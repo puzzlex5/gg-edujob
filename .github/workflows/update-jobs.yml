@@ -2,6 +2,11 @@ name: Update Gyeonggi education jobs
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/scrape_jobs.py'
+      - 'sources.json'
+      - '.github/workflows/update-jobs.yml'
   schedule:
     - cron: '5 22 * * *' # 07:05 KST
 
