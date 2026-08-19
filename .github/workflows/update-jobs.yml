@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
+      - 'scripts/resolve_support_links.py'
       - 'scripts/verify_jobs.py'
       - 'scripts/hotfix_support_office.py'
       - 'scripts/diagnose_support_links.py'
@@ -47,16 +48,18 @@ jobs:
             git pull --rebase
             git push
           fi
-      - name: Restore support-office click behavior and parser compatibility
+      - name: Apply support-office parser and frontend compatibility fixes
         run: |
           python scripts/hotfix_support_office.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py
-          grep -q 'return board||raw' index.html
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py
+          grep -q 'detailLinkResolved' index.html
           grep -q 'subject_parts=' scripts/scrape_jobs.py
       - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
       - name: Repair and re-check all 25 Gyeonggi support-office boards
         run: python scripts/repair_gyeonggi_support.py
+      - name: Resolve exact individual support-office posting links
+        run: python scripts/resolve_support_links.py
       - name: Independent second-pass verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
@@ -64,12 +67,12 @@ jobs:
             cp /tmp/jobs_previous.json jobs.json
             exit 1
           fi
-      - name: Commit verified jobs, click fix, and discovered board cache
+      - name: Commit verified jobs, exact-link report, and discovered board cache
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py
+          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py support_link_resolution.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Restore support-office clicks and refresh verified jobs'
+          git commit -m 'Refresh verified jobs with exact support-office links'
           git pull --rebase
           git push
