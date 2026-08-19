@@ -7,7 +7,9 @@ on:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/verify_jobs.py'
+      - 'scripts/hotfix_support_office.py'
       - 'sources.json'
+      - '.github/workflows/update-jobs.yml'
   schedule:
     - cron: '5 22 * * *' # 07:05 KST - 1차 수집/검증
     - cron: '5 23 * * *' # 08:05 KST - 2차 재수집/재검증
@@ -32,6 +34,12 @@ jobs:
         run: pip install requests beautifulsoup4
       - name: Preserve previous data for anomaly comparison
         run: cp jobs.json /tmp/jobs_previous.json || true
+      - name: Restore support-office click behavior and parser compatibility
+        run: |
+          python scripts/hotfix_support_office.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py
+          grep -q 'return board||raw' index.html
+          grep -q 'subject_parts=' scripts/scrape_jobs.py
       - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
       - name: Repair and re-check all 25 Gyeonggi support-office boards
@@ -43,12 +51,12 @@ jobs:
             cp /tmp/jobs_previous.json jobs.json
             exit 1
           fi
-      - name: Commit verified jobs and discovered board cache
+      - name: Commit verified jobs, click fix, and discovered board cache
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json
+          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py
           git diff --cached --quiet && exit 0
-          git commit -m 'Update and verify metropolitan recruitment data'
+          git commit -m 'Restore support-office clicks and refresh verified jobs'
           git pull --rebase
           git push
