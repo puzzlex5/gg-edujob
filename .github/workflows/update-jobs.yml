@@ -1,0 +1,31 @@
+name: Update Gyeonggi education jobs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5 22 * * *' # 07:05 KST
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install collector dependencies
+        run: pip install requests beautifulsoup4
+      - name: Collect Gyeonggi Office of Education and all 25 support offices
+        run: python scripts/scrape_jobs.py
+      - name: Commit updated jobs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobs.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Update recruitment data'
+          git push
