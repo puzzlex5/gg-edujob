@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
 import re
 
 
 def patch_index():
     p = Path('index.html')
     s = p.read_text(encoding='utf-8')
+    original = s
+
     pat = re.compile(r'function postingLink\(j\)\{.*?\n\}\n\nfunction card\(j\)\{', re.S)
     replacement = r'''function postingLink(j){
   const board=j.boardUrl||'';
@@ -57,10 +60,31 @@ function card(j){'''
     s2, n = pat.subn(lambda m: replacement, s, count=1)
     if n != 1:
         raise RuntimeError(f'index postingLink replacement count={n}')
-    if s2 == s:
-        return False
-    p.write_text(s2, encoding='utf-8')
-    return True
+    s = s2
+
+    # Desktop UX: the filter column owns its own vertical scroll.  Wheel events
+    # over the result column continue to scroll the normal document/results.
+    desktop_rule = '    @media(min-width:901px){.layout{align-items:start}.filter-panel{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}}\n'
+    if '@media(min-width:901px){.layout{align-items:start}.filter-panel{' not in s:
+        marker = '    @media(max-width:900px){'
+        if marker not in s:
+            raise RuntimeError('desktop filter media insertion point not found')
+        s = s.replace(marker, desktop_rule + marker, 1)
+
+    mobile_old = '@media(max-width:900px){.layout{grid-template-columns:1fr}.filter-panel{position:static}'
+    mobile_new = '@media(max-width:900px){.layout{grid-template-columns:1fr}.filter-panel{position:static;max-height:none;overflow:visible;overscroll-behavior:auto}'
+    if mobile_old in s:
+        s = s.replace(mobile_old, mobile_new, 1)
+
+    # Avoid presenting a recent/relevant-job count as the lifetime total of an
+    # official board.  The crawler intentionally stops after it reaches pages
+    # outside the recruitment look-back window.
+    s = s.replace('수집 출처 상태 보기', '수집 출처 상태 보기 · 최근 채용 기준')
+
+    if s != original:
+        p.write_text(s, encoding='utf-8')
+        return True
+    return False
 
 
 def patch_scraper():
@@ -109,7 +133,7 @@ def patch_scraper():
     new = '            if not any(any(k in h for k in ("마감","직종","학교","구분","대상","분야","등록일","작성일","작성자","기관")) for h in headers): continue'
     if old in s:
         s = s.replace(old, new, 1)
-    elif '"구분","대상","분야","등록일","작성자"' in s and '"작성일"' not in s[s.index('def scrape_seoul_office'):s.index('def dedupe_merge')]:
+    elif '("마감","직종","학교","구분","대상","분야","등록일","작성자")' in s:
         s = s.replace('("마감","직종","학교","구분","대상","분야","등록일","작성자")', '("마감","직종","학교","구분","대상","분야","등록일","작성일","작성자","기관")', 1)
 
     old = '                if not title: title=first_of(vals,["제목","공고명"])'
@@ -133,8 +157,36 @@ def patch_scraper():
     if old in s:
         s = s.replace(old, new, 1)
 
+    # The old seven/nine page ceilings silently truncated busy offices.  Crawl
+    # up to 60 pages, while the existing no-new-row / old-date guards stop early.
+    s = s.replace('    for page in range(1, 8):\n        u = with_query(board, currPage=page)',
+                  '    for page in range(1, 61):\n        u = with_query(board, currPage=page)', 1)
+    s = s.replace('    for page in range(1, 10):\n        r = get(board, params={"pageIndex":page})',
+                  '    for page in range(1, 61):\n        r = get(board, params={"pageIndex":page})', 1)
+
+    # Keep explicit page coverage in source-health metadata.
+    if 'pages_total = sum(x.get("pagesScanned",0) for x in meta)' not in s:
+        old = '    raw_total = sum(x["rawRows"] for x in meta)\n    explicit_empty = any(x["explicitEmpty"] for x in meta)'
+        new = '    raw_total = sum(x["rawRows"] for x in meta)\n    pages_total = sum(x.get("pagesScanned",0) for x in meta)\n    explicit_empty = any(x["explicitEmpty"] for x in meta)'
+        if old in s:
+            s = s.replace(old, new, 1)
+        s = s.replace('state, ok, msg = "ok", True, f"게시판 {len(boards)}개 확인"',
+                      'state, ok, msg = "ok", True, f"게시판 {len(boards)}개 · {pages_total}페이지 확인"', 1)
+        s = s.replace('"count":len(all_rows),"rawRows":raw_total,"ok":ok,"state":state,"message":msg}',
+                      '"count":len(all_rows),"rawRows":raw_total,"pagesScanned":pages_total,"ok":ok,"state":state,"message":msg}', 1)
+
+    if 'pages_scanned=0' not in s[s.index('def scrape_seoul_office'):s.index('def dedupe_merge')]:
+        s = s.replace('out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False',
+                      'out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False; pages_scanned=0', 1)
+        s = s.replace('        if not r: break\n        soup=BeautifulSoup(r.text,"html.parser")',
+                      '        if not r: break\n        pages_scanned += 1\n        soup=BeautifulSoup(r.text,"html.parser")', 1)
+        s = s.replace('return out,{"name":office,"url":board,"boards":[board],"count":len(out),"rawRows":raw_rows,"ok":ok,"state":state,"message":msg}',
+                      'return out,{"name":office,"url":board,"boards":[board],"count":len(out),"rawRows":raw_rows,"pagesScanned":pages_scanned,"ok":ok,"state":state,"message":msg}', 1)
+
     if 'data_id = clean(str(a.get("data-id", "")))' not in s[s.index('def detail_from_anchor'):s.index('def school_from_title')]:
         raise RuntimeError('Gyeonggi data-id detail-link hotfix incomplete')
+    if 'for page in range(1, 61):' not in s[s.index('def scrape_mircms_board'):s.index('def scrape_gyeonggi_office')]:
+        raise RuntimeError('Gyeonggi full-pagination hotfix incomplete')
     seoul = s[s.index('def scrape_seoul_office'):s.index('def dedupe_merge')]
     required = [
         'r = get(board, params={"pageIndex":page})',
@@ -142,6 +194,8 @@ def patch_scraper():
         'subject_parts=',
         '"subject":subject',
         '"openMethod":"POST"',
+        'for page in range(1, 61):',
+        'pages_scanned',
     ]
     missing = [x for x in required if x not in seoul]
     if missing:
@@ -153,8 +207,41 @@ def patch_scraper():
     return False
 
 
+def patch_repair_collector():
+    p = Path('scripts/repair_gyeonggi_support.py')
+    s = p.read_text(encoding='utf-8')
+    original = s
+
+    # The second-pass verifier used the same seven-page ceiling as the primary
+    # collector, which could overwrite a good source status with an undercount.
+    s = s.replace('    for page in range(1, 8):', '    for page in range(1, 61):', 1)
+
+    # Include boards discovered by the primary sitemap/menu scan, not only the
+    # seed URLs written in sources.json.
+    if 'cache = json.loads(cache_path.read_text' not in s:
+        s = s.replace('    offices = sources["gyeonggi"]["supportOffices"]\n    session = requests.Session()',
+                      '    offices = sources["gyeonggi"]["supportOffices"]\n    cache_path = ROOT / "board_cache.json"\n    cache = json.loads(cache_path.read_text(encoding="utf-8")) if cache_path.exists() else {}\n    session = requests.Session()', 1)
+        s = s.replace('        boards = list(dict.fromkeys(src.get("boardUrls", [])))',
+                      '        boards = list(dict.fromkeys(src.get("boardUrls", []) + cache.get(src["name"], [])))', 1)
+
+    if '"pagesScanned": pages_ok' not in s:
+        s = s.replace('state, ok, message = "ok", True, f"실제 게시판 행 {raw_total}건 확인 · 최근 채용 {len(rows)}건"',
+                      'state, ok, message = "ok", True, f"실제 게시판 {len(boards)}개 · {pages_ok}페이지 확인 · 최근 채용 {len(rows)}건"', 1)
+        s = s.replace('"count": len(rows),\n            "rawRows": raw_total,',
+                      '"count": len(rows),\n            "rawRows": raw_total,\n            "pagesScanned": pages_ok,', 1)
+
+    if 'for page in range(1, 61):' not in s[s.index('def fetch_board'):s.index('def merge_jobs')]:
+        raise RuntimeError('Gyeonggi repair full-pagination hotfix incomplete')
+
+    if s != original:
+        p.write_text(s, encoding='utf-8')
+        return True
+    return False
+
+
 if __name__ == '__main__':
     changed = []
     if patch_index(): changed.append('index.html')
     if patch_scraper(): changed.append('scripts/scrape_jobs.py')
+    if patch_repair_collector(): changed.append('scripts/repair_gyeonggi_support.py')
     print('HOTFIX_CHANGED', ', '.join(changed) if changed else 'none')
