@@ -11,6 +11,7 @@ on:
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
   schedule:
+    - cron: '27 13 19 8 *' # temporary direct-link repair trigger (UTC)
     - cron: '5 22 * * *' # 07:05 KST - 1차 수집/검증
     - cron: '5 23 * * *' # 08:05 KST - 2차 재수집/재검증
 
