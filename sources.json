@@ -1,33 +1,56 @@
 {
-  "central": {
-    "name": "경기도교육청 통합 구인구직",
-    "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"
+  "gyeonggi": {
+    "name": "경기",
+    "central": {
+      "name": "경기도교육청 통합 구인구직",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"
+    },
+    "supportOffices": [
+      {"name":"가평교육지원청","url":"https://www.goegp.kr/","regions":["가평군"]},
+      {"name":"고양교육지원청","url":"https://www.goegy.kr/","regions":["고양시"]},
+      {"name":"광명교육지원청","url":"https://www.goegm.kr/","regions":["광명시"]},
+      {"name":"광주하남교육지원청","url":"https://www.goegh.kr/","regions":["광주시","하남시"]},
+      {"name":"구리남양주교육지원청","url":"https://www.goegn.kr/","regions":["구리시","남양주시"]},
+      {"name":"군포의왕교육지원청","url":"https://www.goegu.kr/","regions":["군포시","의왕시"]},
+      {"name":"김포교육지원청","url":"https://www.gpoe.kr/","regions":["김포시"]},
+      {"name":"동두천양주교육지원청","url":"https://www.goedy.kr/","regions":["동두천시","양주시"]},
+      {"name":"부천교육지원청","url":"https://www.goebc.kr/","regions":["부천시"]},
+      {"name":"성남교육지원청","url":"https://www.goesn.kr/","regions":["성남시"]},
+      {"name":"수원교육지원청","url":"https://www.goesw.kr/","regions":["수원시"]},
+      {"name":"시흥교육지원청","url":"https://www.goesh.kr/","regions":["시흥시"]},
+      {"name":"안산교육지원청","url":"https://www.goeas.kr/","regions":["안산시"]},
+      {"name":"안성교육지원청","url":"https://www.goean.kr/","regions":["안성시"]},
+      {"name":"안양과천교육지원청","url":"https://www.goeay.kr/","regions":["안양시","과천시"]},
+      {"name":"양평교육지원청","url":"https://www.goeyp.kr/","regions":["양평군"]},
+      {"name":"여주교육지원청","url":"https://www.goeyj.kr/","regions":["여주시"]},
+      {"name":"연천교육지원청","url":"https://www.goeyc.kr/","regions":["연천군"]},
+      {"name":"용인교육지원청","url":"https://www.goeyi.kr/","regions":["용인시"]},
+      {"name":"의정부교육지원청","url":"https://www.goeujb.kr/","regions":["의정부시"]},
+      {"name":"이천교육지원청","url":"https://www.goeic.kr/","regions":["이천시"]},
+      {"name":"파주교육지원청","url":"https://www.goepj.kr/","regions":["파주시"]},
+      {"name":"평택교육지원청","url":"https://www.goept.kr/","regions":["평택시"]},
+      {"name":"포천교육지원청","url":"https://www.goepc.kr/","regions":["포천시"]},
+      {"name":"화성오산교육지원청","url":"https://www.goehs.kr/","regions":["화성시","오산시"]}
+    ]
   },
-  "supportOffices": [
-    {"name":"가평교육지원청","url":"https://www.goegp.kr/","regions":["가평군"]},
-    {"name":"고양교육지원청","url":"https://www.goegy.kr/","regions":["고양시"]},
-    {"name":"광명교육지원청","url":"https://www.goegm.kr/","regions":["광명시"]},
-    {"name":"광주하남교육지원청","url":"https://www.goegh.kr/","regions":["광주시","하남시"]},
-    {"name":"구리남양주교육지원청","url":"https://www.goegn.kr/","regions":["구리시","남양주시"]},
-    {"name":"군포의왕교육지원청","url":"https://www.goegu.kr/","regions":["군포시","의왕시"]},
-    {"name":"김포교육지원청","url":"https://www.gpoe.kr/","regions":["김포시"]},
-    {"name":"동두천양주교육지원청","url":"https://www.goedy.kr/","regions":["동두천시","양주시"]},
-    {"name":"부천교육지원청","url":"https://www.goebc.kr/","regions":["부천시"]},
-    {"name":"성남교육지원청","url":"https://www.goesn.kr/","regions":["성남시"]},
-    {"name":"수원교육지원청","url":"https://www.goesw.kr/","regions":["수원시"]},
-    {"name":"시흥교육지원청","url":"https://www.goesh.kr/","regions":["시흥시"]},
-    {"name":"안산교육지원청","url":"https://www.goeas.kr/","regions":["안산시"]},
-    {"name":"안성교육지원청","url":"https://www.goean.kr/","regions":["안성시"]},
-    {"name":"안양과천교육지원청","url":"https://www.goeay.kr/","regions":["안양시","과천시"]},
-    {"name":"양평교육지원청","url":"https://www.goeyp.kr/","regions":["양평군"]},
-    {"name":"여주교육지원청","url":"https://www.goeyj.kr/","regions":["여주시"]},
-    {"name":"연천교육지원청","url":"https://www.goeyc.kr/","regions":["연천군"]},
-    {"name":"용인교육지원청","url":"https://www.goeyi.kr/","regions":["용인시"]},
-    {"name":"의정부교육지원청","url":"https://www.goeujb.kr/","regions":["의정부시"]},
-    {"name":"이천교육지원청","url":"https://www.goeic.kr/","regions":["이천시"]},
-    {"name":"파주교육지원청","url":"https://www.goepj.kr/","regions":["파주시"]},
-    {"name":"평택교육지원청","url":"https://www.goept.kr/","regions":["평택시"]},
-    {"name":"포천교육지원청","url":"https://www.goepc.kr/","regions":["포천시"]},
-    {"name":"화성오산교육지원청","url":"https://www.goehs.kr/","regions":["화성시","오산시"]}
-  ]
+  "seoul": {
+    "name": "서울",
+    "central": {
+      "name": "서울교육일자리포털",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term"
+    },
+    "supportOffices": [
+      {"name":"동부교육지원청","url":"https://dbedu.sen.go.kr/","boardUrl":"https://dbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["동대문구","중랑구"]},
+      {"name":"서부교육지원청","url":"https://sbedu.sen.go.kr/","boardUrl":"https://sbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["서대문구","마포구","은평구"]},
+      {"name":"남부교육지원청","url":"https://nbedu.sen.go.kr/","boardUrl":"https://nbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["영등포구","구로구","금천구"]},
+      {"name":"북부교육지원청","url":"https://bbedu.sen.go.kr/","boardUrl":"https://bbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["도봉구","노원구"]},
+      {"name":"중부교육지원청","url":"https://jbedu.sen.go.kr/","boardUrl":"https://jbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["종로구","중구","용산구"]},
+      {"name":"강동송파교육지원청","url":"https://gdspedu.sen.go.kr/","boardUrl":"https://gdspedu.sen.go.kr/FUS/JO/JOL11.do","regions":["강동구","송파구"]},
+      {"name":"강서양천교육지원청","url":"https://gsycedu.sen.go.kr/","boardUrl":"https://gsycedu.sen.go.kr/FUS/JO/JOL11.do","regions":["강서구","양천구"]},
+      {"name":"강남서초교육지원청","url":"https://gnscedu.sen.go.kr/","boardUrl":"https://gnscedu.sen.go.kr/FUS/JO/JOL11.do","regions":["강남구","서초구"]},
+      {"name":"동작관악교육지원청","url":"https://dgedu.sen.go.kr/","boardUrl":"https://dgedu.sen.go.kr/FUS/JO/JOL11.do","regions":["동작구","관악구"]},
+      {"name":"성동광진교육지원청","url":"https://sdgjedu.sen.go.kr/","boardUrl":"https://sdgjedu.sen.go.kr/FUS/JO/JOL11.do","regions":["성동구","광진구"]},
+      {"name":"성북강북교육지원청","url":"https://sbgbedu.sen.go.kr/","boardUrl":"https://sbgbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["성북구","강북구"]}
+    ]
+  }
 }
