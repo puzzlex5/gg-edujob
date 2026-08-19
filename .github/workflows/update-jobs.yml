@@ -5,10 +5,12 @@ on:
   push:
     paths:
       - 'scripts/scrape_jobs.py'
+      - 'scripts/verify_jobs.py'
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
   schedule:
-    - cron: '5 22 * * *' # 07:05 KST
+    - cron: '5 22 * * *' # 07:05 KST - 1차 수집/검증
+    - cron: '5 23 * * *' # 08:05 KST - 2차 재수집/재검증
 
 permissions:
   contents: write
@@ -20,7 +22,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -28,14 +30,23 @@ jobs:
           python-version: '3.12'
       - name: Install collector dependencies
         run: pip install requests beautifulsoup4
-      - name: Collect Seoul and Gyeonggi education recruitment data
+      - name: Preserve previous data for anomaly comparison
+        run: cp jobs.json /tmp/jobs_previous.json || true
+      - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
-      - name: Commit updated jobs
+      - name: Independent second-pass verification
+        run: |
+          if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
+            echo 'Critical validation failure. Keeping the previously published jobs.json.'
+            cp /tmp/jobs_previous.json jobs.json
+            exit 1
+          fi
+      - name: Commit verified jobs and discovered board cache
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json
+          git add jobs.json board_cache.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Update metropolitan recruitment data'
+          git commit -m 'Update and verify metropolitan recruitment data'
           git pull --rebase
           git push
