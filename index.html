@@ -217,6 +217,8 @@ function filtered(){
 function postingLink(j){
   const board=j.boardUrl||'';
   const raw=j.url||'';
+
+  // 서울 교육지원청은 JOL11 목록에서 job_seq를 POST로 JOV11 상세화면에 넘긴다.
   if(j.openMethod==='POST' && j.openUrl && j.openParams && j.openParams.job_seq){
     const p=new URLSearchParams({url:j.openUrl,job_seq:String(j.openParams.job_seq)});
     return `open-job.html?${p.toString()}`;
@@ -230,16 +232,32 @@ function postingLink(j){
         return `open-job.html?${p.toString()}`;
       }
     }catch(e){}
-    return board||raw;
+    return '';
   }
+
+  // 경기 교육지원청은 반드시 MirCMS 개별 공고(selectNttInfo.do)로 보낸다.
   if(province(j)==='경기' && j.sourceType==='교육지원청 개별 게시판'){
     try{
-      const u=new URL(raw||'',location.href);
-      if(raw && !u.pathname.includes('selectNttList.do')) return raw;
-    }catch(e){ if(raw) return raw; }
-    return board||raw;
+      if(raw){
+        const u=new URL(raw,location.href);
+        if(u.pathname.includes('selectNttInfo.do') && u.searchParams.get('nttSn')) return u.href;
+      }
+      if(j.nttSn && j.bbsId && board){
+        const b=new URL(board,location.href);
+        const detail=new URL(b.pathname.replace('selectNttList.do','selectNttInfo.do'),b.origin);
+        detail.searchParams.set('bbsId',String(j.bbsId));
+        if(j.mi) detail.searchParams.set('mi',String(j.mi));
+        detail.searchParams.set('nttSn',String(j.nttSn));
+        return detail.href;
+      }
+      if(j.detailLinkResolved===true && raw){
+        const u=new URL(raw,location.href);
+        if(!u.pathname.includes('selectNttList.do')) return u.href;
+      }
+    }catch(e){}
+    return '';
   }
-  return raw||board;
+  return raw||'';
 }
 
 function card(j){

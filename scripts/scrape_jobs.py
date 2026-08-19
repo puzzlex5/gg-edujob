@@ -291,6 +291,16 @@ def detail_from_anchor(board, a):
     href = a.get("href", "") or ""
     onclick = a.get("onclick", "") or ""
     if "selectNttInfo.do" in href: return urljoin(board, href)
+    data_id = clean(str(a.get("data-id", "")))
+    if re.fullmatch(r"\d{5,10}", data_id):
+        p = urlparse(board); q = parse_qs(p.query)
+        params = {}
+        for k in ("bbsId","mi","clasHmpgId"):
+            if q.get(k): params[k] = q[k][0]
+        if not params.get("bbsId"): return ""
+        params["nttSn"] = data_id
+        path = p.path.replace("selectNttList.do", "selectNttInfo.do")
+        return urlunparse((p.scheme,p.netloc,path,"",urlencode(params),""))
     raw = href + " " + onclick
     m = re.search(r"nttSn\s*[=:,'\"() ]+\s*(\d{4,})", raw)
     if not m: m = re.search(r"(?:nttView|selectNttInfo|goView)\D+(\d{4,})", raw)
@@ -462,7 +472,7 @@ def scrape_seoul_office(src):
         if not r: r = post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
         if not r: break
         soup=BeautifulSoup(r.text,"html.parser"); txt=clean(soup.get_text(" ",strip=True))
-        if re.search(r"총\s*0\s*건|전체\s*0\s*건|등록된\s*게시물이\s*없|데이터가\s*없습니다|등록된\s*자료가\s*없",txt): explicit_empty=True
+        if re.search(r"총\s*0\s*건|전체\s*0\s*건|등록된\s*게시물이\s*없|데이터가\s*없습니다|조회된\s*데이터가\s*없|검색된\s*게시물이\s*없|등록된\s*자료가\s*없",txt): explicit_empty=True
         page_raw=0; page_recent=0
         for table in soup.find_all("table"):
             headers=table_headers(table)
