@@ -1,16 +1,13 @@
 {
   "gyeonggi": {
     "name": "경기",
-    "central": {
-      "name": "경기도교육청 통합 구인구직",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"
-    },
+    "central": {"name":"경기도교육청 통합 구인구직","url":"https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"},
     "supportOffices": [
       {"name":"가평교육지원청","url":"https://www.goegp.kr/","regions":["가평군"],"boardUrls":["https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2721&mi=3284","https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2718&mi=3276"],"autoDiscover":true},
       {"name":"고양교육지원청","url":"https://www.goegy.kr/","regions":["고양시"],"boardUrls":["https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=8731&mi=15413","https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=11674&mi=21050&srch_aditCol1=%EA%B5%90%EC%9C%A1%EC%A7%80%EC%9B%90%EC%B2%AD"],"autoDiscover":true},
       {"name":"광명교육지원청","url":"https://www.goegm.kr/","regions":["광명시"],"boardUrls":["https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826","https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4242&mi=5879"],"autoDiscover":true},
       {"name":"광주하남교육지원청","url":"https://www.goegh.kr/","regions":["광주시","하남시"],"boardUrls":["https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754","https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5030&mi=8667"],"autoDiscover":true},
-      {"name":"구리남양주교육지원청","url":"https://www.goegn.kr/","regions":["구리시","남양주시"],"boardUrls":["https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084"],"autoDiscover":true},
+      {"name":"구리남양주교육지원청","url":"https://www.goegn.kr/","regions":["구리시","남양주시"],"boardUrls":["https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=16003"],"autoDiscover":true},
       {"name":"군포의왕교육지원청","url":"https://www.goegu.kr/","regions":["군포시","의왕시"],"boardUrls":["https://www.goegu.kr/goegu/na/ntt/selectNttList.do?bbsId=4306&mi=7110"],"autoDiscover":true},
       {"name":"김포교육지원청","url":"https://www.gpoe.kr/","regions":["김포시"],"boardUrls":["https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?bbsId=5218&mi=9406"],"autoDiscover":true},
       {"name":"동두천양주교육지원청","url":"https://www.goedy.kr/","regions":["동두천시","양주시"],"boardUrls":["https://www.goedy.kr/goedy/na/ntt/selectNttList.do?bbsId=11025&mi=11726"],"autoDiscover":true},
@@ -34,12 +31,8 @@
     ]
   },
   "seoul": {
-    "name": "서울",
-    "central": {
-      "name": "서울교육일자리포털",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term"
-    },
-    "supportOffices": [
+    "name":"서울","central":{"name":"서울교육일자리포털","url":"https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term"},
+    "supportOffices":[
       {"name":"동부교육지원청","url":"https://dbedu.sen.go.kr/","boardUrl":"https://dbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["동대문구","중랑구"]},
       {"name":"서부교육지원청","url":"https://sbedu.sen.go.kr/","boardUrl":"https://sbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["서대문구","마포구","은평구"]},
       {"name":"남부교육지원청","url":"https://nbedu.sen.go.kr/","boardUrl":"https://nbedu.sen.go.kr/FUS/JO/JOL11.do","regions":["영등포구","구로구","금천구"]},
