@@ -14,7 +14,6 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import urlencode
 
 import requests
 from bs4 import BeautifulSoup
@@ -25,11 +24,15 @@ CACHE_PATH = ROOT / "support_period_cache.json"
 INDEX_PATH = ROOT / "index.html"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
-UA = "Mozilla/5.0 (compatible; metro-edujob-period-enricher/1.0)"
-DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
+UA = "Mozilla/5.0 (compatible; metro-edujob-period-enricher/1.1)"
+PARSER_VERSION = 2
+# Full Korean/numeric dates: 2026.08.20 / 2026-8-20 / 2026년 8월 20일.
+FULL_DATE_RE = re.compile(r"(20\d{2})\s*(?:[./-]\s*|년\s*)(\d{1,2})\s*(?:[./-]\s*|월\s*)(\d{1,2})(?:\s*일)?")
+# Common abbreviated range tail: 2026. 8. 20. ~ 8. 25. (inherit the preceding year).
+PARTIAL_DATE_RE = re.compile(r"(?<!\d)(\d{1,2})\s*[./-]\s*(\d{1,2})(?:\s*일)?")
 SOFT_404 = re.compile(r"페이지를\s*찾을\s*수\s*없|존재하지\s*않는\s*페이지|잘못된\s*접근|요청하신\s*페이지가\s*없", re.I)
-APPLY_LABEL = re.compile(r"접수\s*기간|원서\s*접수|서류\s*접수|응시원서\s*접수|공고\s*및\s*접수|접수\s*일시|접수\s*일정|접수\s*마감", re.I)
-WORK_LABEL = re.compile(r"채용\s*기간|계약\s*기간|근무\s*기간|임용\s*기간|근로\s*기간|채용\s*예정\s*기간|근로계약\s*기간", re.I)
+APPLY_LABEL = re.compile(r"접수\s*기간|원서\s*접수|서류\s*접수|응시원서\s*접수|공고\s*및\s*접수|접수\s*일시|접수\s*일정|접수\s*마감|지원서\s*접수", re.I)
+WORK_LABEL = re.compile(r"채용\s*기간|계약\s*기간|근무\s*기간|임용\s*기간|근로\s*기간|채용\s*예정\s*기간|근로계약\s*기간|임용\s*예정\s*기간", re.I)
 _thread = threading.local()
 
 
@@ -38,7 +41,7 @@ def clean(value: str) -> str:
 
 
 def date_norm(value: str) -> str:
-    m = DATE_RE.search(value or "")
+    m = FULL_DATE_RE.search(value or "")
     if not m:
         return ""
     return f"{int(m.group(1)):04d}/{int(m.group(2)):02d}/{int(m.group(3)):02d}"
@@ -65,14 +68,37 @@ def session():
 
 
 def all_dates(text: str):
-    return [date_norm(m.group(0)) for m in DATE_RE.finditer(text or "")]
+    """Return dates in order, including an abbreviated second date that inherits the year.
+
+    Korean school notices frequently write ranges as `2026. 8. 20.(목) ~ 8. 25.(화)`.
+    The previous parser only saw the first date, causing avoidable blank end dates.
+    """
+    text = text or ""
+    found = []
+    spans = []
+    last_year = None
+    for m in FULL_DATE_RE.finditer(text):
+        year, month, day = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        if 1 <= month <= 12 and 1 <= day <= 31:
+            found.append((m.start(), f"{year:04d}/{month:02d}/{day:02d}"))
+            spans.append((m.start(), m.end()))
+            last_year = year
+    if last_year is not None:
+        for m in PARTIAL_DATE_RE.finditer(text):
+            if any(a <= m.start() < b or a < m.end() <= b for a, b in spans):
+                continue
+            month, day = int(m.group(1)), int(m.group(2))
+            if 1 <= month <= 12 and 1 <= day <= 31:
+                found.append((m.start(), f"{last_year:04d}/{month:02d}/{day:02d}"))
+    found.sort(key=lambda x: x[0])
+    return list(dict.fromkeys(value for _, value in found))
 
 
 def period_from_chunk(chunk: str, label_re: re.Pattern):
     if not label_re.search(chunk or ""):
         return "", ""
     m = label_re.search(chunk)
-    tail = chunk[m.start():m.start() + 260]
+    tail = chunk[m.start():m.start() + 340]
     dates = all_dates(tail)
     if len(dates) >= 2:
         return dates[0], dates[1]
@@ -97,9 +123,8 @@ def labelled_chunks(soup: BeautifulSoup):
             chunks.append(text)
     for el in soup.find_all(["p", "li", "div"]):
         text = clean(el.get_text(" ", strip=True))
-        if text and len(text) <= 500 and (APPLY_LABEL.search(text) or WORK_LABEL.search(text)):
+        if text and len(text) <= 650 and (APPLY_LABEL.search(text) or WORK_LABEL.search(text)):
             chunks.append(text)
-    # Preserve order while dropping duplicates.
     return list(dict.fromkeys(chunks))
 
 
@@ -121,7 +146,6 @@ def extract_periods(html: str):
         if (apply_start or apply_end) and (work_start or work_end):
             break
 
-    # Fallback to a bounded slice of the full visible text around each label.
     if not (apply_start or apply_end):
         apply_start, apply_end = period_from_chunk(full, APPLY_LABEL)
     if not (work_start or work_end):
@@ -163,22 +187,24 @@ def fetch_one(job):
         result = extract_periods(r.text)
         result["http"] = r.status_code
         result["checkedAt"] = NOW.strftime("%Y-%m-%d %H:%M KST")
+        result["parserVersion"] = PARSER_VERSION
         return key, result
     except Exception as exc:
-        return key, {"status": "error", "error": f"{type(exc).__name__}: {str(exc)[:120]}", "applyStart": "", "applyEnd": "", "workStart": "", "workEnd": "", "checkedAt": NOW.strftime("%Y-%m-%d %H:%M KST")}
+        return key, {"status": "error", "error": f"{type(exc).__name__}: {str(exc)[:120]}", "applyStart": "", "applyEnd": "", "workStart": "", "workEnd": "", "checkedAt": NOW.strftime("%Y-%m-%d %H:%M KST"), "parserVersion": PARSER_VERSION}
 
 
 def cache_fresh(item):
-    if not item:
+    if not item or item.get("parserVersion") != PARSER_VERSION:
         return False
-    if item.get("status") == "parsed":
-        return True
     raw = item.get("checkedAt", "").replace(" KST", "")
     try:
         dt = datetime.strptime(raw, "%Y-%m-%d %H:%M").replace(tzinfo=KST)
-        return dt >= NOW - timedelta(hours=20)
     except Exception:
         return False
+    # Parsed pages are periodically re-read because schools sometimes amend dates after posting.
+    if item.get("status") == "parsed":
+        return dt >= NOW - timedelta(days=7)
+    return dt >= NOW - timedelta(hours=20)
 
 
 def patch_frontend():
@@ -216,8 +242,6 @@ def main():
             continue
         if not recent_job(job):
             continue
-        # Existing values are preserved. Only fetch when at least one important
-        # period field is missing and an exact detail route exists.
         if all(job.get(k) for k in ("applyStart", "applyEnd", "workStart", "workEnd")):
             continue
         key = fetch_key(job)
@@ -228,12 +252,13 @@ def main():
         if not cache_fresh(cache.get(key)):
             candidates.append(job)
 
-    # De-duplicate requests by exact detail endpoint and cap only pathological runs.
     unique = {}
     for job in candidates:
         unique.setdefault(fetch_key(job), job)
     to_fetch = list(unique.values())[:700]
-    print(f"PERIOD ENRICH candidates={len(keys_to_jobs)} fetch={len(to_fetch)} cached={len(keys_to_jobs)-len(to_fetch)}")
+    cached_count = sum(1 for key in keys_to_jobs if cache_fresh(cache.get(key)))
+    pending_count = max(0, len(keys_to_jobs) - cached_count - len(to_fetch))
+    print(f"PERIOD ENRICH candidates={len(keys_to_jobs)} fetch={len(to_fetch)} cached={cached_count} pending={pending_count}")
 
     if to_fetch:
         with ThreadPoolExecutor(max_workers=8) as pool:
@@ -255,7 +280,7 @@ def main():
                     job[field] = result[field]
             after = sum(bool(job.get(k)) for k in ("applyStart", "applyEnd", "workStart", "workEnd"))
             filled_fields += max(0, after - before)
-            job["periodStatus"] = result.get("status", "unavailable")
+            job["periodStatus"] = result.get("status", "pending" if key in {fetch_key(x) for x in to_fetch} else "unavailable")
             if result.get("status") == "parsed":
                 parsed_jobs += 1
             elif not any(job.get(k) for k in ("applyStart", "applyEnd", "workStart", "workEnd")):
@@ -267,11 +292,13 @@ def main():
     payload["jobs"] = jobs
     payload["periodEnrichment"] = {
         "checkedAt": NOW.strftime("%Y-%m-%d %H:%M KST"),
+        "parserVersion": PARSER_VERSION,
         "recentSupportJobs": len(support_recent),
         "detailPagesParsed": parsed_jobs,
         "fieldsFilledThisRun": filled_fields,
         "missingApplicationPeriod": missing_apply,
         "missingWorkPeriod": missing_work,
+        "pendingDetailPages": pending_count,
         "displayFallback": "원문 확인",
     }
     JOBS_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
