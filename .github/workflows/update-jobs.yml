@@ -7,6 +7,7 @@ on:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/resolve_support_links.py'
+      - 'scripts/enrich_support_periods.py'
       - 'scripts/verify_jobs.py'
       - 'scripts/hotfix_support_office.py'
       - 'scripts/hotfix_repair_links.py'
@@ -28,7 +29,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
         with:
@@ -102,7 +103,7 @@ jobs:
         run: |
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py
           grep -q 'detailLinkResolved' index.html
           grep -q 'subject_parts=' scripts/scrape_jobs.py
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/scrape_jobs.py
@@ -148,6 +149,8 @@ jobs:
         run: python scripts/repair_gyeonggi_support.py
       - name: Resolve exact individual support-office posting links
         run: python scripts/resolve_support_links.py
+      - name: Enrich application and hiring periods from exact support-office details
+        run: python scripts/enrich_support_periods.py
       - name: Independent second-pass verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
@@ -167,13 +170,13 @@ jobs:
               raise SystemExit(f'Refusing publication: only {len(jobs)} jobs in jobs.json')
           print(f'Publication guard passed: {len(jobs)} jobs')
           PY
-      - name: Commit verified jobs, exact-link report, and corrected collectors
+      - name: Commit verified jobs, exact-link report, period cache, and corrected collectors
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py support_link_resolution.json sources.json
+          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py support_link_resolution.json support_period_cache.json sources.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Refresh verified jobs with exact support-office links'
+          git commit -m 'Refresh verified jobs with exact support-office details'
           git pull --rebase
           git push
 
