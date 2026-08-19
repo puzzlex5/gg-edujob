@@ -366,8 +366,7 @@ def scrape_mircms_board(board, src):
                     "subject":first_of(vals,["과목","분야"]),"region":region,"regions":regions,"type":guess_type(raw_type+" "+title),
                     "schoolLevel":normalize_school_level(raw_level,school,title),"applyStart":"","applyEnd":apply_end,
                     "workStart":"","workEnd":"","registered":registered,"headcount":"",
-                    "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board,
-                    "openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}
+                    "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board
                 })
         if page_candidates == 0: break
         if page_recent == 0 and page >= 2: break
@@ -499,7 +498,8 @@ def scrape_seoul_office(src):
                     "subject":first_of(vals,["분야(과목)","분야","과목"]),"region":region,"regions":regions,
                     "type":guess_type(raw_type+" "+title),"schoolLevel":normalize_school_level(raw_level,school,title),
                     "applyStart":registered,"applyEnd":apply_end,"workStart":"","workEnd":"","registered":registered,"headcount":"",
-                    "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board
+                    "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board,
+                    "openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}
                 })
         if page_raw==0: break
         if page_recent==0 and page>=2: break
