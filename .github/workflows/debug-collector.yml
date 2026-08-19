@@ -1,0 +1,63 @@
+name: Diagnose support-office collector
+
+on:
+  push:
+    paths:
+      - '.github/workflows/debug-collector.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Syntax check
+        run: python -m py_compile scripts/scrape_jobs.py scripts/verify_jobs.py
+      - name: Run collector and preserve diagnostics
+        shell: bash
+        run: |
+          set +e
+          cp jobs.json /tmp/jobs-before.json
+          python scripts/scrape_jobs.py > collector-debug.txt 2>&1
+          COLLECT=$?
+          echo "collector_exit=$COLLECT" >> collector-debug.txt
+          if [ -f board_cache.json ]; then
+            echo "board_cache_exists=yes" >> collector-debug.txt
+            echo "board_cache_bytes=$(wc -c < board_cache.json)" >> collector-debug.txt
+          else
+            echo "board_cache_exists=no" >> collector-debug.txt
+          fi
+          python scripts/verify_jobs.py --previous /tmp/jobs-before.json >> collector-debug.txt 2>&1
+          VERIFY=$?
+          echo "verifier_exit=$VERIFY" >> collector-debug.txt
+          python - <<'PY' >> collector-debug.txt 2>&1
+          import json
+          from pathlib import Path
+          p=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+          print('updatedAt=',p.get('updatedAt'))
+          print('total=',len(p.get('jobs',[])))
+          print('verification=',json.dumps(p.get('verification',{}),ensure_ascii=False))
+          for area in ('gyeonggi','seoul'):
+              print('---',area,'---')
+              c=p.get('sources',{}).get(area,{}).get('central',{})
+              print('central',c.get('count'),c.get('state'),c.get('ok'))
+              for s in p.get('sources',{}).get(area,{}).get('supportOffices',[]):
+                  print(s.get('name'), 'count=',s.get('count'), 'raw=',s.get('rawRows'), 'state=',s.get('state'), 'ok=',s.get('ok'), 'msg=',s.get('message'), 'boards=',len(s.get('boards',[])))
+          PY
+          exit 0
+      - name: Commit diagnostics only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add collector-debug.txt board_cache.json || true
+          git diff --cached --quiet && exit 0
+          git commit -m 'Collector diagnostic results [skip ci]'
+          git pull --rebase
+          git push
