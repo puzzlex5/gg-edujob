@@ -109,6 +109,41 @@ jobs:
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/repair_gyeonggi_support.py
       - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
+      - name: Deduplicate stale MirCMS menu aliases in board cache
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import parse_qs, urlparse
+
+          p = Path('board_cache.json')
+          cache = json.loads(p.read_text(encoding='utf-8')) if p.exists() else {}
+          cleaned = {}
+          removed = 0
+          for office, urls in cache.items():
+              seen = set()
+              keep = []
+              for u in urls:
+                  q = parse_qs(urlparse(u).query, keep_blank_values=True)
+                  bbs = (q.get('bbsId') or [''])[0]
+                  # mi is a menu alias, not board identity. Keep separate variants only
+                  # when the same board is intentionally filtered into a subsection.
+                  key = (
+                      (urlparse(u).hostname or '').lower(),
+                      urlparse(u).path,
+                      bbs,
+                      (q.get('srch_aditCol1') or [''])[0],
+                      (q.get('clasHmpgId') or [''])[0],
+                  )
+                  if bbs and key in seen:
+                      removed += 1
+                      continue
+                  seen.add(key)
+                  keep.append(u)
+              cleaned[office] = keep
+          p.write_text(json.dumps(cleaned, ensure_ascii=False, indent=2), encoding='utf-8')
+          print(f'Removed {removed} duplicate MirCMS menu aliases from board_cache.json')
+          PY
       - name: Repair and re-check all 25 Gyeonggi support-office boards
         run: python scripts/repair_gyeonggi_support.py
       - name: Resolve exact individual support-office posting links
