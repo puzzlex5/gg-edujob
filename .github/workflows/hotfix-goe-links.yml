@@ -1,0 +1,51 @@
+name: Hotfix GOE detail links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/hotfix-goe-links.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fix current and future Gyeonggi detail URLs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          paths = [Path('scripts/scrape_jobs.py'), Path('jobs.json')]
+          old = 'hnfpPbancView.do'
+          new = 'hnfpPbancInfoView.do'
+          total = 0
+          for p in paths:
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count:
+                  p.write_text(text.replace(old, new), encoding='utf-8')
+                  total += count
+                  print(f'{p}: fixed {count} link(s)')
+              else:
+                  print(f'{p}: no old links found')
+          print('TOTAL FIXED', total)
+          if total == 0:
+              print('Nothing to change')
+          PY
+
+      - name: Commit hotfix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/scrape_jobs.py jobs.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Fix Gyeonggi recruitment detail URLs'
+          git push
