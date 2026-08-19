@@ -6,6 +6,8 @@ on:
     paths:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
+      - 'scripts/complete_support_coverage.py'
+      - 'scripts/hotfix_desktop_scroll.py'
       - 'scripts/resolve_support_links.py'
       - 'scripts/enrich_support_periods.py'
       - 'scripts/enrich_seoul_get_fallback.py'
@@ -99,8 +101,10 @@ jobs:
         run: |
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          python scripts/hotfix_desktop_scroll.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_desktop_scroll.py
           grep -q 'detailLinkResolved' index.html
+          grep -q 'overscroll-behavior:contain' index.html
           grep -q 'subject_parts=' scripts/scrape_jobs.py
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/scrape_jobs.py
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/repair_gyeonggi_support.py
@@ -140,6 +144,8 @@ jobs:
           PY
       - name: Repair and re-check all 25 Gyeonggi support-office boards
         run: python scripts/repair_gyeonggi_support.py
+      - name: Crawl support offices dynamically through the full recent look-back window
+        run: python scripts/complete_support_coverage.py
       - name: Resolve exact individual support-office posting links
         run: python scripts/resolve_support_links.py
       - name: Enrich application and hiring periods from exact support-office details
@@ -168,11 +174,11 @@ jobs:
       - name: Commit verified jobs, exact-link report, period cache, and corrected collectors
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '4189828+github-actions[bot]@users.noreply.github.com'
           git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py support_link_resolution.json support_period_cache.json sources.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Refresh verified jobs with exact support-office details'
+          git commit -m 'Refresh verified jobs with complete support-office coverage'
           git pull --rebase
           git push
 
-# retrigger: recover valid published data and refresh exact support-office details
+# retrigger: dynamic support-office completeness and independent desktop scrolling
