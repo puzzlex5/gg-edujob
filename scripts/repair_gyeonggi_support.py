@@ -114,11 +114,14 @@ def construct_detail(board_url, ntt_sn):
 
 
 def detail_url(board_url, row):
-    # 1) normal href
+    # 1) normal href or current MirCMS data-id identifier.
     for a in row.find_all("a"):
         href = a.get("href", "") or ""
         if "selectNttInfo.do" in href:
             return urljoin(board_url, href)
+        data_id = clean(str(a.get("data-id", "")))
+        if re.fullmatch(r"\d{5,10}", data_id):
+            return construct_detail(board_url, data_id)
 
     # 2) data-* attributes or javascript/onclick. MirCMS deployments vary.
     html = str(row)
