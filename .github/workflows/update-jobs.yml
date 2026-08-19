@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/scrape_jobs.py'
+      - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/verify_jobs.py'
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
@@ -34,6 +35,8 @@ jobs:
         run: cp jobs.json /tmp/jobs_previous.json || true
       - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
+      - name: Repair and re-check all 25 Gyeonggi support-office boards
+        run: python scripts/repair_gyeonggi_support.py
       - name: Independent second-pass verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
