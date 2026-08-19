@@ -107,16 +107,64 @@ def normalized_title_tokens(title):
     return [w for w in words if w not in stop][:6]
 
 
-def verify_links(jobs, limit=36):
+def verify_links(jobs, limit=50):
+    """Open real detail pages, covering every support office that currently has a collected job.
+
+    The old verifier simply walked jobs in file order and allowed five checks per host. That
+    could spend all 36 checks on the first few offices and still report a reassuring aggregate
+    failure rate. Build an office-stratified sample first so one broken office cannot hide behind
+    healthy neighbors, then use any remaining budget for extra support/central samples.
+    """
     session = requests.Session()
     session.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9"})
     checked = 0
     failed = []
-    seen_hosts = {}
 
-    # Prioritize support-office postings because they are the historically fragile links.
-    ordered = sorted(jobs, key=lambda j: 0 if j.get("sourceType") == "교육지원청 개별 게시판" else 1)
+    support = [j for j in jobs if j.get("sourceType") == "교육지원청 개별 게시판"]
+    central = [j for j in jobs if j.get("sourceType") != "교육지원청 개별 게시판"]
+    ordered = []
+    picked = set()
+    seen_offices = set()
+
+    # First pass: exactly one representative posting per support office/province.
+    for j in support:
+        office_key = (j.get("province", ""), j.get("source", ""))
+        if office_key in seen_offices:
+            continue
+        seen_offices.add(office_key)
+        ordered.append(j)
+        picked.add(id(j))
+
+    # Second pass: add extra support-office samples, capped at two per host.
+    host_counts = {}
     for j in ordered:
+        raw = j.get("openUrl") if j.get("openMethod") == "POST" else j.get("url")
+        host = urlparse(raw or "").hostname or ""
+        if host:
+            host_counts[host] = host_counts.get(host, 0) + 1
+    for j in support:
+        if len(ordered) >= limit or id(j) in picked:
+            continue
+        raw = j.get("openUrl") if j.get("openMethod") == "POST" else j.get("url")
+        host = urlparse(raw or "").hostname or ""
+        if not host or host_counts.get(host, 0) >= 2:
+            continue
+        ordered.append(j)
+        picked.add(id(j))
+        host_counts[host] = host_counts.get(host, 0) + 1
+
+    # Use any remaining budget for central-board links without reducing support-office coverage.
+    for j in central:
+        if len(ordered) >= limit:
+            break
+        raw = j.get("url") or ""
+        host = urlparse(raw).hostname or ""
+        if not raw.startswith("http") or not host or host_counts.get(host, 0) >= 2:
+            continue
+        ordered.append(j)
+        host_counts[host] = host_counts.get(host, 0) + 1
+
+    for j in ordered[:limit]:
         raw = j.get("url") or ""
         open_method = j.get("openMethod")
         open_url = j.get("openUrl") or ""
@@ -128,9 +176,6 @@ def verify_links(jobs, limit=36):
             host = urlparse(raw).hostname or ""
         if not request_url.startswith("http") or not host:
             continue
-        if seen_hosts.get(host, 0) >= 5:
-            continue
-        seen_hosts[host] = seen_hosts.get(host, 0) + 1
         checked += 1
         try:
             if open_method == "POST" and open_url and (j.get("openParams") or {}).get("job_seq"):
@@ -157,8 +202,6 @@ def verify_links(jobs, limit=36):
                 failed.append({"title": j.get("title", "")[:90], "source": j.get("source", ""), "url": request_url, "status": r.status_code})
         except Exception as e:
             failed.append({"title": j.get("title", "")[:90], "source": j.get("source", ""), "url": request_url, "status": type(e).__name__})
-        if checked >= limit:
-            break
     return checked, failed
 
 
