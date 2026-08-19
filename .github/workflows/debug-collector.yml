@@ -20,6 +20,42 @@ jobs:
       - run: pip install requests beautifulsoup4
       - name: Syntax check
         run: python -m py_compile scripts/scrape_jobs.py scripts/verify_jobs.py
+      - name: Inspect representative Gyeonggi MirCMS boards
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, requests
+          from bs4 import BeautifulSoup
+          boards = {
+            '고양': 'https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=8731&mi=15413',
+            '구리남양주': 'https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084',
+            '가평': 'https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2721&mi=3284',
+          }
+          s=requests.Session(); s.headers['User-Agent']='Mozilla/5.0 (compatible; metro-edujob-diagnostic/1.0)'
+          out={}
+          for name,url in boards.items():
+            item={'url':url}
+            try:
+              r=s.get(url,timeout=20,allow_redirects=True)
+              item.update(status=r.status_code, finalUrl=r.url, bytes=len(r.content))
+              soup=BeautifulSoup(r.text,'html.parser')
+              rows=[]
+              for tr in soup.find_all('tr'):
+                tds=tr.find_all('td')
+                if not tds: continue
+                anchors=[]
+                for a in tr.find_all('a'):
+                  anchors.append({'text':' '.join(a.stripped_strings)[:180], 'href':a.get('href',''), 'onclick':a.get('onclick','')})
+                if anchors:
+                  rows.append({'text':' '.join(tr.stripped_strings)[:400], 'anchors':anchors})
+                if len(rows)>=5: break
+              item['rows']=rows
+              item['title']=soup.title.get_text(' ',strip=True) if soup.title else ''
+            except Exception as e:
+              item['error']=repr(e)
+            out[name]=item
+          open('support-board-samples.json','w',encoding='utf-8').write(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
       - name: Run collector and preserve diagnostics
         shell: bash
         run: |
@@ -56,7 +92,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add collector-debug.txt board_cache.json || true
+          git add collector-debug.txt board_cache.json support-board-samples.json || true
           git diff --cached --quiet && exit 0
           git commit -m 'Collector diagnostic results [skip ci]'
           git pull --rebase
