@@ -199,9 +199,23 @@ def verify_links(jobs, limit=50):
                     bad = True
 
             if bad:
-                failed.append({"title": j.get("title", "")[:90], "source": j.get("source", ""), "url": request_url, "status": r.status_code})
+                failed.append({
+                    "title": j.get("title", "")[:90],
+                    "source": j.get("source", ""),
+                    "sourceType": j.get("sourceType", ""),
+                    "province": j.get("province", ""),
+                    "url": request_url,
+                    "status": r.status_code,
+                })
         except Exception as e:
-            failed.append({"title": j.get("title", "")[:90], "source": j.get("source", ""), "url": request_url, "status": type(e).__name__})
+            failed.append({
+                "title": j.get("title", "")[:90],
+                "source": j.get("source", ""),
+                "sourceType": j.get("sourceType", ""),
+                "province": j.get("province", ""),
+                "url": request_url,
+                "status": type(e).__name__,
+            })
     return checked, failed
 
 
@@ -250,9 +264,16 @@ def main():
         critical.append(f"교육지원청 개별공고 링크 미해결: {exact['unresolved']}/{exact['total']}")
 
     checked, failed = verify_links(jobs)
+    support_failed = [f for f in failed if f.get("sourceType") == "교육지원청 개별 게시판"]
+    if support_failed:
+        # Product invariant is absolute: if even one sampled support-office card resolves to a
+        # dead/list/mismatched page, do not publish the fresh dataset over the known-good copy.
+        offices = sorted({f.get("source", "") for f in support_failed if f.get("source")})
+        label = ", ".join(offices[:5]) + (f" 외 {len(offices)-5}곳" if len(offices) > 5 else "")
+        critical.append(f"교육지원청 실제 상세페이지 검사 실패: {len(support_failed)}건" + (f" ({label})" if label else ""))
     if checked and len(failed) / checked > 0.35:
         critical.append(f"원문 링크 검사 실패율 과다: {len(failed)}/{checked}")
-    elif failed:
+    elif failed and not support_failed:
         warnings.append(f"원문 링크 {len(failed)}/{checked}개 확인 필요")
 
     state = "critical" if critical else ("warning" if warnings else "ok")
@@ -262,7 +283,7 @@ def main():
         "message": " · ".join(critical + warnings) if (critical or warnings) else "2차 검증 정상",
         "supportOfficeIssues": issues,
         "supportExactLinks": exact,
-        "linkChecks": {"checked": checked, "failed": len(failed), "failures": failed[:12]},
+        "linkChecks": {"checked": checked, "failed": len(failed), "supportFailed": len(support_failed), "failures": failed[:12]},
         "previousTotal": len(prev.get("jobs", [])) if prev else None,
         "currentTotal": total,
     }
