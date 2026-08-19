@@ -9,6 +9,7 @@ on:
       - 'scripts/resolve_support_links.py'
       - 'scripts/verify_jobs.py'
       - 'scripts/hotfix_support_office.py'
+      - 'scripts/hotfix_sources.py'
       - 'scripts/diagnose_support_links.py'
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
@@ -36,15 +37,17 @@ jobs:
         run: pip install requests beautifulsoup4
       - name: Preserve previous data for anomaly comparison
         run: cp jobs.json /tmp/jobs_previous.json || true
+      - name: Apply targeted official-source board fixes
+        run: python scripts/hotfix_sources.py
       - name: Diagnose exact support-office detail-link structures
         run: python scripts/diagnose_support_links.py
-      - name: Save link diagnostics for repair analysis
+      - name: Save source fixes and link diagnostics for repair analysis
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add support_link_diagnostics.json
+          git add sources.json support_link_diagnostics.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record support-office link diagnostics'
+            git commit -m 'Record source and support-link diagnostics'
             git pull --rebase
             git push
           fi
@@ -71,7 +74,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py support_link_resolution.json
+          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py support_link_resolution.json sources.json
           git diff --cached --quiet && exit 0
           git commit -m 'Refresh verified jobs with exact support-office links'
           git pull --rebase
