@@ -140,6 +140,7 @@ function today0(){const d=new Date();d.setHours(0,0,0,0);return d}
 function diffDay(s){const d=parseDate(s);if(!d)return null;return Math.ceil((d-today0())/86400000)}
 function isToday(s){const d=parseDate(s);if(!d)return false;const n=new Date();return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate()}
 function fmt(s){const d=parseDate(s);if(!d)return s||'-';return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`}
+function periodText(start,end){if(start&&end)return `${fmt(start)} ~ ${fmt(end)}`;if(end)return `~ ${fmt(end)}`;if(start)return `${fmt(start)} ~`;return '원문 확인'}
 function esc(s){return (s||'').toString().replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 
 function schoolLevel(j){
@@ -268,7 +269,7 @@ function card(j){
   const tag=href?'a':'div';
   const linkAttrs=href?` href="${esc(href)}" target="_blank" rel="noopener"`:'';
   const goText=href?'원문 공고 바로가기 ↗':'원문 링크 점검 중';
-  return `<${tag} class="job"${linkAttrs}><div class="jobtop"><div style="min-width:0;flex:1"><div class="badges">${dBadge?`<span class="badge d">${dBadge}</span>`:''}${today?'<span class="badge today">NEW 오늘</span>':''}<span class="badge prov ${prov==='서울'?'seoul':''}">${esc(prov)}</span><span class="badge type">${esc(typ)}</span><span class="badge">${esc(lvl)}</span></div><h2>${esc(j.title||'채용 공고')}</h2><div class="school">${esc(j.school||'기관명 확인')}</div><div class="meta"><div><b>지역</b> ${esc(regionText)}</div><div><b>접수</b> ${fmt(j.applyStart)} ~ ${fmt(j.applyEnd)}</div><div><b>채용</b> ${fmt(j.workStart)} ~ ${fmt(j.workEnd)}</div><div><b>등록</b> ${fmt(j.registered)}</div></div>${j.subject?`<div class="subject">과목·직무　${esc(j.subject)}</div>`:''}<div class="source">출처 · ${esc(j.source||'공식 채용 게시판')}</div></div><div class="go ${href?'':'pending'}">${goText}</div></div></${tag}>`;
+  return `<${tag} class="job"${linkAttrs}><div class="jobtop"><div style="min-width:0;flex:1"><div class="badges">${dBadge?`<span class="badge d">${dBadge}</span>`:''}${today?'<span class="badge today">NEW 오늘</span>':''}<span class="badge prov ${prov==='서울'?'seoul':''}">${esc(prov)}</span><span class="badge type">${esc(typ)}</span><span class="badge">${esc(lvl)}</span></div><h2>${esc(j.title||'채용 공고')}</h2><div class="school">${esc(j.school||'기관명 확인')}</div><div class="meta"><div><b>지역</b> ${esc(regionText)}</div><div><b>접수</b> ${periodText(j.applyStart,j.applyEnd)}</div><div><b>채용</b> ${periodText(j.workStart,j.workEnd)}</div><div><b>등록</b> ${fmt(j.registered)}</div></div>${j.subject?`<div class="subject">과목·직무　${esc(j.subject)}</div>`:''}<div class="source">출처 · ${esc(j.source||'공식 채용 게시판')}</div></div><div class="go ${href?'':'pending'}">${goText}</div></div></${tag}>`;
 }
 
 function selectionSummary(){
