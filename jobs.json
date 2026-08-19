@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19 20:23 KST",
+  "updatedAt": "2026-08-19 20:32 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -8,10 +8,11 @@
           "name": "가평교육지원청",
           "url": "https://www.goegp.kr/",
           "boards": [
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2721&mi=3284",
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2718&mi=3276",
             "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3289&bbsId=2725",
             "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=4386&bbsId=3312",
-            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3312&bbsId=2743",
-            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3284&bbsId=2721"
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3312&bbsId=2743"
           ],
           "count": 0,
           "rawRows": 0,
@@ -50,8 +51,9 @@
           "name": "광주하남교육지원청",
           "url": "https://www.goegh.kr/",
           "boards": [
+            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
+            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5030&mi=8667",
             "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8710&bbsId=5059",
-            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8754&bbsId=5088",
             "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8709&bbsId=5058"
           ],
           "count": 0,
@@ -79,12 +81,14 @@
         {
           "name": "군포의왕교육지원청",
           "url": "https://www.goegu.kr/",
-          "boards": [],
+          "boards": [
+            "https://www.goegu.kr/goegu/na/ntt/selectNttList.do?bbsId=4306&mi=7110"
+          ],
           "count": 0,
           "rawRows": 0,
           "ok": false,
-          "state": "error",
-          "message": "실제 채용 게시판을 찾지 못함"
+          "state": "warning",
+          "message": "게시판은 찾았으나 게시물 구조 확인 필요"
         },
         {
           "name": "김포교육지원청",
@@ -104,6 +108,7 @@
           "name": "동두천양주교육지원청",
           "url": "https://www.goedy.kr/",
           "boards": [
+            "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?bbsId=11025&mi=11726",
             "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=11748&bbsId=11037",
             "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=10336&bbsId=10228"
           ],
@@ -117,6 +122,7 @@
           "name": "부천교육지원청",
           "url": "https://www.goebc.kr/",
           "boards": [
+            "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
             "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?mi=11084&bbsId=6327",
             "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?mi=11172&bbsId=6381"
           ],
@@ -142,18 +148,21 @@
         {
           "name": "수원교육지원청",
           "url": "https://www.goesw.kr/",
-          "boards": [],
+          "boards": [
+            "https://www.goesw.kr/goesw/na/ntt/selectNttList.do?bbsId=11021&mi=18851"
+          ],
           "count": 0,
           "rawRows": 0,
           "ok": false,
-          "state": "error",
-          "message": "실제 채용 게시판을 찾지 못함"
+          "state": "warning",
+          "message": "게시판은 찾았으나 게시물 구조 확인 필요"
         },
         {
           "name": "시흥교육지원청",
           "url": "https://www.goesh.kr/",
           "boards": [
-            "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?mi=9018&bbsId=5518"
+            "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5518&mi=9018",
+            "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003"
           ],
           "count": 0,
           "rawRows": 0,
@@ -165,7 +174,7 @@
           "name": "안산교육지원청",
           "url": "https://www.goeas.kr/",
           "boards": [
-            "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=11390&bbsId=5918",
+            "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?bbsId=5918&mi=11390",
             "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=12985&bbsId=6598",
             "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=13663&bbsId=6933",
             "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=11382&bbsId=6532"
@@ -193,6 +202,7 @@
           "name": "안양과천교육지원청",
           "url": "https://www.goeay.kr/",
           "boards": [
+            "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?bbsId=5137&mi=10158",
             "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10188&bbsId=5151",
             "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10236&bbsId=5176",
             "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10231&bbsId=5173"
@@ -220,6 +230,7 @@
           "name": "여주교육지원청",
           "url": "https://www.goeyj.kr/",
           "boards": [
+            "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?bbsId=10075&mi=10090",
             "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?mi=10103&bbsId=10082",
             "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?mi=10323&bbsId=10178"
           ],
@@ -247,8 +258,9 @@
           "name": "용인교육지원청",
           "url": "https://www.goeyi.kr/",
           "boards": [
-            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?mi=20180&bbsId=12229",
-            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?mi=20165&bbsId=12219",
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12229&mi=20180",
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12219&mi=20165",
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12212&mi=20156",
             "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?mi=20178&bbsId=12227"
           ],
           "count": 0,
@@ -261,9 +273,9 @@
           "name": "의정부교육지원청",
           "url": "https://www.goeujb.kr/",
           "boards": [
+            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?bbsId=4119&mi=7023",
             "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=6984&bbsId=4110",
-            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=7019&bbsId=4117",
-            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=7023&bbsId=4119"
+            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=7019&bbsId=4117"
           ],
           "count": 0,
           "rawRows": 0,
@@ -274,19 +286,21 @@
         {
           "name": "이천교육지원청",
           "url": "https://www.goeic.kr/",
-          "boards": [],
+          "boards": [
+            "https://www.goeic.kr/goeic/na/ntt/selectNttList.do?bbsId=3723&mi=5593"
+          ],
           "count": 0,
           "rawRows": 0,
           "ok": false,
-          "state": "error",
-          "message": "실제 채용 게시판을 찾지 못함"
+          "state": "warning",
+          "message": "게시판은 찾았으나 게시물 구조 확인 필요"
         },
         {
           "name": "파주교육지원청",
           "url": "https://www.goepj.kr/",
           "boards": [
+            "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?bbsId=7162&mi=10759",
             "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10838&bbsId=7202",
-            "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10759&bbsId=7162",
             "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10778&bbsId=7171",
             "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10788&bbsId=7179"
           ],
@@ -300,7 +314,8 @@
           "name": "평택교육지원청",
           "url": "https://www.goept.kr/",
           "boards": [
-            "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10064&bbsId=10077",
+            "https://www.goept.kr/goept/na/ntt/selectNttList.do?bbsId=10077&mi=10064",
+            "https://www.goept.kr/goept/na/ntt/selectNttList.do?bbsId=10069&mi=10054",
             "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10118&bbsId=10111"
           ],
           "count": 0,
@@ -313,9 +328,9 @@
           "name": "포천교육지원청",
           "url": "https://www.goepc.kr/",
           "boards": [
+            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?bbsId=2121&mi=2198",
             "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=2192&bbsId=2103",
-            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=7021&bbsId=2116",
-            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=2198&bbsId=2121"
+            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=7021&bbsId=2116"
           ],
           "count": 0,
           "rawRows": 0,
@@ -326,12 +341,14 @@
         {
           "name": "화성오산교육지원청",
           "url": "https://www.goehs.kr/",
-          "boards": [],
+          "boards": [
+            "https://www.goehs.kr/goehs/na/ntt/selectNttList.do?bbsId=9826&mi=17846"
+          ],
           "count": 0,
           "rawRows": 0,
           "ok": false,
-          "state": "error",
-          "message": "실제 채용 게시판을 찾지 못함"
+          "state": "warning",
+          "message": "게시판은 찾았으나 게시물 구조 확인 필요"
         }
       ],
       "central": {
@@ -492,12 +509,12 @@
     "광명교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "광주하남교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "구리남양주교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
-    "군포의왕교육지원청:실제 채용 게시판을 찾지 못함",
+    "군포의왕교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "김포교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "동두천양주교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "부천교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "성남교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
-    "수원교육지원청:실제 채용 게시판을 찾지 못함",
+    "수원교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "시흥교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "안산교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "안성교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
@@ -506,11 +523,11 @@
     "연천교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "용인교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "의정부교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
-    "이천교육지원청:실제 채용 게시판을 찾지 못함",
+    "이천교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "파주교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "평택교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "포천교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
-    "화성오산교육지원청:실제 채용 게시판을 찾지 못함",
+    "화성오산교육지원청:게시판은 찾았으나 게시물 구조 확인 필요",
     "동부교육지원청:게시판 표는 확인했으나 공고 행 분석 필요",
     "북부교육지원청:게시판 표는 확인했으나 공고 행 분석 필요",
     "강서양천교육지원청:구인 게시판 구조를 읽지 못함",
@@ -518,7 +535,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-08-19 20:30 KST",
+    "checkedAt": "2026-08-19 20:42 KST",
     "message": "교육지원청 확인 필요 28곳",
     "supportOfficeIssues": [
       {
@@ -548,8 +565,8 @@
       },
       {
         "name": "군포의왕교육지원청",
-        "state": "error",
-        "message": "실제 채용 게시판을 찾지 못함"
+        "state": "warning",
+        "message": "게시판은 찾았으나 게시물 구조 확인 필요"
       },
       {
         "name": "김포교육지원청",
@@ -573,8 +590,8 @@
       },
       {
         "name": "수원교육지원청",
-        "state": "error",
-        "message": "실제 채용 게시판을 찾지 못함"
+        "state": "warning",
+        "message": "게시판은 찾았으나 게시물 구조 확인 필요"
       },
       {
         "name": "시흥교육지원청",
@@ -618,8 +635,8 @@
       },
       {
         "name": "이천교육지원청",
-        "state": "error",
-        "message": "실제 채용 게시판을 찾지 못함"
+        "state": "warning",
+        "message": "게시판은 찾았으나 게시물 구조 확인 필요"
       },
       {
         "name": "파주교육지원청",
@@ -638,8 +655,8 @@
       },
       {
         "name": "화성오산교육지원청",
-        "state": "error",
-        "message": "실제 채용 게시판을 찾지 못함"
+        "state": "warning",
+        "message": "게시판은 찾았으나 게시물 구조 확인 필요"
       },
       {
         "name": "동부교육지원청",
@@ -667,7 +684,7 @@
       "failed": 0,
       "failures": []
     },
-    "previousTotal": 1551,
+    "previousTotal": 1642,
     "currentTotal": 1642
   },
   "jobs": [
