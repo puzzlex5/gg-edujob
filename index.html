@@ -215,29 +215,31 @@ function filtered(){
 }
 
 function postingLink(j){
+  const board=j.boardUrl||'';
+  const raw=j.url||'';
   if(j.openMethod==='POST' && j.openUrl && j.openParams && j.openParams.job_seq){
     const p=new URLSearchParams({url:j.openUrl,job_seq:String(j.openParams.job_seq)});
     return `open-job.html?${p.toString()}`;
   }
   if(province(j)==='서울' && j.sourceType==='교육지원청 개별 게시판'){
     try{
-      const u=new URL(j.url||'',location.href);
+      const u=new URL(raw||'',location.href);
       const seq=u.searchParams.get('job_seq');
-      if(seq && /^\\d+$/.test(seq) && u.pathname.endsWith('/FUS/JO/JOV11.do')){
+      if(seq && /^\d+$/.test(seq) && u.pathname.endsWith('/FUS/JO/JOV11.do')){
         const p=new URLSearchParams({url:`${u.origin}/FUS/JO/JOV11.do`,job_seq:seq});
         return `open-job.html?${p.toString()}`;
       }
     }catch(e){}
-    return '';
+    return board||raw;
   }
   if(province(j)==='경기' && j.sourceType==='교육지원청 개별 게시판'){
-    if(j.detailLinkResolved===false) return '';
     try{
-      const u=new URL(j.url||'',location.href);
-      if(u.pathname.includes('selectNttList.do')) return '';
-    }catch(e){}
+      const u=new URL(raw||'',location.href);
+      if(raw && !u.pathname.includes('selectNttList.do')) return raw;
+    }catch(e){ if(raw) return raw; }
+    return board||raw;
   }
-  return j.url||'';
+  return raw||board;
 }
 
 function card(j){

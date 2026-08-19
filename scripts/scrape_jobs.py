@@ -457,16 +457,17 @@ def scrape_seoul_office(src):
     print("SEOUL OFFICE", office)
     out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False
     for page in range(1, 10):
-        r = post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
-        if not r: r = get(board, params={"pageIndex":page})
+        # GET works on more SEN support-office skins; keep POST as a fallback.
+        r = get(board, params={"pageIndex":page})
+        if not r: r = post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
         if not r: break
         soup=BeautifulSoup(r.text,"html.parser"); txt=clean(soup.get_text(" ",strip=True))
-        if re.search(r"총\s*0\s*건|전체\s*0\s*건|등록된\s*게시물이\s*없",txt): explicit_empty=True
+        if re.search(r"총\s*0\s*건|전체\s*0\s*건|등록된\s*게시물이\s*없|데이터가\s*없습니다|등록된\s*자료가\s*없",txt): explicit_empty=True
         page_raw=0; page_recent=0
         for table in soup.find_all("table"):
             headers=table_headers(table)
             if not headers: continue
-            if not any("마감" in h or "직종" in h or "학교" in h for h in headers): continue
+            if not any(any(k in h for k in ("마감","직종","학교","구분","대상","분야","등록일","작성자")) for h in headers): continue
             got_table=True
             for tr in table.find_all("tr"):
                 tds=tr.find_all("td")
@@ -479,15 +480,17 @@ def scrape_seoul_office(src):
                     if i<len(headers) and headers[i]: vals[headers[i]]=clean(td.get_text(" ",strip=True))
                 anchors=[a for a in tr.find_all("a") if clean(a.get_text(" ",strip=True))]
                 title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default=""))
-                if not title: title=first_of(vals,["제목","공고명"])
+                if not title: title=first_of(vals,["제목","공고명","분야1","분야"])
                 if len(title)<3 or EXCLUDE_WORDS.search(title): continue
                 registered=date_norm(first_of(vals,["등록일","작성일"]))
                 if not registered:
                     ds=all_dates(clean(tr.get_text(" ",strip=True))); registered=ds[-1] if ds else ""
                 if registered and not recent_enough(registered,90): continue
                 page_recent+=1
-                school=first_of(vals,["학교명","기관명"]) or school_from_title(title)
-                raw_level=first_of(vals,["학교급별","학교급"]); raw_type=first_of(vals,["직종","고용형태"])
+                school=first_of(vals,["학교명","기관명","작성자"]) or school_from_title(title)
+                raw_level=first_of(vals,["학교급별","학교급","대상"]); raw_type=first_of(vals,["직종","고용형태","구분"])
+                subject_parts=[first_of(vals,["분야1"]),first_of(vals,["분야2"])]
+                subject=" / ".join(x for x in subject_parts if x) or first_of(vals,["분야(과목)","분야","과목"])
                 apply_end=date_norm(first_of(vals,["마감일","접수마감일"])); region=first_of(vals,["지역"])
                 if region not in SEOUL_REGIONS: region=find_region(f"{region} {title} {school}",regions)
                 if not region and len(regions)==1: region=regions[0]
@@ -495,7 +498,7 @@ def scrape_seoul_office(src):
                 detail=f"{open_url}?job_seq={seq}"
                 out.append({
                     "id":f"sen-office-{urlparse(board).hostname}-{seq}","province":"서울","school":school or office,"title":title,
-                    "subject":first_of(vals,["분야(과목)","분야","과목"]),"region":region,"regions":regions,
+                    "subject":subject,"region":region,"regions":regions,
                     "type":guess_type(raw_type+" "+title),"schoolLevel":normalize_school_level(raw_level,school,title),
                     "applyStart":registered,"applyEnd":apply_end,"workStart":"","workEnd":"","registered":registered,"headcount":"",
                     "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board,
