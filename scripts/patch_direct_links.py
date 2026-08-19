@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import re
+
+
+def patch_index():
+    p = Path('index.html')
+    s = p.read_text(encoding='utf-8')
+    old_css = '.go{align-self:center;flex:0 0 auto;border-radius:10px;background:#eef4ff;color:#1e61c7;padding:9px 11px;font-size:11px;font-weight:800}'
+    if '.go.pending{' not in s:
+        if old_css not in s:
+            raise RuntimeError('index go CSS marker not found')
+        s = s.replace(old_css, old_css + '.go.pending{background:#f3f4f6;color:#8994a3}', 1)
+
+    if 'function postingLink(j){' not in s:
+        pattern = re.compile(r'function card\(j\)\{.*?\n\}\n\nfunction selectionSummary\(\)\{', re.S)
+        replacement = r'''function postingLink(j){
+  if(j.openMethod==='POST' && j.openUrl && j.openParams && j.openParams.job_seq){
+    const p=new URLSearchParams({url:j.openUrl,job_seq:String(j.openParams.job_seq)});
+    return `open-job.html?${p.toString()}`;
+  }
+  if(province(j)==='서울' && j.sourceType==='교육지원청 개별 게시판'){
+    try{
+      const u=new URL(j.url||'',location.href);
+      const seq=u.searchParams.get('job_seq');
+      if(seq && /^\\d+$/.test(seq) && u.pathname.endsWith('/FUS/JO/JOV11.do')){
+        const p=new URLSearchParams({url:`${u.origin}/FUS/JO/JOV11.do`,job_seq:seq});
+        return `open-job.html?${p.toString()}`;
+      }
+    }catch(e){}
+    return '';
+  }
+  if(province(j)==='경기' && j.sourceType==='교육지원청 개별 게시판'){
+    if(j.detailLinkResolved===false) return '';
+    try{
+      const u=new URL(j.url||'',location.href);
+      if(u.pathname.includes('selectNttList.do')) return '';
+    }catch(e){}
+  }
+  return j.url||'';
+}
+
+function card(j){
+  const d=diffDay(j.applyEnd);const today=isToday(j.registered);const prov=province(j);const lvl=schoolLevel(j);const typ=jobType(j);
+  const dBadge=d===0?'오늘 마감':d!==null&&d>0&&d<=7?`D-${d}`:'';
+  const regionText=j.region||((j.regions||[]).join('·'))||prov;
+  const href=postingLink(j);
+  const tag=href?'a':'div';
+  const linkAttrs=href?` href="${esc(href)}" target="_blank" rel="noopener"`:'';
+  const goText=href?'원문 공고 바로가기 ↗':'원문 링크 점검 중';
+  return `<${tag} class="job"${linkAttrs}><div class="jobtop"><div style="min-width:0;flex:1"><div class="badges">${dBadge?`<span class="badge d">${dBadge}</span>`:''}${today?'<span class="badge today">NEW 오늘</span>':''}<span class="badge prov ${prov==='서울'?'seoul':''}">${esc(prov)}</span><span class="badge type">${esc(typ)}</span><span class="badge">${esc(lvl)}</span></div><h2>${esc(j.title||'채용 공고')}</h2><div class="school">${esc(j.school||'기관명 확인')}</div><div class="meta"><div><b>지역</b> ${esc(regionText)}</div><div><b>접수</b> ${fmt(j.applyStart)} ~ ${fmt(j.applyEnd)}</div><div><b>채용</b> ${fmt(j.workStart)} ~ ${fmt(j.workEnd)}</div><div><b>등록</b> ${fmt(j.registered)}</div></div>${j.subject?`<div class="subject">과목·직무　${esc(j.subject)}</div>`:''}<div class="source">출처 · ${esc(j.source||'공식 채용 게시판')}</div></div><div class="go ${href?'':'pending'}">${goText}</div></div></${tag}>`;
+}
+
+function selectionSummary(){'''
+        s, n = pattern.subn(lambda m: replacement, s, count=1)
+        if n != 1:
+            raise RuntimeError(f'index card function replacement count={n}')
+    p.write_text(s, encoding='utf-8')
+
+
+def patch_scraper():
+    p = Path('scripts/scrape_jobs.py')
+    s = p.read_text(encoding='utf-8')
+    if 'open_url=urljoin(board,"/FUS/JO/JOV11.do")' not in s:
+        old = 'detail=urljoin(board,f"/FUS/JO/JOV11.do?job_seq={seq}")'
+        if old not in s:
+            raise RuntimeError('Seoul detail marker not found')
+        s = s.replace(old, 'open_url=urljoin(board,"/FUS/JO/JOV11.do")\n                detail=f"{open_url}?job_seq={seq}"', 1)
+    if '"openMethod":"POST","openUrl":open_url' not in s:
+        old = '"source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board'
+        if old not in s:
+            raise RuntimeError('Seoul output marker not found')
+        s = s.replace(old, old + ',\n                    "openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}', 1)
+    p.write_text(s, encoding='utf-8')
+
+
+def patch_repair():
+    p = Path('scripts/repair_gyeonggi_support.py')
+    s = p.read_text(encoding='utf-8')
+    if 'A list page is not an individual announcement.' not in s:
+        old = '''                detail = detail_url(r.url, tr)
+                # A visible official row is still usable even if this MirCMS skin hides nttSn.
+                # In that case link users to the exact official board rather than inventing a detail URL.
+                link = detail or board_url
+                key = (norm(title), registered, link)'''
+        new = '''                detail = detail_url(r.url, tr)
+                # A list page is not an individual announcement. Keep the job visible,
+                # but leave url empty until the exact nttSn detail URL is resolved.
+                link = detail
+                key = (norm(title), registered, detail or board_url)'''
+        if old not in s:
+            raise RuntimeError('Gyeonggi fallback marker not found')
+        s = s.replace(old, new, 1)
+
+    if 'Prefer a newly resolved exact MirCMS detail URL' not in s:
+        old = '''        for field in ("region", "school", "applyEnd", "subject"):
+            if not old.get(field) and job.get(field):
+                old[field] = job[field]
+        old["regions"] = list(dict.fromkeys((old.get("regions") or []) + (job.get("regions") or [])))'''
+        new = '''        for field in ("region", "school", "applyEnd", "subject"):
+            if not old.get(field) and job.get(field):
+                old[field] = job[field]
+        # Prefer a newly resolved exact MirCMS detail URL over an older list-page fallback.
+        if old.get("sourceType") == "교육지원청 개별 게시판" and job.get("detailLinkResolved") and job.get("url"):
+            old_url = old.get("url", "")
+            old_board = old.get("boardUrl", "")
+            if (not old_url) or old_url == old_board or "selectNttList.do" in old_url or old.get("detailLinkResolved") is False:
+                old["url"] = job["url"]
+                old["boardUrl"] = job.get("boardUrl", old_board)
+                old["detailLinkResolved"] = True
+        old["regions"] = list(dict.fromkeys((old.get("regions") or []) + (job.get("regions") or [])))'''
+        if old not in s:
+            raise RuntimeError('Gyeonggi merge marker not found')
+        s = s.replace(old, new, 1)
+    p.write_text(s, encoding='utf-8')
+
+
+def write_bridge():
+    Path('open-job.html').write_text(r'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>원문 공고로 이동 중 | 수도권에듀잡</title>
+<style>body{margin:0;background:#f4f7fb;color:#162033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}.box{max-width:520px;margin:18vh auto;padding:26px;background:#fff;border:1px solid #e3e8f0;border-radius:18px;text-align:center;box-shadow:0 10px 30px rgba(22,32,51,.08)}h1{font-size:20px;margin:0 0 10px}p{color:#687386;line-height:1.6;font-size:14px}button{border:0;border-radius:11px;background:#2563eb;color:#fff;font-weight:800;padding:12px 18px;font-size:15px;cursor:pointer}.err{color:#b42318}</style>
+</head>
+<body>
+<div class="box"><h1>교육지원청 원문 공고로 이동합니다</h1><p id="msg">잠시만 기다려 주세요.</p><button id="retry" hidden type="button">원문 공고 열기</button></div>
+<script>
+const ALLOWED=new Set(['dbedu.sen.go.kr','sbedu.sen.go.kr','nbedu.sen.go.kr','bbedu.sen.go.kr','jbedu.sen.go.kr','gdspedu.sen.go.kr','gsycedu.sen.go.kr','gnscedu.sen.go.kr','dgedu.sen.go.kr','sdgjedu.sen.go.kr','sbgbedu.sen.go.kr']);
+const qs=new URLSearchParams(location.search);const target=qs.get('url')||'';const seq=qs.get('job_seq')||'';let u=null;try{u=new URL(target)}catch(e){}
+const ok=!!u&&u.protocol==='https:'&&ALLOWED.has(u.hostname)&&u.pathname==='/FUS/JO/JOV11.do'&&/^\d+$/.test(seq);
+const msg=document.getElementById('msg');const retry=document.getElementById('retry');
+function submitOfficial(){if(!ok)return;const f=document.createElement('form');f.method='post';f.action=u.href;const i=document.createElement('input');i.type='hidden';i.name='job_seq';i.value=seq;f.appendChild(i);document.body.appendChild(f);f.submit()}
+if(ok){retry.hidden=false;retry.addEventListener('click',submitOfficial);setTimeout(submitOfficial,80)}else{msg.textContent='안전하게 확인할 수 없는 원문 주소입니다.';msg.className='err'}
+</script>
+</body>
+</html>
+''', encoding='utf-8')
+
+
+def main():
+    patch_index()
+    patch_scraper()
+    patch_repair()
+    write_bridge()
+    print('DIRECT LINK PATCH OK')
+
+
+if __name__ == '__main__':
+    main()
