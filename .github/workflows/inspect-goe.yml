@@ -1,4 +1,4 @@
-name: Test full Gyeonggi collector
+name: Inspect Seoul recruitment pages
 
 on:
   push:
@@ -9,21 +9,32 @@ permissions:
   contents: write
 
 jobs:
-  collect:
+  inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests beautifulsoup4
-      - name: Run full collector
-        run: python scripts/scrape_jobs.py
-      - name: Commit result
+      - name: Fetch Seoul recruitment pages
+        run: |
+          python - <<'PY'
+          import urllib.request
+          pages = {
+            'seoul-work-debug.html':'https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term',
+            'seoul-office-debug.html':'https://dgedu.sen.go.kr/FUS/JO/JOL11.do',
+          }
+          for fn,url in pages.items():
+              req=urllib.request.Request(url, headers={'User-Agent':'Mozilla/5.0'})
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  data=r.read()
+              open(fn,'wb').write(data)
+              print(fn, len(data))
+          PY
+      - name: Commit fetched HTML
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json
-          git commit -m 'Update recruitment data' || exit 0
+          git add seoul-work-debug.html seoul-office-debug.html
+          git commit -m 'Inspect Seoul recruitment page structure [skip ci]' || exit 0
           git push
