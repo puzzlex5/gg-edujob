@@ -8,6 +8,7 @@ on:
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/verify_jobs.py'
       - 'scripts/hotfix_support_office.py'
+      - 'scripts/diagnose_support_links.py'
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
   schedule:
@@ -34,6 +35,18 @@ jobs:
         run: pip install requests beautifulsoup4
       - name: Preserve previous data for anomaly comparison
         run: cp jobs.json /tmp/jobs_previous.json || true
+      - name: Diagnose exact support-office detail-link structures
+        run: python scripts/diagnose_support_links.py
+      - name: Save link diagnostics for repair analysis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add support_link_diagnostics.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record support-office link diagnostics'
+            git pull --rebase
+            git push
+          fi
       - name: Restore support-office click behavior and parser compatibility
         run: |
           python scripts/hotfix_support_office.py
