@@ -366,7 +366,8 @@ def scrape_mircms_board(board, src):
                     "subject":first_of(vals,["과목","분야"]),"region":region,"regions":regions,"type":guess_type(raw_type+" "+title),
                     "schoolLevel":normalize_school_level(raw_level,school,title),"applyStart":"","applyEnd":apply_end,
                     "workStart":"","workEnd":"","registered":registered,"headcount":"",
-                    "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board
+                    "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board,
+                    "openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}
                 })
         if page_candidates == 0: break
         if page_recent == 0 and page >= 2: break
@@ -491,7 +492,8 @@ def scrape_seoul_office(src):
                 apply_end=date_norm(first_of(vals,["마감일","접수마감일"])); region=first_of(vals,["지역"])
                 if region not in SEOUL_REGIONS: region=find_region(f"{region} {title} {school}",regions)
                 if not region and len(regions)==1: region=regions[0]
-                detail=urljoin(board,f"/FUS/JO/JOV11.do?job_seq={seq}")
+                open_url=urljoin(board,"/FUS/JO/JOV11.do")
+                detail=f"{open_url}?job_seq={seq}"
                 out.append({
                     "id":f"sen-office-{urlparse(board).hostname}-{seq}","province":"서울","school":school or office,"title":title,
                     "subject":first_of(vals,["분야(과목)","분야","과목"]),"region":region,"regions":regions,

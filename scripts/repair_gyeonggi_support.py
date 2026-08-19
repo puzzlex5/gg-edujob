@@ -215,10 +215,10 @@ def fetch_board(session, board_url, src):
 
                 page_recent_rows += 1
                 detail = detail_url(r.url, tr)
-                # A visible official row is still usable even if this MirCMS skin hides nttSn.
-                # In that case link users to the exact official board rather than inventing a detail URL.
-                link = detail or board_url
-                key = (norm(title), registered, link)
+                # A list page is not an individual announcement. Keep the job visible,
+                # but leave url empty until the exact nttSn detail URL is resolved.
+                link = detail
+                key = (norm(title), registered, detail or board_url)
                 if key in seen:
                     continue
                 seen.add(key)
@@ -293,6 +293,14 @@ def merge_jobs(existing, additions):
         for field in ("region", "school", "applyEnd", "subject"):
             if not old.get(field) and job.get(field):
                 old[field] = job[field]
+        # Prefer a newly resolved exact MirCMS detail URL over an older list-page fallback.
+        if old.get("sourceType") == "교육지원청 개별 게시판" and job.get("detailLinkResolved") and job.get("url"):
+            old_url = old.get("url", "")
+            old_board = old.get("boardUrl", "")
+            if (not old_url) or old_url == old_board or "selectNttList.do" in old_url or old.get("detailLinkResolved") is False:
+                old["url"] = job["url"]
+                old["boardUrl"] = job.get("boardUrl", old_board)
+                old["detailLinkResolved"] = True
         old["regions"] = list(dict.fromkeys((old.get("regions") or []) + (job.get("regions") or [])))
     output.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
     return output

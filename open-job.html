@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>원문 공고로 이동 중 | 수도권에듀잡</title>
+<style>body{margin:0;background:#f4f7fb;color:#162033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}.box{max-width:520px;margin:18vh auto;padding:26px;background:#fff;border:1px solid #e3e8f0;border-radius:18px;text-align:center;box-shadow:0 10px 30px rgba(22,32,51,.08)}h1{font-size:20px;margin:0 0 10px}p{color:#687386;line-height:1.6;font-size:14px}button{border:0;border-radius:11px;background:#2563eb;color:#fff;font-weight:800;padding:12px 18px;font-size:15px;cursor:pointer}.err{color:#b42318}</style>
+</head>
+<body>
+<div class="box"><h1>교육지원청 원문 공고로 이동합니다</h1><p id="msg">잠시만 기다려 주세요.</p><button id="retry" hidden type="button">원문 공고 열기</button></div>
+<script>
+const ALLOWED=new Set(['dbedu.sen.go.kr','sbedu.sen.go.kr','nbedu.sen.go.kr','bbedu.sen.go.kr','jbedu.sen.go.kr','gdspedu.sen.go.kr','gsycedu.sen.go.kr','gnscedu.sen.go.kr','dgedu.sen.go.kr','sdgjedu.sen.go.kr','sbgbedu.sen.go.kr']);
+const qs=new URLSearchParams(location.search);const target=qs.get('url')||'';const seq=qs.get('job_seq')||'';let u=null;try{u=new URL(target)}catch(e){}
+const ok=!!u&&u.protocol==='https:'&&ALLOWED.has(u.hostname)&&u.pathname==='/FUS/JO/JOV11.do'&&/^\d+$/.test(seq);
+const msg=document.getElementById('msg');const retry=document.getElementById('retry');
+function submitOfficial(){if(!ok)return;const f=document.createElement('form');f.method='post';f.action=u.href;const i=document.createElement('input');i.type='hidden';i.name='job_seq';i.value=seq;f.appendChild(i);document.body.appendChild(f);f.submit()}
+if(ok){retry.hidden=false;retry.addEventListener('click',submitOfficial);setTimeout(submitOfficial,80)}else{msg.textContent='안전하게 확인할 수 없는 원문 주소입니다.';msg.className='err'}
+</script>
+</body>
+</html>
