@@ -8,6 +8,7 @@ on:
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/resolve_support_links.py'
       - 'scripts/enrich_support_periods.py'
+      - 'scripts/enrich_seoul_get_fallback.py'
       - 'scripts/verify_jobs.py'
       - 'scripts/hotfix_support_office.py'
       - 'scripts/hotfix_repair_links.py'
@@ -33,8 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Full history is required so an accidentally empty/corrupt jobs.json can
-          # be recovered from the newest valid published snapshot.
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -80,9 +79,6 @@ jobs:
               echo 'No valid historical jobs.json snapshot exists; refusing to risk publishing an empty dataset.' >&2
               exit 1
             fi
-
-            # Restore the valid snapshot in the worktree immediately. Fresh collection
-            # may replace it only after independent verification passes.
             cp /tmp/jobs_previous.json jobs.json
           fi
       - name: Apply targeted official-source board fixes
@@ -103,7 +99,7 @@ jobs:
         run: |
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           grep -q 'detailLinkResolved' index.html
           grep -q 'subject_parts=' scripts/scrape_jobs.py
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/scrape_jobs.py
@@ -116,7 +112,6 @@ jobs:
           import json
           from pathlib import Path
           from urllib.parse import parse_qs, urlparse
-
           p = Path('board_cache.json')
           cache = json.loads(p.read_text(encoding='utf-8')) if p.exists() else {}
           cleaned = {}
@@ -127,8 +122,6 @@ jobs:
               for u in urls:
                   q = parse_qs(urlparse(u).query, keep_blank_values=True)
                   bbs = (q.get('bbsId') or [''])[0]
-                  # mi is a menu alias, not board identity. Keep separate variants only
-                  # when the same board is intentionally filtered into a subsection.
                   key = (
                       (urlparse(u).hostname or '').lower(),
                       urlparse(u).path,
@@ -151,6 +144,8 @@ jobs:
         run: python scripts/resolve_support_links.py
       - name: Enrich application and hiring periods from exact support-office details
         run: python scripts/enrich_support_periods.py
+      - name: Retry Seoul support-office detail periods with GET fallback
+        run: python scripts/enrich_seoul_get_fallback.py
       - name: Independent second-pass verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
