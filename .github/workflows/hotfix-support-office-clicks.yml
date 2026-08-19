@@ -21,16 +21,18 @@ jobs:
         run: |
           python scripts/hotfix_support_office.py
           python -m py_compile scripts/scrape_jobs.py
-          grep -q 'return board||raw' index.html
+          grep -q "data_id = clean(str(a.get(\"data-id\", \"\")))" scripts/scrape_jobs.py
           grep -q 'subject_parts=' scripts/scrape_jobs.py
+          grep -q 'return detail.href;' index.html
+          grep -q "return '';" index.html
       - name: Commit immediate hotfix
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html scripts/scrape_jobs.py
           git diff --cached --quiet && exit 0
-          git commit -m 'Restore support-office clicks and broaden Seoul parser'
+          git commit -m 'Restore exact support-office detail links'
           git pull --rebase
           git push
 
-# retrigger: 2026-08-19 exact-detail-link repair
+# retrigger: 2026-08-19 exact-detail-link repair v2
