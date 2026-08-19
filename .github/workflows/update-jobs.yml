@@ -31,13 +31,59 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history is required so an accidentally empty/corrupt jobs.json can
+          # be recovered from the newest valid published snapshot.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Install collector dependencies
         run: pip install requests beautifulsoup4
-      - name: Preserve previous data for anomaly comparison
-        run: cp jobs.json /tmp/jobs_previous.json || true
+      - name: Preserve newest valid published data for anomaly comparison and rollback
+        shell: bash
+        run: |
+          set -euo pipefail
+          is_valid_jobs() {
+            python - "$1" <<'PY'
+          import json, sys
+          from pathlib import Path
+          p = Path(sys.argv[1])
+          try:
+              data = json.loads(p.read_text(encoding='utf-8'))
+              jobs = data.get('jobs', []) if isinstance(data, dict) else []
+              ok = len(jobs) >= 100
+          except Exception:
+              ok = False
+          raise SystemExit(0 if ok else 1)
+          PY
+          }
+
+          if is_valid_jobs jobs.json; then
+            cp jobs.json /tmp/jobs_previous.json
+            echo 'Current jobs.json is a valid rollback snapshot.'
+          else
+            echo 'Current jobs.json is empty/corrupt; searching Git history for the newest valid snapshot.'
+            found=''
+            while read -r commit; do
+              [ -n "$commit" ] || continue
+              if git show "${commit}:jobs.json" > /tmp/jobs_candidate.json 2>/dev/null && is_valid_jobs /tmp/jobs_candidate.json; then
+                cp /tmp/jobs_candidate.json /tmp/jobs_previous.json
+                found="$commit"
+                echo "Recovered valid jobs.json snapshot from $commit"
+                break
+              fi
+            done < <(git rev-list HEAD -- jobs.json)
+
+            if [ -z "$found" ]; then
+              echo 'No valid historical jobs.json snapshot exists; refusing to risk publishing an empty dataset.' >&2
+              exit 1
+            fi
+
+            # Restore the valid snapshot in the worktree immediately. Fresh collection
+            # may replace it only after independent verification passes.
+            cp /tmp/jobs_previous.json jobs.json
+          fi
       - name: Apply targeted official-source board fixes
         run: python scripts/hotfix_sources.py
       - name: Diagnose exact support-office detail-link structures
@@ -70,10 +116,22 @@ jobs:
       - name: Independent second-pass verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
-            echo 'Critical validation failure. Keeping the previously published jobs.json.'
+            echo 'Critical validation failure. Restoring the newest known-good jobs.json.'
             cp /tmp/jobs_previous.json jobs.json
             exit 1
           fi
+      - name: Final guard against empty/corrupt publication
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('jobs.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          jobs = data.get('jobs', []) if isinstance(data, dict) else []
+          if len(jobs) < 100:
+              raise SystemExit(f'Refusing publication: only {len(jobs)} jobs in jobs.json')
+          print(f'Publication guard passed: {len(jobs)} jobs')
+          PY
       - name: Commit verified jobs, exact-link report, and corrected collectors
         run: |
           git config user.name 'github-actions[bot]'
@@ -84,4 +142,4 @@ jobs:
           git pull --rebase
           git push
 
-# retrigger: exact support-office detail-link refresh
+# retrigger: recover valid published data and refresh exact support-office details
