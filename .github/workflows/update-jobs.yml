@@ -41,6 +41,16 @@ jobs:
           grep -q 'function postingLink' index.html
           grep -q 'openMethod.*POST' scripts/scrape_jobs.py
           grep -q 'ALLOWED' open-job.html
+      - name: Publish direct-link fix immediately
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html open-job.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'Open support-office jobs at exact postings'
+            git pull --rebase
+            git push
+          fi
       - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
       - name: Repair and re-check all 25 Gyeonggi support-office boards
@@ -52,12 +62,12 @@ jobs:
             cp /tmp/jobs_previous.json jobs.json
             exit 1
           fi
-      - name: Commit verified jobs, direct links, and discovered board cache
+      - name: Commit verified jobs and discovered board cache
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json index.html open-job.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py
+          git add jobs.json board_cache.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Update verified jobs and exact posting links'
+          git commit -m 'Update and verify metropolitan recruitment data'
           git pull --rebase
           git push
