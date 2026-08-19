@@ -219,7 +219,7 @@ def scrape_gyeonggi_central():
                     "registered": registered, "headcount": headcount,
                     "source": GYEONGGI["central"]["name"],
                     "sourceType": "통합게시판",
-                    "url": f"https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancView.do?mi=10502&pbancSn={pid}"
+                    "url": f"https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn={pid}"
                 })
             if added == 0 or len(rows) < 45:
                 break
