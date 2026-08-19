@@ -29,7 +29,6 @@ def patch_index():
   }
 
   // 경기 교육지원청은 반드시 MirCMS 개별 공고(selectNttInfo.do)로 보낸다.
-  // 수집기가 nttSn/bbsId를 저장했다면 브라우저에서도 상세주소를 재구성할 수 있다.
   if(province(j)==='경기' && j.sourceType==='교육지원청 개별 게시판'){
     try{
       if(raw){
@@ -68,6 +67,28 @@ def patch_scraper():
     p = Path('scripts/scrape_jobs.py')
     s = p.read_text(encoding='utf-8')
     original = s
+
+    # Gyeonggi MirCMS currently puts the real nttSn in <a data-id="...">.
+    old = '''    href = a.get("href", "") or ""
+    onclick = a.get("onclick", "") or ""
+    if "selectNttInfo.do" in href: return urljoin(board, href)
+    raw = href + " " + onclick'''
+    new = '''    href = a.get("href", "") or ""
+    onclick = a.get("onclick", "") or ""
+    if "selectNttInfo.do" in href: return urljoin(board, href)
+    data_id = clean(str(a.get("data-id", "")))
+    if re.fullmatch(r"\\d{5,10}", data_id):
+        p = urlparse(board); q = parse_qs(p.query)
+        params = {}
+        for k in ("bbsId","mi","clasHmpgId"):
+            if q.get(k): params[k] = q[k][0]
+        if not params.get("bbsId"): return ""
+        params["nttSn"] = data_id
+        path = p.path.replace("selectNttList.do", "selectNttInfo.do")
+        return urlunparse((p.scheme,p.netloc,path,"",urlencode(params),""))
+    raw = href + " " + onclick'''
+    if old in s:
+        s = s.replace(old, new, 1)
 
     old = '''        r = post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
         if not r: r = get(board, params={"pageIndex":page})'''
@@ -112,6 +133,8 @@ def patch_scraper():
     if old in s:
         s = s.replace(old, new, 1)
 
+    if 'data_id = clean(str(a.get("data-id", "")))' not in s[s.index('def detail_from_anchor'):s.index('def school_from_title')]:
+        raise RuntimeError('Gyeonggi data-id detail-link hotfix incomplete')
     seoul = s[s.index('def scrape_seoul_office'):s.index('def dedupe_merge')]
     required = [
         'r = get(board, params={"pageIndex":page})',
