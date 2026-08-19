@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>경기에듀잡 | 경기도 교육 채용정보</title>
+  <meta name="description" content="경기도교육청 채용공고를 지역·직종·학교급·과목별로 빠르게 찾는 비공식 편의 서비스" />
+  <style>
+    :root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#6b7280;--line:#e5e9f0;--navy:#0d1b37;--blue:#2878ff;--blue2:#eaf2ff;--red:#ef4444;--orange:#f59e0b;--green:#10b981;--shadow:0 10px 30px rgba(23,32,51,.08)}
+    *{box-sizing:border-box} body{margin:0;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--ink);background:var(--bg)}
+    a{color:inherit;text-decoration:none}.wrap{max-width:1100px;margin:0 auto;padding:0 18px}.hero{background:linear-gradient(135deg,#081226,#122f63 65%,#185bb5);color:#fff;padding:28px 0 26px;box-shadow:0 8px 25px rgba(8,18,38,.18)}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;gap:11px;align-items:center;font-weight:900;letter-spacing:-.5px;font-size:22px}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#60a5fa,#2563eb);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+    .official{font-size:13px;color:#dbeafe;border:1px solid rgba(255,255,255,.22);padding:9px 12px;border-radius:11px;background:rgba(255,255,255,.07)}.hero h1{font-size:32px;line-height:1.2;margin:28px 0 8px;letter-spacing:-1.2px}.hero p{margin:0;color:#cbd7ea;font-size:15px;line-height:1.6}.hero b{color:#7dd3fc}
+    .searchbox{margin-top:22px;display:flex;gap:8px;background:#fff;border-radius:15px;padding:7px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.searchbox input{flex:1;border:0;outline:0;font-size:16px;padding:12px 14px;background:transparent;min-width:0}.searchbox button{border:0;background:var(--blue);color:#fff;border-radius:11px;padding:0 18px;font-weight:800;font-size:15px;cursor:pointer}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:-18px;position:relative}.stat{background:var(--card);padding:16px;border-radius:15px;box-shadow:var(--shadow);border:1px solid rgba(229,233,240,.8)}.stat .n{font-size:24px;font-weight:900;letter-spacing:-.5px}.stat .t{font-size:12px;color:var(--muted);margin-top:4px}.stat.hot .n{color:var(--red)}.stat.new .n{color:var(--blue)}
+    .layout{display:grid;grid-template-columns:250px 1fr;gap:18px;margin-top:18px;margin-bottom:50px}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 3px 12px rgba(23,32,51,.03);height:max-content}.panel h3{font-size:14px;margin:0 0 11px}.filters{display:flex;flex-direction:column;gap:18px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;color:#4b5563;cursor:pointer}.chip.on{border-color:#9fc0ff;background:var(--blue2);color:#1555b6;font-weight:800}.reset{width:100%;border:0;border-radius:11px;padding:10px;background:#f1f4f8;color:#4b5563;font-weight:700;cursor:pointer}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 12px;gap:10px}.result{font-size:14px}.result strong{font-size:18px}.sort{border:1px solid var(--line);border-radius:10px;background:#fff;padding:9px;color:#4b5563}.list{display:flex;flex-direction:column;gap:10px}.job{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 3px 10px rgba(23,32,51,.035);transition:.15s ease}.job:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:#cdd9ec}.jobtop{display:flex;justify-content:space-between;gap:12px}.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}.badge{font-size:11px;font-weight:800;border-radius:7px;padding:5px 7px;background:#f0f3f7;color:#536073}.badge.d{background:#fff0f0;color:#d93636}.badge.today{background:#eaf2ff;color:#2465ce}.badge.type{background:#edf9f5;color:#087f5b}.job h2{font-size:17px;line-height:1.45;margin:0 0 5px;letter-spacing:-.35px}.school{font-size:13px;color:#5f6b7a;font-weight:700}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;margin-top:14px;padding-top:13px;border-top:1px solid #f0f2f5}.meta div{font-size:12px;color:#687386;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta b{color:#354055;font-weight:750}.subject{margin-top:10px;font-size:12px;color:#435269;background:#f7f9fc;border-radius:9px;padding:9px 10px}.go{align-self:center;flex:0 0 auto;border-radius:10px;background:#f0f5ff;color:#1e63cf;padding:9px 11px;font-size:12px;font-weight:800}.empty{background:#fff;border:1px dashed #cfd7e3;border-radius:16px;padding:40px 20px;text-align:center;color:#687386}.empty strong{display:block;color:#334155;margin-bottom:7px}.update{font-size:11px;color:#8390a4;margin-top:10px}.footer{padding:25px 0 40px;color:#7b8493;font-size:11px;line-height:1.7;text-align:center}
+    @media(max-width:780px){.hero{padding-top:20px}.hero h1{font-size:27px;margin-top:22px}.official{display:none}.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.panel{padding:14px}.filters{gap:12px}.panel h3{margin-bottom:8px}.job{padding:15px}.meta{grid-template-columns:1fr}.go{display:none}.searchbox button{padding:0 14px}.wrap{padding:0 13px}}
+  </style>
+</head>
+<body>
+  <section class="hero"><div class="wrap">
+    <div class="top"><div class="brand"><div class="logo">🎓</div>경기에듀잡</div><a class="official" href="https://www.goe.go.kr/recruit/main.do" target="_blank" rel="noopener">경기도교육청 원문 ↗</a></div>
+    <h1>경기도 학교 채용공고를<br><b>한 화면에서 빠르게</b></h1>
+    <p>지역 · 학교급 · 직종 · 과목으로 걸러보고, 마감이 가까운 공고부터 확인하세요.</p>
+    <div class="searchbox"><input id="q" type="search" placeholder="학교명, 과목, 공고명 검색" autocomplete="off"/><button id="searchBtn">검색</button></div>
+  </div></section>
+
+  <main class="wrap">
+    <section class="stats">
+      <div class="stat"><div class="n" id="countAll">-</div><div class="t">모집 중</div></div>
+      <div class="stat hot"><div class="n" id="countSoon">-</div><div class="t">3일 내 마감</div></div>
+      <div class="stat new"><div class="n" id="countToday">-</div><div class="t">오늘 등록</div></div>
+      <div class="stat"><div class="n" id="countRegion">31</div><div class="t">경기도 시·군</div></div>
+    </section>
+
+    <section class="layout">
+      <aside class="panel filters">
+        <div><h3>지역</h3><div class="chips" id="regionChips"></div></div>
+        <div><h3>학교급</h3><div class="chips" id="schoolChips"></div></div>
+        <div><h3>직종</h3><div class="chips" id="typeChips"></div></div>
+        <button class="reset" id="resetBtn">필터 초기화</button>
+      </aside>
+
+      <section>
+        <div class="toolbar"><div class="result"><strong id="resultCount">0</strong>개 공고</div><select class="sort" id="sort"><option value="deadline">마감 임박순</option><option value="newest">최근 등록순</option></select></div>
+        <div class="list" id="list"><div class="empty"><strong>채용정보를 불러오는 중입니다.</strong>잠시 후 자동으로 표시됩니다.</div></div>
+        <div class="update" id="updated"></div>
+      </section>
+    </section>
+  </main>
+  <footer class="footer wrap">본 사이트는 경기도교육청 공식 서비스가 아닌 비공식 편의 서비스입니다. 채용 조건과 일정은 반드시 원문 공고를 최종 확인하세요.<br>자료 출처: 경기도교육청 구인구직 홈페이지</footer>
+
+<script>
+const REGIONS=['전체','수원시','성남시','용인시','고양시','화성시','안산시','평택시','파주시','김포시','남양주시','부천시','안양시','시흥시','광명시','광주시','군포시','이천시','오산시','안성시','의왕시','하남시','여주시','양평군','과천시','의정부시','양주시','구리시','포천시','동두천시','가평군','연천군'];
+const SCHOOLS=['전체','유치원','초등학교','중학교','고등학교','특수학교','교육지원청','기타'];
+const TYPES=['전체','기간제교원','시간강사/강사','교육공무직','정규채용','자원봉사','기타'];
+let jobs=[]; let state={region:'전체',school:'전체',type:'전체',q:'',sort:'deadline'};
+const $=s=>document.querySelector(s); const norm=s=>(s||'').toString().toLowerCase().replace(/\s+/g,' ');
+function parseDate(s){if(!s)return null;const m=s.match(/(\d{4})[\/.\-](\d{1,2})[\/.\-](\d{1,2})/);return m?new Date(+m[1],+m[2]-1,+m[3],23,59,59):null}
+function today0(){let d=new Date();d.setHours(0,0,0,0);return d} function diffDay(s){const d=parseDate(s);if(!d)return 9999;return Math.ceil((d-today0())/86400000)}
+function inferSchool(j){const t=(j.school||'')+' '+(j.title||'');if(/유치원/.test(t))return '유치원';if(/초등학교|\b초\b/.test(t))return '초등학교';if(/중학교|\b중\b/.test(t))return '중학교';if(/고등학교|\b고\b/.test(t))return '고등학교';if(/특수학교|학교$/.test(j.school||'')&&/특수/.test(t))return '특수학교';if(/교육지원청/.test(t))return '교육지원청';return j.schoolLevel||'기타'}
+function chipGroup(id,arr,key){const el=$(id);el.innerHTML='';arr.forEach(v=>{const b=document.createElement('button');b.className='chip'+(state[key]===v?' on':'');b.textContent=v;b.onclick=()=>{state[key]=v;renderChips();render()};el.appendChild(b)})}
+function renderChips(){chipGroup('#regionChips',REGIONS,'region');chipGroup('#schoolChips',SCHOOLS,'school');chipGroup('#typeChips',TYPES,'type')}
+function filtered(){let a=jobs.filter(j=>{const d=diffDay(j.applyEnd);if(d<0)return false;const school=inferSchool(j);const hay=norm([j.school,j.title,j.subject,j.region,j.type].join(' '));return (state.region==='전체'||j.region===state.region)&&(state.school==='전체'||school===state.school)&&(state.type==='전체'||j.type===state.type)&&(!state.q||hay.includes(norm(state.q))) });
+  a.sort((x,y)=>state.sort==='newest'?((parseDate(y.registered)||0)-(parseDate(x.registered)||0)):(diffDay(x.applyEnd)-diffDay(y.applyEnd)||((parseDate(y.registered)||0)-(parseDate(x.registered)||0))));return a}
+function esc(s){return (s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function card(j){const d=diffDay(j.applyEnd);const today=parseDate(j.registered)?.toDateString()===new Date().toDateString();const dBadge=d===0?'오늘 마감':d>0&&d<=7?`D-${d}`:'';return `<a class="job" href="${esc(j.url||'https://www.goe.go.kr/recruit/main.do')}" target="_blank" rel="noopener"><div class="jobtop"><div style="min-width:0;flex:1"><div class="badges">${dBadge?`<span class="badge d">${dBadge}</span>`:''}${today?'<span class="badge today">NEW 오늘</span>':''}<span class="badge type">${esc(j.type||'채용')}</span><span class="badge">${esc(j.region||'경기도')}</span></div><h2>${esc(j.title||'채용 공고')}</h2><div class="school">${esc(j.school||'학교명 확인')}</div><div class="meta"><div><b>접수</b> ${esc(j.applyStart||'-')} ~ ${esc(j.applyEnd||'-')}</div><div><b>채용</b> ${esc(j.workStart||'-')} ~ ${esc(j.workEnd||'-')}</div><div><b>등록</b> ${esc(j.registered||'-')}</div><div><b>인원</b> ${esc(j.headcount||'-')}</div></div>${j.subject?`<div class="subject">과목·직무　${esc(j.subject)}</div>`:''}</div><div class="go">원문 보기 ↗</div></div></a>`}
+function render(){const a=filtered();$('#resultCount').textContent=a.length;$('#list').innerHTML=a.length?a.map(card).join(''):'<div class="empty"><strong>조건에 맞는 모집 중 공고가 없습니다.</strong>검색어나 필터를 바꿔보세요.</div>'}
+function stats(){const active=jobs.filter(j=>diffDay(j.applyEnd)>=0);$('#countAll').textContent=active.length;$('#countSoon').textContent=active.filter(j=>diffDay(j.applyEnd)<=3).length;$('#countToday').textContent=active.filter(j=>parseDate(j.registered)?.toDateString()===new Date().toDateString()).length}
+async function load(){try{const r=await fetch('jobs.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const data=await r.json();jobs=Array.isArray(data)?data:(data.jobs||[]);const ts=Array.isArray(data)?'':data.updatedAt;if(ts)$('#updated').textContent='최근 자동 갱신: '+ts+' · 매일 오전 7시 갱신';stats();render()}catch(e){jobs=[];stats();render();$('#updated').textContent='자동 수집 데이터 준비 중 · 원문은 경기도교육청에서 확인할 수 있습니다.'}}
+$('#searchBtn').onclick=()=>{state.q=$('#q').value;render()};$('#q').addEventListener('keydown',e=>{if(e.key==='Enter'){$('#searchBtn').click()}});$('#q').addEventListener('input',e=>{state.q=e.target.value;render()});$('#sort').onchange=e=>{state.sort=e.target.value;render()};$('#resetBtn').onclick=()=>{state={region:'전체',school:'전체',type:'전체',q:'',sort:'deadline'};$('#q').value='';$('#sort').value='deadline';renderChips();render()};
+renderChips();load();
+</script>
+</body>
+</html>
