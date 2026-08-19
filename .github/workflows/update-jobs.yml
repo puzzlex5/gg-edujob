@@ -7,12 +7,8 @@ on:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/verify_jobs.py'
-      - 'scripts/patch_direct_links.py'
-      - 'scripts/fix_direct_links_v2.py'
       - 'sources.json'
-      - '.github/workflows/update-jobs.yml'
   schedule:
-    - cron: '31 13 19 8 *' # temporary corrected direct-link repair trigger (UTC)
     - cron: '5 22 * * *' # 07:05 KST - 1차 수집/검증
     - cron: '5 23 * * *' # 08:05 KST - 2차 재수집/재검증
 
@@ -36,32 +32,6 @@ jobs:
         run: pip install requests beautifulsoup4
       - name: Preserve previous data for anomaly comparison
         run: cp jobs.json /tmp/jobs_previous.json || true
-      - name: Ensure support-office cards use exact posting links
-        run: |
-          python scripts/patch_direct_links.py
-          python scripts/fix_direct_links_v2.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py
-          grep -q 'function postingLink' index.html
-          grep -q 'openMethod.*POST' scripts/scrape_jobs.py
-          grep -q 'ALLOWED' open-job.html
-          python - <<'PY'
-          from pathlib import Path
-          s=Path('scripts/scrape_jobs.py').read_text(encoding='utf-8')
-          g=s[s.index('def scrape_mircms_board'):s.index('# -------------------- 서울 중앙')]
-          se=s[s.index('def scrape_seoul_office'):s.index('def dedupe_merge')]
-          assert 'openMethod' not in g, 'Seoul POST metadata leaked into Gyeonggi collector'
-          assert '"openMethod":"POST"' in se, 'Seoul POST metadata missing'
-          PY
-      - name: Publish direct-link fix immediately
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html open-job.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py
-          if ! git diff --cached --quiet; then
-            git commit -m 'Correct exact support-office posting links'
-            git pull --rebase
-            git push
-          fi
       - name: Collect central and all support-office recruitment boards
         run: python scripts/scrape_jobs.py
       - name: Repair and re-check all 25 Gyeonggi support-office boards
