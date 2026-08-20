@@ -6,15 +6,12 @@ on:
     paths:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
-      - 'scripts/complete_support_coverage.py'
       - 'scripts/resolve_support_links.py'
       - 'scripts/enrich_support_periods.py'
       - 'scripts/enrich_seoul_get_fallback.py'
-      - 'scripts/verify_support_completeness.py'
       - 'scripts/verify_jobs.py'
       - 'scripts/merge_recovery_snapshot.py'
       - 'scripts/update_collection_state.py'
-      - 'scripts/harden_complete_crawler.py'
       - 'scripts/harden_network_retries.py'
       - 'scripts/hotfix_support_office.py'
       - 'scripts/hotfix_repair_links.py'
@@ -22,7 +19,7 @@ on:
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
   schedule:
-    - cron: '17 */2 * * *' # 2시간마다. 긴 검증 실행을 매시간 겹치게 하지 않는다.
+    - cron: '17 */2 * * *' # 2시간마다 빠른 신규/변경 공고 수집
 
 permissions:
   contents: write
@@ -34,7 +31,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 105
+    timeout-minutes: 70
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,27 +73,22 @@ jobs:
             cp /tmp/jobs_previous.json jobs.json
           fi
 
-      - name: Prepare resilient collectors without inflating fast page caps
+      - name: Prepare resilient fast collectors
         run: |
           python scripts/hotfix_sources.py
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
-          python scripts/harden_complete_crawler.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py
-          grep -q 'MAX_PAGES = 500' scripts/complete_support_coverage.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
-      - name: Collect central portals and current support-office pages
+      - name: Fast crawl of central portals and support-office current pages
         run: python scripts/scrape_jobs.py
 
-      - name: Re-check Gyeonggi support-office boards
+      - name: Fast re-check of Gyeonggi support-office boards
         run: python scripts/repair_gyeonggi_support.py
 
-      - name: Traverse all 25+11 support offices through the recent 90-day boundary
-        run: python scripts/complete_support_coverage.py
-
-      - name: Preserve active postings that disappeared only in this crawl
+      - name: Preserve active postings missing only from this fast crawl
         run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_previous.json --report missing_recovery_report.json
 
       - name: Resolve exact detail links and enrich application/hiring periods
@@ -105,19 +97,11 @@ jobs:
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
 
-      - name: Require proven 25+11 support-office coverage
-        run: |
-          if ! python scripts/verify_support_completeness.py; then
-            cp /tmp/jobs_previous.json jobs.json
-            echo 'Coverage proof failed; kept previous publication.' >&2
-            exit 1
-          fi
-
-      - name: Independent publication verification
+      - name: Independent fast-publication verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
             cp /tmp/jobs_previous.json jobs.json
-            echo 'Independent validation failed; kept previous publication.' >&2
+            echo 'Fast refresh validation failed; kept previous publication.' >&2
             exit 1
           fi
 
@@ -132,15 +116,15 @@ jobs:
           d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
           jobs=d.get('jobs',[]) if isinstance(d,dict) else []
           if len(jobs)<100: raise SystemExit(f'Refusing publication: only {len(jobs)} jobs')
-          print(f'Publication guard passed: {len(jobs)} jobs')
+          print(f'Fast publication guard passed: {len(jobs)} jobs')
           PY
 
-      - name: Commit only verified collection state
+      - name: Commit only verified fast refresh state
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           git diff --cached --quiet && exit 0
-          git commit -m 'Refresh verified recruitment jobs with durable collection memory'
+          git commit -m 'Fast refresh verified recruitment postings'
           git pull --rebase
           git push
