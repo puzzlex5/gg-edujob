@@ -10,6 +10,7 @@ on:
       - 'scripts/update_collection_state.py'
       - 'scripts/harden_complete_crawler.py'
       - 'scripts/harden_network_retries.py'
+      - 'scripts/harden_completeness_semantics.py'
       - '.github/workflows/recover-missing-jobs.yml'
 
 permissions:
@@ -51,7 +52,8 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_complete_crawler.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py
+          python scripts/harden_completeness_semantics.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/harden_completeness_semantics.py
 
       - name: Fresh crawl of central portals and support offices
         run: python scripts/scrape_jobs.py
@@ -102,7 +104,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_completeness_semantics.py
           git diff --cached --quiet && exit 0
           git commit -m 'Recover missed recruitment postings from official sources'
           git pull --rebase
