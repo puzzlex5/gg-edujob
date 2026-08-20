@@ -5,6 +5,10 @@ Collectors must normally stop because the official board is exhausted, repeats, 
 retention window is safely crossed—not because an arbitrary small page number was reached.
 A finite 500-page ceiling remains only as protection against a broken pagination endpoint.
 The completeness crawler treats hitting that ceiling as incomplete/unhealthy.
+
+Any request failure during pagination is also incomplete. Previously only a page-1 failure
+set accessError, so a failure on page N>1 could be mistaken for a normal end-of-board and
+incorrectly mark partial traversal as complete.
 """
 from pathlib import Path
 
@@ -31,8 +35,11 @@ def patch(path, replacements, required=()):
 changed = 0
 changed += patch(
     "scripts/complete_support_coverage.py",
-    [("MAX_PAGES = 80", "MAX_PAGES = 500  # emergency infinite-loop ceiling; reaching it is NOT complete")],
-    required=("pages < MAX_PAGES",),
+    [
+        ("MAX_PAGES = 80", "MAX_PAGES = 500  # emergency infinite-loop ceiling; reaching it is NOT complete"),
+        ("access_error = page == 1", "access_error = True  # any mid-pagination request failure makes traversal incomplete"),
+    ],
+    required=("pages < MAX_PAGES", "access_error = True  # any mid-pagination request failure makes traversal incomplete"),
 )
 # The primary collectors already stop on empty/repeated/no-new rows. Raise only their low
 # artificial ceilings so those content-based stop conditions, rather than page number, govern.
@@ -52,15 +59,16 @@ changed += patch(
     [("for page in range(1, 8):", "for page in range(1, 501):")],
 )
 
-# Guard against accidental reintroduction of the known low caps.
+# Guard against accidental reintroduction of the known low caps and the old false-complete
+# mid-pagination failure behavior.
 for rel, bad in {
-    "scripts/complete_support_coverage.py": ("MAX_PAGES = 80",),
+    "scripts/complete_support_coverage.py": ("MAX_PAGES = 80", "access_error = page == 1"),
     "scripts/scrape_jobs.py": ("range(1, 35)", "range(1, 8)", "range(1, 60)", "range(1, 10)"),
     "scripts/repair_gyeonggi_support.py": ("range(1, 8)",),
 }.items():
     text = (ROOT / rel).read_text(encoding="utf-8")
     hits = [x for x in bad if x in text]
     if hits:
-        raise SystemExit(f"Low fixed pagination cap remains in {rel}: {hits}")
+        raise SystemExit(f"Unsafe pagination behavior remains in {rel}: {hits}")
 
-print(f"Pagination cap guard applied ({changed} source groups changed); 500 pages is emergency-only")
+print(f"Pagination completeness guard applied ({changed} source groups changed); 500 pages is emergency-only and any request failure is incomplete")
