@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strict publication gate for 25 Gyeonggi + 11 Seoul support-office completeness."""
+"""Strict publication gate for 25 Gyeonggi + 11 Seoul support-office completeness and exact links."""
 import json
 from pathlib import Path
 
@@ -25,11 +25,17 @@ for province, want in expected.items():
         for board in boards:
             pages = int(board.get("pagesScanned") or 0)
             raw = int(board.get("rawRows") or 0)
+            if not board.get("coverageComplete"):
+                problems.append(f"{province}/{name}: board-level traversal is not complete ({board.get('url')})")
+            if pages <= 0:
+                problems.append(f"{province}/{name}: board has no pagination evidence ({board.get('url')})")
             if pages >= 500:
                 problems.append(f"{province}/{name}: emergency 500-page ceiling reached")
+            if board.get("accessError"):
+                problems.append(f"{province}/{name}: board traversal stopped on access error")
             if raw in {70, 80, 90, 100}:
                 if board.get("coverageComplete") and pages < 500:
-                    notes.append(f"{province}/{name}: round rawRows={raw}, but traversal ended without ceiling hit")
+                    notes.append(f"{province}/{name}: round rawRows={raw}, but traversal has explicit completion evidence")
                 else:
                     problems.append(f"{province}/{name}: suspicious round rawRows={raw} without proven complete traversal")
 
@@ -43,6 +49,28 @@ if comp:
 else:
     problems.append("supportCompleteness metadata missing")
 
+# Exact individual posting links are part of health, not a cosmetic enhancement.
+link = data.get("supportLinkResolution") or {}
+for province, exact_key, total_key in (
+    ("gyeonggi", "gyeonggiExact", "gyeonggiTotal"),
+    ("seoul", "seoulExact", "seoulTotal"),
+):
+    exact = int(link.get(exact_key) or 0)
+    total = int(link.get(total_key) or 0)
+    if total <= 0:
+        problems.append(f"{province}: exact-link metadata missing or empty")
+    elif exact != total:
+        problems.append(f"{province}: exact individual posting links {exact}/{total}")
+
+unresolved_jobs = [
+    j for j in data.get("jobs", [])
+    if j.get("sourceType") == "교육지원청 개별 게시판" and not j.get("detailLinkResolved")
+]
+if unresolved_jobs:
+    problems.append(f"support-office jobs without exact individual links: {len(unresolved_jobs)}")
+    for j in unresolved_jobs[:10]:
+        notes.append(f"unresolved: {j.get('province')}/{j.get('source')} · {j.get('title')}")
+
 for note in notes:
     print("NOTE", note)
 if problems:
@@ -50,4 +78,4 @@ if problems:
         print("FAIL", problem)
     raise SystemExit(f"Support-office completeness gate failed with {len(problems)} issue(s)")
 
-print("Support-office completeness gate passed: Gyeonggi 25/25, Seoul 11/11 with board-level evidence")
+print("Support-office gate passed: Gyeonggi 25/25, Seoul 11/11, board-level traversal proven, all individual links exact")
