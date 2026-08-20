@@ -8,6 +8,7 @@ on:
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/complete_support_coverage.py'
       - 'scripts/hotfix_completeness_cap.py'
+      - 'scripts/hotfix_link_resolver_pagination.py'
       - 'scripts/verify_support_completeness.py'
       - 'scripts/hotfix_desktop_scroll.py'
       - 'scripts/resolve_support_links.py'
@@ -90,10 +91,13 @@ jobs:
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
           python scripts/hotfix_completeness_cap.py
+          python scripts/hotfix_link_resolver_pagination.py
           python scripts/hotfix_desktop_scroll.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_completeness_cap.py scripts/verify_support_completeness.py scripts/hotfix_desktop_scroll.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_completeness_cap.py scripts/hotfix_link_resolver_pagination.py scripts/verify_support_completeness.py scripts/hotfix_desktop_scroll.py
           grep -q 'MAX_PAGES = 500' scripts/complete_support_coverage.py
           grep -q 'pages < MAX_PAGES' scripts/complete_support_coverage.py
+          grep -q 'for page in range(1, 501):' scripts/resolve_support_links.py
+          grep -q 'current_exact = False' scripts/resolve_support_links.py
           grep -q 'detailLinkResolved' index.html
           grep -q 'overscroll-behavior-y:contain' index.html
           grep -q '@media (hover:hover) and (pointer:fine)' index.html
@@ -170,11 +174,11 @@ jobs:
               raise SystemExit(f'Refusing publication: only {len(jobs)} jobs in jobs.json')
           print(f'Publication guard passed: {len(jobs)} jobs')
           PY
-      - name: Commit verified jobs, exact-link report, period cache, and corrected collectors
+      - name: Commit verified jobs, coverage evidence, exact-link report, period cache, and corrected collectors
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '4189828+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py support_link_resolution.json support_period_cache.json sources.json
+          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json
           git diff --cached --quiet && exit 0
           git commit -m 'Refresh verified jobs with complete support-office coverage'
           git pull --rebase
