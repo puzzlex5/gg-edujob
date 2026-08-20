@@ -7,10 +7,11 @@ A finite 500-page ceiling remains only as protection against a broken pagination
 The completeness crawler treats hitting that ceiling as incomplete/unhealthy.
 
 Any request failure during pagination is also incomplete. A successful HTTP response with
-no parsable rows is not enough by itself: the crawler must see the expected board/table
-structure (or an explicit empty-board message) before treating that page as a normal end.
-This prevents a layout change, login/error shell, or soft failure from being misclassified
-as complete coverage.
+no parsable rows is not enough by itself: the crawler must see an expected board/table whose
+actual data-row count is zero (or an explicit empty-board message) before treating that page
+as a normal end. A table that still contains rows but whose links no longer parse is therefore
+incomplete, not empty. This prevents layout/link changes, login/error shells, and soft failures
+from being misclassified as complete coverage.
 """
 from pathlib import Path
 
@@ -41,9 +42,11 @@ changed += patch(
         ("MAX_PAGES = 80", "MAX_PAGES = 500  # emergency infinite-loop ceiling; reaching it is NOT complete"),
         ("access_error = page == 1", "access_error = True  # any mid-pagination request failure makes traversal incomplete"),
         ("        page_items = []\n        page_dates = []\n        for table in soup.find_all(\"table\"):\n            hs = headers(table)",
-         "        page_items = []\n        page_dates = []\n        page_has_expected_table = False\n        for table in soup.find_all(\"table\"):\n            hs = headers(table)\n            if any(any(k in h for k in (\"제목\", \"학교\", \"기관\", \"등록일\", \"작성일\", \"마감\")) for h in hs):\n                page_has_expected_table = True"),
+         "        page_items = []\n        page_dates = []\n        page_has_expected_table = False\n        page_candidate_rows = 0\n        for table in soup.find_all(\"table\"):\n            hs = headers(table)\n            table_is_expected = any(any(k in h for k in (\"제목\", \"학교\", \"기관\", \"등록일\", \"작성일\", \"마감\")) for h in hs)\n            if table_is_expected:\n                page_has_expected_table = True"),
+        ("                if not tds:\n                    continue\n                pick = None",
+         "                if not tds:\n                    continue\n                if table_is_expected:\n                    page_candidate_rows += 1\n                pick = None"),
         ("        pages += 1\n        if not page_items:\n            break\n\n        raw_rows += len(page_items)",
-         "        pages += 1\n        if not page_items:\n            ended_on_structural_empty = bool(explicit_empty or page_has_expected_table)\n            break\n\n        raw_rows += len(page_items)"),
+         "        pages += 1\n        if not page_items:\n            ended_on_structural_empty = bool(explicit_empty or (page_has_expected_table and page_candidate_rows == 0))\n            break\n\n        raw_rows += len(page_items)"),
         ("    consecutive_old_pages = 0\n\n    for page in range(1, MAX_PAGES + 1):",
          "    consecutive_old_pages = 0\n    ended_on_structural_empty = False\n\n    for page in range(1, MAX_PAGES + 1):"),
         ("    complete = (not access_error) and (crossed_old or (pages > 0 and not repeat and pages < MAX_PAGES))\n    return out, {\n        \"url\": board, \"pagesScanned\": pages, \"rawRows\": raw_rows,",
@@ -51,11 +54,11 @@ changed += patch(
         ("    use_post = False\n\n    for page in range(1, MAX_PAGES + 1):",
          "    use_post = False\n    ended_on_structural_empty = False\n\n    for page in range(1, MAX_PAGES + 1):"),
         ("        items = []\n        dates = []\n        for table in soup.find_all(\"table\"):\n            hs = headers(table)",
-         "        items = []\n        dates = []\n        page_has_expected_table = False\n        for table in soup.find_all(\"table\"):\n            hs = headers(table)"),
-        ("            got_table = True\n            for tr in table.find_all(\"tr\"):",
-         "            got_table = True\n            page_has_expected_table = True\n            for tr in table.find_all(\"tr\"):"),
+         "        items = []\n        dates = []\n        page_has_expected_table = False\n        page_candidate_rows = 0\n        for table in soup.find_all(\"table\"):\n            hs = headers(table)"),
+        ("            got_table = True\n            for tr in table.find_all(\"tr\"):\n                if not tr.find_all(\"td\"):\n                    continue",
+         "            got_table = True\n            page_has_expected_table = True\n            for tr in table.find_all(\"tr\"):\n                if not tr.find_all(\"td\"):\n                    continue\n                page_candidate_rows += 1"),
         ("        pages += 1\n        if not items:\n            break\n        raw_rows += len(items)",
-         "        pages += 1\n        if not items:\n            ended_on_structural_empty = bool(explicit_empty or page_has_expected_table)\n            break\n        raw_rows += len(items)"),
+         "        pages += 1\n        if not items:\n            ended_on_structural_empty = bool(explicit_empty or (page_has_expected_table and page_candidate_rows == 0))\n            break\n        raw_rows += len(items)"),
         ("    complete = (not access_error) and (crossed_old or (pages > 0 and not repeat and pages < MAX_PAGES))\n    return out, {\n        \"url\": board, \"pagesScanned\": pages, \"rawRows\": raw_rows, \"recentRows\": len(out),",
          "    complete = (not access_error) and (pages < MAX_PAGES) and (crossed_old or ended_on_structural_empty)\n    return out, {\n        \"url\": board, \"pagesScanned\": pages, \"rawRows\": raw_rows, \"recentRows\": len(out),"),
     ],
@@ -64,6 +67,8 @@ changed += patch(
         "access_error = True  # any mid-pagination request failure makes traversal incomplete",
         "ended_on_structural_empty",
         "page_has_expected_table",
+        "page_candidate_rows",
+        "page_candidate_rows == 0",
     ),
 )
 # The primary collectors already stop on empty/repeated/no-new rows. Raise only their low
@@ -100,4 +105,4 @@ for rel, bad in {
     if hits:
         raise SystemExit(f"Unsafe pagination behavior remains in {rel}: {hits}")
 
-print(f"Pagination completeness guard applied ({changed} source groups changed); completeness now requires retention-boundary or structural-empty evidence")
+print(f"Pagination completeness guard applied ({changed} source groups changed); completeness now requires retention-boundary or truly empty-board evidence")
