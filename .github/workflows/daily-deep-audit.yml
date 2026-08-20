@@ -35,7 +35,7 @@ jobs:
           if len(jobs)<100: raise SystemExit(f'Unsafe baseline: {len(jobs)} jobs')
           PY
           cp jobs.json /tmp/jobs_daily_baseline.json
-      - name: Prepare resilient fast collectors and strict deep auditor
+      - name: Prepare deep collectors and retry policy
         run: |
           python scripts/hotfix_sources.py
           python scripts/hotfix_support_office.py
@@ -43,6 +43,8 @@ jobs:
           python scripts/harden_complete_crawler.py
           python scripts/harden_network_retries.py
           python -m py_compile scripts/*.py
+      - name: Discover newly linked official recruitment boards
+        run: python scripts/discover_recruitment_boards.py
       - name: Re-discover and collect all configured official sources
         run: python scripts/scrape_jobs.py
       - name: Re-check all Gyeonggi support-office boards
@@ -82,7 +84,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json collection_state.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          git add jobs.json job_ledger.json collection_state.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py
           git diff --cached --quiet && exit 0
           git commit -m 'Daily deep audit recovered verified recruitment postings'
           git pull --rebase
