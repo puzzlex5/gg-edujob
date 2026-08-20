@@ -3,16 +3,16 @@ name: Recover missing 수도권 education jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '47 * * * *' # 매시간 본 수집 후 별도 누락 복구 재탐색
+    - cron: '47 * * * *'
   push:
     paths:
       - 'scripts/merge_recovery_snapshot.py'
+      - 'scripts/hotfix_link_resolver_pagination.py'
       - '.github/workflows/recover-missing-jobs.yml'
 
 permissions:
   contents: write
 
-# Never race the normal hourly publisher. A recovery pass waits instead of cancelling a healthy run.
 concurrency:
   group: metro-edujob-data
   cancel-in-progress: false
@@ -20,7 +20,7 @@ concurrency:
 jobs:
   recover:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,19 +28,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install collector dependencies
+      - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Preserve currently published dataset
+      - name: Preserve published recovery base
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('jobs.json')
-          d=json.loads(p.read_text(encoding='utf-8'))
+          d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
           jobs=d.get('jobs',[]) if isinstance(d,dict) else []
-          if len(jobs)<100:
-              raise SystemExit(f'Published dataset is not safe as recovery base: {len(jobs)} jobs')
+          if len(jobs)<100: raise SystemExit(f'Unsafe recovery base: {len(jobs)} jobs')
           PY
           cp jobs.json /tmp/jobs_recovery_base.json
 
@@ -54,51 +52,46 @@ jobs:
           python scripts/hotfix_desktop_scroll.py
           python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py
           grep -q 'MAX_PAGES = 500' scripts/complete_support_coverage.py
-          grep -q 'for page in range(1, 501):' scripts/resolve_support_links.py
+          grep -q 'for page in range(1, 9):' scripts/resolve_support_links.py
+          grep -q 'current_exact = False' scripts/resolve_support_links.py
 
-      - name: Fresh crawl of central portals and support offices
+      - name: Fresh second-chance crawl
         run: python scripts/scrape_jobs.py
 
       - name: Re-check Gyeonggi support-office boards
         run: python scripts/repair_gyeonggi_support.py
 
-      - name: Completeness backfill pass 1
+      - name: Completeness backfill pass
         run: python scripts/complete_support_coverage.py
 
-      - name: Completeness backfill pass 2 for transient misses
-        run: |
-          sleep 8
-          python scripts/complete_support_coverage.py
-
-      - name: Merge fresh crawl with previously published active postings
+      - name: Merge with previously published active postings
         run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_recovery_base.json
 
-      - name: Resolve exact support-office detail links after recovery merge
+      - name: Normalize exact detail links
         run: python scripts/resolve_support_links.py
 
-      - name: Enrich application and hiring periods
+      - name: Enrich missing periods only through cached/detail helpers
         run: |
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
 
-      - name: Require proven 25+11 support-office traversal
+      - name: Require proven 25+11 traversal
         run: python scripts/verify_support_completeness.py
 
-      - name: Validate recovered dataset against previous publication
+      - name: Validate recovered dataset
         run: python scripts/verify_jobs.py --previous /tmp/jobs_recovery_base.json
 
-      - name: Refuse a recovery that loses too much data
+      - name: Recovery loss guard
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           before=json.loads(Path('/tmp/jobs_recovery_base.json').read_text(encoding='utf-8')).get('jobs',[])
           after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
-          if len(after)<100:
-              raise SystemExit(f'Recovery output too small: {len(after)}')
+          if len(after)<100: raise SystemExit(f'Recovery output too small: {len(after)}')
           if len(before)>=100 and len(after)<len(before)*0.70:
-              raise SystemExit(f'Recovery unexpectedly lost more than 30%: {len(before)} -> {len(after)}')
-          print(f'Recovery publication guard passed: {len(before)} -> {len(after)} jobs')
+              raise SystemExit(f'Recovery lost too much: {len(before)} -> {len(after)}')
+          print(f'Recovery guard passed: {len(before)} -> {len(after)}')
           PY
 
       - name: Commit only verified recovered postings
@@ -110,3 +103,5 @@ jobs:
           git commit -m 'Recover missed recruitment postings from official sources'
           git pull --rebase
           git push
+
+# This is a second chance 30 minutes after the main hourly crawl, not another duplicate 500-page link scan.
