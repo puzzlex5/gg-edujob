@@ -8,6 +8,7 @@ on:
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/complete_support_coverage.py'
       - 'scripts/hotfix_completeness_cap.py'
+      - 'scripts/verify_support_completeness.py'
       - 'scripts/hotfix_desktop_scroll.py'
       - 'scripts/resolve_support_links.py'
       - 'scripts/enrich_support_periods.py'
@@ -103,7 +104,7 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/hotfix_completeness_cap.py
           python scripts/hotfix_desktop_scroll.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_completeness_cap.py scripts/hotfix_desktop_scroll.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_completeness_cap.py scripts/verify_support_completeness.py scripts/hotfix_desktop_scroll.py
           grep -q 'MAX_PAGES = 500' scripts/complete_support_coverage.py
           grep -q 'pages < MAX_PAGES' scripts/complete_support_coverage.py
           grep -q 'detailLinkResolved' index.html
@@ -156,6 +157,13 @@ jobs:
         run: python scripts/enrich_support_periods.py
       - name: Retry Seoul support-office detail periods with GET fallback
         run: python scripts/enrich_seoul_get_fallback.py
+      - name: Require complete 25+11 support-office traversal evidence
+        run: |
+          if ! python scripts/verify_support_completeness.py; then
+            echo 'Support-office completeness is not proven. Restoring the newest known-good jobs.json.'
+            cp /tmp/jobs_previous.json jobs.json
+            exit 1
+          fi
       - name: Independent second-pass verification
         run: |
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
