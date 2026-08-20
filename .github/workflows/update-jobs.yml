@@ -15,7 +15,6 @@ on:
       - 'scripts/update_collector_status.py'
       - 'scripts/harden_fast_pagination.py'
       - 'scripts/harden_network_retries.py'
-      - 'scripts/hotfix_support_office.py'
       - 'scripts/hotfix_repair_links.py'
       - 'scripts/hotfix_sources.py'
       - 'sources.json'
@@ -81,7 +80,6 @@ jobs:
         run: |
           python scripts/update_collector_status.py --workflow fast --stage hardening --state running
           python scripts/hotfix_sources.py
-          python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
           python scripts/harden_fast_pagination.py
           python scripts/harden_network_retries.py
