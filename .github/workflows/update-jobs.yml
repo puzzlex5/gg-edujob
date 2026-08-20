@@ -156,22 +156,23 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # If the verified publication commit already reached origin/main, do not overwrite
-          # that proven success with a false failed status caused by a post-push shell error.
+          # A verified publication may already have reached origin/main even if the final git
+          # command returned non-zero. Compare the success token stored in origin with this run
+          # before writing a false failure over a proven successful refresh.
           git fetch origin main
-          current_state="$(python - <<'PY'
+          local_success="$(python - <<'PY'
           import json
           from pathlib import Path
           try:
-              d=json.loads(Path('collector_status.json').read_text(encoding='utf-8'))
-              e=d.get('fast',{})
-              print('success' if e.get('state')=='success' and e.get('stage')=='complete' else '')
+              e=json.loads(Path('collector_status.json').read_text(encoding='utf-8')).get('fast',{})
+              print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')
           except Exception:
               print('')
           PY
           )"
-          if [ "$current_state" = "success" ] && git merge-base --is-ancestor HEAD origin/main; then
-            echo 'Verified publication is already on origin/main; preserving success status.'
+          origin_success="$(git show origin/main:collector_status.json 2>/dev/null | python -c "import json,sys; e=json.load(sys.stdin).get('fast',{}); print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')" 2>/dev/null || true)"
+          if [ -n "$local_success" ] && [ "$local_success" = "$origin_success" ]; then
+            echo 'Verified publication already exists on origin/main; preserving success status.'
             exit 0
           fi
           python scripts/update_collector_status.py --workflow fast --state failed
