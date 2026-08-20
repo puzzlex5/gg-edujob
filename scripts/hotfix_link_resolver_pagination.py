@@ -1,52 +1,91 @@
 #!/usr/bin/env python3
-"""Harden Gyeonggi exact-link resolution against truncation and wrong-title remapping."""
+"""Protect canonical support-office detail links without turning hourly refresh into a full 500-page rescan.
+
+The completeness crawler is responsible for exhaustive board traversal. This patch only prevents
+an already exact Gyeonggi detail URL from being overwritten by ambiguous title matching. The
+resolver keeps its bounded fallback scan for genuinely unresolved legacy rows.
+"""
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 p = ROOT / "scripts/resolve_support_links.py"
 s = p.read_text(encoding="utf-8")
 
-replacements = [
-    (
-        "        found = 0\n        methods = {}\n        for page in range(1, 9):",
-        "        found = 0\n        methods = {}\n        seen_page_sigs = set()\n        pages_scanned = 0\n        unresolved_candidates = 0\n        stop_reason = 'ceiling'\n        for page in range(1, 501):",
-    ),
-    (
-        "            r = get(with_page(board, page))\n            if not r:\n                break\n            soup = BeautifulSoup(r.text, \"html.parser\")\n            page_rows = 0",
-        "            r = get(with_page(board, page))\n            if not r:\n                stop_reason = 'access-error'\n                break\n            soup = BeautifulSoup(r.text, \"html.parser\")\n            page_rows = 0\n            page_ids = []\n            candidate_rows = 0",
-    ),
-    (
-        "                    title = title_from_row(tr, headers)\n                    if len(title) < 3:\n                        continue\n                    sn, detail, how = extract_ntt_sn(r.url, tr)",
-        "                    title = title_from_row(tr, headers)\n                    if len(title) < 3:\n                        continue\n                    candidate_rows += 1\n                    sn, detail, how = extract_ntt_sn(r.url, tr)",
-    ),
-    (
-        "                    if not sn or not detail:\n                        continue\n                    page_rows += 1\n                    found += 1",
-        "                    if not sn or not detail:\n                        unresolved_candidates += 1\n                        continue\n                    page_rows += 1\n                    page_ids.append(sn)\n                    found += 1",
-    ),
-    (
-        "            if page_rows == 0:\n                break\n        board_stats.append({\"board\": board, \"resolvedRows\": found, \"methods\": methods})",
-        "            pages_scanned += 1\n            sig = tuple(page_ids)\n            if sig and sig in seen_page_sigs:\n                stop_reason = 'repeated-page'\n                break\n            if sig:\n                seen_page_sigs.add(sig)\n            if candidate_rows > 0 and page_rows == 0:\n                stop_reason = 'unresolved-row-structure'\n                break\n            if page_rows == 0:\n                stop_reason = 'empty-page'\n                break\n        board_stats.append({\"board\": board, \"resolvedRows\": found, \"methods\": methods, \"pagesScanned\": pages_scanned, \"stopReason\": stop_reason, \"ceilingHit\": pages_scanned >= 500, \"unresolvedCandidates\": unresolved_candidates})",
-    ),
-    (
-        "            source_names = job.get(\"checkedSources\") or [job.get(\"source\", \"\")]\n            hit = None\n            for office in source_names:\n                hit = all_map.get((office, norm(job.get(\"title\", \"\"))))\n                if hit:\n                    break\n            if not hit:\n                hit = all_map.get((job.get(\"source\", \"\"), norm(job.get(\"title\", \"\"))))\n            if hit:\n                job.update({\n                    \"url\": hit[\"url\"],\n                    \"boardUrl\": hit[\"boardUrl\"],\n                    \"detailLinkResolved\": True,\n                    \"nttSn\": hit[\"nttSn\"],\n                    \"bbsId\": hit[\"bbsId\"],\n                    \"mi\": hit[\"mi\"],\n                    \"detailResolutionMethod\": hit[\"method\"],\n                })\n                gyeonggi_resolved += 1\n            elif job.get(\"url\") and \"selectNttInfo.do\" in job.get(\"url\", \"\"):\n                q = parse_qs(urlparse(job[\"url\"]).query)\n                sn = (q.get(\"nttSn\") or [\"\"])[0]\n                bbs = (q.get(\"bbsId\") or [\"\"])[0]\n                if sn.isdigit() and bbs:\n                    job[\"detailLinkResolved\"] = True\n                    job[\"nttSn\"] = sn\n                    job[\"bbsId\"] = bbs\n                    job[\"mi\"] = (q.get(\"mi\") or [\"\"])[0]\n                    gyeonggi_resolved += 1",
-        "            # Preserve an already canonical individual URL. Title-only matching is ambiguous\n            # when an office publishes the same generic title repeatedly.\n            current_exact = False\n            if job.get(\"url\") and \"selectNttInfo.do\" in job.get(\"url\", \"\"):\n                q = parse_qs(urlparse(job[\"url\"]).query)\n                sn = (q.get(\"nttSn\") or [\"\"])[0]\n                bbs = (q.get(\"bbsId\") or [\"\"])[0]\n                if sn.isdigit() and bbs:\n                    job[\"detailLinkResolved\"] = True\n                    job[\"nttSn\"] = sn\n                    job[\"bbsId\"] = bbs\n                    job[\"mi\"] = (q.get(\"mi\") or [\"\"])[0]\n                    gyeonggi_resolved += 1\n                    current_exact = True\n            if not current_exact:\n                source_names = job.get(\"checkedSources\") or [job.get(\"source\", \"\")]\n                hit = None\n                for office in source_names:\n                    hit = all_map.get((office, norm(job.get(\"title\", \"\"))))\n                    if hit:\n                        break\n                if not hit:\n                    hit = all_map.get((job.get(\"source\", \"\"), norm(job.get(\"title\", \"\"))))\n                if hit:\n                    job.update({\n                        \"url\": hit[\"url\"], \"boardUrl\": hit[\"boardUrl\"],\n                        \"detailLinkResolved\": True, \"nttSn\": hit[\"nttSn\"],\n                        \"bbsId\": hit[\"bbsId\"], \"mi\": hit[\"mi\"],\n                        \"detailResolutionMethod\": hit[\"method\"],\n                    })\n                    gyeonggi_resolved += 1",
-    ),
-]
+old = '''            source_names = job.get("checkedSources") or [job.get("source", "")]
+            hit = None
+            for office in source_names:
+                hit = all_map.get((office, norm(job.get("title", ""))))
+                if hit:
+                    break
+            if not hit:
+                hit = all_map.get((job.get("source", ""), norm(job.get("title", ""))))
+            if hit:
+                job.update({
+                    "url": hit["url"],
+                    "boardUrl": hit["boardUrl"],
+                    "detailLinkResolved": True,
+                    "nttSn": hit["nttSn"],
+                    "bbsId": hit["bbsId"],
+                    "mi": hit["mi"],
+                    "detailResolutionMethod": hit["method"],
+                })
+                gyeonggi_resolved += 1
+            elif job.get("url") and "selectNttInfo.do" in job.get("url", ""):
+                q = parse_qs(urlparse(job["url"]).query)
+                sn = (q.get("nttSn") or [""])[0]
+                bbs = (q.get("bbsId") or [""])[0]
+                if sn.isdigit() and bbs:
+                    job["detailLinkResolved"] = True
+                    job["nttSn"] = sn
+                    job["bbsId"] = bbs
+                    job["mi"] = (q.get("mi") or [""])[0]
+                    gyeonggi_resolved += 1'''
 
-changed = 0
-for old, new in replacements:
-    if old in s:
-        s = s.replace(old, new, 1)
-        changed += 1
-    elif new not in s:
-        raise SystemExit(f"Unexpected resolver source; patch marker missing: {old[:100]}")
+new = '''            # Canonical URL wins. Generic titles such as "기간제교원 채용 공고" are not unique.
+            current_exact = False
+            if job.get("url") and "selectNttInfo.do" in job.get("url", ""):
+                q = parse_qs(urlparse(job["url"]).query)
+                sn = (q.get("nttSn") or [""])[0]
+                bbs = (q.get("bbsId") or [""])[0]
+                if sn.isdigit() and bbs:
+                    job["detailLinkResolved"] = True
+                    job["nttSn"] = sn
+                    job["bbsId"] = bbs
+                    job["mi"] = (q.get("mi") or [""])[0]
+                    gyeonggi_resolved += 1
+                    current_exact = True
+            if not current_exact:
+                source_names = job.get("checkedSources") or [job.get("source", "")]
+                hit = None
+                for office in source_names:
+                    hit = all_map.get((office, norm(job.get("title", ""))))
+                    if hit:
+                        break
+                if not hit:
+                    hit = all_map.get((job.get("source", ""), norm(job.get("title", ""))))
+                if hit:
+                    job.update({
+                        "url": hit["url"], "boardUrl": hit["boardUrl"],
+                        "detailLinkResolved": True, "nttSn": hit["nttSn"],
+                        "bbsId": hit["bbsId"], "mi": hit["mi"],
+                        "detailResolutionMethod": hit["method"],
+                    })
+                    gyeonggi_resolved += 1'''
 
-for bad in ("for page in range(1, 9):", "if hit:\n                job.update({"):
-    if bad in s:
-        raise SystemExit(f"Unsafe exact-link resolver behavior remains: {bad}")
-for marker in ("for page in range(1, 501):", "seen_page_sigs", "stop_reason = 'access-error'", "unresolvedCandidates", "current_exact = False"):
-    if marker not in s:
-        raise SystemExit(f"Required resolver safety marker missing: {marker}")
+if old in s:
+    s = s.replace(old, new, 1)
+elif "current_exact = False" not in s:
+    raise SystemExit("Unexpected resolver source: canonical-link protection marker missing")
+
+# Deliberately do NOT expand the fallback resolver to 500 pages. complete_support_coverage.py
+# already performs exhaustive 90-day traversal and emits canonical URLs. Repeating that scan here
+# caused hourly runs to exceed their publication window.
+if "for page in range(1, 9):" not in s:
+    # A previously runtime-patched copy may still contain the expensive loop; shrink only that loop.
+    s = s.replace("for page in range(1, 501):", "for page in range(1, 9):", 1)
+
+if "current_exact = False" not in s or "for page in range(1, 9):" not in s:
+    raise SystemExit("Fast exact-link resolver safety markers missing")
 
 p.write_text(s, encoding="utf-8")
-print(f"Exact-link resolver safety patch applied ({changed} edits)")
+print("Exact-link resolver protected; exhaustive traversal remains in completeness crawler only")
