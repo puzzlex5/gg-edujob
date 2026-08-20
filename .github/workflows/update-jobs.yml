@@ -142,12 +142,17 @@ jobs:
 
       - name: Commit only verified fast refresh state
         if: success()
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json date_anomaly_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           git diff --cached --quiet && exit 0
           git commit -m 'Fast refresh verified recruitment postings'
+          # Runtime hardeners can leave intentionally uncommitted working-tree edits. They must
+          # not make git pull --rebase fail after a fully verified publication commit exists.
+          git reset --hard HEAD
           git pull --rebase
           git push
 
@@ -156,9 +161,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # A verified publication may already have reached origin/main even if the final git
-          # command returned non-zero. Compare the success token stored in origin with this run
-          # before writing a false failure over a proven successful refresh.
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # If every validation step completed and HEAD itself already contains the verified
+          # success snapshot, first recover from a sync-only failure instead of rewriting that
+          # proven success as a collector failure.
+          head_success="$(git show HEAD:collector_status.json 2>/dev/null | python -c "import json,sys; e=json.load(sys.stdin).get('fast',{}); print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')" 2>/dev/null || true)"
+          if [ -n "$head_success" ] && [ "$(git log -1 --pretty=%s)" = 'Fast refresh verified recruitment postings' ]; then
+            echo 'Verified success commit exists locally; cleaning runtime edits and retrying sync.'
+            git reset --hard HEAD
+            if git pull --rebase && git push; then
+              echo 'Recovered verified publication sync without false failure status.'
+              exit 0
+            fi
+          fi
+
+          # A verified publication may already have reached origin/main even if a later command
+          # returned non-zero. Preserve it when the success token on origin matches this run.
           git fetch origin main
           local_success="$(python - <<'PY'
           import json
@@ -175,14 +195,14 @@ jobs:
             echo 'Verified publication already exists on origin/main; preserving success status.'
             exit 0
           fi
+
           python scripts/update_collector_status.py --workflow fast --state failed
           cp collector_status.json /tmp/collector_status.json
           git reset --hard HEAD
           cp /tmp/collector_status.json collector_status.json
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record fast collector failure stage'
+          git reset --hard HEAD
           git pull --rebase
           git push
