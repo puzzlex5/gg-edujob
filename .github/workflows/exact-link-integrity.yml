@@ -8,8 +8,6 @@ on:
       - 'scripts/hotfix_link_resolver_pagination.py'
       - 'scripts/verify_exact_support_links.py'
       - '.github/workflows/exact-link-integrity.yml'
-  schedule:
-    - cron: '42 * * * *'
 
 permissions:
   contents: write
@@ -38,6 +36,7 @@ jobs:
           ! grep -q 'for page in range(1, 9):' scripts/resolve_support_links.py
           grep -q 'for page in range(1, 501):' scripts/resolve_support_links.py
           grep -q 'seen_page_sigs' scripts/resolve_support_links.py
+          grep -q 'current_exact = False' scripts/resolve_support_links.py
       - name: Resolve exact individual posting links through board exhaustion
         run: python scripts/resolve_support_links.py
       - name: Require exact links for every support-office job
@@ -51,3 +50,7 @@ jobs:
           git commit -m 'Refresh complete exact support-office links'
           git pull --rebase
           git push
+
+# The normal hourly data workflow already resolves links and now refuses publication unless
+# all support-office jobs have exact individual targets. This workflow is a repair/regression
+# path for changes to the resolver itself, avoiding a second hourly writer racing jobs.json.
