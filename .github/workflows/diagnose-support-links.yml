@@ -1,0 +1,38 @@
+name: Diagnose support-office link structures
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 18 * * *' # daily deep structure snapshot; kept off the hourly critical path
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-link-diagnostics
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Snapshot official support-office link structures
+        run: python scripts/diagnose_support_links.py
+      - name: Commit diagnostics when changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add support_link_diagnostics.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record daily support-link diagnostics'
+          git pull --rebase
+          git push
