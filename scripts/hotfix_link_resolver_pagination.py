@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Remove the legacy 8-page cap from the Gyeonggi exact-link resolver.
-
-The resolver must follow the official board until it is exhausted or pagination repeats.
-A 500-page ceiling is emergency-only and is reported as unhealthy if reached. Mid-pagination
-request failures and rows whose individual posting IDs cannot be parsed are explicit failures,
-not normal end-of-board conditions.
-"""
+"""Harden Gyeonggi exact-link resolution against truncation and wrong-title remapping."""
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +27,10 @@ replacements = [
         "            if page_rows == 0:\n                break\n        board_stats.append({\"board\": board, \"resolvedRows\": found, \"methods\": methods})",
         "            pages_scanned += 1\n            sig = tuple(page_ids)\n            if sig and sig in seen_page_sigs:\n                stop_reason = 'repeated-page'\n                break\n            if sig:\n                seen_page_sigs.add(sig)\n            if candidate_rows > 0 and page_rows == 0:\n                stop_reason = 'unresolved-row-structure'\n                break\n            if page_rows == 0:\n                stop_reason = 'empty-page'\n                break\n        board_stats.append({\"board\": board, \"resolvedRows\": found, \"methods\": methods, \"pagesScanned\": pages_scanned, \"stopReason\": stop_reason, \"ceilingHit\": pages_scanned >= 500, \"unresolvedCandidates\": unresolved_candidates})",
     ),
+    (
+        "            source_names = job.get(\"checkedSources\") or [job.get(\"source\", \"\")]\n            hit = None\n            for office in source_names:\n                hit = all_map.get((office, norm(job.get(\"title\", \"\"))))\n                if hit:\n                    break\n            if not hit:\n                hit = all_map.get((job.get(\"source\", \"\"), norm(job.get(\"title\", \"\"))))\n            if hit:\n                job.update({\n                    \"url\": hit[\"url\"],\n                    \"boardUrl\": hit[\"boardUrl\"],\n                    \"detailLinkResolved\": True,\n                    \"nttSn\": hit[\"nttSn\"],\n                    \"bbsId\": hit[\"bbsId\"],\n                    \"mi\": hit[\"mi\"],\n                    \"detailResolutionMethod\": hit[\"method\"],\n                })\n                gyeonggi_resolved += 1\n            elif job.get(\"url\") and \"selectNttInfo.do\" in job.get(\"url\", \"\"):\n                q = parse_qs(urlparse(job[\"url\"]).query)\n                sn = (q.get(\"nttSn\") or [\"\"])[0]\n                bbs = (q.get(\"bbsId\") or [\"\"])[0]\n                if sn.isdigit() and bbs:\n                    job[\"detailLinkResolved\"] = True\n                    job[\"nttSn\"] = sn\n                    job[\"bbsId\"] = bbs\n                    job[\"mi\"] = (q.get(\"mi\") or [\"\"])[0]\n                    gyeonggi_resolved += 1",
+        "            # Preserve an already canonical individual URL. Title-only matching is ambiguous\n            # when an office publishes the same generic title repeatedly.\n            current_exact = False\n            if job.get(\"url\") and \"selectNttInfo.do\" in job.get(\"url\", \"\"):\n                q = parse_qs(urlparse(job[\"url\"]).query)\n                sn = (q.get(\"nttSn\") or [\"\"])[0]\n                bbs = (q.get(\"bbsId\") or [\"\"])[0]\n                if sn.isdigit() and bbs:\n                    job[\"detailLinkResolved\"] = True\n                    job[\"nttSn\"] = sn\n                    job[\"bbsId\"] = bbs\n                    job[\"mi\"] = (q.get(\"mi\") or [\"\"])[0]\n                    gyeonggi_resolved += 1\n                    current_exact = True\n            if not current_exact:\n                source_names = job.get(\"checkedSources\") or [job.get(\"source\", \"\")]\n                hit = None\n                for office in source_names:\n                    hit = all_map.get((office, norm(job.get(\"title\", \"\"))))\n                    if hit:\n                        break\n                if not hit:\n                    hit = all_map.get((job.get(\"source\", \"\"), norm(job.get(\"title\", \"\"))))\n                if hit:\n                    job.update({\n                        \"url\": hit[\"url\"], \"boardUrl\": hit[\"boardUrl\"],\n                        \"detailLinkResolved\": True, \"nttSn\": hit[\"nttSn\"],\n                        \"bbsId\": hit[\"bbsId\"], \"mi\": hit[\"mi\"],\n                        \"detailResolutionMethod\": hit[\"method\"],\n                    })\n                    gyeonggi_resolved += 1",
+    ),
 ]
 
 changed = 0
@@ -41,21 +39,14 @@ for old, new in replacements:
         s = s.replace(old, new, 1)
         changed += 1
     elif new not in s:
-        raise SystemExit(f"Unexpected resolver source; patch marker missing: {old[:80]}")
+        raise SystemExit(f"Unexpected resolver source; patch marker missing: {old[:100]}")
 
-bad = "for page in range(1, 9):"
-if bad in s:
-    raise SystemExit("Legacy 8-page exact-link cap still present")
-for marker in (
-    "for page in range(1, 501):",
-    "seen_page_sigs",
-    "unresolved-row-structure",
-    "stop_reason = 'access-error'",
-    "unresolvedCandidates",
-    "ceilingHit",
-):
+for bad in ("for page in range(1, 9):", "if hit:\n                job.update({"):
+    if bad in s:
+        raise SystemExit(f"Unsafe exact-link resolver behavior remains: {bad}")
+for marker in ("for page in range(1, 501):", "seen_page_sigs", "stop_reason = 'access-error'", "unresolvedCandidates", "current_exact = False"):
     if marker not in s:
-        raise SystemExit(f"Required resolver pagination marker missing: {marker}")
+        raise SystemExit(f"Required resolver safety marker missing: {marker}")
 
 p.write_text(s, encoding="utf-8")
-print(f"Exact-link resolver pagination guard applied ({changed} edits)")
+print(f"Exact-link resolver safety patch applied ({changed} edits)")
