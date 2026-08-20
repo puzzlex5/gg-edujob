@@ -18,6 +18,7 @@ LEDGER = ROOT / "job_ledger.json"
 STATE = ROOT / "collection_state.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
+DATE_RE = re.compile(r"^(20\d{2})[./-](\d{1,2})[./-](\d{1,2})$")
 
 
 def load(path, default):
@@ -29,6 +30,22 @@ def load(path, default):
 
 def norm_text(v):
     return re.sub(r"\s+", " ", str(v or "")).strip().lower()
+
+
+def valid_registered(value):
+    """Return canonical YYYY/MM/DD only for plausible non-future registration dates."""
+    s = str(value or "").strip()
+    m = DATE_RE.match(s)
+    if not m:
+        return ""
+    try:
+        dt = datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=KST)
+    except ValueError:
+        return ""
+    # Registration dates are historical facts. Allow one day of clock/site skew, never months ahead.
+    if dt.date() > (NOW + timedelta(days=1)).date():
+        return ""
+    return dt.strftime("%Y/%m/%d")
 
 
 def canonical_url(raw):
@@ -110,12 +127,13 @@ def main():
         key = identity(job)
         seen_now.add(key)
         old = entries.get(key, {})
+        reg = valid_registered(job.get("registered"))
         snapshot = {
             "identity": key,
             "province": job.get("province", ""), "source": job.get("source", ""),
             "sourceType": job.get("sourceType", ""), "school": job.get("school", ""),
             "title": job.get("title", ""), "subject": job.get("subject", ""),
-            "registered": job.get("registered", ""), "applyEnd": job.get("applyEnd", ""),
+            "registered": reg, "applyEnd": job.get("applyEnd", ""),
             "url": job.get("url", ""), "boardUrl": job.get("boardUrl", ""),
             "firstSeen": old.get("firstSeen") or now_s, "lastSeen": now_s,
             "seenCount": int(old.get("seenCount") or 0) + 1, "presentInLatest": True,
@@ -132,7 +150,6 @@ def main():
         nid = numeric_id(job)
         if nid is not None and (ck["latestNumericId"] is None or nid > ck["latestNumericId"]):
             ck["latestNumericId"] = nid
-        reg = str(job.get("registered") or "")
         if reg and reg > ck["latestRegistered"]:
             ck["latestRegistered"] = reg
 
@@ -151,7 +168,7 @@ def main():
         "generatedAt": now_s,
         "datasetUpdatedAt": payload.get("updatedAt"),
         "boards": checkpoints,
-        "note": "Durable checkpoints for incremental collection and gap detection; numeric IDs are hints, never sole deletion criteria.",
+        "note": "Durable checkpoints for incremental collection and gap detection; numeric IDs are hints, never sole deletion criteria. Registration dates are independently sanity-checked before checkpointing.",
     }
     LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
