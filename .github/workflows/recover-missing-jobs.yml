@@ -3,11 +3,13 @@ name: Recover missing 수도권 education jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '47 * * * *'
+    - cron: '47 */6 * * *' # 6시간마다 독립 누락 복구·재대조
   push:
     paths:
       - 'scripts/merge_recovery_snapshot.py'
-      - 'scripts/hotfix_link_resolver_pagination.py'
+      - 'scripts/update_collection_state.py'
+      - 'scripts/harden_complete_crawler.py'
+      - 'scripts/harden_network_retries.py'
       - '.github/workflows/recover-missing-jobs.yml'
 
 permissions:
@@ -20,7 +22,7 @@ concurrency:
 jobs:
   recover:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,55 +33,57 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Preserve published recovery base
+      - name: Preserve current verified publication
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
           jobs=d.get('jobs',[]) if isinstance(d,dict) else []
-          if len(jobs)<100: raise SystemExit(f'Unsafe recovery base: {len(jobs)} jobs')
+          if len(jobs)<100: raise SystemExit(f'Unsafe recovery baseline: {len(jobs)} jobs')
           PY
           cp jobs.json /tmp/jobs_recovery_base.json
 
-      - name: Apply current collector safety patches
+      - name: Prepare resilient deep audit collectors
         run: |
           python scripts/hotfix_sources.py
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
-          python scripts/hotfix_completeness_cap.py
-          python scripts/hotfix_link_resolver_pagination.py
-          python scripts/hotfix_desktop_scroll.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py
-          grep -q 'MAX_PAGES = 500' scripts/complete_support_coverage.py
-          grep -q 'for page in range(1, 9):' scripts/resolve_support_links.py
-          grep -q 'current_exact = False' scripts/resolve_support_links.py
+          python scripts/harden_complete_crawler.py
+          python scripts/harden_network_retries.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py
 
-      - name: Fresh second-chance crawl
+      - name: Fresh crawl of central portals and support offices
         run: python scripts/scrape_jobs.py
 
       - name: Re-check Gyeonggi support-office boards
         run: python scripts/repair_gyeonggi_support.py
 
-      - name: Completeness backfill pass
+      - name: Gap audit pass 1 through recent 90-day boundary
         run: python scripts/complete_support_coverage.py
 
-      - name: Merge with previously published active postings
-        run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_recovery_base.json
-
-      - name: Normalize exact detail links
-        run: python scripts/resolve_support_links.py
-
-      - name: Enrich missing periods only through cached/detail helpers
+      - name: Gap audit pass 2 after transient-failure delay
         run: |
+          sleep 12
+          python scripts/complete_support_coverage.py
+
+      - name: Merge fresh snapshot with previously published active postings
+        run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_recovery_base.json --report missing_recovery_report.json
+
+      - name: Resolve exact links and periods
+        run: |
+          python scripts/resolve_support_links.py
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
 
-      - name: Require proven 25+11 traversal
+      - name: Require proven support-office traversal and exact links
         run: python scripts/verify_support_completeness.py
 
-      - name: Validate recovered dataset
+      - name: Validate recovered dataset against published baseline
         run: python scripts/verify_jobs.py --previous /tmp/jobs_recovery_base.json
+
+      - name: Persist append-only recruitment ledger and checkpoints
+        run: python scripts/update_collection_state.py
 
       - name: Recovery loss guard
         run: |
@@ -90,7 +94,7 @@ jobs:
           after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
           if len(after)<100: raise SystemExit(f'Recovery output too small: {len(after)}')
           if len(before)>=100 and len(after)<len(before)*0.70:
-              raise SystemExit(f'Recovery lost too much: {len(before)} -> {len(after)}')
+              raise SystemExit(f'Recovery unexpectedly lost >30%: {len(before)} -> {len(after)}')
           print(f'Recovery guard passed: {len(before)} -> {len(after)}')
           PY
 
@@ -98,10 +102,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json missing_recovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py
+          git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           git diff --cached --quiet && exit 0
           git commit -m 'Recover missed recruitment postings from official sources'
           git pull --rebase
           git push
-
-# This is a second chance 30 minutes after the main hourly crawl, not another duplicate 500-page link scan.
