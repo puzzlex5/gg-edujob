@@ -1,0 +1,62 @@
+name: Verify 수도권에듀잡 search integrity
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'index.html'
+      - 'jobs.json'
+      - 'scripts/ensure_search_logic.py'
+      - 'scripts/verify_search.py'
+      - '.github/workflows/search-integrity.yml'
+  schedule:
+    - cron: '37 * * * *' # 매시간 37분, 수집 작업 뒤 검색 정확도 독립 재검증
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-search-integrity
+  cancel-in-progress: true
+
+jobs:
+  verify-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile search guard scripts
+        run: python -m py_compile scripts/ensure_search_logic.py scripts/verify_search.py
+      - name: Enforce robust frontend search logic
+        run: python scripts/ensure_search_logic.py
+      - name: Check inline JavaScript syntax before any commit
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('index.html').read_text(encoding='utf-8')
+          blocks = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, flags=re.S|re.I)
+          if not blocks:
+              raise SystemExit('No inline JavaScript found in index.html')
+          Path('/tmp/index-inline.js').write_text('\n'.join(blocks), encoding='utf-8')
+          PY
+          node --check /tmp/index-inline.js
+      - name: Verify search against real collected postings
+        run: python scripts/verify_search.py
+      - name: Commit search UI repair only after all checks pass
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Keep search aligned with collected job data'
+          git pull --rebase
+          git push
