@@ -14,6 +14,7 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 KST = timezone(timedelta(hours=9))
 TODAY = datetime.now(KST).date()
+LOOKBACK_DAYS = 90
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 
 
@@ -80,8 +81,9 @@ def should_carry(job):
         return end >= TODAY
     registered = parse_date(job.get("registered"))
     if registered:
-        # Unknown deadline: keep a short safety window so a one-hour parser/network miss cannot hide it.
-        return registered >= TODAY - timedelta(days=30)
+        # Unknown deadline: match the collector's full 90-day lookback. A temporarily missed
+        # posting must not disappear merely because its deadline could not be parsed.
+        return registered >= TODAY - timedelta(days=LOOKBACK_DAYS)
     return False
 
 
@@ -150,6 +152,7 @@ def main():
         "mergedCount": len(merged),
         "carriedForward": len(carried),
         "enrichedFromPrevious": enriched,
+        "unknownDeadlineCarryDays": LOOKBACK_DAYS,
         "policy": "fresh wins; active/recent previous postings survive transient one-run disappearance",
         "generatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),
     }
