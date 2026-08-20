@@ -1,0 +1,90 @@
+name: Daily deep recruitment audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 19 * * *' # 매일 04:23 KST, 최근 90일 전체 정밀감사
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Preserve published baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+          jobs=d.get('jobs',[]) if isinstance(d,dict) else []
+          if len(jobs)<100: raise SystemExit(f'Unsafe baseline: {len(jobs)} jobs')
+          PY
+          cp jobs.json /tmp/jobs_daily_baseline.json
+      - name: Apply collector compatibility and safety patches
+        run: |
+          python scripts/hotfix_sources.py
+          python scripts/hotfix_support_office.py
+          python scripts/hotfix_repair_links.py
+          python scripts/hotfix_completeness_cap.py
+          python scripts/hotfix_link_resolver_pagination.py
+          python scripts/hotfix_desktop_scroll.py
+          python -m py_compile scripts/*.py
+      - name: Re-discover and collect all configured official sources
+        run: python scripts/scrape_jobs.py
+      - name: Re-check all Gyeonggi support-office boards
+        run: python scripts/repair_gyeonggi_support.py
+      - name: Deep 90-day completeness traversal pass 1
+        run: python scripts/complete_support_coverage.py
+      - name: Deep 90-day completeness traversal pass 2
+        run: |
+          sleep 12
+          python scripts/complete_support_coverage.py
+      - name: Preserve still-active postings from baseline if a crawl transiently missed them
+        run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_daily_baseline.json --report daily_missing_recovery_report.json
+      - name: Resolve individual detail links and enrich dates
+        run: |
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
+      - name: Require all 25+11 support offices to have proven traversal
+        run: python scripts/verify_support_completeness.py
+      - name: Independent publication verification
+        run: python scripts/verify_jobs.py --previous /tmp/jobs_daily_baseline.json
+      - name: Persist durable recruitment ledger and checkpoints
+        run: python scripts/update_collection_state.py
+      - name: Final daily audit publication guard
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          before=json.loads(Path('/tmp/jobs_daily_baseline.json').read_text(encoding='utf-8')).get('jobs',[])
+          after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
+          if len(after)<100: raise SystemExit(f'Daily audit output too small: {len(after)}')
+          if len(before)>=100 and len(after)<len(before)*0.70:
+              raise SystemExit(f'Daily audit lost >30% of baseline: {len(before)} -> {len(after)}')
+          print(f'Daily deep audit guard passed: {len(before)} -> {len(after)}')
+          PY
+      - name: Commit only verified deep-audit recovery
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobs.json job_ledger.json collection_state.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py
+          git diff --cached --quiet && exit 0
+          git commit -m 'Daily deep audit recovered verified recruitment postings'
+          git pull --rebase
+          git push
