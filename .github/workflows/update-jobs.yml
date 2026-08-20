@@ -12,6 +12,7 @@ on:
       - 'scripts/verify_jobs.py'
       - 'scripts/merge_recovery_snapshot.py'
       - 'scripts/update_collection_state.py'
+      - 'scripts/update_collector_status.py'
       - 'scripts/harden_fast_pagination.py'
       - 'scripts/harden_network_retries.py'
       - 'scripts/hotfix_support_office.py'
@@ -42,6 +43,8 @@ jobs:
           python-version: '3.12'
       - name: Install collector dependencies
         run: pip install requests beautifulsoup4
+      - name: Mark fast refresh start
+        run: python scripts/update_collector_status.py --workflow fast --stage baseline --state running
 
       - name: Preserve newest valid published baseline
         shell: bash
@@ -76,32 +79,41 @@ jobs:
 
       - name: Prepare resilient fast collectors
         run: |
+          python scripts/update_collector_status.py --workflow fast --stage hardening --state running
           python scripts/hotfix_sources.py
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
           python scripts/harden_fast_pagination.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py
           grep -q 'FAST_MAX_PAGES = 60' scripts/scrape_jobs.py
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
       - name: Fast crawl of central portals and support-office current pages
-        run: python scripts/scrape_jobs.py
+        run: |
+          python scripts/update_collector_status.py --workflow fast --stage fast-crawl --state running
+          python scripts/scrape_jobs.py
 
       - name: Fast re-check of Gyeonggi support-office boards
-        run: python scripts/repair_gyeonggi_support.py
+        run: |
+          python scripts/update_collector_status.py --workflow fast --stage gyeonggi-recheck --state running
+          python scripts/repair_gyeonggi_support.py
 
       - name: Preserve active postings missing only from this fast crawl
-        run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_previous.json --report missing_recovery_report.json
+        run: |
+          python scripts/update_collector_status.py --workflow fast --stage baseline-merge --state running
+          python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_previous.json --report missing_recovery_report.json
 
       - name: Resolve exact detail links and enrich application/hiring periods
         run: |
+          python scripts/update_collector_status.py --workflow fast --stage detail-enrichment --state running
           python scripts/resolve_support_links.py
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
 
       - name: Independent fast-publication verification
         run: |
+          python scripts/update_collector_status.py --workflow fast --stage verification --state running
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
             cp /tmp/jobs_previous.json jobs.json
             echo 'Fast refresh validation failed; kept previous publication.' >&2
@@ -109,10 +121,13 @@ jobs:
           fi
 
       - name: Persist append-only recruitment ledger and checkpoints
-        run: python scripts/update_collection_state.py
+        run: |
+          python scripts/update_collector_status.py --workflow fast --stage ledger --state running
+          python scripts/update_collection_state.py
 
       - name: Final publication guard
         run: |
+          python scripts/update_collector_status.py --workflow fast --stage publication-guard --state running
           python - <<'PY'
           import json
           from pathlib import Path
@@ -121,8 +136,25 @@ jobs:
           if len(jobs)<100: raise SystemExit(f'Refusing publication: only {len(jobs)} jobs')
           print(f'Fast publication guard passed: {len(jobs)} jobs')
           PY
+          python scripts/update_collector_status.py --workflow fast --stage complete --state success
+
+      - name: Mark fast refresh failure
+        if: failure()
+        run: python scripts/update_collector_status.py --workflow fast --state failed
+
+      - name: Commit fast collector status even on failure
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add collector_status.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record fast collector execution status'
+          git pull --rebase
+          git push
 
       - name: Commit only verified fast refresh state
+        if: success()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
