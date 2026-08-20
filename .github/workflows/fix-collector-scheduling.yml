@@ -1,10 +1,9 @@
 name: Fix collector scheduling
 
 on:
-  push:
-    paths:
-      - '.github/workflows/fix-collector-scheduling.yml'
   workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
@@ -25,7 +24,7 @@ jobs:
           configs = {
               '.github/workflows/update-jobs.yml': (
                   "- cron: '17 */2 * * *' # 2시간마다 빠른 신규/변경 공고 수집",
-                  "- cron: '17 0,2,4,6,8,10,12,14,16,18,22 * * *' # 2시간 주기 기반, 04:23~06:53 KST 정밀감사 창 보호",
+                  "- cron: '17 0,2,4,6,8,10,12,14,16,22 * * *' # 2시간 주기 기반, 04:23~06:53 KST 정밀감사 창 보호",
               ),
               '.github/workflows/recover-missing-jobs.yml': (
                   "- cron: '47 */6 * * *' # 6시간마다 독립 누락 복구·재대조",
@@ -36,7 +35,6 @@ jobs:
           for path_s, (old_cron, new_cron) in configs.items():
               p = Path(path_s)
               s = p.read_text(encoding='utf-8')
-              # Heavy data writers must not recursively launch on their own script/data commits.
               s2, n = re.subn(r"\n  push:\n    paths:\n(?:      - .*\n)+", "\n", s, count=1)
               if n == 0 and '\n  push:\n' in s:
                   raise SystemExit(f'Could not safely remove push trigger from {path_s}')
@@ -54,23 +52,25 @@ jobs:
               raise SystemExit('Could not safely remove deep-audit push trigger')
           deep.write_text(s2, encoding='utf-8')
 
-          # Assertions: only schedules/manual dispatch remain on the three heavy writers.
           for path_s in [*configs.keys(), str(deep)]:
               text = Path(path_s).read_text(encoding='utf-8')
               if '\n  push:\n' in text:
                   raise SystemExit(f'Recursive push trigger remains in {path_s}')
-          if "17 0,2,4,6,8,10,12,14,16,18,22 * * *" not in Path('.github/workflows/update-jobs.yml').read_text(encoding='utf-8'):
+          if "17 0,2,4,6,8,10,12,14,16,22 * * *" not in Path('.github/workflows/update-jobs.yml').read_text(encoding='utf-8'):
               raise SystemExit('Fast collector protected schedule missing')
           if "47 1,7,13,16 * * *" not in Path('.github/workflows/recover-missing-jobs.yml').read_text(encoding='utf-8'):
               raise SystemExit('Recovery protected schedule missing')
           print('Collector schedules now reserve the deep-audit window and cannot self-trigger recursively.')
           PY
+      - name: Remove one-shot migration workflow
+        run: rm .github/workflows/fix-collector-scheduling.yml
       - name: Commit corrected schedules
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add .github/workflows/update-jobs.yml .github/workflows/recover-missing-jobs.yml .github/workflows/daily-deep-audit.yml
+          git add .github/workflows/update-jobs.yml .github/workflows/recover-missing-jobs.yml .github/workflows/daily-deep-audit.yml .github/workflows/fix-collector-scheduling.yml
           git diff --cached --quiet && exit 0
           git commit -m 'Reserve deep audit window and stop recursive collector triggers'
+          git reset --hard HEAD
           git pull --rebase
           git push
