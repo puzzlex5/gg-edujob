@@ -11,6 +11,7 @@ on:
       - 'scripts/harden_network_retries.py'
       - 'scripts/complete_support_coverage.py'
       - 'scripts/verify_support_completeness.py'
+      - 'scripts/update_deep_audit_status.py'
       - '.github/workflows/daily-deep-audit.yml'
   schedule:
     - cron: '23 19 * * *' # 매일 04:23 KST, 최근 90일 전체 정밀감사
@@ -37,6 +38,7 @@ jobs:
         run: pip install requests beautifulsoup4
       - name: Preserve published baseline
         run: |
+          echo baseline >/tmp/deep_audit_stage
           python - <<'PY'
           import json
           from pathlib import Path
@@ -45,42 +47,77 @@ jobs:
           if len(jobs)<100: raise SystemExit(f'Unsafe baseline: {len(jobs)} jobs')
           PY
           cp jobs.json /tmp/jobs_daily_baseline.json
+          python scripts/update_deep_audit_status.py baseline running
       - name: Prepare deep collectors and retry policy
         run: |
+          echo hardening >/tmp/deep_audit_stage
           python scripts/hotfix_sources.py
           python scripts/hotfix_repair_links.py
           python scripts/harden_deep_audit.py
           python scripts/harden_network_retries.py
           python -m py_compile scripts/*.py
+          python scripts/update_deep_audit_status.py hardening running
       - name: Discover newly linked official recruitment boards
-        run: python scripts/discover_recruitment_boards.py
+        run: |
+          echo board-discovery >/tmp/deep_audit_stage
+          python scripts/discover_recruitment_boards.py
+          python scripts/update_deep_audit_status.py board-discovery running
       - name: Re-discover and collect all configured official sources
-        run: python scripts/scrape_jobs.py
+        run: |
+          echo primary-crawl >/tmp/deep_audit_stage
+          python scripts/scrape_jobs.py
+          python scripts/update_deep_audit_status.py primary-crawl running
       - name: Re-check all Gyeonggi support-office boards
-        run: python scripts/repair_gyeonggi_support.py
+        run: |
+          echo gyeonggi-recheck >/tmp/deep_audit_stage
+          python scripts/repair_gyeonggi_support.py
+          python scripts/update_deep_audit_status.py gyeonggi-recheck running
       - name: Deep 90-day completeness traversal pass 1
-        run: python scripts/complete_support_coverage.py
+        run: |
+          echo coverage-pass-1 >/tmp/deep_audit_stage
+          python scripts/complete_support_coverage.py
+          python scripts/update_deep_audit_status.py coverage-pass-1 running
       - name: Deep 90-day completeness traversal pass 2
         run: |
+          echo coverage-pass-2 >/tmp/deep_audit_stage
           sleep 12
           python scripts/complete_support_coverage.py
+          python scripts/update_deep_audit_status.py coverage-pass-2 running
       - name: Sanitize impossible registration dates
-        run: python scripts/sanitize_job_dates.py
+        run: |
+          echo date-sanitize >/tmp/deep_audit_stage
+          python scripts/sanitize_job_dates.py
+          python scripts/update_deep_audit_status.py date-sanitize running
       - name: Preserve still-active postings from baseline if a crawl transiently missed them
-        run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_daily_baseline.json --report daily_missing_recovery_report.json
+        run: |
+          echo baseline-merge >/tmp/deep_audit_stage
+          python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_daily_baseline.json --report daily_missing_recovery_report.json
+          python scripts/update_deep_audit_status.py baseline-merge running
       - name: Resolve individual detail links and enrich dates
         run: |
+          echo detail-enrichment >/tmp/deep_audit_stage
           python scripts/resolve_support_links.py
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
+          python scripts/update_deep_audit_status.py detail-enrichment running
       - name: Require all 25+11 support offices to have proven traversal
-        run: python scripts/verify_support_completeness.py
+        run: |
+          echo completeness-verification >/tmp/deep_audit_stage
+          python scripts/verify_support_completeness.py
+          python scripts/update_deep_audit_status.py completeness-verification running
       - name: Independent publication verification
-        run: python scripts/verify_jobs.py --previous /tmp/jobs_daily_baseline.json
+        run: |
+          echo publication-verification >/tmp/deep_audit_stage
+          python scripts/verify_jobs.py --previous /tmp/jobs_daily_baseline.json
+          python scripts/update_deep_audit_status.py publication-verification running
       - name: Persist durable recruitment ledger and checkpoints
-        run: python scripts/update_collection_state.py
+        run: |
+          echo ledger >/tmp/deep_audit_stage
+          python scripts/update_collection_state.py
+          python scripts/update_deep_audit_status.py ledger running
       - name: Final daily audit publication guard
         run: |
+          echo publication-guard >/tmp/deep_audit_stage
           python - <<'PY'
           import json
           from pathlib import Path
@@ -91,12 +128,28 @@ jobs:
               raise SystemExit(f'Daily audit lost >30% of baseline: {len(before)} -> {len(after)}')
           print(f'Daily deep audit guard passed: {len(before)} -> {len(after)}')
           PY
+          python scripts/update_deep_audit_status.py complete success
       - name: Commit only verified deep-audit recovery
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json collection_state.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
+          git add jobs.json job_ledger.json collection_state.json deep_audit_status.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
           git diff --cached --quiet && exit 0
           git commit -m 'Daily deep audit recovered verified recruitment postings'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+      - name: Record failed deep-audit stage without publishing unverified data
+        if: failure()
+        run: |
+          stage="$(cat /tmp/deep_audit_stage 2>/dev/null || echo unknown)"
+          git reset --hard HEAD
+          git clean -fd
+          python scripts/update_deep_audit_status.py "$stage" failed
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add deep_audit_status.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Record failed deep audit stage: $stage"
           git pull --rebase
           git push
