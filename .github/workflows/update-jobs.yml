@@ -13,6 +13,7 @@ on:
       - 'scripts/merge_recovery_snapshot.py'
       - 'scripts/update_collection_state.py'
       - 'scripts/update_collector_status.py'
+      - 'scripts/sanitize_job_dates.py'
       - 'scripts/harden_fast_pagination.py'
       - 'scripts/harden_network_retries.py'
       - 'scripts/hotfix_repair_links.py'
@@ -83,7 +84,7 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_fast_pagination.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py
           grep -q 'FAST_MAX_PAGES = 60' scripts/scrape_jobs.py
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
@@ -96,6 +97,9 @@ jobs:
         run: |
           python scripts/update_collector_status.py --workflow fast --stage gyeonggi-recheck --state running
           python scripts/repair_gyeonggi_support.py
+
+      - name: Sanitize impossible registration dates
+        run: python scripts/sanitize_job_dates.py
 
       - name: Preserve active postings missing only from this fast crawl
         run: |
@@ -141,7 +145,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json date_anomaly_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           git diff --cached --quiet && exit 0
           git commit -m 'Fast refresh verified recruitment postings'
           git pull --rebase
