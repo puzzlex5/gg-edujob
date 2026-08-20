@@ -1,0 +1,38 @@
+name: Apply desktop scroll fix
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/hotfix_desktop_scroll.py'
+      - '.github/workflows/desktop-scroll-fix.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-desktop-scroll
+  cancel-in-progress: true
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply independent desktop scrolling
+        run: |
+          python scripts/hotfix_desktop_scroll.py
+          grep -q '@media(min-width:901px)' index.html
+          grep -q 'overscroll-behavior:contain' index.html
+      - name: Commit desktop UX fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Fix independent desktop filter and results scrolling'
+          git pull --rebase
+          git push
