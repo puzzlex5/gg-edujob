@@ -19,8 +19,7 @@ on:
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
   schedule:
-    - cron: '5 22 * * *' # 07:05 KST - 1차 수집/검증
-    - cron: '5 23 * * *' # 08:05 KST - 2차 재수집/재검증
+    - cron: '17 * * * *' # 매시간 17분(UTC), KST도 매시간 17분에 전체 수집/검증
 
 permissions:
   contents: write
@@ -104,7 +103,8 @@ jobs:
           python scripts/hotfix_desktop_scroll.py
           python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_desktop_scroll.py
           grep -q 'detailLinkResolved' index.html
-          grep -q 'overscroll-behavior:contain' index.html
+          grep -q 'overscroll-behavior-y:contain' index.html
+          grep -q '@media (hover:hover) and (pointer:fine)' index.html
           grep -q 'subject_parts=' scripts/scrape_jobs.py
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/scrape_jobs.py
           grep -q 'data_id = clean(str(a.get("data-id", "")))' scripts/repair_gyeonggi_support.py
@@ -181,4 +181,4 @@ jobs:
           git pull --rebase
           git push
 
-# retrigger: dynamic support-office completeness and independent desktop scrolling
+# hourly verified refresh: full source crawl, completeness repair, exact-link/period enrichment, rollback on failure
