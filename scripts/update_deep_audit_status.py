@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Retrigger marker: rerun deep audit after collector scheduling repair.
 import json
 import sys
 from datetime import datetime, timedelta, timezone
