@@ -2,6 +2,14 @@ name: Daily deep recruitment audit
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/discover_recruitment_boards.py'
+      - 'scripts/harden_complete_crawler.py'
+      - 'scripts/harden_network_retries.py'
+      - 'scripts/complete_support_coverage.py'
+      - 'scripts/verify_support_completeness.py'
+      - '.github/workflows/daily-deep-audit.yml'
   schedule:
     - cron: '23 19 * * *' # 매일 04:23 KST, 최근 90일 전체 정밀감사
 
