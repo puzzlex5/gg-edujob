@@ -1,4 +1,4 @@
-name: Diagnose support-office collector
+name: Diagnose fast collector hardening
 
 on:
   push:
@@ -11,89 +11,44 @@ permissions:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install requests beautifulsoup4
-      - name: Syntax check
-        run: python -m py_compile scripts/scrape_jobs.py scripts/verify_jobs.py
-      - name: Inspect representative Gyeonggi MirCMS boards
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json, requests
-          from bs4 import BeautifulSoup
-          boards = {
-            '고양': 'https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=8731&mi=15413',
-            '구리남양주': 'https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084',
-            '가평': 'https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2721&mi=3284',
-          }
-          s=requests.Session(); s.headers['User-Agent']='Mozilla/5.0 (compatible; metro-edujob-diagnostic/1.0)'
-          out={}
-          for name,url in boards.items():
-            item={'url':url}
-            try:
-              r=s.get(url,timeout=20,allow_redirects=True)
-              item.update(status=r.status_code, finalUrl=r.url, bytes=len(r.content))
-              soup=BeautifulSoup(r.text,'html.parser')
-              rows=[]
-              for tr in soup.find_all('tr'):
-                tds=tr.find_all('td')
-                if not tds: continue
-                anchors=[]
-                for a in tr.find_all('a'):
-                  anchors.append({'text':' '.join(a.stripped_strings)[:180], 'href':a.get('href',''), 'onclick':a.get('onclick','')})
-                if anchors:
-                  rows.append({'text':' '.join(tr.stripped_strings)[:400], 'anchors':anchors})
-                if len(rows)>=5: break
-              item['rows']=rows
-              item['title']=soup.title.get_text(' ',strip=True) if soup.title else ''
-            except Exception as e:
-              item['error']=repr(e)
-            out[name]=item
-          open('support-board-samples.json','w',encoding='utf-8').write(json.dumps(out,ensure_ascii=False,indent=2))
-          PY
-      - name: Run collector and preserve diagnostics
+      - name: Run hardening chain and capture exact failure
         shell: bash
         run: |
           set +e
-          cp jobs.json /tmp/jobs-before.json
-          python scripts/scrape_jobs.py > collector-debug.txt 2>&1
-          COLLECT=$?
-          echo "collector_exit=$COLLECT" >> collector-debug.txt
-          if [ -f board_cache.json ]; then
-            echo "board_cache_exists=yes" >> collector-debug.txt
-            echo "board_cache_bytes=$(wc -c < board_cache.json)" >> collector-debug.txt
-          else
-            echo "board_cache_exists=no" >> collector-debug.txt
-          fi
-          python scripts/verify_jobs.py --previous /tmp/jobs-before.json >> collector-debug.txt 2>&1
-          VERIFY=$?
-          echo "verifier_exit=$VERIFY" >> collector-debug.txt
-          python - <<'PY' >> collector-debug.txt 2>&1
-          import json
-          from pathlib import Path
-          p=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
-          print('updatedAt=',p.get('updatedAt'))
-          print('total=',len(p.get('jobs',[])))
-          print('verification=',json.dumps(p.get('verification',{}),ensure_ascii=False))
-          for area in ('gyeonggi','seoul'):
-              print('---',area,'---')
-              c=p.get('sources',{}).get(area,{}).get('central',{})
-              print('central',c.get('count'),c.get('state'),c.get('ok'))
-              for s in p.get('sources',{}).get(area,{}).get('supportOffices',[]):
-                  print(s.get('name'), 'count=',s.get('count'), 'raw=',s.get('rawRows'), 'state=',s.get('state'), 'ok=',s.get('ok'), 'msg=',s.get('message'), 'boards=',len(s.get('boards',[])))
-          PY
+          : > hardening-debug.txt
+          for cmd in \
+            "python scripts/hotfix_sources.py" \
+            "python scripts/hotfix_support_office.py" \
+            "python scripts/hotfix_repair_links.py" \
+            "python scripts/harden_fast_pagination.py" \
+            "python scripts/harden_network_retries.py" \
+            "python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py" \
+            "grep -q 'FAST_MAX_PAGES = 60' scripts/scrape_jobs.py" \
+            "grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py"
+          do
+            echo "=== $cmd ===" >> hardening-debug.txt
+            bash -lc "$cmd" >> hardening-debug.txt 2>&1
+            rc=$?
+            echo "exit=$rc" >> hardening-debug.txt
+            if [ $rc -ne 0 ]; then
+              echo "FAILED_COMMAND=$cmd" >> hardening-debug.txt
+              break
+            fi
+          done
           exit 0
-      - name: Commit diagnostics only
+      - name: Commit hardening diagnostic
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add collector-debug.txt board_cache.json support-board-samples.json || true
+          git add hardening-debug.txt
           git diff --cached --quiet && exit 0
-          git commit -m 'Collector diagnostic results [skip ci]'
+          git commit -m 'Capture fast hardening failure details [skip ci]'
           git pull --rebase
           git push
