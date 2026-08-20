@@ -17,7 +17,6 @@ on:
       - 'scripts/hotfix_support_office.py'
       - 'scripts/hotfix_repair_links.py'
       - 'scripts/hotfix_sources.py'
-      - 'scripts/diagnose_support_links.py'
       - 'sources.json'
       - '.github/workflows/update-jobs.yml'
   schedule:
@@ -86,18 +85,6 @@ jobs:
           fi
       - name: Apply targeted official-source board fixes
         run: python scripts/hotfix_sources.py
-      - name: Diagnose exact support-office detail-link structures
-        run: python scripts/diagnose_support_links.py
-      - name: Save source fixes and link diagnostics for repair analysis
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add sources.json support_link_diagnostics.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'Record source and support-link diagnostics'
-            git pull --rebase
-            git push
-          fi
       - name: Apply support-office parser and exact-link compatibility fixes
         run: |
           python scripts/hotfix_support_office.py
@@ -193,4 +180,5 @@ jobs:
           git pull --rebase
           git push
 
-# hourly verified refresh: full source crawl, completeness repair, exact-link/period enrichment, rollback on failure
+# Hourly path intentionally excludes the expensive link-structure snapshot diagnostic.
+# Exact-link resolution and 25+11 completeness verification still run every hour.
