@@ -6,6 +6,7 @@ board ended/repeated. They must not stop merely because a page happened to conta
 no matching recent recruitment titles.
 """
 from pathlib import Path
+import runpy
 
 ROOT = Path(__file__).resolve().parents[1]
 p = ROOT / "scripts/scrape_jobs.py"
@@ -43,4 +44,10 @@ for required in ("FAST_MAX_PAGES = 60", "range(1, FAST_MAX_PAGES + 1)", '"capHit
         raise SystemExit(f"Fast pagination hardening missing: {required}")
 
 p.write_text(s, encoding="utf-8")
+
+# Apply stable posting IDs and conservative deduplication in the same mandatory
+# pre-crawl hardening phase.  This prevents generic titles used by different
+# schools from being silently collapsed into one job.
+runpy.run_path(str(ROOT / "scripts/harden_identity_dedupe.py"), run_name="__main__")
+
 print("Fast support-office pagination hardened")
