@@ -1,0 +1,53 @@
+name: Verify exact support-office posting links
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/resolve_support_links.py'
+      - 'scripts/hotfix_link_resolver_pagination.py'
+      - 'scripts/verify_exact_support_links.py'
+      - '.github/workflows/exact-link-integrity.yml'
+  schedule:
+    - cron: '42 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-exact-links
+  cancel-in-progress: true
+
+jobs:
+  exact-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install resolver dependencies
+        run: pip install requests beautifulsoup4
+      - name: Remove legacy fixed-page resolver cap
+        run: |
+          python scripts/hotfix_link_resolver_pagination.py
+          python -m py_compile scripts/resolve_support_links.py scripts/hotfix_link_resolver_pagination.py scripts/verify_exact_support_links.py
+          ! grep -q 'for page in range(1, 9):' scripts/resolve_support_links.py
+          grep -q 'for page in range(1, 501):' scripts/resolve_support_links.py
+          grep -q 'seen_page_sigs' scripts/resolve_support_links.py
+      - name: Resolve exact individual posting links through board exhaustion
+        run: python scripts/resolve_support_links.py
+      - name: Require exact links for every support-office job
+        run: python scripts/verify_exact_support_links.py
+      - name: Commit verified resolver, jobs and link report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/resolve_support_links.py jobs.json support_link_resolution.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Refresh complete exact support-office links'
+          git pull --rebase
+          git push
