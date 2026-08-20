@@ -7,6 +7,7 @@ on:
       - 'scripts/discover_recruitment_boards.py'
       - 'scripts/harden_complete_crawler.py'
       - 'scripts/harden_network_retries.py'
+      - 'scripts/harden_completeness_semantics.py'
       - 'scripts/complete_support_coverage.py'
       - 'scripts/verify_support_completeness.py'
       - '.github/workflows/daily-deep-audit.yml'
@@ -50,6 +51,7 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_complete_crawler.py
           python scripts/harden_network_retries.py
+          python scripts/harden_completeness_semantics.py
           python -m py_compile scripts/*.py
       - name: Discover newly linked official recruitment boards
         run: python scripts/discover_recruitment_boards.py
@@ -92,7 +94,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json collection_state.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py
+          git add jobs.json job_ledger.json collection_state.json board_cache.json support_coverage_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_completeness_semantics.py
           git diff --cached --quiet && exit 0
           git commit -m 'Daily deep audit recovered verified recruitment postings'
           git pull --rebase
