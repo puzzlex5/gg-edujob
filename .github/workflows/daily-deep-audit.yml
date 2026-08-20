@@ -47,7 +47,6 @@ jobs:
       - name: Prepare deep collectors and retry policy
         run: |
           python scripts/hotfix_sources.py
-          python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
           python scripts/harden_complete_crawler.py
           python scripts/harden_network_retries.py
