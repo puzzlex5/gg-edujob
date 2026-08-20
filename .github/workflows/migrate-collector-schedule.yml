@@ -24,28 +24,26 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          def replace_required(path, old, new):
+          def replace_one_of(path, olds, new):
               p=Path(path); s=p.read_text(encoding='utf-8')
-              if old in s:
-                  s=s.replace(old,new,1)
-              elif new not in s:
-                  raise SystemExit(f'Expected marker missing in {path}: {old}')
-              p.write_text(s,encoding='utf-8')
+              if new in s:
+                  return
+              for old in olds:
+                  if old in s:
+                      p.write_text(s.replace(old,new,1),encoding='utf-8')
+                      return
+              raise SystemExit(f'Expected marker missing in {path}: {olds}')
 
           main='.github/workflows/update-jobs.yml'
           recover='.github/workflows/recover-missing-jobs.yml'
 
-          # Heavy verified collection: allow each run to finish, every two hours instead of piling up hourly.
-          replace_required(main, "- cron: '17 * * * *' # 매시간 17분(UTC), KST도 매시간 17분에 전체 수집/검증",
-                                 "- cron: '17 */2 * * *' # 2시간마다 17분(UTC); 무거운 검증 실행이 끝날 시간을 보장")
-          replace_required(main, "# Exact-link resolution and 25+11 completeness verification still run every hour.",
-                                 "# Exact-link resolution and 25+11 completeness verification run on every 2-hour verified refresh.")
+          replace_one_of(main,
+              ["- cron: '17 * * * *'", "- cron: '17 * * * *' # 매시간 17분(UTC), KST도 매시간 17분에 전체 수집/검증"],
+              "- cron: '17 */2 * * *' # 2시간마다 17분(UTC); 무거운 검증 실행이 끝날 시간을 보장")
+          replace_one_of(recover,
+              ["- cron: '47 * * * *'", "- cron: '47 * * * *' # 매시간 본 수집 후 별도 누락 복구 재탐색"],
+              "- cron: '47 */6 * * *' # 6시간마다 별도 누락 복구·재대조")
 
-          # Recovery is an audit layer, not another competing full crawl every hour.
-          replace_required(recover, "- cron: '47 * * * *' # 매시간 본 수집 후 별도 누락 복구 재탐색",
-                                    "- cron: '47 */6 * * *' # 6시간마다 별도 누락 복구·재대조")
-
-          # Persist ledger/checkpoint after validation but before commit.
           main_text=Path(main).read_text(encoding='utf-8')
           marker="      - name: Final guard against empty/corrupt publication\n"
           state_step=(
@@ -55,16 +53,14 @@ jobs:
           if state_step not in main_text:
               if marker not in main_text: raise SystemExit('Main publication marker missing')
               main_text=main_text.replace(marker,state_step+marker,1)
-          main_text=main_text.replace(
-              "git add jobs.json board_cache.json index.html scripts/scrape_jobs.py",
-              "git add jobs.json job_ledger.json collection_state.json board_cache.json index.html scripts/update_collection_state.py scripts/scrape_jobs.py",
-              1,
-          )
-          main_text=main_text.replace(
-              "      - 'scripts/verify_jobs.py'\n",
-              "      - 'scripts/verify_jobs.py'\n      - 'scripts/update_collection_state.py'\n",
-              1,
-          )
+          if "      - 'scripts/update_collection_state.py'\n" not in main_text:
+              anchor="      - 'scripts/verify_jobs.py'\n"
+              if anchor not in main_text: raise SystemExit('Main path trigger anchor missing')
+              main_text=main_text.replace(anchor,anchor+"      - 'scripts/update_collection_state.py'\n",1)
+          if 'job_ledger.json collection_state.json' not in main_text:
+              anchor='git add jobs.json '
+              if anchor not in main_text: raise SystemExit('Main git add anchor missing')
+              main_text=main_text.replace(anchor,'git add jobs.json job_ledger.json collection_state.json ',1)
           Path(main).write_text(main_text,encoding='utf-8')
 
           rec_text=Path(recover).read_text(encoding='utf-8')
@@ -76,19 +72,16 @@ jobs:
           if rec_state not in rec_text:
               if rec_marker not in rec_text: raise SystemExit('Recovery publication marker missing')
               rec_text=rec_text.replace(rec_marker,rec_state+rec_marker,1)
-          rec_text=rec_text.replace(
-              "git add jobs.json board_cache.json",
-              "git add jobs.json job_ledger.json collection_state.json board_cache.json",
-              1,
-          )
-          rec_text=rec_text.replace(
-              "scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py",
-              "scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/resolve_support_links.py",
-              1,
-          )
+          if "      - 'scripts/update_collection_state.py'\n" not in rec_text:
+              anchor="      - 'scripts/merge_recovery_snapshot.py'\n"
+              if anchor in rec_text:
+                  rec_text=rec_text.replace(anchor,anchor+"      - 'scripts/update_collection_state.py'\n",1)
+          if 'job_ledger.json collection_state.json' not in rec_text:
+              anchor='git add jobs.json '
+              if anchor not in rec_text: raise SystemExit('Recovery git add anchor missing')
+              rec_text=rec_text.replace(anchor,'git add jobs.json job_ledger.json collection_state.json ',1)
           Path(recover).write_text(rec_text,encoding='utf-8')
 
-          # Syntax / migration assertions.
           for p in (main,recover):
               txt=Path(p).read_text(encoding='utf-8')
               if 'update_collection_state.py' not in txt: raise SystemExit(f'collection memory not wired into {p}')
