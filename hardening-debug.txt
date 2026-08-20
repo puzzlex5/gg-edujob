@@ -1,0 +1,13 @@
+=== python scripts/hotfix_sources.py ===
+SOURCE_HOTFIX_CHANGED False
+exit=0
+=== python scripts/hotfix_support_office.py ===
+Traceback (most recent call last):
+  File "/home/runner/work/gg-edujob/gg-edujob/scripts/hotfix_support_office.py", line 244, in <module>
+    if patch_index(): changed.append('index.html')
+       ^^^^^^^^^^^^^
+  File "/home/runner/work/gg-edujob/gg-edujob/scripts/hotfix_support_office.py", line 62, in patch_index
+    raise RuntimeError(f'index postingLink replacement count={n}')
+RuntimeError: index postingLink replacement count=0
+exit=1
+FAILED_COMMAND=python scripts/hotfix_support_office.py
