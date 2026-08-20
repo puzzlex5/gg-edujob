@@ -2,8 +2,10 @@
 """Resolve exact individual posting links for support-office jobs.
 
 Gyeonggi MirCMS list pages sometimes expose the internal nttSn only inside
-JavaScript/data attributes. This pass scans the raw row HTML, reconstructs the
-canonical selectNttInfo.do URL and writes the identifiers back to jobs.json.
+JavaScript/data attributes. This pass preserves already-canonical detail URLs and
+only scans official boards when a legacy/current row is still unresolved. Those
+fallback scans are target-aware: they continue until all needed titles are found,
+the board naturally ends/repeats, or a generous safety cap is reached.
 Seoul support-office postings are normalized to the POST bridge fields used by
 open-job.html.
 """
@@ -21,9 +23,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCES = json.loads((ROOT / "sources.json").read_text(encoding="utf-8"))
 JOBS_PATH = ROOT / "jobs.json"
 REPORT_PATH = ROOT / "support_link_resolution.json"
+MAX_FALLBACK_PAGES = 60
 S = requests.Session()
 S.headers.update({
-    "User-Agent": "Mozilla/5.0 (compatible; metro-edujob-link-resolver/2.0)",
+    "User-Agent": "Mozilla/5.0 (compatible; metro-edujob-link-resolver/3.0)",
     "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.5",
 })
 
@@ -83,7 +86,6 @@ def canonical_detail(board, ntt_sn):
 
 
 def extract_ntt_sn(board, tr):
-    # Direct canonical href is strongest.
     for a in tr.find_all("a"):
         href = a.get("href", "") or ""
         if "selectNttInfo.do" in href:
@@ -106,9 +108,6 @@ def extract_ntt_sn(board, tr):
             sn = m.group(1)
             return sn, canonical_detail(board, sn), "strong-pattern"
 
-    # MirCMS internal nttSn values are normally 6-8 digits. Display sequence,
-    # dates and view counts are much shorter, so this recovers skins that hide
-    # the ID in an unnamed data argument.
     candidates = []
     for tag in tr.find_all(True):
         for key, value in tag.attrs.items():
@@ -159,19 +158,41 @@ def title_from_row(tr, headers):
     return max(anchors, key=len, default="")
 
 
-def scan_gyeonggi_office(src):
+def scan_gyeonggi_office(src, target_titles):
+    """Scan only as far as needed for unresolved titles.
+
+    Exact canonical URLs are preserved before this function is called, so a normal
+    refresh usually performs no fallback scans at all. If fallback is necessary,
+    page signatures prevent infinite/repeated pagination and the scan never assumes
+    that 8 pages (80 rows) means the board is complete.
+    """
     office = src["name"]
+    targets = set(target_titles or ())
     resolved = {}
     board_stats = []
+    if not targets:
+        return resolved, board_stats
+
+    remaining = set(targets)
     for board in src.get("boardUrls", []):
+        if not remaining:
+            break
         found = 0
         methods = {}
-        for page in range(1, 9):
+        seen_page_sigs = set()
+        natural_end = False
+        repeated = False
+        access_error = False
+        cap_hit = False
+        pages_scanned = 0
+
+        for page in range(1, MAX_FALLBACK_PAGES + 1):
             r = get(with_page(board, page))
             if not r:
+                access_error = True
                 break
             soup = BeautifulSoup(r.text, "html.parser")
-            page_rows = 0
+            page_rows = []
             for table in soup.find_all("table"):
                 headers = table_headers(table)
                 if not headers:
@@ -185,21 +206,51 @@ def scan_gyeonggi_office(src):
                     sn, detail, how = extract_ntt_sn(r.url, tr)
                     if not sn or not detail:
                         continue
-                    page_rows += 1
-                    found += 1
-                    methods[how] = methods.get(how, 0) + 1
-                    p, bbs, mi, _ = board_parts(r.url)
-                    resolved[(office, norm(title))] = {
-                        "url": detail,
-                        "nttSn": sn,
-                        "bbsId": bbs,
-                        "mi": mi,
-                        "boardUrl": board,
-                        "method": how,
-                    }
-            if page_rows == 0:
+                    page_rows.append((sn, title, detail, how, r.url))
+
+            pages_scanned = page
+            if not page_rows:
+                natural_end = True
                 break
-        board_stats.append({"board": board, "resolvedRows": found, "methods": methods})
+
+            sig = tuple(x[0] for x in page_rows)
+            if sig in seen_page_sigs:
+                repeated = True
+                break
+            seen_page_sigs.add(sig)
+
+            for sn, title, detail, how, resolved_board_url in page_rows:
+                nt = norm(title)
+                if nt not in remaining:
+                    continue
+                found += 1
+                methods[how] = methods.get(how, 0) + 1
+                _, bbs, mi, _ = board_parts(resolved_board_url)
+                resolved[(office, nt)] = {
+                    "url": detail,
+                    "nttSn": sn,
+                    "bbsId": bbs,
+                    "mi": mi,
+                    "boardUrl": board,
+                    "method": how,
+                }
+                remaining.discard(nt)
+            if not remaining:
+                break
+        else:
+            cap_hit = True
+
+        board_stats.append({
+            "board": board,
+            "resolvedTargets": found,
+            "pagesScanned": pages_scanned,
+            "naturalEnd": natural_end,
+            "paginationRepeated": repeated,
+            "accessError": access_error,
+            "capHit": cap_hit,
+            "remainingTargets": len(remaining),
+            "methods": methods,
+        })
     return resolved, board_stats
 
 
@@ -230,71 +281,103 @@ def normalize_seoul_job(job):
     return True
 
 
+def exact_gyeonggi_url(job):
+    raw = job.get("url", "") or ""
+    if "selectNttInfo.do" not in raw:
+        return False
+    q = parse_qs(urlparse(raw).query)
+    sn = (q.get("nttSn") or [""])[0]
+    bbs = (q.get("bbsId") or [""])[0]
+    if not (sn.isdigit() and bbs):
+        return False
+    job["detailLinkResolved"] = True
+    job["nttSn"] = sn
+    job["bbsId"] = bbs
+    job["mi"] = (q.get("mi") or [""])[0]
+    return True
+
+
 def main():
     payload = json.loads(JOBS_PATH.read_text(encoding="utf-8"))
-    all_map = {}
-    office_reports = []
-    for src in SOURCES["gyeonggi"]["supportOffices"]:
-        mapping, stats = scan_gyeonggi_office(src)
-        all_map.update(mapping)
-        office_reports.append({"name": src["name"], "resolvedTitles": len(mapping), "boards": stats})
-        print("SCAN", src["name"], "resolved", len(mapping))
+    jobs = payload.get("jobs", [])
 
     gyeonggi_support = 0
     gyeonggi_resolved = 0
     seoul_support = 0
     seoul_resolved = 0
     unresolved_examples = []
+    unresolved_gg = []
+    targets_by_office = {}
 
-    for job in payload.get("jobs", []):
+    # First preserve canonical identifiers. Only genuinely unresolved Gyeonggi rows
+    # become fallback scan targets, avoiding a full board rescan every two hours.
+    for job in jobs:
         if job.get("sourceType") != "교육지원청 개별 게시판":
             continue
         province = job.get("province", "")
         if province == "경기":
             gyeonggi_support += 1
-            source_names = job.get("checkedSources") or [job.get("source", "")]
-            hit = None
-            for office in source_names:
-                hit = all_map.get((office, norm(job.get("title", ""))))
-                if hit:
-                    break
-            if not hit:
-                hit = all_map.get((job.get("source", ""), norm(job.get("title", ""))))
-            if hit:
-                job.update({
-                    "url": hit["url"],
-                    "boardUrl": hit["boardUrl"],
-                    "detailLinkResolved": True,
-                    "nttSn": hit["nttSn"],
-                    "bbsId": hit["bbsId"],
-                    "mi": hit["mi"],
-                    "detailResolutionMethod": hit["method"],
-                })
+            if exact_gyeonggi_url(job):
                 gyeonggi_resolved += 1
-            elif job.get("url") and "selectNttInfo.do" in job.get("url", ""):
-                q = parse_qs(urlparse(job["url"]).query)
-                sn = (q.get("nttSn") or [""])[0]
-                bbs = (q.get("bbsId") or [""])[0]
-                if sn.isdigit() and bbs:
-                    job["detailLinkResolved"] = True
-                    job["nttSn"] = sn
-                    job["bbsId"] = bbs
-                    job["mi"] = (q.get("mi") or [""])[0]
-                    gyeonggi_resolved += 1
-            else:
-                job["detailLinkResolved"] = False
-                if len(unresolved_examples) < 30:
-                    unresolved_examples.append({"source": job.get("source"), "title": job.get("title")})
+                continue
+            unresolved_gg.append(job)
+            title_key = norm(job.get("title", ""))
+            if title_key:
+                offices = job.get("checkedSources") or [job.get("source", "")]
+                for office in offices:
+                    if office:
+                        targets_by_office.setdefault(office, set()).add(title_key)
         elif province == "서울":
             seoul_support += 1
             if normalize_seoul_job(job):
                 seoul_resolved += 1
+
+    all_map = {}
+    office_reports = []
+    for src in SOURCES["gyeonggi"]["supportOffices"]:
+        targets = targets_by_office.get(src["name"], set())
+        mapping, stats = scan_gyeonggi_office(src, targets)
+        all_map.update(mapping)
+        office_reports.append({
+            "name": src["name"],
+            "targetTitles": len(targets),
+            "resolvedTargets": len(mapping),
+            "boards": stats,
+        })
+        if targets:
+            print("SCAN", src["name"], "targets", len(targets), "resolved", len(mapping))
+
+    for job in unresolved_gg:
+        source_names = job.get("checkedSources") or [job.get("source", "")]
+        hit = None
+        for office in source_names:
+            hit = all_map.get((office, norm(job.get("title", ""))))
+            if hit:
+                break
+        if not hit:
+            hit = all_map.get((job.get("source", ""), norm(job.get("title", ""))))
+        if hit:
+            job.update({
+                "url": hit["url"],
+                "boardUrl": hit["boardUrl"],
+                "detailLinkResolved": True,
+                "nttSn": hit["nttSn"],
+                "bbsId": hit["bbsId"],
+                "mi": hit["mi"],
+                "detailResolutionMethod": hit["method"],
+            })
+            gyeonggi_resolved += 1
+        else:
+            job["detailLinkResolved"] = False
+            if len(unresolved_examples) < 30:
+                unresolved_examples.append({"source": job.get("source"), "title": job.get("title")})
 
     report = {
         "gyeonggi": {
             "supportJobs": gyeonggi_support,
             "exactLinks": gyeonggi_resolved,
             "unresolved": gyeonggi_support - gyeonggi_resolved,
+            "fallbackTargetTitles": sum(len(v) for v in targets_by_office.values()),
             "offices": office_reports,
         },
         "seoul": {
