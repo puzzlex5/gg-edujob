@@ -15,6 +15,10 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 KST = timezone(timedelta(hours=9))
 TODAY = datetime.now(KST).date()
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
+EXCLUDE_WORDS = re.compile(
+    r"최종\s*합격|합격자|서류\s*심사|서류전형|면접\s*대상|선정\s*결과|"
+    r"채용\s*결과|전형\s*결과|합격\s*공고|인사\s*발령|발령\s*알림|발령\s*안내"
+)
 
 
 def load(path):
@@ -52,7 +56,6 @@ def normalized_url(raw):
 
 
 def key(job):
-    # Prefer true posting identifiers over title matching.
     url = normalized_url(job.get("url"))
     if url and ("nttSn=" in url or "job_seq=" in url or "selectNttInfo.do" in url):
         return ("url", url)
@@ -75,12 +78,13 @@ def key(job):
 
 
 def should_carry(job):
+    if EXCLUDE_WORDS.search(str(job.get("title") or "")):
+        return False
     end = parse_date(job.get("applyEnd"))
     if end:
         return end >= TODAY
     registered = parse_date(job.get("registered"))
     if registered:
-        # Unknown deadline: keep a short safety window so a one-hour parser/network miss cannot hide it.
         return registered >= TODAY - timedelta(days=30)
     return False
 
@@ -150,7 +154,7 @@ def main():
         "mergedCount": len(merged),
         "carriedForward": len(carried),
         "enrichedFromPrevious": enriched,
-        "policy": "fresh wins; active/recent previous postings survive transient one-run disappearance",
+        "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
         "generatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),
     }
     Path(args.current).write_text(json.dumps(current, ensure_ascii=False, indent=2), encoding="utf-8")
