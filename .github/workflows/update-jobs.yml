@@ -7,6 +7,7 @@ on:
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/complete_support_coverage.py'
+      - 'scripts/hotfix_completeness_cap.py'
       - 'scripts/hotfix_desktop_scroll.py'
       - 'scripts/resolve_support_links.py'
       - 'scripts/enrich_support_periods.py'
@@ -100,8 +101,11 @@ jobs:
         run: |
           python scripts/hotfix_support_office.py
           python scripts/hotfix_repair_links.py
+          python scripts/hotfix_completeness_cap.py
           python scripts/hotfix_desktop_scroll.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_desktop_scroll.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/hotfix_completeness_cap.py scripts/hotfix_desktop_scroll.py
+          grep -q 'MAX_PAGES = 500' scripts/complete_support_coverage.py
+          grep -q 'pages < MAX_PAGES' scripts/complete_support_coverage.py
           grep -q 'detailLinkResolved' index.html
           grep -q 'overscroll-behavior-y:contain' index.html
           grep -q '@media (hover:hover) and (pointer:fine)' index.html
@@ -175,7 +179,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '4189828+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py support_link_resolution.json support_period_cache.json sources.json
+          git add jobs.json board_cache.json index.html scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py support_link_resolution.json support_period_cache.json sources.json
           git diff --cached --quiet && exit 0
           git commit -m 'Refresh verified jobs with complete support-office coverage'
           git pull --rebase
