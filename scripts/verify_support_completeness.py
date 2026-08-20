@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
-"""Strict publication gate for 25 Gyeonggi + 11 Seoul support-office completeness and exact links."""
+"""Strict publication gate for 25 Gyeonggi + 11 Seoul support-office completeness and exact links.
+
+The gate also persists a compact, auditable coverage report before deciding pass/fail so a
+successful refresh can publish the evidence alongside jobs.json. The report is derived only
+from the freshly collected jobs payload; it never upgrades an unhealthy office to healthy.
+"""
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,8 +16,20 @@ problems = []
 notes = []
 
 expected = {"gyeonggi": 25, "seoul": 11}
+report = {
+    "generatedAt": datetime.now(timezone.utc).isoformat(),
+    "supportCompleteness": comp,
+    "supportLinkResolution": data.get("supportLinkResolution") or {},
+    "provinces": {},
+}
+
 for province, want in expected.items():
     statuses = data.get("sources", {}).get(province, {}).get("supportOffices", [])
+    report["provinces"][province] = {
+        "expectedOffices": want,
+        "actualOffices": len(statuses),
+        "offices": statuses,
+    }
     if len(statuses) != want:
         problems.append(f"{province}: support-office status count {len(statuses)} != {want}")
     for office in statuses:
@@ -70,6 +88,13 @@ if unresolved_jobs:
     problems.append(f"support-office jobs without exact individual links: {len(unresolved_jobs)}")
     for j in unresolved_jobs[:10]:
         notes.append(f"unresolved: {j.get('province')}/{j.get('source')} · {j.get('title')}")
+
+report["notes"] = notes
+report["problems"] = problems
+report["gatePassed"] = not problems
+(ROOT / "support_coverage_report.json").write_text(
+    json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+)
 
 for note in notes:
     print("NOTE", note)
