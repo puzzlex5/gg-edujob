@@ -13,6 +13,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +26,15 @@ S.headers.update({
     "User-Agent": "Mozilla/5.0 (compatible; metro-edujob-link-resolver/2.0)",
     "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.5",
 })
+
+RETRY_POLICY = Retry(
+    total=3, connect=3, read=3, status=3, backoff_factor=0.8,
+    status_forcelist=(408, 429, 500, 502, 503, 504),
+    allowed_methods=frozenset(("GET", "POST")),
+    respect_retry_after_header=True, raise_on_status=False,
+)
+S.mount("https://", HTTPAdapter(max_retries=RETRY_POLICY))
+S.mount("http://", HTTPAdapter(max_retries=RETRY_POLICY))
 
 
 def clean(s):

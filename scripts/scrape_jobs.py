@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import hashlib
 import re
 import time
 import unicodedata
@@ -8,6 +9,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +22,15 @@ NOW = datetime.now(KST)
 UA = "Mozilla/5.0 (compatible; metro-edujob/3.0; public recruitment aggregator)"
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.6"})
+
+RETRY_POLICY = Retry(
+    total=3, connect=3, read=3, status=3, backoff_factor=0.8,
+    status_forcelist=(408, 429, 500, 502, 503, 504),
+    allowed_methods=frozenset(("GET", "POST")),
+    respect_retry_after_header=True, raise_on_status=False,
+)
+S.mount("https://", HTTPAdapter(max_retries=RETRY_POLICY))
+S.mount("http://", HTTPAdapter(max_retries=RETRY_POLICY))
 
 GYEONGGI = SOURCES["gyeonggi"]
 SEOUL = SOURCES["seoul"]
@@ -48,6 +60,7 @@ JOB_WORDS = re.compile(r"채용|구인|모집|기간제|계약제|시간강사|�
 EXCLUDE_WORDS = re.compile(r"최종\s*합격|합격자|서류\s*심사|서류전형|면접\s*대상|선정\s*결과|채용\s*결과|전형\s*결과|합격\s*공고|인사발령")
 BOARD_WORDS = re.compile(r"구인|채용정보|채용공고|모집공고|기간제교사|기간제교원|교육공무직")
 BOARD_EXCLUDE = re.compile(r"구직|인력풀|합격|인사정보|인사발령|공지사항|자료실")
+FAST_MAX_PAGES = 60  # emergency ceiling; normal stop is empty/repeated page
 
 
 def clean(s):
@@ -325,7 +338,7 @@ def scrape_mircms_board(board, src):
     office, regions = src["name"], src.get("regions", [])
     out, seen_urls = [], set()
     raw_rows = 0; explicit_empty = False; pages_scanned = 0
-    for page in range(1, 8):
+    for page in range(1, FAST_MAX_PAGES + 1):
         u = with_query(board, currPage=page)
         r = get(u)
         if not r: break
@@ -371,16 +384,15 @@ def scrape_mircms_board(board, src):
                 if region not in regions: region = find_region(f"{row_text} {school} {title}", regions)
                 if not region and len(regions)==1: region = regions[0]
                 out.append({
-                    "id":"goe-office-"+str(abs(hash(detail))),"province":"경기","school":school or office,"title":title,
+                    "id":"goe-office-"+hashlib.sha1(detail.encode("utf-8")).hexdigest()[:20],"province":"경기","school":school or office,"title":title,
                     "subject":first_of(vals,["과목","분야"]),"region":region,"regions":regions,"type":guess_type(raw_type+" "+title),
                     "schoolLevel":normalize_school_level(raw_level,school,title),"applyStart":"","applyEnd":apply_end,
                     "workStart":"","workEnd":"","registered":registered,"headcount":"",
                     "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board
                 })
         if page_candidates == 0: break
-        if page_recent == 0 and page >= 2: break
         time.sleep(.04)
-    return out, {"rawRows":raw_rows,"explicitEmpty":explicit_empty,"pagesScanned":pages_scanned}
+    return out, {"rawRows":raw_rows,"explicitEmpty":explicit_empty,"pagesScanned":pages_scanned,"capHit":pages_scanned >= FAST_MAX_PAGES}
 
 
 def scrape_gyeonggi_office(src):
@@ -393,8 +405,11 @@ def scrape_gyeonggi_office(src):
         all_rows.extend(rows); m["url"] = b; meta.append(m)
     raw_total = sum(x["rawRows"] for x in meta)
     explicit_empty = any(x["explicitEmpty"] for x in meta)
+    cap_hit = any(x.get("capHit") for x in meta)
     if not boards:
         state, ok, msg = "error", False, "실제 채용 게시판을 찾지 못함"
+    elif cap_hit:
+        state, ok, msg = "warning", False, "빠른 수집 비상 페이지 상한 도달 · 깊은 감사 필요"
     elif raw_total > 0:
         state, ok, msg = "ok", True, f"게시판 {len(boards)}개 확인"
     elif explicit_empty:
@@ -465,7 +480,7 @@ def scrape_seoul_office(src):
     office, board, regions = src["name"], src["boardUrl"], src.get("regions",[])
     print("SEOUL OFFICE", office)
     out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False
-    for page in range(1, 10):
+    for page in range(1, FAST_MAX_PAGES + 1):
         r = get(board, params={"pageIndex":page})
         if not r: r = post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
         if not r: break
@@ -513,7 +528,6 @@ def scrape_seoul_office(src):
                     "openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}
                 })
         if page_raw==0: break
-        if page_recent==0 and page>=2: break
         time.sleep(.04)
     if raw_rows>0:
         state,ok,msg="ok",True,"구인 게시판 확인"
@@ -527,25 +541,53 @@ def scrape_seoul_office(src):
 
 
 def dedupe_merge(jobs):
-    jobs=sorted(jobs,key=lambda j:0 if j.get("sourceType")=="통합게시판" else 1)
-    by_key={}; out=[]
-    for j in jobs:
-        titlekey=norm(j.get("title","")); schoolkey=norm(j.get("school","")); province=j.get("province","")
-        if not titlekey: continue
-        key=province+"|"+titlekey if len(titlekey)>=14 else province+"|"+titlekey+"|"+schoolkey
-        if key not in by_key:
-            j["checkedSources"]=list(dict.fromkeys(j.get("checkedSources") or [j.get("source","")]))
-            by_key[key]=j; out.append(j); continue
-        old=by_key[key]
-        sources=list(dict.fromkeys((old.get("checkedSources") or [old.get("source","")])+(j.get("checkedSources") or [j.get("source","")])))
-        old["checkedSources"]=[x for x in sources if x]
-        if len(old["checkedSources"])>1:
-            old["source"]=" + ".join(old["checkedSources"][:3])+(f" 외 {len(old['checkedSources'])-3}곳" if len(old["checkedSources"])>3 else "")
-        for field in ("region","school","applyEnd","subject"):
-            if not old.get(field) and j.get(field): old[field]=j[field]
-        old["regions"]=list(dict.fromkeys((old.get("regions") or [])+(j.get("regions") or [])))
-    return out
+    """Conservatively merge only strongly-identical announcements.
 
+    Never merge different schools just because they use the same generic title.
+    If school or registration date is missing, retain the row unless its exact
+    source identity is duplicated.
+    """
+    jobs = sorted(jobs, key=lambda j: 0 if j.get("sourceType") == "통합게시판" else 1)
+    by_key = {}
+    out = []
+    for j in jobs:
+        titlekey = norm(j.get("title", ""))
+        if not titlekey:
+            continue
+        province = clean(j.get("province", ""))
+        schoolkey = norm(j.get("school", ""))
+        registered = clean(j.get("registered", ""))
+
+        # Strong semantic identity is intentionally strict.  Generic recruitment
+        # titles are reused by many schools, so province+title alone is unsafe.
+        if schoolkey and registered:
+            key = "semantic|" + "|".join((province, titlekey, schoolkey, registered))
+        else:
+            exact_id = clean(j.get("id", ""))
+            exact_url = clean(j.get("url", ""))
+            key = "exact|" + "|".join((province, exact_id, exact_url))
+
+        if key not in by_key:
+            j["checkedSources"] = list(dict.fromkeys(j.get("checkedSources") or [j.get("source", "")]))
+            by_key[key] = j
+            out.append(j)
+            continue
+
+        old = by_key[key]
+        sources = list(dict.fromkeys(
+            (old.get("checkedSources") or [old.get("source", "")]) +
+            (j.get("checkedSources") or [j.get("source", "")])
+        ))
+        old["checkedSources"] = [x for x in sources if x]
+        if len(old["checkedSources"]) > 1:
+            old["source"] = " + ".join(old["checkedSources"][:3]) + (
+                f" 외 {len(old['checkedSources'])-3}곳" if len(old["checkedSources"]) > 3 else ""
+            )
+        for field in ("region", "school", "applyEnd", "applyStart", "workStart", "workEnd", "subject"):
+            if not old.get(field) and j.get(field):
+                old[field] = j[field]
+        old["regions"] = list(dict.fromkeys((old.get("regions") or []) + (j.get("regions") or [])))
+    return out
 
 def main():
     all_jobs=[]; errors=[]

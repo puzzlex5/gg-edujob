@@ -1,16 +1,17 @@
 {
   "fast": {
-    "state": "failed",
-    "updatedAt": "2026-08-21T00:42:11+09:00",
-    "jobsCount": 3589,
+    "state": "success",
+    "updatedAt": "2026-08-21T02:29:27+09:00",
+    "jobsCount": 6394,
     "artifacts": {
-      "jobLedger": false,
-      "collectionState": false,
+      "jobLedger": true,
+      "collectionState": true,
       "coverageReport": false,
-      "missingRecoveryReport": false,
+      "missingRecoveryReport": true,
       "boardDiscoveryReport": false
     },
-    "stage": "hardening",
-    "lastFailureAt": "2026-08-21T00:42:11+09:00"
+    "stage": "complete",
+    "lastFailureAt": "2026-08-21T00:42:11+09:00",
+    "lastSuccessAt": "2026-08-21T02:29:27+09:00"
   }
 }
