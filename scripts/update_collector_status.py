@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Persist lightweight collector observability without touching published jobs.
 
-Workflows call this before critical stages and on success/failure.  If a run dies,
+Workflows call this before critical stages and on success/failure. If a run dies,
 the repository still records the last stage reached so silent automation failures
 can be distinguished from a legitimate no-change refresh.
+
+Artifact existence alone is not proof of complete coverage: a fast refresh can
+inherit a coverage report produced by an earlier deep audit. Record the report's
+own timestamp and 25+11 completeness evidence so monitors can distinguish a
+fresh/known-good audit from a merely present (possibly stale) file.
 """
 import argparse
 import json
@@ -26,6 +31,46 @@ def jobs_count():
     data = load_json(ROOT / "jobs.json", {})
     jobs = data.get("jobs", []) if isinstance(data, dict) else []
     return len(jobs) if isinstance(jobs, list) else 0
+
+
+def generated_at(path):
+    data = load_json(path, {})
+    return data.get("generatedAt", "") if isinstance(data, dict) else ""
+
+
+def coverage_evidence():
+    report = load_json(ROOT / "support_coverage_report.json", {})
+    summary = report.get("supportCompleteness", {}) if isinstance(report, dict) else {}
+    links = report.get("supportLinkResolution", {}) if isinstance(report, dict) else {}
+    warnings = summary.get("warnings", []) if isinstance(summary, dict) else []
+    gyeonggi_complete = summary.get("gyeonggiComplete")
+    gyeonggi_total = summary.get("gyeonggiTotal")
+    seoul_complete = summary.get("seoulComplete")
+    seoul_total = summary.get("seoulTotal")
+    exact_links = (
+        links.get("gyeonggiExact") == links.get("gyeonggiTotal")
+        and links.get("seoulExact") == links.get("seoulTotal")
+        and links.get("gyeonggiTotal") is not None
+        and links.get("seoulTotal") is not None
+    ) if isinstance(links, dict) else False
+    complete = (
+        gyeonggi_complete == 25
+        and gyeonggi_total == 25
+        and seoul_complete == 11
+        and seoul_total == 11
+        and not warnings
+        and exact_links
+    )
+    return {
+        "generatedAt": report.get("generatedAt", "") if isinstance(report, dict) else "",
+        "gyeonggiComplete": gyeonggi_complete,
+        "gyeonggiTotal": gyeonggi_total,
+        "seoulComplete": seoul_complete,
+        "seoulTotal": seoul_total,
+        "warnings": len(warnings) if isinstance(warnings, list) else None,
+        "exactLinks": exact_links,
+        "complete": complete,
+    }
 
 
 def main():
@@ -55,6 +100,13 @@ def main():
             "missingRecoveryReport": (ROOT / "missing_recovery_report.json").exists(),
             "boardDiscoveryReport": (ROOT / "board_discovery_report.json").exists(),
         },
+        "artifactGeneratedAt": {
+            "coverageReport": generated_at(ROOT / "support_coverage_report.json"),
+            "missingRecoveryReport": generated_at(ROOT / "missing_recovery_report.json"),
+            "boardDiscoveryReport": generated_at(ROOT / "board_discovery_report.json"),
+            "collectionState": generated_at(ROOT / "collection_state.json"),
+        },
+        "coverageEvidence": coverage_evidence(),
     })
     if args.stage:
         entry["stage"] = args.stage
