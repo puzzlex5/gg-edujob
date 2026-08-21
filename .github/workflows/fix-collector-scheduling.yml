@@ -1,6 +1,9 @@
 name: Fix collector scheduling
 
 on:
+  push:
+    paths:
+      - '.github/workflows/fix-collector-scheduling.yml'
   workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'
