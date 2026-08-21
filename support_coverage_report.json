@@ -1,0 +1,1737 @@
+{
+  "generatedAt": "2026-08-21T03:11:55.245953+00:00",
+  "supportCompleteness": {
+    "lookbackDays": 90,
+    "newlyRecoveredJobs": 3,
+    "gyeonggiComplete": 24,
+    "seoulComplete": 11,
+    "gyeonggiTotal": 25,
+    "seoulTotal": 11,
+    "warnings": [
+      "구리남양주교육지원청"
+    ]
+  },
+  "supportLinkResolution": {
+    "gyeonggiExact": 6295,
+    "gyeonggiTotal": 6295,
+    "seoulExact": 434,
+    "seoulTotal": 434
+  },
+  "provinces": {
+    "gyeonggi": {
+      "expectedOffices": 25,
+      "actualOffices": 25,
+      "offices": [
+        {
+          "name": "가평교육지원청",
+          "url": "https://www.goegp.kr/",
+          "boards": [
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2721&mi=3284",
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2718&mi=3276",
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3289&bbsId=2725",
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=4386&bbsId=3312",
+            "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3312&bbsId=2743"
+          ],
+          "count": 93,
+          "rawRows": 208,
+          "pagesScanned": 21,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2721&mi=3284",
+              "pagesScanned": 4,
+              "rawRows": 40,
+              "recentRows": 27,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?bbsId=2718&mi=3276",
+              "pagesScanned": 5,
+              "rawRows": 50,
+              "recentRows": 19,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3289&bbsId=2725",
+              "pagesScanned": 6,
+              "rawRows": 60,
+              "recentRows": 36,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=4386&bbsId=3312",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 11,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegp.kr/goegp/na/ntt/selectNttList.do?mi=3312&bbsId=2743",
+              "pagesScanned": 3,
+              "rawRows": 28,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "고양교육지원청",
+          "url": "https://www.goegy.kr/",
+          "boards": [
+            "https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=8731&mi=15413",
+            "https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=11674&mi=21050&srch_aditCol1=%EA%B5%90%EC%9C%A1%EC%A7%80%EC%9B%90%EC%B2%AD",
+            "https://www.goegy.kr/goegy/na/ntt/selectNttList.do?mi=21048&bbsId=11674"
+          ],
+          "count": 212,
+          "rawRows": 270,
+          "pagesScanned": 27,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=8731&mi=15413",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 2,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegy.kr/goegy/na/ntt/selectNttList.do?bbsId=11674&mi=21050&srch_aditCol1=%EA%B5%90%EC%9C%A1%EC%A7%80%EC%9B%90%EC%B2%AD",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 11,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegy.kr/goegy/na/ntt/selectNttList.do?mi=21048&bbsId=11674",
+              "pagesScanned": 21,
+              "rawRows": 210,
+              "recentRows": 199,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "광명교육지원청",
+          "url": "https://www.goegm.kr/",
+          "boards": [
+            "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826",
+            "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4242&mi=5879"
+          ],
+          "count": 304,
+          "rawRows": 330,
+          "pagesScanned": 33,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826",
+              "pagesScanned": 29,
+              "rawRows": 290,
+              "recentRows": 279,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4242&mi=5879",
+              "pagesScanned": 4,
+              "rawRows": 40,
+              "recentRows": 25,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "광주하남교육지원청",
+          "url": "https://www.goegh.kr/",
+          "boards": [
+            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
+            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5030&mi=8667",
+            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8710&bbsId=5059",
+            "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8709&bbsId=5058"
+          ],
+          "count": 374,
+          "rawRows": 502,
+          "pagesScanned": 50,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
+              "pagesScanned": 38,
+              "rawRows": 382,
+              "recentRows": 361,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5030&mi=8667",
+              "pagesScanned": 6,
+              "rawRows": 60,
+              "recentRows": 10,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8710&bbsId=5059",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 1,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?mi=8709&bbsId=5058",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 2,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "구리남양주교육지원청",
+          "url": "https://www.goegn.kr/",
+          "boards": [
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=16003",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8654&mi=14082",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8655&mi=14083",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14162",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?mi=13581&bbsId=8403",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?mi=13593&bbsId=8411",
+            "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?mi=13579&bbsId=8401"
+          ],
+          "count": 521,
+          "rawRows": 670,
+          "pagesScanned": 69,
+          "ok": false,
+          "state": "warning",
+          "message": "일부 공고는 수집했으나 최근 범위 완전수집 미확인",
+          "coverageComplete": false,
+          "boardHealth": [
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=16003",
+              "pagesScanned": 44,
+              "rawRows": 440,
+              "recentRows": 421,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8654&mi=14082",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 15,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8655&mi=14083",
+              "pagesScanned": 9,
+              "rawRows": 90,
+              "recentRows": 80,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14162",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": false,
+              "coverageComplete": false
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": false,
+              "coverageComplete": false
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?mi=13581&bbsId=8403",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 1,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?mi=13593&bbsId=8411",
+              "pagesScanned": 5,
+              "rawRows": 50,
+              "recentRows": 3,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?mi=13579&bbsId=8401",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 1,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "군포의왕교육지원청",
+          "url": "https://www.goegu.kr/",
+          "boards": [
+            "https://www.goegu.kr/goegu/na/ntt/selectNttList.do?bbsId=4306&mi=7110"
+          ],
+          "count": 7,
+          "rawRows": 60,
+          "pagesScanned": 6,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goegu.kr/goegu/na/ntt/selectNttList.do?bbsId=4306&mi=7110",
+              "pagesScanned": 6,
+              "rawRows": 60,
+              "recentRows": 7,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "김포교육지원청",
+          "url": "https://www.gpoe.kr/",
+          "boards": [
+            "https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?bbsId=5218&mi=9406",
+            "https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?mi=9224&bbsId=5149",
+            "https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?mi=9229&bbsId=5153"
+          ],
+          "count": 547,
+          "rawRows": 620,
+          "pagesScanned": 62,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?bbsId=5218&mi=9406",
+              "pagesScanned": 52,
+              "rawRows": 520,
+              "recentRows": 496,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?mi=9224&bbsId=5149",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 1,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.gpoe.kr/gpoe/na/ntt/selectNttList.do?mi=9229&bbsId=5153",
+              "pagesScanned": 7,
+              "rawRows": 70,
+              "recentRows": 50,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "동두천양주교육지원청",
+          "url": "https://www.goedy.kr/",
+          "boards": [
+            "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?bbsId=11025&mi=11726",
+            "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=11748&bbsId=11037",
+            "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=10336&bbsId=10228"
+          ],
+          "count": 485,
+          "rawRows": 543,
+          "pagesScanned": 56,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?bbsId=11025&mi=11726",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 2,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=11748&bbsId=11037",
+              "pagesScanned": 3,
+              "rawRows": 12,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=10336&bbsId=10228",
+              "pagesScanned": 50,
+              "rawRows": 501,
+              "recentRows": 483,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "부천교육지원청",
+          "url": "https://www.goebc.kr/",
+          "boards": [
+            "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
+            "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?mi=11084&bbsId=6327",
+            "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?mi=11172&bbsId=6381"
+          ],
+          "count": 1332,
+          "rawRows": 1380,
+          "pagesScanned": 138,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
+              "pagesScanned": 64,
+              "rawRows": 640,
+              "recentRows": 621,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?mi=11084&bbsId=6327",
+              "pagesScanned": 10,
+              "rawRows": 100,
+              "recentRows": 90,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?mi=11172&bbsId=6381",
+              "pagesScanned": 64,
+              "rawRows": 640,
+              "recentRows": 621,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "성남교육지원청",
+          "url": "https://www.goesn.kr/",
+          "boards": [
+            "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+            "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?mi=23490&bbsId=17803"
+          ],
+          "count": 933,
+          "rawRows": 970,
+          "pagesScanned": 97,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+              "pagesScanned": 90,
+              "rawRows": 900,
+              "recentRows": 878,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?mi=23490&bbsId=17803",
+              "pagesScanned": 7,
+              "rawRows": 70,
+              "recentRows": 55,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "수원교육지원청",
+          "url": "https://www.goesw.kr/",
+          "boards": [
+            "https://www.goesw.kr/goesw/na/ntt/selectNttList.do?bbsId=11021&mi=18851"
+          ],
+          "count": 15,
+          "rawRows": 83,
+          "pagesScanned": 8,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goesw.kr/goesw/na/ntt/selectNttList.do?bbsId=11021&mi=18851",
+              "pagesScanned": 8,
+              "rawRows": 83,
+              "recentRows": 15,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "시흥교육지원청",
+          "url": "https://www.goesh.kr/",
+          "boards": [
+            "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5518&mi=9018",
+            "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003"
+          ],
+          "count": 65,
+          "rawRows": 116,
+          "pagesScanned": 10,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5518&mi=9018",
+              "pagesScanned": 7,
+              "rawRows": 70,
+              "recentRows": 60,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
+              "pagesScanned": 3,
+              "rawRows": 46,
+              "recentRows": 5,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "안산교육지원청",
+          "url": "https://www.goeas.kr/",
+          "boards": [
+            "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?bbsId=5918&mi=11390",
+            "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=12985&bbsId=6598",
+            "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=13663&bbsId=6933",
+            "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=11382&bbsId=6532"
+          ],
+          "count": 82,
+          "rawRows": 148,
+          "pagesScanned": 17,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?bbsId=5918&mi=11390",
+              "pagesScanned": 9,
+              "rawRows": 90,
+              "recentRows": 76,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=12985&bbsId=6598",
+              "pagesScanned": 2,
+              "rawRows": 3,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=13663&bbsId=6933",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 3,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeas.kr/goeas/na/ntt/selectNttList.do?mi=11382&bbsId=6532",
+              "pagesScanned": 3,
+              "rawRows": 25,
+              "recentRows": 3,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "안성교육지원청",
+          "url": "https://www.goean.kr/",
+          "boards": [
+            "https://www.goean.kr/goean/na/ntt/selectNttList.do?bbsId=2801&mi=4565",
+            "https://www.goean.kr/goean/na/ntt/selectNttList.do?mi=4464&bbsId=2727"
+          ],
+          "count": 228,
+          "rawRows": 260,
+          "pagesScanned": 26,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goean.kr/goean/na/ntt/selectNttList.do?bbsId=2801&mi=4565",
+              "pagesScanned": 22,
+              "rawRows": 220,
+              "recentRows": 203,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goean.kr/goean/na/ntt/selectNttList.do?mi=4464&bbsId=2727",
+              "pagesScanned": 4,
+              "rawRows": 40,
+              "recentRows": 25,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "안양과천교육지원청",
+          "url": "https://www.goeay.kr/",
+          "boards": [
+            "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?bbsId=5137&mi=10158",
+            "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10188&bbsId=5151",
+            "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10236&bbsId=5176",
+            "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10231&bbsId=5173"
+          ],
+          "count": 8,
+          "rawRows": 54,
+          "pagesScanned": 9,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?bbsId=5137&mi=10158",
+              "pagesScanned": 5,
+              "rawRows": 51,
+              "recentRows": 8,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10188&bbsId=5151",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": true,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10236&bbsId=5176",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": true,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeay.kr/goeay/na/ntt/selectNttList.do?mi=10231&bbsId=5173",
+              "pagesScanned": 2,
+              "rawRows": 3,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "양평교육지원청",
+          "url": "https://www.goeyp.kr/",
+          "boards": [
+            "https://www.goeyp.kr/goeyp/na/ntt/selectNttList.do?bbsId=1906&mi=3608",
+            "https://www.goeyp.kr/goeyp/na/ntt/selectNttList.do?mi=3546&bbsId=1871"
+          ],
+          "count": 178,
+          "rawRows": 204,
+          "pagesScanned": 22,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeyp.kr/goeyp/na/ntt/selectNttList.do?bbsId=1906&mi=3608",
+              "pagesScanned": 20,
+              "rawRows": 200,
+              "recentRows": 178,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyp.kr/goeyp/na/ntt/selectNttList.do?mi=3546&bbsId=1871",
+              "pagesScanned": 2,
+              "rawRows": 4,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "여주교육지원청",
+          "url": "https://www.goeyj.kr/",
+          "boards": [
+            "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?bbsId=10075&mi=10090",
+            "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?mi=10103&bbsId=10082",
+            "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?mi=10323&bbsId=10178"
+          ],
+          "count": 7,
+          "rawRows": 67,
+          "pagesScanned": 8,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?bbsId=10075&mi=10090",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 7,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?mi=10103&bbsId=10082",
+              "pagesScanned": 3,
+              "rawRows": 17,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyj.kr/goeyj/na/ntt/selectNttList.do?mi=10323&bbsId=10178",
+              "pagesScanned": 2,
+              "rawRows": 20,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "연천교육지원청",
+          "url": "https://www.goeyc.kr/",
+          "boards": [
+            "https://www.goeyc.kr/goeyc/na/ntt/selectNttList.do?bbsId=2215&mi=2379",
+            "https://www.goeyc.kr/goeyc/na/ntt/selectNttList.do?mi=2386&bbsId=2220",
+            "https://www.goeyc.kr/goeyc/na/ntt/selectNttList.do?mi=2452&bbsId=2243"
+          ],
+          "count": 81,
+          "rawRows": 145,
+          "pagesScanned": 16,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeyc.kr/goeyc/na/ntt/selectNttList.do?bbsId=2215&mi=2379",
+              "pagesScanned": 10,
+              "rawRows": 100,
+              "recentRows": 80,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyc.kr/goeyc/na/ntt/selectNttList.do?mi=2386&bbsId=2220",
+              "pagesScanned": 3,
+              "rawRows": 30,
+              "recentRows": 1,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyc.kr/goeyc/na/ntt/selectNttList.do?mi=2452&bbsId=2243",
+              "pagesScanned": 3,
+              "rawRows": 15,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "용인교육지원청",
+          "url": "https://www.goeyi.kr/",
+          "boards": [
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12229&mi=20180",
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12219&mi=20165",
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12212&mi=20156",
+            "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?mi=20178&bbsId=12227"
+          ],
+          "count": 130,
+          "rawRows": 202,
+          "pagesScanned": 24,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12229&mi=20180",
+              "pagesScanned": 3,
+              "rawRows": 11,
+              "recentRows": 2,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12219&mi=20165",
+              "pagesScanned": 12,
+              "rawRows": 120,
+              "recentRows": 109,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?bbsId=12212&mi=20156",
+              "pagesScanned": 7,
+              "rawRows": 70,
+              "recentRows": 19,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeyi.kr/goeyi/na/ntt/selectNttList.do?mi=20178&bbsId=12227",
+              "pagesScanned": 2,
+              "rawRows": 1,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "의정부교육지원청",
+          "url": "https://www.goeujb.kr/",
+          "boards": [
+            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?bbsId=4119&mi=7023",
+            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=6984&bbsId=4110",
+            "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=7019&bbsId=4117"
+          ],
+          "count": 340,
+          "rawRows": 390,
+          "pagesScanned": 40,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?bbsId=4119&mi=7023",
+              "pagesScanned": 8,
+              "rawRows": 80,
+              "recentRows": 60,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=6984&bbsId=4110",
+              "pagesScanned": 2,
+              "rawRows": 10,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": true,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=7019&bbsId=4117",
+              "pagesScanned": 30,
+              "rawRows": 300,
+              "recentRows": 280,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "이천교육지원청",
+          "url": "https://www.goeic.kr/",
+          "boards": [
+            "https://www.goeic.kr/goeic/na/ntt/selectNttList.do?bbsId=3723&mi=5593"
+          ],
+          "count": 12,
+          "rawRows": 50,
+          "pagesScanned": 5,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goeic.kr/goeic/na/ntt/selectNttList.do?bbsId=3723&mi=5593",
+              "pagesScanned": 5,
+              "rawRows": 50,
+              "recentRows": 12,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "파주교육지원청",
+          "url": "https://www.goepj.kr/",
+          "boards": [
+            "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?bbsId=7162&mi=10759",
+            "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10838&bbsId=7202",
+            "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10778&bbsId=7171",
+            "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10788&bbsId=7179"
+          ],
+          "count": 514,
+          "rawRows": 580,
+          "pagesScanned": 58,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?bbsId=7162&mi=10759",
+              "pagesScanned": 13,
+              "rawRows": 130,
+              "recentRows": 114,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10838&bbsId=7202",
+              "pagesScanned": 40,
+              "rawRows": 400,
+              "recentRows": 385,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10778&bbsId=7171",
+              "pagesScanned": 3,
+              "rawRows": 39,
+              "recentRows": 15,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goepj.kr/goepj/na/ntt/selectNttList.do?mi=10788&bbsId=7179",
+              "pagesScanned": 2,
+              "rawRows": 11,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "평택교육지원청",
+          "url": "https://www.goept.kr/",
+          "boards": [
+            "https://www.goept.kr/goept/na/ntt/selectNttList.do?bbsId=10077&mi=10064",
+            "https://www.goept.kr/goept/na/ntt/selectNttList.do?bbsId=10069&mi=10054",
+            "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10118&bbsId=10111"
+          ],
+          "count": 757,
+          "rawRows": 851,
+          "pagesScanned": 85,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goept.kr/goept/na/ntt/selectNttList.do?bbsId=10077&mi=10064",
+              "pagesScanned": 11,
+              "rawRows": 110,
+              "recentRows": 94,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goept.kr/goept/na/ntt/selectNttList.do?bbsId=10069&mi=10054",
+              "pagesScanned": 7,
+              "rawRows": 70,
+              "recentRows": 11,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10118&bbsId=10111",
+              "pagesScanned": 67,
+              "rawRows": 671,
+              "recentRows": 652,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "포천교육지원청",
+          "url": "https://www.goepc.kr/",
+          "boards": [
+            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?bbsId=2121&mi=2198",
+            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=2192&bbsId=2103",
+            "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=7021&bbsId=2116"
+          ],
+          "count": 185,
+          "rawRows": 242,
+          "pagesScanned": 24,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?bbsId=2121&mi=2198",
+              "pagesScanned": 7,
+              "rawRows": 71,
+              "recentRows": 45,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=2192&bbsId=2103",
+              "pagesScanned": 10,
+              "rawRows": 101,
+              "recentRows": 85,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=7021&bbsId=2116",
+              "pagesScanned": 7,
+              "rawRows": 70,
+              "recentRows": 55,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            }
+          ]
+        },
+        {
+          "name": "화성오산교육지원청",
+          "url": "https://www.goehs.kr/",
+          "boards": [
+            "https://www.goehs.kr/goehs/na/ntt/selectNttList.do?bbsId=9826&mi=17846",
+            "https://www.goehs.kr/goehs/na/ntt/selectNttList.do?bbsId=9838&mi=17866"
+          ],
+          "count": 51,
+          "rawRows": 134,
+          "pagesScanned": 15,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://www.goehs.kr/goehs/na/ntt/selectNttList.do?bbsId=9826&mi=17846",
+              "pagesScanned": 13,
+              "rawRows": 130,
+              "recentRows": 51,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": true,
+              "naturalEnd": false,
+              "coverageComplete": true
+            },
+            {
+              "url": "https://www.goehs.kr/goehs/na/ntt/selectNttList.do?bbsId=9838&mi=17866",
+              "pagesScanned": 2,
+              "rawRows": 4,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "crossedLookback": false,
+              "naturalEnd": true,
+              "coverageComplete": true
+            }
+          ]
+        }
+      ]
+    },
+    "seoul": {
+      "expectedOffices": 11,
+      "actualOffices": 11,
+      "offices": [
+        {
+          "name": "동부교육지원청",
+          "url": "https://dbedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://dbedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 0,
+          "rawRows": 0,
+          "pagesScanned": 1,
+          "ok": true,
+          "state": "empty",
+          "message": "공식 게시판 정상 · 최근 공고 0건",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://dbedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": true,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "서부교육지원청",
+          "url": "https://sbedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://sbedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 4,
+          "rawRows": 4,
+          "pagesScanned": 2,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://sbedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 2,
+              "rawRows": 4,
+              "recentRows": 4,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "남부교육지원청",
+          "url": "https://nbedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://nbedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 15,
+          "rawRows": 16,
+          "pagesScanned": 3,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://nbedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 3,
+              "rawRows": 16,
+              "recentRows": 15,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "북부교육지원청",
+          "url": "https://bbedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://bbedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 0,
+          "rawRows": 0,
+          "pagesScanned": 1,
+          "ok": true,
+          "state": "empty",
+          "message": "공식 게시판 정상 · 최근 공고 0건",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://bbedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": true,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "중부교육지원청",
+          "url": "https://jbedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://jbedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 53,
+          "rawRows": 80,
+          "pagesScanned": 8,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://jbedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 8,
+              "rawRows": 80,
+              "recentRows": 53,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": false,
+              "gotTable": true,
+              "crossedLookback": true,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "강동송파교육지원청",
+          "url": "https://gdspedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://gdspedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 11,
+          "rawRows": 14,
+          "pagesScanned": 3,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://gdspedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 3,
+              "rawRows": 14,
+              "recentRows": 11,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "강서양천교육지원청",
+          "url": "https://gsycedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://gsycedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 160,
+          "rawRows": 180,
+          "pagesScanned": 18,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://gsycedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 18,
+              "rawRows": 180,
+              "recentRows": 160,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": false,
+              "gotTable": true,
+              "crossedLookback": true,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "강남서초교육지원청",
+          "url": "https://gnscedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://gnscedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 102,
+          "rawRows": 130,
+          "pagesScanned": 13,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://gnscedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 13,
+              "rawRows": 130,
+              "recentRows": 102,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": false,
+              "gotTable": true,
+              "crossedLookback": true,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "동작관악교육지원청",
+          "url": "https://dgedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://dgedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 159,
+          "rawRows": 180,
+          "pagesScanned": 18,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://dgedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 18,
+              "rawRows": 180,
+              "recentRows": 159,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": false,
+              "gotTable": true,
+              "crossedLookback": true,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "성동광진교육지원청",
+          "url": "https://sdgjedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://sdgjedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 0,
+          "rawRows": 0,
+          "pagesScanned": 1,
+          "ok": true,
+          "state": "empty",
+          "message": "공식 게시판 정상 · 최근 공고 0건",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://sdgjedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 1,
+              "rawRows": 0,
+              "recentRows": 0,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": true,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        },
+        {
+          "name": "성북강북교육지원청",
+          "url": "https://sbgbedu.sen.go.kr/FUS/JO/JOL11.do",
+          "boards": [
+            "https://sbgbedu.sen.go.kr/FUS/JO/JOL11.do"
+          ],
+          "count": 1,
+          "rawRows": 1,
+          "pagesScanned": 2,
+          "ok": true,
+          "state": "complete",
+          "message": "최근 90일 범위 완전수집",
+          "coverageComplete": true,
+          "boardHealth": [
+            {
+              "url": "https://sbgbedu.sen.go.kr/FUS/JO/JOL11.do",
+              "pagesScanned": 2,
+              "rawRows": 1,
+              "recentRows": 1,
+              "paginationRepeated": false,
+              "accessError": false,
+              "explicitEmpty": false,
+              "naturalEnd": true,
+              "gotTable": true,
+              "crossedLookback": false,
+              "coverageComplete": true,
+              "paginationMethod": "GET"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "notes": [
+    "gyeonggi/구리남양주교육지원청: round rawRows=90, but traversal has explicit completion evidence",
+    "gyeonggi/김포교육지원청: round rawRows=70, but traversal has explicit completion evidence",
+    "gyeonggi/부천교육지원청: round rawRows=100, but traversal has explicit completion evidence",
+    "gyeonggi/성남교육지원청: round rawRows=70, but traversal has explicit completion evidence",
+    "gyeonggi/시흥교육지원청: round rawRows=70, but traversal has explicit completion evidence",
+    "gyeonggi/안산교육지원청: round rawRows=90, but traversal has explicit completion evidence",
+    "gyeonggi/연천교육지원청: round rawRows=100, but traversal has explicit completion evidence",
+    "gyeonggi/용인교육지원청: round rawRows=70, but traversal has explicit completion evidence",
+    "gyeonggi/의정부교육지원청: round rawRows=80, but traversal has explicit completion evidence",
+    "gyeonggi/평택교육지원청: round rawRows=70, but traversal has explicit completion evidence",
+    "gyeonggi/포천교육지원청: round rawRows=70, but traversal has explicit completion evidence",
+    "seoul/중부교육지원청: round rawRows=80, but traversal has explicit completion evidence"
+  ],
+  "problems": [
+    "gyeonggi/구리남양주교육지원청: incomplete or unhealthy (warning: 일부 공고는 수집했으나 최근 범위 완전수집 미확인)",
+    "gyeonggi/구리남양주교육지원청: board-level traversal is not complete (https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14162)",
+    "gyeonggi/구리남양주교육지원청: no explicit termination proof (90-day boundary / natural end / official empty)",
+    "gyeonggi/구리남양주교육지원청: board-level traversal is not complete (https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084)",
+    "gyeonggi/구리남양주교육지원청: no explicit termination proof (90-day boundary / natural end / official empty)",
+    "Gyeonggi complete offices: 24/25"
+  ],
+  "gatePassed": false
+}
