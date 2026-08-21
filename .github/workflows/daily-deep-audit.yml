@@ -2,17 +2,6 @@ name: Daily deep recruitment audit
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'scripts/discover_recruitment_boards.py'
-      - 'scripts/sanitize_job_dates.py'
-      - 'scripts/harden_deep_audit.py'
-      - 'scripts/harden_complete_crawler.py'
-      - 'scripts/harden_network_retries.py'
-      - 'scripts/complete_support_coverage.py'
-      - 'scripts/verify_support_completeness.py'
-      - 'scripts/update_deep_audit_status.py'
-      - '.github/workflows/daily-deep-audit.yml'
   schedule:
     - cron: '23 19 * * *' # 매일 04:23 KST, 최근 90일 전체 정밀감사
 
@@ -146,7 +135,6 @@ jobs:
           set -euo pipefail
           stage="$(cat /tmp/deep_audit_stage 2>/dev/null || echo unknown)"
 
-          # Keep diagnostics produced by the failed run, but never retain its unverified jobs.json.
           mkdir -p /tmp/deep-audit-diagnostics
           for f in support_coverage_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/deep-audit-diagnostics/$f"; fi
