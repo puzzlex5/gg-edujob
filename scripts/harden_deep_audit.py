@@ -71,4 +71,8 @@ elif "no explicit termination proof" not in v:
     raise SystemExit("Verifier termination-proof marker missing")
 VERIFY.write_text(v, encoding="utf-8")
 
+# Phase 2: preserve strict traversal rules while adding a narrowly-scoped fallback for
+# MirCMS rows whose canonical nttSn exists only in row-level javascript/data attributes.
+runpy.run_path(str(ROOT / "scripts/patch_goegn_row_parser.py"), run_name="__main__")
+
 print("Consolidated deep-audit hardening ready")
