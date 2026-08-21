@@ -100,5 +100,31 @@ jobs:
           git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
           git diff --cached --quiet && exit 0
           git commit -m 'Recover missed recruitment postings from official sources'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+
+      - name: Preserve failed recovery diagnostics without publishing unverified data
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/recovery-diagnostics
+          for f in support_coverage_report.json support_link_resolution.json missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/recovery-diagnostics/$f"; fi
+          done
+          git reset --hard HEAD
+          git clean -fd
+          for f in support_coverage_report.json support_link_resolution.json missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "/tmp/recovery-diagnostics/$f" ]; then cp "/tmp/recovery-diagnostics/$f" "$f"; fi
+          done
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in support_coverage_report.json support_link_resolution.json missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record failed recovery diagnostics'
+          git reset --hard HEAD
           git pull --rebase
           git push
