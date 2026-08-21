@@ -14,6 +14,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,10 +29,19 @@ JOBS = PAYLOAD.get("jobs", [])
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 LOOKBACK_DAYS = 90
-MAX_PAGES = 80
+MAX_PAGES = 500  # emergency ceiling; normal stop is lookback/structural end
 UA = "Mozilla/5.0 (compatible; metro-edujob-completeness/1.0; public recruitment aggregator)"
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.6"})
+
+RETRY_POLICY = Retry(
+    total=3, connect=3, read=3, status=3, backoff_factor=0.8,
+    status_forcelist=(408, 429, 500, 502, 503, 504),
+    allowed_methods=frozenset(("GET", "POST")),
+    respect_retry_after_header=True, raise_on_status=False,
+)
+S.mount("https://", HTTPAdapter(max_retries=RETRY_POLICY))
+S.mount("http://", HTTPAdapter(max_retries=RETRY_POLICY))
 
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 JOB_WORDS = re.compile(r"채용|구인|모집|기간제|계약제|시간강사|강사|교사|교원|공무직|사무직|근로자|조리|돌봄|보육|봉사|튜터|안전지킴이|외부강사")
@@ -169,11 +180,12 @@ def gyeonggi_board(board, src):
     explicit_empty = False
     crossed_old = False
     consecutive_old_pages = 0
+    ended_on_structural_empty = False
 
     for page in range(1, MAX_PAGES + 1):
         r = get(with_query(board, currPage=page))
         if not r:
-            access_error = page == 1
+            access_error = True  # any pagination request failure makes traversal incomplete
             break
         soup = BeautifulSoup(r.text, "html.parser")
         txt = clean(soup.get_text(" ", strip=True))
@@ -182,29 +194,58 @@ def gyeonggi_board(board, src):
 
         page_items = []
         page_dates = []
+        page_has_expected_table = False
+        page_candidate_rows = 0
         for table in soup.find_all("table"):
             hs = headers(table)
+            table_is_expected = any(any(k in h for k in ("제목", "학교", "기관", "등록일", "작성일", "마감")) for h in hs)
+            if table_is_expected:
+                page_has_expected_table = True
             for tr in table.find_all("tr"):
                 tds = tr.find_all("td")
                 if not tds:
                     continue
+                if table_is_expected:
+                    page_candidate_rows += 1
                 pick = None
                 detail = ""
+                title = ""
                 for a in tr.find_all("a"):
                     d = detail_from_anchor(r.url, a)
-                    title = clean(a.get_text(" ", strip=True))
-                    if d and len(title) >= 3:
-                        pick, detail = a, d
+                    anchor_title = clean(a.get_text(" ", strip=True))
+                    if d and len(anchor_title) >= 3:
+                        pick, detail, title = a, d, anchor_title
                         break
-                if not pick or detail in seen_details:
-                    continue
                 vals = row_vals(tr, hs)
                 row_text = clean(tr.get_text(" ", strip=True))
+                if not detail:
+                    # MirCMS category menus can keep the real nttSn only in row-level
+                    # javascript/data attributes while the visible title is plain text.
+                    html = str(tr)
+                    m = re.search(r"nttSn\s*[=:,'\"() ]+\s*(\d{4,})", html, re.I)
+                    if not m:
+                        m = re.search(r"(?:nttView|selectNttInfo|goView)\D+(\d{4,})", html, re.I)
+                    if m:
+                        bp = urlparse(r.url)
+                        bq = parse_qs(bp.query)
+                        bbs = (bq.get("bbsId") or [""])[0]
+                        if bbs:
+                            params = {"bbsId": bbs, "nttSn": m.group(1)}
+                            for k in ("mi", "clasHmpgId"):
+                                if bq.get(k):
+                                    params[k] = bq[k][0]
+                            detail = urlunparse((bp.scheme, bp.netloc, bp.path.replace("selectNttList.do", "selectNttInfo.do"), "", urlencode(params), ""))
+                            title = first_of(vals, ["제목", "공고명", "채용공고", "학교명"])
+                            if not title:
+                                cells = [clean(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+                                title = max((x for x in cells if len(x) >= 3 and not DATE_RE.fullmatch(x)), key=len, default="")
+                if not detail or detail in seen_details or len(clean(title)) < 3:
+                    continue
                 registered = date_norm(first_of(vals, ["등록일", "작성일"]))
                 if not registered:
                     ds = all_dates(row_text)
                     registered = ds[-1] if ds else ""
-                title = clean(pick.get_text(" ", strip=True)).replace("새로운 글", "").strip()
+                title = clean(title).replace("새로운 글", "").strip()
                 page_items.append((detail, title, registered, vals, row_text))
                 if registered:
                     page_dates.append(registered)
@@ -217,6 +258,7 @@ def gyeonggi_board(board, src):
             seen_page_sigs.add(sig)
         pages += 1
         if not page_items:
+            ended_on_structural_empty = bool(explicit_empty or (page_has_expected_table and page_candidate_rows == 0))
             break
 
         raw_rows += len(page_items)
@@ -258,12 +300,12 @@ def gyeonggi_board(board, src):
             break
         time.sleep(0.03)
 
-    complete = (not access_error) and (crossed_old or (pages > 0 and not repeat and pages < MAX_PAGES))
+    complete = (not access_error) and (pages < MAX_PAGES) and (crossed_old or ended_on_structural_empty)
     return out, {
         "url": board, "pagesScanned": pages, "rawRows": raw_rows,
         "recentRows": len(out), "paginationRepeated": repeat, "accessError": access_error,
         "explicitEmpty": explicit_empty, "crossedLookback": crossed_old,
-        "coverageComplete": complete,
+        "naturalEnd": ended_on_structural_empty, "coverageComplete": complete,
     }
 
 
@@ -297,6 +339,7 @@ def seoul_board(src):
     crossed_old = False
     consecutive_old_pages = 0
     use_post = False
+    ended_on_structural_empty = False
 
     for page in range(1, MAX_PAGES + 1):
         r = seoul_page(board, page, use_post)
@@ -304,7 +347,7 @@ def seoul_board(src):
             use_post = True
             r = seoul_page(board, page, True)
         if not r:
-            access_error = page == 1
+            access_error = True  # any pagination request failure makes traversal incomplete
             break
         soup = BeautifulSoup(r.text, "html.parser")
         txt = clean(soup.get_text(" ", strip=True))
@@ -313,6 +356,8 @@ def seoul_board(src):
 
         items = []
         dates = []
+        page_has_expected_table = False
+        page_candidate_rows = 0
         for table in soup.find_all("table"):
             hs = headers(table)
             if not hs:
@@ -320,9 +365,11 @@ def seoul_board(src):
             if not any(any(k in h for k in ("마감", "직종", "학교", "구분", "대상", "분야", "등록일", "작성자")) for h in hs):
                 continue
             got_table = True
+            page_has_expected_table = True
             for tr in table.find_all("tr"):
                 if not tr.find_all("td"):
                     continue
+                page_candidate_rows += 1
                 seq = seoul_seq(tr)
                 if not seq:
                     continue
@@ -342,27 +389,57 @@ def seoul_board(src):
         sig = tuple(x[0] for x in items)
         if sig and sig in seen_page_sigs:
             if not use_post:
-                # Some Seoul boards ignore GET pageIndex but paginate correctly on POST.
+                # GET can ignore pageIndex. Re-fetch this SAME page with POST and process
+                # it now; continuing would silently skip the current page.
                 use_post = True
                 r2 = seoul_page(board, page, True)
                 if r2:
                     soup2 = BeautifulSoup(r2.text, "html.parser")
                     post_items = []
+                    post_dates = []
                     for table in soup2.find_all("table"):
                         hs = headers(table)
+                        if not hs:
+                            continue
+                        if not any(any(k in h for k in ("마감", "직종", "학교", "구분", "대상", "분야", "등록일", "작성자")) for h in hs):
+                            continue
+                        got_table = True
                         for tr in table.find_all("tr"):
+                            if not tr.find_all("td"):
+                                continue
                             seq = seoul_seq(tr)
-                            if seq:
-                                post_items.append(seq)
-                    post_sig = tuple(post_items)
+                            if not seq:
+                                continue
+                            vals = row_vals(tr, hs)
+                            anchors = [a for a in tr.find_all("a") if clean(a.get_text(" ", strip=True))]
+                            title = clean(max((a.get_text(" ", strip=True) for a in anchors), key=len, default=""))
+                            if not title:
+                                title = first_of(vals, ["제목", "공고명", "분야1", "분야"])
+                            registered = date_norm(first_of(vals, ["등록일", "작성일"]))
+                            if not registered:
+                                ds = all_dates(clean(tr.get_text(" ", strip=True)))
+                                registered = ds[-1] if ds else ""
+                            post_items.append((seq, title, registered, vals))
+                            if registered:
+                                post_dates.append(registered)
+                    post_sig = tuple(x[0] for x in post_items)
                     if post_sig and post_sig not in seen_page_sigs:
-                        continue
-            repeat = True
-            break
+                        items, dates, sig = post_items, post_dates, post_sig
+                    else:
+                        repeat = True
+                        break
+                else:
+                    access_error = True
+                    repeat = True
+                    break
+            else:
+                repeat = True
+                break
         if sig:
             seen_page_sigs.add(sig)
         pages += 1
         if not items:
+            ended_on_structural_empty = bool(explicit_empty or (page_has_expected_table and page_candidate_rows == 0))
             break
         raw_rows += len(items)
 
@@ -397,11 +474,11 @@ def seoul_board(src):
             break
         time.sleep(0.03)
 
-    complete = (not access_error) and (crossed_old or (pages > 0 and not repeat and pages < MAX_PAGES))
+    complete = (not access_error) and (pages < MAX_PAGES) and (crossed_old or ended_on_structural_empty)
     return out, {
         "url": board, "pagesScanned": pages, "rawRows": raw_rows, "recentRows": len(out),
         "paginationRepeated": repeat, "accessError": access_error, "explicitEmpty": explicit_empty,
-        "gotTable": got_table, "crossedLookback": crossed_old, "coverageComplete": complete,
+        "naturalEnd": ended_on_structural_empty, "gotTable": got_table, "crossedLookback": crossed_old, "coverageComplete": complete,
         "paginationMethod": "POST" if use_post else "GET",
     }
 

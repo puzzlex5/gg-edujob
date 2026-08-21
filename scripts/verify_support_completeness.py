@@ -125,7 +125,9 @@ for province, want in expected.items():
             if pages >= 500:
                 problems.append(f"{province}/{name}: emergency 500-page ceiling reached")
             if board.get("accessError"):
-                problems.append(f"{province}/{name}: board traversal stopped on access error")
+                problems.append(f"{province}/{name}: board traversal stopped on access error before a proven boundary")
+            if not (board.get("crossedLookback") or board.get("naturalEnd") or board.get("explicitEmpty")):
+                problems.append(f"{province}/{name}: no explicit termination proof (90-day boundary / natural end / official empty)")
             if raw in {70, 80, 90, 100}:
                 if board.get("coverageComplete") and pages < 500:
                     notes.append(f"{province}/{name}: round rawRows={raw}, but traversal has explicit completion evidence")

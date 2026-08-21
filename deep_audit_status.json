@@ -1,15 +1,16 @@
 {
-  "state": "failed",
-  "stage": "completeness-verification",
-  "updatedAt": "2026-08-21T12:11:55+09:00",
-  "jobsCount": 6393,
+  "state": "success",
+  "stage": "complete",
+  "updatedAt": "2026-08-21T14:05:59+09:00",
+  "jobsCount": 6760,
   "artifacts": {
-    "coverageReport": false,
+    "coverageReport": true,
     "linkResolution": true,
     "jobLedger": true,
     "collectionState": true,
-    "boardDiscoveryReport": false,
-    "dailyRecoveryReport": false
+    "boardDiscoveryReport": true,
+    "dailyRecoveryReport": true
   },
+  "lastSuccessAt": "2026-08-21T14:05:59+09:00",
   "lastFailureAt": "2026-08-21T12:11:55+09:00"
 }
