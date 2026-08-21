@@ -3,16 +3,7 @@ name: Recover missing 수도권 education jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '47 */6 * * *' # 6시간마다 독립 누락 복구·재대조
-  push:
-    paths:
-      - 'scripts/merge_recovery_snapshot.py'
-      - 'scripts/update_collection_state.py'
-      - 'scripts/sanitize_job_dates.py'
-      - 'scripts/harden_deep_audit.py'
-      - 'scripts/harden_complete_crawler.py'
-      - 'scripts/harden_network_retries.py'
-      - '.github/workflows/recover-missing-jobs.yml'
+    - cron: '47 1,7,13,16 * * *' # KST 10:47,16:47,22:47,01:47; 04:23~06:53 정밀감사 창 보호
 
 permissions:
   contents: write
