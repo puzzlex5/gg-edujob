@@ -141,15 +141,33 @@ jobs:
           git push
       - name: Record failed deep-audit stage without publishing unverified data
         if: failure()
+        shell: bash
         run: |
+          set -euo pipefail
           stage="$(cat /tmp/deep_audit_stage 2>/dev/null || echo unknown)"
+
+          # Keep diagnostics produced by the failed run, but never retain its unverified jobs.json.
+          mkdir -p /tmp/deep-audit-diagnostics
+          for f in support_coverage_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/deep-audit-diagnostics/$f"; fi
+          done
+
           git reset --hard HEAD
           git clean -fd
           python scripts/update_deep_audit_status.py "$stage" failed
+
+          for f in support_coverage_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "/tmp/deep-audit-diagnostics/$f" ]; then cp "/tmp/deep-audit-diagnostics/$f" "$f"; fi
+          done
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add deep_audit_status.json
+          for f in support_coverage_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
           git diff --cached --quiet && exit 0
-          git commit -m "Record failed deep audit stage: $stage"
+          git commit -m "Record failed deep audit diagnostics: $stage"
+          git reset --hard HEAD
           git pull --rebase
           git push
