@@ -2,26 +2,8 @@ name: Update 수도권 education jobs
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'scripts/scrape_jobs.py'
-      - 'scripts/repair_gyeonggi_support.py'
-      - 'scripts/resolve_support_links.py'
-      - 'scripts/enrich_support_periods.py'
-      - 'scripts/enrich_seoul_get_fallback.py'
-      - 'scripts/verify_jobs.py'
-      - 'scripts/merge_recovery_snapshot.py'
-      - 'scripts/update_collection_state.py'
-      - 'scripts/update_collector_status.py'
-      - 'scripts/sanitize_job_dates.py'
-      - 'scripts/harden_fast_pagination.py'
-      - 'scripts/harden_network_retries.py'
-      - 'scripts/hotfix_repair_links.py'
-      - 'scripts/hotfix_sources.py'
-      - 'sources.json'
-      - '.github/workflows/update-jobs.yml'
   schedule:
-    - cron: '17 */2 * * *' # 2시간마다 빠른 신규/변경 공고 수집
+    - cron: '17 0,2,4,6,8,10,12,14,16,18,22 * * *' # 05:17 KST 실행 제외, 정밀감사 창 보호
 
 permissions:
   contents: write
@@ -164,9 +146,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          # If every validation step completed and HEAD itself already contains the verified
-          # success snapshot, first recover from a sync-only failure instead of rewriting that
-          # proven success as a collector failure.
           head_success="$(git show HEAD:collector_status.json 2>/dev/null | python -c "import json,sys; e=json.load(sys.stdin).get('fast',{}); print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')" 2>/dev/null || true)"
           if [ -n "$head_success" ] && [ "$(git log -1 --pretty=%s)" = 'Fast refresh verified recruitment postings' ]; then
             echo 'Verified success commit exists locally; cleaning runtime edits and retrying sync.'
@@ -177,8 +156,6 @@ jobs:
             fi
           fi
 
-          # A verified publication may already have reached origin/main even if a later command
-          # returned non-zero. Preserve it when the success token on origin matches this run.
           git fetch origin main
           local_success="$(python - <<'PY'
           import json
