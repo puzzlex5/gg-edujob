@@ -1,19 +1,91 @@
 #!/usr/bin/env python3
 """Strict publication gate for 25 Gyeonggi + 11 Seoul support-office completeness and exact links.
 
-The gate also persists a compact, auditable coverage report before deciding pass/fail so a
-successful refresh can publish the evidence alongside jobs.json. The report is derived only
-from the freshly collected jobs payload; it never upgrades an unhealthy office to healthy.
+The gate persists auditable coverage evidence before deciding pass/fail. MirCMS can expose the
+same physical board through multiple menu ids (mi). A stale menu alias must not make an otherwise
+proven board look incomplete, but aliases are ignored only when the same physical board has a
+successful representative and the alias itself returned zero rows without an access error.
 """
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-data = json.loads((ROOT / "jobs.json").read_text(encoding="utf-8"))
+JOBS_PATH = ROOT / "jobs.json"
+data = json.loads(JOBS_PATH.read_text(encoding="utf-8"))
 comp = data.get("supportCompleteness") or {}
 problems = []
 notes = []
+
+
+def board_identity(url):
+    """Identify a physical MirCMS board while ignoring menu-only routing parameters.
+
+    bbsId is the stable board id. Query filters such as srch_aditCol1 and clasHmpgId remain part
+    of the identity so a filtered view is not accidentally collapsed into an unfiltered board.
+    """
+    try:
+        p = urlparse(url or "")
+        q = parse_qs(p.query, keep_blank_values=True)
+        bbs = (q.get("bbsId") or [""])[0]
+        if not bbs:
+            return url or ""
+        filters = []
+        for key in ("srch_aditCol1", "clasHmpgId"):
+            if q.get(key):
+                filters.append((key, q[key][0]))
+        return (p.scheme.lower(), p.netloc.lower(), p.path, bbs, tuple(filters))
+    except Exception:
+        return url or ""
+
+
+def reconcile_stale_aliases(office, province):
+    """Collapse only evidence-proven stale menu aliases.
+
+    Safe case: multiple URLs map to the same physical board, at least one traversed completely,
+    and another alias returned zero rows with no access error/repetition. The zero-row alias is
+    marked as ignored rather than being treated as a separate mandatory board.
+    """
+    boards = office.get("boardHealth") or []
+    groups = {}
+    for board in boards:
+        groups.setdefault(board_identity(board.get("url", "")), []).append(board)
+
+    ignored = 0
+    for group in groups.values():
+        if len(group) < 2:
+            continue
+        completed = [b for b in group if b.get("coverageComplete")]
+        if not completed:
+            continue
+        representative = max(
+            completed,
+            key=lambda b: (int(b.get("rawRows") or 0), int(b.get("pagesScanned") or 0)),
+        )
+        for alias in group:
+            if alias is representative or alias.get("coverageComplete"):
+                continue
+            if int(alias.get("rawRows") or 0) != 0:
+                continue
+            if alias.get("accessError") or alias.get("paginationRepeated"):
+                continue
+            alias["ignoredAsStaleAlias"] = True
+            alias["aliasOf"] = representative.get("url", "")
+            ignored += 1
+            notes.append(
+                f"{province}/{office.get('name')}: ignored zero-row stale menu alias "
+                f"{alias.get('url')} -> {representative.get('url')}"
+            )
+
+    effective = [b for b in boards if not b.get("ignoredAsStaleAlias")]
+    if ignored and effective and all(b.get("coverageComplete") for b in effective):
+        office["coverageComplete"] = True
+        office["ok"] = True
+        office["state"] = "complete"
+        office["message"] = "최근 90일 범위 완전수집 · 중복/옛 메뉴 별칭 제외"
+    return effective
+
 
 expected = {"gyeonggi": 25, "seoul": 11}
 report = {
@@ -23,6 +95,7 @@ report = {
     "provinces": {},
 }
 
+complete_counts = {"gyeonggi": 0, "seoul": 0}
 for province, want in expected.items():
     statuses = data.get("sources", {}).get(province, {}).get("supportOffices", [])
     report["provinces"][province] = {
@@ -34,9 +107,11 @@ for province, want in expected.items():
         problems.append(f"{province}: support-office status count {len(statuses)} != {want}")
     for office in statuses:
         name = office.get("name", "(unknown)")
-        if not office.get("coverageComplete") or not office.get("ok"):
+        boards = reconcile_stale_aliases(office, province)
+        if office.get("coverageComplete") and office.get("ok"):
+            complete_counts[province] += 1
+        else:
             problems.append(f"{province}/{name}: incomplete or unhealthy ({office.get('state')}: {office.get('message')})")
-        boards = office.get("boardHealth") or []
         if not boards:
             problems.append(f"{province}/{name}: no board-level coverage evidence")
             continue
@@ -57,7 +132,19 @@ for province, want in expected.items():
                 else:
                     problems.append(f"{province}/{name}: suspicious round rawRows={raw} without proven complete traversal")
 
+# Recompute completeness after evidence-based alias reconciliation and persist the corrected health.
 if comp:
+    comp["gyeonggiTotal"] = len(data.get("sources", {}).get("gyeonggi", {}).get("supportOffices", []))
+    comp["seoulTotal"] = len(data.get("sources", {}).get("seoul", {}).get("supportOffices", []))
+    comp["gyeonggiComplete"] = complete_counts["gyeonggi"]
+    comp["seoulComplete"] = complete_counts["seoul"]
+    comp["warnings"] = [
+        o.get("name")
+        for province in ("gyeonggi", "seoul")
+        for o in data.get("sources", {}).get(province, {}).get("supportOffices", [])
+        if not (o.get("coverageComplete") and o.get("ok"))
+    ]
+    report["supportCompleteness"] = comp
     if int(comp.get("gyeonggiTotal") or 0) != 25 or int(comp.get("seoulTotal") or 0) != 11:
         problems.append("supportCompleteness totals are not 25/11")
     if int(comp.get("gyeonggiComplete") or 0) != 25:
@@ -89,6 +176,8 @@ if unresolved_jobs:
     for j in unresolved_jobs[:10]:
         notes.append(f"unresolved: {j.get('province')}/{j.get('source')} · {j.get('title')}")
 
+# Persist reconciled health only after the strict evidence rules above have been applied.
+JOBS_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 report["notes"] = notes
 report["problems"] = problems
 report["gatePassed"] = not problems
