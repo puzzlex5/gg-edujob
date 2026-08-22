@@ -1,5 +1,6 @@
 name: One-shot clean Seoul CMS status notices
 
+# Retriggered after confirming the previous one-shot file was still present.
 on:
   push:
     paths:
