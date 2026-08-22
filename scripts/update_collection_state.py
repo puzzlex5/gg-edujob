@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 JOBS = ROOT / "jobs.json"
 LEDGER = ROOT / "job_ledger.json"
 STATE = ROOT / "collection_state.json"
+SOURCES = ROOT / "sources.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 DATE_RE = re.compile(r"^(20\d{2})[./-](\d{1,2})[./-](\d{1,2})$")
@@ -30,6 +31,42 @@ def load(path, default):
 
 def norm_text(v):
     return re.sub(r"\s+", " ", str(v or "")).strip().lower()
+
+
+def host_of(value):
+    try:
+        host = (urlparse(str(value or "")).hostname or "").lower().strip(".")
+    except Exception:
+        return ""
+    return host[4:] if host.startswith("www.") else host
+
+
+def build_support_host_map(sources):
+    owners = {}
+    for province_key in ("gyeonggi", "seoul"):
+        section = sources.get(province_key, {}) if isinstance(sources, dict) else {}
+        for office in section.get("supportOffices", []) or []:
+            name = str(office.get("name") or "").strip()
+            if not name:
+                continue
+            urls = [office.get("url"), office.get("boardUrl")]
+            urls.extend(office.get("boardUrls") or [])
+            for raw in urls:
+                host = host_of(raw)
+                if host:
+                    owners.setdefault(host, set()).add(name)
+    return {host: next(iter(names)) for host, names in owners.items() if len(names) == 1}
+
+
+def canonical_source(raw_source, host_map, *urls):
+    old = str(raw_source or "").strip()
+    if "교육지원청" not in old:
+        return old
+    for raw in urls:
+        canonical = host_map.get(host_of(raw))
+        if canonical:
+            return canonical
+    return old
 
 
 def valid_registered(value):
@@ -116,6 +153,8 @@ def main():
     if len(jobs) < 100:
         raise SystemExit(f"Refusing to update collection memory from suspicious dataset: {len(jobs)} jobs")
 
+    sources = load(SOURCES, {})
+    host_map = build_support_host_map(sources)
     old_ledger = load(LEDGER, {"entries": {}})
     entries = old_ledger.get("entries", {}) if isinstance(old_ledger, dict) else {}
     old_state = load(STATE, {"boards": {}})
@@ -129,9 +168,13 @@ def main():
         seen_now.add(key)
         old = entries.get(key, {})
         reg = valid_registered(job.get("registered"))
+        source = canonical_source(
+            job.get("source", ""), host_map,
+            job.get("url"), job.get("openUrl"), job.get("boardUrl"),
+        )
         snapshot = {
             "identity": key,
-            "province": job.get("province", ""), "source": job.get("source", ""),
+            "province": job.get("province", ""), "source": source,
             "sourceType": job.get("sourceType", ""), "school": job.get("school", ""),
             "title": job.get("title", ""), "subject": job.get("subject", ""),
             "registered": reg, "applyEnd": job.get("applyEnd", ""),
@@ -141,9 +184,9 @@ def main():
         }
         entries[key] = snapshot
 
-        board = job.get("boardUrl") or job.get("source") or "unknown"
+        board = job.get("boardUrl") or source or "unknown"
         ck = checkpoints.setdefault(board, {
-            "source": job.get("source", ""), "province": job.get("province", ""),
+            "source": source, "province": job.get("province", ""),
             "boardUrl": job.get("boardUrl", ""), "latestNumericId": None,
             "latestRegistered": "", "observedJobs": 0, "presentInLatest": True,
         })
@@ -161,6 +204,9 @@ def main():
             continue
         if board not in checkpoints:
             preserved = dict(old_ck)
+            preserved["source"] = canonical_source(
+                old_ck.get("source", ""), host_map, board, old_ck.get("boardUrl"),
+            )
             preserved["presentInLatest"] = False
             preserved["lastObservedJobs"] = int(old_ck.get("observedJobs") or old_ck.get("lastObservedJobs") or 0)
             checkpoints[board] = preserved
@@ -189,7 +235,7 @@ def main():
         "generatedAt": now_s,
         "datasetUpdatedAt": payload.get("updatedAt"),
         "boards": checkpoints,
-        "note": "Durable board checkpoints survive transient crawl gaps; presentInLatest distinguishes current observations from retained high-water marks. Numeric IDs are hints, never sole deletion criteria.",
+        "note": "Durable board checkpoints survive transient crawl gaps; source attribution follows unambiguous official support-office hosts; numeric IDs are hints, never sole deletion criteria.",
     }
     LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
