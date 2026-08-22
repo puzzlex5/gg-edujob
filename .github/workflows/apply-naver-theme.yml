@@ -1,0 +1,54 @@
+name: Apply Naver-inspired site theme
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'naver-theme.css'
+      - '.github/workflows/apply-naver-theme.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Inject theme stylesheet safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          link='<link rel="stylesheet" href="naver-theme.css?v=20260822">'
+          if link not in s:
+              if '</head>' not in s:
+                  raise SystemExit('Missing </head> in index.html')
+              s=s.replace('</head>', link+'\n</head>', 1)
+          s=s.replace('<meta name="theme-color" content="#0b1830" />','<meta name="theme-color" content="#03c75a" />')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Validate site script and theme hook
+        run: |
+          grep -q 'naver-theme.css?v=20260822' index.html
+          grep -q '#03c75a' naver-theme.css
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          blocks=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', s, re.S|re.I)
+          Path('/tmp/site.js').write_text('\n'.join(blocks), encoding='utf-8')
+          PY
+          if [ -s /tmp/site.js ]; then node --check /tmp/site.js; fi
+      - name: Commit visual refresh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html naver-theme.css
+          git diff --cached --quiet && exit 0
+          git commit -m 'Refresh 수도권에듀잡 with compact Naver-inspired UI'
+          git pull --rebase
+          git push
