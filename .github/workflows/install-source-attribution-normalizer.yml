@@ -1,0 +1,68 @@
+name: Install source attribution normalization
+
+on:
+  push:
+    paths:
+      - '.github/workflows/install-source-attribution-normalizer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch verified collector paths
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          fast = Path('.github/workflows/update-jobs.yml')
+          text = fast.read_text(encoding='utf-8')
+          needle = "      - name: Independent fast-publication verification\n"
+          block = "      - name: Normalize support-office source attribution\n        run: |\n          python scripts/update_collector_status.py --workflow fast --stage source-attribution --state running\n          python scripts/normalize_source_attribution.py\n\n"
+          if block not in text:
+              if needle not in text:
+                  raise SystemExit('fast verification anchor missing')
+              text = text.replace(needle, block + needle, 1)
+          text = text.replace(
+              'scripts/recover_seoul_office_cms_jobs.py scripts/verify_jobs.py',
+              'scripts/recover_seoul_office_cms_jobs.py scripts/normalize_source_attribution.py scripts/verify_jobs.py'
+          )
+          text = text.replace(
+              'seoul_office_cms_recovery_report.json date_anomaly_report.json',
+              'seoul_office_cms_recovery_report.json source_attribution_report.json date_anomaly_report.json'
+          )
+          fast.write_text(text, encoding='utf-8')
+
+          deep = Path('.github/workflows/daily-deep-audit.yml')
+          text = deep.read_text(encoding='utf-8')
+          needle = "      - name: Require all 25+11 support offices to have proven traversal\n"
+          block = "      - name: Normalize support-office source attribution\n        run: |\n          echo source-attribution >/tmp/deep_audit_stage\n          python scripts/normalize_source_attribution.py\n          python scripts/update_deep_audit_status.py source-attribution running\n\n"
+          if block not in text:
+              if needle not in text:
+                  raise SystemExit('deep verification anchor missing')
+              text = text.replace(needle, block + needle, 1)
+          text = text.replace(
+              'daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json',
+              'daily_missing_recovery_report.json source_attribution_report.json date_anomaly_report.json board_discovery_report.json'
+          )
+          deep.write_text(text, encoding='utf-8')
+          PY
+          python -m py_compile scripts/normalize_source_attribution.py
+      - name: Commit installed normalization
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/workflows/update-jobs.yml .github/workflows/daily-deep-audit.yml
+          git diff --cached --quiet && exit 0
+          git commit -m 'Normalize support-office source attribution before publication'
+          git pull --rebase
+          git push
