@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'naver-theme.css'
+      - 'mobile-ui.js'
       - '.github/workflows/apply-naver-theme.yml'
 
 permissions:
@@ -17,24 +18,35 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Inject theme stylesheet safely
+      - name: Inject theme and mobile behavior safely
         run: |
           python - <<'PY'
           from pathlib import Path
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          link='<link rel="stylesheet" href="naver-theme.css?v=20260822">'
-          if link not in s:
+          link='<link rel="stylesheet" href="naver-theme.css?v=20260823">'
+          old='<link rel="stylesheet" href="naver-theme.css?v=20260822">'
+          if old in s:
+              s=s.replace(old, link, 1)
+          elif link not in s:
               if '</head>' not in s:
                   raise SystemExit('Missing </head> in index.html')
               s=s.replace('</head>', link+'\n</head>', 1)
+          script='<script src="mobile-ui.js?v=20260823" defer></script>'
+          if script not in s:
+              if '</body>' not in s:
+                  raise SystemExit('Missing </body> in index.html')
+              s=s.replace('</body>', script+'\n</body>', 1)
           s=s.replace('<meta name="theme-color" content="#0b1830" />','<meta name="theme-color" content="#03c75a" />')
           p.write_text(s, encoding='utf-8')
           PY
-      - name: Validate site script and theme hook
+      - name: Validate site script and mobile hooks
         run: |
-          grep -q 'naver-theme.css?v=20260822' index.html
-          grep -q '#03c75a' naver-theme.css
+          grep -q 'naver-theme.css?v=20260823' index.html
+          grep -q 'mobile-ui.js?v=20260823' index.html
+          grep -q '@media(max-width:900px)' naver-theme.css
+          grep -q 'mobile-collapsed' mobile-ui.js
+          node --check mobile-ui.js
           python - <<'PY'
           from pathlib import Path
           import re
@@ -47,8 +59,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html naver-theme.css
+          git add index.html naver-theme.css mobile-ui.js
           git diff --cached --quiet && exit 0
-          git commit -m 'Refresh 수도권에듀잡 with compact Naver-inspired UI'
+          git commit -m 'Fix 수도권에듀잡 mobile responsive layout'
           git pull --rebase
           git push
