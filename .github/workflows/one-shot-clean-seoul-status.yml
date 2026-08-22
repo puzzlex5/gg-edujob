@@ -1,0 +1,50 @@
+name: One-shot clean Seoul CMS status notices
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-shot-clean-seoul-status.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Preserve verified baseline
+        run: cp jobs.json /tmp/jobs_before_seoul_status_cleanup.json
+      - name: Remove status notices and refresh conservative CMS recovery
+        run: |
+          python scripts/discover_recruitment_boards.py
+          python scripts/recover_seoul_office_cms_jobs.py
+          python scripts/sanitize_job_dates.py
+      - name: Verify publication
+        run: |
+          python scripts/verify_jobs.py --previous /tmp/jobs_before_seoul_status_cleanup.json
+          python scripts/update_collection_state.py
+      - name: Commit verified cleanup and remove one-shot workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobs.json job_ledger.json collection_state.json board_cache.json board_discovery_report.json seoul_office_cms_recovery_report.json date_anomaly_report.json
+          git rm .github/workflows/one-shot-clean-seoul-status.yml
+          git diff --cached --quiet && exit 0
+          git commit -m 'Clean Seoul CMS recruitment status notices'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
