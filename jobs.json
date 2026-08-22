@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22 19:57 KST",
+  "updatedAt": "2026-08-22 22:46 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-22 21:03 KST",
+    "checkedAt": "2026-08-22 23:36 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -68833,8 +68833,8 @@
       "schoolLevel": "초등학교",
       "applyStart": "",
       "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
+      "workStart": "2026/08/21",
+      "workEnd": "2027/02/26",
       "registered": "2026/07/23",
       "headcount": "",
       "source": "부천교육지원청",
@@ -68848,7 +68848,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-e84857c61238750ba44a",
@@ -173477,8 +173477,7 @@
       "nttSn": "1218020",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-41785827e8e96310413c",
@@ -173508,8 +173507,7 @@
       "nttSn": "1217994",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-2ae6c810a68860bbf76b",
@@ -174396,8 +174394,7 @@
       "nttSn": "1218058",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-be27fe70a0d1cb1671de",
@@ -174764,8 +174761,7 @@
       "nttSn": "1217945",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-319fa43ece0afe3fca9d",
@@ -201915,7 +201911,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-22 20:38 KST",
+      "checkedAt": "2026-08-22 23:31 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -201924,7 +201920,7 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-22 21:02 KST",
+    "checkedAt": "2026-08-22 23:35 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "missingRecovery": {
@@ -201934,7 +201930,7 @@
     "carriedForward": 41,
     "enrichedFromPrevious": 6189,
     "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
-    "generatedAt": "2026-08-22 20:41 KST"
+    "generatedAt": "2026-08-22 23:34 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 6045,
@@ -201943,17 +201939,17 @@
     "seoulTotal": 440
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-22 20:41 KST",
+    "checkedAt": "2026-08-22 23:34 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5626,
-    "detailPagesParsed": 2281,
-    "fieldsFilledThisRun": 16,
+    "detailPagesParsed": 2278,
+    "fieldsFilledThisRun": 2,
     "missingApplicationPeriod": 1077,
-    "missingWorkPeriod": 1863,
+    "missingWorkPeriod": 1862,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-22 20:41 KST",
+      "checkedAt": "2026-08-22 23:34 KST",
       "candidates": 186,
       "detailPagesConfirmed": 186,
       "cacheEntriesImproved": 0,
