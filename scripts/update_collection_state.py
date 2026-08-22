@@ -42,7 +42,6 @@ def valid_registered(value):
         dt = datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=KST)
     except ValueError:
         return ""
-    # Registration dates are historical facts. Allow one day of clock/site skew, never months ahead.
     if dt.date() > (NOW + timedelta(days=1)).date():
         return ""
     return dt.strftime("%Y/%m/%d")
@@ -119,6 +118,8 @@ def main():
 
     old_ledger = load(LEDGER, {"entries": {}})
     entries = old_ledger.get("entries", {}) if isinstance(old_ledger, dict) else {}
+    old_state = load(STATE, {"boards": {}})
+    old_checkpoints = old_state.get("boards", {}) if isinstance(old_state, dict) else {}
     seen_now = set()
     now_s = NOW.strftime("%Y-%m-%d %H:%M:%S KST")
 
@@ -144,7 +145,7 @@ def main():
         ck = checkpoints.setdefault(board, {
             "source": job.get("source", ""), "province": job.get("province", ""),
             "boardUrl": job.get("boardUrl", ""), "latestNumericId": None,
-            "latestRegistered": "", "observedJobs": 0,
+            "latestRegistered": "", "observedJobs": 0, "presentInLatest": True,
         })
         ck["observedJobs"] += 1
         nid = numeric_id(job)
@@ -152,6 +153,26 @@ def main():
             ck["latestNumericId"] = nid
         if reg and reg > ck["latestRegistered"]:
             ck["latestRegistered"] = reg
+
+    # Checkpoints are durable memory, not a snapshot-only index. Preserve boards that
+    # temporarily disappear from jobs.json and never move stable high-water marks backward.
+    for board, old_ck in old_checkpoints.items():
+        if not isinstance(old_ck, dict):
+            continue
+        if board not in checkpoints:
+            preserved = dict(old_ck)
+            preserved["presentInLatest"] = False
+            preserved["lastObservedJobs"] = int(old_ck.get("observedJobs") or old_ck.get("lastObservedJobs") or 0)
+            checkpoints[board] = preserved
+            continue
+        ck = checkpoints[board]
+        old_nid = old_ck.get("latestNumericId")
+        if isinstance(old_nid, int) and (ck["latestNumericId"] is None or old_nid > ck["latestNumericId"]):
+            ck["latestNumericId"] = old_nid
+        old_reg = valid_registered(old_ck.get("latestRegistered"))
+        if old_reg and old_reg > ck["latestRegistered"]:
+            ck["latestRegistered"] = old_reg
+        ck["lastObservedJobs"] = int(old_ck.get("observedJobs") or old_ck.get("lastObservedJobs") or 0)
 
     for key, old in list(entries.items()):
         if key not in seen_now:
@@ -168,7 +189,7 @@ def main():
         "generatedAt": now_s,
         "datasetUpdatedAt": payload.get("updatedAt"),
         "boards": checkpoints,
-        "note": "Durable checkpoints for incremental collection and gap detection; numeric IDs are hints, never sole deletion criteria. Registration dates are independently sanity-checked before checkpointing.",
+        "note": "Durable board checkpoints survive transient crawl gaps; presentInLatest distinguishes current observations from retained high-water marks. Numeric IDs are hints, never sole deletion criteria.",
     }
     LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
