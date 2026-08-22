@@ -4,6 +4,10 @@
 Freshly collected records win. A previously published record is carried forward only when it is
 still plausibly active/recent and was not rediscovered in the fresh snapshot. This protects users
 from transient parser/network gaps while avoiding indefinite retention of stale postings.
+
+Before merge/dedupe, support-office source labels are normalized from the exact official URL host.
+This prevents a historical merged label such as "평택교육지원청 + 안성교육지원청" from being
+carried forward when the URL unambiguously belongs to one support office.
 """
 import argparse
 import json
@@ -11,6 +15,8 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+
+from normalize_source_attribution import build_host_map, host_of
 
 KST = timezone(timedelta(hours=9))
 TODAY = datetime.now(KST).date()
@@ -53,6 +59,19 @@ def normalized_url(raw):
         return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", query, ""))
     except Exception:
         return str(raw).strip()
+
+
+def normalize_support_source(job, host_map):
+    """Normalize only provably support-office-owned URLs; preserve central portal labels."""
+    raw_url = job.get("url") or job.get("openUrl") or job.get("boardUrl")
+    canonical = host_map.get(host_of(raw_url))
+    if not canonical:
+        return job
+    old = str(job.get("source") or "").strip()
+    if old == canonical or "교육지원청" not in old:
+        return job
+    job["source"] = canonical
+    return job
 
 
 def key(job):
@@ -105,12 +124,22 @@ def main():
     ap.add_argument("--previous", required=True)
     ap.add_argument("--current", default="jobs.json")
     ap.add_argument("--report", default="missing_recovery_report.json")
+    ap.add_argument("--sources", default="sources.json")
     args = ap.parse_args()
 
     previous = load(args.previous)
     current = load(args.current)
+    sources = load(args.sources)
+    host_map = build_host_map(sources)
     prev_jobs = previous.get("jobs", []) if isinstance(previous, dict) else []
     cur_jobs = current.get("jobs", []) if isinstance(current, dict) else []
+
+    # Normalize both sides before fallback identity construction and before carry-forward reporting.
+    # Exact canonical URLs are stronger evidence than historical merged source strings.
+    for job in cur_jobs:
+        normalize_support_source(job, host_map)
+    for job in prev_jobs:
+        normalize_support_source(job, host_map)
 
     merged = []
     positions = {}
@@ -136,15 +165,16 @@ def main():
         if not should_carry(old):
             continue
         copy = dict(old)
+        normalize_support_source(copy, host_map)
         copy["recoveryCarryForward"] = True
         copy["recoveryReason"] = "previously published active/recent posting not rediscovered in this crawl"
         positions[k] = len(merged)
         merged.append(copy)
         carried.append({
-            "province": old.get("province"), "source": old.get("source"),
-            "school": old.get("school"), "title": old.get("title"),
-            "registered": old.get("registered"), "applyEnd": old.get("applyEnd"),
-            "url": old.get("url"),
+            "province": copy.get("province"), "source": copy.get("source"),
+            "school": copy.get("school"), "title": copy.get("title"),
+            "registered": copy.get("registered"), "applyEnd": copy.get("applyEnd"),
+            "url": copy.get("url"),
         })
 
     current["jobs"] = merged
