@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22 23:43 KST",
+  "updatedAt": "2026-08-23 02:52 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -1362,7 +1362,7 @@
       "central": {
         "name": "경기도교육청 통합 구인구직",
         "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502",
-        "count": 789,
+        "count": 782,
         "ok": true,
         "state": "ok"
       }
@@ -1712,12 +1712,12 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-23 01:15 KST",
+    "checkedAt": "2026-08-23 04:09 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 6808,
-      "resolved": 6808,
+      "total": 6815,
+      "resolved": 6815,
       "unresolved": 0,
       "examples": []
     },
@@ -1727,8 +1727,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 6497,
-    "currentTotal": 6819
+    "previousTotal": 6819,
+    "currentTotal": 6826
   },
   "jobs": [
     {
@@ -1837,17 +1837,42 @@
       "periodStatus": "unavailable"
     },
     {
-      "id": "goe-complete-ecd4005491dddb6136",
+      "id": "goe-57491",
+      "province": "경기",
+      "school": "늘푸른고등학교",
+      "title": "[늘푸른고] 2026 계약제 교원 2차 채용 공고문(특수)",
+      "subject": "특수",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/08/23",
+      "applyEnd": "2026/08/25",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/23",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57491"
+    },
+    {
+      "id": "goe-office-4a0532b28d2e5f4f3532",
       "province": "경기",
       "school": "늘푸른고등학교",
       "title": "[늘푸른고] 2026 기간제교사, 시간강사 채용 공고(특수-기간제, 체육-시간강사, 상담-시간강사)",
       "subject": "",
-      "region": "",
+      "region": "성남시",
       "regions": [
         "성남시"
       ],
-      "type": "기타",
-      "schoolLevel": "기타",
+      "type": "시간강사/강사",
+      "schoolLevel": "고등학교",
       "applyStart": "",
       "applyEnd": "2026/08/25",
       "workStart": "",
@@ -1859,12 +1884,12 @@
         "성남교육지원청"
       ],
       "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&nttSn=1949292&mi=23603",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&mi=23603&nttSn=1949292",
       "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
-      "detailLinkResolved": true,
       "nttSn": "1949292",
       "bbsId": "17872",
       "mi": "23603",
+      "detailLinkResolved": true,
       "periodStatus": "parsed"
     },
     {
@@ -1897,31 +1922,6 @@
       "mi": "23603",
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-57490",
-      "province": "경기",
-      "school": "다원초등학교",
-      "title": "계약제교원 채용 공고(6학년 담임)",
-      "subject": "6학년 담임",
-      "region": "화성시",
-      "regions": [
-        "화성시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "2026/08/21",
-      "applyEnd": "2026/08/26",
-      "workStart": "2026/08/27",
-      "workEnd": "2026/09/30",
-      "registered": "2026/08/22",
-      "headcount": "1",
-      "source": "경기도교육청 통합 구인구직",
-      "checkedSources": [
-        "경기도교육청 통합 구인구직"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57490"
     },
     {
       "id": "sen-108799",
@@ -3444,7 +3444,7 @@
       "workEnd": "2027/08/31",
       "registered": "2026/08/21",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -5754,7 +5754,7 @@
       "workEnd": "2026/11/13",
       "registered": "2026/08/21",
       "headcount": "",
-      "source": "안성교육지원청 + 부천교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "부천교육지원청"
@@ -6244,7 +6244,7 @@
       "workEnd": "",
       "registered": "2026/08/21",
       "headcount": "",
-      "source": "의정부교육지원청 + 포천교육지원청",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "의정부교육지원청",
         "포천교육지원청"
@@ -7005,7 +7005,7 @@
       "workEnd": "",
       "registered": "2026/08/20",
       "headcount": "",
-      "source": "가평교육지원청 + 평택교육지원청 + 경기도교육청 통합 구인구직",
+      "source": "가평교육지원청",
       "checkedSources": [
         "가평교육지원청",
         "평택교육지원청",
@@ -7738,7 +7738,7 @@
       "workEnd": "",
       "registered": "2026/08/20",
       "headcount": "",
-      "source": "포천교육지원청 + 동두천양주교육지원청",
+      "source": "포천교육지원청",
       "checkedSources": [
         "포천교육지원청",
         "동두천양주교육지원청"
@@ -8468,7 +8468,7 @@
       "workEnd": "",
       "registered": "2026/08/20",
       "headcount": "",
-      "source": "동작관악교육지원청 + 서울교육일자리포털",
+      "source": "동작관악교육지원청",
       "checkedSources": [
         "동작관악교육지원청",
         "서울교육일자리포털"
@@ -8505,7 +8505,7 @@
       "workEnd": "2027/01/14",
       "registered": "2026/08/20",
       "headcount": "",
-      "source": "의정부교육지원청 + 경기도교육청 통합 구인구직 + 동두천양주교육지원청 외 1곳",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "의정부교육지원청",
         "경기도교육청 통합 구인구직",
@@ -8765,6 +8765,37 @@
       "detailLinkResolved": true
     },
     {
+      "id": "goe-office-9948c17e7441dacdccff",
+      "province": "경기",
+      "school": "기관명 충현고등학교",
+      "title": "[충현고] 시간강사 채용 공고(중국어)",
+      "subject": "",
+      "region": "광명시",
+      "regions": [
+        "광명시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/08/20",
+      "applyEnd": "2026/08/23",
+      "workStart": "2026/08/20",
+      "workEnd": "2026/08/23",
+      "registered": "2026/08/20",
+      "headcount": "",
+      "source": "광명교육지원청",
+      "checkedSources": [
+        "광명교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegm.kr/goegm/na/ntt/selectNttInfo.do?bbsId=4225&mi=5826&nttSn=1258308",
+      "boardUrl": "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826",
+      "detailLinkResolved": true,
+      "nttSn": "1258308",
+      "bbsId": "4225",
+      "mi": "5826",
+      "periodStatus": "parsed"
+    },
+    {
       "id": "goe-office-7aa22d6e413bc8070644",
       "province": "경기",
       "school": "기관명 광명광덕초등학교",
@@ -8981,6 +9012,38 @@
       "bbsId": "5088",
       "mi": "8754",
       "detailLinkResolved": true
+    },
+    {
+      "id": "goe-office-80a6f59267695e178e94",
+      "province": "경기",
+      "school": "구리남양주교육지원청",
+      "title": "2026년 8월 25일자 한별초 기간제교원(2학년 담임) 채용 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "구리시",
+        "남양주시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/08/20",
+      "applyEnd": "2026/08/23",
+      "workStart": "2026/08/25",
+      "workEnd": "2026/09/23",
+      "registered": "2026/08/20",
+      "headcount": "",
+      "source": "구리남양주교육지원청",
+      "checkedSources": [
+        "구리남양주교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegn.kr/goegn/na/ntt/selectNttInfo.do?bbsId=8653&mi=16003&nttSn=1401568",
+      "boardUrl": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=16003",
+      "detailLinkResolved": true,
+      "nttSn": "1401568",
+      "bbsId": "8653",
+      "mi": "16003",
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-87e9a1e85390065801fb",
@@ -10391,6 +10454,37 @@
       "periodStatus": "unavailable"
     },
     {
+      "id": "goe-office-f0ea9d496a92ae619516",
+      "province": "경기",
+      "school": "비전고등학교",
+      "title": "2026학년도 비전고등학교 계약제교원(통합과학, 미술) 채용 공고",
+      "subject": "",
+      "region": "평택시",
+      "regions": [
+        "평택시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/08/20",
+      "applyEnd": "2026/08/23",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/20",
+      "headcount": "",
+      "source": "평택교육지원청",
+      "checkedSources": [
+        "평택교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goept.kr/goept/na/ntt/selectNttInfo.do?bbsId=10111&mi=10118&nttSn=2562639",
+      "boardUrl": "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10118&bbsId=10111",
+      "detailLinkResolved": true,
+      "nttSn": "2562639",
+      "bbsId": "10111",
+      "mi": "10118",
+      "periodStatus": "parsed"
+    },
+    {
       "id": "goe-office-7696a604ba391393260e",
       "province": "경기",
       "school": "은혜중학교",
@@ -11630,7 +11724,7 @@
       "workEnd": "2026/10/30",
       "registered": "2026/08/19",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -12579,6 +12673,38 @@
       "bbsId": "8653",
       "mi": "16003",
       "detailLinkResolved": true
+    },
+    {
+      "id": "goe-office-5e84662b9fa069896d92",
+      "province": "경기",
+      "school": "구리남양주교육지원청",
+      "title": "다산가람초 2학기 기간제교원 채용 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "구리시",
+        "남양주시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "2026/08/26",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/19",
+      "headcount": "",
+      "source": "구리남양주교육지원청",
+      "checkedSources": [
+        "구리남양주교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegn.kr/goegn/na/ntt/selectNttInfo.do?bbsId=8653&mi=16003&nttSn=1401135",
+      "boardUrl": "https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=16003",
+      "detailLinkResolved": true,
+      "nttSn": "1401135",
+      "bbsId": "8653",
+      "mi": "16003",
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-06dc5d9581053bbd701a",
@@ -14383,7 +14509,7 @@
       "workEnd": "",
       "registered": "2026/08/19",
       "headcount": "",
-      "source": "평택교육지원청 + 안성교육지원청",
+      "source": "평택교육지원청",
       "checkedSources": [
         "평택교육지원청",
         "안성교육지원청"
@@ -14864,7 +14990,7 @@
       "workEnd": "2027/08/31",
       "registered": "2026/08/18",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -14897,7 +15023,7 @@
       "workEnd": "",
       "registered": "2026/08/18",
       "headcount": "",
-      "source": "성남교육지원청 + 부천교육지원청",
+      "source": "성남교육지원청",
       "checkedSources": [
         "성남교육지원청",
         "부천교육지원청"
@@ -15066,6 +15192,37 @@
       "bbsId": "10228",
       "mi": "10336",
       "detailLinkResolved": true,
+      "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office-09b8994c6a4c9cbd3971",
+      "province": "경기",
+      "school": "성남수정초등학교",
+      "title": "2026 성남수정초등학교 기간제교사(6학년 담임교사) 채용 계획(2차)",
+      "subject": "",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "2026/08/23",
+      "workStart": "2026/08/25",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/18",
+      "headcount": "",
+      "source": "성남교육지원청",
+      "checkedSources": [
+        "성남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&mi=23603&nttSn=1947967",
+      "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+      "detailLinkResolved": true,
+      "nttSn": "1947967",
+      "bbsId": "17872",
+      "mi": "23603",
       "periodStatus": "parsed"
     },
     {
@@ -15341,7 +15498,7 @@
       "workEnd": "2026/09/03",
       "registered": "2026/08/18",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -23630,7 +23787,7 @@
       "workEnd": "",
       "registered": "2026/08/14",
       "headcount": "",
-      "source": "안성교육지원청 + 평택교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "평택교육지원청"
@@ -24840,7 +24997,7 @@
       "workEnd": "2027/02/26",
       "registered": "2026/08/13",
       "headcount": "",
-      "source": "동작관악교육지원청 + 서울교육일자리포털",
+      "source": "동작관악교육지원청",
       "checkedSources": [
         "동작관악교육지원청",
         "서울교육일자리포털"
@@ -30473,7 +30630,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/08/12",
       "headcount": "",
-      "source": "파주교육지원청 + 부천교육지원청",
+      "source": "파주교육지원청",
       "checkedSources": [
         "파주교육지원청",
         "부천교육지원청"
@@ -30761,7 +30918,7 @@
       "workEnd": "",
       "registered": "2026/08/12",
       "headcount": "",
-      "source": "안성교육지원청 + 평택교육지원청 + 동두천양주교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "평택교육지원청",
@@ -30826,7 +30983,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/08/12",
       "headcount": "",
-      "source": "가평교육지원청 + 평택교육지원청",
+      "source": "가평교육지원청",
       "checkedSources": [
         "가평교육지원청",
         "평택교육지원청"
@@ -39382,7 +39539,7 @@
       "workEnd": "2026/08/28",
       "registered": "2026/08/10",
       "headcount": "",
-      "source": "용인교육지원청 + 광명교육지원청",
+      "source": "용인교육지원청",
       "checkedSources": [
         "용인교육지원청",
         "광명교육지원청"
@@ -40457,7 +40614,7 @@
       "workEnd": "2027/01/14",
       "registered": "2026/08/07",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청 + 포천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청",
@@ -40619,7 +40776,7 @@
       "workEnd": "2027/08/31",
       "registered": "2026/08/07",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -42285,7 +42442,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/08/07",
       "headcount": "",
-      "source": "의정부교육지원청 + 포천교육지원청",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "의정부교육지원청",
         "포천교육지원청"
@@ -46449,7 +46606,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/08/05",
       "headcount": "",
-      "source": "의정부교육지원청 + 동두천양주교육지원청",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "의정부교육지원청",
         "동두천양주교육지원청"
@@ -50151,7 +50308,7 @@
       "workEnd": "2027/01/07",
       "registered": "2026/08/03",
       "headcount": "",
-      "source": "구리남양주교육지원청 + 경기도교육청 통합 구인구직",
+      "source": "구리남양주교육지원청",
       "checkedSources": [
         "구리남양주교육지원청",
         "경기도교육청 통합 구인구직"
@@ -56758,7 +56915,7 @@
       "workEnd": "",
       "registered": "2026/07/30",
       "headcount": "",
-      "source": "안성교육지원청 + 평택교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "평택교육지원청"
@@ -66810,7 +66967,7 @@
       "workEnd": "",
       "registered": "2026/07/23",
       "headcount": "",
-      "source": "성남교육지원청 + 파주교육지원청 + 부천교육지원청 외 1곳",
+      "source": "성남교육지원청",
       "checkedSources": [
         "성남교육지원청",
         "파주교육지원청",
@@ -67325,6 +67482,38 @@
       "bbsId": "5088",
       "mi": "8754",
       "detailLinkResolved": true
+    },
+    {
+      "id": "goe-office-d09042c9c57428b76fdf",
+      "province": "경기",
+      "school": "곤지암중학교",
+      "title": "[곤지암중학교]기간제 음악 교사 채용 공고(음악)",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "광주시",
+        "하남시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/07/23",
+      "applyEnd": "2026/07/28",
+      "workStart": "2026/08/18",
+      "workEnd": "2026/10/14",
+      "registered": "2026/07/23",
+      "headcount": "",
+      "source": "광주하남교육지원청",
+      "checkedSources": [
+        "광주하남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegh.kr/goegh/na/ntt/selectNttInfo.do?bbsId=5088&mi=8754&nttSn=1218863",
+      "boardUrl": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
+      "detailLinkResolved": true,
+      "nttSn": "1218863",
+      "bbsId": "5088",
+      "mi": "8754",
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-dce899203e377dbfe395",
@@ -69662,7 +69851,7 @@
       "workEnd": "2025/08/21",
       "registered": "2026/07/22",
       "headcount": "",
-      "source": "광명교육지원청 + 부천교육지원청 + 구리남양주교육지원청",
+      "source": "광명교육지원청",
       "checkedSources": [
         "광명교육지원청",
         "부천교육지원청",
@@ -73997,7 +74186,7 @@
       "workEnd": "2027/07/31",
       "registered": "2026/07/20",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 연천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "연천교육지원청"
@@ -74031,7 +74220,7 @@
       "workEnd": "2026/08/31",
       "registered": "2026/07/20",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 연천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "연천교육지원청"
@@ -76585,7 +76774,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/07/16",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -81640,7 +81829,7 @@
       "workEnd": "2026/08/14",
       "registered": "2026/07/15",
       "headcount": "",
-      "source": "광명교육지원청 + 포천교육지원청",
+      "source": "광명교육지원청",
       "checkedSources": [
         "광명교육지원청",
         "포천교육지원청"
@@ -84489,7 +84678,7 @@
       "workEnd": "2027/07/31",
       "registered": "2026/07/14",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 연천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "연천교육지원청"
@@ -84591,7 +84780,7 @@
       "workEnd": "2026/08/21",
       "registered": "2026/07/14",
       "headcount": "",
-      "source": "구리남양주교육지원청 + 동두천양주교육지원청 + 부천교육지원청 외 4곳",
+      "source": "구리남양주교육지원청",
       "checkedSources": [
         "구리남양주교육지원청",
         "동두천양주교육지원청",
@@ -85121,7 +85310,7 @@
       "workEnd": "",
       "registered": "2026/07/14",
       "headcount": "",
-      "source": "광주하남교육지원청 + 구리남양주교육지원청",
+      "source": "광주하남교육지원청",
       "checkedSources": [
         "광주하남교육지원청",
         "구리남양주교육지원청"
@@ -95874,7 +96063,7 @@
       "workEnd": "2026/12/30",
       "registered": "2026/07/09",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -99213,7 +99402,7 @@
       "workEnd": "2026/07/08",
       "registered": "2026/07/08",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청 + 포천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청",
@@ -99840,7 +100029,7 @@
       "workEnd": "2026/08/19",
       "registered": "2026/07/08",
       "headcount": "",
-      "source": "파주교육지원청 + 부천교육지원청",
+      "source": "파주교육지원청",
       "checkedSources": [
         "파주교육지원청",
         "부천교육지원청",
@@ -100027,7 +100216,7 @@
       "workEnd": "",
       "registered": "2026/07/08",
       "headcount": "",
-      "source": "고양교육지원청 + 화성오산교육지원청",
+      "source": "고양교육지원청",
       "checkedSources": [
         "고양교육지원청",
         "화성오산교육지원청"
@@ -103660,7 +103849,7 @@
       "workEnd": "2026/08/20",
       "registered": "2026/07/07",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 연천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "연천교육지원청"
@@ -107470,7 +107659,7 @@
       "workEnd": "2026/08/14",
       "registered": "2026/07/06",
       "headcount": "",
-      "source": "성남교육지원청 + 부천교육지원청",
+      "source": "성남교육지원청",
       "checkedSources": [
         "성남교육지원청",
         "부천교육지원청"
@@ -107537,7 +107726,7 @@
       "workEnd": "2026/08/14",
       "registered": "2026/07/06",
       "headcount": "",
-      "source": "파주교육지원청 + 광명교육지원청 + 김포교육지원청 외 1곳",
+      "source": "파주교육지원청",
       "checkedSources": [
         "파주교육지원청",
         "광명교육지원청",
@@ -111916,7 +112105,7 @@
       "workEnd": "2026/08/20",
       "registered": "2026/07/03",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 연천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "연천교육지원청"
@@ -112202,7 +112391,7 @@
       "workEnd": "2026/08/19",
       "registered": "2026/07/03",
       "headcount": "",
-      "source": "파주교육지원청 + 광명교육지원청",
+      "source": "파주교육지원청",
       "checkedSources": [
         "파주교육지원청",
         "광명교육지원청"
@@ -119898,7 +120087,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/07/01",
       "headcount": "",
-      "source": "구리남양주교육지원청 + 포천교육지원청",
+      "source": "구리남양주교육지원청",
       "checkedSources": [
         "구리남양주교육지원청",
         "포천교육지원청"
@@ -123829,7 +124018,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/06/30",
       "headcount": "",
-      "source": "구리남양주교육지원청 + 포천교육지원청",
+      "source": "구리남양주교육지원청",
       "checkedSources": [
         "구리남양주교육지원청",
         "포천교육지원청"
@@ -127079,7 +127268,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/06/29",
       "headcount": "",
-      "source": "성남교육지원청 + 광주하남교육지원청 + 구리남양주교육지원청",
+      "source": "성남교육지원청",
       "checkedSources": [
         "성남교육지원청",
         "광주하남교육지원청",
@@ -129276,7 +129465,7 @@
       "workEnd": "",
       "registered": "2026/06/29",
       "headcount": "",
-      "source": "안성교육지원청 + 평택교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "평택교육지원청"
@@ -131915,7 +132104,7 @@
       "periodStatus": "parsed"
     },
     {
-      "id": "goe-office-a3822f484858546605a3",
+      "id": "goe-complete-70175f3cbcbe9fd35b",
       "province": "경기",
       "school": "이매고등학교",
       "title": "이매고등학교 체육과 시간강사 채용 공고",
@@ -131924,8 +132113,8 @@
       "regions": [
         "성남시"
       ],
-      "type": "시간강사/강사",
-      "schoolLevel": "고등학교",
+      "type": "기타",
+      "schoolLevel": "기타",
       "applyStart": "",
       "applyEnd": "2026/06/29",
       "workStart": "2026/07/08",
@@ -131937,12 +132126,12 @@
         "성남교육지원청"
       ],
       "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&mi=23603&nttSn=1939102",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&nttSn=1939102&mi=23603",
       "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+      "detailLinkResolved": true,
       "nttSn": "1939102",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
       "periodStatus": "parsed"
     },
     {
@@ -141266,7 +141455,7 @@
       "workEnd": "2027/02/28",
       "registered": "2026/06/24",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 연천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "연천교육지원청"
@@ -143761,7 +143950,7 @@
       "workEnd": "2026/12/31",
       "registered": "2026/06/24",
       "headcount": "",
-      "source": "의정부교육지원청 + 포천교육지원청",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "의정부교육지원청",
         "포천교육지원청"
@@ -146530,7 +146719,7 @@
       "workEnd": "2026/08/19",
       "registered": "2026/06/23",
       "headcount": "",
-      "source": "부천교육지원청 + 안성교육지원청 + 광명교육지원청",
+      "source": "부천교육지원청",
       "checkedSources": [
         "부천교육지원청",
         "안성교육지원청",
@@ -148969,7 +149158,7 @@
       "workEnd": "",
       "registered": "2026/06/22",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 파주교육지원청 + 부천교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "파주교육지원청",
@@ -155525,7 +155714,7 @@
       "workEnd": "2026/08/14",
       "registered": "2026/06/18",
       "headcount": "",
-      "source": "안성교육지원청 + 동두천양주교육지원청 + 파주교육지원청 외 1곳",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "동두천양주교육지원청",
@@ -155559,7 +155748,7 @@
       "workEnd": "2026/08/07",
       "registered": "2026/06/18",
       "headcount": "",
-      "source": "안성교육지원청 + 파주교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "파주교육지원청"
@@ -161101,7 +161290,7 @@
       "workEnd": "2026/08/20",
       "registered": "2026/06/16",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 안성교육지원청",
+      "source": "동두천양주교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "안성교육지원청"
@@ -164255,7 +164444,7 @@
       "workEnd": "2026/08/19",
       "registered": "2026/06/15",
       "headcount": "",
-      "source": "부천교육지원청 + 동두천양주교육지원청",
+      "source": "부천교육지원청",
       "checkedSources": [
         "부천교육지원청",
         "동두천양주교육지원청"
@@ -168366,6 +168555,37 @@
         "job_seq": "10081"
       },
       "detailLinkResolved": true,
+      "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-complete-c7e1a7f3c51a21050b",
+      "province": "경기",
+      "school": "분당초등학교",
+      "title": "2026학년도 시간강사 채용 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "성남시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "",
+      "applyEnd": "2026/06/16",
+      "workStart": "2026/06/25",
+      "workEnd": "2026/06/26",
+      "registered": "2026/06/12",
+      "headcount": "",
+      "source": "성남교육지원청",
+      "checkedSources": [
+        "성남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&nttSn=1935146&mi=23603",
+      "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+      "detailLinkResolved": true,
+      "nttSn": "1935146",
+      "bbsId": "17872",
+      "mi": "23603",
       "periodStatus": "parsed"
     },
     {
@@ -183159,7 +183379,7 @@
       "workEnd": "2026/07/16",
       "registered": "2026/06/08",
       "headcount": "",
-      "source": "의정부교육지원청 + 포천교육지원청",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "의정부교육지원청",
         "포천교육지원청"
@@ -211114,7 +211334,7 @@
       "workEnd": "",
       "registered": "2026/04/01",
       "headcount": "",
-      "source": "광주하남교육지원청 + 이천교육지원청",
+      "source": "광주하남교육지원청",
       "checkedSources": [
         "광주하남교육지원청",
         "이천교육지원청"
@@ -211148,7 +211368,7 @@
       "workEnd": "",
       "registered": "2026/04/01",
       "headcount": "",
-      "source": "군포의왕교육지원청 + 안양과천교육지원청",
+      "source": "군포의왕교육지원청",
       "checkedSources": [
         "군포의왕교육지원청",
         "안양과천교육지원청"
@@ -211845,7 +212065,7 @@
       "workEnd": "",
       "registered": "2026/08/19",
       "headcount": "",
-      "source": "평택교육지원청 + 안성교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "평택교육지원청",
         "안성교육지원청"
@@ -211908,7 +212128,7 @@
       "workEnd": "2027/08/31",
       "registered": "2026/08/18",
       "headcount": "",
-      "source": "동두천양주교육지원청 + 의정부교육지원청",
+      "source": "의정부교육지원청",
       "checkedSources": [
         "동두천양주교육지원청",
         "의정부교육지원청"
@@ -212114,7 +212334,7 @@
       "workEnd": "",
       "registered": "2026/08/14",
       "headcount": "",
-      "source": "안성교육지원청 + 광명교육지원청",
+      "source": "안성교육지원청",
       "checkedSources": [
         "안성교육지원청",
         "광명교육지원청"
@@ -212597,7 +212817,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-23 00:34 KST",
+      "checkedAt": "2026-08-23 03:34 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -212607,7 +212827,7 @@
   },
   "supportCompleteness": {
     "lookbackDays": 90,
-    "newlyRecoveredJobs": 1,
+    "newlyRecoveredJobs": 0,
     "gyeonggiComplete": 25,
     "seoulComplete": 11,
     "gyeonggiTotal": 25,
@@ -212615,36 +212835,36 @@
     "warnings": []
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-23 01:13 KST",
+    "checkedAt": "2026-08-23 04:07 KST",
     "futureRegistrationDatesCorrected": 3
   },
   "missingRecovery": {
-    "freshCount": 8105,
-    "previousCount": 6497,
-    "mergedCount": 6819,
+    "freshCount": 8106,
+    "previousCount": 6819,
+    "mergedCount": 6826,
     "carriedForward": 38,
-    "enrichedFromPrevious": 6192,
+    "enrichedFromPrevious": 6515,
     "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
-    "generatedAt": "2026-08-23 01:13 KST"
+    "generatedAt": "2026-08-23 04:07 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6368,
-    "gyeonggiTotal": 6368,
+    "gyeonggiExact": 6375,
+    "gyeonggiTotal": 6375,
     "seoulExact": 440,
     "seoulTotal": 440
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-23 01:13 KST",
+    "checkedAt": "2026-08-23 04:07 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 5691,
-    "detailPagesParsed": 2397,
-    "fieldsFilledThisRun": 162,
-    "missingApplicationPeriod": 1058,
+    "recentSupportJobs": 5698,
+    "detailPagesParsed": 2404,
+    "fieldsFilledThisRun": 22,
+    "missingApplicationPeriod": 1059,
     "missingWorkPeriod": 1911,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-23 01:13 KST",
+      "checkedAt": "2026-08-23 04:08 KST",
       "candidates": 186,
       "detailPagesConfirmed": 186,
       "cacheEntriesImproved": 0,
