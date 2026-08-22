@@ -26,7 +26,15 @@ NOW = datetime.now(KST)
 
 DETAIL_RE = re.compile(r"/CMS/.+/\d+_\d+\.html$", re.I)
 RECRUIT_RE = re.compile(r"채용|구인|모집|기간제|계약제|전문상담사|교육공무직|대체인력|대체직원|근로자", re.I)
-EXCLUDE_RE = re.compile(r"합격|응시현황|서류전형|면접대상|채용결과|선정결과|인사발령|보도자료", re.I)
+# Status/result notices often contain the word '채용' but are not recruitment opportunities.
+# Keep this deliberately broad: preserving a genuine opening is less important than avoiding
+# expired/procedural notices masquerading as active jobs in this supplemental recovery path.
+EXCLUDE_RE = re.compile(
+    r"합격|응시현황|응시원서\s*접수\s*현황|원서\s*접수\s*현황|접수\s*현황|"
+    r"서류전형|면접대상|면접\s*대상|채용결과|선정결과|최종\s*결과|"
+    r"인사발령|보도자료|경쟁률|접수인원|응시인원",
+    re.I,
+)
 DATE_RE = re.compile(r"(20\d{2})[./-]\s*(\d{1,2})[./-]\s*(\d{1,2})")
 
 S = requests.Session()
@@ -112,12 +120,19 @@ def fetch_job(office, item):
     }, "accepted"
 
 
+def is_recovered_status_notice(job):
+    """Remove only records created by this supplemental recovery path that are now known status notices."""
+    return str(job.get("id", "")).startswith("sen-office-cms-") and bool(EXCLUDE_RE.search(clean(job.get("title", ""))))
+
+
 def main():
     if not JOBS.exists() or not REPORT.exists():
         raise SystemExit("jobs.json or board_discovery_report.json missing")
     payload = json.loads(JOBS.read_text(encoding="utf-8"))
     report = json.loads(REPORT.read_text(encoding="utf-8"))
-    jobs = payload.get("jobs", [])
+    original_jobs = payload.get("jobs", [])
+    removed = [j for j in original_jobs if is_recovered_status_notice(j)]
+    jobs = [j for j in original_jobs if not is_recovered_status_notice(j)]
     existing_urls = {j.get("url", "") for j in jobs}
     existing_semantic = {(norm(j.get("title", "")), j.get("registered", "")) for j in jobs}
     accepted, skipped = [], []
@@ -134,16 +149,20 @@ def main():
                 continue
             jobs.append(job); accepted.append(job)
             existing_urls.add(job["url"]); existing_semantic.add(semantic)
-    if accepted:
+    if accepted or removed:
         jobs.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
         payload["jobs"] = jobs
-        payload.setdefault("verification", {})["seoulOfficeCmsRecovery"] = {"added": len(accepted), "state": "pending-verification"}
+        payload.setdefault("verification", {})["seoulOfficeCmsRecovery"] = {
+            "added": len(accepted), "removedStatusNotices": len(removed), "state": "pending-verification"
+        }
         JOBS.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     result = {"generatedAt": NOW.isoformat(timespec="seconds"), "added": len(accepted),
+              "removedStatusNotices": len(removed),
+              "removed": [{k:v for k,v in j.items() if k in ("source","title","registered","url")} for j in removed],
               "accepted": [{k:v for k,v in j.items() if k in ("source","title","registered","url")} for j in accepted],
               "skippedCount": len(skipped), "skipped": skipped[:200]}
     OUT_REPORT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Seoul office CMS recovery: added={len(accepted)} skipped={len(skipped)}")
+    print(f"Seoul office CMS recovery: added={len(accepted)} removed_status={len(removed)} skipped={len(skipped)}")
 
 
 if __name__ == "__main__":
