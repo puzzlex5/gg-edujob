@@ -66,7 +66,7 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_fast_pagination.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/recover_seoul_office_cms_jobs.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py
           grep -q 'FAST_MAX_PAGES = 60' scripts/scrape_jobs.py
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
@@ -94,6 +94,12 @@ jobs:
           python scripts/resolve_support_links.py
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
+
+      - name: Recover verified Seoul support-office CMS recruitment posts
+        run: |
+          python scripts/update_collector_status.py --workflow fast --stage seoul-cms-recovery --state running
+          python scripts/recover_seoul_office_cms_jobs.py
+          python scripts/sanitize_job_dates.py
 
       - name: Independent fast-publication verification
         run: |
@@ -129,7 +135,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json date_anomaly_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json seoul_office_cms_recovery_report.json date_anomaly_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           git diff --cached --quiet && exit 0
           git commit -m 'Fast refresh verified recruitment postings'
           # Runtime hardeners can leave intentionally uncommitted working-tree edits. They must
