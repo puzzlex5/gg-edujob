@@ -102,11 +102,27 @@ jobs:
           python scripts/sanitize_job_dates.py
 
       - name: Independent fast-publication verification
+        shell: bash
         run: |
+          set -euo pipefail
           python scripts/update_collector_status.py --workflow fast --stage verification --state running
+          rm -f verification_failure_report.json
           if ! python scripts/verify_jobs.py --previous /tmp/jobs_previous.json; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          try:
+              data=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+              report=data.get('verification',{}) if isinstance(data,dict) else {}
+          except Exception as e:
+              report={'state':'critical','message':f'failed to read verification payload: {type(e).__name__}'}
+          Path('verification_failure_report.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8'
+          )
+          print(json.dumps(report, ensure_ascii=False))
+          PY
             cp /tmp/jobs_previous.json jobs.json
-            echo 'Fast refresh validation failed; kept previous publication.' >&2
+            echo 'Fast refresh validation failed; kept previous publication and preserved diagnostics.' >&2
             exit 1
           fi
 
@@ -135,11 +151,10 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f verification_failure_report.json
           git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json seoul_office_cms_recovery_report.json date_anomaly_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
           git diff --cached --quiet && exit 0
           git commit -m 'Fast refresh verified recruitment postings'
-          # Runtime hardeners can leave intentionally uncommitted working-tree edits. They must
-          # not make git pull --rebase fail after a fully verified publication commit exists.
           git reset --hard HEAD
           git pull --rebase
           git push
@@ -151,6 +166,10 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          if [ -f verification_failure_report.json ]; then
+            cp verification_failure_report.json /tmp/verification_failure_report.json
+          fi
 
           head_success="$(git show HEAD:collector_status.json 2>/dev/null | python -c "import json,sys; e=json.load(sys.stdin).get('fast',{}); print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')" 2>/dev/null || true)"
           if [ -n "$head_success" ] && [ "$(git log -1 --pretty=%s)" = 'Fast refresh verified recruitment postings' ]; then
@@ -183,7 +202,11 @@ jobs:
           cp collector_status.json /tmp/collector_status.json
           git reset --hard HEAD
           cp /tmp/collector_status.json collector_status.json
+          if [ -f /tmp/verification_failure_report.json ]; then
+            cp /tmp/verification_failure_report.json verification_failure_report.json
+          fi
           git add collector_status.json
+          [ ! -f verification_failure_report.json ] || git add verification_failure_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record fast collector failure stage'
           git reset --hard HEAD
