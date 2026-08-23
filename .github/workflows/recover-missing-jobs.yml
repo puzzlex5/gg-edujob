@@ -97,8 +97,10 @@ jobs:
               raise SystemExit(f'Recovery unexpectedly lost >30%: {len(before)} -> {len(after)}')
           if int(summary.get('missingAfter') or 0) != 0:
               raise SystemExit(f'Official ID reconciliation still missing {summary.get("missingAfter")} postings')
-          if int(summary.get('reconciledOffices') or 0) != int(summary.get('totalOffices') or -1):
-              raise SystemExit(f'Not all support offices reconciled: {summary}')
+          reconciled=int(summary.get('reconciledSources') or 0)
+          total=int(summary.get('totalSources') or 0)
+          if total != 38 or reconciled != total:
+              raise SystemExit(f'Not all 38 official sources reconciled: {summary}')
           print(f'Recovery guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
           PY
 
