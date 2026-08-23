@@ -1,8 +1,8 @@
 {
   "fast": {
     "state": "success",
-    "updatedAt": "2026-08-24T05:41:12+09:00",
-    "jobsCount": 6465,
+    "updatedAt": "2026-08-24T08:50:54+09:00",
+    "jobsCount": 6467,
     "artifacts": {
       "jobLedger": true,
       "collectionState": true,
@@ -12,22 +12,26 @@
     },
     "stage": "complete",
     "lastFailureAt": "2026-08-23T08:48:17+09:00",
-    "lastSuccessAt": "2026-08-24T05:41:12+09:00",
+    "lastSuccessAt": "2026-08-24T08:50:54+09:00",
     "artifactGeneratedAt": {
       "coverageReport": "2026-08-22T21:22:09.773840+00:00",
       "missingRecoveryReport": "",
       "boardDiscoveryReport": "",
-      "collectionState": "2026-08-24 05:41:12 KST"
+      "collectionState": "2026-08-24 08:50:54 KST"
     },
     "coverageEvidence": {
       "generatedAt": "2026-08-22T21:22:09.773840+00:00",
+      "ageHours": 26.48,
+      "freshWithinHours": 30,
+      "fresh": true,
       "gyeonggiComplete": 25,
       "gyeonggiTotal": 25,
       "seoulComplete": 11,
       "seoulTotal": 11,
       "warnings": 0,
       "exactLinks": true,
-      "complete": true
+      "complete": true,
+      "currentComplete": true
     }
   }
 }

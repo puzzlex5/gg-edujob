@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24 04:49 KST",
+  "updatedAt": "2026-08-24 07:55 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -727,8 +727,8 @@
           "boards": [
             "https://gdspedu.sen.go.kr/FUS/JO/JOL11.do"
           ],
-          "count": 10,
-          "rawRows": 13,
+          "count": 9,
+          "rawRows": 12,
           "ok": true,
           "state": "ok",
           "message": "구인 게시판 확인"
@@ -797,7 +797,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 475,
+        "count": 484,
         "ok": true,
         "state": "ok"
       }
@@ -806,12 +806,12 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-08-24 05:41 KST",
+    "checkedAt": "2026-08-24 08:50 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 6453,
-      "resolved": 6453,
+      "total": 6455,
+      "resolved": 6455,
       "unresolved": 0,
       "examples": []
     },
@@ -835,33 +835,95 @@
       ]
     },
     "previousTotal": 6465,
-    "currentTotal": 6465
+    "currentTotal": 6467
   },
   "jobs": [
     {
-      "id": "sen-108813",
+      "id": "sen-108833",
       "province": "서울",
-      "school": "성베드로학교",
-      "title": "성베드로학교(서울) 시간강사 구인",
-      "subject": "고3수업(정보통신, 과학, 미술) 월 234교시, 화234교시, 수34교시",
-      "region": "구로구",
+      "school": "풍문고등학교",
+      "title": "2026년도 학교법인 풍문학원 풍문고등학교 일반9급(시설직) 공개경쟁임용 계획 공고",
+      "subject": "시설관리 등",
+      "region": "강남구",
       "regions": [
-        "구로구"
+        "강남구"
       ],
-      "type": "시간강사/강사",
-      "schoolLevel": "기타",
-      "applyStart": "2026/08/23",
-      "applyEnd": "2026/12/24",
-      "workStart": "2026/08/25",
-      "workEnd": "2027/02/12",
-      "registered": "2026/08/23",
+      "type": "정규채용",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/08",
+      "applyEnd": "2026/09/14",
+      "workStart": "2026/10/01",
+      "workEnd": "2027/09/30",
+      "registered": "2026/08/24",
       "headcount": "1",
       "source": "서울교육일자리포털",
       "checkedSources": [
         "서울교육일자리포털"
       ],
       "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108813"
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108833"
+    },
+    {
+      "id": "goe-office2-1ddf8039a38f4210b8",
+      "province": "경기",
+      "school": "하탑중학교",
+      "title": "2026 하탑중 교원 장기재직휴가 시간강사 채용 공고(중국어)",
+      "subject": "",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "",
+      "applyEnd": "2026/09/04",
+      "workStart": "2026/09/14",
+      "workEnd": "",
+      "registered": "2026/08/24",
+      "headcount": "",
+      "source": "성남교육지원청",
+      "checkedSources": [
+        "성남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&mi=23603&nttSn=1949345",
+      "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+      "detailLinkResolved": true,
+      "nttSn": "1949345",
+      "bbsId": "17872",
+      "mi": "23603",
+      "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office2-df4dfc69511166fb14",
+      "province": "경기",
+      "school": "복정초등학교",
+      "title": "2026학년도 방과후학교 지원인력 채용 공고",
+      "subject": "",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "기타",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "2026/08/26",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/24",
+      "headcount": "",
+      "source": "성남교육지원청",
+      "checkedSources": [
+        "성남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&mi=23603&nttSn=1949341",
+      "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+      "detailLinkResolved": true,
+      "nttSn": "1949341",
+      "bbsId": "17872",
+      "mi": "23603",
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-8cc9edfcf155a8a14c9f",
@@ -47009,7 +47071,9 @@
         "job_seq": "8283"
       },
       "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "periodStatus": "unavailable",
+      "recoveryCarryForward": true,
+      "recoveryReason": "previously published active/recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-office-dgedu.sen.go.kr-10193",
@@ -200877,7 +200941,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-24 05:36 KST",
+      "checkedAt": "2026-08-24 08:45 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -200886,42 +200950,42 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-24 05:40 KST",
+    "checkedAt": "2026-08-24 08:49 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-24 05:40 KST",
+    "checkedAt": "2026-08-24 08:49 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
-    "freshCount": 7588,
+    "freshCount": 7598,
     "previousCount": 6465,
-    "mergedCount": 6464,
-    "carriedForward": 39,
+    "mergedCount": 6466,
+    "carriedForward": 40,
     "enrichedFromPrevious": 6163,
     "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
-    "generatedAt": "2026-08-24 05:39 KST"
+    "generatedAt": "2026-08-24 08:48 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6017,
-    "gyeonggiTotal": 6017,
+    "gyeonggiExact": 6019,
+    "gyeonggiTotal": 6019,
     "seoulExact": 436,
     "seoulTotal": 436
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-24 05:39 KST",
+    "checkedAt": "2026-08-24 08:48 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 5498,
-    "detailPagesParsed": 2242,
-    "fieldsFilledThisRun": 0,
+    "recentSupportJobs": 5500,
+    "detailPagesParsed": 2244,
+    "fieldsFilledThisRun": 3,
     "missingApplicationPeriod": 1051,
     "missingWorkPeriod": 1832,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-24 05:39 KST",
+      "checkedAt": "2026-08-24 08:48 KST",
       "candidates": 186,
-      "detailPagesConfirmed": 186,
+      "detailPagesConfirmed": 185,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     }

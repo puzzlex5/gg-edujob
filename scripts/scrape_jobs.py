@@ -61,6 +61,7 @@ EXCLUDE_WORDS = re.compile(r"최종\s*합격|합격자|서류\s*심사|서류전
 BOARD_WORDS = re.compile(r"구인|채용정보|채용공고|모집공고|기간제교사|기간제교원|교육공무직")
 BOARD_EXCLUDE = re.compile(r"구직|인력풀|합격|인사정보|인사발령|공지사항|자료실")
 FAST_MAX_PAGES = 60  # emergency ceiling; normal stop is empty/repeated page
+CENTRAL_MAX_PAGES = 500  # emergency ceiling; central crawlers normally stop on empty/repeated/final page
 
 
 def clean(s):
@@ -202,7 +203,7 @@ def scrape_gyeonggi_central():
     jobs, seen_ids = [], set()
     for code, (cat_name, ui_type) in GYEONGGI_CATEGORIES.items():
         print("GYEONGGI CENTRAL", code, cat_name)
-        for page in range(1, 35):
+        for page in range(1, CENTRAL_MAX_PAGES + 1):
             data = {
                 "mi":"10502","pbancSn":"","currPage":str(page),"srchEcptDl":"Y","srchTodayPb":"","srchLgnNm":"",
                 "srchOcptNm":cat_name,"srchOcptCd":code,"pageIndex":"50","orderbyType":"reg","searchType":"","searchValue":"",
@@ -431,7 +432,7 @@ def parse_seoul_card(card):
 def scrape_seoul_central():
     base_url = SEOUL["central"]["url"]
     jobs, seen = [], set()
-    for page in range(1, 60):
+    for page in range(1, CENTRAL_MAX_PAGES + 1):
         r = get(base_url, params={"type":"term","q_currPage":page,"q_rowPerPage":"50","q_sortBy":"regDt","q_recClosed":"closed"})
         if not r: break
         soup = BeautifulSoup(r.text, "html.parser")
