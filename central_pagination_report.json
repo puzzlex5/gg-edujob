@@ -1,0 +1,106 @@
+{
+  "generatedAt": "2026-08-24 01:42:30 KST",
+  "policy": "central sources fail closed: non-empty rows must yield stable IDs; repeated full pages are pagination failures; short pages require one-page confirmation",
+  "sources": [
+    {
+      "name": "경기도교육청 통합 구인구직",
+      "province": "경기",
+      "stableIdCount": 715,
+      "complete": false,
+      "categories": [
+        {
+          "code": "A",
+          "name": "기간제/사립교원",
+          "pagesScanned": 7,
+          "rawRows": 262,
+          "stableIdCount": 261,
+          "terminalEvidence": "",
+          "accessError": false,
+          "parseError": true,
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": false
+        },
+        {
+          "code": "B",
+          "name": "초중등시간강사",
+          "pagesScanned": 8,
+          "rawRows": 314,
+          "stableIdCount": 313,
+          "terminalEvidence": "",
+          "accessError": false,
+          "parseError": true,
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": false
+        },
+        {
+          "code": "C",
+          "name": "교육공무직원",
+          "pagesScanned": 3,
+          "rawRows": 78,
+          "stableIdCount": 77,
+          "terminalEvidence": "",
+          "accessError": false,
+          "parseError": true,
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": false
+        },
+        {
+          "code": "D",
+          "name": "사립학교 교원정규채용",
+          "pagesScanned": 2,
+          "rawRows": 2,
+          "stableIdCount": 1,
+          "terminalEvidence": "",
+          "accessError": false,
+          "parseError": true,
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": false
+        },
+        {
+          "code": "E",
+          "name": "사립학교 사무직정규채용",
+          "pagesScanned": 2,
+          "rawRows": 2,
+          "stableIdCount": 1,
+          "terminalEvidence": "",
+          "accessError": false,
+          "parseError": true,
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": false
+        },
+        {
+          "code": "F",
+          "name": "자원봉사자",
+          "pagesScanned": 3,
+          "rawRows": 63,
+          "stableIdCount": 62,
+          "terminalEvidence": "",
+          "accessError": false,
+          "parseError": true,
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": false
+        }
+      ]
+    },
+    {
+      "name": "서울교육일자리포털",
+      "province": "서울",
+      "stableIdCount": 475,
+      "pagesScanned": 11,
+      "rawRows": 475,
+      "terminalEvidence": "empty-page",
+      "accessError": false,
+      "parseError": false,
+      "paginationRepeated": false,
+      "capHit": false,
+      "complete": true
+    }
+  ],
+  "complete": false
+}
