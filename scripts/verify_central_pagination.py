@@ -2,9 +2,10 @@
 """Independently prove pagination completion for the two central recruitment portals.
 
 This verifier does not trust the collector's row count. It traverses the official list endpoints
-with stable source IDs and requires structural termination evidence: an empty page, a short final
-page (where applicable), or a page that produces no new stable IDs after earlier pages. Reaching
-the emergency ceiling or a request failure before such evidence is incomplete.
+with stable source IDs and requires fail-closed structural termination evidence. A non-empty page
+whose stable IDs cannot be parsed is a parser failure, not completion. A repeated full page is a
+pagination failure, not completion. A short page is treated as final only after the next request
+returns empty or repeats that same short page.
 """
 import json
 import re
@@ -22,7 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "central_pagination_report.json"
 KST = timezone(timedelta(hours=9))
 MAX_PAGES = 500
-UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.0)"
+EXPECTED_PAGE_SIZE = 50
+UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.1)"
 
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9"})
@@ -54,6 +56,12 @@ def get(url, params):
         return None
 
 
+def _finish_state(pages, terminal, access_error, parse_error, pagination_repeated):
+    cap_hit = pages >= MAX_PAGES and not terminal
+    complete = bool(terminal) and not access_error and not parse_error and not pagination_repeated and not cap_hit
+    return cap_hit, complete
+
+
 def audit_gyeonggi():
     central_url = primary.GYEONGGI["central"]["url"]
     categories = []
@@ -66,11 +74,16 @@ def audit_gyeonggi():
         raw_rows = 0
         terminal = ""
         access_error = False
+        parse_error = False
+        pagination_repeated = False
+        previous_ids = None
+        previous_short = False
+
         for page in range(1, MAX_PAGES + 1):
             data = {
                 "mi": "10502", "pbancSn": "", "currPage": str(page), "srchEcptDl": "Y",
                 "srchTodayPb": "", "srchLgnNm": "", "srchOcptNm": cat_name,
-                "srchOcptCd": code, "pageIndex": "50", "orderbyType": "reg",
+                "srchOcptCd": code, "pageIndex": str(EXPECTED_PAGE_SIZE), "orderbyType": "reg",
                 "searchType": "", "searchValue": "", "btchDlYn": "", "cndNo": "",
                 "srchSchlSe": "",
             }
@@ -85,6 +98,7 @@ def audit_gyeonggi():
             if not rows:
                 terminal = "empty-page"
                 break
+
             ids = []
             for li in rows:
                 a = li.find("a", href=re.compile(r"goView\(['\"]?\d+"))
@@ -93,22 +107,38 @@ def audit_gyeonggi():
                 m = re.search(r"goView\(['\"]?(\d+)", a.get("href", ""))
                 if m:
                     ids.append(m.group(1))
+
+            # Non-empty official rows with zero stable IDs means the parser no longer matches.
+            if not ids:
+                parse_error = True
+                break
+
+            page_ids = tuple(ids)
+            if previous_ids is not None and page_ids == previous_ids:
+                if previous_short:
+                    terminal = "short-final-page-confirmed-by-repeat"
+                else:
+                    pagination_repeated = True
+                break
+
             new_ids = [x for x in ids if x not in seen]
+            if not new_ids:
+                # A repeated/overlapping full page cannot prove that there are no later pages.
+                pagination_repeated = True
+                break
+
             seen.update(ids)
             all_ids.update(ids)
-            if not new_ids:
-                terminal = "no-new-stable-ids"
-                break
-            if len(rows) < 45:
-                terminal = "short-final-page"
-                break
-        cap_hit = pages >= MAX_PAGES and not terminal
-        ok = bool(terminal) and not access_error and not cap_hit
+            previous_ids = page_ids
+            previous_short = len(rows) < EXPECTED_PAGE_SIZE
+
+        cap_hit, ok = _finish_state(pages, terminal, access_error, parse_error, pagination_repeated)
         complete = complete and ok
         categories.append({
             "code": code, "name": cat_name, "pagesScanned": pages, "rawRows": raw_rows,
             "stableIdCount": len(seen), "terminalEvidence": terminal,
-            "accessError": access_error, "capHit": cap_hit, "complete": ok,
+            "accessError": access_error, "parseError": parse_error,
+            "paginationRepeated": pagination_repeated, "capHit": cap_hit, "complete": ok,
         })
 
     return {
@@ -125,10 +155,14 @@ def audit_seoul():
     raw_rows = 0
     terminal = ""
     access_error = False
+    parse_error = False
+    pagination_repeated = False
+    previous_ids = None
+    previous_short = False
 
     for page in range(1, MAX_PAGES + 1):
         r = get(base_url, {
-            "type": "term", "q_currPage": page, "q_rowPerPage": "50",
+            "type": "term", "q_currPage": page, "q_rowPerPage": str(EXPECTED_PAGE_SIZE),
             "q_sortBy": "regDt", "q_recClosed": "closed",
         })
         if not r:
@@ -141,6 +175,7 @@ def audit_seoul():
         if not cards:
             terminal = "empty-page"
             break
+
         ids = []
         for li in cards:
             a = li.find("a", href=re.compile(r"BD_selectRecDetail\.do\?q_rcrtSn="))
@@ -149,21 +184,34 @@ def audit_seoul():
             m = re.search(r"q_rcrtSn=(\d+)", a.get("href", ""))
             if m:
                 ids.append(m.group(1))
-        new_ids = [x for x in ids if x not in seen]
-        seen.update(ids)
-        if not new_ids:
-            terminal = "no-new-stable-ids"
-            break
-        if len(cards) < 45:
-            terminal = "short-final-page"
+
+        if not ids:
+            parse_error = True
             break
 
-    cap_hit = pages >= MAX_PAGES and not terminal
-    complete = bool(terminal) and not access_error and not cap_hit
+        page_ids = tuple(ids)
+        if previous_ids is not None and page_ids == previous_ids:
+            if previous_short:
+                terminal = "short-final-page-confirmed-by-repeat"
+            else:
+                pagination_repeated = True
+            break
+
+        new_ids = [x for x in ids if x not in seen]
+        if not new_ids:
+            pagination_repeated = True
+            break
+
+        seen.update(ids)
+        previous_ids = page_ids
+        previous_short = len(cards) < EXPECTED_PAGE_SIZE
+
+    cap_hit, complete = _finish_state(pages, terminal, access_error, parse_error, pagination_repeated)
     return {
         "name": primary.SEOUL["central"]["name"], "province": "서울",
         "stableIdCount": len(seen), "pagesScanned": pages, "rawRows": raw_rows,
         "terminalEvidence": terminal, "accessError": access_error,
+        "parseError": parse_error, "paginationRepeated": pagination_repeated,
         "capHit": cap_hit, "complete": complete,
     }
 
@@ -173,7 +221,7 @@ def main():
     se = audit_seoul()
     report = {
         "generatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST"),
-        "policy": "central sources require structural pagination termination evidence; non-empty first page is never sufficient",
+        "policy": "central sources fail closed: non-empty rows must yield stable IDs; repeated full pages are pagination failures; short pages require one-page confirmation",
         "sources": [gg, se],
         "complete": bool(gg.get("complete") and se.get("complete")),
     }
