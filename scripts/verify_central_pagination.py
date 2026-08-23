@@ -41,7 +41,7 @@ def post(url, data):
         r = S.post(url, data=data, timeout=22, allow_redirects=True)
         r.raise_for_status()
         return r
-    except Exception as e:
+    except Exception:
         return None
 
 
@@ -87,10 +87,10 @@ def audit_gyeonggi():
                 break
             ids = []
             for li in rows:
-                a = li.find("a", href=re.compile(r"goView\\(['\"]?\\d+"))
+                a = li.find("a", href=re.compile(r"goView\(['\"]?\d+"))
                 if not a:
                     continue
-                m = re.search(r"goView\\(['\"]?(\\d+)", a.get("href", ""))
+                m = re.search(r"goView\(['\"]?(\d+)", a.get("href", ""))
                 if m:
                     ids.append(m.group(1))
             new_ids = [x for x in ids if x not in seen]
@@ -99,7 +99,6 @@ def audit_gyeonggi():
             if not new_ids:
                 terminal = "no-new-stable-ids"
                 break
-            # The portal requests 50 rows/page. A shorter non-empty page is structural final-page evidence.
             if len(rows) < 45:
                 terminal = "short-final-page"
                 break
@@ -144,10 +143,10 @@ def audit_seoul():
             break
         ids = []
         for li in cards:
-            a = li.find("a", href=re.compile(r"BD_selectRecDetail\\.do\\?q_rcrtSn="))
+            a = li.find("a", href=re.compile(r"BD_selectRecDetail\.do\?q_rcrtSn="))
             if not a:
                 continue
-            m = re.search(r"q_rcrtSn=(\\d+)", a.get("href", ""))
+            m = re.search(r"q_rcrtSn=(\d+)", a.get("href", ""))
             if m:
                 ids.append(m.group(1))
         new_ids = [x for x in ids if x not in seen]
