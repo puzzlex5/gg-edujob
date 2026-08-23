@@ -4,9 +4,9 @@
 This verifier does not trust the collector's row count. It traverses the official list endpoints
 with stable source IDs and requires fail-closed structural termination evidence. A non-empty page
 whose stable IDs cannot be parsed is a parser failure, not completion, unless the page explicitly
-contains an official empty-result message. A repeated full page is a pagination failure, not
-completion. A short page is treated as final only after the next request returns empty or an
-explicit empty state (or repeats that same short page).
+contains an official empty-result message. After a proven short final data page, a following page
+made only of non-post rows is also valid termination, but only when no detail-link candidate exists.
+A repeated full page is a pagination failure, not completion.
 """
 import json
 import re
@@ -25,7 +25,7 @@ OUT = ROOT / "central_pagination_report.json"
 KST = timezone(timedelta(hours=9))
 MAX_PAGES = 500
 EXPECTED_PAGE_SIZE = 50
-UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.2)"
+UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.3)"
 EMPTY_STATE_RE = re.compile(
     r"검색\s*결과가\s*없|조회(?:된)?\s*(?:자료|데이터|결과)가\s*없|"
     r"등록된\s*(?:자료|게시물|게시글)이\s*없|데이터가\s*없|게시물이\s*없",
@@ -70,6 +70,23 @@ def _finish_state(pages, terminal, access_error, parse_error, pagination_repeate
 
 def explicit_empty(soup):
     return bool(EMPTY_STATE_RE.search(soup.get_text(" ", strip=True)))
+
+
+def has_gyeonggi_detail_candidate(rows):
+    """Fail closed if a supposedly terminal row still looks like a recruitment detail link.
+
+    This deliberately accepts broad candidates, not only the currently parsed goView('123') form,
+    so a future href/onclick syntax change cannot be mistaken for an empty terminal page.
+    """
+    for li in rows:
+        html = str(li)
+        if re.search(r"goView|pbancSn|hnfpPbanc|PbancView|select.*Pbanc", html, re.I):
+            return True
+        for a in li.find_all("a"):
+            href = (a.get("href") or "") + " " + (a.get("onclick") or "")
+            if re.search(r"\d{4,}", href):
+                return True
+    return False
 
 
 def audit_gyeonggi():
@@ -118,11 +135,14 @@ def audit_gyeonggi():
                 if m:
                     ids.append(m.group(1))
 
-            # The portal renders its no-results state as a non-post <li>. Accept that only
-            # when the page itself explicitly says there are no results; otherwise fail closed.
             if not ids:
                 if explicit_empty(soup):
                     terminal = "explicit-empty-state"
+                elif previous_short and not has_gyeonggi_detail_candidate(rows):
+                    # The official portal sometimes renders one informational <li> instead of
+                    # an empty <ul> on the page after a short final data page. Accept it only
+                    # when there is no recruitment-detail-like link to parse.
+                    terminal = "short-final-page-confirmed-by-nonpost-row"
                 else:
                     parse_error = True
                 break
@@ -237,7 +257,7 @@ def main():
     se = audit_seoul()
     report = {
         "generatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST"),
-        "policy": "central sources fail closed: stable IDs are required unless the official page explicitly renders a no-results state; repeated full pages are pagination failures; short pages require one-page confirmation",
+        "policy": "central sources fail closed: stable IDs are required unless the official page explicitly renders a no-results state; after a short final data page, a following non-post row is terminal only when it contains no detail-link candidate; repeated full pages are pagination failures",
         "sources": [gg, se],
         "complete": bool(gg.get("complete") and se.get("complete")),
     }
