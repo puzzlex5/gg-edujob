@@ -8,6 +8,8 @@ on:
       - 'scripts/harden_central_pagination.py'
       - 'scripts/verify_central_pagination.py'
       - '.github/workflows/source-id-reconciliation.yml'
+  schedule:
+    - cron: '37 0,12 * * *' # 09:37, 21:37 KST; independent 38-source proof twice daily
 
 permissions:
   contents: write
