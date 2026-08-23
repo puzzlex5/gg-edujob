@@ -3,9 +3,10 @@
 
 This verifier does not trust the collector's row count. It traverses the official list endpoints
 with stable source IDs and requires fail-closed structural termination evidence. A non-empty page
-whose stable IDs cannot be parsed is a parser failure, not completion. A repeated full page is a
-pagination failure, not completion. A short page is treated as final only after the next request
-returns empty or repeats that same short page.
+whose stable IDs cannot be parsed is a parser failure, not completion, unless the page explicitly
+contains an official empty-result message. A repeated full page is a pagination failure, not
+completion. A short page is treated as final only after the next request returns empty or an
+explicit empty state (or repeats that same short page).
 """
 import json
 import re
@@ -24,7 +25,12 @@ OUT = ROOT / "central_pagination_report.json"
 KST = timezone(timedelta(hours=9))
 MAX_PAGES = 500
 EXPECTED_PAGE_SIZE = 50
-UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.1)"
+UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.2)"
+EMPTY_STATE_RE = re.compile(
+    r"검색\s*결과가\s*없|조회(?:된)?\s*(?:자료|데이터|결과)가\s*없|"
+    r"등록된\s*(?:자료|게시물|게시글)이\s*없|데이터가\s*없|게시물이\s*없",
+    re.I,
+)
 
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9"})
@@ -60,6 +66,10 @@ def _finish_state(pages, terminal, access_error, parse_error, pagination_repeate
     cap_hit = pages >= MAX_PAGES and not terminal
     complete = bool(terminal) and not access_error and not parse_error and not pagination_repeated and not cap_hit
     return cap_hit, complete
+
+
+def explicit_empty(soup):
+    return bool(EMPTY_STATE_RE.search(soup.get_text(" ", strip=True)))
 
 
 def audit_gyeonggi():
@@ -108,9 +118,13 @@ def audit_gyeonggi():
                 if m:
                     ids.append(m.group(1))
 
-            # Non-empty official rows with zero stable IDs means the parser no longer matches.
+            # The portal renders its no-results state as a non-post <li>. Accept that only
+            # when the page itself explicitly says there are no results; otherwise fail closed.
             if not ids:
-                parse_error = True
+                if explicit_empty(soup):
+                    terminal = "explicit-empty-state"
+                else:
+                    parse_error = True
                 break
 
             page_ids = tuple(ids)
@@ -123,14 +137,13 @@ def audit_gyeonggi():
 
             new_ids = [x for x in ids if x not in seen]
             if not new_ids:
-                # A repeated/overlapping full page cannot prove that there are no later pages.
                 pagination_repeated = True
                 break
 
             seen.update(ids)
             all_ids.update(ids)
             previous_ids = page_ids
-            previous_short = len(rows) < EXPECTED_PAGE_SIZE
+            previous_short = len(ids) < EXPECTED_PAGE_SIZE
 
         cap_hit, ok = _finish_state(pages, terminal, access_error, parse_error, pagination_repeated)
         complete = complete and ok
@@ -186,7 +199,10 @@ def audit_seoul():
                 ids.append(m.group(1))
 
         if not ids:
-            parse_error = True
+            if explicit_empty(soup):
+                terminal = "explicit-empty-state"
+            else:
+                parse_error = True
             break
 
         page_ids = tuple(ids)
@@ -204,7 +220,7 @@ def audit_seoul():
 
         seen.update(ids)
         previous_ids = page_ids
-        previous_short = len(cards) < EXPECTED_PAGE_SIZE
+        previous_short = len(ids) < EXPECTED_PAGE_SIZE
 
     cap_hit, complete = _finish_state(pages, terminal, access_error, parse_error, pagination_repeated)
     return {
@@ -221,7 +237,7 @@ def main():
     se = audit_seoul()
     report = {
         "generatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST"),
-        "policy": "central sources fail closed: non-empty rows must yield stable IDs; repeated full pages are pagination failures; short pages require one-page confirmation",
+        "policy": "central sources fail closed: stable IDs are required unless the official page explicitly renders a no-results state; repeated full pages are pagination failures; short pages require one-page confirmation",
         "sources": [gg, se],
         "complete": bool(gg.get("complete") and se.get("complete")),
     }
