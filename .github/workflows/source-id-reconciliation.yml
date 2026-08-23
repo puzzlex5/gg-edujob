@@ -56,8 +56,10 @@ jobs:
           r=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
           s=r.get('summary',{})
           if int(s.get('missingAfter') or 0): raise SystemExit(f'Official IDs still missing: {s}')
-          if int(s.get('reconciledOffices') or 0) != int(s.get('totalOffices') or -1):
-              raise SystemExit(f'Office reconciliation incomplete: {s}')
+          reconciled=int(s.get('reconciledSources') or 0)
+          total=int(s.get('totalSources') or 0)
+          if total != 38 or reconciled != total:
+              raise SystemExit(f'38-source reconciliation incomplete: {s}')
           print('Official source-ID reconciliation passed', s)
           PY
       - name: Persist durable ledgers and checkpoints
