@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Normalize fast support-office pagination to one adaptive emergency ceiling.
+"""Normalize fast and central pagination before every fast crawl.
 
-Several older hotfixes may already have rewritten the original 7/9-page loops to a
-literal 60-page loop.  This hardener must therefore accept either legacy form and
-normalize both to FAST_MAX_PAGES.  It is deliberately idempotent so workflow
-hardening cannot fail merely because an earlier compatibility patch already ran.
+Support-office collectors historically used fixed 7/9-page loops and the two central portals
+used fixed 34/59-page loops. This hardener is deliberately idempotent: it normalizes the support
+office collectors to FAST_MAX_PAGES and then invokes the central hardener so ordinary fast runs
+cannot silently retain the legacy central caps. Natural empty/repeated/final-page evidence remains
+the normal stop condition; the numeric maxima are emergency ceilings only.
 """
 from pathlib import Path
 import runpy
@@ -19,7 +20,7 @@ if "FAST_MAX_PAGES = 60" not in s:
         raise SystemExit("Cannot locate collector constants marker")
     s = s.replace(marker, marker + "FAST_MAX_PAGES = 60  # emergency ceiling; normal stop is empty/repeated page\n", 1)
 
-# Normalize every known historical loop form.  hotfix_support_office.py can run
+# Normalize every known historical support-office loop form. hotfix_support_office.py can run
 # before this script and convert 7/9 to a literal 60, so literal 60 is not an error.
 for old in (
     "for page in range(1, 8):",
@@ -28,8 +29,8 @@ for old in (
 ):
     s = s.replace(old, "for page in range(1, FAST_MAX_PAGES + 1):")
 
-# A page with no matching recent recruitment title is not proof that later rows
-# are absent. Empty/repeated pages are the legitimate fast-stop signals.
+# A page with no matching recent recruitment title is not proof that later rows are absent.
+# Empty/repeated pages are the legitimate fast-stop signals.
 s = s.replace("        if page_recent == 0 and page >= 2: break\n", "")
 s = s.replace("        if page_recent==0 and page>=2: break\n", "")
 
@@ -72,8 +73,13 @@ for forbidden in ("range(1, 8)", "range(1, 10)", "range(1, 61)"):
 
 p.write_text(s, encoding="utf-8")
 
-# Stable posting IDs and conservative deduplication are part of the same mandatory
-# pre-crawl hardening phase. Generic titles from different schools must not merge.
+# Central portal pagination must be hardened for ordinary fast crawls too, not only during the
+# separate source-ID reconciliation workflow. Otherwise the checked-in 34/59-page legacy loops
+# can silently truncate fast data between deep audits.
+runpy.run_path(str(ROOT / "scripts/harden_central_pagination.py"), run_name="__main__")
+
+# Stable posting IDs and conservative deduplication are part of the same mandatory pre-crawl
+# hardening phase. Generic titles from different schools must not merge.
 runpy.run_path(str(ROOT / "scripts/harden_identity_dedupe.py"), run_name="__main__")
 
-print("Fast support-office pagination hardened")
+print("Fast support-office and central pagination hardened")
