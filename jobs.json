@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23 16:51 KST",
+  "updatedAt": "2026-08-23 19:58 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -797,7 +797,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 531,
+        "count": 520,
         "ok": true,
         "state": "ok"
       }
@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-08-23 19:27 KST",
+    "checkedAt": "2026-08-23 20:55 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -838,6 +838,31 @@
     "currentTotal": 6504
   },
   "jobs": [
+    {
+      "id": "sen-108813",
+      "province": "서울",
+      "school": "성베드로학교",
+      "title": "성베드로학교(서울) 시간강사 구인",
+      "subject": "고3수업(정보통신, 과학, 미술) 월 234교시, 화234교시, 수34교시",
+      "region": "구로구",
+      "regions": [
+        "구로구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "기타",
+      "applyStart": "2026/08/23",
+      "applyEnd": "2026/12/24",
+      "workStart": "2026/08/25",
+      "workEnd": "2027/02/12",
+      "registered": "2026/08/23",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108813"
+    },
     {
       "id": "goe-office-8cc9edfcf155a8a14c9f",
       "province": "경기",
@@ -892,31 +917,6 @@
       ],
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57491"
-    },
-    {
-      "id": "sen-108808",
-      "province": "서울",
-      "school": "등명중학교",
-      "title": "(등명중)영어과 시간강사 채용",
-      "subject": "영어",
-      "region": "강서구",
-      "regions": [
-        "강서구"
-      ],
-      "type": "시간강사/강사",
-      "schoolLevel": "중학교",
-      "applyStart": "2026/08/23",
-      "applyEnd": "2026/08/26",
-      "workStart": "2026/09/17",
-      "workEnd": "2026/09/23",
-      "registered": "2026/08/23",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108808"
     },
     {
       "id": "goe-office-4a0532b28d2e5f4f3532",
@@ -75856,6 +75856,37 @@
       "mi": ""
     },
     {
+      "id": "goe-office-7e188eb9c5b78fb23456",
+      "province": "경기",
+      "school": "수주고등학교",
+      "title": "2026학년도 시간강사 채용 공고(미술)",
+      "subject": "",
+      "region": "부천시",
+      "regions": [
+        "부천시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/07/20",
+      "applyEnd": "2026/07/23",
+      "workStart": "2029/08/03",
+      "workEnd": "2029/08/07",
+      "registered": "2026/07/20",
+      "headcount": "",
+      "source": "부천교육지원청",
+      "checkedSources": [
+        "부천교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goebc.kr/goebc/na/ntt/selectNttInfo.do?bbsId=6381&nttSn=1225081",
+      "boardUrl": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
+      "nttSn": "1225081",
+      "bbsId": "6381",
+      "detailLinkResolved": true,
+      "mi": "",
+      "periodStatus": "parsed"
+    },
+    {
       "id": "goe-office-193697ac88bc86529f04",
       "province": "경기",
       "school": "중흥고등학교",
@@ -76499,37 +76530,6 @@
       "mi": "9406",
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-office-7e188eb9c5b78fb23456",
-      "province": "경기",
-      "school": "수주고등학교",
-      "title": "2026학년도 시간강사 채용 공고(미술)",
-      "subject": "",
-      "region": "부천시",
-      "regions": [
-        "부천시"
-      ],
-      "type": "시간강사/강사",
-      "schoolLevel": "고등학교",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/07/20",
-      "headcount": "",
-      "source": "부천교육지원청",
-      "checkedSources": [
-        "부천교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goebc.kr/goebc/na/ntt/selectNttInfo.do?bbsId=6381&nttSn=1225081",
-      "boardUrl": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
-      "nttSn": "1225081",
-      "bbsId": "6381",
-      "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-313fc8258dea667660b0",
@@ -82544,6 +82544,37 @@
       "periodStatus": "parsed"
     },
     {
+      "id": "goe-office-589dc4ec68dd72766464",
+      "province": "경기",
+      "school": "부명중학교",
+      "title": "부명중학교 교육공무직원(행정실무사) 대체근로자 채용 공고",
+      "subject": "",
+      "region": "부천시",
+      "regions": [
+        "부천시"
+      ],
+      "type": "교육공무직/기간제근로자",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/07/15",
+      "applyEnd": "2026/07/20",
+      "workStart": "2026/08/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/07/15",
+      "headcount": "",
+      "source": "부천교육지원청",
+      "checkedSources": [
+        "부천교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goebc.kr/goebc/na/ntt/selectNttInfo.do?bbsId=6381&nttSn=1224420",
+      "boardUrl": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
+      "nttSn": "1224420",
+      "bbsId": "6381",
+      "detailLinkResolved": true,
+      "mi": "",
+      "periodStatus": "parsed"
+    },
+    {
       "id": "goe-office-e73de5a8e31ea930565a",
       "province": "경기",
       "school": "옥길버들초등학교",
@@ -83809,37 +83840,6 @@
       "mi": "9406",
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-office-589dc4ec68dd72766464",
-      "province": "경기",
-      "school": "부명중학교",
-      "title": "부명중학교 교육공무직원(행정실무사) 대체근로자 채용 공고",
-      "subject": "",
-      "region": "부천시",
-      "regions": [
-        "부천시"
-      ],
-      "type": "교육공무직/기간제근로자",
-      "schoolLevel": "중학교",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/07/15",
-      "headcount": "",
-      "source": "부천교육지원청",
-      "checkedSources": [
-        "부천교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goebc.kr/goebc/na/ntt/selectNttInfo.do?bbsId=6381&nttSn=1224420",
-      "boardUrl": "https://www.goebc.kr/goebc/na/ntt/selectNttList.do?bbsId=6381&mi=",
-      "nttSn": "1224420",
-      "bbsId": "6381",
-      "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-c893654471b33b8dc04f",
@@ -202102,7 +202102,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-23 17:33 KST",
+      "checkedAt": "2026-08-23 20:48 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -202111,17 +202111,21 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-23 19:26 KST",
+    "checkedAt": "2026-08-23 20:53 KST",
     "futureRegistrationDatesCorrected": 0
   },
+  "metadataSanitization": {
+    "checkedAt": "2026-08-23 20:53 KST",
+    "schoolColumnLabelsRemoved": 0
+  },
   "missingRecovery": {
-    "freshCount": 7744,
+    "freshCount": 7733,
     "previousCount": 6504,
     "mergedCount": 6503,
     "carriedForward": 41,
     "enrichedFromPrevious": 6196,
     "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
-    "generatedAt": "2026-08-23 17:36 KST"
+    "generatedAt": "2026-08-23 20:52 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 6052,
@@ -202130,25 +202134,21 @@
     "seoulTotal": 440
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-23 17:36 KST",
+    "checkedAt": "2026-08-23 20:52 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5551,
-    "detailPagesParsed": 2253,
-    "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1058,
-    "missingWorkPeriod": 1845,
+    "detailPagesParsed": 2255,
+    "fieldsFilledThisRun": 8,
+    "missingApplicationPeriod": 1056,
+    "missingWorkPeriod": 1843,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-23 17:36 KST",
+      "checkedAt": "2026-08-23 20:52 KST",
       "candidates": 186,
       "detailPagesConfirmed": 186,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     }
-  },
-  "metadataSanitization": {
-    "checkedAt": "2026-08-23 19:26 KST",
-    "schoolColumnLabelsRemoved": 1538
   }
 }
