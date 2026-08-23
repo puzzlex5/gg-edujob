@@ -1,0 +1,91 @@
+name: Reconcile official recruitment source IDs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/reconcile_source_ids.py'
+      - '.github/workflows/source-id-reconciliation.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Preserve verified publication baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+          jobs=d.get('jobs',[]) if isinstance(d,dict) else []
+          if len(jobs)<100: raise SystemExit(f'Unsafe reconciliation baseline: {len(jobs)}')
+          PY
+          cp jobs.json /tmp/jobs_source_id_baseline.json
+      - name: Compile reconciliation code
+        run: python -m py_compile scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/verify_jobs.py scripts/update_collection_state.py
+      - name: Crawl official IDs and recover missing source occurrences
+        run: python scripts/reconcile_source_ids.py
+      - name: Re-resolve recovered details and sanitize dates
+        run: |
+          python scripts/sanitize_job_dates.py
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
+      - name: Verify reconciled publication
+        run: |
+          python scripts/verify_jobs.py --previous /tmp/jobs_source_id_baseline.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          s=r.get('summary',{})
+          if int(s.get('missingAfter') or 0): raise SystemExit(f'Official IDs still missing: {s}')
+          if int(s.get('reconciledOffices') or 0) != int(s.get('totalOffices') or -1):
+              raise SystemExit(f'Office reconciliation incomplete: {s}')
+          print('Official source-ID reconciliation passed', s)
+          PY
+      - name: Persist durable ledgers and checkpoints
+        run: python scripts/update_collection_state.py
+      - name: Commit only fully reconciled data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Reconcile official recruitment source IDs'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+      - name: Preserve reconciliation diagnostics on failure
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f source_reconciliation_report.json ]; then cp source_reconciliation_report.json /tmp/source_reconciliation_report.json; fi
+          git reset --hard HEAD
+          git clean -fd
+          if [ -f /tmp/source_reconciliation_report.json ]; then cp /tmp/source_reconciliation_report.json source_reconciliation_report.json; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if [ -f source_reconciliation_report.json ]; then git add source_reconciliation_report.json; fi
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record official source-ID reconciliation failure'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
