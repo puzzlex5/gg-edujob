@@ -7,8 +7,8 @@ can be distinguished from a legitimate no-change refresh.
 
 Artifact existence alone is not proof of complete coverage: a fast refresh can
 inherit a coverage report produced by an earlier deep audit. Record the report's
-own timestamp and 25+11 completeness evidence so monitors can distinguish a
-fresh/known-good audit from a merely present (possibly stale) file.
+own timestamp, age, and 25+11 completeness evidence so monitors can distinguish a
+fresh/known-good audit from a merely present stale file.
 """
 import argparse
 import json
@@ -18,6 +18,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STATUS = ROOT / "collector_status.json"
 KST = timezone(timedelta(hours=9))
+# Daily deep audit normally refreshes this evidence every 24 hours. Allow a small
+# scheduling/runtime margin, but never let a multi-day-old success masquerade as
+# current completeness evidence.
+COVERAGE_FRESH_HOURS = 30
 
 
 def load_json(path, default):
@@ -36,6 +40,29 @@ def jobs_count():
 def generated_at(path):
     data = load_json(path, {})
     return data.get("generatedAt", "") if isinstance(data, dict) else ""
+
+
+def parse_timestamp(value):
+    s = str(value or "").strip()
+    if not s:
+        return None
+    candidates = [s]
+    if s.endswith(" KST"):
+        candidates.append(s[:-4] + "+09:00")
+    for candidate in candidates:
+        try:
+            dt = datetime.fromisoformat(candidate.replace("Z", "+00:00"))
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=KST)
+            return dt.astimezone(KST)
+        except Exception:
+            pass
+    for fmt in ("%Y-%m-%d %H:%M:%S KST", "%Y-%m-%d %H:%M KST"):
+        try:
+            return datetime.strptime(s, fmt).replace(tzinfo=KST)
+        except Exception:
+            pass
+    return None
 
 
 def coverage_evidence():
@@ -61,15 +88,28 @@ def coverage_evidence():
         and not warnings
         and exact_links
     )
+    generated = report.get("generatedAt", "") if isinstance(report, dict) else ""
+    generated_dt = parse_timestamp(generated)
+    age_hours = None
+    fresh = False
+    if generated_dt is not None:
+        age_hours = max(0.0, (datetime.now(KST) - generated_dt).total_seconds() / 3600.0)
+        fresh = age_hours <= COVERAGE_FRESH_HOURS
     return {
-        "generatedAt": report.get("generatedAt", "") if isinstance(report, dict) else "",
+        "generatedAt": generated,
+        "ageHours": round(age_hours, 2) if age_hours is not None else None,
+        "freshWithinHours": COVERAGE_FRESH_HOURS,
+        "fresh": fresh,
         "gyeonggiComplete": gyeonggi_complete,
         "gyeonggiTotal": gyeonggi_total,
         "seoulComplete": seoul_complete,
         "seoulTotal": seoul_total,
         "warnings": len(warnings) if isinstance(warnings, list) else None,
         "exactLinks": exact_links,
+        # `complete` is historical truth about the report itself. `currentComplete`
+        # is the operational signal monitors should use for the current system.
         "complete": complete,
+        "currentComplete": bool(complete and fresh),
     }
 
 
