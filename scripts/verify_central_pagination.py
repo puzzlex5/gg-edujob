@@ -5,7 +5,8 @@ This verifier does not trust the collector's row count. It traverses the officia
 with stable source IDs and requires fail-closed structural termination evidence. A non-empty page
 whose stable IDs cannot be parsed is a parser failure, not completion, unless the page explicitly
 contains an official empty-result message. After a proven short final data page, a following page
-made only of non-post rows is also valid termination, but only when no detail-link candidate exists.
+made only of non-post rows is also valid termination, but only when no semantic recruitment-detail
+candidate exists. Arbitrary numeric pagination/menu links are never treated as job-detail evidence.
 A repeated full page is a pagination failure, not completion.
 """
 import json
@@ -25,7 +26,7 @@ OUT = ROOT / "central_pagination_report.json"
 KST = timezone(timedelta(hours=9))
 MAX_PAGES = 500
 EXPECTED_PAGE_SIZE = 50
-UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.3)"
+UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.4)"
 EMPTY_STATE_RE = re.compile(
     r"검색\s*결과가\s*없|조회(?:된)?\s*(?:자료|데이터|결과)가\s*없|"
     r"등록된\s*(?:자료|게시물|게시글)이\s*없|데이터가\s*없|게시물이\s*없",
@@ -72,20 +73,40 @@ def explicit_empty(soup):
     return bool(EMPTY_STATE_RE.search(soup.get_text(" ", strip=True)))
 
 
-def has_gyeonggi_detail_candidate(rows):
-    """Fail closed if a supposedly terminal row still looks like a recruitment detail link.
+def extract_gyeonggi_id(li):
+    """Extract only a semantically bound recruitment posting ID from one list item.
 
-    This deliberately accepts broad candidates, not only the currently parsed goView('123') form,
-    so a future href/onclick syntax change cannot be mistaken for an empty terminal page.
+    Do not accept arbitrary 4+ digit numbers: terminal/pagination/menu rows commonly contain
+    numeric hrefs and previously caused every Gyeonggi category to fail with one false extra row.
     """
+    for a in li.find_all("a"):
+        raw = " ".join((a.get("href") or "", a.get("onclick") or ""))
+        patterns = (
+            r"goView\s*\(\s*['\"]?(\d+)",
+            r"pbancSn\s*[=:,'\"() ]+\s*(\d+)",
+            r"(?:hnfpPbanc|PbancView|select\w*Pbanc)[^0-9]{0,80}(\d{4,})",
+        )
+        for pat in patterns:
+            m = re.search(pat, raw, re.I)
+            if m:
+                return m.group(1)
+    return ""
+
+
+def has_gyeonggi_detail_candidate(rows):
+    """Fail closed only for semantic recruitment-detail candidates, not page/menu numbers."""
     for li in rows:
-        html = str(li)
-        if re.search(r"goView|pbancSn|hnfpPbanc|PbancView|select.*Pbanc", html, re.I):
+        if extract_gyeonggi_id(li):
             return True
-        for a in li.find_all("a"):
-            href = (a.get("href") or "") + " " + (a.get("onclick") or "")
-            if re.search(r"\d{4,}", href):
-                return True
+        html = str(li)
+        # Preserve fail-closed behavior for a future detail syntax change, but require an actual
+        # recruitment-detail semantic token and an ID bound nearby. A bare numeric href is not enough.
+        if re.search(
+            r"(?:goView|pbancSn|hnfpPbanc|PbancView|select\w*Pbanc)[^0-9]{0,120}\d{4,}",
+            html,
+            re.I,
+        ):
+            return True
     return False
 
 
@@ -105,6 +126,7 @@ def audit_gyeonggi():
         pagination_repeated = False
         previous_ids = None
         previous_short = False
+        parse_error_sample = ""
 
         for page in range(1, MAX_PAGES + 1):
             data = {
@@ -126,25 +148,18 @@ def audit_gyeonggi():
                 terminal = "empty-page"
                 break
 
-            ids = []
-            for li in rows:
-                a = li.find("a", href=re.compile(r"goView\(['\"]?\d+"))
-                if not a:
-                    continue
-                m = re.search(r"goView\(['\"]?(\d+)", a.get("href", ""))
-                if m:
-                    ids.append(m.group(1))
+            ids = [x for x in (extract_gyeonggi_id(li) for li in rows) if x]
 
             if not ids:
                 if explicit_empty(soup):
                     terminal = "explicit-empty-state"
                 elif previous_short and not has_gyeonggi_detail_candidate(rows):
-                    # The official portal sometimes renders one informational <li> instead of
-                    # an empty <ul> on the page after a short final data page. Accept it only
-                    # when there is no recruitment-detail-like link to parse.
+                    # The portal renders one informational <li> on the page after a short final
+                    # data page. Treat it as terminal only when it has no semantic detail candidate.
                     terminal = "short-final-page-confirmed-by-nonpost-row"
                 else:
                     parse_error = True
+                    parse_error_sample = re.sub(r"\s+", " ", rows[0].get_text(" ", strip=True))[:180]
                 break
 
             page_ids = tuple(ids)
@@ -171,6 +186,7 @@ def audit_gyeonggi():
             "code": code, "name": cat_name, "pagesScanned": pages, "rawRows": raw_rows,
             "stableIdCount": len(seen), "terminalEvidence": terminal,
             "accessError": access_error, "parseError": parse_error,
+            "parseErrorSample": parse_error_sample,
             "paginationRepeated": pagination_repeated, "capHit": cap_hit, "complete": ok,
         })
 
@@ -257,7 +273,7 @@ def main():
     se = audit_seoul()
     report = {
         "generatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST"),
-        "policy": "central sources fail closed: stable IDs are required unless the official page explicitly renders a no-results state; after a short final data page, a following non-post row is terminal only when it contains no detail-link candidate; repeated full pages are pagination failures",
+        "policy": "central sources fail closed: stable IDs are required unless the official page explicitly renders a no-results state; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
         "sources": [gg, se],
         "complete": bool(gg.get("complete") and se.get("complete")),
     }
