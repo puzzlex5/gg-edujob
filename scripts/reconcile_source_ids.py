@@ -6,10 +6,11 @@ re-read through their source-native IDs. The source ID, not title similarity, is
 unit: Gyeonggi support bbsId+nttSn, Seoul support host+job_seq, Gyeonggi central pbancSn,
 and Seoul central q_rcrtSn. Missing source occurrences are restored before publication.
 
-MirCMS can expose one physical board through several menu ids (mi). Reconciliation therefore
-uses the same evidence rule as the strict completeness gate: a zero-row menu alias is ignored
-only when an equivalent physical board (same host/path/bbsId and content-affecting filters)
-was traversed completely and the alias itself had no access or pagination error.
+MirCMS can expose one physical board through several menu ids (mi). A menu alias is ignored only
+when a completely traversed representative of the same physical board proves that every stable ID
+seen through the alias is already contained in the representative, and the alias itself had no
+access/pagination error. This covers both zero-row stale menus and partial duplicate menu views
+without hiding a genuinely distinct posting.
 """
 import json
 from datetime import timedelta, timezone, datetime
@@ -87,8 +88,18 @@ def physical_board_identity(url):
         return url or ""
 
 
-def effective_gyeonggi_metas(metas):
-    """Ignore only evidence-proven stale menu aliases; never hide a real board failure."""
+def ids_for_rows(rows):
+    return {sid for sid in (source_id(row) for row in rows) if sid}
+
+
+def effective_gyeonggi_metas(metas, rows_by_board):
+    """Ignore only ID-proven duplicate menu aliases; never hide unique official IDs.
+
+    A fully traversed representative is authoritative for one physical board. An incomplete menu
+    alias may be ignored only if it had no access/repetition error and every stable ID it exposed
+    is already present in that representative. Thus an alias containing even one unique ID remains
+    mandatory and will keep reconciliation red until its traversal is explained.
+    """
     groups = {}
     for meta in metas:
         groups.setdefault(physical_board_identity(meta.get("url", "")), []).append(meta)
@@ -101,19 +112,27 @@ def effective_gyeonggi_metas(metas):
             continue
         representative = max(
             complete,
-            key=lambda m: (int(m.get("rawRows") or 0), int(m.get("pagesScanned") or 0)),
+            key=lambda m: (
+                len(ids_for_rows(rows_by_board.get(m.get("url", ""), []))),
+                int(m.get("rawRows") or 0),
+                int(m.get("pagesScanned") or 0),
+            ),
         )
+        representative_ids = ids_for_rows(rows_by_board.get(representative.get("url", ""), []))
         for alias in group:
             if alias is representative or alias.get("coverageComplete"):
                 continue
-            if int(alias.get("rawRows") or 0) != 0:
-                continue
             if alias.get("accessError") or alias.get("paginationRepeated"):
                 continue
-            alias["ignoredAsStaleAlias"] = True
+            alias_ids = ids_for_rows(rows_by_board.get(alias.get("url", ""), []))
+            if not alias_ids.issubset(representative_ids):
+                continue
+            alias["ignoredAsDuplicateMenuAlias"] = True
             alias["aliasOf"] = representative.get("url", "")
+            alias["aliasStableIdCount"] = len(alias_ids)
+            alias["representativeStableIdCount"] = len(representative_ids)
 
-    return [m for m in metas if not m.get("ignoredAsStaleAlias")]
+    return [m for m in metas if not m.get("ignoredAsDuplicateMenuAlias")]
 
 
 def source_status(province, name, rows, coverage_complete=True, pages_scanned=0, access_errors=0, boards=None, board_health=None):
@@ -130,50 +149,54 @@ def crawl_official_ids():
     sources = []
     all_rows = []
 
-    # Central portals: native source IDs are retained in their detail URLs.
     gg_central = primary.scrape_gyeonggi_central()
-    sources.append(source_status("경기", primary.GYEONGGI["central"]["name"], gg_central,
-                                 coverage_complete=bool(gg_central), boards=[primary.GYEONGGI["central"]["url"]]))
+    sources.append(source_status(
+        "경기", primary.GYEONGGI["central"]["name"], gg_central,
+        coverage_complete=bool(gg_central), boards=[primary.GYEONGGI["central"]["url"]],
+    ))
     all_rows.extend(gg_central)
 
     se_central = primary.scrape_seoul_central()
-    sources.append(source_status("서울", primary.SEOUL["central"]["name"], se_central,
-                                 coverage_complete=bool(se_central), boards=[primary.SEOUL["central"]["url"]]))
+    sources.append(source_status(
+        "서울", primary.SEOUL["central"]["name"], se_central,
+        coverage_complete=bool(se_central), boards=[primary.SEOUL["central"]["url"]],
+    ))
     all_rows.extend(se_central)
 
-    # 25 Gyeonggi support offices: every configured/cached MirCMS recruitment board.
     for src in cov.SOURCES["gyeonggi"]["supportOffices"]:
         boards = []
         for u in list(src.get("boardUrls", [])) + list(cov.CACHE.get(src["name"], [])):
             if u and u not in boards:
                 boards.append(u)
-        rows, metas = [], []
+        rows = []
+        metas = []
+        rows_by_board = {}
         for board in boards:
             found, meta = cov.gyeonggi_board(board, src)
+            rows_by_board[meta.get("url", board)] = found
             rows.extend(found)
             metas.append(meta)
-        effective = effective_gyeonggi_metas(metas)
+        effective = effective_gyeonggi_metas(metas, rows_by_board)
         sources.append(source_status(
             "경기", src["name"], rows,
             coverage_complete=bool(effective) and all(m.get("coverageComplete") for m in effective),
             pages_scanned=sum(int(m.get("pagesScanned") or 0) for m in effective),
-            access_errors=sum(1 for m in effective if m.get("accessError")), boards=boards,
-            board_health=metas,
+            access_errors=sum(1 for m in effective if m.get("accessError")),
+            boards=boards, board_health=metas,
         ))
         all_rows.extend(rows)
 
-    # 11 Seoul support offices: native job_seq is the source identity.
     for src in cov.SOURCES["seoul"]["supportOffices"]:
         rows, meta = cov.seoul_board(src)
         sources.append(source_status(
-            "서울", src["name"], rows, coverage_complete=bool(meta.get("coverageComplete")),
+            "서울", src["name"], rows,
+            coverage_complete=bool(meta.get("coverageComplete")),
             pages_scanned=int(meta.get("pagesScanned") or 0),
             access_errors=1 if meta.get("accessError") else 0,
             boards=[src.get("boardUrl", "")], board_health=[meta],
         ))
         all_rows.extend(rows)
 
-    # Menu aliases and multi-category listings may expose the same ID repeatedly.
     by_id = {}
     for row in all_rows:
         sid = source_id(row)
@@ -196,7 +219,6 @@ def main():
     official_ids = set(official)
     missing_before = sorted(official_ids - dataset_ids_before)
 
-    # Exact-ID recovery. Similar titles never suppress a distinct official source occurrence.
     recovered = []
     for sid in missing_before:
         row = dict(official[sid])
@@ -205,7 +227,6 @@ def main():
         jobs.append(row)
         recovered.append(sid)
 
-    # De-dupe only exact stable source IDs; leave non-ID records to later conservative merge/UI grouping.
     seen_ids = set()
     kept = []
     for job in jobs:
@@ -220,7 +241,6 @@ def main():
     dataset_ids_after = {source_id(j) for j in jobs if source_id(j)}
     missing_after = sorted(official_ids - dataset_ids_after)
 
-    # Append-only source evidence ledger.
     current_official = set()
     source_by_id = {}
     for src in sources:
@@ -262,12 +282,12 @@ def main():
     payload["jobs"] = jobs
     payload["sourceReconciliation"] = {
         "generatedAt": NOW_S, "lookbackDays": cov.LOOKBACK_DAYS,
-        "officialIdCount": len(official_ids), "datasetIdCountBefore": len(dataset_ids_before),
+        "officialIdCount": len(official_ids),
+        "datasetIdCountBefore": len(dataset_ids_before),
         "missingBefore": len(missing_before), "recoveredNow": len(recovered),
         "missingAfter": len(missing_after),
         "reconciledSources": sum(1 for x in sources if x["reconciled"]),
         "totalSources": len(sources),
-        # Backward-compatible aliases used by existing guards/monitoring.
         "reconciledOffices": sum(1 for x in sources if x["reconciled"]),
         "totalOffices": len(sources),
     }
@@ -285,7 +305,8 @@ def main():
         "summary": payload["sourceReconciliation"],
         "incompleteSources": incomplete_sources,
         "incompleteOffices": incomplete_sources,
-        "missingAfterExamples": missing_after[:50], "sources": sources, "offices": sources,
+        "missingAfterExamples": missing_after[:50],
+        "sources": sources, "offices": sources,
     }
     REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report["summary"], ensure_ascii=False))
