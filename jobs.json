@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23 12:32 KST",
+  "updatedAt": "2026-08-23 14:49 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -654,7 +654,7 @@
       "central": {
         "name": "경기도교육청 통합 구인구직",
         "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502",
-        "count": 782,
+        "count": 784,
         "ok": true,
         "state": "ok"
       }
@@ -797,7 +797,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 564,
+        "count": 554,
         "ok": true,
         "state": "ok"
       }
@@ -806,12 +806,12 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-08-23 13:20 KST",
+    "checkedAt": "2026-08-23 15:47 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 6491,
-      "resolved": 6491,
+      "total": 6492,
+      "resolved": 6492,
       "unresolved": 0,
       "examples": []
     },
@@ -834,10 +834,66 @@
         }
       ]
     },
-    "previousTotal": 6826,
-    "currentTotal": 6503
+    "previousTotal": 6503,
+    "currentTotal": 6504
   },
   "jobs": [
+    {
+      "id": "goe-office-8cc9edfcf155a8a14c9f",
+      "province": "경기",
+      "school": "보평초등학교",
+      "title": "보평초등학교 교육공무직원(조리실무사) 대체직 채용 공고",
+      "subject": "",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "교육공무직/기간제근로자",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/08/24",
+      "applyEnd": "2026/08/28",
+      "workStart": "2026/09/01",
+      "workEnd": "2026/09/30",
+      "registered": "2026/08/23",
+      "headcount": "",
+      "source": "성남교육지원청",
+      "checkedSources": [
+        "성남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17803&mi=23490&nttSn=1949299",
+      "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?mi=23490&bbsId=17803",
+      "detailLinkResolved": true,
+      "nttSn": "1949299",
+      "bbsId": "17803",
+      "mi": "23490",
+      "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-57491",
+      "province": "경기",
+      "school": "늘푸른고등학교",
+      "title": "[늘푸른고] 2026 계약제 교원 2차 채용 공고문(특수)",
+      "subject": "특수",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/08/23",
+      "applyEnd": "2026/08/26",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/23",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57491"
+    },
     {
       "id": "sen-108808",
       "province": "서울",
@@ -893,31 +949,6 @@
       "mi": "23603",
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-57491",
-      "province": "경기",
-      "school": "늘푸른고등학교",
-      "title": "[늘푸른고] 2026 계약제 교원 2차 채용 공고문(특수)",
-      "subject": "특수",
-      "region": "성남시",
-      "regions": [
-        "성남시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "고등학교",
-      "applyStart": "2026/08/23",
-      "applyEnd": "2026/08/25",
-      "workStart": "2026/09/01",
-      "workEnd": "2027/02/28",
-      "registered": "2026/08/23",
-      "headcount": "1",
-      "source": "경기도교육청 통합 구인구직",
-      "checkedSources": [
-        "경기도교육청 통합 구인구직"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57491"
     },
     {
       "id": "goe-office-36199ad10435213b062f",
@@ -202072,7 +202103,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-23 13:15 KST",
+      "checkedAt": "2026-08-23 15:40 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -202081,36 +202112,36 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-23 13:19 KST",
+    "checkedAt": "2026-08-23 15:45 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "missingRecovery": {
-    "freshCount": 7775,
-    "previousCount": 6826,
-    "mergedCount": 6502,
+    "freshCount": 7768,
+    "previousCount": 6503,
+    "mergedCount": 6503,
     "carriedForward": 41,
-    "enrichedFromPrevious": 6194,
+    "enrichedFromPrevious": 6195,
     "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
-    "generatedAt": "2026-08-23 13:18 KST"
+    "generatedAt": "2026-08-23 15:44 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6051,
-    "gyeonggiTotal": 6051,
+    "gyeonggiExact": 6052,
+    "gyeonggiTotal": 6052,
     "seoulExact": 440,
     "seoulTotal": 440
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-23 13:18 KST",
+    "checkedAt": "2026-08-23 15:44 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 5550,
-    "detailPagesParsed": 2253,
-    "fieldsFilledThisRun": 5,
+    "recentSupportJobs": 5551,
+    "detailPagesParsed": 2254,
+    "fieldsFilledThisRun": 4,
     "missingApplicationPeriod": 1058,
     "missingWorkPeriod": 1845,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-23 13:19 KST",
+      "checkedAt": "2026-08-23 15:45 KST",
       "candidates": 186,
       "detailPagesConfirmed": 186,
       "cacheEntriesImproved": 0,
