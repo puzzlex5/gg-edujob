@@ -3,7 +3,7 @@ name: Update 수도권 education jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 0,2,4,6,8,10,12,14,16,18,22 * * *' # 05:17 KST 실행 제외, 정밀감사 창 보호
+    - cron: '17 0,2,4,6,8,10,12,14,16,22 * * *' # 03:17/05:17 KST 실행 제외, 04:23 정밀감사 창 보호
 
 permissions:
   contents: write
