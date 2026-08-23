@@ -15,7 +15,7 @@ concurrency:
 jobs:
   recover:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,7 +43,7 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_deep_audit.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py
 
       - name: Fresh crawl of central portals and support offices
         run: python scripts/scrape_jobs.py
@@ -58,6 +58,9 @@ jobs:
         run: |
           sleep 12
           python scripts/complete_support_coverage.py
+
+      - name: Reconcile official posting IDs and recover exact missing source occurrences
+        run: python scripts/reconcile_source_ids.py
 
       - name: Sanitize impossible registration dates
         run: python scripts/sanitize_job_dates.py
@@ -87,19 +90,25 @@ jobs:
           from pathlib import Path
           before=json.loads(Path('/tmp/jobs_recovery_base.json').read_text(encoding='utf-8')).get('jobs',[])
           after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
+          rec=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          summary=rec.get('summary',{})
           if len(after)<100: raise SystemExit(f'Recovery output too small: {len(after)}')
           if len(before)>=100 and len(after)<len(before)*0.70:
               raise SystemExit(f'Recovery unexpectedly lost >30%: {len(before)} -> {len(after)}')
-          print(f'Recovery guard passed: {len(before)} -> {len(after)}')
+          if int(summary.get('missingAfter') or 0) != 0:
+              raise SystemExit(f'Official ID reconciliation still missing {summary.get("missingAfter")} postings')
+          if int(summary.get('reconciledOffices') or 0) != int(summary.get('totalOffices') or -1):
+              raise SystemExit(f'Not all support offices reconciled: {summary}')
+          print(f'Recovery guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
           PY
 
       - name: Commit only verified recovered postings
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json board_cache.json missing_recovery_report.json source_reconciliation_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
           git diff --cached --quiet && exit 0
-          git commit -m 'Recover missed recruitment postings from official sources'
+          git commit -m 'Recover and reconcile official recruitment posting IDs'
           git reset --hard HEAD
           git pull --rebase
           git push
@@ -110,21 +119,21 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/recovery-diagnostics
-          for f in support_coverage_report.json support_link_resolution.json missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/recovery-diagnostics/$f"; fi
           done
           git reset --hard HEAD
           git clean -fd
-          for f in support_coverage_report.json support_link_resolution.json missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "/tmp/recovery-diagnostics/$f" ]; then cp "/tmp/recovery-diagnostics/$f" "$f"; fi
           done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for f in support_coverage_report.json support_link_resolution.json missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           git diff --cached --quiet && exit 0
-          git commit -m 'Record failed recovery diagnostics'
+          git commit -m 'Record failed official-ID recovery diagnostics'
           git reset --hard HEAD
           git pull --rebase
           git push
