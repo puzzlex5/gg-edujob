@@ -98,7 +98,7 @@ jobs:
             if [ -f "/tmp/source-id-diagnostics/$f" ]; then cp "/tmp/source-id-diagnostics/$f" "$f"; fi
           done
           git config user.name 'github-actions[bot]'
-          git config user.email '418982518+github-actions[bot]@users.noreply.github.com'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
