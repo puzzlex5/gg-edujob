@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23 14:49 KST",
+  "updatedAt": "2026-08-23 16:51 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -654,7 +654,7 @@
       "central": {
         "name": "경기도교육청 통합 구인구직",
         "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502",
-        "count": 784,
+        "count": 783,
         "ok": true,
         "state": "ok"
       }
@@ -797,7 +797,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 554,
+        "count": 531,
         "ok": true,
         "state": "ok"
       }
@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-08-23 16:23 KST",
+    "checkedAt": "2026-08-23 17:38 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -863,11 +863,10 @@
       "sourceType": "교육지원청 개별 게시판",
       "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17803&mi=23490&nttSn=1949299",
       "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?mi=23490&bbsId=17803",
-      "detailLinkResolved": true,
       "nttSn": "1949299",
       "bbsId": "17803",
       "mi": "23490",
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-57491",
@@ -202103,7 +202102,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-23 15:40 KST",
+      "checkedAt": "2026-08-23 17:33 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -202112,17 +202111,17 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-23 16:22 KST",
+    "checkedAt": "2026-08-23 17:37 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "missingRecovery": {
-    "freshCount": 7768,
-    "previousCount": 6503,
+    "freshCount": 7744,
+    "previousCount": 6504,
     "mergedCount": 6503,
     "carriedForward": 41,
-    "enrichedFromPrevious": 6195,
+    "enrichedFromPrevious": 6196,
     "policy": "fresh wins; active/recent previous recruitment postings survive transient one-run disappearance; result/personnel notices are never resurrected",
-    "generatedAt": "2026-08-23 15:44 KST"
+    "generatedAt": "2026-08-23 17:36 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 6052,
@@ -202131,17 +202130,17 @@
     "seoulTotal": 440
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-23 15:44 KST",
+    "checkedAt": "2026-08-23 17:36 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5551,
-    "detailPagesParsed": 2254,
-    "fieldsFilledThisRun": 4,
+    "detailPagesParsed": 2253,
+    "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1058,
     "missingWorkPeriod": 1845,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-23 15:45 KST",
+      "checkedAt": "2026-08-23 17:36 KST",
       "candidates": 186,
       "detailPagesConfirmed": 186,
       "cacheEntriesImproved": 0,
