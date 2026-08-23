@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
-"""Independent official-ID reconciliation for support-office recruitment boards.
+"""Independent stable-ID reconciliation for all 38 official recruitment sources.
 
-The normal crawler can be wrong in two ways even when it reports success: a row can be skipped,
-or two different postings with similar titles can be collapsed by presentation-level dedupe.
-This audit therefore treats the source system's stable posting ID (Gyeonggi bbsId+nttSn,
-Seoul host+job_seq) as the primary evidence.  Every currently discoverable official ID is
-compared with jobs.json and an append-only source-id ledger.  Missing official IDs are recovered
-as distinct source occurrences before the publication gate runs.
+Support offices are re-traversed through the completeness crawler and central portals are
+re-read through their source-native IDs.  The source ID, not title similarity, is the evidence
+unit: Gyeonggi support bbsId+nttSn, Seoul support host+job_seq, Gyeonggi central pbancSn,
+and Seoul central q_rcrtSn. Missing source occurrences are restored before publication.
 """
 import json
-import re
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta, timezone, datetime
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 import complete_support_coverage as cov
+import scrape_jobs as primary
 
 ROOT = Path(__file__).resolve().parents[1]
 JOBS_PATH = ROOT / "jobs.json"
@@ -33,22 +31,31 @@ def load(path, default):
 
 
 def source_id(job):
+    raw = job.get("url") or ""
+    try:
+        q = parse_qs(urlparse(raw).query)
+    except Exception:
+        q = {}
+
+    if job.get("sourceType") == "통합게시판":
+        pb = str((q.get("pbancSn") or [""])[0])
+        if pb.isdigit():
+            return f"goe-central:{pb}"
+        rid = str((q.get("q_rcrtSn") or [""])[0])
+        if rid.isdigit():
+            return f"seoul-central:{rid}"
+
     province = str(job.get("province") or "")
     if province == "서울":
         seq = str((job.get("openParams") or {}).get("job_seq") or "")
-        host = (urlparse(job.get("openUrl") or job.get("url") or "").hostname or "").lower()
+        host = (urlparse(job.get("openUrl") or raw).hostname or "").lower()
         if not seq.isdigit():
-            try:
-                seq = (parse_qs(urlparse(job.get("url") or "").query).get("job_seq") or [""])[0]
-            except Exception:
-                seq = ""
+            seq = str((q.get("job_seq") or [""])[0])
         return f"seoul:{host}:{seq}" if host and seq.isdigit() else ""
 
     if province == "경기":
-        raw = job.get("url") or ""
         try:
             u = urlparse(raw)
-            q = parse_qs(u.query)
             bbs = str(job.get("bbsId") or (q.get("bbsId") or [""])[0])
             ntt = str(job.get("nttSn") or (q.get("nttSn") or [""])[0])
             host = (u.hostname or "").lower()
@@ -58,16 +65,32 @@ def source_id(job):
     return ""
 
 
-def job_fingerprint(job):
-    def n(v):
-        return re.sub(r"[^0-9a-z가-힣]+", "", str(v or "").lower())
-    return "|".join((n(job.get("province")), n(job.get("source")), n(job.get("school")), n(job.get("title")), n(job.get("registered"))))
+def source_status(province, name, rows, coverage_complete=True, pages_scanned=0, access_errors=0, boards=None):
+    ids = sorted({source_id(x) for x in rows if source_id(x)})
+    return {
+        "province": province, "name": name, "boards": boards or [],
+        "officialIds": ids, "officialIdCount": len(ids),
+        "coverageComplete": bool(coverage_complete), "pagesScanned": int(pages_scanned or 0),
+        "accessErrors": int(access_errors or 0),
+    }
 
 
 def crawl_official_ids():
-    offices = []
+    sources = []
     all_rows = []
 
+    # Central portals: native source IDs are retained in their detail URLs.
+    gg_central = primary.scrape_gyeonggi_central()
+    sources.append(source_status("경기", primary.GYEONGGI["central"]["name"], gg_central,
+                                 coverage_complete=bool(gg_central), boards=[primary.GYEONGGI["central"]["url"]]))
+    all_rows.extend(gg_central)
+
+    se_central = primary.scrape_seoul_central()
+    sources.append(source_status("서울", primary.SEOUL["central"]["name"], se_central,
+                                 coverage_complete=bool(se_central), boards=[primary.SEOUL["central"]["url"]]))
+    all_rows.extend(se_central)
+
+    # 25 Gyeonggi support offices: every configured/cached MirCMS recruitment board.
     for src in cov.SOURCES["gyeonggi"]["supportOffices"]:
         boards = []
         for u in list(src.get("boardUrls", [])) + list(cov.CACHE.get(src["name"], [])):
@@ -78,35 +101,32 @@ def crawl_official_ids():
             found, meta = cov.gyeonggi_board(board, src)
             rows.extend(found)
             metas.append(meta)
-        ids = {source_id(x) for x in rows if source_id(x)}
-        offices.append({
-            "province": "경기", "name": src["name"], "boards": boards,
-            "officialIds": sorted(ids), "officialIdCount": len(ids),
-            "coverageComplete": bool(metas) and all(m.get("coverageComplete") for m in metas),
-            "pagesScanned": sum(int(m.get("pagesScanned") or 0) for m in metas),
-            "accessErrors": sum(1 for m in metas if m.get("accessError")),
-        })
+        sources.append(source_status(
+            "경기", src["name"], rows,
+            coverage_complete=bool(metas) and all(m.get("coverageComplete") for m in metas),
+            pages_scanned=sum(int(m.get("pagesScanned") or 0) for m in metas),
+            access_errors=sum(1 for m in metas if m.get("accessError")), boards=boards,
+        ))
         all_rows.extend(rows)
 
+    # 11 Seoul support offices: native job_seq is the source identity.
     for src in cov.SOURCES["seoul"]["supportOffices"]:
         rows, meta = cov.seoul_board(src)
-        ids = {source_id(x) for x in rows if source_id(x)}
-        offices.append({
-            "province": "서울", "name": src["name"], "boards": [src.get("boardUrl", "")],
-            "officialIds": sorted(ids), "officialIdCount": len(ids),
-            "coverageComplete": bool(meta.get("coverageComplete")),
-            "pagesScanned": int(meta.get("pagesScanned") or 0),
-            "accessErrors": 1 if meta.get("accessError") else 0,
-        })
+        sources.append(source_status(
+            "서울", src["name"], rows, coverage_complete=bool(meta.get("coverageComplete")),
+            pages_scanned=int(meta.get("pagesScanned") or 0),
+            access_errors=1 if meta.get("accessError") else 0,
+            boards=[src.get("boardUrl", "")],
+        ))
         all_rows.extend(rows)
 
-    # Same source ID may appear through menu aliases. Keep one canonical row per source ID.
+    # Menu aliases and multi-category listings may expose the same ID repeatedly.
     by_id = {}
     for row in all_rows:
         sid = source_id(row)
         if sid and sid not in by_id:
             by_id[sid] = row
-    return offices, by_id
+    return sources, by_id
 
 
 def main():
@@ -118,13 +138,12 @@ def main():
     old_ledger = load(LEDGER_PATH, {"entries": {}})
     entries = old_ledger.get("entries", {}) if isinstance(old_ledger, dict) else {}
 
-    offices, official = crawl_official_ids()
+    sources, official = crawl_official_ids()
     dataset_ids_before = {source_id(j) for j in jobs if source_id(j)}
     official_ids = set(official)
     missing_before = sorted(official_ids - dataset_ids_before)
 
-    # Recover by exact source identity, never by title. This deliberately prevents distinct
-    # re-postings / 1st-2nd notices with similar titles from being collapsed.
+    # Exact-ID recovery. Similar titles never suppress a distinct official source occurrence.
     recovered = []
     for sid in missing_before:
         row = dict(official[sid])
@@ -133,8 +152,7 @@ def main():
         jobs.append(row)
         recovered.append(sid)
 
-    # De-dupe only exact source identities. Rows without a stable source ID are left untouched;
-    # presentation grouping belongs in the UI, not in the evidence ledger.
+    # De-dupe only exact stable source IDs; leave non-ID records to later conservative merge/UI grouping.
     seen_ids = set()
     kept = []
     for job in jobs:
@@ -149,19 +167,18 @@ def main():
     dataset_ids_after = {source_id(j) for j in jobs if source_id(j)}
     missing_after = sorted(official_ids - dataset_ids_after)
 
-    # Append-only evidence ledger: once an official source ID has been observed, never forget it.
+    # Append-only source evidence ledger.
     current_official = set()
-    office_by_id = {}
-    for office in offices:
-        for sid in office["officialIds"]:
+    source_by_id = {}
+    for src in sources:
+        for sid in src["officialIds"]:
             current_official.add(sid)
-            office_by_id[sid] = (office["province"], office["name"])
+            source_by_id[sid] = (src["province"], src["name"])
     for sid, row in official.items():
         old = entries.get(sid, {})
-        province, office = office_by_id.get(sid, (row.get("province", ""), row.get("source", "")))
+        province, source = source_by_id.get(sid, (row.get("province", ""), row.get("source", "")))
         entries[sid] = {
-            "sourceIdentity": sid,
-            "province": province, "source": office,
+            "sourceIdentity": sid, "province": province, "source": source,
             "title": row.get("title", ""), "school": row.get("school", ""),
             "registered": row.get("registered", ""), "url": row.get("url", ""),
             "firstSeen": old.get("firstSeen") or NOW_S, "lastSeen": NOW_S,
@@ -172,63 +189,56 @@ def main():
         if sid not in current_official:
             old["presentInLatestOfficialScan"] = False
 
-    # Office-level expected-vs-collected evidence.
     total_missing_after = 0
-    incomplete_offices = []
-    for office in offices:
-        ids = set(office.pop("officialIds"))
-        before = ids & dataset_ids_before
-        after = ids & dataset_ids_after
-        office_missing_before = sorted(ids - dataset_ids_before)
-        office_missing_after = sorted(ids - dataset_ids_after)
-        office["inDatasetBefore"] = len(before)
-        office["missingBeforeCount"] = len(office_missing_before)
-        office["recoveredNowCount"] = len(set(office_missing_before) & set(recovered))
-        office["inDatasetAfter"] = len(after)
-        office["missingAfterCount"] = len(office_missing_after)
-        office["missingAfterExamples"] = office_missing_after[:20]
-        office["reconciled"] = bool(office["coverageComplete"] and not office_missing_after)
-        total_missing_after += len(office_missing_after)
-        if not office["reconciled"]:
-            incomplete_offices.append(office["name"])
+    incomplete_sources = []
+    for src in sources:
+        ids = set(src.pop("officialIds"))
+        missing_src_before = sorted(ids - dataset_ids_before)
+        missing_src_after = sorted(ids - dataset_ids_after)
+        src["inDatasetBefore"] = len(ids & dataset_ids_before)
+        src["missingBeforeCount"] = len(missing_src_before)
+        src["recoveredNowCount"] = len(set(missing_src_before) & set(recovered))
+        src["inDatasetAfter"] = len(ids & dataset_ids_after)
+        src["missingAfterCount"] = len(missing_src_after)
+        src["missingAfterExamples"] = missing_src_after[:20]
+        src["reconciled"] = bool(src["coverageComplete"] and not missing_src_after)
+        total_missing_after += len(missing_src_after)
+        if not src["reconciled"]:
+            incomplete_sources.append(src["name"])
 
     payload["jobs"] = jobs
     payload["sourceReconciliation"] = {
-        "generatedAt": NOW_S,
-        "lookbackDays": cov.LOOKBACK_DAYS,
-        "officialIdCount": len(official_ids),
-        "datasetIdCountBefore": len(dataset_ids_before),
-        "missingBefore": len(missing_before),
-        "recoveredNow": len(recovered),
+        "generatedAt": NOW_S, "lookbackDays": cov.LOOKBACK_DAYS,
+        "officialIdCount": len(official_ids), "datasetIdCountBefore": len(dataset_ids_before),
+        "missingBefore": len(missing_before), "recoveredNow": len(recovered),
         "missingAfter": len(missing_after),
-        "reconciledOffices": sum(1 for x in offices if x["reconciled"]),
-        "totalOffices": len(offices),
+        "reconciledSources": sum(1 for x in sources if x["reconciled"]),
+        "totalSources": len(sources),
+        # Backward-compatible aliases used by existing guards/monitoring.
+        "reconciledOffices": sum(1 for x in sources if x["reconciled"]),
+        "totalOffices": len(sources),
     }
     payload["jobs"].sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
     JOBS_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    ledger = {
+    LEDGER_PATH.write_text(json.dumps({
         "generatedAt": NOW_S,
-        "policy": "append-only stable official posting IDs; title similarity never deletes source evidence",
-        "knownOfficialIdCount": len(entries),
-        "entries": entries,
-    }
-    LEDGER_PATH.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
+        "policy": "append-only stable official posting IDs across all 38 sources; title similarity never deletes source evidence",
+        "knownOfficialIdCount": len(entries), "entries": entries,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     report = {
-        "generatedAt": NOW_S,
-        "lookbackDays": cov.LOOKBACK_DAYS,
+        "generatedAt": NOW_S, "lookbackDays": cov.LOOKBACK_DAYS,
         "summary": payload["sourceReconciliation"],
-        "incompleteOffices": incomplete_offices,
-        "missingAfterExamples": missing_after[:50],
-        "offices": offices,
+        "incompleteSources": incomplete_sources,
+        "incompleteOffices": incomplete_sources,
+        "missingAfterExamples": missing_after[:50], "sources": sources, "offices": sources,
     }
     REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report["summary"], ensure_ascii=False))
 
-    # Do not certify a scan that did not traverse an office completely, even if its current IDs match.
-    if incomplete_offices or total_missing_after:
-        raise SystemExit(f"Source-ID reconciliation incomplete: offices={len(incomplete_offices)}, missing={total_missing_after}")
+    if incomplete_sources or total_missing_after:
+        raise SystemExit(f"Source-ID reconciliation incomplete: sources={len(incomplete_sources)}, missing={total_missing_after}")
 
 
 if __name__ == "__main__":
