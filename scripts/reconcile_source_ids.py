@@ -2,9 +2,14 @@
 """Independent stable-ID reconciliation for all 38 official recruitment sources.
 
 Support offices are re-traversed through the completeness crawler and central portals are
-re-read through their source-native IDs.  The source ID, not title similarity, is the evidence
+re-read through their source-native IDs. The source ID, not title similarity, is the evidence
 unit: Gyeonggi support bbsId+nttSn, Seoul support host+job_seq, Gyeonggi central pbancSn,
 and Seoul central q_rcrtSn. Missing source occurrences are restored before publication.
+
+MirCMS can expose one physical board through several menu ids (mi). Reconciliation therefore
+uses the same evidence rule as the strict completeness gate: a zero-row menu alias is ignored
+only when an equivalent physical board (same host/path/bbsId and content-affecting filters)
+was traversed completely and the alias itself had no access or pagination error.
 """
 import json
 from datetime import timedelta, timezone, datetime
@@ -65,13 +70,59 @@ def source_id(job):
     return ""
 
 
-def source_status(province, name, rows, coverage_complete=True, pages_scanned=0, access_errors=0, boards=None):
+def physical_board_identity(url):
+    """Stable MirCMS board identity, ignoring menu-only `mi` but retaining real filters."""
+    try:
+        p = urlparse(url or "")
+        q = parse_qs(p.query, keep_blank_values=True)
+        bbs = (q.get("bbsId") or [""])[0]
+        if not bbs:
+            return url or ""
+        filters = []
+        for key in ("srch_aditCol1", "clasHmpgId"):
+            if q.get(key):
+                filters.append((key, q[key][0]))
+        return (p.scheme.lower(), p.netloc.lower(), p.path, bbs, tuple(filters))
+    except Exception:
+        return url or ""
+
+
+def effective_gyeonggi_metas(metas):
+    """Ignore only evidence-proven stale menu aliases; never hide a real board failure."""
+    groups = {}
+    for meta in metas:
+        groups.setdefault(physical_board_identity(meta.get("url", "")), []).append(meta)
+
+    for group in groups.values():
+        if len(group) < 2:
+            continue
+        complete = [m for m in group if m.get("coverageComplete")]
+        if not complete:
+            continue
+        representative = max(
+            complete,
+            key=lambda m: (int(m.get("rawRows") or 0), int(m.get("pagesScanned") or 0)),
+        )
+        for alias in group:
+            if alias is representative or alias.get("coverageComplete"):
+                continue
+            if int(alias.get("rawRows") or 0) != 0:
+                continue
+            if alias.get("accessError") or alias.get("paginationRepeated"):
+                continue
+            alias["ignoredAsStaleAlias"] = True
+            alias["aliasOf"] = representative.get("url", "")
+
+    return [m for m in metas if not m.get("ignoredAsStaleAlias")]
+
+
+def source_status(province, name, rows, coverage_complete=True, pages_scanned=0, access_errors=0, boards=None, board_health=None):
     ids = sorted({source_id(x) for x in rows if source_id(x)})
     return {
         "province": province, "name": name, "boards": boards or [],
         "officialIds": ids, "officialIdCount": len(ids),
         "coverageComplete": bool(coverage_complete), "pagesScanned": int(pages_scanned or 0),
-        "accessErrors": int(access_errors or 0),
+        "accessErrors": int(access_errors or 0), "boardHealth": board_health or [],
     }
 
 
@@ -101,11 +152,13 @@ def crawl_official_ids():
             found, meta = cov.gyeonggi_board(board, src)
             rows.extend(found)
             metas.append(meta)
+        effective = effective_gyeonggi_metas(metas)
         sources.append(source_status(
             "경기", src["name"], rows,
-            coverage_complete=bool(metas) and all(m.get("coverageComplete") for m in metas),
-            pages_scanned=sum(int(m.get("pagesScanned") or 0) for m in metas),
-            access_errors=sum(1 for m in metas if m.get("accessError")), boards=boards,
+            coverage_complete=bool(effective) and all(m.get("coverageComplete") for m in effective),
+            pages_scanned=sum(int(m.get("pagesScanned") or 0) for m in effective),
+            access_errors=sum(1 for m in effective if m.get("accessError")), boards=boards,
+            board_health=metas,
         ))
         all_rows.extend(rows)
 
@@ -116,7 +169,7 @@ def crawl_official_ids():
             "서울", src["name"], rows, coverage_complete=bool(meta.get("coverageComplete")),
             pages_scanned=int(meta.get("pagesScanned") or 0),
             access_errors=1 if meta.get("accessError") else 0,
-            boards=[src.get("boardUrl", "")],
+            boards=[src.get("boardUrl", "")], board_health=[meta],
         ))
         all_rows.extend(rows)
 
