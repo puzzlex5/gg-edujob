@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-24 01:42:30 KST",
-  "policy": "central sources fail closed: non-empty rows must yield stable IDs; repeated full pages are pagination failures; short pages require one-page confirmation",
+  "generatedAt": "2026-08-24 01:54:34 KST",
+  "policy": "central sources fail closed: stable IDs are required unless the official page explicitly renders a no-results state; repeated full pages are pagination failures; short pages require one-page confirmation",
   "sources": [
     {
       "name": "경기도교육청 통합 구인구직",
