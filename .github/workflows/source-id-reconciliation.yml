@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/reconcile_source_ids.py'
+      - 'scripts/harden_central_pagination.py'
       - '.github/workflows/source-id-reconciliation.yml'
 
 permissions:
@@ -37,8 +38,10 @@ jobs:
           if len(jobs)<100: raise SystemExit(f'Unsafe reconciliation baseline: {len(jobs)}')
           PY
           cp jobs.json /tmp/jobs_source_id_baseline.json
+      - name: Remove fixed central portal page caps
+        run: python scripts/harden_central_pagination.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/verify_jobs.py scripts/update_collection_state.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py
       - name: Crawl official IDs and recover missing source occurrences
         run: python scripts/reconcile_source_ids.py
       - name: Re-resolve recovered details and sanitize dates
@@ -68,7 +71,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json scripts/scrape_jobs.py
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
           git reset --hard HEAD
