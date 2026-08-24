@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Fail closed when the two independent central-source audits disagree.
+"""Fail closed when the two independent central-source audits are logically inconsistent.
 
-`verify_central_pagination.py` proves the official central list pagination independently.
-`reconcile_source_ids.py` separately discovers stable IDs used for recovery.  Both can report
-"complete" while seeing different populations, so publication must require their central-source
-stable-ID counts to agree within the same audit run.  The central pagination proof is intentionally
-run again after reconciliation; a mismatch therefore also catches postings that appeared during
-a long audit and prevents a mixed-time snapshot from being published as complete.
+`verify_central_pagination.py` proves the official central list pagination independently using the
+portal's current active-oriented list semantics. `reconcile_source_ids.py` proves the broader
+recent 90-day population used for completeness/recovery. Therefore the two populations should not
+be forced to have identical counts: the active set is expected to be a subset of the 90-day set.
+This checker requires the 90-day reconciliation count to be at least as large as the independently
+traversed active count, in the same audit window. A smaller 90-day count is impossible and fails
+closed.
 """
 import json
 from datetime import datetime, timedelta, timezone
@@ -51,17 +52,22 @@ def main():
         if not other:
             mismatches.append({"name": name, "reason": "missing-from-reconciliation"})
             continue
-        central_count = int(src.get("stableIdCount") or 0)
-        recon_count = int(other.get("officialIdCount") or 0)
-        item = {"name": name, "centralStableIds": central_count, "reconciliationOfficialIds": recon_count}
+        active_count = int(src.get("stableIdCount") or 0)
+        recent_count = int(other.get("officialIdCount") or 0)
+        item = {
+            "name": name,
+            "activeStableIds": active_count,
+            "recent90DayOfficialIds": recent_count,
+            "relation": "active-subset-of-recent",
+        }
         checked.append(item)
-        if central_count != recon_count:
+        if recent_count < active_count:
             mismatches.append(item)
 
     if len(checked) != 2:
         raise SystemExit(f"Expected exactly two central sources, checked={checked}, mismatches={mismatches}")
     if mismatches:
-        raise SystemExit("Independent central-source ID populations disagree: " + json.dumps(mismatches, ensure_ascii=False))
+        raise SystemExit("Central 90-day population is smaller than independently proven active population: " + json.dumps(mismatches, ensure_ascii=False))
 
     print(json.dumps({"state": "ok", "timestampSkewMinutes": round(skew, 2), "sources": checked}, ensure_ascii=False))
 
