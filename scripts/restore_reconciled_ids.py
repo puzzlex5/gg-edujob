@@ -5,6 +5,10 @@ This is intentionally narrower than a full 38-source reconciliation. It compares
 jobs.json against source_id_ledger.json, groups only missing IDs by their official source, and
 re-crawls those sources. If every ledger-protected ID can be restored, publication may continue;
 otherwise the fast workflow fails and keeps the previous published dataset.
+
+For Gyeonggi central, targeted restoration uses the same full recent-90-day population as
+source-ID reconciliation. The normal fast collector follows the official UI's active-only
+`마감제외` view, which is not sufficient to restore a ledger-protected recently closed posting.
 """
 import json
 from collections import defaultdict
@@ -14,6 +18,7 @@ from pathlib import Path
 import complete_support_coverage as cov
 import reconcile_source_ids as rec
 import scrape_jobs as primary
+import crawl_gyeonggi_central_recent as central_recent
 
 ROOT = Path(__file__).resolve().parents[1]
 JOBS = ROOT / "jobs.json"
@@ -48,7 +53,13 @@ def unique_by_id(rows):
 
 def crawl_target(province, source):
     if source == primary.GYEONGGI["central"]["name"]:
-        return primary.scrape_gyeonggi_central(), {"kind": "central", "source": source}
+        rows = central_recent.scrape_gyeonggi_central_recent()
+        coverage = central_recent.scrape_gyeonggi_central_recent.last_coverage
+        return rows, {
+            "kind": "central", "source": source, "lookbackDays": central_recent.LOOKBACK_DAYS,
+            "coverageComplete": bool(coverage) and all(x.get("coverageComplete") for x in coverage),
+            "categories": coverage,
+        }
     if source == primary.SEOUL["central"]["name"]:
         return primary.scrape_seoul_central(), {"kind": "central", "source": source}
 
