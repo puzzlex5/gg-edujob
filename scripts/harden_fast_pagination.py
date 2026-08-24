@@ -82,4 +82,9 @@ runpy.run_path(str(ROOT / "scripts/harden_central_pagination.py"), run_name="__m
 # hardening phase. Generic titles from different schools must not merge.
 runpy.run_path(str(ROOT / "scripts/harden_identity_dedupe.py"), run_name="__main__")
 
-print("Fast support-office and central pagination hardened")
+# A fresh 38-source stable-ID reconciliation is authoritative for publication. It must not be
+# masked by an older support-count proof, and post-success git synchronization races must not
+# overwrite a verified complete run as a collector failure.
+runpy.run_path(str(ROOT / "scripts/harden_status_semantics.py"), run_name="__main__")
+
+print("Fast support-office, central pagination, identity, and status semantics hardened")
