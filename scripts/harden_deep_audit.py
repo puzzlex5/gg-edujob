@@ -5,7 +5,9 @@ This replaces the unsafe workflow pattern of running two independent source rewr
 that expected different versions of complete_support_coverage.py. It first applies the
 500-page/structural-end hardener, then adds strict any-page failure semantics, fixes
 Seoul GET->POST pagination without skipping the current page, exposes explicit natural
-termination evidence, and strengthens the completeness verifier.
+termination evidence, strengthens the completeness verifier, and ensures official-ID
+reconciliation uses the full recent 90-day Gyeonggi central population rather than the
+UI's active-only `마감제외` view.
 """
 from pathlib import Path
 import runpy
@@ -74,5 +76,9 @@ VERIFY.write_text(v, encoding="utf-8")
 # Phase 2: preserve strict traversal rules while adding a narrowly-scoped fallback for
 # MirCMS rows whose canonical nttSn exists only in row-level javascript/data attributes.
 runpy.run_path(str(ROOT / "scripts/patch_goegn_row_parser.py"), run_name="__main__")
+
+# Phase 3: completeness reconciliation must not inherit Gyeonggi central's active-only
+# `마감제외` UI filter. Patch reconciliation to use the dedicated recent-90-day crawler.
+runpy.run_path(str(ROOT / "scripts/harden_reconciliation_central_lookback.py"), run_name="__main__")
 
 print("Consolidated deep-audit hardening ready")
