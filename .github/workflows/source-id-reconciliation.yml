@@ -40,11 +40,15 @@ jobs:
       - name: Remove fixed central portal page caps
         run: python scripts/harden_central_pagination.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/verify_central_pagination.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
         run: python scripts/reconcile_source_ids.py
+      - name: Re-prove central IDs and require independent agreement
+        run: |
+          python scripts/verify_central_pagination.py
+          python scripts/verify_central_reconciliation_consistency.py
       - name: Re-resolve recovered details and sanitize dates
         run: |
           python scripts/sanitize_job_dates.py
@@ -69,6 +73,7 @@ jobs:
               raise SystemExit(f'Central pagination proof incomplete: {c}')
           print('Official source-ID reconciliation passed', s)
           PY
+          python scripts/verify_central_reconciliation_consistency.py
       - name: Persist durable ledgers and checkpoints
         run: |
           python scripts/update_collection_state.py
@@ -77,7 +82,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/verify_central_reconciliation_consistency.py
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
           git reset --hard HEAD
