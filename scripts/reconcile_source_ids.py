@@ -19,6 +19,7 @@ from urllib.parse import parse_qs, urlparse
 
 import complete_support_coverage as cov
 import scrape_jobs as primary
+import crawl_gyeonggi_central_recent as central_recent
 
 ROOT = Path(__file__).resolve().parents[1]
 JOBS_PATH = ROOT / "jobs.json"
@@ -27,6 +28,7 @@ REPORT_PATH = ROOT / "source_reconciliation_report.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 NOW_S = NOW.strftime("%Y-%m-%d %H:%M:%S KST")
+RECONCILIATION_POLICY = "stable-id-38-v2-gyeonggi-central-90d"
 
 
 def load(path, default):
@@ -149,7 +151,7 @@ def crawl_official_ids():
     sources = []
     all_rows = []
 
-    gg_central = primary.scrape_gyeonggi_central()
+    gg_central = central_recent.scrape_gyeonggi_central_recent()
     sources.append(source_status(
         "경기", primary.GYEONGGI["central"]["name"], gg_central,
         coverage_complete=bool(gg_central), boards=[primary.GYEONGGI["central"]["url"]],
@@ -282,6 +284,7 @@ def main():
     payload["jobs"] = jobs
     payload["sourceReconciliation"] = {
         "generatedAt": NOW_S, "lookbackDays": cov.LOOKBACK_DAYS,
+        "populationPolicy": RECONCILIATION_POLICY,
         "officialIdCount": len(official_ids),
         "datasetIdCountBefore": len(dataset_ids_before),
         "missingBefore": len(missing_before), "recoveredNow": len(recovered),
@@ -296,12 +299,14 @@ def main():
 
     LEDGER_PATH.write_text(json.dumps({
         "generatedAt": NOW_S,
+        "populationPolicy": RECONCILIATION_POLICY,
         "policy": "append-only stable official posting IDs across all 38 sources; title similarity never deletes source evidence",
         "knownOfficialIdCount": len(entries), "entries": entries,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     report = {
         "generatedAt": NOW_S, "lookbackDays": cov.LOOKBACK_DAYS,
+        "populationPolicy": RECONCILIATION_POLICY,
         "summary": payload["sourceReconciliation"],
         "incompleteSources": incomplete_sources,
         "incompleteOffices": incomplete_sources,
