@@ -127,6 +127,7 @@ def main():
     if not isinstance(old, dict):
         old = {}
 
+    evidence = coverage_evidence()
     now = datetime.now(KST).isoformat(timespec="seconds")
     entry = dict(old)
     entry.update({
@@ -146,7 +147,7 @@ def main():
             "boardDiscoveryReport": generated_at(ROOT / "board_discovery_report.json"),
             "collectionState": generated_at(ROOT / "collection_state.json"),
         },
-        "coverageEvidence": coverage_evidence(),
+        "coverageEvidence": evidence,
     })
     if args.stage:
         entry["stage"] = args.stage
@@ -158,6 +159,21 @@ def main():
     all_status[args.workflow] = entry
     STATUS.write_text(json.dumps(all_status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"collector status: {args.workflow} {args.state} stage={entry.get('stage','')}")
+
+    # Fast refreshes do not perform the full 90-day support-office audit themselves.
+    # Therefore they must not publish a new snapshot once the last proven 25+11
+    # completeness evidence is stale or incomplete. Failing here lets the workflow's
+    # existing rollback path keep the last known-good jobs.json instead of silently
+    # advancing the public dataset on unproven coverage.
+    if (
+        args.workflow == "fast"
+        and args.stage == "publication-guard"
+        and args.state == "running"
+        and not evidence.get("currentComplete")
+    ):
+        raise SystemExit(
+            "Refusing fast publication: current 25+11 coverage evidence is stale or incomplete"
+        )
 
 
 if __name__ == "__main__":
