@@ -69,11 +69,16 @@ def main():
 
     rec = evidence.get("sourceReconciliation", {}) if isinstance(evidence, dict) else {}
     support = evidence.get("supportCoverage", {}) if isinstance(evidence, dict) else {}
+    effective_proof = (
+        "38-source-reconciliation"
+        if isinstance(rec, dict) and rec.get("currentComplete") is True
+        else evidence.get("proof", "")
+    )
     deep.update({
         "effectiveState": "success" if supersedes_failure else "historical-failure-newer",
         "effectiveAt": updated.isoformat(timespec="seconds"),
         "effectiveWorkflow": workflow,
-        "effectiveProof": evidence.get("proof", ""),
+        "effectiveProof": effective_proof,
         "effectiveJobsCount": entry.get("jobsCount"),
         "effectiveSupersedesLastFailure": supersedes_failure,
         "effectiveEvidence": {
@@ -87,7 +92,7 @@ def main():
         },
     })
     DEEP.write_text(json.dumps(deep, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"effective audit health: {deep['effectiveState']} via {workflow} ({evidence.get('proof','')})")
+    print(f"effective audit health: {deep['effectiveState']} via {workflow} ({effective_proof})")
 
 
 if __name__ == "__main__":
