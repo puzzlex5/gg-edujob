@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/restore_reconciled_ids.py'
+      - 'scripts/crawl_gyeonggi_central_recent.py'
       - 'scripts/sync_effective_audit_status.py'
       - '.github/workflows/restore-official-ids.yml'
   schedule:
@@ -39,7 +40,7 @@ jobs:
       - name: Preserve published baseline
         run: |
           cp jobs.json /tmp/jobs_before_restore.json
-          python -m py_compile scripts/restore_reconciled_ids.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/sync_effective_audit_status.py
+          python -m py_compile scripts/restore_reconciled_ids.py scripts/crawl_gyeonggi_central_recent.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/sync_effective_audit_status.py
       - name: Restore only missing ledger-protected official IDs
         run: python scripts/restore_reconciled_ids.py
       - name: Re-sanitize and verify restored publication
