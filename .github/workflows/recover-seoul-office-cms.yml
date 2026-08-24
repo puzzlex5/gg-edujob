@@ -47,6 +47,20 @@ jobs:
           python scripts/sanitize_job_dates.py
           python scripts/verify_jobs.py --previous /tmp/jobs_before_seoul_cms.json
           python scripts/update_collection_state.py
+      - name: Require completeness proof to remain bound to recovered dataset
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'scripts')
+          from update_collector_status import coverage_evidence
+          evidence = coverage_evidence()
+          if not evidence.get('currentComplete'):
+              raise SystemExit(
+                  'Refusing Seoul CMS publication: recovery no longer preserves a fresh '
+                  'completeness proof bound to the current jobs dataset'
+              )
+          print('Seoul CMS publication guard passed via', evidence.get('proof'))
+          PY
       - name: Commit only verified recovery
         run: |
           git config user.name 'github-actions[bot]'
