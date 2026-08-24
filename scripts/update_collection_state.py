@@ -136,15 +136,28 @@ def numeric_id(job):
     candidates = []
     for v in (job.get("nttSn"), (job.get("openParams") or {}).get("job_seq")):
         s = str(v or "")
-        if s.isdigit(): candidates.append(int(s))
+        if s.isdigit():
+            candidates.append(int(s))
     try:
         q = parse_qs(urlparse(job.get("url") or "").query)
         for k in ("pbancSn", "nttSn", "job_seq", "seq"):
             s = (q.get(k) or [""])[0]
-            if s.isdigit(): candidates.append(int(s))
+            if s.isdigit():
+                candidates.append(int(s))
     except Exception:
         pass
     return max(candidates) if candidates else None
+
+
+def observed_highwater(checkpoint):
+    """Keep the largest previously observed count even after partial/specialized refreshes."""
+    values = []
+    for key in ("observedJobs", "lastObservedJobs", "maxObservedJobs"):
+        try:
+            values.append(int(checkpoint.get(key) or 0))
+        except (TypeError, ValueError):
+            pass
+    return max(values) if values else 0
 
 
 def main():
@@ -202,13 +215,15 @@ def main():
     for board, old_ck in old_checkpoints.items():
         if not isinstance(old_ck, dict):
             continue
+        highwater = observed_highwater(old_ck)
         if board not in checkpoints:
             preserved = dict(old_ck)
             preserved["source"] = canonical_source(
                 old_ck.get("source", ""), host_map, board, old_ck.get("boardUrl"),
             )
             preserved["presentInLatest"] = False
-            preserved["lastObservedJobs"] = int(old_ck.get("observedJobs") or old_ck.get("lastObservedJobs") or 0)
+            preserved["lastObservedJobs"] = highwater
+            preserved["maxObservedJobs"] = highwater
             checkpoints[board] = preserved
             continue
         ck = checkpoints[board]
@@ -218,7 +233,12 @@ def main():
         old_reg = valid_registered(old_ck.get("latestRegistered"))
         if old_reg and old_reg > ck["latestRegistered"]:
             ck["latestRegistered"] = old_reg
-        ck["lastObservedJobs"] = int(old_ck.get("observedJobs") or old_ck.get("lastObservedJobs") or 0)
+        ck["lastObservedJobs"] = highwater
+        ck["maxObservedJobs"] = max(highwater, int(ck.get("observedJobs") or 0))
+
+    for board, ck in checkpoints.items():
+        if "maxObservedJobs" not in ck:
+            ck["maxObservedJobs"] = int(ck.get("observedJobs") or 0)
 
     for key, old in list(entries.items()):
         if key not in seen_now:
@@ -235,7 +255,7 @@ def main():
         "generatedAt": now_s,
         "datasetUpdatedAt": payload.get("updatedAt"),
         "boards": checkpoints,
-        "note": "Durable board checkpoints survive transient crawl gaps; source attribution follows unambiguous official support-office hosts; numeric IDs are hints, never sole deletion criteria.",
+        "note": "Durable board checkpoints survive transient crawl gaps; source attribution follows unambiguous official support-office hosts; numeric IDs and observed-count high-water marks never move backward.",
     }
     LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
