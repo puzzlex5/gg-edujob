@@ -7,6 +7,10 @@ part of the 90-day audit population. This crawler disables `srchEcptDl`, follows
 ordering, and requires two consecutive fully-old pages (or a structural end) before declaring the
 90-day boundary crossed. It returns the same job shape used by scrape_jobs.py and fails closed when
 coverage cannot be proven.
+
+Important invariant: every posting admitted to the 90-day completeness population must have a
+parseable registration date. The official portal retains up to one year of material, so treating an
+unparseable date as "recent" can silently inflate a 90-day audit into a one-year crawl.
 """
 import re
 import time
@@ -41,6 +45,8 @@ def scrape_gyeonggi_central_recent():
 
     for code, (cat_name, ui_type) in primary.GYEONGGI_CATEGORIES.items():
         pages = 0
+        raw_rows = 0
+        accepted_rows = 0
         crossed = False
         natural_end = False
         access_error = False
@@ -64,6 +70,7 @@ def scrape_gyeonggi_central_recent():
             soup = BeautifulSoup(r.text, "html.parser")
             rows = soup.select("div.recruit_list > ul > li")
             pages += 1
+            raw_rows += len(rows)
             if not rows:
                 natural_end = True
                 break
@@ -71,6 +78,7 @@ def scrape_gyeonggi_central_recent():
             page_ids = []
             page_dates = []
             parsed_rows = []
+            undated = []
             for li in rows:
                 a = li.find("a", href=re.compile(r"goView\(['\"]?\d+"))
                 if not a:
@@ -84,7 +92,25 @@ def scrape_gyeonggi_central_recent():
                 page_ids.append(pid)
                 if registered:
                     page_dates.append(registered)
+                else:
+                    undated.append({
+                        "id": pid,
+                        "text": primary.clean(li.get_text(" ", strip=True))[:180],
+                    })
                 parsed_rows.append((pid, li, top, registered))
+
+            # Fail closed. A missing registration date destroys the proof that this is a 90-day
+            # population; continuing could pull the portal's full one-year retention window.
+            if undated:
+                raise RuntimeError(
+                    f"Gyeonggi central registration-date parse failure on {cat_name} page {page}: "
+                    f"{undated[:3]}"
+                )
+            if page_ids and len(page_dates) != len(page_ids):
+                raise RuntimeError(
+                    f"Gyeonggi central date/id mismatch on {cat_name} page {page}: "
+                    f"ids={len(page_ids)} dates={len(page_dates)}"
+                )
 
             sig = tuple(page_ids)
             if sig and sig == previous_page_ids:
@@ -96,7 +122,7 @@ def scrape_gyeonggi_central_recent():
                 if pid in seen_ids:
                     continue
                 seen_ids.add(pid)
-                if registered and _old(registered):
+                if _old(registered):
                     continue
                 school = top[0] if top else ""
                 title_el = li.select_one(".cont_tit")
@@ -120,6 +146,7 @@ def scrape_gyeonggi_central_recent():
                     "sourceType": "통합게시판",
                     "url": f"https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn={pid}",
                 })
+                accepted_rows += 1
 
             if page_dates and all(_old(x) for x in page_dates):
                 consecutive_old_pages += 1
@@ -136,6 +163,7 @@ def scrape_gyeonggi_central_recent():
         ok = (crossed or natural_end) and not access_error and not repeated and pages < primary.CENTRAL_MAX_PAGES
         coverage.append({
             "code": code, "name": cat_name, "pagesScanned": pages,
+            "rawRows": raw_rows, "acceptedRecentRows": accepted_rows,
             "crossedLookback": crossed, "naturalEnd": natural_end,
             "accessError": access_error, "paginationRepeated": repeated,
             "coverageComplete": ok,
