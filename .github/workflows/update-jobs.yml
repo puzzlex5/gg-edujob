@@ -72,7 +72,7 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_fast_pagination.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/recover_seoul_office_cms_jobs.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/recover_seoul_office_cms_jobs.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py scripts/validate_reconciliation_policy.py
           grep -q 'FAST_MAX_PAGES = 60' scripts/scrape_jobs.py
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
@@ -140,6 +140,7 @@ jobs:
       - name: Final publication guard
         run: |
           python scripts/update_collector_status.py --workflow fast --stage publication-guard --state running
+          python scripts/validate_reconciliation_policy.py
           python - <<'PY'
           import json
           from pathlib import Path
