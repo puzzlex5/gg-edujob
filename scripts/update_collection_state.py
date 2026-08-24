@@ -12,11 +12,14 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
+from checkpoint_inventory import seed_configured_boards
+
 ROOT = Path(__file__).resolve().parents[1]
 JOBS = ROOT / "jobs.json"
 LEDGER = ROOT / "job_ledger.json"
 STATE = ROOT / "collection_state.json"
 SOURCES = ROOT / "sources.json"
+BOARD_CACHE = ROOT / "board_cache.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 DATE_RE = re.compile(r"^(20\d{2})[./-](\d{1,2})[./-](\d{1,2})$")
@@ -167,6 +170,7 @@ def main():
         raise SystemExit(f"Refusing to update collection memory from suspicious dataset: {len(jobs)} jobs")
 
     sources = load(SOURCES, {})
+    board_cache = load(BOARD_CACHE, {})
     host_map = build_support_host_map(sources)
     old_ledger = load(LEDGER, {"entries": {}})
     entries = old_ledger.get("entries", {}) if isinstance(old_ledger, dict) else {}
@@ -236,6 +240,12 @@ def main():
         ck["lastObservedJobs"] = highwater
         ck["maxObservedJobs"] = max(highwater, int(ck.get("observedJobs") or 0))
 
+    # Board inventory is source configuration, not a property of one job snapshot. Seed every
+    # configured/discovered official board so a partial refresh cannot make the monitor forget it.
+    seed_configured_boards(
+        checkpoints, sources, board_cache, host_map, canonical_source, observed_highwater,
+    )
+
     for board, ck in checkpoints.items():
         if "maxObservedJobs" not in ck:
             ck["maxObservedJobs"] = int(ck.get("observedJobs") or 0)
@@ -255,7 +265,7 @@ def main():
         "generatedAt": now_s,
         "datasetUpdatedAt": payload.get("updatedAt"),
         "boards": checkpoints,
-        "note": "Durable board checkpoints survive transient crawl gaps; source attribution follows unambiguous official support-office hosts; numeric IDs and observed-count high-water marks never move backward.",
+        "note": "Durable board checkpoints and configured official board inventory survive partial crawl gaps; source attribution follows unambiguous official support-office hosts; numeric IDs and observed-count high-water marks never move backward.",
     }
     LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=2), encoding="utf-8")
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
