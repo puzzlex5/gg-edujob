@@ -68,6 +68,23 @@ jobs:
         run: |
           python scripts/verify_central_pagination.py
           python scripts/verify_central_reconciliation_consistency.py
+      - name: Require persistent independent Gyeonggi 90-day evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('gyeonggi_central_90d_report.json')
+          if not p.exists() or p.stat().st_size < 100:
+              raise SystemExit('Independent Gyeonggi 90-day proof artifact missing')
+          r=json.loads(p.read_text(encoding='utf-8'))
+          if not r.get('complete'):
+              raise SystemExit(f'Independent Gyeonggi 90-day proof incomplete: {r}')
+          recon=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          gg=next((x for x in recon.get('sources',[]) if x.get('name')=='경기도교육청 통합 구인구직'), None)
+          if not gg or int(gg.get('officialIdCount') or 0) != int(r.get('stableIdCount') or 0):
+              raise SystemExit(f'Independent Gyeonggi 90-day count not bound to reconciliation: report={r.get("stableIdCount")} recon={gg}')
+          print('Persistent Gyeonggi 90-day proof verified', r.get('stableIdCount'))
+          PY
       - name: Re-resolve recovered details and sanitize dates
         run: |
           python scripts/sanitize_job_dates.py
@@ -102,7 +119,9 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json gyeonggi_central_90d_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
+          test -s gyeonggi_central_90d_report.json
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
+          git add -f gyeonggi_central_90d_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
           git reset --hard HEAD
@@ -126,9 +145,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json
-          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json; do
+          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
+          if [ -f gyeonggi_central_90d_report.json ]; then git add -f gyeonggi_central_90d_report.json; fi
           git diff --cached --quiet && exit 0
           git commit -m 'Record official source-ID reconciliation failure'
           git reset --hard HEAD
