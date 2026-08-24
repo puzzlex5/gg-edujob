@@ -44,7 +44,7 @@ jobs:
           python scripts/harden_deep_audit.py
           python scripts/harden_network_retries.py
           python scripts/harden_central_pagination.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/harden_central_pagination.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/harden_central_pagination.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py
 
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
@@ -65,6 +65,11 @@ jobs:
 
       - name: Reconcile official posting IDs and recover exact missing source occurrences
         run: python scripts/reconcile_source_ids.py
+
+      - name: Re-prove central IDs and require independent agreement
+        run: |
+          python scripts/verify_central_pagination.py
+          python scripts/verify_central_reconciliation_consistency.py
 
       - name: Sanitize impossible registration dates
         run: python scripts/sanitize_job_dates.py
@@ -113,12 +118,13 @@ jobs:
               raise SystemExit(f'Both central sources must independently prove pagination: {sources}')
           print(f'Recovery guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}; central pagination complete')
           PY
+          python scripts/verify_central_reconciliation_consistency.py
 
       - name: Commit only verified recovered postings
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json board_cache.json missing_recovery_report.json source_reconciliation_report.json central_pagination_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/harden_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json board_cache.json missing_recovery_report.json source_reconciliation_report.json central_pagination_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/harden_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
           git diff --cached --quiet && exit 0
           git commit -m 'Recover and reconcile official recruitment posting IDs'
           git reset --hard HEAD
