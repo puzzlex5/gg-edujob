@@ -45,8 +45,10 @@ jobs:
           cp jobs.json /tmp/jobs_source_id_baseline.json
       - name: Remove fixed central portal page caps
         run: python scripts/harden_central_pagination.py
+      - name: Require full recent 90-day Gyeonggi central population
+        run: python scripts/harden_reconciliation_central_lookback.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
@@ -88,7 +90,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/verify_central_reconciliation_consistency.py
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
           git reset --hard HEAD
