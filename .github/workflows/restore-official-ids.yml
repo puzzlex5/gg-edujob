@@ -1,0 +1,83 @@
+name: Restore missing reconciled official IDs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/restore_reconciled_ids.py'
+      - '.github/workflows/restore-official-ids.yml'
+  schedule:
+    - cron: '7 0,2,4,6,8,10,12,14,16 * * *' # 10 minutes before each fast-refresh window
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest main after any queue delay
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Preserve published baseline
+        run: |
+          cp jobs.json /tmp/jobs_before_restore.json
+          python -m py_compile scripts/restore_reconciled_ids.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py
+      - name: Restore only missing ledger-protected official IDs
+        run: python scripts/restore_reconciled_ids.py
+      - name: Re-sanitize and verify restored publication
+        run: |
+          python scripts/sanitize_job_dates.py
+          python scripts/verify_jobs.py --previous /tmp/jobs_before_restore.json
+          python scripts/update_collection_state.py
+          python scripts/update_collector_status.py --workflow official-id-restore --stage complete --state success
+      - name: Commit only verified restoration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobs.json collection_state.json collector_status.json official_id_restore_report.json date_anomaly_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Restore missing reconciled official recruitment IDs'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+      - name: Preserve diagnostics without publishing incomplete restoration
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/id-restore-diagnostics
+          [ ! -f official_id_restore_report.json ] || cp official_id_restore_report.json /tmp/id-restore-diagnostics/
+          git reset --hard HEAD
+          git clean -fd
+          if [ -f /tmp/id-restore-diagnostics/official_id_restore_report.json ]; then
+            cp /tmp/id-restore-diagnostics/official_id_restore_report.json official_id_restore_report.json
+          fi
+          python scripts/update_collector_status.py --workflow official-id-restore --stage restore --state failed || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add collector_status.json
+          [ ! -f official_id_restore_report.json ] || git add official_id_restore_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record failed targeted official-ID restoration'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
