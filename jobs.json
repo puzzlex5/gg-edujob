@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-25 03:46 KST",
+    "checkedAt": "2026-08-25 03:48 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -822,7 +822,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 8906,
+    "previousTotal": 8907,
     "currentTotal": 8907
   },
   "jobs": [
@@ -272909,11 +272909,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-25 03:45 KST",
+    "checkedAt": "2026-08-25 03:47 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-25 03:45 KST",
+    "checkedAt": "2026-08-25 03:47 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -272950,5 +272950,12 @@
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-08-25 03:47:10 KST",
+    "protectedOfficialIds": 8511,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
