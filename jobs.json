@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-25 04:59 KST",
+    "checkedAt": "2026-08-25 06:04 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -822,7 +822,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 8907,
+    "previousTotal": 18002,
     "currentTotal": 18002
   },
   "jobs": [
@@ -516662,11 +516662,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-25 04:58 KST",
+    "checkedAt": "2026-08-25 06:02 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-25 04:58 KST",
+    "checkedAt": "2026-08-25 06:02 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -516687,7 +516687,7 @@
     "seoulTotal": 511
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-25 04:58 KST",
+    "checkedAt": "2026-08-25 06:02 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6178,
     "detailPagesParsed": 2593,
@@ -516697,7 +516697,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-25 04:58 KST",
+      "checkedAt": "2026-08-25 06:02 KST",
       "candidates": 209,
       "detailPagesConfirmed": 207,
       "cacheEntriesImproved": 0,
@@ -516712,13 +516712,13 @@
     "missingAfter": 0
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-08-25 04:37:27 KST",
+    "generatedAt": "2026-08-25 05:38:38 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
     "officialIdCount": 17810,
-    "datasetIdCountBefore": 8896,
-    "missingBefore": 9095,
-    "recoveredNow": 9095,
+    "datasetIdCountBefore": 17991,
+    "missingBefore": 0,
+    "recoveredNow": 0,
     "missingAfter": 0,
     "reconciledSources": 38,
     "totalSources": 38,
