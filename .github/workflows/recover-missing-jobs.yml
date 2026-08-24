@@ -43,7 +43,11 @@ jobs:
           python scripts/hotfix_repair_links.py
           python scripts/harden_deep_audit.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py
+          python scripts/harden_central_pagination.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/harden_central_pagination.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py
+
+      - name: Prove central portal pagination independently
+        run: python scripts/verify_central_pagination.py
 
       - name: Fresh crawl of central portals and support offices
         run: python scripts/scrape_jobs.py
@@ -92,6 +96,7 @@ jobs:
           after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
           rec=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
           summary=rec.get('summary',{})
+          central=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
           if len(after)<100: raise SystemExit(f'Recovery output too small: {len(after)}')
           if len(before)>=100 and len(after)<len(before)*0.70:
               raise SystemExit(f'Recovery unexpectedly lost >30%: {len(before)} -> {len(after)}')
@@ -101,14 +106,19 @@ jobs:
           total=int(summary.get('totalSources') or 0)
           if total != 38 or reconciled != total:
               raise SystemExit(f'Not all 38 official sources reconciled: {summary}')
-          print(f'Recovery guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
+          if not central.get('complete'):
+              raise SystemExit(f'Central pagination proof incomplete: {central}')
+          sources=central.get('sources') or []
+          if len(sources) != 2 or any(not s.get('complete') for s in sources):
+              raise SystemExit(f'Both central sources must independently prove pagination: {sources}')
+          print(f'Recovery guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}; central pagination complete')
           PY
 
       - name: Commit only verified recovered postings
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json board_cache.json missing_recovery_report.json source_reconciliation_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json board_cache.json missing_recovery_report.json source_reconciliation_report.json central_pagination_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/harden_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
           git diff --cached --quiet && exit 0
           git commit -m 'Recover and reconcile official recruitment posting IDs'
           git reset --hard HEAD
@@ -121,17 +131,17 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/recovery-diagnostics
-          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/recovery-diagnostics/$f"; fi
           done
           git reset --hard HEAD
           git clean -fd
-          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "/tmp/recovery-diagnostics/$f" ]; then cp "/tmp/recovery-diagnostics/$f" "$f"; fi
           done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           git diff --cached --quiet && exit 0
