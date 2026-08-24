@@ -2,10 +2,10 @@
 """Persist collector state and fail closed when current completeness evidence is absent.
 
 A fast refresh can use either a fresh 25+11 deep coverage proof or a fresh successful
-38-source stable-ID reconciliation. Reconciliation evidence is valid for publication only
-while every official stable ID from that scan is still present in the current jobs.json.
-This prevents a later fast crawl from silently dropping reconciled postings while reusing a
-still-fresh historical success report.
+38-source stable-ID reconciliation. Historical proof is valid for publication only while
+the current jobs.json still contains at least the support-office population proven by that
+scan (and, for reconciliation, every official stable ID from the scan). This prevents a
+later fast crawl from silently dropping postings while reusing a still-fresh proof.
 """
 import argparse
 import json
@@ -120,6 +120,20 @@ def current_stable_ids(payload):
     return {sid for sid in (stable_source_id(j) for j in jobs if isinstance(j, dict)) if sid}
 
 
+def current_support_link_evidence(payload):
+    verification = payload.get("verification", {}) if isinstance(payload, dict) else {}
+    exact = verification.get("supportExactLinks", {}) if isinstance(verification, dict) else {}
+    total = int(exact.get("total") or 0) if isinstance(exact, dict) else 0
+    resolved = int(exact.get("resolved") or 0) if isinstance(exact, dict) else 0
+    unresolved = int(exact.get("unresolved") or 0) if isinstance(exact, dict) else 0
+    return {
+        "total": total,
+        "resolved": resolved,
+        "unresolved": unresolved,
+        "exact": bool(total > 0 and unresolved == 0 and resolved == total),
+    }
+
+
 def support_coverage_evidence():
     report = load_json(ROOT / "support_coverage_report.json", {})
     summary = report.get("supportCompleteness", {}) if isinstance(report, dict) else {}
@@ -129,6 +143,9 @@ def support_coverage_evidence():
     gg_t = summary.get("gyeonggiTotal")
     se_c = summary.get("seoulComplete")
     se_t = summary.get("seoulTotal")
+    reference_gg = int(links.get("gyeonggiTotal") or 0) if isinstance(links, dict) else 0
+    reference_se = int(links.get("seoulTotal") or 0) if isinstance(links, dict) else 0
+    reference_total = reference_gg + reference_se
     exact_links = bool(
         isinstance(links, dict)
         and links.get("gyeonggiTotal") is not None
@@ -139,6 +156,13 @@ def support_coverage_evidence():
     complete = gg_c == 25 and gg_t == 25 and se_c == 11 and se_t == 11 and not warnings and exact_links
     generated = report.get("generatedAt", "") if isinstance(report, dict) else ""
     age, fresh = freshness(generated)
+
+    current_links = current_support_link_evidence(jobs_payload())
+    dataset_bound = bool(
+        reference_total > 0
+        and current_links["exact"]
+        and current_links["total"] >= reference_total
+    )
     return {
         "generatedAt": generated,
         "ageHours": age,
@@ -151,7 +175,11 @@ def support_coverage_evidence():
         "warnings": len(warnings) if isinstance(warnings, list) else None,
         "exactLinks": exact_links,
         "complete": complete,
-        "currentComplete": bool(complete and fresh),
+        "referenceSupportPostingCount": reference_total,
+        "currentSupportPostingCount": current_links["total"],
+        "currentSupportExactLinks": current_links["exact"],
+        "datasetBound": dataset_bound,
+        "currentComplete": bool(complete and fresh and dataset_bound),
     }
 
 
