@@ -1,31 +1,23 @@
 #!/usr/bin/env python3
-"""Persist lightweight collector observability without touching published jobs.
+"""Persist collector state and fail closed when current completeness evidence is absent.
 
-Workflows call this before critical stages and on success/failure. If a run dies,
-the repository still records the last stage reached so silent automation failures
-can be distinguished from a legitimate no-change refresh.
-
-A fast refresh does not perform the full independent audit itself. Current completeness
-can therefore be proven by either of two independent, fresh evidence paths:
-1) the 25+11 support-office deep coverage report with exact-link totals, or
-2) a fully successful 38-source stable-ID reconciliation (including both central portals),
-   provided its central pagination proof, durable ID ledger, and jobs exact-link verification
-   are all present and consistent.
-
-Artifact existence alone is never treated as proof.
+A fast refresh can use either a fresh 25+11 deep coverage proof or a fresh successful
+38-source stable-ID reconciliation. Reconciliation evidence is valid for publication only
+while every official stable ID from that scan is still present in the current jobs.json.
+This prevents a later fast crawl from silently dropping reconciled postings while reusing a
+still-fresh historical success report.
 """
 import argparse
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 STATUS = ROOT / "collector_status.json"
 KST = timezone(timedelta(hours=9))
-# Daily deep audit normally refreshes this evidence every 24 hours. Allow a small
-# scheduling/runtime margin, but never let a multi-day-old success masquerade as
-# current completeness evidence.
 EVIDENCE_FRESH_HOURS = 30
+RECONCILIATION_SCAN_SKEW_HOURS = 3
 
 
 def load_json(path, default):
@@ -81,40 +73,81 @@ def freshness(value):
     return round(age, 2), age <= EVIDENCE_FRESH_HOURS
 
 
+def timestamp_skew_hours(a, b):
+    da, db = parse_timestamp(a), parse_timestamp(b)
+    if da is None or db is None:
+        return None
+    return abs((da - db).total_seconds()) / 3600.0
+
+
+def stable_source_id(job):
+    """Match reconcile_source_ids.py identities without importing crawler modules."""
+    raw = str(job.get("url") or "")
+    try:
+        parsed = urlparse(raw)
+        q = parse_qs(parsed.query)
+    except Exception:
+        parsed = urlparse("")
+        q = {}
+
+    if job.get("sourceType") == "통합게시판":
+        pb = str((q.get("pbancSn") or [""])[0])
+        if pb.isdigit():
+            return f"goe-central:{pb}"
+        rid = str((q.get("q_rcrtSn") or [""])[0])
+        if rid.isdigit():
+            return f"seoul-central:{rid}"
+
+    province = str(job.get("province") or "")
+    if province == "서울":
+        seq = str((job.get("openParams") or {}).get("job_seq") or "")
+        open_raw = str(job.get("openUrl") or raw)
+        host = (urlparse(open_raw).hostname or "").lower()
+        if not seq.isdigit():
+            seq = str((q.get("job_seq") or [""])[0])
+        return f"seoul:{host}:{seq}" if host and seq.isdigit() else ""
+
+    if province == "경기":
+        host = (parsed.hostname or "").lower()
+        bbs = str(job.get("bbsId") or (q.get("bbsId") or [""])[0])
+        ntt = str(job.get("nttSn") or (q.get("nttSn") or [""])[0])
+        return f"mircms:{host}:{bbs}:{ntt}" if host and bbs.isdigit() and ntt.isdigit() else ""
+    return ""
+
+
+def current_stable_ids(payload):
+    jobs = payload.get("jobs", []) if isinstance(payload, dict) else []
+    return {sid for sid in (stable_source_id(j) for j in jobs if isinstance(j, dict)) if sid}
+
+
 def support_coverage_evidence():
     report = load_json(ROOT / "support_coverage_report.json", {})
     summary = report.get("supportCompleteness", {}) if isinstance(report, dict) else {}
     links = report.get("supportLinkResolution", {}) if isinstance(report, dict) else {}
     warnings = summary.get("warnings", []) if isinstance(summary, dict) else []
-    gyeonggi_complete = summary.get("gyeonggiComplete")
-    gyeonggi_total = summary.get("gyeonggiTotal")
-    seoul_complete = summary.get("seoulComplete")
-    seoul_total = summary.get("seoulTotal")
-    exact_links = (
-        links.get("gyeonggiExact") == links.get("gyeonggiTotal")
-        and links.get("seoulExact") == links.get("seoulTotal")
+    gg_c = summary.get("gyeonggiComplete")
+    gg_t = summary.get("gyeonggiTotal")
+    se_c = summary.get("seoulComplete")
+    se_t = summary.get("seoulTotal")
+    exact_links = bool(
+        isinstance(links, dict)
         and links.get("gyeonggiTotal") is not None
         and links.get("seoulTotal") is not None
-    ) if isinstance(links, dict) else False
-    complete = (
-        gyeonggi_complete == 25
-        and gyeonggi_total == 25
-        and seoul_complete == 11
-        and seoul_total == 11
-        and not warnings
-        and exact_links
+        and links.get("gyeonggiExact") == links.get("gyeonggiTotal")
+        and links.get("seoulExact") == links.get("seoulTotal")
     )
+    complete = gg_c == 25 and gg_t == 25 and se_c == 11 and se_t == 11 and not warnings and exact_links
     generated = report.get("generatedAt", "") if isinstance(report, dict) else ""
-    age_hours, fresh = freshness(generated)
+    age, fresh = freshness(generated)
     return {
         "generatedAt": generated,
-        "ageHours": age_hours,
+        "ageHours": age,
         "freshWithinHours": EVIDENCE_FRESH_HOURS,
         "fresh": fresh,
-        "gyeonggiComplete": gyeonggi_complete,
-        "gyeonggiTotal": gyeonggi_total,
-        "seoulComplete": seoul_complete,
-        "seoulTotal": seoul_total,
+        "gyeonggiComplete": gg_c,
+        "gyeonggiTotal": gg_t,
+        "seoulComplete": se_c,
+        "seoulTotal": se_t,
         "warnings": len(warnings) if isinstance(warnings, list) else None,
         "exactLinks": exact_links,
         "complete": complete,
@@ -123,13 +156,6 @@ def support_coverage_evidence():
 
 
 def reconciliation_evidence():
-    """Return strict evidence for the independent all-38-source proof.
-
-    The reconciliation report alone is insufficient: a failed workflow can preserve a report
-    and ledger for diagnostics. Require all of the independently produced success invariants:
-    38/38 sources, zero missing IDs, completed central pagination, a durable ledger generated in
-    the same scan window, and the published jobs payload's exact support-link verification.
-    """
     report = load_json(ROOT / "source_reconciliation_report.json", {})
     summary = report.get("summary", {}) if isinstance(report, dict) else {}
     central = load_json(ROOT / "central_pagination_report.json", {})
@@ -139,45 +165,73 @@ def reconciliation_evidence():
     exact = verification.get("supportExactLinks", {}) if isinstance(verification, dict) else {}
 
     generated = report.get("generatedAt", "") if isinstance(report, dict) else ""
-    age_hours, fresh = freshness(generated)
+    report_age, report_fresh = freshness(generated)
     ledger_generated = ledger.get("generatedAt", "") if isinstance(ledger, dict) else ""
     ledger_age, ledger_fresh = freshness(ledger_generated)
     central_generated = central.get("generatedAt", "") if isinstance(central, dict) else ""
     central_age, central_fresh = freshness(central_generated)
 
+    report_ledger_skew = timestamp_skew_hours(generated, ledger_generated)
+    report_central_skew = timestamp_skew_hours(generated, central_generated)
+    same_scan_window = bool(
+        report_ledger_skew is not None
+        and report_ledger_skew <= 0.05
+        and report_central_skew is not None
+        and report_central_skew <= RECONCILIATION_SCAN_SKEW_HOURS
+    )
+
     reconciled = int(summary.get("reconciledSources") or 0)
     total = int(summary.get("totalSources") or 0)
     missing_after = int(summary.get("missingAfter") or 0)
-    exact_links = (
+    exact_links = bool(
         isinstance(exact, dict)
         and exact.get("total") is not None
         and int(exact.get("unresolved") or 0) == 0
         and int(exact.get("resolved") or 0) == int(exact.get("total") or 0)
     )
-    ledger_present = bool(isinstance(ledger, dict) and ledger.get("entries"))
-    complete = (
+
+    entries = ledger.get("entries", {}) if isinstance(ledger, dict) else {}
+    required_ids = {
+        sid for sid, entry in entries.items()
+        if isinstance(entry, dict) and entry.get("presentInLatestOfficialScan") is True
+    }
+    current_ids = current_stable_ids(payload)
+    missing_from_current = sorted(required_ids - current_ids)
+    dataset_bound = bool(required_ids and not missing_from_current)
+
+    complete = bool(
         total == 38
         and reconciled == 38
         and missing_after == 0
-        and bool(central.get("complete"))
-        and ledger_present
+        and central.get("complete") is True
+        and required_ids
         and exact_links
+        and same_scan_window
+        and dataset_bound
     )
-    current = bool(complete and fresh and ledger_fresh and central_fresh)
+    current = bool(complete and report_fresh and ledger_fresh and central_fresh)
     return {
         "generatedAt": generated,
-        "ageHours": age_hours,
+        "ageHours": report_age,
         "freshWithinHours": EVIDENCE_FRESH_HOURS,
-        "fresh": fresh,
+        "fresh": report_fresh,
         "reconciledSources": reconciled,
         "totalSources": total,
         "missingAfter": missing_after,
-        "centralPaginationComplete": bool(central.get("complete")),
+        "centralPaginationComplete": central.get("complete") is True,
         "centralGeneratedAt": central_generated,
         "centralAgeHours": central_age,
-        "ledgerPresent": ledger_present,
+        "ledgerPresent": bool(required_ids),
         "ledgerGeneratedAt": ledger_generated,
         "ledgerAgeHours": ledger_age,
+        "sameScanWindow": same_scan_window,
+        "reportLedgerSkewHours": round(report_ledger_skew, 3) if report_ledger_skew is not None else None,
+        "reportCentralSkewHours": round(report_central_skew, 3) if report_central_skew is not None else None,
+        "requiredOfficialIds": len(required_ids),
+        "currentMatchedOfficialIds": len(required_ids & current_ids),
+        "missingOfficialIdsFromCurrentDataset": len(missing_from_current),
+        "missingOfficialIdExamples": missing_from_current[:20],
+        "datasetBound": dataset_bound,
         "exactLinks": exact_links,
         "complete": complete,
         "currentComplete": current,
@@ -188,13 +242,13 @@ def coverage_evidence():
     support = support_coverage_evidence()
     reconciliation = reconciliation_evidence()
     current = bool(support.get("currentComplete") or reconciliation.get("currentComplete"))
+    proof = "support-coverage" if support.get("currentComplete") else (
+        "38-source-reconciliation" if reconciliation.get("currentComplete") else "none"
+    )
     return {
-        # Preserve the old top-level fields for existing monitors while exposing both proof paths.
         **support,
         "currentComplete": current,
-        "proof": "support-coverage" if support.get("currentComplete") else (
-            "38-source-reconciliation" if reconciliation.get("currentComplete") else "none"
-        ),
+        "proof": proof,
         "supportCoverage": support,
         "sourceReconciliation": reconciliation,
     }
@@ -253,9 +307,6 @@ def main():
     STATUS.write_text(json.dumps(all_status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"collector status: {args.workflow} {args.state} stage={entry.get('stage','')}")
 
-    # Fast refreshes do not perform either independent proof themselves. Refuse publication
-    # only when BOTH current proof paths are absent/stale/incomplete; the workflow rollback then
-    # preserves the last known-good jobs.json.
     if (
         args.workflow == "fast"
         and args.stage == "publication-guard"
@@ -263,7 +314,7 @@ def main():
         and not evidence.get("currentComplete")
     ):
         raise SystemExit(
-            "Refusing fast publication: no fresh complete support-coverage or 38-source reconciliation evidence"
+            "Refusing fast publication: no fresh completeness proof bound to the current dataset"
         )
 
 
