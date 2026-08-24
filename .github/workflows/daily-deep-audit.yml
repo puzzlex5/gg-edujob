@@ -82,6 +82,12 @@ jobs:
           echo source-id-reconciliation >/tmp/deep_audit_stage
           python scripts/reconcile_source_ids.py
           python scripts/update_deep_audit_status.py source-id-reconciliation running
+      - name: Re-prove central IDs and require independent agreement
+        run: |
+          echo central-cross-check >/tmp/deep_audit_stage
+          python scripts/verify_central_pagination.py
+          python scripts/verify_central_reconciliation_consistency.py
+          python scripts/update_deep_audit_status.py central-cross-check running
       - name: Sanitize impossible registration dates
         run: |
           echo date-sanitize >/tmp/deep_audit_stage
@@ -138,12 +144,13 @@ jobs:
               raise SystemExit(f'Daily central pagination proof incomplete: {central}')
           print(f'Daily deep audit guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
           PY
+          python scripts/verify_central_reconciliation_consistency.py
           python scripts/update_deep_audit_status.py complete success
       - name: Commit only verified deep-audit recovery
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json deep_audit_status.json board_cache.json support_coverage_report.json source_reconciliation_report.json central_pagination_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json deep_audit_status.json board_cache.json support_coverage_report.json source_reconciliation_report.json central_pagination_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
           git diff --cached --quiet && exit 0
           git commit -m 'Daily deep audit reconciled official recruitment IDs'
           git reset --hard HEAD
