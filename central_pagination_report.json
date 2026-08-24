@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-25 06:02:37 KST",
+  "generatedAt": "2026-08-25 08:15:36 KST",
   "policy": "central sources fail closed: every semantic posting row/card must expose a stable ID; partial-page parsing is a failure; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
   "sources": [
     {
       "name": "경기도교육청 통합 구인구직",
       "province": "경기",
-      "stableIdCount": 709,
+      "stableIdCount": 710,
       "complete": true,
       "categories": [
         {
           "code": "A",
           "name": "기간제/사립교원",
           "pagesScanned": 6,
-          "rawRows": 238,
-          "stableIdCount": 237,
+          "rawRows": 239,
+          "stableIdCount": 238,
           "terminalEvidence": "short-final-page-confirmed-by-nonpost-row",
           "accessError": false,
           "parseError": false,
@@ -103,9 +103,9 @@
     {
       "name": "서울교육일자리포털",
       "province": "서울",
-      "stableIdCount": 438,
+      "stableIdCount": 440,
       "pagesScanned": 10,
-      "rawRows": 438,
+      "rawRows": 440,
       "terminalEvidence": "empty-page",
       "accessError": false,
       "parseError": false,
