@@ -1,0 +1,98 @@
+name: Normalize failed collector status
+
+on:
+  push:
+    paths:
+      - 'collector_status.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Detect rejected-candidate status
+        id: detect
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('collector_status.json')
+          d=json.loads(p.read_text(encoding='utf-8')) if p.exists() else {}
+          fast=d.get('fast',{}) if isinstance(d,dict) else {}
+          should=fast.get('state')=='failed' and not fast.get('publishedBaselineNormalized')
+          with open('/tmp/should_normalize','w') as f:
+              f.write('yes' if should else 'no')
+          if should:
+              Path('/tmp/rejected_fast_status.json').write_text(
+                  json.dumps(fast, ensure_ascii=False, indent=2), encoding='utf-8'
+              )
+              print('Rejected candidate status captured; published jobs.json will be re-evaluated.')
+          else:
+              print('No failed candidate status requiring normalization.')
+          PY
+          echo "run=$(cat /tmp/should_normalize)" >> "$GITHUB_OUTPUT"
+
+      - name: Recompute status from preserved published dataset
+        if: steps.detect.outputs.run == 'yes'
+        run: |
+          python scripts/update_collector_status.py --workflow fast --state failed
+          python - <<'PY'
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          KST=timezone(timedelta(hours=9))
+          status=json.loads(Path('collector_status.json').read_text(encoding='utf-8'))
+          rejected=json.loads(Path('/tmp/rejected_fast_status.json').read_text(encoding='utf-8'))
+          fast=status.setdefault('fast',{})
+          fast['publishedBaselineNormalized']=True
+          fast['publishedJobsCount']=fast.get('jobsCount')
+          fast['rejectedCandidate']={
+              'updatedAt': rejected.get('updatedAt'),
+              'stage': rejected.get('stage'),
+              'jobsCount': rejected.get('jobsCount'),
+              'coverageEvidence': rejected.get('coverageEvidence'),
+          }
+          report={
+              'generatedAt': datetime.now(KST).strftime('%Y-%m-%d %H:%M:%S KST'),
+              'note': 'Rejected candidate diagnostics preserved separately; collector_status now describes the last published jobs.json.',
+              'candidate': fast['rejectedCandidate'],
+              'published': {
+                  'jobsCount': fast.get('publishedJobsCount'),
+                  'coverageEvidence': fast.get('coverageEvidence'),
+              },
+          }
+          Path('rejected_fast_candidate_status.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf-8'
+          )
+          Path('collector_status.json').write_text(
+              json.dumps(status, ensure_ascii=False, indent=2)+'\n', encoding='utf-8'
+          )
+          PY
+
+      - name: Commit normalized status only
+        if: steps.detect.outputs.run == 'yes'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add collector_status.json rejected_fast_candidate_status.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Normalize failed collector status to published baseline'
+          git pull --rebase
+          git push
