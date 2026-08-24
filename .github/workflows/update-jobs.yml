@@ -3,7 +3,7 @@ name: Update 수도권 education jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 0,2,4,6,8,10,12,14,16,22 * * *' # 03:17/05:17 KST 실행 제외, 04:23 정밀감사 창 보호
+    - cron: '17 0,2,4,6,8,10,12,14,16 * * *' # 03:17/05:17/07:17 KST 실행 제외, 04:23 정밀감사 180분 창 보호
 
 permissions:
   contents: write
@@ -151,8 +151,9 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm -f --ignore-unmatch verification_failure_report.json
+          rm -f verification_failure_report.json
           git add collector_status.json jobs.json job_ledger.json collection_state.json board_cache.json missing_recovery_report.json seoul_office_cms_recovery_report.json date_anomaly_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py
+          git add -u verification_failure_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Fast refresh verified recruitment postings'
           git reset --hard HEAD
