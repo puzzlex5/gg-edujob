@@ -25,6 +25,8 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install requests beautifulsoup4
+      - name: Mark reconciliation start
+        run: python scripts/update_collector_status.py --workflow reconciliation --stage baseline --state running
       - name: Preserve verified publication baseline
         run: |
           python - <<'PY'
@@ -38,7 +40,7 @@ jobs:
       - name: Remove fixed central portal page caps
         run: python scripts/harden_central_pagination.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/verify_central_pagination.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/verify_central_pagination.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
@@ -68,12 +70,14 @@ jobs:
           print('Official source-ID reconciliation passed', s)
           PY
       - name: Persist durable ledgers and checkpoints
-        run: python scripts/update_collection_state.py
+        run: |
+          python scripts/update_collection_state.py
+          python scripts/update_collector_status.py --workflow reconciliation --stage complete --state success
       - name: Commit only fully reconciled data
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json scripts/scrape_jobs.py
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
           git reset --hard HEAD
@@ -93,8 +97,10 @@ jobs:
           for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json; do
             if [ -f "/tmp/source-id-diagnostics/$f" ]; then cp "/tmp/source-id-diagnostics/$f" "$f"; fi
           done
+          python scripts/update_collector_status.py --workflow reconciliation --stage source-id-reconciliation --state failed
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add collector_status.json
           for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
