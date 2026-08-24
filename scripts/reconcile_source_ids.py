@@ -95,13 +95,7 @@ def ids_for_rows(rows):
 
 
 def effective_gyeonggi_metas(metas, rows_by_board):
-    """Ignore only ID-proven duplicate menu aliases; never hide unique official IDs.
-
-    A fully traversed representative is authoritative for one physical board. An incomplete menu
-    alias may be ignored only if it had no access/repetition error and every stable ID it exposed
-    is already present in that representative. Thus an alias containing even one unique ID remains
-    mandatory and will keep reconciliation red until its traversal is explained.
-    """
+    """Ignore only ID-proven duplicate menu aliases; never hide unique official IDs."""
     groups = {}
     for meta in metas:
         groups.setdefault(physical_board_identity(meta.get("url", "")), []).append(meta)
@@ -152,9 +146,20 @@ def crawl_official_ids():
     all_rows = []
 
     gg_central = central_recent.scrape_gyeonggi_central_recent()
+    gg_central_health = [dict(x) for x in central_recent.scrape_gyeonggi_central_recent.last_coverage]
+    gg_central_complete = (
+        bool(gg_central_health)
+        and all(x.get("coverageComplete") for x in gg_central_health)
+        and not any(x.get("accessError") or x.get("paginationRepeated") for x in gg_central_health)
+    )
+    # The crawler itself fails closed, but persist its traversal proof in the reconciliation report
+    # so large/round counts are explainable instead of appearing as an unexplained aggregate.
     sources.append(source_status(
         "경기", primary.GYEONGGI["central"]["name"], gg_central,
-        coverage_complete=bool(gg_central), boards=[primary.GYEONGGI["central"]["url"]],
+        coverage_complete=gg_central_complete,
+        pages_scanned=sum(int(x.get("pagesScanned") or 0) for x in gg_central_health),
+        access_errors=sum(1 for x in gg_central_health if x.get("accessError")),
+        boards=[primary.GYEONGGI["central"]["url"]], board_health=gg_central_health,
     ))
     all_rows.extend(gg_central)
 
