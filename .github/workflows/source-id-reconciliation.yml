@@ -57,7 +57,7 @@ jobs:
       - name: Require full recent 90-day Gyeonggi central population
         run: python scripts/harden_reconciliation_central_lookback.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
@@ -91,6 +91,13 @@ jobs:
           python scripts/resolve_support_links.py
           python scripts/enrich_support_periods.py
           python scripts/enrich_seoul_get_fallback.py
+      - name: Restore any official IDs lost during enrichment
+        run: |
+          python scripts/restore_reconciled_ids.py
+          python scripts/sanitize_job_dates.py
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
       - name: Verify reconciled publication
         run: |
           python scripts/verify_jobs.py --previous /tmp/jobs_source_id_baseline.json
@@ -108,7 +115,11 @@ jobs:
           c=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
           if not c.get('complete'):
               raise SystemExit(f'Central pagination proof incomplete: {c}')
-          print('Official source-ID reconciliation passed', s)
+          restore=json.loads(Path('official_id_restore_report.json').read_text(encoding='utf-8'))
+          rs=restore.get('summary',{})
+          if int(rs.get('missingAfter') or 0):
+              raise SystemExit(f'Official IDs lost after enrichment: {rs}')
+          print('Official source-ID reconciliation passed', s, 'finalRestore', rs)
           PY
           python scripts/verify_central_reconciliation_consistency.py
       - name: Persist durable ledgers and checkpoints
@@ -120,7 +131,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           test -s gyeonggi_central_90d_report.json
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
           git add -f gyeonggi_central_90d_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
@@ -133,19 +144,19 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/source-id-diagnostics
-          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json; do
+          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json official_id_restore_report.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/source-id-diagnostics/$f"; fi
           done
           git reset --hard HEAD
           git clean -fd
-          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json; do
+          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json official_id_restore_report.json; do
             if [ -f "/tmp/source-id-diagnostics/$f" ]; then cp "/tmp/source-id-diagnostics/$f" "$f"; fi
           done
           python scripts/update_collector_status.py --workflow reconciliation --stage source-id-reconciliation --state failed
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json
-          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json; do
+          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json official_id_restore_report.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           if [ -f gyeonggi_central_90d_report.json ]; then git add -f gyeonggi_central_90d_report.json; fi
