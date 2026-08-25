@@ -6,6 +6,12 @@ used fixed 34/59-page loops. This hardener is deliberately idempotent: it normal
 office collectors to FAST_MAX_PAGES and then invokes the central hardener so ordinary fast runs
 cannot silently retain the legacy central caps. Natural empty/repeated/final-page evidence remains
 the normal stop condition; the numeric maxima are emergency ceilings only.
+
+The fast path must not duplicate the full deep audit. Once a support-office board has produced
+two consecutive pages whose dated rows are all older than the 90-day publication population,
+the fast crawl may stop. This is deliberately conservative: undated or mixed-date pages never
+trigger the boundary stop, and the independent reconciliation/deep-audit paths remain responsible
+for proving full 90-day completeness.
 """
 from pathlib import Path
 import runpy
@@ -29,10 +35,40 @@ for old in (
 ):
     s = s.replace(old, "for page in range(1, FAST_MAX_PAGES + 1):")
 
-# A page with no matching recent recruitment title is not proof that later rows are absent.
-# Empty/repeated pages are the legitimate fast-stop signals.
+# A page with no matching recruitment title is not proof that later rows are absent.
+# Empty/repeated pages and a proven chronological lookback boundary are legitimate fast stops.
 s = s.replace("        if page_recent == 0 and page >= 2: break\n", "")
 s = s.replace("        if page_recent==0 and page>=2: break\n", "")
+
+# Gyeonggi fast boards: stop after two consecutive fully-dated pages are all older than 90 days.
+# Do not stop on undated/mixed pages; that keeps the rule fail-safe for irregular boards.
+old_init = "    raw_rows = 0; explicit_empty = False; pages_scanned = 0\n"
+new_init = "    raw_rows = 0; explicit_empty = False; pages_scanned = 0; consecutive_old_pages = 0\n"
+if new_init not in s:
+    if old_init not in s:
+        raise SystemExit("Cannot locate Gyeonggi fast-board initialization")
+    s = s.replace(old_init, new_init, 1)
+
+old_page = "        page_candidates = 0; page_recent = 0\n"
+new_page = "        page_candidates = 0; page_recent = 0; page_dates = []\n"
+if new_page not in s:
+    if old_page not in s:
+        raise SystemExit("Cannot locate Gyeonggi fast-board page counters")
+    s = s.replace(old_page, new_page, 1)
+
+old_registered = '                if not registered:\n                    ds = all_dates(row_text); registered = ds[-1] if ds else ""\n                if registered and not recent_enough(registered, 90): continue\n'
+new_registered = '                if not registered:\n                    ds = all_dates(row_text); registered = ds[-1] if ds else ""\n                if registered: page_dates.append(registered)\n                if registered and not recent_enough(registered, 90): continue\n'
+if new_registered not in s:
+    if old_registered not in s:
+        raise SystemExit("Cannot locate Gyeonggi registration-date filter")
+    s = s.replace(old_registered, new_registered, 1)
+
+old_stop = "        if page_candidates == 0: break\n        time.sleep(.04)\n"
+new_stop = "        if page_candidates == 0: break\n        if page_dates and all(not recent_enough(d, 90) for d in page_dates):\n            consecutive_old_pages += 1\n        else:\n            consecutive_old_pages = 0\n        if consecutive_old_pages >= 2: break\n        time.sleep(.04)\n"
+if new_stop not in s:
+    if old_stop not in s:
+        raise SystemExit("Cannot locate Gyeonggi fast-board stop block")
+    s = s.replace(old_stop, new_stop, 1)
 
 # Gyeonggi metadata: record emergency-cap contact explicitly.
 old_return = 'return out, {"rawRows":raw_rows,"explicitEmpty":explicit_empty,"pagesScanned":pages_scanned}'
@@ -60,6 +96,7 @@ required = (
     "FAST_MAX_PAGES = 60",
     "range(1, FAST_MAX_PAGES + 1)",
     '"capHit":pages_scanned >= FAST_MAX_PAGES',
+    "consecutive_old_pages >= 2",
 )
 for marker in required:
     if marker not in s:
