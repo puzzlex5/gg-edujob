@@ -148,6 +148,9 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           test -s gyeonggi_central_90d_report.json
+          if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
+            git rm -f reconciliation_failure_report.json
+          fi
           git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
           git add -f gyeonggi_central_90d_report.json
           git diff --cached --quiet && exit 0
@@ -166,19 +169,54 @@ jobs:
           done
           git reset --hard HEAD
           git clean -fd
-          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json official_id_restore_report.json; do
-            if [ -f "/tmp/source-id-diagnostics/$f" ]; then cp "/tmp/source-id-diagnostics/$f" "$f"; fi
-          done
+          python - <<'PY'
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          root=Path('/tmp/source-id-diagnostics')
+          def load(name):
+              p=root/name
+              if not p.exists(): return {}
+              try: return json.loads(p.read_text(encoding='utf-8'))
+              except Exception: return {'readError': True}
+
+          recon=load('source_reconciliation_report.json')
+          central=load('central_pagination_report.json')
+          gg90=load('gyeonggi_central_90d_report.json')
+          restore=load('official_id_restore_report.json')
+          ledger=load('source_id_ledger.json')
+          kst=timezone(timedelta(hours=9))
+          report={
+              'generatedAt': datetime.now(kst).strftime('%Y-%m-%d %H:%M:%S KST'),
+              'policy': 'Rejected reconciliation diagnostics are isolated from canonical published proof files.',
+              'candidate': {
+                  'reconciliation': recon.get('summary',{}),
+                  'centralPagination': {
+                      'generatedAt': central.get('generatedAt'),
+                      'complete': central.get('complete'),
+                      'sources': central.get('sources',[]),
+                  },
+                  'gyeonggiCentral90d': {
+                      'generatedAt': gg90.get('generatedAt'),
+                      'stableIdCount': gg90.get('stableIdCount'),
+                      'complete': gg90.get('complete'),
+                  },
+                  'finalRestore': restore.get('summary',{}),
+                  'sourceIdLedger': {
+                      'generatedAt': ledger.get('generatedAt'),
+                      'officialIdCount': len(ledger.get('ids',{})) if isinstance(ledger.get('ids'),dict) else ledger.get('officialIdCount'),
+                  },
+              },
+          }
+          Path('reconciliation_failure_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
           python scripts/update_collector_status.py --workflow reconciliation --stage source-id-reconciliation --state failed
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add collector_status.json
-          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json official_id_restore_report.json; do
-            if [ -f "$f" ]; then git add "$f"; fi
-          done
-          if [ -f gyeonggi_central_90d_report.json ]; then git add -f gyeonggi_central_90d_report.json; fi
+          git add collector_status.json reconciliation_failure_report.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Record official source-ID reconciliation failure'
+          git commit -m 'Record isolated official source-ID reconciliation failure'
           git reset --hard HEAD
           git pull --rebase
           git push
