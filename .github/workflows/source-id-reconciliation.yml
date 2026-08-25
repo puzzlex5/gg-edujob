@@ -58,7 +58,7 @@ jobs:
       - name: Require full recent 90-day Gyeonggi central population
         run: python scripts/harden_reconciliation_central_lookback.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
@@ -139,19 +139,20 @@ jobs:
           print('Official source-ID reconciliation passed', s, 'finalRestore', rs)
           PY
           python scripts/verify_central_reconciliation_consistency.py
-      - name: Persist durable ledgers and checkpoints
+      - name: Persist durable ledgers, checkpoints, and effective audit health
         run: |
           python scripts/update_collection_state.py
           python scripts/update_collector_status.py --workflow reconciliation --stage complete --state success
+          python scripts/sync_effective_audit_status.py
       - name: Commit only fully reconciled data
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
           test -s gyeonggi_central_90d_report.json
           if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
             git rm -f reconciliation_failure_report.json
           fi
-          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json deep_audit_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
           git add -f gyeonggi_central_90d_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
@@ -213,7 +214,7 @@ jobs:
           PY
           python scripts/update_collector_status.py --workflow reconciliation --stage source-id-reconciliation --state failed
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json reconciliation_failure_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record isolated official source-ID reconciliation failure'
