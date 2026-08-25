@@ -98,6 +98,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          from datetime import datetime, timedelta, timezone
           from pathlib import Path
           p=Path('gyeonggi_central_90d_report.json')
           if not p.exists() or p.stat().st_size < 100:
@@ -107,9 +108,25 @@ jobs:
               raise SystemExit(f'Independent Gyeonggi 90-day proof incomplete: {r}')
           recon=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
           gg=next((x for x in recon.get('sources',[]) if x.get('name')=='경기도교육청 통합 구인구직'), None)
-          if not gg or int(gg.get('officialIdCount') or 0) != int(r.get('stableIdCount') or 0):
-              raise SystemExit(f'Independent Gyeonggi 90-day count not bound to reconciliation: report={r.get("stableIdCount")} recon={gg}')
+          if not gg:
+              raise SystemExit('Gyeonggi central reconciliation source missing')
+          kst=timezone(timedelta(hours=9))
+          fmt='%Y-%m-%d %H:%M:%S KST'
+          try:
+              rt=datetime.strptime(recon.get('generatedAt',''), fmt).replace(tzinfo=kst)
+              gt=datetime.strptime(r.get('generatedAt',''), fmt).replace(tzinfo=kst)
+          except Exception as exc:
+              raise SystemExit(f'Cannot bind persistent Gyeonggi proof timestamps: {type(exc).__name__}')
+          skew=abs((gt-rt).total_seconds())/60
+          if skew > 35:
+              raise SystemExit(f'Persistent Gyeonggi proof outside audit window: {skew:.1f} minutes')
+          print('Persistent Gyeonggi 90-day proof present', {
+              'independent': r.get('stableIdCount'),
+              'reconciliation': gg.get('officialIdCount'),
+              'skewMinutes': round(skew,2),
+          })
           PY
+          python scripts/verify_central_reconciliation_consistency.py
       - name: Sanitize impossible registration dates
         run: |
           echo date-sanitize >/tmp/deep_audit_stage
