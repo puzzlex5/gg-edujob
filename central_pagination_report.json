@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-25 10:28:49 KST",
+  "generatedAt": "2026-08-25 10:34:33 KST",
   "policy": "central sources fail closed: every semantic posting row/card must expose a stable ID; partial-page parsing is a failure; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
   "sources": [
     {
       "name": "경기도교육청 통합 구인구직",
       "province": "경기",
-      "stableIdCount": 762,
-      "complete": true,
+      "stableIdCount": 763,
+      "complete": false,
       "categories": [
         {
           "code": "A",
@@ -27,16 +27,16 @@
           "code": "B",
           "name": "초중등시간강사",
           "pagesScanned": 8,
-          "rawRows": 350,
-          "stableIdCount": 349,
-          "terminalEvidence": "short-final-page-confirmed-by-nonpost-row",
+          "rawRows": 351,
+          "stableIdCount": 350,
+          "terminalEvidence": "",
           "accessError": false,
-          "parseError": false,
+          "parseError": true,
           "partialParseRows": 0,
-          "parseErrorSample": "",
+          "parseErrorSample": "등록된 공고가 없습니다.",
           "paginationRepeated": false,
           "capHit": false,
-          "complete": true
+          "complete": false
         },
         {
           "code": "C",
@@ -103,9 +103,9 @@
     {
       "name": "서울교육일자리포털",
       "province": "서울",
-      "stableIdCount": 441,
+      "stableIdCount": 442,
       "pagesScanned": 10,
-      "rawRows": 441,
+      "rawRows": 442,
       "terminalEvidence": "empty-page",
       "accessError": false,
       "parseError": false,
@@ -116,5 +116,5 @@
       "complete": true
     }
   ],
-  "complete": true
+  "complete": false
 }
