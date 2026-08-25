@@ -31,7 +31,7 @@ EXPECTED_PAGE_SIZE = 50
 UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.5)"
 EMPTY_STATE_RE = re.compile(
     r"검색\s*결과가\s*없|조회(?:된)?\s*(?:자료|데이터|결과)가\s*없|"
-    r"등록된\s*(?:자료|게시물|게시글)이\s*없|데이터가\s*없|게시물이\s*없",
+    r"등록된\s*(?:자료|게시물|게시글|공고)이\s*없|데이터가\s*없|게시물이\s*없|공고가\s*없",
     re.I,
 )
 
