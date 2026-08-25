@@ -126,7 +126,9 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f recovery_failure_report.json
           git add jobs.json job_ledger.json source_id_ledger.json collection_state.json collector_status.json board_cache.json missing_recovery_report.json source_reconciliation_report.json central_pagination_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/harden_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
+          git ls-files --error-unmatch recovery_failure_report.json >/dev/null 2>&1 && git add -u -- recovery_failure_report.json || true
           git diff --cached --quiet && exit 0
           git commit -m 'Recover and reconcile official recruitment posting IDs'
           git reset --hard HEAD
@@ -142,20 +144,66 @@ jobs:
           for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/recovery-diagnostics/$f"; fi
           done
+
+          # A failed candidate must never replace the canonical evidence that belongs to the
+          # last published jobs.json. Reset all candidate files first, then persist only a compact
+          # rejected-candidate diagnostic under a separate filename.
           git reset --hard HEAD
           git clean -fd
-          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
-            if [ -f "/tmp/recovery-diagnostics/$f" ]; then cp "/tmp/recovery-diagnostics/$f" "$f"; fi
-          done
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+
+          src = Path('/tmp/recovery-diagnostics')
+          def load(name):
+              p = src / name
+              if not p.exists():
+                  return None
+              try:
+                  return json.loads(p.read_text(encoding='utf-8'))
+              except Exception as e:
+                  return {'readError': type(e).__name__}
+
+          rec = load('source_reconciliation_report.json')
+          ledger = load('source_id_ledger.json')
+          central = load('central_pagination_report.json')
+          coverage = load('support_coverage_report.json')
+          links = load('support_link_resolution.json')
+          missing = load('missing_recovery_report.json')
+          dates = load('date_anomaly_report.json')
+
+          report = {
+              'generatedAt': datetime.now(timezone(timedelta(hours=9))).strftime('%Y-%m-%d %H:%M:%S KST'),
+              'policy': 'failed recovery candidate evidence is isolated; canonical jobs/evidence remain last-known-good',
+              'sourceReconciliationSummary': (rec or {}).get('summary') if isinstance(rec, dict) else None,
+              'sourceIdLedger': {
+                  'generatedAt': (ledger or {}).get('generatedAt'),
+                  'knownIdCount': len((ledger or {}).get('entries') or {}) if isinstance(ledger, dict) else None,
+              },
+              'centralPagination': {
+                  'generatedAt': (central or {}).get('generatedAt'),
+                  'complete': (central or {}).get('complete'),
+                  'sources': (central or {}).get('sources'),
+              } if isinstance(central, dict) else None,
+              'supportCoverageSummary': (coverage or {}).get('summary') if isinstance(coverage, dict) else None,
+              'supportCompleteness': (coverage or {}).get('supportCompleteness') if isinstance(coverage, dict) else None,
+              'supportLinkResolution': {
+                  'gyeonggi': (links or {}).get('gyeonggi'),
+                  'seoul': (links or {}).get('seoul'),
+              } if isinstance(links, dict) else None,
+              'missingRecoverySummary': (missing or {}).get('summary') if isinstance(missing, dict) else None,
+              'dateAnomalySummary': (dates or {}).get('summary') if isinstance(dates, dict) else None,
+          }
+          Path('recovery_failure_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+
           python scripts/update_collector_status.py --workflow recovery --stage recovery --state failed
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add collector_status.json
-          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
-            if [ -f "$f" ]; then git add "$f"; fi
-          done
+          git add collector_status.json recovery_failure_report.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Record failed official-ID recovery diagnostics'
+          git commit -m 'Record failed official-ID recovery candidate separately'
           git reset --hard HEAD
           git pull --rebase
           git push
