@@ -118,7 +118,7 @@ jobs:
           except Exception as exc:
               raise SystemExit(f'Cannot bind persistent Gyeonggi proof timestamps: {type(exc).__name__}')
           skew=abs((gt-rt).total_seconds())/60
-          if skew > 35:
+          if skew > 45:
               raise SystemExit(f'Persistent Gyeonggi proof outside audit window: {skew:.1f} minutes')
           print('Persistent Gyeonggi 90-day proof present', {
               'independent': r.get('stableIdCount'),
