@@ -30,8 +30,9 @@ MAX_PAGES = 500
 EXPECTED_PAGE_SIZE = 50
 UA = "Mozilla/5.0 (compatible; metro-edujob-central-auditor/1.5)"
 EMPTY_STATE_RE = re.compile(
-    r"검색\s*결과가\s*없|조회(?:된)?\s*(?:자료|데이터|결과)가\s*없|"
-    r"등록된\s*(?:자료|게시물|게시글|공고)이\s*없|데이터가\s*없|게시물이\s*없|공고가\s*없",
+    r"검색\s*결과가\s*없|조회(?:된)?\s*(?:자료|데이터|결과)(?:이|가)?\s*없|"
+    r"등록된\s*(?:자료|게시물|게시글|공고)(?:이|가)?\s*없|데이터(?:이|가)?\s*없|"
+    r"게시물(?:이|가)?\s*없|공고(?:이|가)?\s*없",
     re.I,
 )
 
@@ -151,8 +152,6 @@ def audit_gyeonggi():
             ids = [sid for _li, sid in row_pairs if sid]
             unparsed_detail_rows = [li for li, sid in row_pairs if not sid and gyeonggi_row_has_detail_semantics(li)]
 
-            # Never accept a partially parsed data page. A single changed detail-link syntax can
-            # otherwise hide one real posting while the other 49 rows make the page look healthy.
             if ids and unparsed_detail_rows:
                 parse_error = True
                 partial_parse_rows = len(unparsed_detail_rows)
@@ -247,8 +246,6 @@ def audit_seoul():
             else:
                 unparsed_cards.append(li)
 
-        # All selected recruitment cards must expose their stable q_rcrtSn. Partial success is
-        # not completeness: one malformed card is one potentially lost posting.
         if ids and unparsed_cards:
             parse_error = True
             partial_parse_cards = len(unparsed_cards)
