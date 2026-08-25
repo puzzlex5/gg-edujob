@@ -29,7 +29,11 @@ CENTRAL = ROOT / "central_pagination_report.json"
 RECON = ROOT / "source_reconciliation_report.json"
 GG90 = ROOT / "gyeonggi_central_90d_report.json"
 KST = timezone(timedelta(hours=9))
-MAX_SKEW_MINUTES = 35
+# A full independent Gyeonggi 90-day traversal currently takes roughly 15-20 minutes after
+# reconciliation and central pagination have completed. 35 minutes was shorter than the actual
+# end-to-end proof chain and caused false failures at ~36 minutes. Keep the window bounded but
+# large enough for one complete audit chain; population drift is still independently capped below.
+MAX_SKEW_MINUTES = 45
 MAX_DRIFT_RATIO = 0.01
 MAX_DRIFT_ABSOLUTE = 25
 MIN_DRIFT_ABSOLUTE = 3
