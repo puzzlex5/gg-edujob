@@ -9,6 +9,7 @@ on:
       - 'scripts/harden_reconciliation_central_lookback.py'
       - 'scripts/crawl_gyeonggi_central_recent.py'
       - 'scripts/verify_gyeonggi_central_90d.py'
+      - 'scripts/verify_central_pagination.py'
       - 'scripts/verify_central_reconciliation_consistency.py'
       - 'scripts/validate_reconciliation_policy.py'
   schedule:
