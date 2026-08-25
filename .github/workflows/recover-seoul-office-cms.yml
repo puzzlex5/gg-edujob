@@ -61,13 +61,40 @@ jobs:
               )
           print('Seoul CMS publication guard passed via', evidence.get('proof'))
           PY
-      - name: Commit only verified recovery
+      - name: Rebase recovery on latest verified main and commit
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # Another data workflow can update main while this job is crawling. Never rebase a
+          # generated jobs.json across that change: it creates content conflicts and can overwrite
+          # newer verified postings. Re-run the small CMS recovery on the newest published baseline.
+          git fetch origin main
+          git reset --hard origin/main
+          git clean -fd
+          cp jobs.json /tmp/jobs_latest_main.json
+
+          python scripts/discover_recruitment_boards.py
+          python scripts/recover_seoul_office_cms_jobs.py
+          python scripts/sanitize_job_dates.py
+          python scripts/verify_jobs.py --previous /tmp/jobs_latest_main.json
+          python scripts/update_collection_state.py
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'scripts')
+          from update_collector_status import coverage_evidence
+          evidence = coverage_evidence()
+          if not evidence.get('currentComplete'):
+              raise SystemExit(
+                  'Refusing Seoul CMS publication after latest-main replay: completeness proof '
+                  'is not bound to the replayed dataset'
+              )
+          print('Latest-main Seoul CMS publication guard passed via', evidence.get('proof'))
+          PY
+
           git add jobs.json job_ledger.json collection_state.json board_cache.json board_discovery_report.json seoul_office_cms_recovery_report.json date_anomaly_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Recover Seoul support-office CMS recruitment posts'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+          git push origin HEAD:main
