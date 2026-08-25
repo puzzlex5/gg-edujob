@@ -2,14 +2,10 @@ name: Restore missing reconciled official IDs
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'scripts/restore_reconciled_ids.py'
-      - 'scripts/crawl_gyeonggi_central_recent.py'
-      - 'scripts/sync_effective_audit_status.py'
-      - '.github/workflows/restore-official-ids.yml'
   schedule:
-    - cron: '7 0,2,4,6,8,10,12,14,16 * * *' # 10 minutes before each fast-refresh window
+    # Fast refresh starts at minute 17 of UTC hours 0,2,...,16.
+    # Start targeted restore 55 minutes earlier so its 45-minute timeout has a 10-minute buffer.
+    - cron: '22 1,3,5,7,9,11,13,15,23 * * *'
 
 permissions:
   contents: write
