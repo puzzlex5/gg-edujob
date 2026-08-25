@@ -338,7 +338,7 @@ def school_from_title(title):
 def scrape_mircms_board(board, src):
     office, regions = src["name"], src.get("regions", [])
     out, seen_urls = [], set()
-    raw_rows = 0; explicit_empty = False; pages_scanned = 0
+    raw_rows = 0; explicit_empty = False; pages_scanned = 0; consecutive_old_pages = 0
     for page in range(1, FAST_MAX_PAGES + 1):
         u = with_query(board, currPage=page)
         r = get(u)
@@ -347,7 +347,7 @@ def scrape_mircms_board(board, src):
         soup = BeautifulSoup(r.text, "html.parser")
         page_text = clean(soup.get_text(" ", strip=True))
         if re.search(r"전체\s*0\s*건|등록된\s*게시물이\s*없", page_text): explicit_empty = True
-        page_candidates = 0; page_recent = 0
+        page_candidates = 0; page_recent = 0; page_dates = []
         for table in soup.find_all("table"):
             headers = table_headers(table)
             for tr in table.find_all("tr"):
@@ -372,6 +372,7 @@ def scrape_mircms_board(board, src):
                 registered = date_norm(first_of(vals,["등록일","작성일"]))
                 if not registered:
                     ds = all_dates(row_text); registered = ds[-1] if ds else ""
+                if registered: page_dates.append(registered)
                 if registered and not recent_enough(registered, 90): continue
                 if EXCLUDE_WORDS.search(title): continue
                 board_label = clean((soup.find("h2") or soup.find("h3") or soup.title).get_text(" ", strip=True) if (soup.find("h2") or soup.find("h3") or soup.title) else "")
@@ -392,6 +393,11 @@ def scrape_mircms_board(board, src):
                     "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board
                 })
         if page_candidates == 0: break
+        if page_dates and all(not recent_enough(d, 90) for d in page_dates):
+            consecutive_old_pages += 1
+        else:
+            consecutive_old_pages = 0
+        if consecutive_old_pages >= 2: break
         time.sleep(.04)
     return out, {"rawRows":raw_rows,"explicitEmpty":explicit_empty,"pagesScanned":pages_scanned,"capHit":pages_scanned >= FAST_MAX_PAGES}
 
