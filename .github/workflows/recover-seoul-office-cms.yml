@@ -2,12 +2,8 @@ name: Recover Seoul support-office CMS recruitment posts
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'scripts/recover_seoul_office_cms_jobs.py'
-      - '.github/workflows/recover-seoul-office-cms.yml'
   schedule:
-    - cron: '37 1,3,5,7,9,11,13,15,17,22 * * *' # 10:37~02:37 KST + 07:37, deep-audit window avoided
+    - cron: '37 1,3,5,7,9,11,13,15,22 * * *' # 10:37~00:37 KST + 07:37; 02:37 slot removed so delayed runs cannot intrude on deep-audit window
 
 permissions:
   contents: write
