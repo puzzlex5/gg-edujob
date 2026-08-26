@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26 20:51 KST",
+  "updatedAt": "2026-08-26 23:30 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -739,7 +739,7 @@
           "boards": [
             "https://gsycedu.sen.go.kr/FUS/JO/JOL11.do"
           ],
-          "count": 158,
+          "count": 157,
           "rawRows": 600,
           "ok": true,
           "state": "ok",
@@ -797,7 +797,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 413,
+        "count": 410,
         "ok": true,
         "state": "ok"
       }
@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-26 23:15 KST",
+    "checkedAt": "2026-08-26 23:55 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -21078,7 +21078,10 @@
       "openParams": {
         "job_seq": "15108"
       },
-      "detailLinkResolved": true
+      "detailLinkResolved": true,
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-57600",
@@ -21322,7 +21325,10 @@
         "서울교육일자리포털"
       ],
       "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108928"
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108928",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "sen-108906",
@@ -32602,56 +32608,6 @@
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108915"
     },
     {
-      "id": "sen-108817",
-      "province": "서울",
-      "school": "당곡고등학교",
-      "title": "2026학년도 기간제교사 채용 공고문(당곡고 도덕윤리)",
-      "subject": "-",
-      "region": "관악구",
-      "regions": [
-        "관악구"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "고등학교",
-      "applyStart": "2026/08/24",
-      "applyEnd": "2026/08/26",
-      "workStart": "2026/09/01",
-      "workEnd": "2027/02/28",
-      "registered": "2026/08/24",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108817"
-    },
-    {
-      "id": "sen-108843",
-      "province": "서울",
-      "school": "당곡고등학교",
-      "title": "2026학년도 기간제교사 채용 공고문(당곡고 국어)",
-      "subject": "-",
-      "region": "관악구",
-      "regions": [
-        "관악구"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "고등학교",
-      "applyStart": "2026/08/24",
-      "applyEnd": "2026/08/26",
-      "workStart": "2026/09/01",
-      "workEnd": "2027/02/28",
-      "registered": "2026/08/24",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108843"
-    },
-    {
       "id": "sen-108840",
       "province": "서울",
       "school": "서울창경초등학교",
@@ -33079,6 +33035,62 @@
       "mi": "7021",
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "sen-108817",
+      "province": "서울",
+      "school": "당곡고등학교",
+      "title": "2026학년도 기간제교사 채용 공고문(당곡고 도덕윤리)",
+      "subject": "-",
+      "region": "관악구",
+      "regions": [
+        "관악구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/08/24",
+      "applyEnd": "2026/08/26",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/24",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108817",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-108843",
+      "province": "서울",
+      "school": "당곡고등학교",
+      "title": "2026학년도 기간제교사 채용 공고문(당곡고 국어)",
+      "subject": "-",
+      "region": "관악구",
+      "regions": [
+        "관악구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/08/24",
+      "applyEnd": "2026/08/26",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/24",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108843",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-57635",
@@ -557069,7 +557081,7 @@
       "id": "sen-98029",
       "province": "서울",
       "school": "서울월촌초등학교",
-      "title": "서울월촌초등학교 5학년 영어교과 시간강사 모집",
+      "title": "(급급)서울월촌초등학교 5학년 시간강사 모집",
       "subject": "5학년 영어",
       "region": "양천구",
       "regions": [
@@ -557077,10 +557089,10 @@
       ],
       "type": "시간강사/강사",
       "schoolLevel": "초등학교",
-      "applyStart": "2026/08/20",
-      "applyEnd": "2026/09/11",
-      "workStart": "2026/10/06",
-      "workEnd": "2026/10/08",
+      "applyStart": "2026/08/26",
+      "applyEnd": "2026/08/27",
+      "workStart": "2026/08/27",
+      "workEnd": "2026/08/27",
       "registered": "2026/04/08",
       "headcount": "1",
       "source": "서울교육일자리포털",
@@ -559211,7 +559223,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-26 21:12 KST",
+      "checkedAt": "2026-08-26 23:51 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -559220,23 +559232,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-26 23:14 KST",
+    "checkedAt": "2026-08-26 23:54 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-26 23:14 KST",
+    "checkedAt": "2026-08-26 23:54 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
-    "freshCount": 7726,
+    "freshCount": 7722,
     "previousCount": 18509,
     "mergedCount": 18508,
-    "carriedForward": 10782,
+    "carriedForward": 10786,
     "officialIdProtected": 18090,
-    "officialIdCarryForward": 10478,
-    "enrichedFromPrevious": 6237,
+    "officialIdCarryForward": 10482,
+    "enrichedFromPrevious": 6236,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-08-26 21:15 KST"
+    "generatedAt": "2026-08-26 23:54 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 7097,
@@ -559245,7 +559257,7 @@
     "seoulTotal": 516
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-26 21:16 KST",
+    "checkedAt": "2026-08-26 23:54 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6259,
     "detailPagesParsed": 2640,
@@ -559255,18 +559267,11 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-26 21:16 KST",
+      "checkedAt": "2026-08-26 23:54 KST",
       "candidates": 217,
       "detailPagesConfirmed": 215,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     }
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-08-26 23:09:56 KST",
-    "protectedOfficialIds": 18090,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
