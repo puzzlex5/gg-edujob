@@ -2,6 +2,9 @@ name: Deep audit schedule watchdog
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/deep-audit-watchdog.yml'
   schedule:
     - cron: '23 21 * * *' # 06:23 KST fallback if the 04:23 daily audit was missed/failed
 
@@ -48,10 +51,8 @@ jobs:
           updated_at = parse_kst(d.get('updatedAt'))
           state = str(d.get('state') or '')
 
-          # If today's full audit already succeeded, there is nothing to recover.
           if success_at and success_at.date() == today and state == 'success':
               decision = 'skip-success'
-          # If an audit is actively progressing and its status heartbeat is recent, do not queue a duplicate.
           elif state == 'running' and updated_at and (now - updated_at) <= timedelta(hours=4):
               decision = 'skip-running'
           else:
