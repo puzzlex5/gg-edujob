@@ -806,12 +806,12 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-26 23:55 KST",
+    "checkedAt": "2026-08-27 02:12 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7613,
-      "resolved": 7613,
+      "total": 7614,
+      "resolved": 7614,
       "unresolved": 0,
       "examples": []
     },
@@ -823,9 +823,45 @@
       "failures": []
     },
     "previousTotal": 18509,
-    "currentTotal": 18509
+    "currentTotal": 18510
   },
   "jobs": [
+    {
+      "id": "sen-complete-gdspedu.sen.go.kr-8306",
+      "province": "서울",
+      "school": "서울가락초등학교",
+      "title": "3학년 담임+기초학력업무",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "강동구",
+        "송파구"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "2026/08/27",
+      "applyEnd": "2026/08/28",
+      "workStart": "2026/09/01",
+      "workEnd": "2026/12/23",
+      "registered": "2026/08/27",
+      "headcount": "",
+      "source": "강동송파교육지원청",
+      "checkedSources": [
+        "강동송파교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://gdspedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=8306",
+      "boardUrl": "https://gdspedu.sen.go.kr/FUS/JO/JOL11.do",
+      "openMethod": "POST",
+      "openUrl": "https://gdspedu.sen.go.kr/FUS/JO/JOV11.do",
+      "openParams": {
+        "job_seq": "8306"
+      },
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul:gdspedu.sen.go.kr:8306",
+      "detailLinkResolved": true,
+      "periodStatus": "parsed"
+    },
     {
       "id": "goe-57983",
       "province": "경기",
@@ -559232,11 +559268,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-26 23:54 KST",
+    "checkedAt": "2026-08-27 02:10 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-26 23:54 KST",
+    "checkedAt": "2026-08-27 02:10 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -559253,13 +559289,13 @@
   "supportLinkResolution": {
     "gyeonggiExact": 7097,
     "gyeonggiTotal": 7097,
-    "seoulExact": 516,
-    "seoulTotal": 516
+    "seoulExact": 517,
+    "seoulTotal": 517
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-26 23:54 KST",
+    "checkedAt": "2026-08-27 02:10 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6259,
+    "recentSupportJobs": 6260,
     "detailPagesParsed": 2640,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1130,
@@ -559267,11 +559303,32 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-26 23:54 KST",
+      "checkedAt": "2026-08-27 02:10 KST",
       "candidates": 217,
       "detailPagesConfirmed": 215,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-08-27 01:37:48 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17809,
+    "datasetIdCountBefore": 18498,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-08-27 02:10:10 KST",
+    "protectedOfficialIds": 17809,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
