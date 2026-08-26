@@ -1,0 +1,81 @@
+name: Deep audit schedule watchdog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 21 * * *' # 06:23 KST fallback if the 04:23 daily audit was missed/failed
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decide whether today's deep audit needs a fallback dispatch
+        id: gate
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          KST = timezone(timedelta(hours=9))
+          now = datetime.now(KST)
+          today = now.date()
+          p = Path('deep_audit_status.json')
+          try:
+              d = json.loads(p.read_text(encoding='utf-8'))
+          except Exception:
+              d = {}
+
+          def parse_kst(value):
+              if not value:
+                  return None
+              try:
+                  return datetime.fromisoformat(str(value)).astimezone(KST)
+              except Exception:
+                  return None
+
+          success_at = parse_kst(d.get('lastSuccessAt'))
+          updated_at = parse_kst(d.get('updatedAt'))
+          state = str(d.get('state') or '')
+
+          # If today's full audit already succeeded, there is nothing to recover.
+          if success_at and success_at.date() == today and state == 'success':
+              decision = 'skip-success'
+          # If an audit is actively progressing and its status heartbeat is recent, do not queue a duplicate.
+          elif state == 'running' and updated_at and (now - updated_at) <= timedelta(hours=4):
+              decision = 'skip-running'
+          else:
+              decision = 'dispatch'
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as fh:
+              fh.write(f'decision={decision}\n')
+          print(json.dumps({
+              'decision': decision,
+              'nowKST': now.isoformat(),
+              'state': state,
+              'lastSuccessAt': d.get('lastSuccessAt'),
+              'updatedAt': d.get('updatedAt'),
+          }, ensure_ascii=False))
+          PY
+      - name: Dispatch fallback deep audit
+        if: steps.gate.outputs.decision == 'dispatch'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api --method POST \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/daily-deep-audit.yml/dispatches" \
+            -f ref=main
+          echo 'Fallback daily deep audit dispatched.'
