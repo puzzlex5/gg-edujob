@@ -20,6 +20,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Synchronize latest main after any queue delay
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+          git rev-parse HEAD >/tmp/recovery_base_sha
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -124,17 +131,29 @@ jobs:
           python scripts/sync_effective_audit_status.py
 
       - name: Commit only verified recovered postings
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # Generated JSON should never be rebased over a newer publication. The shared
+          # concurrency group normally keeps main stable; this guard handles delayed/stale runs
+          # and any writer outside the group by failing closed instead of creating JSON conflicts.
+          git fetch origin main
+          base_sha="$(cat /tmp/recovery_base_sha)"
+          remote_sha="$(git rev-parse origin/main)"
+          if [ "$remote_sha" != "$base_sha" ]; then
+            echo "Recovery publication became stale: baseline=$base_sha origin/main=$remote_sha" >&2
+            exit 1
+          fi
+
           rm -f recovery_failure_report.json
           git add jobs.json job_ledger.json source_id_ledger.json collection_state.json collector_status.json deep_audit_status.json board_cache.json missing_recovery_report.json source_reconciliation_report.json central_pagination_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/harden_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
           git ls-files --error-unmatch recovery_failure_report.json >/dev/null 2>&1 && git add -u -- recovery_failure_report.json || true
           git diff --cached --quiet && exit 0
           git commit -m 'Recover and reconcile official recruitment posting IDs'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+          git push origin HEAD:main
 
       - name: Preserve failed recovery diagnostics without publishing unverified data
         if: failure()
@@ -146,10 +165,11 @@ jobs:
             if [ -f "$f" ]; then cp "$f" "/tmp/recovery-diagnostics/$f"; fi
           done
 
-          # A failed candidate must never replace the canonical evidence that belongs to the
-          # last published jobs.json. Reset all candidate files first, then persist only a compact
-          # rejected-candidate diagnostic under a separate filename.
-          git reset --hard HEAD
+          # A failed candidate must never replace canonical evidence. Also recover from any
+          # interrupted rebase/detached HEAD before recording the isolated diagnostic.
+          git rebase --abort >/dev/null 2>&1 || true
+          git fetch origin main
+          git checkout -B main origin/main
           git clean -fd
           python - <<'PY'
           import json
@@ -205,6 +225,4 @@ jobs:
           git add collector_status.json recovery_failure_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record failed official-ID recovery candidate separately'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+          git push origin HEAD:main || true
