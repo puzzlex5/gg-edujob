@@ -274,6 +274,17 @@ def merge_jobs(existing, additions):
     output = []
 
     def key_for(j):
+        raw_url = j.get("url") or ""
+        try:
+            parsed = urlparse(raw_url)
+            query = parse_qs(parsed.query)
+            ntt = str(j.get("nttSn") or (query.get("nttSn") or [""])[0])
+            bbs = str(j.get("bbsId") or (query.get("bbsId") or [""])[0])
+            if ntt.isdigit() and bbs.isdigit():
+                host = (parsed.hostname or urlparse(j.get("boardUrl") or "").hostname or "").lower()
+                return f"mircms|{host}|{bbs}|{ntt}"
+        except Exception:
+            pass
         title = norm(j.get("title", ""))
         school = norm(j.get("school", ""))
         province = j.get("province", "")
