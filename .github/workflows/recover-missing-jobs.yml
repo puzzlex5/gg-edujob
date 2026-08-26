@@ -137,15 +137,16 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          # Generated JSON should never be rebased over a newer publication. The shared
-          # concurrency group normally keeps main stable; this guard handles delayed/stale runs
-          # and any writer outside the group by failing closed instead of creating JSON conflicts.
+          # Generated datasets are snapshots, not mergeable source code. If another verified
+          # writer advanced main while this long recovery was crawling, keep that newer state and
+          # treat this candidate as superseded rather than failing or rebasing JSON snapshots.
           git fetch origin main
           base_sha="$(cat /tmp/recovery_base_sha)"
           remote_sha="$(git rev-parse origin/main)"
           if [ "$remote_sha" != "$base_sha" ]; then
-            echo "Recovery publication became stale: baseline=$base_sha origin/main=$remote_sha" >&2
-            exit 1
+            echo "Recovery candidate superseded by newer main: baseline=$base_sha origin/main=$remote_sha"
+            git reset --hard origin/main
+            exit 0
           fi
 
           rm -f recovery_failure_report.json
@@ -153,7 +154,15 @@ jobs:
           git ls-files --error-unmatch recovery_failure_report.json >/dev/null 2>&1 && git add -u -- recovery_failure_report.json || true
           git diff --cached --quiet && exit 0
           git commit -m 'Recover and reconcile official recruitment posting IDs'
-          git push origin HEAD:main
+
+          # Close the tiny fetch-to-push race without force-pushing. A newer verified publication
+          # wins, and the next recovery will start from it.
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            echo "Recovery publish lost race to newer main; discarding superseded candidate"
+            git reset --hard origin/main
+            exit 0
+          fi
 
       - name: Preserve failed recovery diagnostics without publishing unverified data
         if: failure()
