@@ -6,11 +6,16 @@ on:
     paths:
       - '.github/workflows/deep-audit-watchdog.yml'
   schedule:
-    - cron: '23 21 * * *' # 06:23 KST fallback if the 04:23 daily audit was missed/failed
+    - cron: '23,53 21 * * *' # 06:23,06:53 KST fallback windows
+    - cron: '23 22 * * *'    # 07:23 KST final fallback window
 
 permissions:
   contents: read
   actions: write
+
+concurrency:
+  group: deep-audit-schedule-watchdog
+  cancel-in-progress: false
 
 jobs:
   watchdog:
@@ -68,13 +73,21 @@ jobs:
               'updatedAt': d.get('updatedAt'),
           }, ensure_ascii=False))
           PY
-      - name: Dispatch fallback deep audit
+      - name: Dispatch fallback deep audit when no run is already active
         if: steps.gate.outputs.decision == 'dispatch'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          active="$(gh api \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/daily-deep-audit.yml/runs?per_page=20" \
+            --jq '[.workflow_runs[] | select(.status == "queued" or .status == "in_progress")] | length')"
+          if [ "${active:-0}" -gt 0 ]; then
+            echo "A daily deep audit is already queued/in progress; skipping duplicate fallback dispatch."
+            exit 0
+          fi
           gh api --method POST \
             -H 'Accept: application/vnd.github+json' \
             "/repos/${GITHUB_REPOSITORY}/actions/workflows/daily-deep-audit.yml/dispatches" \
