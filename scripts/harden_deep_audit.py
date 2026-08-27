@@ -53,12 +53,26 @@ if old_fallback in s:
 elif "silently skip the current page" not in s:
     raise SystemExit("Seoul GET->POST fallback marker missing")
 
+# Some Seoul support-office tables do not expose a real 등록일 column. The old generic
+# row-date fallback chose the last visible date, which can be a future work/apply date
+# (e.g. 2027/02/28) and corrupt both sorting and the 90-day traversal boundary. Keep the
+# fallback only when the candidate is not in the future; otherwise leave 등록일 unknown.
+unsafe_seoul_date_fallback = '''                            if not registered:\n                                ds = all_dates(clean(tr.get_text(" ", strip=True)))\n                                registered = ds[-1] if ds else ""'''
+safe_seoul_date_fallback = '''                            if not registered:\n                                ds = all_dates(clean(tr.get_text(" ", strip=True)))\n                                today_s = NOW.strftime("%Y/%m/%d")\n                                plausible = [d for d in ds if d and d <= today_s]\n                                registered = plausible[-1] if plausible else ""'''
+s = s.replace(unsafe_seoul_date_fallback, safe_seoul_date_fallback)
+unsafe_seoul_date_fallback_main = '''                if not registered:\n                    ds = all_dates(clean(tr.get_text(" ", strip=True)))\n                    registered = ds[-1] if ds else ""'''
+safe_seoul_date_fallback_main = '''                if not registered:\n                    ds = all_dates(clean(tr.get_text(" ", strip=True)))\n                    today_s = NOW.strftime("%Y/%m/%d")\n                    plausible = [d for d in ds if d and d <= today_s]\n                    registered = plausible[-1] if plausible else ""'''
+s = s.replace(unsafe_seoul_date_fallback_main, safe_seoul_date_fallback_main)
+if "registered = ds[-1] if ds else \"\"" in s[s.find("def seoul_board"):]:
+    raise SystemExit("Unsafe Seoul row-date fallback still present")
+
 for marker in (
     "MAX_PAGES = 500",
     "ended_on_structural_empty",
     "naturalEnd",
     "silently skip the current page",
     "any pagination request failure makes traversal incomplete",
+    "plausible = [d for d in ds if d and d <= today_s]",
 ):
     if marker not in s:
         raise SystemExit(f"Deep audit hardening incomplete: {marker}")
