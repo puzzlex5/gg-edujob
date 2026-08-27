@@ -381,7 +381,9 @@ def seoul_board(src):
                 registered = date_norm(first_of(vals, ["등록일", "작성일"]))
                 if not registered:
                     ds = all_dates(clean(tr.get_text(" ", strip=True)))
-                    registered = ds[-1] if ds else ""
+                    today_s = NOW.strftime("%Y/%m/%d")
+                    plausible = [d for d in ds if d and d <= today_s]
+                    registered = plausible[-1] if plausible else ""
                 items.append((seq, title, registered, vals))
                 if registered:
                     dates.append(registered)
@@ -418,7 +420,9 @@ def seoul_board(src):
                             registered = date_norm(first_of(vals, ["등록일", "작성일"]))
                             if not registered:
                                 ds = all_dates(clean(tr.get_text(" ", strip=True)))
-                                registered = ds[-1] if ds else ""
+                                today_s = NOW.strftime("%Y/%m/%d")
+                                plausible = [d for d in ds if d and d <= today_s]
+                                registered = plausible[-1] if plausible else ""
                             post_items.append((seq, title, registered, vals))
                             if registered:
                                 post_dates.append(registered)
