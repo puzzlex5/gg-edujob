@@ -1,0 +1,108 @@
+name: Fast refresh schedule watchdog
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/fast-refresh-watchdog.yml'
+  schedule:
+    - cron: '47 * * * *' # hourly fallback; dispatch only when fast refresh is materially stale
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Decide whether fast refresh needs a fallback dispatch
+        id: gate
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+          python - <<'PY'
+          import json, os, subprocess
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          KST = timezone(timedelta(hours=9))
+          now = datetime.now(KST)
+
+          try:
+              root = json.loads(Path('collector_status.json').read_text(encoding='utf-8'))
+              fast = root.get('fast', {}) if isinstance(root, dict) else {}
+          except Exception:
+              fast = {}
+
+          def parse_kst(value):
+              if not value:
+                  return None
+              try:
+                  dt = datetime.fromisoformat(str(value))
+                  if dt.tzinfo is None:
+                      dt = dt.replace(tzinfo=KST)
+                  return dt.astimezone(KST)
+              except Exception:
+                  return None
+
+          success_at = parse_kst(fast.get('lastSuccessAt'))
+          updated_at = parse_kst(fast.get('updatedAt'))
+          state = str(fast.get('state') or '')
+          success_age = (now - success_at) if success_at else None
+          running_age = (now - updated_at) if updated_at else None
+
+          # Do not race an update that GitHub already has queued/running, even if the
+          # repository status file has not yet been updated by that run.
+          api = f"/repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?per_page=100"
+          proc = subprocess.run(
+              ['gh', 'api', api, '--jq',
+               '[.workflow_runs[] | select(.path==".github/workflows/update-jobs.yml" and (.status=="queued" or .status=="in_progress" or .status=="waiting" or .status=="requested" or .status=="pending"))] | length'],
+              text=True, capture_output=True,
+          )
+          try:
+              active_runs = int((proc.stdout or '0').strip()) if proc.returncode == 0 else 0
+          except Exception:
+              active_runs = 0
+
+          if active_runs > 0:
+              decision = 'skip-active-run'
+          elif state == 'running' and running_age is not None and running_age <= timedelta(minutes=90):
+              decision = 'skip-status-running'
+          elif success_age is not None and success_age <= timedelta(hours=3, minutes=15):
+              decision = 'skip-fresh'
+          else:
+              decision = 'dispatch'
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as fh:
+              fh.write(f'decision={decision}\n')
+          print(json.dumps({
+              'decision': decision,
+              'nowKST': now.isoformat(),
+              'fastState': state,
+              'fastLastSuccessAt': fast.get('lastSuccessAt'),
+              'fastUpdatedAt': fast.get('updatedAt'),
+              'successAgeHours': round(success_age.total_seconds()/3600, 2) if success_age else None,
+              'activeUpdateRuns': active_runs,
+          }, ensure_ascii=False))
+          PY
+      - name: Dispatch fallback fast refresh
+        if: steps.gate.outputs.decision == 'dispatch'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api --method POST \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/update-jobs.yml/dispatches" \
+            -f ref=main
+          echo 'Fallback fast refresh dispatched.'
