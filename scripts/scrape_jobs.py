@@ -514,7 +514,7 @@ def scrape_seoul_office(src):
                 if len(title)<3 or EXCLUDE_WORDS.search(title): continue
                 registered=date_norm(first_of(vals,["등록일","작성일"]))
                 if not registered:
-                    ds=all_dates(clean(tr.get_text(" ",strip=True))); registered=ds[-1] if ds else ""
+                    ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=list(dict.fromkeys(d for d in ds if d and d <= today_s)); registered=plausible[0] if len(plausible)==1 else ""
                 if registered and not recent_enough(registered,90): continue
                 page_recent+=1
                 school=first_of(vals,["학교명","기관명","작성자"]) or school_from_title(title)
