@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Idempotently add standard resilient HTTP retry/backoff to crawler and verifier sessions."""
 import re
+import runpy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,6 +61,11 @@ if verify.exists():
     verify.write_text(s, encoding="utf-8")
     patched += 1
     print("retry policy ready scripts/verify_jobs.py")
+
+# Every fast/recovery/deep workflow already executes this hardener. Keep the Seoul row-date
+# safety fix on the same mandatory path so the primary collector cannot invent a future
+# registration date before sanitize_job_dates.py gets a chance to clean it up.
+runpy.run_path(str(ROOT / "scripts/harden_seoul_registration_dates.py"), run_name="__main__")
 
 if patched == 0:
     raise SystemExit("No crawler/verifier sessions were hardened; expected at least one")
