@@ -6,11 +6,19 @@ on:
     paths:
       - '.github/workflows/fast-refresh-watchdog.yml'
   schedule:
-    - cron: '47 * * * *' # hourly fallback; dispatch only when fast refresh is materially stale
+    # GitHub scheduled workflows can occasionally be delayed or skipped. Use two
+    # deliberately off-peak minute slots so one missed scheduler tick does not
+    # leave fast collection stale for another full hour.
+    - cron: '17 * * * *'
+    - cron: '47 * * * *'
 
 permissions:
   contents: read
   actions: write
+
+concurrency:
+  group: fast-refresh-watchdog
+  cancel-in-progress: true
 
 jobs:
   watchdog:
