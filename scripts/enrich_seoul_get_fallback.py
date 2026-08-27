@@ -6,6 +6,12 @@ supplied in the query string even when the legacy POST request returns an empty
 shell with HTTP 200.  The main enricher keeps the POST cache key used by jobs,
 so this pass upgrades only failed/unavailable cache entries after independently
 confirming the GET response contains the expected posting title.
+
+This pass also closes a timing gap in the deep audit: board discovery happens
+before detail enrichment, while the standalone Seoul CMS recovery may have run
+hours earlier. If discovery surfaced a CMS candidate that the last recovery
+report has never evaluated, run the conservative CMS recovery immediately so
+the same audit verifies and publishes it instead of waiting for a later refresh.
 """
 from __future__ import annotations
 
@@ -23,6 +29,8 @@ import enrich_support_periods as base
 ROOT = Path(__file__).resolve().parents[1]
 JOBS_PATH = ROOT / "jobs.json"
 CACHE_PATH = ROOT / "support_period_cache.json"
+DISCOVERY_PATH = ROOT / "board_discovery_report.json"
+CMS_REPORT_PATH = ROOT / "seoul_office_cms_recovery_report.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 UA = "Mozilla/5.0 (compatible; metro-edujob-seoul-get-fallback/1.0)"
@@ -80,6 +88,50 @@ def fetch(job):
         return key, result
     except Exception:
         return key, None
+
+
+def recover_newly_discovered_cms():
+    """Evaluate Seoul CMS candidates newly surfaced since the last recovery report.
+
+    Compare URLs instead of filesystem mtimes because Git checkouts can refresh mtimes
+    for unrelated files. A candidate already listed as accepted or skipped has been
+    evaluated and does not need another immediate pass.
+    """
+    if not DISCOVERY_PATH.exists():
+        return {"newCandidates": 0, "ran": False}
+    try:
+        discovery = json.loads(DISCOVERY_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {"newCandidates": 0, "ran": False, "reason": "discovery-unreadable"}
+
+    discovered = {
+        str(item.get("url") or "")
+        for office in discovery.get("seoul", []) or []
+        for item in office.get("candidates", []) or []
+        if str(item.get("url") or "")
+    }
+    evaluated = set()
+    if CMS_REPORT_PATH.exists():
+        try:
+            prior = json.loads(CMS_REPORT_PATH.read_text(encoding="utf-8"))
+            for item in prior.get("accepted", []) or []:
+                if item.get("url"):
+                    evaluated.add(str(item["url"]))
+            for item in prior.get("skipped", []) or []:
+                if item.get("url"):
+                    evaluated.add(str(item["url"]))
+        except Exception:
+            # An unreadable prior report must not suppress fresh official candidates.
+            evaluated = set()
+
+    unseen = sorted(discovered - evaluated)
+    if not unseen:
+        return {"newCandidates": 0, "ran": False}
+
+    import recover_seoul_office_cms_jobs as cms
+
+    cms.main()
+    return {"newCandidates": len(unseen), "ran": True, "examples": unseen[:10]}
 
 
 def main():
@@ -147,7 +199,15 @@ def main():
     }
     JOBS_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     CACHE_PATH.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
-    print("SEOUL GET FALLBACK", payload["periodEnrichment"]["seoulGetFallback"])
+
+    cms_result = recover_newly_discovered_cms()
+    payload["periodEnrichment"]["seoulCmsDiscoverySync"] = cms_result
+    # Re-read because the CMS recovery may have appended jobs to jobs.json.
+    current_payload = json.loads(JOBS_PATH.read_text(encoding="utf-8"))
+    current_payload.setdefault("periodEnrichment", {})["seoulGetFallback"] = payload["periodEnrichment"]["seoulGetFallback"]
+    current_payload["periodEnrichment"]["seoulCmsDiscoverySync"] = cms_result
+    JOBS_PATH.write_text(json.dumps(current_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    print("SEOUL GET FALLBACK", current_payload["periodEnrichment"]["seoulGetFallback"], "CMS SYNC", cms_result)
 
 
 if __name__ == "__main__":
