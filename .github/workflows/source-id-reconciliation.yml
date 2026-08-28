@@ -13,7 +13,7 @@ on:
       - 'scripts/verify_central_reconciliation_consistency.py'
       - 'scripts/validate_reconciliation_policy.py'
   schedule:
-    - cron: '37 0,12 * * *' # 09:37, 21:37 KST; independent 38-source proof twice daily
+    - cron: '37 0,4,8,12 * * *' # 09:37, 13:37, 17:37, 21:37 KST; independent 38-source proof four times daily
 
 permissions:
   contents: write
