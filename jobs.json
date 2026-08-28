@@ -806,12 +806,12 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-29 04:05 KST",
+    "checkedAt": "2026-08-29 06:43 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7693,
-      "resolved": 7693,
+      "total": 7694,
+      "resolved": 7694,
       "unresolved": 0,
       "examples": []
     },
@@ -822,8 +822,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 18851,
-    "currentTotal": 18843
+    "previousTotal": 18843,
+    "currentTotal": 18844
   },
   "jobs": [
     {
@@ -8559,6 +8559,39 @@
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
+    },
+    {
+      "id": "goe-complete-410961495fa054415a",
+      "province": "경기",
+      "school": "의정부호원초등학교",
+      "title": "[의정부호원초등학교] 계약제교원(기간제교사_4학년 학급담임교사) 채용 2차 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "의정부시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/08/28",
+      "headcount": "",
+      "source": "의정부교육지원청",
+      "checkedSources": [
+        "의정부교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goeujb.kr/goeujb/na/ntt/selectNttInfo.do?bbsId=4117&nttSn=1125547&mi=7019",
+      "boardUrl": "https://www.goeujb.kr/goeujb/na/ntt/selectNttList.do?mi=7019&bbsId=4117",
+      "detailLinkResolved": true,
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "mircms:www.goeujb.kr:4117:1125547",
+      "nttSn": "1125547",
+      "bbsId": "4117",
+      "mi": "7019",
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-58165",
@@ -567090,11 +567123,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-29 04:04 KST",
+    "checkedAt": "2026-08-29 06:41 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-29 04:04 KST",
+    "checkedAt": "2026-08-29 06:41 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -567109,23 +567142,23 @@
     "generatedAt": "2026-08-29 04:03 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 7166,
-    "gyeonggiTotal": 7166,
+    "gyeonggiExact": 7167,
+    "gyeonggiTotal": 7167,
     "seoulExact": 527,
     "seoulTotal": 527
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-29 04:03 KST",
+    "checkedAt": "2026-08-29 06:41 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6301,
+    "recentSupportJobs": 6302,
     "detailPagesParsed": 2649,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1126,
-    "missingWorkPeriod": 2089,
+    "missingApplicationPeriod": 1127,
+    "missingWorkPeriod": 2090,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-29 04:03 KST",
+      "checkedAt": "2026-08-29 06:41 KST",
       "candidates": 224,
       "detailPagesConfirmed": 219,
       "cacheEntriesImproved": 0,
@@ -567135,5 +567168,26 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-08-29 06:04:56 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 18187,
+    "datasetIdCountBefore": 18833,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-08-29 06:41:35 KST",
+    "protectedOfficialIds": 18187,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
