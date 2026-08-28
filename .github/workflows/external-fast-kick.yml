@@ -1,0 +1,38 @@
+name: External fast refresh kick
+
+on:
+  push:
+    paths:
+      - '.github/fast-refresh-kick'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: external-fast-refresh-kick
+  cancel-in-progress: true
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Avoid duplicate fast runs and dispatch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          api="/repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100"
+          active="$(gh api "$api" --jq '[.workflow_runs[] | select(.path==".github/workflows/update-jobs.yml" and (.status=="queued" or .status=="in_progress" or .status=="waiting" or .status=="requested" or .status=="pending"))] | length')"
+          if [ "$active" -gt 0 ]; then
+            echo "Fast refresh already active; no duplicate dispatch."
+            exit 0
+          fi
+          gh api --method POST \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/update-jobs.yml/dispatches" \
+            -f ref=main
+          echo 'External fallback fast refresh dispatched.'
