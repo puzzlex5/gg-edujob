@@ -6,8 +6,7 @@ on:
     paths:
       - '.github/workflows/deep-audit-watchdog.yml'
   schedule:
-    - cron: '23,53 21 * * *' # 06:23,06:53 KST fallback windows
-    - cron: '23 22 * * *'    # 07:23 KST final fallback window
+    - cron: '23 19-23,0-3 * * *' # 04:23~12:23 KST: recover missed schedules and cancel stale delayed duplicates
 
 permissions:
   contents: read
@@ -23,6 +22,61 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Cancel stale delayed scheduled audits after today's verified success
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          success_at="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          try:
+              d=json.loads(Path('deep_audit_status.json').read_text(encoding='utf-8'))
+              print(d.get('lastSuccessAt','') if d.get('state') == 'success' else '')
+          except Exception:
+              print('')
+          PY
+          )"
+          [ -n "$success_at" ] || exit 0
+
+          gh api \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/daily-deep-audit.yml/runs?per_page=30" \
+            > /tmp/deep-audit-runs.json
+
+          stale_ids="$(SUCCESS_AT="$success_at" python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          try:
+              success = datetime.fromisoformat(os.environ['SUCCESS_AT']).astimezone(timezone.utc)
+          except Exception:
+              raise SystemExit(0)
+          data=json.loads(Path('/tmp/deep-audit-runs.json').read_text(encoding='utf-8'))
+          for run in data.get('workflow_runs', []):
+              if run.get('event') != 'schedule' or run.get('status') not in ('queued','in_progress'):
+                  continue
+              raw=run.get('run_started_at') or run.get('created_at') or ''
+              try:
+                  started=datetime.fromisoformat(raw.replace('Z','+00:00')).astimezone(timezone.utc)
+              except Exception:
+                  continue
+              # A direct scheduled audit that begins only after today's verified audit already
+              # succeeded is a delayed duplicate. It can hold the shared data-write lock for hours.
+              if started > success:
+                  print(run.get('id'))
+          PY
+          )"
+
+          for run_id in $stale_ids; do
+            echo "Cancelling delayed duplicate daily audit run ${run_id}; today's verified audit already succeeded at ${success_at}."
+            gh api --method POST \
+              -H 'Accept: application/vnd.github+json' \
+              "/repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel" || true
+          done
+
       - name: Decide whether today's deep audit needs a fallback dispatch
         id: gate
         shell: bash
