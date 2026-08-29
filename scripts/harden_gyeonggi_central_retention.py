@@ -6,6 +6,10 @@ not lost. Without an explicit registration-date boundary, however, that turns th
 an all-history crawl. This hardener keeps closed postings while filtering rows older than 90 days
 and requires two consecutive fully dated old pages before treating the retention boundary as
 crossed. Empty/repeated/final-page evidence remains valid independently.
+
+It also makes the publication verifier retention-aware. A previously over-collected baseline must
+not permanently block a corrected 90-day population as a false "central drop" when the corrected
+count closely matches the independently reconciled official 90-day count.
 """
 from pathlib import Path
 
@@ -77,4 +81,52 @@ for required in (
 
 s = s[:start] + block + s[end:]
 p.write_text(s, encoding="utf-8")
-print("Gyeonggi central fast crawl constrained to the verified 90-day population")
+
+# The verifier normally compares the new central count with the previous publication. That is a
+# useful safety guard, except when the previous publication is itself known to be inflated by the
+# all-history bug this hardener fixes. Suppress only that specific false positive: the new count
+# must closely match an independently reconciled COMPLETE official 90-day source count, while the
+# previous count must be materially above that authoritative population.
+vp = ROOT / "scripts/verify_jobs.py"
+vs = vp.read_text(encoding="utf-8")
+old_guard = '''        for key, label in (("gyeonggi", "경기"), ("seoul", "서울")):
+            before, after = central_count(prev, key), central_count(data, key)
+            if before >= 50 and after < before * 0.35:
+                critical.append(f"{label} 중앙 공고 급감: {before}→{after}")
+'''
+new_guard = '''        recon = load(ROOT / "source_reconciliation_report.json") or {}
+        rsummary = recon.get("summary", {}) if isinstance(recon, dict) else {}
+        recon_complete = (
+            int(rsummary.get("missingAfter") or 0) == 0
+            and int(rsummary.get("reconciledSources") or 0) > 0
+            and int(rsummary.get("reconciledSources") or 0) == int(rsummary.get("totalSources") or 0)
+            and int(rsummary.get("lookbackDays") or recon.get("lookbackDays") or 0) == 90
+        )
+        authoritative = {}
+        if recon_complete:
+            for src in recon.get("sources", []):
+                name = src.get("name", "")
+                if src.get("coverageComplete") is not True:
+                    continue
+                if name == "경기도교육청 통합 구인구직":
+                    authoritative["gyeonggi"] = int(src.get("officialIdCount") or 0)
+                elif name == "서울교육일자리포털":
+                    authoritative["seoul"] = int(src.get("officialIdCount") or 0)
+        for key, label in (("gyeonggi", "경기"), ("seoul", "서울")):
+            before, after = central_count(prev, key), central_count(data, key)
+            expected = authoritative.get(key, 0)
+            verified_retention_normalization = (
+                expected >= 50
+                and expected * 0.95 <= after <= expected * 1.05
+                and before > expected * 1.5
+            )
+            if before >= 50 and after < before * 0.35 and not verified_retention_normalization:
+                critical.append(f"{label} 중앙 공고 급감: {before}→{after}")
+'''
+if new_guard not in vs:
+    if old_guard not in vs:
+        raise SystemExit("Cannot locate verifier central-drop guard")
+    vs = vs.replace(old_guard, new_guard, 1)
+vp.write_text(vs, encoding="utf-8")
+
+print("Gyeonggi central fast crawl constrained to the verified 90-day population; verifier accepts only independently reconciled retention normalization")
