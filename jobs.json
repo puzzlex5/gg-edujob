@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30 00:53 KST",
+  "updatedAt": "2026-08-30 06:04 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -917,7 +917,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-30 01:53 KST",
+    "checkedAt": "2026-08-30 07:11 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -933,7 +933,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 55733,
+    "previousTotal": 21416,
     "currentTotal": 21416
   },
   "jobs": [
@@ -601872,7 +601872,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-30 01:21 KST",
+      "checkedAt": "2026-08-30 06:34 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -601881,23 +601881,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-30 01:52 KST",
+    "checkedAt": "2026-08-30 07:09 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-30 01:52 KST",
+    "checkedAt": "2026-08-30 07:09 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 19320,
-    "previousCount": 55733,
+    "previousCount": 21416,
     "mergedCount": 21414,
     "carriedForward": 2094,
     "officialIdProtected": 18182,
     "officialIdCarryForward": 1504,
-    "enrichedFromPrevious": 7332,
+    "enrichedFromPrevious": 9888,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-08-30 01:51 KST"
+    "generatedAt": "2026-08-30 07:07 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 9720,
@@ -601906,7 +601906,7 @@
     "seoulTotal": 527
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-30 01:51 KST",
+    "checkedAt": "2026-08-30 07:07 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6181,
     "detailPagesParsed": 2596,
@@ -601916,7 +601916,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-30 01:51 KST",
+      "checkedAt": "2026-08-30 07:08 KST",
       "candidates": 224,
       "detailPagesConfirmed": 219,
       "cacheEntriesImproved": 0,

@@ -1,7 +1,7 @@
 {
   "fast": {
-    "state": "failed",
-    "updatedAt": "2026-08-30T05:54:03+09:00",
+    "state": "success",
+    "updatedAt": "2026-08-30T07:11:08+09:00",
     "jobsCount": 21416,
     "artifacts": {
       "jobLedger": true,
@@ -13,9 +13,9 @@
       "missingRecoveryReport": true,
       "boardDiscoveryReport": true
     },
-    "stage": "hardening",
+    "stage": "complete",
     "lastFailureAt": "2026-08-30T05:54:03+09:00",
-    "lastSuccessAt": "2026-08-30T01:54:03+09:00",
+    "lastSuccessAt": "2026-08-30T07:11:08+09:00",
     "artifactGeneratedAt": {
       "coverageReport": "2026-08-29T09:22:42.099644+00:00",
       "sourceReconciliationReport": "2026-08-29 18:30:29 KST",
@@ -23,11 +23,11 @@
       "centralPaginationReport": "2026-08-29 18:53:54 KST",
       "missingRecoveryReport": "",
       "boardDiscoveryReport": "",
-      "collectionState": "2026-08-30 01:53:59 KST"
+      "collectionState": "2026-08-30 07:11:05 KST"
     },
     "coverageEvidence": {
       "generatedAt": "2026-08-29T09:22:42.099644+00:00",
-      "ageHours": 11.52,
+      "ageHours": 12.81,
       "freshWithinHours": 30,
       "fresh": true,
       "gyeonggiComplete": 25,
@@ -46,7 +46,7 @@
       "reconciliationAuthoritative": true,
       "supportCoverage": {
         "generatedAt": "2026-08-29T09:22:42.099644+00:00",
-        "ageHours": 11.52,
+        "ageHours": 12.81,
         "freshWithinHours": 30,
         "fresh": true,
         "gyeonggiComplete": 25,
@@ -64,7 +64,7 @@
       },
       "sourceReconciliation": {
         "generatedAt": "2026-08-29 18:30:29 KST",
-        "ageHours": 11.39,
+        "ageHours": 12.68,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
@@ -72,10 +72,10 @@
         "missingAfter": 0,
         "centralPaginationComplete": true,
         "centralGeneratedAt": "2026-08-29 18:53:54 KST",
-        "centralAgeHours": 11.0,
+        "centralAgeHours": 12.29,
         "ledgerPresent": true,
         "ledgerGeneratedAt": "2026-08-29 18:30:29 KST",
-        "ledgerAgeHours": 11.39,
+        "ledgerAgeHours": 12.68,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
         "reportCentralSkewHours": 0.39,
