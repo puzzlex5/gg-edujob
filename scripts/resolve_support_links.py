@@ -5,7 +5,7 @@ Gyeonggi MirCMS list pages sometimes expose the internal nttSn only inside
 JavaScript/data attributes. This pass preserves already-canonical detail URLs and
 only scans official boards when a legacy/current row is still unresolved. Those
 fallback scans are target-aware: they continue until all needed titles are found,
-the board naturally ends/repeats, or a generous safety cap is reached.
+or pagination is proven to have naturally ended/repeated.
 Seoul support-office postings are normalized to the POST bridge fields used by
 open-job.html.
 """
@@ -23,7 +23,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCES = json.loads((ROOT / "sources.json").read_text(encoding="utf-8"))
 JOBS_PATH = ROOT / "jobs.json"
 REPORT_PATH = ROOT / "support_link_resolution.json"
-MAX_FALLBACK_PAGES = 60
 S = requests.Session()
 S.headers.update({
     "User-Agent": "Mozilla/5.0 (compatible; metro-edujob-link-resolver/3.0)",
@@ -164,7 +163,9 @@ def scan_gyeonggi_office(src, target_titles):
     Exact canonical URLs are preserved before this function is called, so a normal
     refresh usually performs no fallback scans at all. If fallback is necessary,
     page signatures prevent infinite/repeated pagination and the scan never assumes
-    that 8 pages (80 rows) means the board is complete.
+    that a round page count means the board is complete. There is deliberately no
+    fixed page limit: completion requires a resolved target, an empty page, or a
+    repeated page signature.
     """
     office = src["name"]
     targets = set(target_titles or ())
@@ -183,10 +184,10 @@ def scan_gyeonggi_office(src, target_titles):
         natural_end = False
         repeated = False
         access_error = False
-        cap_hit = False
         pages_scanned = 0
+        page = 1
 
-        for page in range(1, MAX_FALLBACK_PAGES + 1):
+        while True:
             r = get(with_page(board, page))
             if not r:
                 access_error = True
@@ -237,8 +238,7 @@ def scan_gyeonggi_office(src, target_titles):
                 remaining.discard(nt)
             if not remaining:
                 break
-        else:
-            cap_hit = True
+            page += 1
 
         board_stats.append({
             "board": board,
@@ -247,7 +247,7 @@ def scan_gyeonggi_office(src, target_titles):
             "naturalEnd": natural_end,
             "paginationRepeated": repeated,
             "accessError": access_error,
-            "capHit": cap_hit,
+            "capHit": False,
             "remainingTargets": len(remaining),
             "methods": methods,
         })
