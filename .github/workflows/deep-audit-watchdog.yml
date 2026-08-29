@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/deep-audit-watchdog.yml'
+      - '.github/workflows/daily-deep-audit.yml'
   schedule:
     - cron: '23 19-23,0-3 * * *' # 04:23~12:23 KST: recover missed schedules and cancel stale delayed duplicates
 
