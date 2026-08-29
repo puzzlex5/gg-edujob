@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-29 09:48 KST",
+    "checkedAt": "2026-08-29 10:22 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -822,7 +822,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 18840,
+    "previousTotal": 18842,
     "currentTotal": 18842
   },
   "jobs": [
@@ -567353,11 +567353,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-29 09:47 KST",
+    "checkedAt": "2026-08-29 10:20 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-29 09:47 KST",
+    "checkedAt": "2026-08-29 10:20 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -567378,7 +567378,7 @@
     "seoulTotal": 527
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-29 09:46 KST",
+    "checkedAt": "2026-08-29 10:20 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6302,
     "detailPagesParsed": 2649,
@@ -567388,7 +567388,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-29 09:46 KST",
+      "checkedAt": "2026-08-29 10:20 KST",
       "candidates": 224,
       "detailPagesConfirmed": 219,
       "cacheEntriesImproved": 0,
@@ -567398,5 +567398,26 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-08-29 09:49:29 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 18186,
+    "datasetIdCountBefore": 18832,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-08-29 10:20:45 KST",
+    "protectedOfficialIds": 18186,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
