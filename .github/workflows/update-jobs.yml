@@ -71,9 +71,11 @@ jobs:
           python scripts/hotfix_sources.py
           python scripts/hotfix_repair_links.py
           python scripts/harden_fast_pagination.py
+          python scripts/harden_gyeonggi_central_retention.py
           python scripts/harden_network_retries.py
-          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/recover_seoul_office_cms_jobs.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py scripts/validate_reconciliation_policy.py scripts/sync_effective_audit_status.py
-          grep -q 'FAST_MAX_PAGES = 60' scripts/scrape_jobs.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/recover_seoul_office_cms_jobs.py scripts/verify_jobs.py scripts/merge_recovery_snapshot.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sanitize_job_dates.py scripts/validate_reconciliation_policy.py scripts/sync_effective_audit_status.py scripts/harden_gyeonggi_central_retention.py
+          grep -q 'consecutive_old_pages >= 2' scripts/scrape_jobs.py
+          grep -q 'if registered and not recent_enough(registered, 90)' scripts/scrape_jobs.py
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
       - name: Fast crawl of central portals and support-office current pages
