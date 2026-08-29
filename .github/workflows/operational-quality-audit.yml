@@ -1,0 +1,56 @@
+name: Operational quality audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/audit_operational_quality.py'
+      - '.github/workflows/operational-quality-audit.yml'
+  schedule:
+    - cron: '42 0,2,4,6,8,10,12,14,16 * * *' # fast refresh 뒤 독립 품질감사
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  quality-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest verified publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile independent quality auditor
+        run: python -m py_compile scripts/audit_operational_quality.py
+      - name: Audit duplicates freshness contamination and overcollection
+        id: audit
+        continue-on-error: true
+        run: python scripts/audit_operational_quality.py
+      - name: Commit quality evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add operational_quality_report.json operational_quality_history.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Audit recruitment data quality and freshness'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+      - name: Fail after preserving hard-quality diagnostics
+        if: steps.audit.outcome == 'failure'
+        run: exit 1
