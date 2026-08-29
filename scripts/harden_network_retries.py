@@ -62,6 +62,11 @@ if verify.exists():
     patched += 1
     print("retry policy ready scripts/verify_jobs.py")
 
+# Keep the central population boundary on a mandatory fast/recovery path. The active-only filter
+# stays disabled so recently closed postings are retained, but the crawl must not expand into
+# all-history data and pollute search results with tens of thousands of stale postings.
+runpy.run_path(str(ROOT / "scripts/harden_gyeonggi_central_retention.py"), run_name="__main__")
+
 # Every fast/recovery/deep workflow already executes this hardener. Keep the Seoul row-date
 # safety fix on the same mandatory path so the primary collector cannot invent a future
 # registration date before sanitize_job_dates.py gets a chance to clean it up.
