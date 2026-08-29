@@ -84,17 +84,24 @@ p.write_text(s, encoding="utf-8")
 
 # The verifier normally compares the new central count with the previous publication. That is a
 # useful safety guard, except when the previous publication is itself known to be inflated by the
-# all-history bug this hardener fixes. Suppress only that specific false positive: the new count
-# must closely match an independently reconciled COMPLETE official 90-day source count, while the
-# previous count must be materially above that authoritative population.
+# all-history bug this hardener fixes. The current verifier has a stricter implementation using
+# authoritative_central_count() plus a narrow tolerance. Treat that implementation as already
+# hardened instead of failing just because the older source-text template no longer matches.
 vp = ROOT / "scripts/verify_jobs.py"
 vs = vp.read_text(encoding="utf-8")
-old_guard = '''        for key, label in (("gyeonggi", "경기"), ("seoul", "서울")):
+current_markers = (
+    "def authoritative_central_count(province):",
+    "verified_retention_cleanup = (",
+    "abs(after - authoritative) <= tolerance",
+    "before > authoritative * 1.5",
+)
+if not all(marker in vs for marker in current_markers):
+    old_guard = '''        for key, label in (("gyeonggi", "경기"), ("seoul", "서울")):
             before, after = central_count(prev, key), central_count(data, key)
             if before >= 50 and after < before * 0.35:
                 critical.append(f"{label} 중앙 공고 급감: {before}→{after}")
 '''
-new_guard = '''        recon = load(ROOT / "source_reconciliation_report.json") or {}
+    new_guard = '''        recon = load(ROOT / "source_reconciliation_report.json") or {}
         rsummary = recon.get("summary", {}) if isinstance(recon, dict) else {}
         recon_complete = (
             int(rsummary.get("missingAfter") or 0) == 0
@@ -123,10 +130,10 @@ new_guard = '''        recon = load(ROOT / "source_reconciliation_report.json") 
             if before >= 50 and after < before * 0.35 and not verified_retention_normalization:
                 critical.append(f"{label} 중앙 공고 급감: {before}→{after}")
 '''
-if new_guard not in vs:
-    if old_guard not in vs:
-        raise SystemExit("Cannot locate verifier central-drop guard")
-    vs = vs.replace(old_guard, new_guard, 1)
-vp.write_text(vs, encoding="utf-8")
+    if new_guard not in vs:
+        if old_guard not in vs:
+            raise SystemExit("Cannot locate verifier central-drop guard or current retention-aware verifier")
+        vs = vs.replace(old_guard, new_guard, 1)
+        vp.write_text(vs, encoding="utf-8")
 
-print("Gyeonggi central fast crawl constrained to the verified 90-day population; verifier accepts only independently reconciled retention normalization")
+print("Gyeonggi central fast crawl constrained to the verified 90-day population; retention-aware verifier confirmed")
