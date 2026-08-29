@@ -1,0 +1,788 @@
+{
+  "generatedAt": "2026-08-29 21:52:26 KST",
+  "policy": "diagnostic-first; stable-ID/URL duplicates are strong evidence, semantic duplicates are review-only",
+  "summary": {
+    "publishedJobs": 55733,
+    "officialIds": 18182,
+    "publishedToOfficialRatio": 3.065,
+    "exactStableIdDuplicateGroups": 0,
+    "exactStableIdExtraRecords": 0,
+    "exactUrlDuplicateGroups": 0,
+    "exactUrlExtraRecords": 0,
+    "semanticDuplicateGroupsReviewOnly": 283,
+    "resultLikeNotices": 53,
+    "staleInactiveOver120Days": 34631,
+    "missingDetailLinks": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "missingOfficialIds": 0
+  },
+  "findings": [
+    {
+      "severity": "warning",
+      "code": "result-notice-contamination",
+      "count": 53
+    },
+    {
+      "severity": "warning",
+      "code": "stale-inactive-overcollection",
+      "count": 34631
+    },
+    {
+      "severity": "warning",
+      "code": "population-inflation",
+      "ratio": 3.065
+    }
+  ],
+  "sourceFreshness": [
+    {
+      "province": "경기",
+      "name": "경기도교육청 통합 구인구직",
+      "officialIdCount": 10269,
+      "publishedRecords": 47212,
+      "latestRegistered": "2026-08-29",
+      "freshnessDays": 0,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "서울교육일자리포털",
+      "officialIdCount": 361,
+      "publishedRecords": 816,
+      "latestRegistered": "2026-08-29",
+      "freshnessDays": 0,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "가평교육지원청",
+      "officialIdCount": 96,
+      "publishedRecords": 113,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "고양교육지원청",
+      "officialIdCount": 219,
+      "publishedRecords": 223,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "광명교육지원청",
+      "officialIdCount": 313,
+      "publishedRecords": 319,
+      "latestRegistered": "2026-08-29",
+      "freshnessDays": 0,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "광주하남교육지원청",
+      "officialIdCount": 358,
+      "publishedRecords": 362,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "구리남양주교육지원청",
+      "officialIdCount": 554,
+      "publishedRecords": 566,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "군포의왕교육지원청",
+      "officialIdCount": 7,
+      "publishedRecords": 11,
+      "latestRegistered": "2026-08-20",
+      "freshnessDays": 9,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "김포교육지원청",
+      "officialIdCount": 555,
+      "publishedRecords": 563,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "동두천양주교육지원청",
+      "officialIdCount": 506,
+      "publishedRecords": 515,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "부천교육지원청",
+      "officialIdCount": 719,
+      "publishedRecords": 722,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "성남교육지원청",
+      "officialIdCount": 990,
+      "publishedRecords": 1006,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "수원교육지원청",
+      "officialIdCount": 16,
+      "publishedRecords": 16,
+      "latestRegistered": "2026-08-27",
+      "freshnessDays": 2,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "시흥교육지원청",
+      "officialIdCount": 69,
+      "publishedRecords": 83,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "안산교육지원청",
+      "officialIdCount": 84,
+      "publishedRecords": 85,
+      "latestRegistered": "2026-08-26",
+      "freshnessDays": 3,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "안성교육지원청",
+      "officialIdCount": 226,
+      "publishedRecords": 227,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "안양과천교육지원청",
+      "officialIdCount": 9,
+      "publishedRecords": 15,
+      "latestRegistered": "2026-08-26",
+      "freshnessDays": 3,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "양평교육지원청",
+      "officialIdCount": 192,
+      "publishedRecords": 192,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "여주교육지원청",
+      "officialIdCount": 8,
+      "publishedRecords": 13,
+      "latestRegistered": "2026-08-24",
+      "freshnessDays": 5,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "연천교육지원청",
+      "officialIdCount": 86,
+      "publishedRecords": 92,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "용인교육지원청",
+      "officialIdCount": 134,
+      "publishedRecords": 140,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "의정부교육지원청",
+      "officialIdCount": 356,
+      "publishedRecords": 364,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "이천교육지원청",
+      "officialIdCount": 11,
+      "publishedRecords": 15,
+      "latestRegistered": "2026-08-06",
+      "freshnessDays": 23,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "파주교육지원청",
+      "officialIdCount": 507,
+      "publishedRecords": 508,
+      "latestRegistered": "2026-08-29",
+      "freshnessDays": 0,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "평택교육지원청",
+      "officialIdCount": 782,
+      "publishedRecords": 792,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "포천교육지원청",
+      "officialIdCount": 202,
+      "publishedRecords": 231,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "경기",
+      "name": "화성오산교육지원청",
+      "officialIdCount": 54,
+      "publishedRecords": 54,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "동부교육지원청",
+      "officialIdCount": 0,
+      "publishedRecords": 1,
+      "latestRegistered": "2026-08-12",
+      "freshnessDays": 17,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "서부교육지원청",
+      "officialIdCount": 8,
+      "publishedRecords": 9,
+      "latestRegistered": "2026-08-27",
+      "freshnessDays": 2,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "남부교육지원청",
+      "officialIdCount": 7,
+      "publishedRecords": 28,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "북부교육지원청",
+      "officialIdCount": 0,
+      "publishedRecords": 0,
+      "latestRegistered": "",
+      "freshnessDays": null,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "중부교육지원청",
+      "officialIdCount": 57,
+      "publishedRecords": 57,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "강동송파교육지원청",
+      "officialIdCount": 3,
+      "publishedRecords": 15,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "강서양천교육지원청",
+      "officialIdCount": 156,
+      "publishedRecords": 158,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "강남서초교육지원청",
+      "officialIdCount": 101,
+      "publishedRecords": 106,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "동작관악교육지원청",
+      "officialIdCount": 166,
+      "publishedRecords": 174,
+      "latestRegistered": "2026-08-28",
+      "freshnessDays": 1,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "성동광진교육지원청",
+      "officialIdCount": 0,
+      "publishedRecords": 1,
+      "latestRegistered": "2026-08-20",
+      "freshnessDays": 9,
+      "reconciled": true,
+      "missingAfterCount": 0
+    },
+    {
+      "province": "서울",
+      "name": "성북강북교육지원청",
+      "officialIdCount": 1,
+      "publishedRecords": 1,
+      "latestRegistered": "2026-08-21",
+      "freshnessDays": 8,
+      "reconciled": true,
+      "missingAfterCount": 0
+    }
+  ],
+  "examples": {
+    "exactStableIdDuplicates": [],
+    "exactUrlDuplicates": [],
+    "resultLikeNotices": [
+      {
+        "province": "경기",
+        "source": "시흥교육지원청",
+        "school": "초등학교",
+        "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+        "registered": "2026/08/18",
+        "applyEnd": "",
+        "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "영생고등학교",
+        "title": "마감 영생고등학교 사무직원 공개경쟁임용 1차 필기시험 합격자 명단",
+        "registered": "2026/08/10",
+        "applyEnd": "2026/08/10",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=55480"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "풍생고등학교",
+        "title": "마감 2026학년도 학교법인풍생학원 사무직원(교육행정 9급) 공개채용 최종합격자 알림",
+        "registered": "2026/08/06",
+        "applyEnd": "2026/08/06",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=55132"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "풍생고등학교",
+        "title": "마감 학교법인풍생학원 신규 사무직원(교육행정 9급) 1차 전형 합격자 명단",
+        "registered": "2026/07/23",
+        "applyEnd": "2026/07/23",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=54090"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "신한중학교",
+        "title": "마감 학교법인신한학원(신한중학교) 사무직원(교육행정9급) 공개전형 최종합격자 공고",
+        "registered": "2026/06/24",
+        "applyEnd": "2026/06/30",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=50321"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "신한고등학교",
+        "title": "마감 학교법인신한학원(신한중) 사무직원 신규채용 1차(서류전형) 합격자명단 안내",
+        "registered": "2026/06/17",
+        "applyEnd": "2026/06/18",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=49534"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "동화고등학교",
+        "title": "마감 학교법인동화학원(동화중학교) 2026학년도 사무직원 신규채용 최종합격자 발표",
+        "registered": "2026/04/21",
+        "applyEnd": "2026/04/30",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=43321"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "신성고등학교",
+        "title": "마감 2026년 학교법인 원천학원[신성고] 사무직원(시설관리) 9급 최종 합격자 발표",
+        "registered": "2026/04/17",
+        "applyEnd": "2026/04/23",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=42963"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "화성고등학교",
+        "title": "마감 2026학년도 백련학원(화성고등학교) 사무직원 채용 최종합격자 발표 공고",
+        "registered": "2026/04/16",
+        "applyEnd": "2026/04/24",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=42644"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "화성고등학교",
+        "title": "마감 2026학년도 학교법인 백련학원(화성고등학교)사무직원 채용 1차 서류전형 합격자 발표",
+        "registered": "2026/04/09",
+        "applyEnd": "2026/04/14",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=41504"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "동화고등학교",
+        "title": "마감 학교법인동화학원(동화중학교) 2026학년도 사무직원 신규채용 제2차 전형 합격자 발표",
+        "registered": "2026/04/06",
+        "applyEnd": "2026/04/09",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=40973"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "동화고등학교",
+        "title": "마감 1. 2026학년도 동화학원 사무직원 신규채용 제1차 합격자 발표",
+        "registered": "2026/03/30",
+        "applyEnd": "2026/03/25",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=40071"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "우성고등학교",
+        "title": "마감 2026학년도 학교법인 성지학원(우성고등학교) 사무직원(시설관리9급) 최종합격자 공고",
+        "registered": "2026/03/16",
+        "applyEnd": "2026/03/17",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=37922"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "우성고등학교",
+        "title": "마감 2026학년도 학교법인 성지학원(우성고등학교) 사무직원(시설관리9급) 제1차 서류전형 합격자 공고",
+        "registered": "2026/03/12",
+        "applyEnd": "2026/03/13",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=37451"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "신한고등학교",
+        "title": "마감 학교법인신한학원(신한고등학교) 사무직원(교육행정9급) 공개전형 최종합격자 공고",
+        "registered": "2026/03/06",
+        "applyEnd": "2026/03/13",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=36539"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "신한고등학교",
+        "title": "마감 학교법인신한학원(신한고) 사무직원 신규채용 1차(서류전형) 합격자명단",
+        "registered": "2026/02/24",
+        "applyEnd": "2026/02/26",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=34857"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "청담고등학교",
+        "title": "마감 2026학년도 학교법인 청담학원(청담중학교, 청담고등학교) 교원 신규채용 최종합격자 발표",
+        "registered": "2026/02/13",
+        "applyEnd": "2026/02/28",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=32277"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "효성고등학교",
+        "title": "마감 2026학년도 학교법인 대연학원(효성고등학교) 교원 신규채용 공개전형 최종합격자 공고",
+        "registered": "2026/02/11",
+        "applyEnd": "2026/02/15",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=31197"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "영생고등학교",
+        "title": "마감 학교법인 한신학원(영생고등학교) 2026학년도 정규교원 신규채용 합격자 발표",
+        "registered": "2026/02/05",
+        "applyEnd": "2026/02/12",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=27112"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "파주중학교",
+        "title": "마감 2026학년도 학교법인 연풍학원 신규교원 선정경쟁시험 최종 합격자 발표",
+        "registered": "2026/02/05",
+        "applyEnd": "2026/02/09",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=26867"
+      }
+    ],
+    "staleInactive": [
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "덕장중학교",
+        "title": "마감 2026년 덕장중 특수 시간강사 채용공고(2차)",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/07/13",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44545"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "고암중학교",
+        "title": "마감 2026 고암중학교 시간강사(기술,가정) 채용 공고문 (3차)",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/21",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44593"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "적암초등학교",
+        "title": "마감 2026학년도 문화예술교육 외부강사 모집 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/15",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44615"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "정발초등학교",
+        "title": "마감 2026학년 두드림학교 프로그램 강사 채용",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/14",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44582"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "아름학교",
+        "title": "마감 2026학년도 초3 교내방과후 프로그램(놀이체육,음악놀이) 개인위탁 외부강사 모집(아름학교)",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/13",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44483"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "안말초등학교",
+        "title": "마감 안말초등학교 늘봄행정실무사 대체근로자 채용공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/13",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44616"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "운흥초등학교병설유치원",
+        "title": "마감 2026학년도 유치원 방과후과정 영어 특성화 강사 모집 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/12",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44482"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "경기도김포교육지원청",
+        "title": "마감 신양중학교 지방공무원 (교육행정) 결원 대체 채용 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/12",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44481"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "무봉초등학교병설유치원",
+        "title": "마감 2026 유보통합 협력강사<마주봄교사>채용공고(무봉초등학교병설유치원)",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44640"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "여흥초등학교병설유치원",
+        "title": "마감 유치원 특수종일반 기간제교사 채용",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44521"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "도래울중학교",
+        "title": "마감 도래울중학교 두드림학교 강사 채용 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44641"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "석호초등학교",
+        "title": "마감 2026 학습코칭 두루지원 학습지도강사(시간강사) 채용 재공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44568"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "용인강남학교",
+        "title": "마감 용인강남학교 시간강사 채용공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44553"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "호원초등학교",
+        "title": "마감 2026 호원초 두드림학교 학력 향상 프로그램 강사 모집",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44538"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "여주초등학교",
+        "title": "마감 여주초등학교 교육공무직원(행정실무사 대체) 채용 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/11",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44519"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "홀트학교",
+        "title": "마감 2026학년도 홀트학교 기간제교원 공개채용 시행계획 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/08",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44646"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "숲노을초등학교",
+        "title": "마감 숲노을초병설유치원 유보통합 협력강사 「마주봄교사」 채용 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/08",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44629"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "원일초등학교병설유치원",
+        "title": "마감 2026 원일초등학교 방학 중 방과후과정 운영인력 채용공고(여름방학, 겨울방학 포함)",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/08",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44587"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "권선고등학교",
+        "title": "마감 권선고 계약제교원(시간강사)채용공고(2차)",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/08",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44581"
+      },
+      {
+        "province": "경기",
+        "source": "경기도교육청 통합 구인구직",
+        "school": "무봉초등학교병설유치원",
+        "title": "마감 2026학년도 무봉초등학교병설유치원 여름방학 및 겨울방학 중 방과후 과정 운영인력 채용 공고",
+        "registered": "2026/04/30",
+        "applyEnd": "2026/05/08",
+        "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=44546"
+      }
+    ],
+    "missingDetailLinks": []
+  }
+}
