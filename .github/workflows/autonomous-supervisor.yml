@@ -1,0 +1,104 @@
+name: Autonomous stage-5 supervisor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7 * * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: metro-edujob-autonomous-supervisor
+  cancel-in-progress: true
+
+jobs:
+  supervise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Unit-test supervisor policy
+        run: python -m unittest tests/test_autonomous_supervisor.py
+
+      - name: Build one-action repair plan
+        run: python scripts/autonomous_supervisor.py plan --state agent_status.json --output agent_plan.json
+
+      - name: Publish plan to workflow summary
+        shell: bash
+        run: |
+          echo '## 수도권에듀잡 autonomous supervisor' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat agent_plan.json >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Select repair workflow
+        id: select
+        shell: bash
+        run: |
+          workflow="$(python - <<'PY'
+          import json
+          p=json.load(open('agent_plan.json',encoding='utf-8'))
+          a=p.get('selectedAction') or {}
+          print(a.get('workflow',''))
+          PY
+          )"
+          reason="$(python - <<'PY'
+          import json
+          p=json.load(open('agent_plan.json',encoding='utf-8'))
+          a=p.get('selectedAction') or {}
+          print((a.get('reason') or '').replace('\n',' '))
+          PY
+          )"
+          echo "workflow=$workflow" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch selected repair workflow
+        if: steps.select.outputs.workflow != ''
+        id: dispatch
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_WORKFLOW: ${{ steps.select.outputs.workflow }}
+        shell: bash
+        run: gh workflow run "$TARGET_WORKFLOW" --ref main
+
+      - name: Record autonomous decision
+        if: steps.select.outputs.workflow != ''
+        shell: bash
+        env:
+          TARGET_WORKFLOW: ${{ steps.select.outputs.workflow }}
+          DISPATCH_OUTCOME: ${{ steps.dispatch.outcome }}
+          DECISION_REASON: ${{ steps.select.outputs.reason }}
+        run: |
+          if [ "$DISPATCH_OUTCOME" = 'success' ]; then result='dispatched'; else result='failed'; fi
+          python scripts/autonomous_supervisor.py record \
+            --state agent_status.json \
+            --plan agent_plan.json \
+            --workflow "$TARGET_WORKFLOW" \
+            --result "$result" \
+            --message "$DECISION_REASON"
+
+      - name: Commit supervisor state only when it acted
+        if: steps.select.outputs.workflow != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add agent_status.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record autonomous supervisor repair decision'
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Fail visibly when dispatch failed
+        if: steps.select.outputs.workflow != '' && steps.dispatch.outcome != 'success'
+        run: exit 1
