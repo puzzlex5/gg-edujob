@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-29 13:19 KST",
+  "updatedAt": "2026-08-29 15:19 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -806,7 +806,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-29 14:48 KST",
+    "checkedAt": "2026-08-29 15:50 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -22958,7 +22958,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109071",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -30611,7 +30611,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108992",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -332398,7 +332398,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=104331",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -563880,7 +563880,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=99875",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -567440,7 +567440,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-29 13:44 KST",
+      "checkedAt": "2026-08-29 15:44 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -567449,23 +567449,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-29 14:47 KST",
+    "checkedAt": "2026-08-29 15:48 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-29 14:47 KST",
+    "checkedAt": "2026-08-29 15:48 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 8025,
-    "previousCount": 18844,
+    "previousCount": 18845,
     "mergedCount": 18843,
     "carriedForward": 10818,
-    "officialIdProtected": 18186,
-    "officialIdCarryForward": 10285,
+    "officialIdProtected": 18183,
+    "officialIdCarryForward": 10281,
     "enrichedFromPrevious": 6838,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-08-29 13:47 KST"
+    "generatedAt": "2026-08-29 15:47 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 7166,
@@ -567474,7 +567474,7 @@
     "seoulTotal": 527
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-29 14:21 KST",
+    "checkedAt": "2026-08-29 15:47 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6302,
     "detailPagesParsed": 2654,
@@ -567484,7 +567484,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-29 14:21 KST",
+      "checkedAt": "2026-08-29 15:47 KST",
       "candidates": 224,
       "detailPagesConfirmed": 219,
       "cacheEntriesImproved": 0,
@@ -567494,26 +567494,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "sourceReconciliation": {
-    "generatedAt": "2026-08-29 13:51:09 KST",
-    "lookbackDays": 90,
-    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 18183,
-    "datasetIdCountBefore": 18835,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "reconciledOffices": 38,
-    "totalOffices": 38
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-08-29 14:29:59 KST",
-    "protectedOfficialIds": 18183,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
