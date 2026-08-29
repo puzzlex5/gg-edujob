@@ -33,6 +33,39 @@ def central_count(data, province):
         return 0
 
 
+def authoritative_central_count(province):
+    """Return the independently reconciled 90-day central population when trustworthy."""
+    report = load(ROOT / "source_reconciliation_report.json")
+    if not isinstance(report, dict):
+        return None
+    summary = report.get("summary") or {}
+    if (
+        int(summary.get("totalSources") or 0) != 38
+        or int(summary.get("reconciledSources") or 0) != 38
+        or int(summary.get("missingAfter") or -1) != 0
+        or int(summary.get("lookbackDays") or report.get("lookbackDays") or 0) != 90
+    ):
+        return None
+    expected_name = {
+        "gyeonggi": "경기도교육청 통합 구인구직",
+        "seoul": "서울교육일자리포털",
+    }.get(province)
+    if not expected_name:
+        return None
+    for source in report.get("sources", []):
+        if source.get("name") != expected_name:
+            continue
+        if not source.get("coverageComplete") or not source.get("reconciled"):
+            return None
+        if int(source.get("missingAfterCount") or 0) != 0:
+            return None
+        try:
+            return int(source.get("officialIdCount"))
+        except Exception:
+            return None
+    return None
+
+
 def support_issues(data):
     out = []
     for province in ("gyeonggi", "seoul"):
@@ -233,7 +266,20 @@ def main():
         for key, label in (("gyeonggi", "경기"), ("seoul", "서울")):
             before, after = central_count(prev, key), central_count(data, key)
             if before >= 50 and after < before * 0.35:
-                critical.append(f"{label} 중앙 공고 급감: {before}→{after}")
+                authoritative = authoritative_central_count(key)
+                tolerance = max(5, int(authoritative * 0.02)) if authoritative is not None else 0
+                verified_retention_cleanup = (
+                    authoritative is not None
+                    and abs(after - authoritative) <= tolerance
+                    and before > authoritative * 1.5
+                )
+                if verified_retention_cleanup:
+                    warnings.append(
+                        f"{label} 중앙 이전 기준 과수집 정상화: {before}→{after} "
+                        f"(독립 90일 공식 ID {authoritative})"
+                    )
+                else:
+                    critical.append(f"{label} 중앙 공고 급감: {before}→{after}")
     issues = support_issues(data)
     if issues:
         warnings.append(f"교육지원청 확인 필요 {len(issues)}곳")
