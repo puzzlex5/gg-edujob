@@ -155,8 +155,13 @@ def fetch_board(session, board_url, src):
     pages_ok = 0
     explicit_empty = False
     seen = set()
+    seen_page_signatures = set()
+    consecutive_old_pages = 0
+    stop_reason = ""
+    late_error = ""
+    page = 1
 
-    for page in range(1, 8):
+    while True:
         p = urlparse(board_url)
         q = parse_qs(p.query, keep_blank_values=True)
         q["currPage"] = [str(page)]
@@ -166,7 +171,9 @@ def fetch_board(session, board_url, src):
             r.raise_for_status()
         except Exception as exc:
             if page == 1:
-                return collected, {"url": board_url, "rawRows": 0, "pagesOk": 0, "explicitEmpty": False, "error": f"{type(exc).__name__}: {str(exc)[:100]}"}
+                return collected, {"url": board_url, "rawRows": 0, "pagesOk": 0, "explicitEmpty": False, "error": f"{type(exc).__name__}: {str(exc)[:100]}", "stopReason": "first_page_error", "crossedLookback": False}
+            late_error = f"{type(exc).__name__}: {str(exc)[:100]}"
+            stop_reason = "later_page_error"
             break
 
         pages_ok += 1
@@ -179,6 +186,8 @@ def fetch_board(session, board_url, src):
         board_label = clean(heading.get_text(" ", strip=True) if heading else "")
         page_table_rows = 0
         page_recent_rows = 0
+        page_dates = []
+        page_row_keys = []
 
         for table in soup.find_all("table"):
             header_row = table.find("tr")
@@ -208,6 +217,9 @@ def fetch_board(session, board_url, src):
                 if not registered:
                     dates = [date_norm(m.group(0)) for m in DATE_RE.finditer(row_text)]
                     registered = dates[-1] if dates else ""
+                page_row_keys.append((norm(title), registered))
+                if registered:
+                    page_dates.append(registered)
 
                 if registered and not recent_enough(registered):
                     continue
@@ -261,12 +273,25 @@ def fetch_board(session, board_url, src):
                 })
 
         if page_table_rows == 0:
+            stop_reason = "no_rows"
             break
-        # Once rows are older than the recent window there is no need to crawl deeper.
-        if page_recent_rows == 0 and page >= 2:
+        signature = tuple(page_row_keys)
+        if signature and signature in seen_page_signatures:
+            stop_reason = "repeated_page"
             break
+        if signature:
+            seen_page_signatures.add(signature)
+        fully_dated = len(page_dates) == page_table_rows
+        if fully_dated and page_dates and all(not recent_enough(d) for d in page_dates):
+            consecutive_old_pages += 1
+        else:
+            consecutive_old_pages = 0
+        if consecutive_old_pages >= 2:
+            stop_reason = "retention_boundary"
+            break
+        page += 1
 
-    return collected, {"url": board_url, "rawRows": raw_rows, "pagesOk": pages_ok, "explicitEmpty": explicit_empty, "error": ""}
+    return collected, {"url": board_url, "rawRows": raw_rows, "pagesOk": pages_ok, "explicitEmpty": explicit_empty, "error": late_error, "stopReason": stop_reason, "crossedLookback": stop_reason == "retention_boundary", "lastPage": pages_ok}
 
 
 def merge_jobs(existing, additions):
@@ -345,11 +370,15 @@ def main():
         pages_ok = sum(m.get("pagesOk", 0) for m in board_meta)
         explicit_empty = any(m.get("explicitEmpty") for m in board_meta)
         errors = [m.get("error") for m in board_meta if m.get("error")]
+        safe_stops = {"no_rows", "repeated_page", "retention_boundary"}
+        traversal_complete = bool(board_meta) and all((not m.get("error")) and m.get("stopReason") in safe_stops for m in board_meta)
 
         if not boards:
             state, ok, message = "error", False, "실제 채용 게시판 URL 미등록"
+        elif raw_total > 0 and traversal_complete:
+            state, ok, message = "ok", True, f"실제 게시판 행 {raw_total}건 완전순회 · 최근 채용 {len(rows)}건"
         elif raw_total > 0:
-            state, ok, message = "ok", True, f"실제 게시판 행 {raw_total}건 확인 · 최근 채용 {len(rows)}건"
+            state, ok, message = "needs_check", False, f"게시판 행 {raw_total}건 확인했으나 pagination 종료 근거 불충분"
         elif pages_ok and explicit_empty:
             state, ok, message = "empty", True, "공식 게시판 정상 · 현재 게시물 0건"
         elif pages_ok:

@@ -202,6 +202,7 @@ def scrape_gyeonggi_central():
     central_url = GYEONGGI["central"]["url"]
     jobs, seen_ids = [], set()
     for code, (cat_name, ui_type) in GYEONGGI_CATEGORIES.items():
+        consecutive_old_pages = 0
         print("GYEONGGI CENTRAL", code, cat_name)
         for page in range(1, CENTRAL_MAX_PAGES + 1):
             data = {
@@ -215,6 +216,7 @@ def scrape_gyeonggi_central():
             rows = soup.select("div.recruit_list > ul > li")
             if not rows: break
             added = 0
+            page_dates = []
             for li in rows:
                 a = li.find("a", href=re.compile(r"goView\(['\"]?\d+"))
                 if not a: continue
@@ -226,6 +228,7 @@ def scrape_gyeonggi_central():
                 top = [clean(x.get_text(" ", strip=True)) for x in li.select(".cont_top span")]
                 school = top[0] if top else ""
                 registered = next((date_norm(x) for x in top if "등록일" in x), "")
+                if registered: page_dates.append(registered)
                 title_el = li.select_one(".cont_tit")
                 title = clean(title_el.get_text(" ", strip=True) if title_el else "")
                 title = clean(re.sub(r"^(마감임박|오늘등록|NEW)\s*", "", title))
@@ -235,6 +238,8 @@ def scrape_gyeonggi_central():
                 subject = vals.get("직무분야", "")
                 body_text = clean(li.get_text(" ", strip=True))
                 region = find_region(body_text, GYEONGGI_REGIONS)
+                if registered and not recent_enough(registered, 90):
+                    continue
                 jobs.append({
                     "id":"goe-"+pid,"province":"경기","school":school,"title":title,"subject":subject,
                     "region":region,"regions":[region] if region else [],"type":ui_type,
@@ -244,7 +249,14 @@ def scrape_gyeonggi_central():
                     "source":GYEONGGI["central"]["name"],"checkedSources":[GYEONGGI["central"]["name"]],"sourceType":"통합게시판",
                     "url":f"https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn={pid}"
                 })
-            if added == 0 or len(rows) < 45: break
+            if added == 0: break
+            fully_dated = len(page_dates) == added
+            if fully_dated and page_dates and all(not recent_enough(d, 90) for d in page_dates):
+                consecutive_old_pages += 1
+            else:
+                consecutive_old_pages = 0
+            if consecutive_old_pages >= 2: break
+            if len(rows) < 45: break
             time.sleep(.05)
     return jobs
 
