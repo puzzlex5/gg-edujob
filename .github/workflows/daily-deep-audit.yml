@@ -43,14 +43,42 @@ jobs:
           PY
           cp jobs.json /tmp/jobs_daily_baseline.json
           python scripts/update_deep_audit_status.py baseline running
-      - name: Prepare deep collectors and retry policy
+      - name: Validate deep collectors and retry policy
         run: |
           echo hardening >/tmp/deep_audit_stage
-          python scripts/hotfix_sources.py
-          python scripts/hotfix_repair_links.py
-          python scripts/harden_deep_audit.py
-          python scripts/harden_network_retries.py
           python -m py_compile scripts/*.py
+          python - <<'PY'
+          from pathlib import Path
+
+          checks = {
+              'scripts/repair_gyeonggi_support.py': [
+                  'data_id = clean(str(a.get("data-id", "")))',
+                  'return f"mircms|{host}|{bbs}|{ntt}"',
+              ],
+              'scripts/complete_support_coverage.py': [
+                  'MAX_PAGES = 500',
+                  'ended_on_structural_empty',
+                  'naturalEnd',
+                  'any pagination request failure makes traversal incomplete',
+                  'plausible = [d for d in ds if d and d <= today_s]',
+              ],
+              'scripts/verify_support_completeness.py': [
+                  'no explicit termination proof',
+              ],
+              'scripts/reconcile_source_ids.py': [
+                  'gyeonggi_central_90d_report.json',
+              ],
+          }
+          missing = []
+          for name, markers in checks.items():
+              text = Path(name).read_text(encoding='utf-8')
+              for marker in markers:
+                  if marker not in text:
+                      missing.append(f'{name}: {marker}')
+          if missing:
+              raise SystemExit('Committed deep-audit hardening is incomplete: ' + '; '.join(missing))
+          print('Committed deep-audit hardening markers validated')
+          PY
           python scripts/update_deep_audit_status.py hardening running
       - name: Discover newly linked official recruitment boards
         run: |
