@@ -205,7 +205,7 @@ def scrape_gyeonggi_central():
         print("GYEONGGI CENTRAL", code, cat_name)
         for page in range(1, CENTRAL_MAX_PAGES + 1):
             data = {
-                "mi":"10502","pbancSn":"","currPage":str(page),"srchEcptDl":"Y","srchTodayPb":"","srchLgnNm":"",
+                "mi":"10502","pbancSn":"","currPage":str(page),"srchEcptDl":"","srchTodayPb":"","srchLgnNm":"",
                 "srchOcptNm":cat_name,"srchOcptCd":code,"pageIndex":"50","orderbyType":"reg","searchType":"","searchValue":"",
                 "btchDlYn":"","cndNo":"","srchSchlSe":""
             }
@@ -339,7 +339,8 @@ def scrape_mircms_board(board, src):
     office, regions = src["name"], src.get("regions", [])
     out, seen_urls = [], set()
     raw_rows = 0; explicit_empty = False; pages_scanned = 0; consecutive_old_pages = 0
-    for page in range(1, FAST_MAX_PAGES + 1):
+    page = 1
+    while True:
         u = with_query(board, currPage=page)
         r = get(u)
         if not r: break
@@ -393,13 +394,15 @@ def scrape_mircms_board(board, src):
                     "source":office,"checkedSources":[office],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board
                 })
         if page_candidates == 0: break
-        if page_dates and all(not recent_enough(d, 90) for d in page_dates):
+        fully_dated = len(page_dates) == page_candidates
+        if fully_dated and page_dates and all(not recent_enough(d, 90) for d in page_dates):
             consecutive_old_pages += 1
         else:
             consecutive_old_pages = 0
         if consecutive_old_pages >= 2: break
+        page += 1
         time.sleep(.04)
-    return out, {"rawRows":raw_rows,"explicitEmpty":explicit_empty,"pagesScanned":pages_scanned,"capHit":pages_scanned >= FAST_MAX_PAGES}
+    return out, {"rawRows":raw_rows,"explicitEmpty":explicit_empty,"pagesScanned":pages_scanned}
 
 
 def scrape_gyeonggi_office(src):
@@ -412,11 +415,8 @@ def scrape_gyeonggi_office(src):
         all_rows.extend(rows); m["url"] = b; meta.append(m)
     raw_total = sum(x["rawRows"] for x in meta)
     explicit_empty = any(x["explicitEmpty"] for x in meta)
-    cap_hit = any(x.get("capHit") for x in meta)
     if not boards:
         state, ok, msg = "error", False, "실제 채용 게시판을 찾지 못함"
-    elif cap_hit:
-        state, ok, msg = "warning", False, "빠른 수집 비상 페이지 상한 도달 · 깊은 감사 필요"
     elif raw_total > 0:
         state, ok, msg = "ok", True, f"게시판 {len(boards)}개 확인"
     elif explicit_empty:
@@ -486,14 +486,15 @@ def seoul_seq_from_row(tr):
 def scrape_seoul_office(src):
     office, board, regions = src["name"], src["boardUrl"], src.get("regions",[])
     print("SEOUL OFFICE", office)
-    out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False
-    for page in range(1, FAST_MAX_PAGES + 1):
+    out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False; consecutive_old_pages=0
+    page = 1
+    while True:
         r = get(board, params={"pageIndex":page})
         if not r: r = post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
         if not r: break
         soup=BeautifulSoup(r.text,"html.parser"); txt=clean(soup.get_text(" ",strip=True))
         if re.search(r"총\s*0\s*건|전체\s*0\s*건|등록된\s*게시물이\s*없|데이터가\s*없습니다|조회된\s*데이터가\s*없|검색된\s*게시물이\s*없|등록된\s*자료가\s*없",txt): explicit_empty=True
-        page_raw=0; page_recent=0
+        page_raw=0; page_recent=0; page_dates=[]
         for table in soup.find_all("table"):
             headers=table_headers(table)
             if not headers: continue
@@ -515,6 +516,7 @@ def scrape_seoul_office(src):
                 registered=date_norm(first_of(vals,["등록일","작성일"]))
                 if not registered:
                     ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=list(dict.fromkeys(d for d in ds if d and d <= today_s)); registered=plausible[0] if len(plausible)==1 else ""
+                if registered: page_dates.append(registered)
                 if registered and not recent_enough(registered,90): continue
                 page_recent+=1
                 school=first_of(vals,["학교명","기관명","작성자"]) or school_from_title(title)
@@ -535,6 +537,13 @@ def scrape_seoul_office(src):
                     "openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}
                 })
         if page_raw==0: break
+        fully_dated = len(page_dates) == page_raw
+        if fully_dated and page_dates and all(not recent_enough(d, 90) for d in page_dates):
+            consecutive_old_pages += 1
+        else:
+            consecutive_old_pages = 0
+        if consecutive_old_pages >= 2: break
+        page += 1
         time.sleep(.04)
     if raw_rows>0:
         state,ok,msg="ok",True,"구인 게시판 확인"
