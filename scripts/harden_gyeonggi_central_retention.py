@@ -66,14 +66,22 @@ if "if registered and not recent_enough(registered, 90):" not in block:
         raise SystemExit("Cannot locate Gyeonggi central append point")
     block = block.replace(old_append, new_append, 1)
 
-# Earlier pagination hardeners may add repeated-page evidence (page_ids/signatures) around this
-# stop logic. Treat that as equivalent hardening instead of requiring one exact source template.
-stop_markers = (
-    "if added == 0",
+# Earlier pagination hardeners may replace `added == 0` with stronger repeated-page
+# evidence based on the complete page ID sequence. Both are compatible with the
+# retention boundary below; do not require the weaker legacy marker when the stronger
+# page-signature guard is present.
+legacy_stop_present = "if added == 0" in block
+signature_stop_present = all(marker in block for marker in (
+    "if not page_ids: break",
+    "page_signature = tuple(page_ids)",
+    "if page_signature == previous_page_ids: break",
+    "previous_page_ids = page_signature",
+))
+retention_stop_present = all(marker in block for marker in (
     "fully_dated = len(page_dates) == added",
     "consecutive_old_pages >= 2",
-)
-if not all(marker in block for marker in stop_markers):
+))
+if not ((legacy_stop_present or signature_stop_present) and retention_stop_present):
     old_tail = "            if added == 0 or len(rows) < 45: break\n            time.sleep(.05)\n"
     new_tail = (
         "            if added == 0: break\n"
@@ -102,6 +110,13 @@ required = (
 for marker in required:
     if marker not in block:
         raise SystemExit(f"Gyeonggi central 90-day hardening missing: {marker}")
+if not ("if added == 0" in block or all(marker in block for marker in (
+    "if not page_ids: break",
+    "page_signature = tuple(page_ids)",
+    "if page_signature == previous_page_ids: break",
+    "previous_page_ids = page_signature",
+))):
+    raise SystemExit("Gyeonggi central pagination stop evidence is missing")
 
 s = s[:start] + block + s[end:]
 p.write_text(s, encoding="utf-8")
