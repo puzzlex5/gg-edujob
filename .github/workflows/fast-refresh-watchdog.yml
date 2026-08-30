@@ -5,6 +5,19 @@ on:
   push:
     paths:
       - '.github/workflows/fast-refresh-watchdog.yml'
+      - '.github/workflows/update-jobs.yml'
+      - 'scripts/scrape_jobs.py'
+      - 'scripts/repair_gyeonggi_support.py'
+      - 'scripts/resolve_support_links.py'
+      - 'scripts/enrich_support_periods.py'
+      - 'scripts/enrich_seoul_get_fallback.py'
+      - 'scripts/recover_seoul_office_cms_jobs.py'
+      - 'scripts/verify_jobs.py'
+      - 'scripts/merge_recovery_snapshot.py'
+      - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/harden_fast_pagination.py'
+      - 'scripts/harden_gyeonggi_central_retention.py'
+      - 'scripts/harden_network_retries.py'
   schedule:
     # GitHub scheduled workflows can occasionally be delayed or skipped. Use two
     # deliberately off-peak minute slots so one missed scheduler tick does not
@@ -28,6 +41,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
       - name: Decide whether fast refresh needs a fallback dispatch
         id: gate
         shell: bash
@@ -81,10 +95,42 @@ jobs:
           except Exception:
               active_runs = 0
 
+          # A successful fast run is not evidence for collector/verification code that
+          # changed afterwards. Detect those changes independently of the age threshold
+          # so a safety fix is exercised promptly rather than waiting several hours.
+          validation_paths = [
+              '.github/workflows/update-jobs.yml',
+              'scripts/scrape_jobs.py',
+              'scripts/repair_gyeonggi_support.py',
+              'scripts/resolve_support_links.py',
+              'scripts/enrich_support_periods.py',
+              'scripts/enrich_seoul_get_fallback.py',
+              'scripts/recover_seoul_office_cms_jobs.py',
+              'scripts/verify_jobs.py',
+              'scripts/merge_recovery_snapshot.py',
+              'scripts/validate_reconciliation_policy.py',
+              'scripts/harden_fast_pagination.py',
+              'scripts/harden_gyeonggi_central_retention.py',
+              'scripts/harden_network_retries.py',
+          ]
+          collector_changes_after_success = 0
+          if success_at is not None:
+              since = success_at.astimezone(timezone.utc).isoformat()
+              changed = subprocess.run(
+                  ['git', 'log', '--format=%H', f'--since={since}', '--', *validation_paths],
+                  text=True, capture_output=True,
+              )
+              if changed.returncode == 0:
+                  collector_changes_after_success = len([
+                      line for line in changed.stdout.splitlines() if line.strip()
+                  ])
+
           if active_runs > 0:
               decision = 'skip-active-run'
           elif state == 'running' and running_age is not None and running_age <= timedelta(minutes=90):
               decision = 'skip-status-running'
+          elif collector_changes_after_success > 0:
+              decision = 'dispatch'
           elif success_age is not None and success_age <= timedelta(hours=3, minutes=15):
               decision = 'skip-fresh'
           else:
@@ -100,6 +146,7 @@ jobs:
               'fastUpdatedAt': fast.get('updatedAt'),
               'successAgeHours': round(success_age.total_seconds()/3600, 2) if success_age else None,
               'activeUpdateRuns': active_runs,
+              'collectorChangesAfterSuccess': collector_changes_after_success,
           }, ensure_ascii=False))
           PY
       - name: Dispatch fallback fast refresh
