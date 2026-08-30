@@ -200,6 +200,8 @@ def fetch_board(session, board_url, src):
         page_row_keys = []
         page_dates = []
         page_row_keys = []
+        page_dates = []
+        page_row_keys = []
 
         for table in soup.find_all("table"):
             header_row = table.find("tr")
