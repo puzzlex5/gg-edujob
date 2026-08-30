@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30 19:19 KST",
+  "updatedAt": "2026-08-30 21:19 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -917,7 +917,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-30 20:47 KST",
+    "checkedAt": "2026-08-30 22:27 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -594141,7 +594141,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-30 19:44 KST",
+      "checkedAt": "2026-08-30 21:49 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -594150,23 +594150,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-30 20:46 KST",
+    "checkedAt": "2026-08-30 22:25 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-30 20:46 KST",
+    "checkedAt": "2026-08-30 22:25 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 19303,
-    "previousCount": 21152,
+    "previousCount": 21153,
     "mergedCount": 21151,
     "carriedForward": 1848,
     "officialIdProtected": 17803,
     "officialIdCarryForward": 1230,
     "enrichedFromPrevious": 9888,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-08-30 20:14 KST"
+    "generatedAt": "2026-08-30 22:24 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 9667,
@@ -594175,7 +594175,7 @@
     "seoulTotal": 517
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-30 20:14 KST",
+    "checkedAt": "2026-08-30 22:24 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6182,
     "detailPagesParsed": 2597,
@@ -594185,7 +594185,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-30 20:14 KST",
+      "checkedAt": "2026-08-30 22:24 KST",
       "candidates": 225,
       "detailPagesConfirmed": 220,
       "cacheEntriesImproved": 0,
@@ -594195,12 +594195,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-08-30 20:29:44 KST",
-    "protectedOfficialIds": 17803,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
