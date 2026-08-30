@@ -203,6 +203,7 @@ def scrape_gyeonggi_central():
     jobs, seen_ids = [], set()
     for code, (cat_name, ui_type) in GYEONGGI_CATEGORIES.items():
         consecutive_old_pages = 0
+        previous_page_ids = None
         print("GYEONGGI CENTRAL", code, cat_name)
         for page in range(1, CENTRAL_MAX_PAGES + 1):
             data = {
@@ -217,12 +218,14 @@ def scrape_gyeonggi_central():
             if not rows: break
             added = 0
             page_dates = []
+            page_ids = []
             for li in rows:
                 a = li.find("a", href=re.compile(r"goView\(['\"]?\d+"))
                 if not a: continue
                 m = re.search(r"goView\(['\"]?(\d+)", a.get("href", ""))
                 if not m: continue
                 pid = m.group(1)
+                page_ids.append(pid)
                 if pid in seen_ids: continue
                 seen_ids.add(pid); added += 1
                 top = [clean(x.get_text(" ", strip=True)) for x in li.select(".cont_top span")]
@@ -249,7 +252,10 @@ def scrape_gyeonggi_central():
                     "source":GYEONGGI["central"]["name"],"checkedSources":[GYEONGGI["central"]["name"]],"sourceType":"통합게시판",
                     "url":f"https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn={pid}"
                 })
-            if added == 0: break
+            if not page_ids: break
+            page_signature = tuple(page_ids)
+            if page_signature == previous_page_ids: break
+            previous_page_ids = page_signature
             fully_dated = len(page_dates) == added
             if fully_dated and page_dates and all(not recent_enough(d, 90) for d in page_dates):
                 consecutive_old_pages += 1
