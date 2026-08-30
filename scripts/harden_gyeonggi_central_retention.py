@@ -32,7 +32,8 @@ if new_init not in block:
 
 old_added = '            added = 0\n            for li in rows:\n'
 new_added = '            added = 0\n            page_dates = []\n            for li in rows:\n'
-if new_added not in block:
+signature_added = '            added = 0\n            page_dates = []\n            page_ids = []\n            for li in rows:\n'
+if new_added not in block and signature_added not in block:
     if old_added not in block:
         raise SystemExit("Cannot locate Gyeonggi central page initialization")
     block = block.replace(old_added, new_added, 1)
