@@ -1,0 +1,41 @@
+name: Frontend performance hardening
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/optimize_frontend_performance.py'
+      - '.github/workflows/frontend-performance.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-frontend
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply safe browser performance patch
+        run: |
+          python scripts/optimize_frontend_performance.py
+          grep -q 'let visibleLimit=80;const PAGE_SIZE=80;' index.html
+          grep -q "fetch('jobs.json',{cache:'no-cache'})" index.html
+          grep -q 'let searchTimer=0;' index.html
+      - name: Commit optimized frontend
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html scripts/optimize_frontend_performance.py
+          git diff --cached --quiet && exit 0
+          git commit -m 'Keep large recruitment dataset responsive in browser'
+          git pull --rebase
+          git push
