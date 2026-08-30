@@ -66,7 +66,9 @@ jobs:
                   'no explicit termination proof',
               ],
               'scripts/reconcile_source_ids.py': [
-                  'gyeonggi_central_90d_report.json',
+                  'import crawl_gyeonggi_central_recent as central_recent',
+                  'stable-id-38-v2-gyeonggi-central-90d',
+                  'central_recent.scrape_gyeonggi_central_recent()',
               ],
           }
           missing = []
