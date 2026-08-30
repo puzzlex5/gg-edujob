@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30 11:11 KST",
+  "updatedAt": "2026-08-30 13:19 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -908,7 +908,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 355,
+        "count": 352,
         "ok": true,
         "state": "ok"
       }
@@ -917,7 +917,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-30 12:47 KST",
+    "checkedAt": "2026-08-30 14:22 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -941,8 +941,8 @@
       "id": "sen-109340",
       "province": "서울",
       "school": "서울정수초등학교",
-      "title": "(정수초-급구)시간강사 - 특수학급. 8월 31일(월)~9월 4일(금)",
-      "subject": "특수학급",
+      "title": "(정수초-급구)시간강사 - 특수학급(특수교사). 8월 31일(월)~9월 4일(금)",
+      "subject": "특수학급(특수교사)",
       "region": "성북구",
       "regions": [
         "성북구"
@@ -7897,31 +7897,6 @@
       "reconciliationCarryForward": true
     },
     {
-      "id": "sen-109281",
-      "province": "서울",
-      "school": "서울명일초등학교",
-      "title": "(서울명일초) 2026학년도 기간제교원(4학년 담임) 채용",
-      "subject": "4학년 학급 담임 및 독서교육 업무",
-      "region": "강동구",
-      "regions": [
-        "강동구"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "2026/08/28",
-      "applyEnd": "2026/08/30",
-      "workStart": "2026/09/03",
-      "workEnd": "2026/11/02",
-      "registered": "2026/08/28",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109281"
-    },
-    {
       "id": "sen-109243",
       "province": "서울",
       "school": "명지중학교",
@@ -7976,6 +7951,34 @@
       "bbsId": "8653",
       "mi": "16003",
       "detailLinkResolved": true
+    },
+    {
+      "id": "sen-109281",
+      "province": "서울",
+      "school": "서울명일초등학교",
+      "title": "(서울명일초) 2026학년도 기간제교원(4학년 담임) 채용",
+      "subject": "4학년 학급 담임 및 독서교육 업무",
+      "region": "강동구",
+      "regions": [
+        "강동구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/08/28",
+      "applyEnd": "2026/08/30",
+      "workStart": "2026/09/03",
+      "workEnd": "2026/11/02",
+      "registered": "2026/08/28",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109281",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "sen-109290",
@@ -15654,31 +15657,6 @@
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109256"
     },
     {
-      "id": "sen-109255",
-      "province": "서울",
-      "school": "서울강신초등학교",
-      "title": "(강신초)특수학급 담임 기간제 교사 채용",
-      "subject": "특수학급 담임교사",
-      "region": "양천구",
-      "regions": [
-        "양천구"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "2026/08/27",
-      "applyEnd": "2026/08/30",
-      "workStart": "2026/09/14",
-      "workEnd": "2026/11/10",
-      "registered": "2026/08/27",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109255"
-    },
-    {
       "id": "sen-109254",
       "province": "서울",
       "school": "청원여자고등학교",
@@ -15937,6 +15915,34 @@
       "bbsId": "10111",
       "mi": "10118",
       "detailLinkResolved": true
+    },
+    {
+      "id": "sen-109255",
+      "province": "서울",
+      "school": "서울강신초등학교",
+      "title": "(강신초)특수학급 담임 기간제 교사 채용",
+      "subject": "특수학급 담임교사",
+      "region": "양천구",
+      "regions": [
+        "양천구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/08/27",
+      "applyEnd": "2026/08/30",
+      "workStart": "2026/09/14",
+      "workEnd": "2026/11/10",
+      "registered": "2026/08/27",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109255",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "sen-109187",
@@ -30137,31 +30143,6 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57791"
     },
     {
-      "id": "sen-109030",
-      "province": "서울",
-      "school": "서울은곡유치원",
-      "title": "특수교육대상학생 체험활동 등 교육활동 지원인력 채용 공고",
-      "subject": "특수교육대상학생 체험활동 등 교육활동 지원인력",
-      "region": "강남구",
-      "regions": [
-        "강남구"
-      ],
-      "type": "자원봉사",
-      "schoolLevel": "유치원",
-      "applyStart": "2026/08/25",
-      "applyEnd": "2026/08/30",
-      "workStart": "2026/09/01",
-      "workEnd": "2026/11/30",
-      "registered": "2026/08/25",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109030"
-    },
-    {
       "id": "sen-109029",
       "province": "서울",
       "school": "동국대학교사범대학부속중학교",
@@ -30456,6 +30437,34 @@
       "mi": "23603",
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "sen-109030",
+      "province": "서울",
+      "school": "서울은곡유치원",
+      "title": "특수교육대상학생 체험활동 등 교육활동 지원인력 채용 공고",
+      "subject": "특수교육대상학생 체험활동 등 교육활동 지원인력",
+      "region": "강남구",
+      "regions": [
+        "강남구"
+      ],
+      "type": "자원봉사",
+      "schoolLevel": "유치원",
+      "applyStart": "2026/08/25",
+      "applyEnd": "2026/08/30",
+      "workStart": "2026/09/01",
+      "workEnd": "2026/11/30",
+      "registered": "2026/08/25",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109030",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "sen-109055",
@@ -594037,7 +594046,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-30 11:40 KST",
+      "checkedAt": "2026-08-30 13:48 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -594046,23 +594055,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-30 12:46 KST",
+    "checkedAt": "2026-08-30 14:21 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-30 12:46 KST",
+    "checkedAt": "2026-08-30 14:21 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
-    "freshCount": 19320,
-    "previousCount": 21149,
+    "freshCount": 19317,
+    "previousCount": 21151,
     "mergedCount": 21149,
-    "carriedForward": 1829,
+    "carriedForward": 1832,
     "officialIdProtected": 17821,
-    "officialIdCarryForward": 1230,
+    "officialIdCarryForward": 1233,
     "enrichedFromPrevious": 9888,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-08-30 12:11 KST"
+    "generatedAt": "2026-08-30 14:20 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 9667,
@@ -594071,7 +594080,7 @@
     "seoulTotal": 516
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-30 12:11 KST",
+    "checkedAt": "2026-08-30 14:20 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6181,
     "detailPagesParsed": 2597,
@@ -594081,7 +594090,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-30 12:11 KST",
+      "checkedAt": "2026-08-30 14:20 KST",
       "candidates": 224,
       "detailPagesConfirmed": 219,
       "cacheEntriesImproved": 0,
@@ -594091,12 +594100,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-08-30 12:29:53 KST",
-    "protectedOfficialIds": 17821,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
