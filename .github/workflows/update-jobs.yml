@@ -87,7 +87,8 @@ jobs:
         timeout-minutes: 25
         run: |
           python scripts/update_collector_status.py --workflow fast --stage gyeonggi-recheck --state running
-          python scripts/repair_gyeonggi_support.py --lookback-days 21 -p 12
+          # Fail closed on request/termination errors, but do not truncate busy offices at an arbitrary page count.
+          python scripts/repair_gyeonggi_support.py --lookback-days 21
 
       - name: Sanitize impossible registration dates
         run: python scripts/sanitize_job_dates.py
