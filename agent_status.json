@@ -2,12 +2,12 @@
   "version": 1,
   "dispatchHistory": {
     "update-jobs.yml": {
-      "lastAttemptAt": "2026-08-31T06:09:54+09:00",
+      "lastAttemptAt": "2026-09-01T00:10:01+09:00",
       "lastResult": "dispatched",
-      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=gyeonggi-recheck",
       "lastCode": "fast-collector-unhealthy",
-      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
-      "count": 3
+      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=gyeonggi-recheck",
+      "count": 4
     },
     "daily-deep-audit.yml": {
       "lastAttemptAt": "2026-08-31T19:09:54+09:00",
@@ -89,19 +89,28 @@
       "lastCode": "coverage-integrity-failure",
       "message": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
       "count": 1
+    },
+    {
+      "workflow": "update-jobs.yml",
+      "lastAttemptAt": "2026-09-01T00:10:01+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=gyeonggi-recheck",
+      "lastCode": "fast-collector-unhealthy",
+      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=gyeonggi-recheck",
+      "count": 4
     }
   ],
-  "lastUpdatedAt": "2026-08-31T23:10:00+09:00",
+  "lastUpdatedAt": "2026-09-01T00:10:01+09:00",
   "lastHealth": "critical",
   "lastPlanSummary": {
-    "generatedAt": "2026-08-31T23:09:51+09:00",
+    "generatedAt": "2026-09-01T00:09:57+09:00",
     "selectedAction": {
-      "workflow": "recover-missing-jobs.yml",
-      "code": "coverage-integrity-failure",
-      "reason": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
-      "priority": 130,
+      "workflow": "update-jobs.yml",
+      "code": "fast-collector-unhealthy",
+      "reason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=gyeonggi-recheck",
+      "priority": 105,
       "severity": "critical",
-      "cooldown_hours": 4
+      "cooldown_hours": 3
     },
     "blockedByCooldown": []
   }
