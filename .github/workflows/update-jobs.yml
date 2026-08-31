@@ -84,6 +84,7 @@ jobs:
           python scripts/scrape_jobs.py
 
       - name: Fast re-check of Gyeonggi support-office boards
+        timeout-minutes: 25
         run: |
           python scripts/update_collector_status.py --workflow fast --stage gyeonggi-recheck --state running
           python scripts/repair_gyeonggi_support.py
