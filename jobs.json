@@ -922,7 +922,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-08-31 18:29 KST",
+    "checkedAt": "2026-08-31 18:31 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -959,7 +959,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 21226,
+    "previousTotal": 20928,
     "currentTotal": 20928
   },
   "jobs": [
@@ -586756,11 +586756,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-31 18:28 KST",
+    "checkedAt": "2026-08-31 18:30 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-31 18:28 KST",
+    "checkedAt": "2026-08-31 18:30 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -586801,5 +586801,12 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-08-31 18:30:30 KST",
+    "protectedOfficialIds": 17503,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
