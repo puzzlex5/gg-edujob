@@ -60,8 +60,26 @@ jobs:
           echo "workflow=$workflow" >> "$GITHUB_OUTPUT"
           echo "reason=$reason" >> "$GITHUB_OUTPUT"
 
-      - name: Dispatch selected repair workflow
+      - name: Check selected workflow activity
         if: steps.select.outputs.workflow != ''
+        id: activity
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_WORKFLOW: ${{ steps.select.outputs.workflow }}
+        run: |
+          set -euo pipefail
+          active="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/workflows/${TARGET_WORKFLOW}/runs?per_page=50" \
+            --jq '[.workflow_runs[] | select(.status=="queued" or .status=="in_progress" or .status=="waiting" or .status=="requested" or .status=="pending")] | length')"
+          if [ "${active:-0}" -gt 0 ]; then
+            echo 'active=true' >> "$GITHUB_OUTPUT"
+            echo "Selected workflow already has ${active} active run(s); suppressing duplicate dispatch."
+          else
+            echo 'active=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dispatch selected repair workflow
+        if: steps.select.outputs.workflow != '' && steps.activity.outputs.active != 'true'
         id: dispatch
         continue-on-error: true
         env:
@@ -71,7 +89,7 @@ jobs:
         run: gh workflow run "$TARGET_WORKFLOW" --ref main
 
       - name: Record autonomous decision
-        if: steps.select.outputs.workflow != ''
+        if: steps.select.outputs.workflow != '' && steps.activity.outputs.active != 'true'
         shell: bash
         env:
           TARGET_WORKFLOW: ${{ steps.select.outputs.workflow }}
@@ -87,7 +105,7 @@ jobs:
             --message "$DECISION_REASON"
 
       - name: Commit supervisor state only when it acted
-        if: steps.select.outputs.workflow != ''
+        if: steps.select.outputs.workflow != '' && steps.activity.outputs.active != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -100,5 +118,5 @@ jobs:
           git push origin HEAD:main
 
       - name: Fail visibly when dispatch failed
-        if: steps.select.outputs.workflow != '' && steps.dispatch.outcome != 'success'
+        if: steps.select.outputs.workflow != '' && steps.activity.outputs.active != 'true' && steps.dispatch.outcome != 'success'
         run: exit 1
