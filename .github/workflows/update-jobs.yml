@@ -213,12 +213,24 @@ jobs:
             exit 0
           fi
 
-          python scripts/update_collector_status.py --workflow fast --state failed
-          cp collector_status.json /tmp/collector_status.json
+          failed_stage="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          try:
+              e=json.loads(Path('collector_status.json').read_text(encoding='utf-8')).get('fast',{})
+              print(e.get('stage',''))
+          except Exception:
+              print('')
+          PY
+          )"
           git reset --hard HEAD
-          cp /tmp/collector_status.json collector_status.json
           if [ -f /tmp/verification_failure_report.json ]; then
             cp /tmp/verification_failure_report.json verification_failure_report.json
+          fi
+          if [ -n "$failed_stage" ]; then
+            python scripts/update_collector_status.py --workflow fast --stage "$failed_stage" --state failed
+          else
+            python scripts/update_collector_status.py --workflow fast --state failed
           fi
           git add collector_status.json
           [ ! -f verification_failure_report.json ] || git add verification_failure_report.json
