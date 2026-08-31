@@ -45,7 +45,7 @@ def date_norm(value):
     return f"{int(m.group(1)):04d}/{int(m.group(2)):02d}/{int(m.group(3)):02d}"
 
 
-def recent_enough(value, days=150):
+def recent_enough(value, days=90):
     if not value:
         return True
     try:
@@ -114,7 +114,6 @@ def construct_detail(board_url, ntt_sn):
 
 
 def detail_url(board_url, row):
-    # 1) normal href or current MirCMS data-id identifier.
     for a in row.find_all("a"):
         href = a.get("href", "") or ""
         if "selectNttInfo.do" in href:
@@ -123,7 +122,6 @@ def detail_url(board_url, row):
         if re.fullmatch(r"\d{5,10}", data_id):
             return construct_detail(board_url, data_id)
 
-    # 2) data-* attributes or javascript/onclick. MirCMS deployments vary.
     html = str(row)
     patterns = [
         r"(?:data[-_]?ntt[-_]?sn|nttSn|ntt_sn)\s*[=:]['\" ]*(\d{4,})",
@@ -188,44 +186,6 @@ def fetch_board(session, board_url, src):
         page_recent_rows = 0
         page_dates = []
         page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
-        page_dates = []
-        page_row_keys = []
 
         for table in soup.find_all("table"):
             header_row = table.find("tr")
@@ -268,8 +228,6 @@ def fetch_board(session, board_url, src):
 
                 page_recent_rows += 1
                 detail = detail_url(r.url, tr)
-                # A list page is not an individual announcement. Keep the job visible,
-                # but leave url empty until the exact nttSn detail URL is resolved.
                 link = detail
                 key = (norm(title), registered, detail or board_url)
                 if key in seen:
@@ -370,7 +328,6 @@ def merge_jobs(existing, additions):
         for field in ("region", "school", "applyEnd", "subject"):
             if not old.get(field) and job.get(field):
                 old[field] = job[field]
-        # Prefer a newly resolved exact MirCMS detail URL over an older list-page fallback.
         if old.get("sourceType") == "교육지원청 개별 게시판" and job.get("detailLinkResolved") and job.get("url"):
             old_url = old.get("url", "")
             old_board = old.get("boardUrl", "")
