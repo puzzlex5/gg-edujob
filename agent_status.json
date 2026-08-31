@@ -16,6 +16,14 @@
       "lastCode": "deep-audit-unhealthy",
       "message": "최종 정밀감사 증거가 성공/완전 상태가 아닙니다.",
       "count": 3
+    },
+    "recover-missing-jobs.yml": {
+      "lastAttemptAt": "2026-08-31T23:10:00+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
+      "lastCode": "coverage-integrity-failure",
+      "message": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
+      "count": 1
     }
   },
   "recentDispatches": [
@@ -72,19 +80,28 @@
       "lastCode": "deep-audit-unhealthy",
       "message": "최종 정밀감사 증거가 성공/완전 상태가 아닙니다.",
       "count": 3
+    },
+    {
+      "workflow": "recover-missing-jobs.yml",
+      "lastAttemptAt": "2026-08-31T23:10:00+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
+      "lastCode": "coverage-integrity-failure",
+      "message": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
+      "count": 1
     }
   ],
-  "lastUpdatedAt": "2026-08-31T19:09:54+09:00",
+  "lastUpdatedAt": "2026-08-31T23:10:00+09:00",
   "lastHealth": "critical",
   "lastPlanSummary": {
-    "generatedAt": "2026-08-31T19:09:52+09:00",
+    "generatedAt": "2026-08-31T23:09:51+09:00",
     "selectedAction": {
-      "workflow": "daily-deep-audit.yml",
-      "code": "deep-audit-unhealthy",
-      "reason": "최종 정밀감사 증거가 성공/완전 상태가 아닙니다.",
-      "priority": 115,
+      "workflow": "recover-missing-jobs.yml",
+      "code": "coverage-integrity-failure",
+      "reason": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
+      "priority": 130,
       "severity": "critical",
-      "cooldown_hours": 6
+      "cooldown_hours": 4
     },
     "blockedByCooldown": []
   }
