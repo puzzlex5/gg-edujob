@@ -189,6 +189,11 @@ jobs:
           echo ledger >/tmp/deep_audit_stage
           python scripts/update_collection_state.py
           python scripts/update_deep_audit_status.py ledger running
+      - name: Audit operational quality against reconciled IDs
+        run: |
+          echo operational-quality >/tmp/deep_audit_stage
+          python scripts/audit_operational_quality.py
+          python scripts/update_deep_audit_status.py operational-quality running
       - name: Final daily audit publication guard
         run: |
           echo publication-guard >/tmp/deep_audit_stage
@@ -201,6 +206,8 @@ jobs:
           summary=rec.get('summary',{})
           central=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
           gg90=json.loads(Path('gyeonggi_central_90d_report.json').read_text(encoding='utf-8'))
+          quality=json.loads(Path('operational_quality_report.json').read_text(encoding='utf-8'))
+          qsummary=quality.get('summary',{})
           if len(after)<100: raise SystemExit(f'Daily audit output too small: {len(after)}')
           if len(before)>=100 and len(after)<len(before)*0.70:
               raise SystemExit(f'Daily audit lost >30% of baseline: {len(before)} -> {len(after)}')
@@ -210,6 +217,12 @@ jobs:
           total=int(summary.get('totalSources') or 0)
           if total != 38 or reconciled != total:
               raise SystemExit(f'Daily 38-source official-ID audit incomplete: {summary}')
+          if int(qsummary.get('publishedJobs') or 0) != len(after):
+              raise SystemExit(f'Operational quality snapshot is not bound to publication candidate: {qsummary.get("publishedJobs")} != {len(after)}')
+          if int(qsummary.get('missingOfficialIds') or 0) != 0 or int(qsummary.get('reconciledSources') or 0) != 38:
+              raise SystemExit(f'Operational quality audit disagrees with reconciliation: {qsummary}')
+          if int(qsummary.get('missingDetailLinks') or 0) != 0:
+              raise SystemExit(f'Operational quality audit found missing detail links: {qsummary}')
           if not central.get('complete'):
               raise SystemExit(f'Daily central pagination proof incomplete: {central}')
           if not gg90.get('complete'):
@@ -223,7 +236,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           test -s gyeonggi_central_90d_report.json
-          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json deep_audit_status.json board_cache.json support_coverage_report.json source_reconciliation_report.json central_pagination_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json deep_audit_status.json board_cache.json support_coverage_report.json source_reconciliation_report.json central_pagination_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json operational_quality_report.json operational_quality_history.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
           git add -f gyeonggi_central_90d_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Daily deep audit reconciled official recruitment IDs'
@@ -238,7 +251,7 @@ jobs:
           stage="$(cat /tmp/deep_audit_stage 2>/dev/null || echo unknown)"
 
           mkdir -p /tmp/deep-audit-diagnostics
-          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/deep-audit-diagnostics/$f"; fi
           done
 
@@ -246,14 +259,14 @@ jobs:
           git clean -fd
           python scripts/update_deep_audit_status.py "$stage" failed
 
-          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
             if [ -f "/tmp/deep-audit-diagnostics/$f" ]; then cp "/tmp/deep-audit-diagnostics/$f" "$f"; fi
           done
 
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add deep_audit_status.json
-          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json; do
+          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           if [ -f gyeonggi_central_90d_report.json ]; then git add -f gyeonggi_central_90d_report.json; fi
