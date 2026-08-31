@@ -110,6 +110,7 @@ jobs:
           python scripts/sanitize_job_dates.py
 
       - name: Independent fast-publication verification
+        timeout-minutes: 25
         shell: bash
         run: |
           set -euo pipefail
