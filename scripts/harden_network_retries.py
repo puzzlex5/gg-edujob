@@ -15,6 +15,7 @@ FILES = [
 ]
 IMPORTS = "from requests.adapters import HTTPAdapter\nfrom urllib3.util.retry import Retry\n"
 POLICY = '''\nRETRY_POLICY = Retry(\n    total=3, connect=3, read=3, status=3, backoff_factor=0.8,\n    status_forcelist=(408, 429, 500, 502, 503, 504),\n    allowed_methods=frozenset(("GET", "POST")),\n    respect_retry_after_header=True, raise_on_status=False,\n)\nS.mount("https://", HTTPAdapter(max_retries=RETRY_POLICY))\nS.mount("http://", HTTPAdapter(max_retries=RETRY_POLICY))\n'''
+REPAIR_POLICY = '''    retry_policy = Retry(\n        total=3, connect=3, read=3, status=3, backoff_factor=0.8,\n        status_forcelist=(408, 429, 500, 502, 503, 504),\n        allowed_methods=frozenset(("GET",)),\n        respect_retry_after_header=True, raise_on_status=False,\n    )\n    session.mount("https://", HTTPAdapter(max_retries=retry_policy))\n    session.mount("http://", HTTPAdapter(max_retries=retry_policy))\n'''
 VERIFIER_POLICY = '''\n    retry_policy = Retry(\n        total=3, connect=3, read=3, status=3, backoff_factor=0.8,\n        status_forcelist=(408, 429, 500, 502, 503, 504),\n        allowed_methods=frozenset(("GET", "POST")),\n        respect_retry_after_header=True, raise_on_status=False,\n    )\n    session.mount("https://", HTTPAdapter(max_retries=retry_policy))\n    session.mount("http://", HTTPAdapter(max_retries=retry_policy))\n'''
 
 patched = 0
@@ -24,6 +25,24 @@ for rel in FILES:
     if not p.exists():
         continue
     s = p.read_text(encoding="utf-8")
+
+    # The Gyeonggi second-pass collector intentionally owns a local session in main().
+    # Harden that session explicitly: otherwise one transient 408/429/5xx/read failure
+    # makes the entire fail-closed fast refresh abort even though the published baseline
+    # remains valid. Retries are GET-only because this collector never mutates a source.
+    if rel == "scripts/repair_gyeonggi_support.py" and "    session = requests.Session()\n" in s:
+        if "from requests.adapters import HTTPAdapter" not in s:
+            if "import requests\n" not in s:
+                raise SystemExit(f"requests import marker missing in {rel}")
+            s = s.replace("import requests\n", "import requests\n" + IMPORTS, 1)
+        marker = "    session = requests.Session()\n"
+        if "session.mount(\"https://\", HTTPAdapter(max_retries=retry_policy))" not in s:
+            s = s.replace(marker, marker + REPAIR_POLICY, 1)
+        p.write_text(s, encoding="utf-8")
+        patched += 1
+        print("retry policy ready", rel)
+        continue
+
     # Some enrichers use thread-local or per-request sessions. Do not rewrite those blindly.
     if "S = requests.Session()" not in s or "S.headers.update" not in s:
         print("retry policy skipped (custom/no shared session)", rel)
