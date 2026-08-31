@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31 18:54 KST",
+  "updatedAt": "2026-08-31 20:01 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -765,7 +765,7 @@
       "central": {
         "name": "경기도교육청 통합 구인구직",
         "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502",
-        "count": 10075,
+        "count": 10076,
         "ok": true,
         "state": "ok"
       }
@@ -908,7 +908,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 312,
+        "count": 311,
         "ok": true,
         "state": "ok"
       }
@@ -917,7 +917,7 @@
   "errors": [],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-08-31 20:00 KST",
+    "checkedAt": "2026-08-31 21:09 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -933,8 +933,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 20928,
-    "currentTotal": 21248
+    "previousTotal": 21248,
+    "currentTotal": 21249
   },
   "jobs": [
     {
@@ -5801,6 +5801,31 @@
       ],
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58341"
+    },
+    {
+      "id": "goe-58495",
+      "province": "경기",
+      "school": "유신고등학교",
+      "title": "유신고등학교 시간 강사 채용 공고(2차)-국어",
+      "subject": "국어",
+      "region": "수원시",
+      "regions": [
+        "수원시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/01",
+      "applyEnd": "2026/09/03",
+      "workStart": "2026/09/07",
+      "workEnd": "2026/09/10",
+      "registered": "2026/08/31",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58495"
     },
     {
       "id": "goe-58490",
@@ -38697,31 +38722,6 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57800"
     },
     {
-      "id": "sen-109064",
-      "province": "서울",
-      "school": "서울신구유치원",
-      "title": "(서울신구유)2026학년도 교육공무직원(에듀케어강사) 결원 대체 인력 모집 공고",
-      "subject": "방과후 과정 수업 등",
-      "region": "강남구",
-      "regions": [
-        "강남구"
-      ],
-      "type": "교육공무직/기간제근로자",
-      "schoolLevel": "유치원",
-      "applyStart": "2026/08/26",
-      "applyEnd": "2026/08/31",
-      "workStart": "2026/09/01",
-      "workEnd": "2027/02/28",
-      "registered": "2026/08/25",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109064"
-    },
-    {
       "id": "sen-108978",
       "province": "서울",
       "school": "서울수락산유치원",
@@ -39266,6 +39266,34 @@
       "bbsId": "10111",
       "mi": "10118",
       "detailLinkResolved": true
+    },
+    {
+      "id": "sen-109064",
+      "province": "서울",
+      "school": "서울신구유치원",
+      "title": "(서울신구유)2026학년도 교육공무직원(에듀케어강사) 결원 대체 인력 모집 공고",
+      "subject": "방과후 과정 수업 등",
+      "region": "강남구",
+      "regions": [
+        "강남구"
+      ],
+      "type": "교육공무직/기간제근로자",
+      "schoolLevel": "유치원",
+      "applyStart": "2026/08/26",
+      "applyEnd": "2026/08/31",
+      "workStart": "2026/09/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/08/25",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109064",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "sen-108972",
@@ -596550,7 +596578,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-08-31 19:24 KST",
+      "checkedAt": "2026-08-31 20:32 KST",
       "parser": "gyeonggi-mircms-table-v2",
       "offices": 25,
       "healthy": 25,
@@ -596559,23 +596587,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-08-31 19:59 KST",
+    "checkedAt": "2026-08-31 21:08 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-08-31 19:59 KST",
+    "checkedAt": "2026-08-31 21:08 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 19305,
-    "previousCount": 20928,
-    "mergedCount": 21246,
-    "carriedForward": 1941,
+    "previousCount": 21248,
+    "mergedCount": 21247,
+    "carriedForward": 1942,
     "officialIdProtected": 17503,
-    "officialIdCarryForward": 1274,
-    "enrichedFromPrevious": 9567,
+    "officialIdCarryForward": 1275,
+    "enrichedFromPrevious": 9883,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-08-31 19:58 KST"
+    "generatedAt": "2026-08-31 21:07 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 9655,
@@ -596584,7 +596612,7 @@
     "seoulTotal": 512
   },
   "periodEnrichment": {
-    "checkedAt": "2026-08-31 19:58 KST",
+    "checkedAt": "2026-08-31 21:07 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6176,
     "detailPagesParsed": 2591,
@@ -596594,7 +596622,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-08-31 19:58 KST",
+      "checkedAt": "2026-08-31 21:07 KST",
       "candidates": 228,
       "detailPagesConfirmed": 223,
       "cacheEntriesImproved": 0,
