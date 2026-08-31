@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""Robust second-pass collector for Gyeonggi education support-office MirCMS boards.
-
-The primary collector historically treated a board as broken when it could not
-extract MirCMS detail-link JavaScript even though the board table was visible.
-This pass reads the table structure first, treats visible rows as proof that the
-board is healthy, and merges recent recruitment rows into jobs.json.
-"""
+"""Robust second-pass collector for Gyeonggi education support-office MirCMS boards."""
+import argparse
 import hashlib
 import json
 import re
+import sys
 import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -19,10 +15,9 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES_PATH = ROOT / "sources.json"
-JOBS_PATH = ROOT / "jobs.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
-UA = "Mozilla/5.0 (compatible; metro-edujob-gyeonggi-support/2.0)"
+UA = "Mozilla/5.0 (compatible; metro-edujob-gyeonggi-support/2.1)"
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 JOB_WORDS = re.compile(r"채용|구인|모집|기간제|계약제|시간강사|강사|교사|교원|공무직|사무직|근로자|조리|돌봄|보육|봉사|튜터|안전지킴이|외부강사")
 EXCLUDE_WORDS = re.compile(r"최종\s*합격|합격자|서류\s*심사|서류전형|면접\s*대상|선정\s*결과|채용\s*결과|전형\s*결과|합격\s*공고|인사발령")
@@ -45,7 +40,7 @@ def date_norm(value):
     return f"{int(m.group(1)):04d}/{int(m.group(2)):02d}/{int(m.group(3)):02d}"
 
 
-def recent_enough(value, days=90):
+def recent_enough(value, days):
     if not value:
         return True
     try:
@@ -61,9 +56,9 @@ def guess_type(text):
         return "교육공무직/기간제근로자"
     if any(x in text for x in ("자원봉사", "봉사자", "안전지킴이")):
         return "자원봉사"
-    if "시간강사" in text or "강사" in text or "튜터" in text or "시간제" in text:
+    if any(x in text for x in ("시간강사", "강사", "튜터", "시간제")):
         return "시간강사/강사"
-    if "기간제" in text or "계약제교원" in text or "교원" in text or "교사" in text:
+    if any(x in text for x in ("기간제", "계약제교원", "교원", "교사")):
         return "기간제교원"
     return "기타"
 
@@ -121,42 +116,37 @@ def detail_url(board_url, row):
         data_id = clean(str(a.get("data-id", "")))
         if re.fullmatch(r"\d{5,10}", data_id):
             return construct_detail(board_url, data_id)
-
     html = str(row)
-    patterns = [
+    for pat in (
         r"(?:data[-_]?ntt[-_]?sn|nttSn|ntt_sn)\s*[=:]['\" ]*(\d{4,})",
         r"(?:selectNttInfo|fncNttView|fnNttView|nttView|goView)\s*\([^)]*?['\"]?(\d{4,})",
         r"(?:selectNttInfo|fncNttView|fnNttView|nttView|goView)[^0-9]{0,100}(\d{4,})",
-    ]
-    for pat in patterns:
+    ):
         m = re.search(pat, html, re.I)
         if m:
             return construct_detail(board_url, m.group(1))
-
     for tag in row.find_all(True):
         for key, value in tag.attrs.items():
             key_l = str(key).lower().replace("_", "-")
+            if "ntt" not in key_l and "sn" not in key_l:
+                continue
             values = value if isinstance(value, list) else [value]
-            if "ntt" in key_l or "sn" in key_l:
-                for raw in values:
-                    m = re.search(r"\b(\d{4,})\b", str(raw))
-                    if m:
-                        return construct_detail(board_url, m.group(1))
+            for raw in values:
+                m = re.search(r"\b(\d{4,})\b", str(raw))
+                if m:
+                    return construct_detail(board_url, m.group(1))
     return ""
 
 
-def fetch_board(session, board_url, src):
+def fetch_board(session, board_url, src, lookback_days, max_pages):
     regions = src.get("regions", [])
     office = src["name"]
-    collected = []
-    raw_rows = 0
-    pages_ok = 0
+    collected, seen = [], set()
+    raw_rows = pages_ok = 0
     explicit_empty = False
-    seen = set()
     seen_page_signatures = set()
     consecutive_old_pages = 0
-    stop_reason = ""
-    late_error = ""
+    stop_reason = late_error = ""
     page = 1
 
     while True:
@@ -168,10 +158,10 @@ def fetch_board(session, board_url, src):
             r = session.get(page_url, timeout=20, allow_redirects=True)
             r.raise_for_status()
         except Exception as exc:
+            err = f"{type(exc).__name__}: {str(exc)[:100]}"
             if page == 1:
-                return collected, {"url": board_url, "rawRows": 0, "pagesOk": 0, "explicitEmpty": False, "error": f"{type(exc).__name__}: {str(exc)[:100]}", "stopReason": "first_page_error", "crossedLookback": False}
-            late_error = f"{type(exc).__name__}: {str(exc)[:100]}"
-            stop_reason = "later_page_error"
+                return collected, {"url": board_url, "rawRows": 0, "pagesOk": 0, "explicitEmpty": False, "error": err, "stopReason": "first_page_error", "crossedLookback": False, "lastPage": 0, "pageCapHit": False}
+            late_error, stop_reason = err, "later_page_error"
             break
 
         pages_ok += 1
@@ -179,13 +169,10 @@ def fetch_board(session, board_url, src):
         page_text = clean(soup.get_text(" ", strip=True))
         if re.search(r"전체\s*0\s*건|총\s*0\s*건|등록된\s*게시물이\s*없", page_text):
             explicit_empty = True
-
         heading = soup.find("h2") or soup.find("h3") or soup.title
         board_label = clean(heading.get_text(" ", strip=True) if heading else "")
         page_table_rows = 0
-        page_recent_rows = 0
-        page_dates = []
-        page_row_keys = []
+        page_dates, page_row_keys = [], []
 
         for table in soup.find_all("table"):
             header_row = table.find("tr")
@@ -194,22 +181,16 @@ def fetch_board(session, board_url, src):
             date_idx = next((i for i, h in enumerate(headers) if "등록일" in h or "작성일" in h), None)
             if title_idx is None:
                 continue
-
             for tr in table.find_all("tr"):
                 tds = tr.find_all("td")
                 if not tds or title_idx >= len(tds):
                     continue
-                title_cell = tds[title_idx]
-                title = clean(title_cell.get_text(" ", strip=True)).replace("새로운 글", "").strip()
+                title = clean(tds[title_idx].get_text(" ", strip=True)).replace("새로운 글", "").strip()
                 if len(title) < 3:
                     continue
-
                 page_table_rows += 1
                 raw_rows += 1
-                vals = {}
-                for i, td in enumerate(tds):
-                    if i < len(headers) and headers[i]:
-                        vals[headers[i]] = clean(td.get_text(" ", strip=True))
+                vals = {headers[i]: clean(td.get_text(" ", strip=True)) for i, td in enumerate(tds) if i < len(headers) and headers[i]}
                 row_text = clean(tr.get_text(" ", strip=True))
                 registered = date_norm(vals.get(headers[date_idx], "")) if date_idx is not None and date_idx < len(headers) else ""
                 if not registered:
@@ -218,22 +199,17 @@ def fetch_board(session, board_url, src):
                 page_row_keys.append((norm(title), registered))
                 if registered:
                     page_dates.append(registered)
-
-                if registered and not recent_enough(registered):
+                if registered and not recent_enough(registered, lookback_days):
                     continue
                 if EXCLUDE_WORDS.search(title):
                     continue
                 if not JOB_WORDS.search(title) and not BOARD_WORDS.search(board_label):
                     continue
-
-                page_recent_rows += 1
                 detail = detail_url(r.url, tr)
-                link = detail
                 key = (norm(title), registered, detail or board_url)
                 if key in seen:
                     continue
                 seen.add(key)
-
                 school = first_value(vals, ["학교명", "기관명"]) or school_from_title(title)
                 region = first_value(vals, ["지역"])
                 if region not in regions:
@@ -243,28 +219,15 @@ def fetch_board(session, board_url, src):
                 raw_type = first_value(vals, ["직종", "구분", "고용형태", "분야"])
                 raw_level = first_value(vals, ["학교급별", "학교급", "급별"])
                 apply_end = date_norm(first_value(vals, ["접수마감일", "마감일"]))
-                digest = hashlib.sha1(f"{office}|{title}|{registered}|{link}".encode("utf-8")).hexdigest()[:18]
+                digest = hashlib.sha1(f"{office}|{title}|{registered}|{detail}".encode("utf-8")).hexdigest()[:18]
                 collected.append({
-                    "id": "goe-office2-" + digest,
-                    "province": "경기",
-                    "school": school or office,
-                    "title": title,
-                    "subject": first_value(vals, ["과목", "분야"]),
-                    "region": region,
-                    "regions": regions,
-                    "type": guess_type(raw_type + " " + title),
+                    "id": "goe-office2-" + digest, "province": "경기", "school": school or office,
+                    "title": title, "subject": first_value(vals, ["과목", "분야"]), "region": region,
+                    "regions": regions, "type": guess_type(raw_type + " " + title),
                     "schoolLevel": guess_school_level((raw_level or "") + " " + school + " " + title),
-                    "applyStart": "",
-                    "applyEnd": apply_end,
-                    "workStart": "",
-                    "workEnd": "",
-                    "registered": registered,
-                    "headcount": "",
-                    "source": office,
-                    "checkedSources": [office],
-                    "sourceType": "교육지원청 개별 게시판",
-                    "url": link,
-                    "boardUrl": board_url,
+                    "applyStart": "", "applyEnd": apply_end, "workStart": "", "workEnd": "",
+                    "registered": registered, "headcount": "", "source": office, "checkedSources": [office],
+                    "sourceType": "교육지원청 개별 게시판", "url": detail, "boardUrl": board_url,
                     "detailLinkResolved": bool(detail),
                 })
 
@@ -278,21 +241,20 @@ def fetch_board(session, board_url, src):
         if signature:
             seen_page_signatures.add(signature)
         fully_dated = len(page_dates) == page_table_rows
-        if fully_dated and page_dates and all(not recent_enough(d) for d in page_dates):
-            consecutive_old_pages += 1
-        else:
-            consecutive_old_pages = 0
+        consecutive_old_pages = consecutive_old_pages + 1 if fully_dated and page_dates and all(not recent_enough(d, lookback_days) for d in page_dates) else 0
         if consecutive_old_pages >= 2:
             stop_reason = "retention_boundary"
             break
+        if max_pages and page >= max_pages:
+            stop_reason = "page_cap"
+            break
         page += 1
 
-    return collected, {"url": board_url, "rawRows": raw_rows, "pagesOk": pages_ok, "explicitEmpty": explicit_empty, "error": late_error, "stopReason": stop_reason, "crossedLookback": stop_reason == "retention_boundary", "lastPage": pages_ok}
+    return collected, {"url": board_url, "rawRows": raw_rows, "pagesOk": pages_ok, "explicitEmpty": explicit_empty, "error": late_error, "stopReason": stop_reason, "crossedLookback": stop_reason == "retention_boundary", "lastPage": pages_ok, "pageCapHit": stop_reason == "page_cap"}
 
 
 def merge_jobs(existing, additions):
-    by_key = {}
-    output = []
+    by_key, output = {}, []
 
     def key_for(j):
         raw_url = j.get("url") or ""
@@ -306,9 +268,7 @@ def merge_jobs(existing, additions):
                 return f"mircms|{host}|{bbs}|{ntt}"
         except Exception:
             pass
-        title = norm(j.get("title", ""))
-        school = norm(j.get("school", ""))
-        province = j.get("province", "")
+        title, school, province = norm(j.get("title", "")), norm(j.get("school", "")), j.get("province", "")
         return province + "|" + title if len(title) >= 14 else province + "|" + title + "|" + school
 
     for job in existing + additions:
@@ -329,70 +289,67 @@ def merge_jobs(existing, additions):
             if not old.get(field) and job.get(field):
                 old[field] = job[field]
         if old.get("sourceType") == "교육지원청 개별 게시판" and job.get("detailLinkResolved") and job.get("url"):
-            old_url = old.get("url", "")
-            old_board = old.get("boardUrl", "")
+            old_url, old_board = old.get("url", ""), old.get("boardUrl", "")
             if (not old_url) or old_url == old_board or "selectNttList.do" in old_url or old.get("detailLinkResolved") is False:
-                old["url"] = job["url"]
-                old["boardUrl"] = job.get("boardUrl", old_board)
-                old["detailLinkResolved"] = True
+                old["url"], old["boardUrl"], old["detailLinkResolved"] = job["url"], job.get("boardUrl", old_board), True
         old["regions"] = list(dict.fromkeys((old.get("regions") or []) + (job.get("regions") or [])))
     output.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
     return output
 
 
+def parse_args():
+    p = argparse.ArgumentParser()
+    p.add_argument("-i", "--input", default="jobs.json")
+    p.add_argument("-o", "--output", default="jobs.json")
+    p.add_argument("--lookback-days", type=int, default=90)
+    p.add_argument("-p", "--max-pages", type=int, default=0, help="fail closed if this page cap is hit before a safe stop; 0 disables cap")
+    args = p.parse_args()
+    if args.lookback_days < 1 or args.max_pages < 0:
+        p.error("lookback-days must be >=1 and max-pages must be >=0")
+    return args
+
+
 def main():
+    args = parse_args()
+    input_path = (ROOT / args.input).resolve() if not Path(args.input).is_absolute() else Path(args.input)
+    output_path = (ROOT / args.output).resolve() if not Path(args.output).is_absolute() else Path(args.output)
     sources = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))
-    payload = json.loads(JOBS_PATH.read_text(encoding="utf-8"))
+    payload = json.loads(input_path.read_text(encoding="utf-8"))
     offices = sources["gyeonggi"]["supportOffices"]
     session = requests.Session()
     session.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.5"})
-
-    all_new = []
-    statuses = []
+    all_new, statuses = [], []
     error_prefixes = {src["name"] + ":" for src in offices}
     old_errors = [e for e in payload.get("errors", []) if not any(str(e).startswith(prefix) for prefix in error_prefixes)]
 
     for src in offices:
         boards = list(dict.fromkeys(src.get("boardUrls", [])))
-        board_meta = []
-        rows = []
+        board_meta, rows = [], []
         for board in boards:
-            found, meta = fetch_board(session, board, src)
+            found, meta = fetch_board(session, board, src, args.lookback_days, args.max_pages)
             rows.extend(found)
             board_meta.append(meta)
-
         raw_total = sum(m.get("rawRows", 0) for m in board_meta)
         pages_ok = sum(m.get("pagesOk", 0) for m in board_meta)
         explicit_empty = any(m.get("explicitEmpty") for m in board_meta)
         errors = [m.get("error") for m in board_meta if m.get("error")]
         safe_stops = {"no_rows", "repeated_page", "retention_boundary"}
         traversal_complete = bool(board_meta) and all((not m.get("error")) and m.get("stopReason") in safe_stops for m in board_meta)
-
         if not boards:
             state, ok, message = "error", False, "실제 채용 게시판 URL 미등록"
         elif raw_total > 0 and traversal_complete:
             state, ok, message = "ok", True, f"실제 게시판 행 {raw_total}건 완전순회 · 최근 채용 {len(rows)}건"
         elif raw_total > 0:
-            state, ok, message = "needs_check", False, f"게시판 행 {raw_total}건 확인했으나 pagination 종료 근거 불충분"
+            caps = [m for m in board_meta if m.get("pageCapHit")]
+            suffix = f" · page cap {args.max_pages} 도달" if caps else ""
+            state, ok, message = "needs_check", False, f"게시판 행 {raw_total}건 확인했으나 pagination 종료 근거 불충분{suffix}"
         elif pages_ok and explicit_empty:
             state, ok, message = "empty", True, "공식 게시판 정상 · 현재 게시물 0건"
         elif pages_ok:
             state, ok, message = "needs_check", False, "공식 페이지 접속 성공 · 채용 표 구조 추가 확인 필요"
         else:
             state, ok, message = "error", False, (errors[0] if errors else "공식 게시판 접속 실패")
-
-        status = {
-            "name": src["name"],
-            "url": src.get("url", boards[0] if boards else ""),
-            "boards": boards,
-            "count": len(rows),
-            "rawRows": raw_total,
-            "ok": ok,
-            "state": state,
-            "message": message,
-            "parser": "gyeonggi-mircms-table-v2",
-            "boardHealth": board_meta,
-        }
+        status = {"name": src["name"], "url": src.get("url", boards[0] if boards else ""), "boards": boards, "count": len(rows), "rawRows": raw_total, "ok": ok, "state": state, "message": message, "parser": "gyeonggi-mircms-table-v2.1", "boardHealth": board_meta}
         statuses.append(status)
         all_new.extend(rows)
         if not ok:
@@ -403,16 +360,15 @@ def main():
     payload["jobs"] = merge_jobs(payload.get("jobs", []), all_new)
     payload["errors"] = old_errors[:100]
     payload.setdefault("repair", {})["gyeonggiSupport"] = {
-        "checkedAt": NOW.strftime("%Y-%m-%d %H:%M KST"),
-        "parser": "gyeonggi-mircms-table-v2",
-        "offices": len(statuses),
-        "healthy": sum(1 for s in statuses if s["ok"]),
-        "needsCheck": sum(1 for s in statuses if not s["ok"]),
-        "recentJobsRead": len(all_new),
+        "checkedAt": NOW.strftime("%Y-%m-%d %H:%M KST"), "parser": "gyeonggi-mircms-table-v2.1",
+        "offices": len(statuses), "healthy": sum(1 for s in statuses if s["ok"]),
+        "needsCheck": sum(1 for s in statuses if not s["ok"]), "recentJobsRead": len(all_new),
+        "lookbackDays": args.lookback_days, "maxPages": args.max_pages,
     }
-    JOBS_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print("GYEONGGI SUPPORT REPAIR", payload["repair"]["gyeonggiSupport"])
+    return 0 if payload["repair"]["gyeonggiSupport"]["needsCheck"] == 0 else 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
