@@ -137,16 +137,31 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          # Generated datasets are snapshots, not mergeable source code. If another verified
-          # writer advanced main while this long recovery was crawling, keep that newer state and
-          # treat this candidate as superseded rather than failing or rebasing JSON snapshots.
+          # Generated datasets are snapshots, not generally mergeable. A concurrent quality audit,
+          # however, only changes its two diagnostic artifacts and must not invalidate an otherwise
+          # verified recovery candidate. Replay the candidate on top of that diagnostic-only commit;
+          # any other concurrent change still wins and causes this candidate to be discarded.
           git fetch origin main
           base_sha="$(cat /tmp/recovery_base_sha)"
           remote_sha="$(git rev-parse origin/main)"
           if [ "$remote_sha" != "$base_sha" ]; then
-            echo "Recovery candidate superseded by newer main: baseline=$base_sha origin/main=$remote_sha"
+            changed_paths="$(git diff --name-only "$base_sha" "$remote_sha")"
+            unsafe_paths="$(printf '%s\n' "$changed_paths" | grep -Ev '^(operational_quality_report\.json|operational_quality_history\.json)$' || true)"
+            if [ -n "$unsafe_paths" ]; then
+              echo "Recovery candidate superseded by newer data/code on main: baseline=$base_sha origin/main=$remote_sha"
+              printf '%s\n' "$unsafe_paths"
+              git reset --hard origin/main
+              exit 0
+            fi
+            echo "Only diagnostic quality artifacts advanced main; replaying verified recovery candidate"
+            git stash push -u -m recovery-candidate >/dev/null
             git reset --hard origin/main
-            exit 0
+            if ! git stash pop; then
+              echo "Recovery candidate could not be replayed cleanly; preserving newer main"
+              git reset --hard origin/main
+              git stash drop >/dev/null 2>&1 || true
+              exit 0
+            fi
           fi
 
           rm -f recovery_failure_report.json
