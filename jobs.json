@@ -954,8 +954,8 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-01 16:52 KST",
-    "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
+    "checkedAt": "2026-09-01 19:02 KST",
+    "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
       "total": 7529,
@@ -966,7 +966,7 @@
     "linkChecks": {
       "checked": 50,
       "failed": 0,
-      "soft": 1,
+      "soft": 2,
       "supportFailed": 0,
       "failures": [
         {
@@ -979,10 +979,21 @@
           "hard": false,
           "reason": "title-evidence-missing",
           "finalUrl": "https://www.goeas.kr/goeas/na/ntt/selectNttInfo.do?bbsId=6532&mi=11382&nttSn=1526699"
+        },
+        {
+          "title": "한솔초 교육공무직원(행정실무사) 대체인력 채용 공고",
+          "source": "성남교육지원청",
+          "sourceType": "교육지원청 개별 게시판",
+          "province": "경기",
+          "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17803&mi=23490&nttSn=1952051",
+          "status": 200,
+          "hard": false,
+          "reason": "title-evidence-missing",
+          "finalUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17803&mi=23490&nttSn=1952051"
         }
       ]
     },
-    "previousTotal": 18814,
+    "previousTotal": 18815,
     "currentTotal": 18815
   },
   "jobs": [
@@ -522474,11 +522485,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-01 16:50 KST",
+    "checkedAt": "2026-09-01 19:01 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-01 16:50 KST",
+    "checkedAt": "2026-09-01 19:01 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
