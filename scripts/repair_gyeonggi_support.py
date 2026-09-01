@@ -11,6 +11,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -317,6 +319,14 @@ def main():
     payload = json.loads(input_path.read_text(encoding="utf-8"))
     offices = sources["gyeonggi"]["supportOffices"]
     session = requests.Session()
+    retry_policy = Retry(
+        total=3, connect=3, read=3, status=3, backoff_factor=0.8,
+        status_forcelist=(408, 429, 500, 502, 503, 504),
+        allowed_methods=frozenset(("GET",)),
+        respect_retry_after_header=True, raise_on_status=False,
+    )
+    session.mount("https://", HTTPAdapter(max_retries=retry_policy))
+    session.mount("http://", HTTPAdapter(max_retries=retry_policy))
     session.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.5"})
     all_new, statuses = [], []
     error_prefixes = {src["name"] + ":" for src in offices}
