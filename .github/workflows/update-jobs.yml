@@ -79,6 +79,7 @@ jobs:
           grep -q 'RETRY_POLICY = Retry' scripts/scrape_jobs.py
 
       - name: Fast crawl of central portals and support-office current pages
+        timeout-minutes: 50
         run: |
           python scripts/update_collector_status.py --workflow fast --stage fast-crawl --state running
           python scripts/scrape_jobs.py
