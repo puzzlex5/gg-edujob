@@ -954,7 +954,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-01 16:06 KST",
+    "checkedAt": "2026-09-01 16:35 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -982,7 +982,7 @@
         }
       ]
     },
-    "previousTotal": 18734,
+    "previousTotal": 18814,
     "currentTotal": 18814
   },
   "jobs": [
@@ -522450,11 +522450,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-01 16:05 KST",
+    "checkedAt": "2026-09-01 16:34 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-01 16:05 KST",
+    "checkedAt": "2026-09-01 16:34 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -522495,5 +522495,12 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-01 16:34:08 KST",
+    "protectedOfficialIds": 17900,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
