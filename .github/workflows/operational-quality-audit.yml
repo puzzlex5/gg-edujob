@@ -12,8 +12,11 @@ on:
 permissions:
   contents: write
 
+# This workflow only writes diagnostic quality artifacts. Keep it out of the
+# canonical jobs.json writer lock so it cannot evict a pending reconciliation
+# run from GitHub Actions' single-pending concurrency slot.
 concurrency:
-  group: metro-edujob-data
+  group: metro-edujob-quality-audit
   cancel-in-progress: false
 
 jobs:
