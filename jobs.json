@@ -954,7 +954,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-01 22:01 KST",
+    "checkedAt": "2026-09-01 22:40 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -993,8 +993,8 @@
         }
       ]
     },
-    "previousTotal": 18879,
-    "currentTotal": 18881
+    "previousTotal": 18881,
+    "currentTotal": 18884
   },
   "jobs": [
     {
@@ -4763,6 +4763,33 @@
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
+    },
+    {
+      "id": "goe-58595",
+      "province": "경기",
+      "school": "안산부곡중학교",
+      "title": "안산부곡중] 2026학년도 계약제교원(시간강사) 채용공고(수학)",
+      "subject": "수학",
+      "region": "안산시",
+      "regions": [
+        "안산시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/01",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/09/18",
+      "workEnd": "2026/10/08",
+      "registered": "2026/09/01",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58595",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:58595"
     },
     {
       "id": "goe-58652",
@@ -9099,6 +9126,60 @@
       "nttSn": "1137140",
       "bbsId": "5218",
       "mi": "9406"
+    },
+    {
+      "id": "goe-58574",
+      "province": "경기",
+      "school": "효행초등학교",
+      "title": "효행초 기초학력 협력강사 모집 공고",
+      "subject": "기초학력 렵력강사",
+      "region": "화성시",
+      "regions": [
+        "화성시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/08/31",
+      "applyEnd": "2026/09/03",
+      "workStart": "2026/09/14",
+      "workEnd": "2026/12/18",
+      "registered": "2026/09/01",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58574",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:58574"
+    },
+    {
+      "id": "goe-58631",
+      "province": "경기",
+      "school": "봉일천고등학교",
+      "title": "기간제교원 채용 공고",
+      "subject": "미술",
+      "region": "파주시",
+      "regions": [
+        "파주시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/01",
+      "applyEnd": "2026/09/03",
+      "workStart": "2026/09/28",
+      "workEnd": "2026/12/29",
+      "registered": "2026/09/01",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58631",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:58631"
     },
     {
       "id": "goe-58655",
@@ -524301,11 +524382,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-01 22:00 KST",
+    "checkedAt": "2026-09-01 22:38 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-01 22:00 KST",
+    "checkedAt": "2026-09-01 22:38 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -524326,17 +524407,17 @@
     "seoulTotal": 521
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-01 21:59 KST",
+    "checkedAt": "2026-09-01 22:38 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6184,
     "detailPagesParsed": 2599,
-    "fieldsFilledThisRun": 2,
+    "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1099,
     "missingWorkPeriod": 2059,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-01 22:00 KST",
+      "checkedAt": "2026-09-01 22:38 KST",
       "candidates": 235,
       "detailPagesConfirmed": 230,
       "cacheEntriesImproved": 0,
@@ -524346,5 +524427,26 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-01 22:03:00 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 18058,
+    "datasetIdCountBefore": 18868,
+    "missingBefore": 3,
+    "recoveredNow": 3,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-01 22:38:00 KST",
+    "protectedOfficialIds": 18058,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
