@@ -38,6 +38,12 @@ def load(path, default):
         return default
 
 
+def is_recruitment_row(job):
+    """Keep the reconciliation population aligned with the published recruitment policy."""
+    title = str((job or {}).get("title") or "")
+    return not bool(primary.EXCLUDE_WORDS.search(title))
+
+
 def source_id(job):
     raw = job.get("url") or ""
     try:
@@ -91,7 +97,7 @@ def physical_board_identity(url):
 
 
 def ids_for_rows(rows):
-    return {sid for sid in (source_id(row) for row in rows) if sid}
+    return {sid for sid in (source_id(row) for row in rows if is_recruitment_row(row)) if sid}
 
 
 def effective_gyeonggi_metas(metas, rows_by_board):
@@ -132,6 +138,7 @@ def effective_gyeonggi_metas(metas, rows_by_board):
 
 
 def source_status(province, name, rows, coverage_complete=True, pages_scanned=0, access_errors=0, boards=None, board_health=None):
+    rows = [x for x in rows if is_recruitment_row(x)]
     ids = sorted({source_id(x) for x in rows if source_id(x)})
     return {
         "province": province, "name": name, "boards": boards or [],
@@ -152,8 +159,6 @@ def crawl_official_ids():
         and all(x.get("coverageComplete") for x in gg_central_health)
         and not any(x.get("accessError") or x.get("paginationRepeated") for x in gg_central_health)
     )
-    # The crawler itself fails closed, but persist its traversal proof in the reconciliation report
-    # so large/round counts are explainable instead of appearing as an unexplained aggregate.
     sources.append(source_status(
         "경기", primary.GYEONGGI["central"]["name"], gg_central,
         coverage_complete=gg_central_complete,
@@ -206,6 +211,8 @@ def crawl_official_ids():
 
     by_id = {}
     for row in all_rows:
+        if not is_recruitment_row(row):
+            continue
         sid = source_id(row)
         if sid and sid not in by_id:
             by_id[sid] = row
@@ -222,7 +229,7 @@ def main():
     entries = old_ledger.get("entries", {}) if isinstance(old_ledger, dict) else {}
 
     sources, official = crawl_official_ids()
-    dataset_ids_before = {source_id(j) for j in jobs if source_id(j)}
+    dataset_ids_before = {source_id(j) for j in jobs if source_id(j) and is_recruitment_row(j)}
     official_ids = set(official)
     missing_before = sorted(official_ids - dataset_ids_before)
 
@@ -237,6 +244,8 @@ def main():
     seen_ids = set()
     kept = []
     for job in jobs:
+        if not is_recruitment_row(job):
+            continue
         sid = source_id(job)
         if sid:
             if sid in seen_ids:
@@ -305,7 +314,7 @@ def main():
     LEDGER_PATH.write_text(json.dumps({
         "generatedAt": NOW_S,
         "populationPolicy": RECONCILIATION_POLICY,
-        "policy": "append-only stable official posting IDs across all 38 sources; title similarity never deletes source evidence",
+        "policy": "append-only stable official recruitment posting IDs across all 38 sources; result/selection notices are excluded by title policy; title similarity never deletes source evidence",
         "knownOfficialIdCount": len(entries), "entries": entries,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
