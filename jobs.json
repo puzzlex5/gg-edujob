@@ -954,7 +954,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-02 22:10 KST",
+    "checkedAt": "2026-09-02 22:46 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -982,7 +982,7 @@
         }
       ]
     },
-    "previousTotal": 18919,
+    "previousTotal": 18920,
     "currentTotal": 18920
   },
   "jobs": [
@@ -525197,11 +525197,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-02 22:09 KST",
+    "checkedAt": "2026-09-02 22:44 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-02 22:09 KST",
+    "checkedAt": "2026-09-02 22:44 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -525222,7 +525222,7 @@
     "seoulTotal": 519
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-02 22:07 KST",
+    "checkedAt": "2026-09-02 22:44 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6164,
     "detailPagesParsed": 2585,
@@ -525232,7 +525232,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-02 22:08 KST",
+      "checkedAt": "2026-09-02 22:45 KST",
       "candidates": 240,
       "detailPagesConfirmed": 235,
       "cacheEntriesImproved": 0,
@@ -525242,5 +525242,26 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-02 22:12:02 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 18033,
+    "datasetIdCountBefore": 18907,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-02 22:44:57 KST",
+    "protectedOfficialIds": 18033,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
