@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: pip install -r requirements.txt
       - name: Preserve published baseline
         run: |
           cp jobs.json /tmp/jobs_before_restore.json
