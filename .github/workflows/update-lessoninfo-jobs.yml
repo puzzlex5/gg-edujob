@@ -2,6 +2,10 @@ name: Update Lessoninfo recruitment jobs
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/crawl_lessoninfo_jobs.py'
+      - '.github/workflows/update-lessoninfo-jobs.yml'
   schedule:
     - cron: '27 * * * *'
 
@@ -50,7 +54,7 @@ jobs:
         continue-on-error: true
         run: |
           python - <<'PY'
-          import json, pathlib, sys
+          import json, pathlib
           p = pathlib.Path('lessoninfo_reconciliation_report.json')
           if not p.exists():
               raise SystemExit('missing reconciliation report')
