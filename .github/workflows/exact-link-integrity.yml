@@ -29,14 +29,16 @@ jobs:
           python-version: '3.12'
       - name: Install resolver dependencies
         run: pip install requests beautifulsoup4
-      - name: Remove legacy fixed-page resolver cap
+      - name: Verify target-aware resolver pagination guard
         run: |
           python scripts/hotfix_link_resolver_pagination.py
           python -m py_compile scripts/resolve_support_links.py scripts/hotfix_link_resolver_pagination.py scripts/verify_exact_support_links.py
+          ! grep -q 'MAX_FALLBACK_PAGES' scripts/resolve_support_links.py
           ! grep -q 'for page in range(1, 9):' scripts/resolve_support_links.py
-          grep -q 'for page in range(1, 501):' scripts/resolve_support_links.py
+          ! grep -q 'for page in range(1, 501):' scripts/resolve_support_links.py
+          grep -q 'while True:' scripts/resolve_support_links.py
           grep -q 'seen_page_sigs' scripts/resolve_support_links.py
-          grep -q 'current_exact = False' scripts/resolve_support_links.py
+          grep -q 'def exact_gyeonggi_url' scripts/resolve_support_links.py
       - name: Resolve exact individual posting links through board exhaustion
         run: python scripts/resolve_support_links.py
       - name: Require exact links for every support-office job
