@@ -26,6 +26,23 @@ if changed:
     P.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 print('SOURCE_HOTFIX_CHANGED', changed)
 
+# Keep result/personnel notices out even when source titles insert whitespace.
+# Reconciliation imports this same EXCLUDE_WORDS regex from scrape_jobs.py, so
+# patching it here keeps fast publication and the independent official-ID
+# population aligned instead of fixing only one side.
+SP = Path('scripts/scrape_jobs.py')
+s = SP.read_text(encoding='utf-8')
+exclude_changed = False
+legacy_exclude = '합격\\s*공고|인사발령")'
+hardened_exclude = '합격\\s*공고|인사\\s*발령")'
+if hardened_exclude not in s:
+    if legacy_exclude not in s:
+        raise RuntimeError('Recruitment exclusion regex marker not found')
+    s = s.replace(legacy_exclude, hardened_exclude, 1)
+    exclude_changed = True
+    SP.write_text(s, encoding='utf-8')
+print('RESULT_NOTICE_FILTER_HOTFIX_CHANGED', exclude_changed)
+
 # The central portal can return an entire page of IDs already seen in an earlier
 # recruitment category.  That is not an end-of-pagination signal: later pages can
 # still contain category-specific postings.  The authoritative 90-day crawler
