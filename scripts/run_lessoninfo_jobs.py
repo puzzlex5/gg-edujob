@@ -12,6 +12,23 @@ import json
 import crawl_lessoninfo_jobs as c
 
 
+# Keep historical seeds for backward compatibility, but also include the currently
+# observed public recruitment boards. Lessoninfo has changed board identifiers over
+# time, and treating an old board that returns HTTP 200 + zero rows as authoritative
+# can otherwise create a silent empty traversal.
+CURRENT_SEEDS = [
+    {"bo_table": "20161213204337_3675", "code": "20170307205448_7050", "label": "학원강사구인-현재"},
+    {"bo_table": "20170316171033_6494", "code": "20170307205423_8969", "label": "학교·방과후·늘봄-현재"},
+    {"bo_table": "20170316171033_6494", "code": "", "label": "학교·방과후·늘봄-전체"},
+]
+for seed in CURRENT_SEEDS:
+    if not any(
+        existing.get("bo_table") == seed["bo_table"] and existing.get("code", "") == seed["code"]
+        for existing in c.SEEDS
+    ):
+        c.SEEDS.append(seed)
+
+
 def main() -> int:
     s = c.session()
     base = None
