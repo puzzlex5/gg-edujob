@@ -16,7 +16,11 @@ def main() -> int:
     s = c.session()
     base = None
     robots_status = ""
-    for candidate in c.BASES:
+    # Lessoninfo currently serves its board routes reliably on the www host. Prefer it
+    # while retaining the bare host as a fallback.
+    bases = ["https://www.lessoninfo.co.kr", "https://lessoninfo.co.kr"]
+    bases.extend(candidate for candidate in c.BASES if candidate not in bases)
+    for candidate in bases:
         allowed, status = c.check_robots(s, candidate)
         if allowed:
             try:
@@ -85,7 +89,11 @@ def main() -> int:
 
     dataset_ids = set(jobs_by_id)
     missing_after = sorted(eligible_discovered_ids - dataset_ids)
-    healthy = traversal_complete and not missing_after and not detail_errors
+    # A complete-looking traversal that discovers zero candidates is not credible for
+    # these active recruitment boards. Treat it as a structural/host failure so an empty
+    # dataset can never become the new known-good state.
+    empty_traversal = not all_candidates
+    healthy = traversal_complete and not empty_traversal and not missing_after and not detail_errors
 
     if healthy:
         jobs = sorted(
@@ -141,6 +149,7 @@ def main() -> int:
         "rejectedNonRecruitment": len(rejected_ids),
         "detailErrorCount": len(detail_errors),
         "detailErrorExamples": detail_errors[:10],
+        "emptyTraversal": empty_traversal,
         "preservedPreviousDataset": not healthy,
         "errors": errors,
     }
