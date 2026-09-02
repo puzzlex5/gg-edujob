@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install collector dependencies
-        run: pip install requests beautifulsoup4
+        run: pip install -r requirements.txt
       - name: Mark fast refresh start
         run: python scripts/update_collector_status.py --workflow fast --stage baseline --state running
 
