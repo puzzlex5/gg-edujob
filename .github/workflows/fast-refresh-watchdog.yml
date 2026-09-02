@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/fast-refresh-watchdog.yml'
       - '.github/workflows/update-jobs.yml'
+      - 'scripts/hotfix_sources.py'
       - 'scripts/scrape_jobs.py'
       - 'scripts/repair_gyeonggi_support.py'
       - 'scripts/resolve_support_links.py'
@@ -100,6 +101,7 @@ jobs:
           # so a safety fix is exercised promptly rather than waiting several hours.
           validation_paths = [
               '.github/workflows/update-jobs.yml',
+              'scripts/hotfix_sources.py',
               'scripts/scrape_jobs.py',
               'scripts/repair_gyeonggi_support.py',
               'scripts/resolve_support_links.py',
