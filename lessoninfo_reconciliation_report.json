@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-03T00:41:28+09:00",
+  "generatedAt": "2026-09-03T01:08:04+09:00",
   "policy": "lessoninfo-recruitment-only-stable-id-v2",
   "lookbackDays": 120,
-  "base": "https://lessoninfo.co.kr",
+  "base": "https://www.lessoninfo.co.kr",
   "robotsStatus": "allowed",
-  "healthy": true,
+  "healthy": false,
   "traversalComplete": true,
   "sourceReports": [
     {
@@ -80,6 +80,7 @@
   "rejectedNonRecruitment": 0,
   "detailErrorCount": 0,
   "detailErrorExamples": [],
-  "preservedPreviousDataset": false,
+  "emptyTraversal": true,
+  "preservedPreviousDataset": true,
   "errors": []
 }
