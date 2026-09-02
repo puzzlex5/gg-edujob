@@ -40,7 +40,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: pip install -r requirements.txt
       - name: Mark reconciliation start
         run: python scripts/update_collector_status.py --workflow reconciliation --stage baseline --state running
       - name: Preserve verified publication baseline
