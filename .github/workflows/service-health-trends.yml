@@ -1,0 +1,56 @@
+name: Service health trends
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/update_health_trends.py'
+      - '.github/workflows/service-health-trends.yml'
+  schedule:
+    - cron: '57 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-observability
+  cancel-in-progress: true
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest verified state
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Syntax check trend observer
+        run: python -m py_compile scripts/update_health_trends.py
+      - name: Record rolling health snapshot
+        id: trend
+        continue-on-error: true
+        run: python scripts/update_health_trends.py
+      - name: Commit evidence before alerting
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add health_trend_history.json health_anomaly_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record recruitment service health trend'
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((i*4))
+          done
+          exit 1
+      - name: Fail visibly only on hard integrity failure
+        if: steps.trend.outcome != 'success'
+        run: exit 1
