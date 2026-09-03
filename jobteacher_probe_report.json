@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-09-03T22:54:24+09:00",
+  "source": "잡티처",
+  "baseUrl": "https://www.jobteacher.kr",
+  "mode": "read-only-onboarding-probe",
+  "publicationEnabled": false,
+  "surfaces": [],
+  "summary": {
+    "metroSurfacesReachable": false,
+    "stableIdEvidence": false,
+    "paginationEvidence": false,
+    "readyForDedicatedCollector": false,
+    "errors": 3
+  },
+  "errors": [
+    {
+      "surface": "all",
+      "error": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    },
+    {
+      "surface": "seoul",
+      "error": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists/all/?is_search=yes&sel_area%5B%5D=1 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    },
+    {
+      "surface": "gyeonggi",
+      "error": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists/all/?is_search=yes&sel_area%5B%5D=2422 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    }
+  ],
+  "policy": {
+    "publishBeforeValidation": false,
+    "regionsAllowed": [
+      "서울",
+      "경기"
+    ],
+    "nextGate": "durable ID + complete pagination + current-job classification + missingAfter=0"
+  }
+}
