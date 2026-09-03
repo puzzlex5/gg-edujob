@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/crawl_jobteacher_browser.py'
+      - 'scripts/validate_jobteacher_links.py'
       - '.github/workflows/update-jobteacher-jobs.yml'
   schedule:
     - cron: '43 * * * *'
@@ -36,18 +37,25 @@ jobs:
           python -m pip install --disable-pip-version-check -r requirements.txt playwright
           python -m playwright install --with-deps chromium
       - name: Syntax check
-        run: python -m py_compile scripts/crawl_jobteacher_browser.py
+        run: python -m py_compile scripts/crawl_jobteacher_browser.py scripts/validate_jobteacher_links.py
       - name: Collect isolated JobTeacher jobs
         id: collect
         continue-on-error: true
         run: python scripts/crawl_jobteacher_browser.py
+      - name: Validate all current JobTeacher detail links
+        id: detail_links
+        if: steps.collect.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/validate_jobteacher_links.py
       - name: Validate isolation and completeness gate
         id: validate
+        if: steps.collect.outcome == 'success' && steps.detail_links.outcome == 'success'
         continue-on-error: true
         run: |
           python - <<'PY'
           import json, pathlib
           r=json.loads(pathlib.Path('jobteacher_reconciliation_report.json').read_text(encoding='utf-8'))
+          d=json.loads(pathlib.Path('jobteacher_detail_link_report.json').read_text(encoding='utf-8'))
           assert r.get('policy')=='jobteacher-active-browser-v1'
           assert r.get('publicationEnabled') is False
           assert r.get('healthy') is True
@@ -55,17 +63,23 @@ jobs:
           assert r.get('missingAfterCount')==0
           assert len(r.get('sourceReports') or [])==2
           assert all((x.get('ids') or 0)>0 and x.get('complete') for x in r['sourceReports'])
+          assert d.get('policy')=='jobteacher-detail-link-browser-v1'
+          assert d.get('healthy') is True
+          assert d.get('detailCoverageComplete') is True
+          assert d.get('detailErrorCount')==0
+          assert d.get('tlsVerificationDisabled') is False
           jobs=json.loads(pathlib.Path('jobteacher_jobs.json').read_text(encoding='utf-8'))
           assert jobs and all(j.get('province') in {'서울','경기'} for j in jobs)
           assert all(str(j.get('sourceIdentity','')).startswith('jobteacher:') for j in jobs)
-          print(json.dumps({'healthy':r['healthy'],'count':len(jobs),'sources':r['sourceReports']},ensure_ascii=False))
+          assert d.get('currentIdCount') == len(jobs)
+          print(json.dumps({'healthy':r['healthy'],'count':len(jobs),'detailVerified':d['verifiedCurrentCount'],'sources':r['sourceReports']},ensure_ascii=False))
           PY
       - name: Commit isolated evidence and healthy dataset
         if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobteacher_jobs.json jobteacher_source_id_ledger.json jobteacher_reconciliation_report.json jobteacher_collection_state.json 2>/dev/null || true
+          git add jobteacher_jobs.json jobteacher_source_id_ledger.json jobteacher_reconciliation_report.json jobteacher_collection_state.json jobteacher_detail_link_ledger.json jobteacher_detail_link_report.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'Update isolated JobTeacher recruitment collection'
             for i in 1 2 3; do
@@ -74,5 +88,5 @@ jobs:
             done
           fi
       - name: Fail after preserving diagnostics
-        if: steps.collect.outcome != 'success' || steps.validate.outcome != 'success'
+        if: steps.collect.outcome != 'success' || steps.detail_links.outcome != 'success' || steps.validate.outcome != 'success'
         run: exit 1
