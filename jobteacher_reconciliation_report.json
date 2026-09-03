@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-09-04T00:31:30+09:00",
+  "source": "잡티처",
+  "policy": "jobteacher-active-browser-v1",
+  "healthy": true,
+  "traversalComplete": true,
+  "sourceReports": [
+    {
+      "surface": "seoul",
+      "pagesExpected": 91,
+      "pagesTraversed": 91,
+      "ids": 1752,
+      "complete": true
+    },
+    {
+      "surface": "gyeonggi",
+      "pagesExpected": 126,
+      "pagesTraversed": 126,
+      "ids": 2448,
+      "complete": true
+    }
+  ],
+  "candidateIdCount": 4037,
+  "publishedIdCount": 4037,
+  "missingAfterCount": 0,
+  "missingAfter": [],
+  "errors": [],
+  "previousPublishedCount": 0,
+  "severeDrop": false,
+  "preservedPreviousDataset": false,
+  "publicationEnabled": false,
+  "nextGate": "detail-link validation + generic unified-search adapter"
+}
