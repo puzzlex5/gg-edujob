@@ -17,7 +17,7 @@ permissions:
 
 concurrency:
   group: metro-edujob-lessoninfo
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   collect:
