@@ -1,31 +1,622 @@
 {
-  "generatedAt": "2026-09-03T22:54:24+09:00",
+  "generatedAt": "2026-09-03T23:14:50+09:00",
   "source": "잡티처",
   "baseUrl": "https://www.jobteacher.kr",
   "mode": "read-only-onboarding-probe",
   "publicationEnabled": false,
-  "surfaces": [],
-  "summary": {
-    "metroSurfacesReachable": false,
-    "stableIdEvidence": false,
-    "paginationEvidence": false,
-    "readyForDedicatedCollector": false,
-    "errors": 3
-  },
-  "errors": [
+  "surfaces": [
     {
       "surface": "all",
-      "error": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+      "requestedUrl": "https://www.jobteacher.kr/employ/lists",
+      "finalUrl": "https://www.jobteacher.kr/employ/lists",
+      "httpStatus": 200,
+      "transport": "chromium-verified-tls",
+      "tlsVerificationDisabled": false,
+      "htmlBytes": 117526,
+      "blockedOrHumanCheck": false,
+      "reachable": true,
+      "metroTextPresent": true,
+      "jobLikeUrlCount": 53,
+      "candidateStableIdCount": 53,
+      "candidateStableIdExamples": [
+        {
+          "key": "path-id",
+          "value": "275570",
+          "url": "https://www.jobteacher.kr/employ/detail/275570"
+        },
+        {
+          "key": "path-id",
+          "value": "444794",
+          "url": "https://www.jobteacher.kr/employ/detail/444794"
+        },
+        {
+          "key": "path-id",
+          "value": "475748",
+          "url": "https://www.jobteacher.kr/employ/detail/475748"
+        },
+        {
+          "key": "path-id",
+          "value": "255691",
+          "url": "https://www.jobteacher.kr/employ/detail/255691"
+        },
+        {
+          "key": "path-id",
+          "value": "599291",
+          "url": "https://www.jobteacher.kr/employ/detail/599291"
+        },
+        {
+          "key": "path-id",
+          "value": "599288",
+          "url": "https://www.jobteacher.kr/employ/detail/599288"
+        },
+        {
+          "key": "path-id",
+          "value": "389552",
+          "url": "https://www.jobteacher.kr/employ/detail/389552"
+        },
+        {
+          "key": "path-id",
+          "value": "647285",
+          "url": "https://www.jobteacher.kr/employ/detail/647285"
+        },
+        {
+          "key": "path-id",
+          "value": "645060",
+          "url": "https://www.jobteacher.kr/employ/detail/645060"
+        },
+        {
+          "key": "path-id",
+          "value": "629753",
+          "url": "https://www.jobteacher.kr/employ/detail/629753"
+        },
+        {
+          "key": "path-id",
+          "value": "611312",
+          "url": "https://www.jobteacher.kr/employ/detail/611312"
+        },
+        {
+          "key": "path-id",
+          "value": "366506",
+          "url": "https://www.jobteacher.kr/employ/detail/366506"
+        },
+        {
+          "key": "path-id",
+          "value": "307499",
+          "url": "https://www.jobteacher.kr/employ/detail/307499"
+        },
+        {
+          "key": "path-id",
+          "value": "684231",
+          "url": "https://www.jobteacher.kr/employ/detail/684231"
+        },
+        {
+          "key": "path-id",
+          "value": "673262",
+          "url": "https://www.jobteacher.kr/employ/detail/673262"
+        },
+        {
+          "key": "path-id",
+          "value": "687389",
+          "url": "https://www.jobteacher.kr/employ/detail/687389"
+        },
+        {
+          "key": "path-id",
+          "value": "684236",
+          "url": "https://www.jobteacher.kr/employ/detail/684236"
+        },
+        {
+          "key": "path-id",
+          "value": "687912",
+          "url": "https://www.jobteacher.kr/employ/detail/687912"
+        },
+        {
+          "key": "path-id",
+          "value": "684896",
+          "url": "https://www.jobteacher.kr/employ/detail/684896"
+        },
+        {
+          "key": "path-id",
+          "value": "682874",
+          "url": "https://www.jobteacher.kr/employ/detail/682874"
+        },
+        {
+          "key": "path-id",
+          "value": "566111",
+          "url": "https://www.jobteacher.kr/employ/detail/566111"
+        },
+        {
+          "key": "path-id",
+          "value": "686735",
+          "url": "https://www.jobteacher.kr/employ/detail/686735"
+        },
+        {
+          "key": "path-id",
+          "value": "684924",
+          "url": "https://www.jobteacher.kr/employ/detail/684924"
+        },
+        {
+          "key": "path-id",
+          "value": "686738",
+          "url": "https://www.jobteacher.kr/employ/detail/686738"
+        },
+        {
+          "key": "path-id",
+          "value": "687395",
+          "url": "https://www.jobteacher.kr/employ/detail/687395"
+        },
+        {
+          "key": "path-id",
+          "value": "594376",
+          "url": "https://www.jobteacher.kr/employ/detail/594376"
+        },
+        {
+          "key": "path-id",
+          "value": "682872",
+          "url": "https://www.jobteacher.kr/employ/detail/682872"
+        },
+        {
+          "key": "path-id",
+          "value": "687062",
+          "url": "https://www.jobteacher.kr/employ/detail/687062"
+        },
+        {
+          "key": "path-id",
+          "value": "617841",
+          "url": "https://www.jobteacher.kr/employ/detail/617841"
+        },
+        {
+          "key": "path-id",
+          "value": "687095",
+          "url": "https://www.jobteacher.kr/employ/detail/687095"
+        }
+      ],
+      "paginationLinkCount": 6,
+      "paginationExamples": [
+        "https://www.jobteacher.kr/employ/lists/all/?&page=2",
+        "https://www.jobteacher.kr/employ/lists/all/?&page=3",
+        "https://www.jobteacher.kr/employ/lists/all/?&page=4",
+        "https://www.jobteacher.kr/employ/lists/all/?&page=5",
+        "https://www.jobteacher.kr/employ/lists/all/?&page=6",
+        "https://www.jobteacher.kr/employ/lists/all/?&page=302"
+      ],
+      "rowSampleCount": 21,
+      "rowSamples": [
+        "학원명 근무지역 채용정보 제목 | 요약정보 모집부문(과목) 마감일 수정일",
+        "임용닷컴 서울 전체 임용닷컴과 함께 할 교수님을 모십니다. 기타 스크랩 새창보기 기타 과목 채용시까지 Today",
+        "라이징수학학원 인천 연수구 중고등수학선생님 모십니다. 중/고등부 스크랩 새창보기 수학 상시채용 Today",
+        "(주)남양주정상에듀 경기 남양주시 [정상어학원 남양주분원] 영어선생님(초중등) 신입/경력 초/중등부 스크랩 새창보기 영어 D-1 Today",
+        "시사에듀어학원 경북 포항시 북구 시사에듀어학원 포항점에서 영어강사님을 모집합니다 대학/일반 스크랩 새창보기 영어 ~09.11 Today",
+        "블라썸에듀학원 경기 안양시 경기 군포시 블라썸에듀 안양, 평촌, 산본 영어학원 신규 관리강사를 모십니다. 중/고등부 스크랩 새창보기 영어 ~09.30 Today",
+        "해커스 교육그룹 서울 전체 해커스 교육그룹 전문강사 모집 기타,기타,기타,기타 스크랩 새창보기 기타 과목 일어/JPT 외 상시채용 Today",
+        "(주)아발론교육 서울 전체 경기 전체 [아발론 교육] 영어강사 상시 채용 초/중등부 스크랩 새창보기 영어 상시채용 Today",
+        "이음에듀학원 충남 홍성군 초중고 또는 중고 수학선생님 초/중/고등부 스크랩 새창보기 수학 ~10.31 Today",
+        "킹글리쉬어학원 경북 영주시 초중학생 대상 영어 강사 모집 초/중등부 스크랩 새창보기 영어 ~09.27 Today",
+        "주식회사 조은에듀 (효자지점) 경북 포항시 남구 초등/중등 영어 강사모집(1시~6시50분) 초/중등부 스크랩 새창보기 영어 ~09.26 Today",
+        "와이비엠이씨씨어학원 경북 포항시 남구 남구YBM ECC어학원 영어강사 구합니다!! (전공 +경력자 확실 하게 우대) 초/중등부 스크랩 새창보기 영어 ~10.23 Today"
+      ],
+      "page2Url": "https://www.jobteacher.kr/employ/lists/all/?&page=2",
+      "page2HttpStatus": 200,
+      "page2Transport": "chromium-verified-tls",
+      "page2RowSampleCount": 21,
+      "paginationChangesContent": true
     },
     {
       "surface": "seoul",
-      "error": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists/all/?is_search=yes&sel_area%5B%5D=1 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+      "requestedUrl": "https://www.jobteacher.kr/employ/lists/all/?is_search=yes&sel_area%5B%5D=1",
+      "finalUrl": "https://www.jobteacher.kr/employ/lists/all/?is_search=yes&sel_area%5B%5D=1",
+      "httpStatus": 200,
+      "transport": "chromium-verified-tls",
+      "tlsVerificationDisabled": false,
+      "htmlBytes": 122741,
+      "blockedOrHumanCheck": false,
+      "reachable": true,
+      "metroTextPresent": true,
+      "jobLikeUrlCount": 63,
+      "candidateStableIdCount": 63,
+      "candidateStableIdExamples": [
+        {
+          "key": "path-id",
+          "value": "255691",
+          "url": "https://www.jobteacher.kr/employ/detail/255691"
+        },
+        {
+          "key": "path-id",
+          "value": "599291",
+          "url": "https://www.jobteacher.kr/employ/detail/599291"
+        },
+        {
+          "key": "path-id",
+          "value": "444794",
+          "url": "https://www.jobteacher.kr/employ/detail/444794"
+        },
+        {
+          "key": "path-id",
+          "value": "275570",
+          "url": "https://www.jobteacher.kr/employ/detail/275570"
+        },
+        {
+          "key": "path-id",
+          "value": "475748",
+          "url": "https://www.jobteacher.kr/employ/detail/475748"
+        },
+        {
+          "key": "path-id",
+          "value": "599288",
+          "url": "https://www.jobteacher.kr/employ/detail/599288"
+        },
+        {
+          "key": "path-id",
+          "value": "389552",
+          "url": "https://www.jobteacher.kr/employ/detail/389552"
+        },
+        {
+          "key": "path-id",
+          "value": "647285",
+          "url": "https://www.jobteacher.kr/employ/detail/647285"
+        },
+        {
+          "key": "path-id",
+          "value": "645060",
+          "url": "https://www.jobteacher.kr/employ/detail/645060"
+        },
+        {
+          "key": "path-id",
+          "value": "611312",
+          "url": "https://www.jobteacher.kr/employ/detail/611312"
+        },
+        {
+          "key": "path-id",
+          "value": "684231",
+          "url": "https://www.jobteacher.kr/employ/detail/684231"
+        },
+        {
+          "key": "path-id",
+          "value": "307499",
+          "url": "https://www.jobteacher.kr/employ/detail/307499"
+        },
+        {
+          "key": "path-id",
+          "value": "366506",
+          "url": "https://www.jobteacher.kr/employ/detail/366506"
+        },
+        {
+          "key": "path-id",
+          "value": "629753",
+          "url": "https://www.jobteacher.kr/employ/detail/629753"
+        },
+        {
+          "key": "path-id",
+          "value": "617841",
+          "url": "https://www.jobteacher.kr/employ/detail/617841"
+        },
+        {
+          "key": "path-id",
+          "value": "687395",
+          "url": "https://www.jobteacher.kr/employ/detail/687395"
+        },
+        {
+          "key": "path-id",
+          "value": "687914",
+          "url": "https://www.jobteacher.kr/employ/detail/687914"
+        },
+        {
+          "key": "path-id",
+          "value": "684236",
+          "url": "https://www.jobteacher.kr/employ/detail/684236"
+        },
+        {
+          "key": "path-id",
+          "value": "594376",
+          "url": "https://www.jobteacher.kr/employ/detail/594376"
+        },
+        {
+          "key": "path-id",
+          "value": "566111",
+          "url": "https://www.jobteacher.kr/employ/detail/566111"
+        },
+        {
+          "key": "path-id",
+          "value": "687389",
+          "url": "https://www.jobteacher.kr/employ/detail/687389"
+        },
+        {
+          "key": "path-id",
+          "value": "684896",
+          "url": "https://www.jobteacher.kr/employ/detail/684896"
+        },
+        {
+          "key": "path-id",
+          "value": "687912",
+          "url": "https://www.jobteacher.kr/employ/detail/687912"
+        },
+        {
+          "key": "path-id",
+          "value": "686735",
+          "url": "https://www.jobteacher.kr/employ/detail/686735"
+        },
+        {
+          "key": "path-id",
+          "value": "684763",
+          "url": "https://www.jobteacher.kr/employ/detail/684763"
+        },
+        {
+          "key": "path-id",
+          "value": "687062",
+          "url": "https://www.jobteacher.kr/employ/detail/687062"
+        },
+        {
+          "key": "path-id",
+          "value": "682872",
+          "url": "https://www.jobteacher.kr/employ/detail/682872"
+        },
+        {
+          "key": "path-id",
+          "value": "687095",
+          "url": "https://www.jobteacher.kr/employ/detail/687095"
+        },
+        {
+          "key": "path-id",
+          "value": "684924",
+          "url": "https://www.jobteacher.kr/employ/detail/684924"
+        },
+        {
+          "key": "path-id",
+          "value": "682874",
+          "url": "https://www.jobteacher.kr/employ/detail/682874"
+        }
+      ],
+      "paginationLinkCount": 6,
+      "paginationExamples": [
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=2",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=3",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=4",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=5",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=6",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=91"
+      ],
+      "rowSampleCount": 21,
+      "rowSamples": [
+        "학원명 근무지역 채용정보 제목 | 요약정보 모집부문(과목) 마감일 수정일",
+        "임용닷컴 서울 전체 임용닷컴과 함께 할 교수님을 모십니다. 기타 스크랩 새창보기 기타 과목 채용시까지 Today",
+        "해커스 교육그룹 서울 전체 해커스 교육그룹 전문강사 모집 기타,기타,기타,기타 스크랩 새창보기 기타 과목 일어/JPT 외 상시채용 Today",
+        "(주)아발론교육 서울 전체 경기 전체 [아발론 교육] 영어강사 상시 채용 초/중등부 스크랩 새창보기 영어 상시채용 Today",
+        "(주)정상제이엘에스 서울 전체 경기 전체 정상어학원[본사직영] - 서울 경기지역 영어 어학원 강사 경력/신입 채용 초/중등부 스크랩 새창보기 영어 상시채용 Today",
+        "(주)가디언어학원 서울 전체 경기 고양시 마포 중/고등 영어강사 채용 중/고등부 스크랩 새창보기 영어 ~09.19 Today",
+        "지성과감성학원 서울 양천구 [목동 국어학원][지성과감성] 중,고등부 겸임 강사 모집합니다. 중/고등부 스크랩 새창보기 국어 ~09.26 Today",
+        "(주) 생각의창 서울 양천구 [목동 생각의창 국어학원] 중, 고등부 신입 및 경력 강사 모집 중/고등부 스크랩 새창보기 국어 ~09.16 Today",
+        "주식회사창의와탐구 서울 서초구 와이즈만/직영 하반기 과학, 수학 교사 공개 채용 유치부,유치부 스크랩 새창보기 과학계열 수학 ~09.22 Today",
+        "위드아이 몬테소리 학원 서울 영등포구 몬테소리 평일 오후 파트타임 교사 모집 (서울 영등포구) 유치부 스크랩 새창보기 기타 과목 ~10.03 Today",
+        "중랑정상어학원 서울 중랑구 정상어학원 중랑분원에서 함께할 수학과 강사모집(월수금 파트) 초/중등부 스크랩 새창보기 수학 ~09.23 Today",
+        "상상코칭 서울 전체 경기 전체 외 학생들의 멘토가 되어주실 초중고등 선생님 모십니다(비대면면접,전국 재택근무,화상 및 방문수업,회원다수,자기계발가능) 중/고등부,중/고등부,중/고등부,중/고등부 스크랩 새창보기 수학 과학계열 외 채용시까지 Today"
+      ],
+      "page2Url": "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=1&is_search=yes&page=2",
+      "page2HttpStatus": 200,
+      "page2Transport": "chromium-verified-tls",
+      "page2RowSampleCount": 20,
+      "paginationChangesContent": true
     },
     {
       "surface": "gyeonggi",
-      "error": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists/all/?is_search=yes&sel_area%5B%5D=2422 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+      "requestedUrl": "https://www.jobteacher.kr/employ/lists/all/?is_search=yes&sel_area%5B%5D=2422",
+      "finalUrl": "https://www.jobteacher.kr/employ/lists/all/?is_search=yes&sel_area%5B%5D=2422",
+      "httpStatus": 200,
+      "transport": "chromium-verified-tls",
+      "tlsVerificationDisabled": false,
+      "htmlBytes": 123693,
+      "blockedOrHumanCheck": false,
+      "reachable": true,
+      "metroTextPresent": true,
+      "jobLikeUrlCount": 64,
+      "candidateStableIdCount": 64,
+      "candidateStableIdExamples": [
+        {
+          "key": "path-id",
+          "value": "444794",
+          "url": "https://www.jobteacher.kr/employ/detail/444794"
+        },
+        {
+          "key": "path-id",
+          "value": "599291",
+          "url": "https://www.jobteacher.kr/employ/detail/599291"
+        },
+        {
+          "key": "path-id",
+          "value": "475748",
+          "url": "https://www.jobteacher.kr/employ/detail/475748"
+        },
+        {
+          "key": "path-id",
+          "value": "255691",
+          "url": "https://www.jobteacher.kr/employ/detail/255691"
+        },
+        {
+          "key": "path-id",
+          "value": "275570",
+          "url": "https://www.jobteacher.kr/employ/detail/275570"
+        },
+        {
+          "key": "path-id",
+          "value": "389552",
+          "url": "https://www.jobteacher.kr/employ/detail/389552"
+        },
+        {
+          "key": "path-id",
+          "value": "599288",
+          "url": "https://www.jobteacher.kr/employ/detail/599288"
+        },
+        {
+          "key": "path-id",
+          "value": "647285",
+          "url": "https://www.jobteacher.kr/employ/detail/647285"
+        },
+        {
+          "key": "path-id",
+          "value": "645060",
+          "url": "https://www.jobteacher.kr/employ/detail/645060"
+        },
+        {
+          "key": "path-id",
+          "value": "684231",
+          "url": "https://www.jobteacher.kr/employ/detail/684231"
+        },
+        {
+          "key": "path-id",
+          "value": "307499",
+          "url": "https://www.jobteacher.kr/employ/detail/307499"
+        },
+        {
+          "key": "path-id",
+          "value": "629753",
+          "url": "https://www.jobteacher.kr/employ/detail/629753"
+        },
+        {
+          "key": "path-id",
+          "value": "611312",
+          "url": "https://www.jobteacher.kr/employ/detail/611312"
+        },
+        {
+          "key": "path-id",
+          "value": "366506",
+          "url": "https://www.jobteacher.kr/employ/detail/366506"
+        },
+        {
+          "key": "path-id",
+          "value": "682872",
+          "url": "https://www.jobteacher.kr/employ/detail/682872"
+        },
+        {
+          "key": "path-id",
+          "value": "687395",
+          "url": "https://www.jobteacher.kr/employ/detail/687395"
+        },
+        {
+          "key": "path-id",
+          "value": "566111",
+          "url": "https://www.jobteacher.kr/employ/detail/566111"
+        },
+        {
+          "key": "path-id",
+          "value": "686738",
+          "url": "https://www.jobteacher.kr/employ/detail/686738"
+        },
+        {
+          "key": "path-id",
+          "value": "687062",
+          "url": "https://www.jobteacher.kr/employ/detail/687062"
+        },
+        {
+          "key": "path-id",
+          "value": "687095",
+          "url": "https://www.jobteacher.kr/employ/detail/687095"
+        },
+        {
+          "key": "path-id",
+          "value": "684236",
+          "url": "https://www.jobteacher.kr/employ/detail/684236"
+        },
+        {
+          "key": "path-id",
+          "value": "686735",
+          "url": "https://www.jobteacher.kr/employ/detail/686735"
+        },
+        {
+          "key": "path-id",
+          "value": "617841",
+          "url": "https://www.jobteacher.kr/employ/detail/617841"
+        },
+        {
+          "key": "path-id",
+          "value": "684924",
+          "url": "https://www.jobteacher.kr/employ/detail/684924"
+        },
+        {
+          "key": "path-id",
+          "value": "687912",
+          "url": "https://www.jobteacher.kr/employ/detail/687912"
+        },
+        {
+          "key": "path-id",
+          "value": "673262",
+          "url": "https://www.jobteacher.kr/employ/detail/673262"
+        },
+        {
+          "key": "path-id",
+          "value": "687389",
+          "url": "https://www.jobteacher.kr/employ/detail/687389"
+        },
+        {
+          "key": "path-id",
+          "value": "594376",
+          "url": "https://www.jobteacher.kr/employ/detail/594376"
+        },
+        {
+          "key": "path-id",
+          "value": "687914",
+          "url": "https://www.jobteacher.kr/employ/detail/687914"
+        },
+        {
+          "key": "path-id",
+          "value": "684896",
+          "url": "https://www.jobteacher.kr/employ/detail/684896"
+        }
+      ],
+      "paginationLinkCount": 6,
+      "paginationExamples": [
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=2",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=3",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=4",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=5",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=6",
+        "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=127"
+      ],
+      "rowSampleCount": 20,
+      "rowSamples": [
+        "학원명 근무지역 채용정보 제목 | 요약정보 모집부문(과목) 마감일 수정일",
+        "(주)남양주정상에듀 경기 남양주시 [정상어학원 남양주분원] 영어선생님(초중등) 신입/경력 초/중등부 스크랩 새창보기 영어 D-1 Today",
+        "블라썸에듀학원 경기 안양시 경기 군포시 블라썸에듀 안양, 평촌, 산본 영어학원 신규 관리강사를 모십니다. 중/고등부 스크랩 새창보기 영어 ~09.30 Today",
+        "(주)아발론교육 서울 전체 경기 전체 [아발론 교육] 영어강사 상시 채용 초/중등부 스크랩 새창보기 영어 상시채용 Today",
+        "(주)정상제이엘에스 서울 전체 경기 전체 정상어학원[본사직영] - 서울 경기지역 영어 어학원 강사 경력/신입 채용 초/중등부 스크랩 새창보기 영어 상시채용 Today",
+        "(주)가디언어학원 서울 전체 경기 고양시 마포 중/고등 영어강사 채용 중/고등부 스크랩 새창보기 영어 ~09.19 Today",
+        "주식회사 이씨씨향남어학원 경기 화성시 YBMECC 오후과정 영어강사 채용 유/초등부 스크랩 새창보기 영어 ~09.13 Today",
+        "꿈열매유치원 경기 화성시 유치원 영어 강사 유치부 스크랩 새창보기 영어 D-3 Today",
+        "차이나로중국어학원 경기 안성시 영어 강사 모집(원어민 우대) 기타 스크랩 새창보기 영어 ~09.15 Today",
+        "필리아국영수학원 경기 화성시 초등중등 영어 전임 강사 초빙 초/중등부 스크랩 새창보기 영어 ~10.26 Today",
+        "상상코칭 서울 전체 경기 전체 외 학생들의 멘토가 되어주실 초중고등 선생님 모십니다(비대면면접,전국 재택근무,화상 및 방문수업,회원다수,자기계발가능) 중/고등부,중/고등부,중/고등부,중/고등부 스크랩 새창보기 수학 과학계열 외 채용시까지 Today",
+        "영어 날다 서울 전체 경기 전체 외 [영어날다] 온라인 교육 프로그램 운영 및 학습 매니저 (재택·유연근무 가능) 기타 스크랩 새창보기 영어회화 상시채용 Today"
+      ],
+      "page2Url": "https://www.jobteacher.kr/employ/lists/all/?sel_area%5B0%5D=2422&is_search=yes&page=2",
+      "page2HttpStatus": 200,
+      "page2Transport": "chromium-verified-tls",
+      "page2RowSampleCount": 21,
+      "paginationChangesContent": true
     }
   ],
+  "summary": {
+    "metroSurfacesReachable": true,
+    "stableIdEvidence": true,
+    "paginationEvidence": true,
+    "readyForDedicatedCollector": true,
+    "errors": 0,
+    "verifiedTlsFallbacks": 3
+  },
+  "transportDiagnostics": {
+    "requestsTlsFallbacks": [
+      {
+        "url": "https://www.jobteacher.kr/employ/lists",
+        "reason": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+      },
+      {
+        "url": "https://www.jobteacher.kr/employ/lists/all/?is_search=yes&sel_area%5B%5D=1",
+        "reason": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists/all/?is_search=yes&sel_area%5B%5D=1 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+      },
+      {
+        "url": "https://www.jobteacher.kr/employ/lists/all/?is_search=yes&sel_area%5B%5D=2422",
+        "reason": "SSLError: HTTPSConnectionPool(host='www.jobteacher.kr', port=443): Max retries exceeded with url: /employ/lists/all/?is_search=yes&sel_area%5B%5D=2422 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+      }
+    ],
+    "certificateVerificationDisabled": false
+  },
+  "errors": [],
   "policy": {
     "publishBeforeValidation": false,
     "regionsAllowed": [
