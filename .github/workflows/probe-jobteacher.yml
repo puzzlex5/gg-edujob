@@ -17,7 +17,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
         with:
@@ -30,7 +30,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install probe dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements.txt playwright
+          python -m playwright install --with-deps chromium
       - name: Syntax check
         run: python -m py_compile scripts/probe_jobteacher.py
       - name: Probe JobTeacher public recruitment structure
@@ -47,6 +49,8 @@ jobs:
           d=json.load(p.open(encoding='utf-8'))
           assert d.get('publicationEnabled') is False, 'probe must never publish jobs'
           assert d.get('mode') == 'read-only-onboarding-probe'
+          td=d.get('transportDiagnostics') or {}
+          assert td.get('certificateVerificationDisabled') is False, 'TLS verification must not be disabled'
           print(json.dumps(d.get('summary',{}),ensure_ascii=False))
           PY
       - name: Commit probe evidence
