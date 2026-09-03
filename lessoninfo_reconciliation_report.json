@@ -1,37 +1,7 @@
 {
-  "generatedAt": "2026-09-03T09:43:47+09:00",
-  "policy": "lessoninfo-exact-two-surface-v4",
-  "lookbackDays": 120,
-  "base": "https://www.lessoninfo.co.kr",
-  "robotsStatus": "allowed",
+  "generatedAt": "2026-09-03T09:58:40+09:00",
+  "policy": "lessoninfo-active-two-surface-v5",
   "healthy": false,
-  "traversalComplete": false,
-  "sourceReports": [
-    {
-      "surface": "방과후/강사 구인",
-      "complete": false,
-      "pagesScanned": 1,
-      "ids": 0,
-      "stopReason": "unexpected_empty_first_page"
-    },
-    {
-      "surface": "문화예술구인",
-      "complete": false,
-      "pagesScanned": 1,
-      "ids": 0,
-      "stopReason": "unexpected_empty_first_page"
-    }
-  ],
-  "candidateIdCount": 0,
-  "discoveredIdCount": 0,
-  "publishedIdCount": 0,
-  "missingAfterCount": 0,
-  "missingAfterExamples": [],
-  "parsedNow": 0,
-  "rejectedNonRecruitment": 0,
-  "detailErrorCount": 0,
-  "detailErrorExamples": [],
-  "emptyTraversal": true,
-  "preservedPreviousDataset": true,
-  "errors": []
+  "blocker": "ConnectionError:HTTPSConnectionPool(host='lessoninfo.cafe24.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='lessoninfo.cafe24.com', port=443): Failed to resolve 'lessoninfo.cafe24.com' ([Errno -5] No address associated with hostname)\"))",
+  "preservedPreviousDataset": true
 }
