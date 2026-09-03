@@ -1,0 +1,41 @@
+name: Dependency update verification
+
+on:
+  pull_request:
+    paths:
+      - 'requirements.txt'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install proposed Python dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Run repository unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Compile collector and audit scripts
+        run: python -m compileall -q scripts
+      - name: Verify current official reconciliation policy
+        run: python scripts/validate_reconciliation_policy.py
+      - name: Rebuild disposable unified search with proposed dependencies
+        run: |
+          python scripts/build_unified_search.py --output /tmp/unified_candidate.json --report /tmp/unified_build_report.json
+          python scripts/validate_unified_search.py --file /tmp/unified_candidate.json --report /tmp/unified_validation_report.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/unified_validation_report.json',encoding='utf-8'))
+          assert r.get('healthy') is True, r
+          assert int(r.get('missingLessoninfoIds') or 0)==0, r
+          assert int(r.get('missingLinks') or 0)==0, r
+          print('dependency candidate preserved unified search integrity')
+          PY
