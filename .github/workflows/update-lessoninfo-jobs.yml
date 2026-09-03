@@ -8,6 +8,7 @@ on:
       - 'scripts/run_lessoninfo_jobs_exact.py'
       - 'scripts/crawl_lessoninfo_browser.py'
       - 'scripts/run_lessoninfo_browser_fast.py'
+      - 'scripts/run_lessoninfo_browser_resilient.py'
       - '.github/workflows/update-lessoninfo-jobs.yml'
   schedule:
     - cron: '27 * * * *'
@@ -43,7 +44,7 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Syntax check
-        run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/crawl_lessoninfo_browser.py scripts/run_lessoninfo_browser_fast.py
+        run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/crawl_lessoninfo_browser.py scripts/run_lessoninfo_browser_fast.py scripts/run_lessoninfo_browser_resilient.py
 
       - name: Collect current Lessoninfo jobs in Chromium
         id: collect
@@ -53,7 +54,7 @@ jobs:
           LESSONINFO_BROWSER_DISCOVERY_DAYS: '120'
           LESSONINFO_BROWSER_DETAIL_CONCURRENCY: '4'
           LESSONINFO_NO_DEADLINE_FRESH_DAYS: '30'
-        run: python scripts/run_lessoninfo_browser_fast.py
+        run: python scripts/run_lessoninfo_browser_resilient.py
 
       - name: Validate current-only collection evidence
         id: validate
