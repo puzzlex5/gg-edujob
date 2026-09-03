@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-09-04T06:17:56+09:00",
+  "source": "아트모아",
+  "mode": "read-only-region-semantics-probe-v1",
+  "publicationEnabled": false,
+  "surfaces": [],
+  "errors": [
+    {
+      "region": "서울",
+      "error": "Error: Locator.click: Element is not visible\nCall log:\n  - waiting for locator(\"label[for=\\\"area_level_2001\\\"]\")\n    - locator resolved to <label for=\"area_level_2001\">서울</label>\n  - attempting click action\n    - scrolling into view if needed\n"
+    },
+    {
+      "region": "경기",
+      "error": "Error: Locator.click: Element is not visible\nCall log:\n  - waiting for locator(\"label[for=\\\"area_level_2083\\\"]\")\n    - locator resolved to <label for=\"area_level_2083\">경기</label>\n  - attempting click action\n    - scrolling into view if needed\n"
+    }
+  ],
+  "summary": {
+    "surfaceCount": 0,
+    "errors": 2,
+    "areaLikePayloadObserved": false,
+    "readyToPatchCollectorProbe": false
+  }
+}
