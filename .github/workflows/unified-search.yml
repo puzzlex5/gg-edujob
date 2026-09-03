@@ -5,9 +5,7 @@ on:
   push:
     paths:
       - 'scripts/build_unified_search.py'
-      - 'scripts/build_unified_search_multi.py'
       - 'scripts/validate_unified_search.py'
-      - 'scripts/validate_unified_search_multi.py'
       - 'scripts/crosscheck_private_official.py'
       - 'scripts/apply_unified_frontend.py'
       - 'unified-ui.js'
@@ -17,7 +15,6 @@ on:
     workflows:
       - 'Update 수도권 education jobs'
       - 'Update Lessoninfo recruitment jobs'
-      - 'Update JobTeacher recruitment jobs'
     types: [completed]
   schedule:
     - cron: '47 * * * *'
@@ -47,18 +44,18 @@ jobs:
           python-version: '3.12'
       - name: Syntax check unified pipeline and UI
         run: |
-          python -m py_compile scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/apply_unified_frontend.py
+          python -m py_compile scripts/build_unified_search.py scripts/validate_unified_search.py scripts/crosscheck_private_official.py scripts/apply_unified_frontend.py
           node --check unified-ui.js
           node --check mobile-ui.js
       - name: Build disposable unified candidate
         id: build_candidate
         continue-on-error: true
-        run: python scripts/build_unified_search_multi.py
-      - name: Validate candidate against all canonical sources
+        run: python scripts/build_unified_search.py --output unified_jobs.next.json --report unified_search_report.json
+      - name: Validate candidate against canonical sources
         id: validate_candidate
         if: steps.build_candidate.outcome == 'success'
         continue-on-error: true
-        run: python scripts/validate_unified_search_multi.py
+        run: python scripts/validate_unified_search.py --file unified_jobs.next.json --report unified_validation_report.json
       - name: Crosscheck private school signals against official data
         id: crosscheck
         if: steps.validate_candidate.outcome == 'success'
@@ -74,16 +71,12 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('unified_jobs.json',encoding='utf-8'))
-          assert d.get('dataset') == 'unified-search-v3-multi-private'
-          assert d.get('totalSourceCount',0) >= 40
-          assert (d.get('privateSources') or {}).get('lessoninfo',{}).get('ok') is True
-          assert (d.get('privateSources') or {}).get('jobteacher',{}).get('ok') is True
+          assert d.get('totalSourceCount',0) >= 39
           assert any(j.get('feedKind')=='official' for j in d['jobs'])
-          assert any(j.get('source')=='레슨인포' for j in d['jobs'])
-          assert any(j.get('source')=='잡티처' for j in d['jobs'])
+          assert any(j.get('feedKind')=='private' for j in d['jobs'])
           bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and j.get('province') not in {'서울','경기'}]
           assert not bad, f'non-metro private rows: {len(bad)}'
-          print('verified unified publication',len(d['jobs']),d.get('totalSourceCount'))
+          print('verified unified publication',len(d['jobs']))
           PY
       - name: Commit verified search projection or diagnostics
         if: always()
