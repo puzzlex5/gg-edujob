@@ -41,13 +41,13 @@ jobs:
       - name: Syntax check
         run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/run_lessoninfo_jobs_exact.py
 
-      - name: Collect exact Lessoninfo recruitment surfaces
+      - name: Collect active Lessoninfo recruitment surfaces
         id: collect
         continue-on-error: true
         env:
           LESSONINFO_LOOKBACK_DAYS: '120'
           LESSONINFO_MAX_PAGES: '500'
-          LESSONINFO_DELAY_SECONDS: '0.8'
+          LESSONINFO_DELAY_SECONDS: '0.35'
         run: python scripts/run_lessoninfo_jobs_exact.py
 
       - name: Validate reconciliation evidence
@@ -65,20 +65,23 @@ jobs:
               'healthy': r.get('healthy'),
               'traversalComplete': r.get('traversalComplete'),
               'sourceReports': r.get('sourceReports'),
-              'discoveredIdCount': r.get('discoveredIdCount'),
+              'activeIdCount': r.get('activeIdCount'),
               'publishedIdCount': r.get('publishedIdCount'),
+              'perSurfaceActive': r.get('perSurfaceActive'),
               'missingAfterCount': r.get('missingAfterCount'),
               'detailErrorCount': r.get('detailErrorCount'),
               'preservedPreviousDataset': r.get('preservedPreviousDataset'),
           }, ensure_ascii=False, indent=2))
-          if r.get('policy') != 'lessoninfo-exact-two-surface-v4':
+          if r.get('policy') != 'lessoninfo-active-two-surface-v5':
               raise SystemExit('wrong Lessoninfo collection policy')
           if not r.get('healthy') or not r.get('traversalComplete') or r.get('missingAfterCount') != 0:
               raise SystemExit('Lessoninfo completeness guard failed')
           reports = r.get('sourceReports') or []
           surfaces = {x.get('surface') for x in reports}
-          if not {'방과후/강사 구인', '문화예술구인'}.issubset(surfaces):
+          if not {'방과후교사•늘봄학교 강사', '문화예술 채용'}.issubset(surfaces):
               raise SystemExit('both Lessoninfo recruitment surfaces were not verified')
+          if any((x.get('ids') or 0) <= 0 for x in reports):
+              raise SystemExit('a Lessoninfo source surface returned zero source IDs')
           PY
 
       - name: Commit collection evidence and healthy dataset
@@ -88,7 +91,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add lessoninfo_jobs.json lessoninfo_source_id_ledger.json lessoninfo_reconciliation_report.json lessoninfo_collection_state.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
-            git commit -m 'Update Lessoninfo recruitment collection evidence'
+            git commit -m 'Update active Lessoninfo recruitment collection'
             for i in 1 2 3; do
               git pull --rebase origin main && git push origin HEAD:main && break
               sleep $((i*5))
