@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T02:09:54+09:00",
+  "generatedAt": "2026-09-04T05:10:26+09:00",
   "source": "아트모아",
   "baseUrl": "https://www.artmore.kr",
   "mode": "read-only-onboarding-probe",
@@ -7,16 +7,16 @@
   "summary": {
     "reachable": true,
     "stableIdEvidence": true,
-    "regionFilterEvidence": false,
+    "regionFilterEvidence": true,
     "deadlineFilterEvidence": true,
-    "paginationControlEvidence": true,
+    "paginationControlEvidence": false,
     "readyForCollectorEngineering": false,
-    "errors": 0
+    "errors": 1
   },
   "evidence": {
     "httpStatus": 200,
     "finalUrl": "https://www.artmore.kr/sub/recruit/search_list.do",
-    "htmlBytes": 845535,
+    "htmlBytes": 848251,
     "blockedOrHumanCheck": false,
     "visibleTotalText": "선택조건결과 90,018건",
     "firstPageDurableIdCount": 10,
@@ -74,719 +74,881 @@
     ],
     "detailDirectReachable": true,
     "detailStatus": 200,
-    "detailFinalUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94856",
-    "formCount": 3,
-    "formInputNames": [
-      "array_apy_method_type",
-      "array_career_type",
-      "array_employ_type",
-      "array_keyword_kind",
-      "artmore_yn",
-      "corp_id",
-      "end_year",
-      "exclude_end_yn",
-      "keyword",
-      "last_date",
-      "last_end_dt",
-      "last_start_dt",
-      "like_corp_idx",
-      "listSize",
-      "merit_type",
-      "page",
-      "pay_max",
-      "pay_min",
-      "pay_type",
-      "rec_idx",
-      "reg_date",
-      "reg_end_dt",
-      "reg_start_dt",
-      "school_code",
-      "school_type",
-      "scrap_idx",
-      "search_cd",
-      "search_nm",
-      "search_txt",
-      "search_val",
-      "sort_type",
-      "start_year"
+    "paginationControls": [
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "나의 강의실",
+        "href": "/sub/mypage/lecture_list.do",
+        "onclick": "",
+        "cls": "gnb-title"
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강신청이력",
+        "href": "/sub/mypage/lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강중인 강좌",
+        "href": "/sub/mypage/doing_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강완료 강좌",
+        "href": "/sub/mypage/ended_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "관심강좌",
+        "href": "/sub/mypage/like_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "강좌 질의답변",
+        "href": "/sub/mypage/qna_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "나의 강의실",
+        "href": "/sub/mypage/lecture_list.do",
+        "onclick": "",
+        "cls": "gnb-title"
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강신청이력",
+        "href": "/sub/mypage/lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강중인 강좌",
+        "href": "/sub/mypage/doing_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강완료 강좌",
+        "href": "/sub/mypage/ended_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "관심강좌",
+        "href": "/sub/mypage/like_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "강좌 질의답변",
+        "href": "/sub/mypage/qna_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "나의 강의실",
+        "href": "/sub/mypage/lecture_list.do",
+        "onclick": "",
+        "cls": "gnb-title arr"
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강신청이력",
+        "href": "/sub/mypage/lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강중인 강좌",
+        "href": "/sub/mypage/doing_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "수강완료 강좌",
+        "href": "/sub/mypage/ended_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "관심강좌",
+        "href": "/sub/mypage/like_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "강좌 질의답변",
+        "href": "/sub/mypage/qna_lecture_list.do",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "1",
+        "href": "#none",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "2",
+        "href": "#none",
+        "onclick": "goPageNavigation(2); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "3",
+        "href": "#none",
+        "onclick": "goPageNavigation(3); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "4",
+        "href": "#none",
+        "onclick": "goPageNavigation(4); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "5",
+        "href": "#none",
+        "onclick": "goPageNavigation(5); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "6",
+        "href": "#none",
+        "onclick": "goPageNavigation(6); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "7",
+        "href": "#none",
+        "onclick": "goPageNavigation(7); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "8",
+        "href": "#none",
+        "onclick": "goPageNavigation(8); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "9",
+        "href": "#none",
+        "onclick": "goPageNavigation(9); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "10",
+        "href": "#none",
+        "onclick": "goPageNavigation(10); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "",
+        "href": "#none",
+        "onclick": "goPageNavigation(2); return false;",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "",
+        "href": "#none",
+        "onclick": "goPageNavigation(9002); return false;",
+        "cls": ""
+      }
     ],
-    "regionControls": [],
+    "page2StableIds": [],
+    "page2ChangesContent": false,
     "deadlineControls": [
+      {
+        "tag": "LABEL",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "마감/종료 제외",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
       {
         "tag": "INPUT",
         "name": "exclude_end_yn",
+        "id": "exclude_end_yn",
         "type": "hidden",
         "value": "",
-        "id": "exclude_end_yn",
-        "checked": false
-      },
-      {
-        "tag": "INPUT",
-        "name": "end_year",
-        "type": "text",
-        "value": "",
-        "id": "jobs_sch_option_career_text02",
-        "checked": false
-      },
-      {
-        "tag": "INPUT",
-        "name": "reg_end_dt",
-        "type": "text",
-        "value": "",
-        "id": "reg_end_dt",
-        "checked": false
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
       },
       {
         "tag": "INPUT",
         "name": "last_date",
+        "id": "jobs_sch_option_deadline_chkall",
         "type": "radio",
         "value": "",
-        "id": "jobs_sch_option_deadline_chkall",
-        "checked": true
+        "checked": true,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
       },
       {
         "tag": "INPUT",
         "name": "last_date",
+        "id": "last_date_item_3011",
+        "type": "radio",
+        "value": "1",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "INPUT",
+        "name": "last_date",
+        "id": "last_date_item_3012",
+        "type": "radio",
+        "value": "2",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "INPUT",
+        "name": "last_date",
+        "id": "last_date_item_3013",
+        "type": "radio",
+        "value": "3",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "INPUT",
+        "name": "last_date",
+        "id": "last_date_item_3014",
+        "type": "radio",
+        "value": "4",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "INPUT",
+        "name": "last_date",
+        "id": "last_date_item_3015",
+        "type": "radio",
+        "value": "5",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "INPUT",
+        "name": "last_date",
+        "id": "jobs_sch_option_deadline_chk06",
         "type": "radio",
         "value": "direct",
-        "id": "jobs_sch_option_deadline_chk06",
-        "checked": false
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": ""
       },
       {
         "tag": "INPUT",
         "name": "last_end_dt",
+        "id": "last_end_dt",
         "type": "text",
         "value": "",
-        "id": "last_end_dt",
-        "checked": false
-      }
-    ],
-    "paginationControls": [
-      {
-        "text": "1",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": ""
-      },
-      {
-        "text": "2",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(2); return false;"
-      },
-      {
-        "text": "3",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(3); return false;"
-      },
-      {
-        "text": "4",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(4); return false;"
-      },
-      {
-        "text": "5",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(5); return false;"
-      },
-      {
-        "text": "6",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(6); return false;"
-      },
-      {
-        "text": "7",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(7); return false;"
-      },
-      {
-        "text": "8",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(8); return false;"
-      },
-      {
-        "text": "9",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(9); return false;"
-      },
-      {
-        "text": "10",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(10); return false;"
-      },
-      {
+        "checked": false,
         "text": "",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(2); return false;"
+        "href": "",
+        "onclick": "",
+        "cls": "date-inpt hasDatepicker"
       },
       {
+        "tag": "SELECT",
+        "name": "",
+        "id": "sort_type_select",
+        "type": "select-one",
+        "value": "1",
+        "checked": false,
+        "text": "최근등록일순 예전등록일순 회사명 ↓ 회사명 ↑ 임금높은순 임금낮은순 학력높은순 학력낮은순 경력많은순 경력낮은순 마감일순 ↓ 마감일순 ↑",
+        "href": "",
+        "onclick": "",
+        "cls": "i-select bo_vsort_sel"
+      }
+    ],
+    "dynamicRegionControls": [
+      {
+        "tag": "SELECT",
+        "name": "",
+        "id": "",
+        "type": "select-one",
+        "value": "/sub/recruit/search_list.do",
+        "checked": false,
+        "text": "ArtMore 안내 일자리 정보 인재정보 기업/직업 정보 뉴스/자료 커뮤니티",
+        "href": "",
+        "onclick": "",
+        "cls": "sub_location_sel"
+      },
+      {
+        "tag": "SELECT",
+        "name": "",
+        "id": "sub_location",
+        "type": "select-one",
+        "value": "/sub/recruit/search_list.do",
+        "checked": false,
+        "text": "일자리 상세검색 장르별 업종별 지역별",
+        "href": "",
+        "onclick": "",
+        "cls": "sub_location_sel"
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "진행중 슬립노모어 서울 운영 스탭 모집",
+        "href": "/sub/recruit/search_view.do?rec_idx=94856",
+        "onclick": "",
+        "cls": "jobs_title"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2001",
+        "type": "radio",
+        "value": "2001",
+        "checked": false,
         "text": "",
-        "href": "https://www.artmore.kr/sub/recruit/search_list.do#none",
-        "onclick": "goPageNavigation(9002); return false;"
-      }
-    ],
-    "forms": [
-      {
-        "action": "https://www.artmore.kr/sub/total/total.do",
-        "method": "post",
-        "id": "frm_total",
-        "name": "frm_total",
-        "controls": [
-          {
-            "tag": "INPUT",
-            "name": "search_txt",
-            "type": "search",
-            "value": "",
-            "id": "search_txt",
-            "checked": false
-          }
-        ]
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
       },
       {
-        "action": "https://www.artmore.kr/sub/recruit/search_list.do",
-        "method": "get",
-        "id": "hidden_frm",
-        "name": "hidden_form",
-        "controls": [
-          {
-            "tag": "INPUT",
-            "name": "corp_id",
-            "type": "hidden",
-            "value": "",
-            "id": "corp_id",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "like_corp_idx",
-            "type": "hidden",
-            "value": "",
-            "id": "like_corp_idx",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "rec_idx",
-            "type": "hidden",
-            "value": "",
-            "id": "rec_idx",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "scrap_idx",
-            "type": "hidden",
-            "value": "",
-            "id": "scrap_idx",
-            "checked": false
-          }
-        ]
+        "tag": "LABEL",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "서울",
+        "href": "",
+        "onclick": "",
+        "cls": ""
       },
       {
-        "action": "https://www.artmore.kr/sub/recruit/search_list.do",
-        "method": "post",
-        "id": "frm",
-        "name": "frm",
-        "controls": [
-          {
-            "tag": "INPUT",
-            "name": "page",
-            "type": "hidden",
-            "value": "1",
-            "id": "page",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "listSize",
-            "type": "hidden",
-            "value": "10",
-            "id": "listSize",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "sort_type",
-            "type": "hidden",
-            "value": "1",
-            "id": "sort_type",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "exclude_end_yn",
-            "type": "hidden",
-            "value": "",
-            "id": "exclude_end_yn",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "artmore_yn",
-            "type": "hidden",
-            "value": "",
-            "id": "artmore_yn",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "search_cd",
-            "type": "hidden",
-            "value": "",
-            "id": "search_cd",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "search_nm",
-            "type": "hidden",
-            "value": "",
-            "id": "search_nm",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "search_val",
-            "type": "hidden",
-            "value": "",
-            "id": "search_val",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "keyword",
-            "type": "text",
-            "value": "",
-            "id": "jobs_keyword",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_keyword_kind",
-            "type": "checkbox",
-            "value": "1",
-            "id": "jobs_sch_keyword_subj",
-            "checked": true
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_keyword_kind",
-            "type": "checkbox",
-            "value": "2",
-            "id": "jobs_sch_keyword_cname",
-            "checked": true
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_keyword_kind",
-            "type": "checkbox",
-            "value": "3",
-            "id": "jobs_sch_keyword_sector",
-            "checked": true
-          },
-          {
-            "tag": "BUTTON",
-            "name": "",
-            "type": "button",
-            "value": "",
-            "id": "jobs_sch_detail_btn",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2287",
-            "id": "array_employ_type_2287",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2288",
-            "id": "array_employ_type_2288",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2289",
-            "id": "array_employ_type_2289",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2290",
-            "id": "array_employ_type_2290",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2291",
-            "id": "array_employ_type_2291",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2292",
-            "id": "array_employ_type_2292",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2293",
-            "id": "array_employ_type_2293",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_employ_type",
-            "type": "checkbox",
-            "value": "2294",
-            "id": "array_employ_type_2294",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_career_type",
-            "type": "checkbox",
-            "value": "2303",
-            "id": "array_career_type_2303",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_career_type",
-            "type": "checkbox",
-            "value": "2301",
-            "id": "array_career_type_2301",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_career_type",
-            "type": "checkbox",
-            "value": "2302",
-            "id": "array_career_type_2302",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "start_year",
-            "type": "text",
-            "value": "",
-            "id": "jobs_sch_option_career_text01",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "end_year",
-            "type": "text",
-            "value": "",
-            "id": "jobs_sch_option_career_text02",
-            "checked": false
-          },
-          {
-            "tag": "SELECT",
-            "name": "school_code",
-            "type": "select-one",
-            "value": "",
-            "id": "jobs_sch_option_edu_sel",
-            "checked": false
-          },
-          {
-            "tag": "SELECT",
-            "name": "school_type",
-            "type": "select-one",
-            "value": "",
-            "id": "jobs_sch_option_edu_stat_sel",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "merit_type",
-            "type": "radio",
-            "value": "",
-            "id": "jobs_sch_option_condition_chkall",
-            "checked": true
-          },
-          {
-            "tag": "INPUT",
-            "name": "merit_type",
-            "type": "radio",
-            "value": "3601",
-            "id": "merit_type_3601",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "merit_type",
-            "type": "radio",
-            "value": "3602",
-            "id": "merit_type_3602",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "merit_type",
-            "type": "radio",
-            "value": "3603",
-            "id": "merit_type_3603",
-            "checked": false
-          },
-          {
-            "tag": "SELECT",
-            "name": "pay_type",
-            "type": "select-one",
-            "value": "",
-            "id": "jobs_sch_option_paytype",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "pay_min",
-            "type": "text",
-            "value": "",
-            "id": "jobs_sch_option_pay01",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "pay_max",
-            "type": "text",
-            "value": "",
-            "id": "jobs_sch_option_pay02",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "",
-            "id": "jobs_sch_option_register_chkall",
-            "checked": true
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "1",
-            "id": "reg_date_item_3011",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "2",
-            "id": "reg_date_item_3012",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "3",
-            "id": "reg_date_item_3013",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "4",
-            "id": "reg_date_item_3014",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "5",
-            "id": "reg_date_item_3015",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_date",
-            "type": "radio",
-            "value": "direct",
-            "id": "jobs_sch_option_register_chk06",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_start_dt",
-            "type": "text",
-            "value": "",
-            "id": "reg_start_dt",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "reg_end_dt",
-            "type": "text",
-            "value": "",
-            "id": "reg_end_dt",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "",
-            "id": "jobs_sch_option_deadline_chkall",
-            "checked": true
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "1",
-            "id": "last_date_item_3011",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "2",
-            "id": "last_date_item_3012",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "3",
-            "id": "last_date_item_3013",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "4",
-            "id": "last_date_item_3014",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "5",
-            "id": "last_date_item_3015",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_date",
-            "type": "radio",
-            "value": "direct",
-            "id": "jobs_sch_option_deadline_chk06",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_start_dt",
-            "type": "text",
-            "value": "",
-            "id": "last_start_dt",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "last_end_dt",
-            "type": "text",
-            "value": "",
-            "id": "last_end_dt",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_apy_method_type",
-            "type": "checkbox",
-            "value": "3561",
-            "id": "array_apy_method_3561",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_apy_method_type",
-            "type": "checkbox",
-            "value": "3562",
-            "id": "array_apy_method_3562",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_apy_method_type",
-            "type": "checkbox",
-            "value": "3563",
-            "id": "array_apy_method_3563",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_apy_method_type",
-            "type": "checkbox",
-            "value": "3564",
-            "id": "array_apy_method_3564",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_apy_method_type",
-            "type": "checkbox",
-            "value": "3565",
-            "id": "array_apy_method_3565",
-            "checked": false
-          },
-          {
-            "tag": "INPUT",
-            "name": "array_apy_method_type",
-            "type": "checkbox",
-            "value": "3566",
-            "id": "array_apy_method_3566",
-            "checked": false
-          },
-          {
-            "tag": "BUTTON",
-            "name": "",
-            "type": "button",
-            "value": "",
-            "id": "jobs_clear",
-            "checked": false
-          },
-          {
-            "tag": "BUTTON",
-            "name": "",
-            "type": "button",
-            "value": "",
-            "id": "result_sch_btn",
-            "checked": false
-          }
-        ]
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2027",
+        "type": "radio",
+        "value": "2027",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2044",
+        "type": "radio",
+        "value": "2044",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2053",
+        "type": "radio",
+        "value": "2053",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2064",
+        "type": "radio",
+        "value": "2064",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2070",
+        "type": "radio",
+        "value": "2070",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2076",
+        "type": "radio",
+        "value": "2076",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2082",
+        "type": "radio",
+        "value": "2082",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2083",
+        "type": "radio",
+        "value": "2083",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "LABEL",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "경기",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2132",
+        "type": "radio",
+        "value": "2132",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2151",
+        "type": "radio",
+        "value": "2151",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2167",
+        "type": "radio",
+        "value": "2167",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2185",
+        "type": "radio",
+        "value": "2185",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2202",
+        "type": "radio",
+        "value": "2202",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2225",
+        "type": "radio",
+        "value": "2225",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2251",
+        "type": "radio",
+        "value": "2251",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "INPUT",
+        "name": "area",
+        "id": "area_level_2275",
+        "type": "radio",
+        "value": "2275",
+        "checked": false,
+        "text": "",
+        "href": "",
+        "onclick": "",
+        "cls": "area_level_one"
+      },
+      {
+        "tag": "BUTTON",
+        "name": "",
+        "id": "btn_area_ok",
+        "type": "button",
+        "value": "",
+        "checked": false,
+        "text": "적용하기",
+        "href": "",
+        "onclick": "",
+        "cls": "btn01 jobs_sch_option_apply"
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "서울아트마켓",
+        "href": "https://pams.or.kr/main.asp",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "서울국제공연예술제",
+        "href": "http://spaf.or.kr/2024/",
+        "onclick": "",
+        "cls": ""
       }
     ],
-    "metroTextPresent": true,
-    "activeTextPresent": true
+    "metroRegionValueCandidates": [
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "진행중 슬립노모어 서울 운영 스탭 모집",
+        "href": "/sub/recruit/search_view.do?rec_idx=94856",
+        "onclick": "",
+        "cls": "jobs_title"
+      },
+      {
+        "tag": "LABEL",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "서울",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "LABEL",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "경기",
+        "href": "",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "서울아트마켓",
+        "href": "https://pams.or.kr/main.asp",
+        "onclick": "",
+        "cls": ""
+      },
+      {
+        "tag": "A",
+        "name": "",
+        "id": "",
+        "type": "",
+        "value": "",
+        "checked": false,
+        "text": "서울국제공연예술제",
+        "href": "http://spaf.or.kr/2024/",
+        "onclick": "",
+        "cls": ""
+      }
+    ]
   },
-  "errors": [],
+  "errors": [
+    {
+      "stage": "page2",
+      "error": "TimeoutError: Locator.click: Timeout 7000ms exceeded.\nCall log:\n  - waiting for get_by_text(\"2\", exact=True).first\n    - locator resolved to <a alt=\"2page\" href=\"#none\" title=\"2page\" onclick=\"goPageNavigation(2); return false;\">2</a>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n  - retrying click action\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <div class=\"popup_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n  - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n      - waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"popup_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n      - waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n      - waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n  - retrying click action\n    - waiting 500ms\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <div id=\"mCSB_3\" tabindex=\"0\" class=\"mCustomScrollBox mCS-dark-thick mCSB_vertical mCSB_inside\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n  3 × retrying click action\n      - waiting 500ms\n      - waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"jobs_sch_option_cont\">…</div> from <div class=\"popup_dim\" id=\"jobs_wkplace_pop\">…</div> subtree intercepts pointer events\n  - retrying click action\n    - waiting 500ms\n"
+    }
+  ],
   "policy": {
     "publishBeforeValidation": false,
     "regionsAllowed": [
       "서울",
       "경기"
     ],
-    "nextGate": "server-side metro/current filter params + complete pagination + missingAfter=0"
+    "nextGate": "exact metro/current filter params + complete pagination + durable ID ledger + missingAfter=0"
   }
 }
