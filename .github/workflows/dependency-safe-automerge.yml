@@ -1,0 +1,66 @@
+name: Safe dependency auto merge
+
+on:
+  workflow_run:
+    workflows: ['Dependency update verification']
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Resolve verified Dependabot pull request
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          pr="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}" --jq '.pull_requests[0].number // empty')"
+          [ -n "$pr" ] || { echo 'No pull request associated with verification run'; exit 0; }
+          author="$(gh api "/repos/${GITHUB_REPOSITORY}/pulls/${pr}" --jq '.user.login')"
+          [ "$author" = 'dependabot[bot]' ] || { echo "Refusing non-Dependabot PR: $author"; exit 1; }
+          echo "number=$pr" >> "$GITHUB_OUTPUT"
+      - name: Permit only narrow dependency-only diffs
+        if: steps.pr.outputs.number != ''
+        id: policy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          gh api "/repos/${GITHUB_REPOSITORY}/pulls/${PR}/files?per_page=100" > /tmp/files.json
+          python - <<'PY'
+          import json,re,os
+          fs=json.load(open('/tmp/files.json',encoding='utf-8'))
+          if not fs: raise SystemExit('empty Dependabot diff')
+          allowed=True; reasons=[]
+          for f in fs:
+              name=f.get('filename',''); patch=f.get('patch') or ''
+              if name=='requirements.txt':
+                  continue
+              if name.startswith('.github/workflows/') and name.endswith(('.yml','.yaml')):
+                  changed=[ln[1:].strip() for ln in patch.splitlines() if ln.startswith(('+','-')) and not ln.startswith(('+++','---'))]
+                  for ln in changed:
+                      if not ln: continue
+                      if not re.fullmatch(r'(?:-\s*)?uses:\s*(?:actions|github)/[A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+',ln):
+                          allowed=False; reasons.append(f'{name}: non-version workflow change: {ln[:120]}')
+                  continue
+              allowed=False; reasons.append(f'unapproved file: {name}')
+          print('\n'.join(reasons))
+          if not allowed: raise SystemExit('Dependabot diff exceeds safe auto-merge policy')
+          PY
+          echo 'safe=true' >> "$GITHUB_OUTPUT"
+      - name: Merge verified safe dependency update
+        if: steps.pr.outputs.number != '' && steps.policy.outputs.safe == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
