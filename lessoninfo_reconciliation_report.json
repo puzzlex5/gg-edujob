@@ -1,38 +1,45 @@
 {
-  "generatedAt": "2026-09-03T10:53:44+09:00",
+  "generatedAt": "2026-09-03T12:11:20+09:00",
   "policy": "lessoninfo-active-browser-v1",
-  "healthy": false,
-  "traversalComplete": false,
+  "healthy": true,
+  "traversalComplete": true,
   "sourceReports": [
     {
       "surface": "방과후교사•늘봄학교 강사",
       "listUrl": "https://www.lessoninfo.co.kr/board/board.php?board_code=20130529164321_7227&code=&bo_table=20170316171033_6494",
-      "complete": false,
-      "pagesScanned": 1,
-      "ids": 0,
-      "stopReason": "unexpected_empty_first_page"
+      "complete": true,
+      "pagesScanned": 12,
+      "ids": 850,
+      "stopReason": "discovery_horizon_crossed"
     },
     {
       "surface": "문화예술 채용",
       "listUrl": "https://www.lessoninfo.co.kr/culture-jobs/list.php",
-      "complete": false,
-      "pagesScanned": 1,
-      "ids": 0,
-      "stopReason": "unexpected_empty_first_page"
+      "complete": true,
+      "pagesScanned": 10,
+      "ids": 617,
+      "stopReason": "end_of_pages"
     }
   ],
-  "candidateIdCount": 0,
-  "activeIdCount": 0,
-  "publishedIdCount": 649,
+  "candidateIdCount": 1467,
+  "activeIdCount": 670,
+  "publishedIdCount": 670,
   "perSurfaceActive": {
-    "afterschool-nulbom": 0,
-    "culture-arts": 0
+    "afterschool-nulbom": 111,
+    "culture-arts": 559
   },
   "missingAfterCount": 0,
   "missingAfterExamples": [],
   "detailErrorCount": 0,
   "detailErrorExamples": [],
-  "classificationCounts": {},
-  "preservedPreviousDataset": true,
+  "classificationCounts": {
+    "active": 670,
+    "outside-seoul-gyeonggi": 16,
+    "stale-without-deadline": 723,
+    "closed-marker": 9,
+    "no-date-no-deadline": 15,
+    "non-recruitment": 34
+  },
+  "preservedPreviousDataset": false,
   "errors": []
 }
