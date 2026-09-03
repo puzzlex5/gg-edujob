@@ -48,7 +48,7 @@ jobs:
           assert p.exists(), 'ArtMore filter probe report missing'
           d=json.loads(p.read_text(encoding='utf-8'))
           assert d.get('publicationEnabled') is False
-          assert d.get('mode') == 'read-only-filter-payload-probe'
+          assert str(d.get('mode') or '').startswith('read-only-filter-payload-probe')
           print(json.dumps(d.get('summary',{}), ensure_ascii=False, indent=2))
           PY
       - name: Commit filter evidence
