@@ -1,0 +1,89 @@
+name: Unified recruitment search
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/build_unified_search.py'
+      - 'scripts/validate_unified_search.py'
+      - 'scripts/apply_unified_frontend.py'
+      - 'unified-ui.js'
+      - '.github/workflows/unified-search.yml'
+  workflow_run:
+    workflows:
+      - 'Update 수도권 education jobs'
+      - 'Update Lessoninfo recruitment jobs'
+    types: [completed]
+  schedule:
+    - cron: '47 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-unified
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest canonical datasets
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Syntax check unified pipeline
+        run: python -m py_compile scripts/build_unified_search.py scripts/validate_unified_search.py scripts/apply_unified_frontend.py
+      - name: Build disposable unified candidate
+        id: build_candidate
+        continue-on-error: true
+        run: python scripts/build_unified_search.py --output unified_jobs.next.json --report unified_search_report.json
+      - name: Validate candidate against canonical sources
+        id: validate_candidate
+        if: steps.build_candidate.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/validate_unified_search.py --file unified_jobs.next.json --report unified_validation_report.json
+      - name: Publish only verified unified dataset
+        if: steps.build_candidate.outcome == 'success' && steps.validate_candidate.outcome == 'success'
+        run: |
+          mv unified_jobs.next.json unified_jobs.json
+          python scripts/apply_unified_frontend.py
+          grep -q "fetch('unified_jobs.json',{cache:'no-cache'})" index.html
+          grep -q 'unified-ui.js' index.html
+          python - <<'PY'
+          import json
+          d=json.load(open('unified_jobs.json',encoding='utf-8'))
+          assert d.get('totalSourceCount',0) >= 39
+          assert any(j.get('feedKind')=='official' for j in d['jobs'])
+          assert any(j.get('feedKind')=='private' for j in d['jobs'])
+          bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and j.get('province') not in {'서울','경기'}]
+          assert not bad, f'non-metro private rows: {len(bad)}'
+          print('verified unified publication',len(d['jobs']))
+          PY
+      - name: Commit verified search projection or diagnostics
+        if: always()
+        run: |
+          rm -f unified_jobs.next.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add unified_search_report.json unified_validation_report.json 2>/dev/null || true
+          if [ "${{ steps.build_candidate.outcome }}" = success ] && [ "${{ steps.validate_candidate.outcome }}" = success ]; then
+            git add unified_jobs.json index.html
+          fi
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish verified unified recruitment search'
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break
+            sleep $((i*4))
+          done
+      - name: Fail after preserving diagnostics
+        if: steps.build_candidate.outcome != 'success' || steps.validate_candidate.outcome != 'success'
+        run: exit 1
