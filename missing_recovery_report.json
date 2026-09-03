@@ -1,14 +1,14 @@
 {
   "summary": {
     "freshCount": 16747,
-    "previousCount": 18854,
-    "mergedCount": 18907,
-    "carriedForward": 2160,
+    "previousCount": 18911,
+    "mergedCount": 18908,
+    "carriedForward": 2161,
     "officialIdProtected": 17887,
-    "officialIdCarryForward": 1234,
-    "enrichedFromPrevious": 7133,
+    "officialIdCarryForward": 1235,
+    "enrichedFromPrevious": 7151,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-03 19:30 KST"
+    "generatedAt": "2026-09-03 20:08 KST"
   },
   "carried": [
     {
@@ -1000,6 +1000,17 @@
       "sourceIdentity": "seoul-central:109363",
       "reason": "previously published posting still within application period",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109363"
+    },
+    {
+      "province": "서울",
+      "source": "서울교육일자리포털",
+      "school": "봉원중학교",
+      "title": "봉원중학교 기간제교원 채용 공고(영어)",
+      "registered": "2026/08/31",
+      "applyEnd": "2026/09/03",
+      "sourceIdentity": "seoul-central:109413",
+      "reason": "present in latest independent official-ID reconciliation",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109413"
     },
     {
       "province": "서울",
