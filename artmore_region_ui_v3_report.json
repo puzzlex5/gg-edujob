@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-09-04T06:22:23+09:00",
+  "source": "아트모아",
+  "mode": "read-only-region-ui-probe-v3",
+  "publicationEnabled": false,
+  "surfaces": [],
+  "errors": [
+    {
+      "region": "서울",
+      "error": "RuntimeError: region control not visible: 서울=2001"
+    },
+    {
+      "region": "경기",
+      "error": "RuntimeError: region control not visible: 경기=2083"
+    }
+  ],
+  "summary": {
+    "surfaceCount": 0,
+    "errors": 2,
+    "verifiedSurfaceCount": 0,
+    "readyForCollectorEngineering": false
+  }
+}
