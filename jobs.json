@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03 19:33 KST",
+  "updatedAt": "2026-09-03 21:32 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -125,11 +125,11 @@
             "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
             "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5030&mi=8667"
           ],
-          "count": 67,
+          "count": 68,
           "rawRows": 138,
           "ok": true,
           "state": "ok",
-          "message": "실제 게시판 행 138건 완전순회 · 최근 채용 67건",
+          "message": "실제 게시판 행 138건 완전순회 · 최근 채용 68건",
           "parser": "gyeonggi-mircms-table-v2.1",
           "boardHealth": [
             {
@@ -954,12 +954,12 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-03 20:34 KST",
+    "checkedAt": "2026-09-03 22:08 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7472,
-      "resolved": 7472,
+      "total": 7473,
+      "resolved": 7473,
       "unresolved": 0,
       "examples": []
     },
@@ -994,7 +994,7 @@
       ]
     },
     "previousTotal": 18912,
-    "currentTotal": 18912
+    "currentTotal": 18913
   },
   "jobs": [
     {
@@ -1705,6 +1705,38 @@
       "bbsId": "17872",
       "mi": "23603",
       "detailLinkResolved": true,
+      "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office-8b240e0b0e555f25f0de",
+      "province": "경기",
+      "school": "방과후학교",
+      "title": "2026학년도 방과후학교 지원인력(초단시간근로자) 채용 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "광주시",
+        "하남시"
+      ],
+      "type": "기타",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/04",
+      "applyEnd": "2026/09/11",
+      "workStart": "2026/09/28",
+      "workEnd": "2027/02/28",
+      "registered": "2026/09/03",
+      "headcount": "",
+      "source": "광주하남교육지원청",
+      "checkedSources": [
+        "광주하남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegh.kr/goegh/na/ntt/selectNttInfo.do?bbsId=5030&mi=8667&nttSn=1223405",
+      "boardUrl": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5030&mi=8667",
+      "detailLinkResolved": true,
+      "nttSn": "1223405",
+      "bbsId": "5030",
+      "mi": "8667",
       "periodStatus": "parsed"
     },
     {
@@ -4130,31 +4162,6 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58937"
     },
     {
-      "id": "goe-58935",
-      "province": "경기",
-      "school": "도당중학교",
-      "title": "2026학년도 도당중학교 교육과정 내 학교스포츠클럽강사 채용",
-      "subject": "체육",
-      "region": "부천시",
-      "regions": [
-        "부천시"
-      ],
-      "type": "시간강사/강사",
-      "schoolLevel": "중학교",
-      "applyStart": "2026/09/03",
-      "applyEnd": "2026/09/08",
-      "workStart": "2026/09/08",
-      "workEnd": "2027/02/28",
-      "registered": "2026/09/03",
-      "headcount": "1",
-      "source": "경기도교육청 통합 구인구직",
-      "checkedSources": [
-        "경기도교육청 통합 구인구직"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58935"
-    },
-    {
       "id": "goe-58931",
       "province": "경기",
       "school": "빛가온중학교",
@@ -5888,6 +5895,31 @@
       ],
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58815"
+    },
+    {
+      "id": "goe-58935",
+      "province": "경기",
+      "school": "도당중학교",
+      "title": "2026학년도 도당중학교 교육과정 내 학교스포츠클럽강사 채용",
+      "subject": "체육",
+      "region": "부천시",
+      "regions": [
+        "부천시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/03",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/09/08",
+      "workEnd": "2027/02/28",
+      "registered": "2026/09/03",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58935"
     },
     {
       "id": "goe-58930",
@@ -524907,53 +524939,53 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-03 20:04 KST",
+      "checkedAt": "2026-09-03 22:01 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
       "needsCheck": 0,
-      "recentJobsRead": 1012,
+      "recentJobsRead": 1013,
       "lookbackDays": 21,
       "maxPages": 0
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-03 20:32 KST",
+    "checkedAt": "2026-09-03 22:07 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-03 20:32 KST",
+    "checkedAt": "2026-09-03 22:07 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
-    "freshCount": 16747,
-    "previousCount": 18911,
-    "mergedCount": 18908,
+    "freshCount": 16748,
+    "previousCount": 18912,
+    "mergedCount": 18909,
     "carriedForward": 2161,
     "officialIdProtected": 17887,
     "officialIdCarryForward": 1235,
     "enrichedFromPrevious": 7151,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-03 20:08 KST"
+    "generatedAt": "2026-09-03 22:06 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6950,
-    "gyeonggiTotal": 6950,
+    "gyeonggiExact": 6951,
+    "gyeonggiTotal": 6951,
     "seoulExact": 522,
     "seoulTotal": 522
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-03 20:08 KST",
+    "checkedAt": "2026-09-03 22:06 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6244,
-    "detailPagesParsed": 2612,
-    "fieldsFilledThisRun": 0,
+    "recentSupportJobs": 6245,
+    "detailPagesParsed": 2613,
+    "fieldsFilledThisRun": 4,
     "missingApplicationPeriod": 1103,
     "missingWorkPeriod": 2088,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-03 20:09 KST",
+      "checkedAt": "2026-09-03 22:06 KST",
       "candidates": 246,
       "detailPagesConfirmed": 240,
       "cacheEntriesImproved": 0,
@@ -524963,12 +524995,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-03 20:32:40 KST",
-    "protectedOfficialIds": 17887,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
