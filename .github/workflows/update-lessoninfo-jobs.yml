@@ -8,6 +8,7 @@ on:
       - 'scripts/run_lessoninfo_jobs_exact.py'
       - 'scripts/crawl_lessoninfo_browser.py'
       - 'scripts/run_lessoninfo_browser_fast.py'
+      - 'scripts/run_lessoninfo_browser_integrated.py'
       - 'scripts/run_lessoninfo_browser_resilient.py'
       - '.github/workflows/update-lessoninfo-jobs.yml'
   schedule:
@@ -44,7 +45,7 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Syntax check
-        run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/crawl_lessoninfo_browser.py scripts/run_lessoninfo_browser_fast.py scripts/run_lessoninfo_browser_resilient.py
+        run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/crawl_lessoninfo_browser.py scripts/run_lessoninfo_browser_fast.py scripts/run_lessoninfo_browser_integrated.py scripts/run_lessoninfo_browser_resilient.py
 
       - name: Collect current Lessoninfo jobs in Chromium
         id: collect
@@ -99,19 +100,14 @@ jobs:
           d = json.loads(jp.read_text(encoding='utf-8'))
           jobs = d if isinstance(d, list) else (d.get('jobs') or [])
           bad = [
-              {
-                  'id': j.get('sourceIdentity'),
-                  'title': j.get('title'),
-                  'metroRegion': j.get('metroRegion'),
-                  'location': j.get('location'),
-              }
-              for j in jobs
-              if j.get('metroRegion') not in {'서울', '경기'}
+              {'id': j.get('sourceIdentity'),'title': j.get('title'),'metroRegion': j.get('metroRegion'),'location': j.get('location')}
+              for j in jobs if j.get('metroRegion') not in {'서울', '경기'}
           ]
           if bad:
               print(json.dumps(bad[:20], ensure_ascii=False, indent=2))
               raise SystemExit(f'non-Seoul/Gyeonggi Lessoninfo rows published: {len(bad)}')
-          print(f'Lessoninfo metro-only guard passed: {len(jobs)} Seoul/Gyeonggi jobs')
+          linked=sum(1 for j in jobs if j.get('linkedOfficialUrls'))
+          print(f'Lessoninfo metro-only guard passed: {len(jobs)} Seoul/Gyeonggi jobs; explicit official links captured on {linked} rows')
           PY
 
       - name: Commit collection evidence and healthy dataset
