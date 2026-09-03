@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - 'scripts/crawl_lessoninfo_jobs.py'
-      - 'scripts/run_lessoninfo_jobs.py'
+      - 'scripts/run_lessoninfo_jobs_exact.py'
       - '.github/workflows/update-lessoninfo-jobs.yml'
   schedule:
     - cron: '27 * * * *'
@@ -39,16 +39,16 @@ jobs:
         run: python -m pip install --disable-pip-version-check -r requirements.txt
 
       - name: Syntax check
-        run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/run_lessoninfo_jobs.py
+        run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/run_lessoninfo_jobs_exact.py
 
-      - name: Collect and reconcile Lessoninfo recruitment postings
+      - name: Collect exact Lessoninfo recruitment surfaces
         id: collect
         continue-on-error: true
         env:
           LESSONINFO_LOOKBACK_DAYS: '120'
           LESSONINFO_MAX_PAGES: '500'
           LESSONINFO_DELAY_SECONDS: '0.8'
-        run: python scripts/run_lessoninfo_jobs.py
+        run: python scripts/run_lessoninfo_jobs_exact.py
 
       - name: Validate reconciliation evidence
         id: validate
@@ -61,16 +61,24 @@ jobs:
               raise SystemExit('missing reconciliation report')
           r = json.loads(p.read_text(encoding='utf-8'))
           print(json.dumps({
+              'policy': r.get('policy'),
               'healthy': r.get('healthy'),
               'traversalComplete': r.get('traversalComplete'),
+              'sourceReports': r.get('sourceReports'),
               'discoveredIdCount': r.get('discoveredIdCount'),
               'publishedIdCount': r.get('publishedIdCount'),
               'missingAfterCount': r.get('missingAfterCount'),
               'detailErrorCount': r.get('detailErrorCount'),
               'preservedPreviousDataset': r.get('preservedPreviousDataset'),
           }, ensure_ascii=False, indent=2))
+          if r.get('policy') != 'lessoninfo-exact-two-surface-v4':
+              raise SystemExit('wrong Lessoninfo collection policy')
           if not r.get('healthy') or not r.get('traversalComplete') or r.get('missingAfterCount') != 0:
               raise SystemExit('Lessoninfo completeness guard failed')
+          reports = r.get('sourceReports') or []
+          surfaces = {x.get('surface') for x in reports}
+          if not {'방과후/강사 구인', '문화예술구인'}.issubset(surfaces):
+              raise SystemExit('both Lessoninfo recruitment surfaces were not verified')
           PY
 
       - name: Commit collection evidence and healthy dataset
