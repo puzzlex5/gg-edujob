@@ -1,0 +1,75 @@
+name: Health anomaly auto repair
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '12 * * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: metro-edujob-health-repair
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Sync latest health evidence
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Validate repair planner
+        run: python -m py_compile scripts/plan_health_repair.py
+      - name: Select one cooldown-safe repair
+        id: plan
+        run: |
+          python scripts/plan_health_repair.py plan
+          workflow="$(python - <<'PY'
+          import json
+          p=json.load(open('health_repair_plan.json',encoding='utf-8'))
+          print((p.get('selectedAction') or {}).get('workflow',''))
+          PY
+          )"
+          echo "workflow=$workflow" >> "$GITHUB_OUTPUT"
+      - name: Check target workflow activity
+        if: steps.plan.outputs.workflow != ''
+        id: activity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ steps.plan.outputs.workflow }}
+        run: |
+          active="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/workflows/${TARGET}/runs?per_page=30" --jq '[.workflow_runs[] | select(.status=="queued" or .status=="in_progress" or .status=="waiting" or .status=="requested" or .status=="pending")] | length')"
+          if [ "${active:-0}" -gt 0 ]; then echo 'active=true' >> "$GITHUB_OUTPUT"; else echo 'active=false' >> "$GITHUB_OUTPUT"; fi
+      - name: Dispatch selected repair
+        if: steps.plan.outputs.workflow != '' && steps.activity.outputs.active != 'true'
+        id: dispatch
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ steps.plan.outputs.workflow }}
+        run: gh workflow run "$TARGET" --ref main
+      - name: Record repair attempt
+        if: steps.plan.outputs.workflow != '' && steps.activity.outputs.active != 'true'
+        run: |
+          if [ "${{ steps.dispatch.outcome }}" = success ]; then result=dispatched; else result=failed; fi
+          python scripts/plan_health_repair.py record --result "$result"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add health_repair_state.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record health anomaly auto repair'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Fail visibly if dispatch failed
+        if: steps.plan.outputs.workflow != '' && steps.activity.outputs.active != 'true' && steps.dispatch.outcome != 'success'
+        run: exit 1
