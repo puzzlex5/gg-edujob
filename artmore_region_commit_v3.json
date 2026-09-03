@@ -1,0 +1,177 @@
+{
+  "generatedAt": "2026-09-04T06:31:59+09:00",
+  "source": "아트모아",
+  "mode": "read-only-region-commit-probe-v3",
+  "publicationEnabled": false,
+  "surfaces": [
+    {
+      "region": "서울",
+      "code": "2001",
+      "status": 200,
+      "preSubmitState": {
+        "checked": [],
+        "formArea": [],
+        "current": "Y"
+      },
+      "payload": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date=",
+      "parsedAreaLike": {},
+      "parsedCurrent": [
+        "Y"
+      ],
+      "firstPageIds": [
+        "94856",
+        "94855",
+        "94854",
+        "94853",
+        "94852",
+        "94851",
+        "94862",
+        "94861",
+        "94860",
+        "94859"
+      ],
+      "targetHits": 6,
+      "otherMetroContamination": 1,
+      "requests": [
+        {
+          "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://log-artmore.kr:8443/nlog/log/event?v=1323250876&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471129507&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=2120131722.1788471130&frm=0&pscdl=noapi&rcb=6&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938466~115938468~118897920~118897930~120385422~120469145~120469153&sid=1788471129&sct=1&seg=0&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=8060",
+          "method": "POST",
+          "postData": null
+        },
+        {
+          "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+          "method": "POST",
+          "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+        },
+        {
+          "url": "https://log-artmore.kr:8443/nlog/log/event?v=1129899845&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D7a0b6701-956a-42b5-fb3f-cd91faff4e1f-1788471129512%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471133815&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=2120131722.1788471130&frm=0&pscdl=noapi&rcb=10&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616985~115938465~115938468~118897920~118897930~120385422~120469145~120469153&sid=1788471129&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1457",
+          "method": "POST",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471133815&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=2120131722.1788471130&frm=0&pscdl=noapi&rcb=10&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115616985~115938465~115938468~118897920~118897930~120385422~120469145~120469153&sid=1788471129&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=scroll&epn.percent_scrolled=90&_et=3&tfd=6464",
+          "method": "POST",
+          "postData": null
+        },
+        {
+          "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+          "method": "POST",
+          "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+        },
+        {
+          "url": "https://log-artmore.kr:8443/nlog/log/event?v=1334913741&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D7a0b6701-956a-42b5-fb3f-cd91faff4e1f-1788471129512%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471165370&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=2120131722.1788471130&frm=0&pscdl=noapi&rcb=4&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938466~115938469~118897920~118897930~120385423~120469145~120469153&sid=1788471129&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1288",
+          "method": "POST",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "region": "경기",
+      "code": "2083",
+      "status": 200,
+      "preSubmitState": {
+        "checked": [],
+        "formArea": [],
+        "current": "Y"
+      },
+      "payload": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date=",
+      "parsedAreaLike": {},
+      "parsedCurrent": [
+        "Y"
+      ],
+      "firstPageIds": [
+        "94856",
+        "94855",
+        "94854",
+        "94853",
+        "94852",
+        "94851",
+        "94862",
+        "94861",
+        "94860",
+        "94859"
+      ],
+      "targetHits": 1,
+      "otherMetroContamination": 6,
+      "requests": [
+        {
+          "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://log-artmore.kr:8443/nlog/log/event?v=478596987&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471173961&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=1146094813.1788471174&frm=0&pscdl=noapi&rcb=12&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616985~115938466~115938469~118897920~118897930~120385422~120469145~120469153&sid=1788471174&sct=1&seg=0&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=7210",
+          "method": "POST",
+          "postData": null
+        },
+        {
+          "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+          "method": "POST",
+          "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+        },
+        {
+          "url": "https://log-artmore.kr:8443/nlog/log/event?v=1976060210&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D42eb8995-81e3-52cf-65cb-00ef6b788021-1788471173965%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471178197&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=1146094813.1788471174&frm=0&pscdl=noapi&rcb=13&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616986~115938466~115938469~118897920~118897930~120385422~120469145~120469153~120474864&sid=1788471174&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1449",
+          "method": "POST",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471178197&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=1146094813.1788471174&frm=0&pscdl=noapi&rcb=13&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115616986~115938466~115938469~118897920~118897930~120385422~120469145~120469153~120474864&sid=1788471174&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=scroll&epn.percent_scrolled=90&_et=16&tfd=6456",
+          "method": "POST",
+          "postData": null
+        },
+        {
+          "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+          "method": "POST",
+          "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+        },
+        {
+          "url": "https://log-artmore.kr:8443/nlog/log/event?v=734046346&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D42eb8995-81e3-52cf-65cb-00ef6b788021-1788471173965%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+          "method": "GET",
+          "postData": null
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6921v871751056za200zd871751056&_p=1788471210332&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=1146094813.1788471174&frm=0&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938465~115938468~118897920~118897930~120385422~120469145~120469153&sid=1788471174&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1303",
+          "method": "POST",
+          "postData": null
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "surfaceCount": 2,
+    "errors": 0,
+    "verifiedSurfaceCount": 0,
+    "readyForCollectorEngineering": false
+  }
+}
