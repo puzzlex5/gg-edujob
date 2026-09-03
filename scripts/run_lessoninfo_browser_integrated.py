@@ -5,13 +5,25 @@ A Lessoninfo posting can point to a school/education-office original. We capture
 outbound URLs carrying a known official posting identity (pbancSn, q_rcrtSn/rcrtSn, nttSn+bbsId,
 or job_seq). These links are strong evidence usable by the unified layer; ordinary title similarity
 remains review-only.
+
+The source exclusion pattern intentionally does not ban the bare word '홍보': legitimate culture
+jobs such as '홍보팀 채용' must not be lost. Non-recruitment promotion still fails the positive
+recruitment-signal guard or dedicated non-recruitment terms.
 """
 from __future__ import annotations
 
+import re
 from urllib.parse import parse_qs, urljoin, urlparse
 
 import crawl_lessoninfo_browser as b
-import run_lessoninfo_browser_fast  # applies the hardened fast load + classify_clean wrappers
+import run_lessoninfo_browser_fast  # applies hardened load/current/metro classification wrappers
+
+# Prevent a false negative where a real role such as '홍보팀 채용' was classified as promotion.
+b.EXCLUDE_RE = re.compile(
+    r"구직|이력서|취업희망|매매|팝니다|판매|삽니다|양도|인수|권리금|임대|대여|연습실|"
+    r"악기매매|중고악기|원생모집|학생모집|레슨생|콩쿠르|콩쿨|공연정보|세무\s*상담|사기꾼",
+    re.I,
+)
 
 _BASE_CLASSIFY = b.classify_detail
 
