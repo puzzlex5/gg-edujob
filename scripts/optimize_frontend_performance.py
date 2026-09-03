@@ -2,10 +2,12 @@
 """Keep the static GitHub Pages UI responsive as the recruitment dataset grows.
 
 The collector intentionally keeps a large durable dataset for completeness. The browser must not
-turn every matching row into DOM on each keystroke. This patch keeps full search/filter semantics
-but renders results incrementally and lets normal HTTP cache revalidation work.
+turn every matching row into DOM on each keystroke. This patch keeps full search/filter semantics,
+renders results incrementally, lets normal HTTP cache revalidation work, and refreshes the small
+UI helper asset when navigation/source-status behavior changes.
 """
 from pathlib import Path
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / "index.html"
@@ -34,5 +36,14 @@ if old_input in text:
 elif "let searchTimer=0;" not in text:
     raise SystemExit("search input handler changed; refusing unsafe debounce patch")
 
+# mobile-ui.js contains the visible official/private tabs and the Lessoninfo source-status panel.
+# Bump only this asset reference so browsers do not keep the pre-Lessoninfo white-on-white version.
+new_asset = "mobile-ui.js?v=20260903b"
+if new_asset not in text:
+    patched, count = re.subn(r"mobile-ui\.js\?v=[A-Za-z0-9._-]+", new_asset, text, count=1)
+    if count != 1:
+        raise SystemExit("mobile-ui.js asset reference changed; refusing unsafe cache-bust patch")
+    text = patched
+
 PATH.write_text(text, encoding="utf-8")
-print("frontend performance hardening applied: incremental DOM, debounced search, cache revalidation")
+print("frontend hardening applied: incremental DOM, debounced search, cache revalidation, refreshed Lessoninfo UI asset")
