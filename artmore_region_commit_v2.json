@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-09-04T06:28:49+09:00",
+  "source": "아트모아",
+  "mode": "read-only-region-commit-probe-v2",
+  "publicationEnabled": false,
+  "surfaces": [],
+  "errors": [
+    {
+      "region": "서울",
+      "error": "TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#area_level_2001\")\n    - locator resolved to <input name=\"area\" type=\"radio\" value=\"2001\" id=\"area_level_2001\" class=\"area_level_one\"/>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <label for=\"area_level_2001\">서울</label> intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <label for=\"area_level_2001\">서울</label> intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <label for=\"area_level_2001\">서울</label> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n"
+    },
+    {
+      "region": "경기",
+      "error": "TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#area_level_2083\")\n    - locator resolved to <input name=\"area\" type=\"radio\" value=\"2083\" id=\"area_level_2083\" class=\"area_level_one\"/>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <label for=\"area_level_2083\">경기</label> intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <label for=\"area_level_2083\">경기</label> intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <label for=\"area_level_2083\">경기</label> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n"
+    }
+  ],
+  "summary": {
+    "surfaceCount": 0,
+    "errors": 2,
+    "verifiedSurfaceCount": 0,
+    "readyForCollectorEngineering": false
+  }
+}
