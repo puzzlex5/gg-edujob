@@ -24,7 +24,8 @@ TODAY = datetime.now(KST).date()
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 RESULT_RE = re.compile(r"최종\s*합격|합격자|서류\s*(?:심사|전형)\s*결과|면접\s*대상|선정\s*결과|채용\s*결과|전형\s*결과|인사\s*발령")
 ALWAYS_RE = re.compile(r"상시\s*(?:채용|모집)|채용\s*시까지|충원\s*시까지", re.I)
-PRIVATE_BANNED_RE = re.compile(r"구직|학원\s*매매|악기\s*(?:판매|매매)|연습실|원생\s*모집|학생\s*모집|레슨생\s*모집|팝니다|삽니다|권리금|임대|홍보", re.I)
+PRIVATE_BANNED_RE = re.compile(r"구직|학원\s*매매|악기\s*(?:판매|매매)|연습실|원생\s*모집|학생\s*모집|레슨생\s*모집|팝니다|삽니다|권리금|임대", re.I)
+PROMO_ONLY_RE = re.compile(r"(?:홍보|광고)\s*(?:글|게시글|게시|합니다|드립니다|안내)$", re.I)
 INSTRUMENT_RE = re.compile(r"피아노|바이올린|비올라|첼로|플루트|클라리넷|오보에|바순|색소폰|트럼펫|트롬본|호른|튜바|타악기|드럼|기타|우쿨렐레|우크렐레|리코더|칼림바|국악|가야금|해금|대금|사물놀이|합창|성악|작곡|지휘|반주|오케스트라", re.I)
 
 
@@ -125,7 +126,7 @@ def official_current(job, protected_ids):
 
 def private_current(job):
     title = str(job.get("title") or "")
-    if PRIVATE_BANNED_RE.search(title):
+    if PRIVATE_BANNED_RE.search(title) or PROMO_ONLY_RE.search(title):
         return False
     if job.get("province") not in {"서울", "경기"}:
         return False
@@ -384,8 +385,6 @@ def main():
     projected_official = [project_official(j) for j in official_jobs if official_current(j, protected)]
     projected_private = [project_private(j) for j in private_jobs if private_current(j)]
 
-    # Source-occurrence counts are computed before exact cross-source collapse so the status panel
-    # still reports every current Lessoninfo source posting even when an official representative wins.
     source_surface_counts = {"afterschool-nulbom": 0, "culture-arts": 0}
     for j in projected_private:
         if j.get("sourceSurface") in source_surface_counts:
