@@ -235,6 +235,7 @@ def scrape_gyeonggi_central():
                 title_el = li.select_one(".cont_tit")
                 title = clean(title_el.get_text(" ", strip=True) if title_el else "")
                 title = clean(re.sub(r"^(마감임박|오늘등록|NEW)\s*", "", title))
+                if EXCLUDE_WORDS.search(title): continue
                 vals = parse_gyeonggi_labelled(li)
                 apply_start, apply_end = split_period(vals.get("접수기간", ""))
                 work_start, work_end = split_period(vals.get("채용기간", ""))
@@ -475,6 +476,7 @@ def scrape_seoul_central():
             school=clean(s_title.split("|")[0]) if s_title else ""
             registered=date_norm(s_title)
             title=clean(li.select_one(".list_title").get_text(" ",strip=True) if li.select_one(".list_title") else "")
+            if EXCLUDE_WORDS.search(title): continue
             vals=parse_seoul_card(li)
             subject=vals.get("과목(담당업무)","")
             region=find_region(vals.get("모집정보","")+" "+title+" "+school,SEOUL_REGIONS)
