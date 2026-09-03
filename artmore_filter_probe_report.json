@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-04T04:17:28+09:00",
+  "generatedAt": "2026-09-04T04:21:30+09:00",
   "source": "아트모아",
-  "mode": "read-only-filter-payload-probe-v2",
+  "mode": "read-only-filter-payload-probe-v3",
   "publicationEnabled": false,
   "summary": {
     "reachable": true,
     "regionCodesDiscovered": true,
     "currentFilterInteraction": true,
-    "serverPayloadCaptured": false,
+    "serverPayloadCaptured": true,
     "metroServerFilteringVerified": false,
     "readyForCollectorEngineering": false,
-    "errors": 2
+    "errors": 1
   },
   "evidence": {
     "initialStatus": 200,
@@ -135,16 +135,531 @@
       "서울": "2001",
       "경기": "2083"
     },
-    "surfaces": []
+    "surfaces": [
+      {
+        "region": "서울",
+        "areaCode": "2001",
+        "httpStatus": 200,
+        "total": "선택조건결과 40,900건",
+        "firstPageIds": [
+          "94856",
+          "94855",
+          "94854",
+          "94853",
+          "94852",
+          "94851",
+          "94862",
+          "94861",
+          "94860",
+          "94859"
+        ],
+        "firstPageIdCount": 10,
+        "resultRows": [
+          {
+            "id": "94856",
+            "text": "미쓰잭슨 주식회사 진행중 슬립노모어 서울 운영 스탭 모집 경력무관 고등학교 서울 중구 퇴계로 212 (필동2가) 시급 10,320원 ~ 10,320원 계약직 주5일 채용시까지 2026-09-03 등록 129"
+          },
+          {
+            "id": "94855",
+            "text": "시흥시청 진행중 시흥아트센터 하우스 어텐던트(공연장 안내원) 채용 경력무관 학력무관 경기 시흥시 서울대학로 255 (배곧동) 시급 11,860원 ~ 11,860원 관계없음 주1일 D-9 2026-09-03 등록 2026-09-13 마감 72"
+          },
+          {
+            "id": "94854",
+            "text": "(재)국립발레단 진행중 (재)국립발레단 사무국장 채용 공고 경력 15년 학력무관 서울 서초구 남부순환로 2406 (서초동) 연봉 78,355,980원 ~ 0원 계약직 주5일 D-11 2026-09-03 등록 2026-09-15 마감 160"
+          },
+          {
+            "id": "94853",
+            "text": "(재)국립심포니오케스트라 블라인드 채용 진행중 (재)국립심포니오케스트라 2026년 제3차 경력직 직원 채용 공고 경력 1년 학력무관 서울 서초구 남부순환로 2406 (서초동) 월급 0원 ~ 0원 관계없음 주5일 D-14 2026-09-03 등록 2026-09-18 마감 409"
+          },
+          {
+            "id": "94852",
+            "text": "마스트미디어 진행중 ㈜마스트미디어 클래식사업본부 매니지먼트 경력직 채용 경력 3년 대학교(4년) 서울 강남구 삼성로 757 (청담동) 연봉 0원 ~ 0원 정규직 주5일 D-12 2026-09-03 등록 2026-09-16 마감 122"
+          },
+          {
+            "id": "94851",
+            "text": "마스트미디어 진행중 ㈜마스트미디어 클래식사업본부 홍보마케팅 경력직 채용 경력 2년 대학교(4년) 서울 강남구 삼성로 757 (청담동) 연봉 0원 ~ 0원 정규직 주5일 D-12 2026-09-03 등록 2026-09-16 마감 101"
+          },
+          {
+            "id": "94862",
+            "text": "주식회사 더나아짐 진행중 더나아짐 발달 장애아동 음악선생님 모십니다. 경력무관 학력무관 부산광역시 동래구 명륜로112번길 108 월급 2,156,880원 ~ 2,156,880원 계약직 주5일 채용시까지 2026-09-03 등록 5"
+          },
+          {
+            "id": "94861",
+            "text": "하나씨앤에스(주) 진행중 [KBS 대구방송총국] 중계 및 조명보조원 모집 경력무관 학력무관 대구광역시 수성구 달구벌대로496길 30 월급 2,173,600원 ~ 0원 계약직 주5일 D-4 2026-09-03 등록 2026-09-08 마감 3"
+          },
+          {
+            "id": "94860",
+            "text": "동학농민혁명기념재단 진행중 동학농민혁명기념재단 직원(기간제근로자_전시교육 1... 경력무관 학력무관 전북특별자치도 정읍시 덕천면 동학로 742 월급 2,593,690원 ~ 0원 계약직 주5일 D-11 2026-09-03 등록 2026-09-15 마감 10"
+          },
+          {
+            "id": "94859",
+            "text": "케이워터운영관리(주) 진행중 케이워터운영관리㈜ 홍보(문화안내) 단기계약직 채용... 경력무관 학력무관 부산광역시 사하구 낙동남로1233번길 1 월급 2,301,272원 ~ 0원 계약직 주5일 D-6 2026-09-03 등록 2026-09-10 마감 11"
+          }
+        ],
+        "targetRegionHitCount": 6,
+        "otherMetroContaminationCount": 1,
+        "formStateBeforeSubmit": [
+          {
+            "name": "page",
+            "type": "hidden",
+            "value": "1",
+            "checked": false,
+            "id": "page"
+          },
+          {
+            "name": "listSize",
+            "type": "hidden",
+            "value": "10",
+            "checked": false,
+            "id": "listSize"
+          },
+          {
+            "name": "sort_type",
+            "type": "hidden",
+            "value": "1",
+            "checked": false,
+            "id": "sort_type"
+          },
+          {
+            "name": "exclude_end_yn",
+            "type": "hidden",
+            "value": "Y",
+            "checked": false,
+            "id": "exclude_end_yn"
+          },
+          {
+            "name": "artmore_yn",
+            "type": "hidden",
+            "value": "",
+            "checked": false,
+            "id": "artmore_yn"
+          },
+          {
+            "name": "search_cd",
+            "type": "hidden",
+            "value": "",
+            "checked": false,
+            "id": "search_cd"
+          },
+          {
+            "name": "search_nm",
+            "type": "hidden",
+            "value": "",
+            "checked": false,
+            "id": "search_nm"
+          },
+          {
+            "name": "search_val",
+            "type": "hidden",
+            "value": "",
+            "checked": false,
+            "id": "search_val"
+          },
+          {
+            "name": "keyword",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "jobs_keyword"
+          },
+          {
+            "name": "array_keyword_kind",
+            "type": "checkbox",
+            "value": "1",
+            "checked": true,
+            "id": "jobs_sch_keyword_subj"
+          },
+          {
+            "name": "array_keyword_kind",
+            "type": "checkbox",
+            "value": "2",
+            "checked": true,
+            "id": "jobs_sch_keyword_cname"
+          },
+          {
+            "name": "array_keyword_kind",
+            "type": "checkbox",
+            "value": "3",
+            "checked": true,
+            "id": "jobs_sch_keyword_sector"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2287",
+            "checked": false,
+            "id": "array_employ_type_2287"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2288",
+            "checked": false,
+            "id": "array_employ_type_2288"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2289",
+            "checked": false,
+            "id": "array_employ_type_2289"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2290",
+            "checked": false,
+            "id": "array_employ_type_2290"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2291",
+            "checked": false,
+            "id": "array_employ_type_2291"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2292",
+            "checked": false,
+            "id": "array_employ_type_2292"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2293",
+            "checked": false,
+            "id": "array_employ_type_2293"
+          },
+          {
+            "name": "array_employ_type",
+            "type": "checkbox",
+            "value": "2294",
+            "checked": false,
+            "id": "array_employ_type_2294"
+          },
+          {
+            "name": "array_career_type",
+            "type": "checkbox",
+            "value": "2303",
+            "checked": false,
+            "id": "array_career_type_2303"
+          },
+          {
+            "name": "array_career_type",
+            "type": "checkbox",
+            "value": "2301",
+            "checked": false,
+            "id": "array_career_type_2301"
+          },
+          {
+            "name": "array_career_type",
+            "type": "checkbox",
+            "value": "2302",
+            "checked": false,
+            "id": "array_career_type_2302"
+          },
+          {
+            "name": "start_year",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_career_text01"
+          },
+          {
+            "name": "end_year",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_career_text02"
+          },
+          {
+            "name": "school_code",
+            "type": "select-one",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_edu_sel"
+          },
+          {
+            "name": "school_type",
+            "type": "select-one",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_edu_stat_sel"
+          },
+          {
+            "name": "merit_type",
+            "type": "radio",
+            "value": "",
+            "checked": true,
+            "id": "jobs_sch_option_condition_chkall"
+          },
+          {
+            "name": "merit_type",
+            "type": "radio",
+            "value": "3601",
+            "checked": false,
+            "id": "merit_type_3601"
+          },
+          {
+            "name": "merit_type",
+            "type": "radio",
+            "value": "3602",
+            "checked": false,
+            "id": "merit_type_3602"
+          },
+          {
+            "name": "merit_type",
+            "type": "radio",
+            "value": "3603",
+            "checked": false,
+            "id": "merit_type_3603"
+          },
+          {
+            "name": "pay_type",
+            "type": "select-one",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_paytype"
+          },
+          {
+            "name": "pay_min",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_pay01"
+          },
+          {
+            "name": "pay_max",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "jobs_sch_option_pay02"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "",
+            "checked": true,
+            "id": "jobs_sch_option_register_chkall"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "1",
+            "checked": false,
+            "id": "reg_date_item_3011"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "2",
+            "checked": false,
+            "id": "reg_date_item_3012"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "3",
+            "checked": false,
+            "id": "reg_date_item_3013"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "4",
+            "checked": false,
+            "id": "reg_date_item_3014"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "5",
+            "checked": false,
+            "id": "reg_date_item_3015"
+          },
+          {
+            "name": "reg_date",
+            "type": "radio",
+            "value": "direct",
+            "checked": false,
+            "id": "jobs_sch_option_register_chk06"
+          },
+          {
+            "name": "reg_start_dt",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "reg_start_dt"
+          },
+          {
+            "name": "reg_end_dt",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "reg_end_dt"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "",
+            "checked": true,
+            "id": "jobs_sch_option_deadline_chkall"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "1",
+            "checked": false,
+            "id": "last_date_item_3011"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "2",
+            "checked": false,
+            "id": "last_date_item_3012"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "3",
+            "checked": false,
+            "id": "last_date_item_3013"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "4",
+            "checked": false,
+            "id": "last_date_item_3014"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "5",
+            "checked": false,
+            "id": "last_date_item_3015"
+          },
+          {
+            "name": "last_date",
+            "type": "radio",
+            "value": "direct",
+            "checked": false,
+            "id": "jobs_sch_option_deadline_chk06"
+          },
+          {
+            "name": "last_start_dt",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "last_start_dt"
+          },
+          {
+            "name": "last_end_dt",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "id": "last_end_dt"
+          },
+          {
+            "name": "array_apy_method_type",
+            "type": "checkbox",
+            "value": "3561",
+            "checked": false,
+            "id": "array_apy_method_3561"
+          },
+          {
+            "name": "array_apy_method_type",
+            "type": "checkbox",
+            "value": "3562",
+            "checked": false,
+            "id": "array_apy_method_3562"
+          },
+          {
+            "name": "array_apy_method_type",
+            "type": "checkbox",
+            "value": "3563",
+            "checked": false,
+            "id": "array_apy_method_3563"
+          },
+          {
+            "name": "array_apy_method_type",
+            "type": "checkbox",
+            "value": "3564",
+            "checked": false,
+            "id": "array_apy_method_3564"
+          },
+          {
+            "name": "array_apy_method_type",
+            "type": "checkbox",
+            "value": "3565",
+            "checked": false,
+            "id": "array_apy_method_3565"
+          },
+          {
+            "name": "array_apy_method_type",
+            "type": "checkbox",
+            "value": "3566",
+            "checked": false,
+            "id": "array_apy_method_3566"
+          }
+        ],
+        "capturedSearchRequests": [
+          {
+            "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788463308504&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=30048829.1788463309&frm=0&pscdl=noapi&rcb=1&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616986~115938466~115938468~118897920~118897930~120385422~120469145~120469153&sid=1788463308&sct=1&seg=0&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=7656",
+            "method": "POST",
+            "postData": null
+          },
+          {
+            "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+            "method": "POST",
+            "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+          },
+          {
+            "url": "https://log-artmore.kr:8443/nlog/log/event?v=1553740968&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D0fbd62e0-63f4-b101-bd19-42db4404bb41-1788463308507%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+            "method": "GET",
+            "postData": null
+          },
+          {
+            "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788463312023&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=30048829.1788463309&frm=0&pscdl=noapi&rcb=16&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616985~115938466~115938469~118897920~118897930~119404699~120385423~120469145~120469153~120914213&sid=1788463308&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=2406",
+            "method": "POST",
+            "postData": null
+          },
+          {
+            "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788463312023&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=30048829.1788463309&frm=0&pscdl=noapi&rcb=16&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115616985~115938466~115938469~118897920~118897930~119404699~120385423~120469145~120469153~120914213&sid=1788463308&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=scroll&epn.percent_scrolled=90&_et=6&tfd=7407",
+            "method": "POST",
+            "postData": null
+          },
+          {
+            "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+            "method": "POST",
+            "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+          },
+          {
+            "url": "https://log-artmore.kr:8443/nlog/log/event?v=758474288&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D0fbd62e0-63f4-b101-bd19-42db4404bb41-1788463308507%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+            "method": "GET",
+            "postData": null
+          },
+          {
+            "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788463344493&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=30048829.1788463309&frm=0&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938465~115938469~118897920~118897930~120385423~120469145~120469153&sid=1788463308&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1271",
+            "method": "POST",
+            "postData": null
+          }
+        ],
+        "finalPostPayload": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date=",
+        "serializedArea": null,
+        "serializedCurrentOnly": "Y",
+        "payloadVerified": false,
+        "regionResultVerified": false
+      }
+    ]
   },
   "errors": [
     {
-      "region": "서울",
-      "error": "Error: Locator.check: Clicking the checkbox did not change its state\nCall log:\n  - waiting for locator(\"#jobs_ving_chk\")\n    - locator resolved to <input type=\"checkbox\" id=\"jobs_ving_chk\"/>\n  - attempting click action\n    - scrolling into view if needed\n    - done scrolling\n    - forcing action\n    - performing click action\n    - click action done\n    - waiting for scheduled navigations to finish\n    - navigations have finished\n"
-    },
-    {
       "region": "경기",
-      "error": "Error: Locator.check: Clicking the checkbox did not change its state\nCall log:\n  - waiting for locator(\"#jobs_ving_chk\")\n    - locator resolved to <input type=\"checkbox\" id=\"jobs_ving_chk\"/>\n  - attempting click action\n    - scrolling into view if needed\n    - done scrolling\n    - forcing action\n    - performing click action\n    - click action done\n    - waiting for scheduled navigations to finish\n    - navigations have finished\n"
+      "error": "RuntimeError: area radio not found for 경기=2083"
     }
   ]
 }
