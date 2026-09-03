@@ -6,8 +6,10 @@ on:
     paths:
       - 'scripts/build_unified_search.py'
       - 'scripts/validate_unified_search.py'
+      - 'scripts/crosscheck_private_official.py'
       - 'scripts/apply_unified_frontend.py'
       - 'unified-ui.js'
+      - 'mobile-ui.js'
       - '.github/workflows/unified-search.yml'
   workflow_run:
     workflows:
@@ -40,8 +42,11 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - name: Syntax check unified pipeline
-        run: python -m py_compile scripts/build_unified_search.py scripts/validate_unified_search.py scripts/apply_unified_frontend.py
+      - name: Syntax check unified pipeline and UI
+        run: |
+          python -m py_compile scripts/build_unified_search.py scripts/validate_unified_search.py scripts/crosscheck_private_official.py scripts/apply_unified_frontend.py
+          node --check unified-ui.js
+          node --check mobile-ui.js
       - name: Build disposable unified candidate
         id: build_candidate
         continue-on-error: true
@@ -51,6 +56,11 @@ jobs:
         if: steps.build_candidate.outcome == 'success'
         continue-on-error: true
         run: python scripts/validate_unified_search.py --file unified_jobs.next.json --report unified_validation_report.json
+      - name: Crosscheck private school signals against official data
+        id: crosscheck
+        if: steps.validate_candidate.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/crosscheck_private_official.py
       - name: Publish only verified unified dataset
         if: steps.build_candidate.outcome == 'success' && steps.validate_candidate.outcome == 'success'
         run: |
@@ -74,7 +84,7 @@ jobs:
           rm -f unified_jobs.next.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add unified_search_report.json unified_validation_report.json 2>/dev/null || true
+          git add unified_search_report.json unified_validation_report.json unified_crosscheck_report.json 2>/dev/null || true
           if [ "${{ steps.build_candidate.outcome }}" = success ] && [ "${{ steps.validate_candidate.outcome }}" = success ]; then
             git add unified_jobs.json index.html
           fi
@@ -85,5 +95,5 @@ jobs:
             sleep $((i*4))
           done
       - name: Fail after preserving diagnostics
-        if: steps.build_candidate.outcome != 'success' || steps.validate_candidate.outcome != 'success'
+        if: steps.build_candidate.outcome != 'success' || steps.validate_candidate.outcome != 'success' || steps.crosscheck.outcome == 'failure'
         run: exit 1
