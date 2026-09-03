@@ -1,7 +1,43 @@
 {
-  "generatedAt": "2026-09-03T09:59:22+09:00",
-  "policy": "lessoninfo-active-two-surface-v5",
-  "healthy": false,
-  "blocker": "ConnectionError:HTTPSConnectionPool(host='lessoninfo.cafe24.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='lessoninfo.cafe24.com', port=443): Failed to resolve 'lessoninfo.cafe24.com' ([Errno -5] No address associated with hostname)\"))",
-  "preservedPreviousDataset": true
+  "generatedAt": "2026-09-03T10:22:00+09:00",
+  "policy": "lessoninfo-active-browser-v1",
+  "healthy": true,
+  "traversalComplete": true,
+  "sourceReports": [
+    {
+      "surface": "방과후교사•늘봄학교 강사",
+      "listUrl": "https://www.lessoninfo.co.kr/board/board.php?board_code=20130529164321_7227&code=&bo_table=20170316171033_6494",
+      "complete": true,
+      "pagesScanned": 12,
+      "ids": 850,
+      "stopReason": "discovery_horizon_crossed"
+    },
+    {
+      "surface": "문화예술 채용",
+      "listUrl": "https://www.lessoninfo.co.kr/culture-jobs/list.php",
+      "complete": true,
+      "pagesScanned": 10,
+      "ids": 617,
+      "stopReason": "end_of_pages"
+    }
+  ],
+  "candidateIdCount": 1467,
+  "activeIdCount": 649,
+  "publishedIdCount": 649,
+  "perSurfaceActive": {
+    "afterschool-nulbom": 35,
+    "culture-arts": 614
+  },
+  "missingAfterCount": 0,
+  "missingAfterExamples": [],
+  "detailErrorCount": 0,
+  "detailErrorExamples": [],
+  "classificationCounts": {
+    "active": 649,
+    "expired-deadline": 664,
+    "stale-without-deadline": 142,
+    "closed-marker": 12
+  },
+  "preservedPreviousDataset": false,
+  "errors": []
 }
