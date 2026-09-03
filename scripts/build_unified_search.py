@@ -6,7 +6,8 @@ Safety model:
 - lessoninfo_jobs.json remains the canonical Lessoninfo private dataset.
 - unified_jobs.next.json is a disposable search projection only.
 - Distinct stable IDs are never merged because titles merely look alike.
-- Exact stable ID / exact canonical URL are the only automatic duplicate identities.
+- Cross-source automatic merge requires an explicit exact official posting URL/identity captured
+  from the private detail page. Semantic title/school/date similarity remains review-only.
 """
 from __future__ import annotations
 
@@ -275,6 +276,67 @@ def project_private(job):
     return row
 
 
+def official_identity_urls(row):
+    """Canonical official detail identities usable for exact cross-source matching."""
+    out = set()
+    for raw in (row.get("url"), row.get("openUrl")):
+        c = canonical_url(raw)
+        if c:
+            out.add(c)
+    seq = str((row.get("openParams") or {}).get("job_seq") or "")
+    if seq.isdigit() and row.get("openUrl"):
+        try:
+            p = urlparse(str(row["openUrl"]))
+            out.add(urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"job_seq": seq}), "")))
+        except Exception:
+            pass
+    return out
+
+
+def merge_explicit_official_aliases(official_rows, private_rows):
+    """Prefer official representative only for a unique exact explicit official URL match."""
+    index = {}
+    for row in official_rows:
+        for u in official_identity_urls(row):
+            index.setdefault(u, []).append(row)
+
+    kept_private = []
+    merged = []
+    ambiguous = []
+    for p in private_rows:
+        matches = []
+        evidence_urls = []
+        for raw in p.get("linkedOfficialUrls") or []:
+            c = canonical_url(raw)
+            if not c:
+                continue
+            hits = index.get(c, [])
+            if len(hits) == 1:
+                matches.append(hits[0])
+                evidence_urls.append(c)
+            elif len(hits) > 1:
+                ambiguous.append({"privateId": p.get("sourceIdentity"), "url": c, "officialMatches": len(hits)})
+        unique = {id(x): x for x in matches}
+        if len(unique) == 1:
+            o = next(iter(unique.values()))
+            alias = {
+                "source": "레슨인포",
+                "sourceIdentity": p.get("sourceIdentity"),
+                "sourceSurface": p.get("sourceSurface"),
+                "sourceSurfaceLabel": p.get("sourceSurfaceLabel"),
+                "privateUrl": p.get("originalUrl") or p.get("url"),
+                "evidence": "explicit-exact-official-url",
+                "evidenceUrl": evidence_urls[0] if evidence_urls else "",
+            }
+            existing = {x.get("sourceIdentity") for x in o.setdefault("alsoSeenOn", [])}
+            if alias["sourceIdentity"] not in existing:
+                o["alsoSeenOn"].append(alias)
+            merged.append({"officialId": o.get("sourceIdentity"), "privateId": p.get("sourceIdentity"), "evidenceUrl": alias["evidenceUrl"]})
+        else:
+            kept_private.append(p)
+    return kept_private, merged, ambiguous
+
+
 def dedupe_strong(rows):
     out = []
     seen_id = set()
@@ -287,9 +349,8 @@ def dedupe_strong(rows):
         url = canonical_url(row.get("url"))
         if url and url in seen_url:
             prior = seen_url[url]
-            # Exact URL is strong evidence. Preserve richer official row if a private alias points to it.
             if prior.get("feedKind") == "official" and row.get("feedKind") == "private":
-                prior.setdefault("alsoSeenOn", []).append({"source": row.get("source"), "sourceIdentity": sid})
+                prior.setdefault("alsoSeenOn", []).append({"source": row.get("source"), "sourceIdentity": sid, "privateUrl": row.get("originalUrl") or row.get("url"), "evidence": "exact-same-detail-url"})
                 exact_url_groups.append([prior.get("sourceIdentity"), sid])
                 if sid: seen_id.add(sid)
                 continue
@@ -322,51 +383,69 @@ def main():
 
     projected_official = [project_official(j) for j in official_jobs if official_current(j, protected)]
     projected_private = [project_private(j) for j in private_jobs if private_current(j)]
-    rows, exact_url_groups = dedupe_strong(projected_official + projected_private)
+
+    # Source-occurrence counts are computed before exact cross-source collapse so the status panel
+    # still reports every current Lessoninfo source posting even when an official representative wins.
+    source_surface_counts = {"afterschool-nulbom": 0, "culture-arts": 0}
+    for j in projected_private:
+        if j.get("sourceSurface") in source_surface_counts:
+            source_surface_counts[j["sourceSurface"]] += 1
+
+    remaining_private, explicit_aliases, ambiguous_aliases = merge_explicit_official_aliases(projected_official, projected_private)
+    rows, exact_url_groups = dedupe_strong(projected_official + remaining_private)
     rows.sort(key=lambda j: (j.get("registered") or "", j.get("applyEnd") or "9999-12-31", j.get("sourceIdentity") or ""), reverse=True)
 
     per_feed = {"official": 0, "private": 0}
-    per_private_surface = {"afterschool-nulbom": 0, "culture-arts": 0}
     for j in rows:
-        per_feed[j.get("feedKind", "official")] = per_feed.get(j.get("feedKind", "official"), 0) + 1
-        if j.get("feedKind") == "private" and j.get("sourceSurface") in per_private_surface:
-            per_private_surface[j["sourceSurface"]] += 1
+        kind = j.get("feedKind", "official")
+        per_feed[kind] = per_feed.get(kind, 0) + 1
 
     private_source_ok = bool(private_report.get("healthy") and private_report.get("traversalComplete") and private_report.get("missingAfterCount") == 0 and private_report.get("detailErrorCount") == 0)
+    official_source_count = int(official_data.get("officialSourceCount", 38))
     payload = {
         "updatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),
-        "dataset": "unified-search-v1",
-        "officialSourceCount": int(official_data.get("officialSourceCount", 38)) + 1,
-        "officialSourceCountOriginal": int(official_data.get("officialSourceCount", 38)),
-        "totalSourceCount": int(official_data.get("officialSourceCount", 38)) + 1,
+        "dataset": "unified-search-v2",
+        "officialSourceCount": official_source_count,
+        "totalSourceCount": official_source_count + 1,
         "sources": official_data.get("sources", {}),
         "privateSources": {
             "lessoninfo": {
                 "name": "레슨인포",
                 "ok": private_source_ok,
-                "count": per_feed.get("private", 0),
+                "count": len(projected_private),
+                "displayedAsPrivate": per_feed.get("private", 0),
+                "representedByOfficial": len(explicit_aliases) + len(exact_url_groups),
                 "lastVerifiedAt": private_report.get("generatedAt"),
                 "missingAfterCount": private_report.get("missingAfterCount"),
                 "detailErrorCount": private_report.get("detailErrorCount"),
-                "surfaces": per_private_surface,
+                "surfaces": source_surface_counts,
             }
         },
-        "counts": {"total": len(rows), **per_feed, "privateSurfaces": per_private_surface},
+        "counts": {
+            "total": len(rows),
+            **per_feed,
+            "lessoninfoSourceOccurrences": len(projected_private),
+            "privateSurfaces": source_surface_counts,
+        },
         "jobs": rows,
     }
     Path(args.output).write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     report = {
         "generatedAt": datetime.now(KST).isoformat(timespec="seconds"),
-        "policy": "unified-search-v1-strong-identity-only",
+        "policy": "unified-search-v2-explicit-official-identity-only",
         "canonicalOfficialJobs": len(official_jobs),
         "canonicalPrivateJobs": len(private_jobs),
         "selectedOfficialJobs": len(projected_official),
         "selectedPrivateJobs": len(projected_private),
         "publishedJobs": len(rows),
         "perFeed": per_feed,
-        "perPrivateSurface": per_private_surface,
+        "perPrivateSurface": source_surface_counts,
         "protectedOfficialIds": len(protected),
+        "explicitOfficialAliasGroupsMerged": len(explicit_aliases),
         "exactUrlAliasGroupsMerged": len(exact_url_groups),
+        "ambiguousExplicitOfficialLinks": len(ambiguous_aliases),
+        "explicitAliasExamples": explicit_aliases[:30],
+        "ambiguousAliasExamples": ambiguous_aliases[:20],
         "semanticDuplicatePolicy": "review-only-never-auto-delete",
         "privateSourceHealthy": private_source_ok,
     }
