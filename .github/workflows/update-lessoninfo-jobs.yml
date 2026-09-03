@@ -91,6 +91,26 @@ jobs:
               raise SystemExit('a Lessoninfo source surface returned zero source IDs')
           if r.get('detailErrorCount') != 0:
               raise SystemExit('one or more Lessoninfo detail postings could not be verified')
+
+          jp = pathlib.Path('lessoninfo_jobs.json')
+          if not jp.exists():
+              raise SystemExit('missing Lessoninfo published dataset')
+          d = json.loads(jp.read_text(encoding='utf-8'))
+          jobs = d if isinstance(d, list) else (d.get('jobs') or [])
+          bad = [
+              {
+                  'id': j.get('sourceIdentity'),
+                  'title': j.get('title'),
+                  'metroRegion': j.get('metroRegion'),
+                  'location': j.get('location'),
+              }
+              for j in jobs
+              if j.get('metroRegion') not in {'서울', '경기'}
+          ]
+          if bad:
+              print(json.dumps(bad[:20], ensure_ascii=False, indent=2))
+              raise SystemExit(f'non-Seoul/Gyeonggi Lessoninfo rows published: {len(bad)}')
+          print(f'Lessoninfo metro-only guard passed: {len(jobs)} Seoul/Gyeonggi jobs')
           PY
 
       - name: Commit collection evidence and healthy dataset
