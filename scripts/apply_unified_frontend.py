@@ -31,12 +31,12 @@ marker='<script src="mobile-ui.js?v='
 if 'unified-ui.js' not in s:
     i=s.find(marker)
     if i<0: raise SystemExit('mobile-ui script marker missing')
-    s=s[:i]+'<script src="unified-ui.js?v=20260903c" defer></script>\n'+s[i:]
+    s=s[:i]+'<script src="unified-ui.js?v=20260903d" defer></script>\n'+s[i:]
 else:
-    s,n=re.subn(r'unified-ui\.js\?v=[A-Za-z0-9._-]+','unified-ui.js?v=20260903c',s,count=1)
+    s,n=re.subn(r'unified-ui\.js\?v=[A-Za-z0-9._-]+','unified-ui.js?v=20260903d',s,count=1)
     if n!=1: raise SystemExit('unified-ui asset reference changed')
 
 # Keep the data loader compatible with both old and new metadata names.
 s=s.replace("if(data.officialSourceCount)$('#countSources').textContent=data.officialSourceCount;","if(data.totalSourceCount||data.officialSourceCount)$('#countSources').textContent=data.totalSourceCount||data.officialSourceCount;")
 p.write_text(s,encoding='utf-8')
-print('unified frontend patch applied: lightweight dataset, precomputed searchText, refreshed UI asset')
+print('unified frontend patch applied: lightweight dataset, precomputed searchText, refreshed scope-aware UI asset')
