@@ -11,7 +11,8 @@ from pathlib import Path
 KST = timezone(timedelta(hours=9))
 TODAY = datetime.now(KST).date()
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
-BANNED = re.compile(r"구직|학원\s*매매|악기\s*(?:판매|매매)|연습실|원생\s*모집|학생\s*모집|레슨생\s*모집|팝니다|삽니다|권리금|임대|홍보", re.I)
+BANNED = re.compile(r"구직|학원\s*매매|악기\s*(?:판매|매매)|연습실|원생\s*모집|학생\s*모집|레슨생\s*모집|팝니다|삽니다|권리금|임대", re.I)
+PROMO_ONLY = re.compile(r"(?:홍보|광고)\s*(?:글|게시글|게시|합니다|드립니다|안내)$", re.I)
 
 
 def load(path):
@@ -72,7 +73,7 @@ def main():
         errors.append(f"Unified dataset has {len(bad_alias_evidence)} cross-source aliases without strong exact evidence")
 
     outside_source = [j for j in lesson_jobs if j.get("province") not in {"서울", "경기"}]
-    banned_source = [j for j in lesson_jobs if BANNED.search(str(j.get("title") or ""))]
+    banned_source = [j for j in lesson_jobs if BANNED.search(str(j.get("title") or "")) or PROMO_ONLY.search(str(j.get("title") or ""))]
     expired_source = [j for j in lesson_jobs if parse_date(j.get("applyEnd")) and parse_date(j.get("applyEnd")) < TODAY]
     future_source = [j for j in lesson_jobs if parse_date(j.get("registered")) and parse_date(j.get("registered")) > TODAY]
     if outside_source:
