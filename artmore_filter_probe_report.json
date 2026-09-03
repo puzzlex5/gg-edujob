@@ -1,0 +1,894 @@
+{
+  "generatedAt": "2026-09-04T03:16:10+09:00",
+  "source": "아트모아",
+  "mode": "read-only-filter-payload-probe",
+  "publicationEnabled": false,
+  "summary": {
+    "reachable": true,
+    "currentFilterInteraction": true,
+    "regionSelectorInteraction": false,
+    "metroSelectionInteraction": false,
+    "serverPayloadCaptured": true,
+    "filteredResultChanged": true,
+    "readyForCollectorEngineering": false,
+    "errors": 0
+  },
+  "evidence": {
+    "initialStatus": 200,
+    "initialTotal": "선택조건결과 90,018건",
+    "initialFirstPageIds": [
+      "94856",
+      "94855",
+      "94854",
+      "94853",
+      "94852",
+      "94851",
+      "94860",
+      "94859",
+      "94858",
+      "94857"
+    ],
+    "controlSnippets": {
+      "exclude": [
+        {
+          "tag": "DIV",
+          "id": "wrap",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "아트모아\nArtMore\n예술산업아카데미\n로그인\n회원가입\n검색하기\nSEARCH\n검색하기\n닫기\n사이트맵 열기\n\n일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료",
+          "html": "<div id=\"wrap\" class=\"sub\">\n\t\t<!-- header -->\n\t\t<header id=\"header\">\n\t\t\t<div class=\"gnb-overlay-bg\"></div>\n\t\t\t<!-- thead -->\n\t\t\t<div class=\"thead\">\n\t\t\t\t<div class=\"inner\">\n\t\t\t\t\t<!-- logo -->\n\t\t\t\t\t<h1 class=\"logo\"><a href=\"/main/main.do\">아트모아</a></h1>\n                    <div id=\"gnbBg\"></div>\n\t\t\t\t\t<!-- //logo -->\n\t\t\t\t\t<!-- gnb_box -->\n                    <div class=\"wrap-gnb\">\n                        <nav class=\"gnb-box\" id=\"gnb-box\">\n                            <h2 class=\"hide\">주요메뉴</h2>\n                             <div class=\"gnb-wrap\" id=\"art-menu-list1\">\n                                <ul class=\"gnb\" id=\"gnb\">\n\t                                \n    \t                            \t<li><a href=\"/sub/intro/about_artmore.do\" class=\"gnb-title\">ArtMore 안내</a>\n        \t                                <ul class=\"lnb-list1\">\n            \t                            \t\n\t            \t            "
+        },
+        {
+          "tag": "DIV",
+          "id": "jobs",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택",
+          "html": "<div id=\"jobs\" class=\"sub\">\n    <div class=\"sub_visual sub_visual02\">\n        <div class=\"wrapper\">\n            <p class=\"sub_vs_title df\">일자리정보</p>\n\n            <div class=\"sub_location\">\n                <ul class=\"sub_location_ul\">\n                    <li><a href=\"/\"><img src=\"/resources/images/home_icon01.png\" alt=\"홈으로\"></a></li>\n                    <li>\n                        <select class=\"sub_location_sel\" onchange=\"location.href=value\">\n                            \n                                <option value=\"/sub/intro/about_artmore.do\">ArtMore 안내</option>\n                            \n                                <option value=\"/sub/recruit/search_list.do\" selected=\"\">일자리 정보</option>\n                            \n                                <option value=\"/sub/human/search_list.do\">인재정보</option>\n                            \n                                <option value=\""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"sub_content\">\n        <div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSiz"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSize\" id=\"listSize\" value=\"10\">\n     "
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "마감/종료 제외",
+          "html": "<label for=\"jobs_ving_chk\">마감/종료 제외</label>"
+        }
+      ],
+      "region": [
+        {
+          "tag": "DIV",
+          "id": "wrap",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "아트모아\nArtMore\n예술산업아카데미\n로그인\n회원가입\n검색하기\nSEARCH\n검색하기\n닫기\n사이트맵 열기\n\n일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료",
+          "html": "<div id=\"wrap\" class=\"sub\">\n\t\t<!-- header -->\n\t\t<header id=\"header\">\n\t\t\t<div class=\"gnb-overlay-bg\"></div>\n\t\t\t<!-- thead -->\n\t\t\t<div class=\"thead\">\n\t\t\t\t<div class=\"inner\">\n\t\t\t\t\t<!-- logo -->\n\t\t\t\t\t<h1 class=\"logo\"><a href=\"/main/main.do\">아트모아</a></h1>\n                    <div id=\"gnbBg\"></div>\n\t\t\t\t\t<!-- //logo -->\n\t\t\t\t\t<!-- gnb_box -->\n                    <div class=\"wrap-gnb\">\n                        <nav class=\"gnb-box\" id=\"gnb-box\">\n                            <h2 class=\"hide\">주요메뉴</h2>\n                             <div class=\"gnb-wrap\" id=\"art-menu-list1\">\n                                <ul class=\"gnb\" id=\"gnb\">\n\t                                \n    \t                            \t<li><a href=\"/sub/intro/about_artmore.do\" class=\"gnb-title\">ArtMore 안내</a>\n        \t                                <ul class=\"lnb-list1\">\n            \t                            \t\n\t            \t            "
+        },
+        {
+          "tag": "DIV",
+          "id": "jobs",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택",
+          "html": "<div id=\"jobs\" class=\"sub\">\n    <div class=\"sub_visual sub_visual02\">\n        <div class=\"wrapper\">\n            <p class=\"sub_vs_title df\">일자리정보</p>\n\n            <div class=\"sub_location\">\n                <ul class=\"sub_location_ul\">\n                    <li><a href=\"/\"><img src=\"/resources/images/home_icon01.png\" alt=\"홈으로\"></a></li>\n                    <li>\n                        <select class=\"sub_location_sel\" onchange=\"location.href=value\">\n                            \n                                <option value=\"/sub/intro/about_artmore.do\">ArtMore 안내</option>\n                            \n                                <option value=\"/sub/recruit/search_list.do\" selected=\"\">일자리 정보</option>\n                            \n                                <option value=\"/sub/human/search_list.do\">인재정보</option>\n                            \n                                <option value=\""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"sub_content\">\n        <div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSiz"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSize\" id=\"listSize\" value=\"10\">\n     "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기",
+          "html": "<div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSize\" id=\"listSize\" value=\"10\">\n                    <input type=\"hidden\" name=\"sort_type\" id=\"sort_type\" value=\"1\">\n                    <input type=\"hidden\" name=\"exclude_end_yn\" id=\"exclude_end_yn\" value=\"\">\n                    <input type=\"hidden\" name=\"artmore_yn\" id=\"artmore_yn\" value=\"\">\n                    <input type=\"hidden\" name=\"search_cd\" id=\"search_cd\" value=\"\">\n                    <input type=\"hidden\" name=\"search_nm\" id=\"search_nm\" value=\"\">\n                    <input type=\"hidden\" name=\"search_val\" id=\"search_val\" value=\"\">\n                    <div class=\"jobs_sch_cont\">\n                        <div class=\"jobs_sch_keyword cf\">\n  "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정",
+          "html": "<div class=\"jobs_sch_cont\">\n                        <div class=\"jobs_sch_keyword cf\">\n                            <div class=\"jobs_sch_li\">\n                                <label for=\"jobs_keyword\" class=\"jobs_sch_lb jobs_sch_li_l\">검색어</label>\n                                <input type=\"text\" class=\"i-inpt jobs_sch_li_r\" id=\"jobs_keyword\" name=\"keyword\" value=\"\">\n                            </div>\n                            <ul class=\"jobs_sch_keyword_chk cf\">\n                                \n                                <!--2021-05-25_수정(checkbox default: checked) → 디폴트는 컨트롤러에서 keyword_kind_str=1,2,3 로 처리-->\n                                <li class=\"i-checks\">\n                                    <input type=\"checkbox\" id=\"jobs_sch_keyword_subj\" class=\"keyword_group\" name=\"array_keyword_kind\" value=\"1\" checked=\"\">\n                                    <label for=\"jobs_sch_keyword_sub"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택",
+          "html": "<div class=\"jobs_sch_detail cf\">\n                            <div class=\"jobs_sch_li\">\n                                <span class=\"jobs_sch_lb jobs_sch_li_l\">장르별</span>\n                                <button type=\"button\" class=\"jobs_sch_pop_btn\" onclick=\"popUp('jobs_genre_pop')\">장르 선택</button>\n                            </div>\n                            <div class=\"jobs_sch_li\">\n                                <span class=\"jobs_sch_lb jobs_sch_li_l\">업종별</span>\n                                <button type=\"button\" class=\"jobs_sch_pop_btn\" onclick=\"popUp('jobs_sector_pop')\">업종 선택</button>\n                            </div>\n                            <div class=\"jobs_sch_li\">\n                                <span class=\"jobs_sch_lb jobs_sch_li_l\">지역별</span>\n                                <button type=\"button\" class=\"jobs_sch_pop_btn\" onclick=\"popUp('jobs_wkplace_pop')\">지역 선택</button>"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "지역별 지역 선택",
+          "html": "<div class=\"jobs_sch_li\">\n                                <span class=\"jobs_sch_lb jobs_sch_li_l\">지역별</span>\n                                <button type=\"button\" class=\"jobs_sch_pop_btn\" onclick=\"popUp('jobs_wkplace_pop')\">지역 선택</button>\n                            </div>"
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "name": "",
+          "type": "button",
+          "value": "",
+          "text": "지역 선택",
+          "html": "<button type=\"button\" class=\"jobs_sch_pop_btn\" onclick=\"popUp('jobs_wkplace_pop')\">지역 선택</button>"
+        },
+        {
+          "tag": "DIV",
+          "id": "jobs_wkplace_pop",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "지역 선택\n                닫기\n            \n\n            \n                \n\n                    \n                        시/도 선택\n                        \n             ",
+          "html": "<div id=\"jobs_wkplace_pop\" class=\"popup_dim\">\n        <div class=\"popup_wrap\">\n            <div class=\"popup_top\">\n                <span class=\"popup_title\">지역 선택</span>\n                <button type=\"button\" class=\"popup_close_btn\" onclick=\"popClose()\">닫기</button>\n            </div>\n\n            <div class=\"popup_cont\">\n                <div class=\"popup_cont_inner\">\n\n                    <div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "지역 선택\n                닫기\n            \n\n            \n                \n\n                    \n                        시/도 선택\n                        \n             ",
+          "html": "<div class=\"popup_wrap\">\n            <div class=\"popup_top\">\n                <span class=\"popup_title\">지역 선택</span>\n                <button type=\"button\" class=\"popup_close_btn\" onclick=\"popClose()\">닫기</button>\n            </div>\n\n            <div class=\"popup_cont\">\n                <div class=\"popup_cont_inner\">\n\n                    <div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n                                            <label for="
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "지역 선택\n                닫기",
+          "html": "<div class=\"popup_top\">\n                <span class=\"popup_title\">지역 선택</span>\n                <button type=\"button\" class=\"popup_close_btn\" onclick=\"popClose()\">닫기</button>\n            </div>"
+        }
+      ],
+      "seoul": [
+        {
+          "tag": "DIV",
+          "id": "wrap",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "아트모아\nArtMore\n예술산업아카데미\n로그인\n회원가입\n검색하기\nSEARCH\n검색하기\n닫기\n사이트맵 열기\n\n일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료",
+          "html": "<div id=\"wrap\" class=\"sub\">\n\t\t<!-- header -->\n\t\t<header id=\"header\">\n\t\t\t<div class=\"gnb-overlay-bg\"></div>\n\t\t\t<!-- thead -->\n\t\t\t<div class=\"thead\">\n\t\t\t\t<div class=\"inner\">\n\t\t\t\t\t<!-- logo -->\n\t\t\t\t\t<h1 class=\"logo\"><a href=\"/main/main.do\">아트모아</a></h1>\n                    <div id=\"gnbBg\"></div>\n\t\t\t\t\t<!-- //logo -->\n\t\t\t\t\t<!-- gnb_box -->\n                    <div class=\"wrap-gnb\">\n                        <nav class=\"gnb-box\" id=\"gnb-box\">\n                            <h2 class=\"hide\">주요메뉴</h2>\n                             <div class=\"gnb-wrap\" id=\"art-menu-list1\">\n                                <ul class=\"gnb\" id=\"gnb\">\n\t                                \n    \t                            \t<li><a href=\"/sub/intro/about_artmore.do\" class=\"gnb-title\">ArtMore 안내</a>\n        \t                                <ul class=\"lnb-list1\">\n            \t                            \t\n\t            \t            "
+        },
+        {
+          "tag": "DIV",
+          "id": "jobs",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택",
+          "html": "<div id=\"jobs\" class=\"sub\">\n    <div class=\"sub_visual sub_visual02\">\n        <div class=\"wrapper\">\n            <p class=\"sub_vs_title df\">일자리정보</p>\n\n            <div class=\"sub_location\">\n                <ul class=\"sub_location_ul\">\n                    <li><a href=\"/\"><img src=\"/resources/images/home_icon01.png\" alt=\"홈으로\"></a></li>\n                    <li>\n                        <select class=\"sub_location_sel\" onchange=\"location.href=value\">\n                            \n                                <option value=\"/sub/intro/about_artmore.do\">ArtMore 안내</option>\n                            \n                                <option value=\"/sub/recruit/search_list.do\" selected=\"\">일자리 정보</option>\n                            \n                                <option value=\"/sub/human/search_list.do\">인재정보</option>\n                            \n                                <option value=\""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"sub_content\">\n        <div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSiz"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSize\" id=\"listSize\" value=\"10\">\n     "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력낮은순\n경력많은순\n경력낮은순\n마감일순 ↓\n마감일순 ↑\n \n10개씩 보기\n50개씩 보기\n100개씩 보기\n채용정보 목록\n회사명/정보제공처\t채용공고명/담당업무/지원자격\t근무조건\t등록/마감일\t조회수\n\n\n미쓰잭슨 ",
+          "html": "<div class=\"board_tb_wrap jobs_sch_tb_wrap\">\n                <div class=\"bo_view_type\">\n                    <ul class=\"bo_view_type_ul\">\n                        <li class=\"bo_vsort\">\n                            <select id=\"sort_type_select\" class=\"i-select bo_vsort_sel\" title=\"정렬순서\">\n                                <option value=\"1\" selected=\"selected\">최근등록일순</option>\n                                <option value=\"2\">예전등록일순</option>\n                                <option value=\"3\">회사명 ↓</option>\n                                <option value=\"4\">회사명 ↑</option>\n                                <option value=\"5\">임금높은순</option>\n                                <option value=\"6\">임금낮은순</option>\n                                <option value=\"7\">학력높은순</option>\n                                <option value=\"8\">학력낮은순</option>\n                                <option value=\"9\">경력많은순</option>\n        "
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "진행중 슬립노모어 서울 운영 스탭 모집",
+          "html": "<a href=\"/sub/recruit/search_view.do?rec_idx=94856\" class=\"jobs_title\">\n                                            \n                                                    \n                                                            <span class=\"jobs_list_state state01\">진행중</span>\n                                                        \n                                                \n                                            슬립노모어 서울 운영 스탭 모집\n                                        </a>"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "경력무관 고등학교 서울 중구 퇴계로 212 (필동2가)",
+          "html": "<div class=\"jobs_dtl_box\">\n                                            <span class=\"jobs_career\">경력무관</span>\n                                            <span class=\"jobs_edu\">고등학교</span>\n                                            <span class=\"jobs_wkplace\">서울 중구 퇴계로 212 (필동2가)</span>\n                                        </div>"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "서울 중구 퇴계로 212 (필동2가)",
+          "html": "<span class=\"jobs_wkplace\">서울 중구 퇴계로 212 (필동2가)</span>"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "경력무관 학력무관 경기 시흥시 서울대학로 255 (배곧동)",
+          "html": "<div class=\"jobs_dtl_box\">\n                                            <span class=\"jobs_career\">경력무관</span>\n                                            <span class=\"jobs_edu\">학력무관</span>\n                                            <span class=\"jobs_wkplace\">경기 시흥시 서울대학로 255 (배곧동)</span>\n                                        </div>"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "경기 시흥시 서울대학로 255 (배곧동)",
+          "html": "<span class=\"jobs_wkplace\">경기 시흥시 서울대학로 255 (배곧동)</span>"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "경력 15년 학력무관 서울 서초구 남부순환로 2406 (서초동)",
+          "html": "<div class=\"jobs_dtl_box\">\n                                            <span class=\"jobs_career\">경력 15년</span>\n                                            <span class=\"jobs_edu\">학력무관</span>\n                                            <span class=\"jobs_wkplace\">서울 서초구 남부순환로 2406 (서초동)</span>\n                                        </div>"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "서울 서초구 남부순환로 2406 (서초동)",
+          "html": "<span class=\"jobs_wkplace\">서울 서초구 남부순환로 2406 (서초동)</span>"
+        }
+      ],
+      "gyeonggi": [
+        {
+          "tag": "DIV",
+          "id": "wrap",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "아트모아\nArtMore\n예술산업아카데미\n로그인\n회원가입\n검색하기\nSEARCH\n검색하기\n닫기\n사이트맵 열기\n\n일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료",
+          "html": "<div id=\"wrap\" class=\"sub\">\n\t\t<!-- header -->\n\t\t<header id=\"header\">\n\t\t\t<div class=\"gnb-overlay-bg\"></div>\n\t\t\t<!-- thead -->\n\t\t\t<div class=\"thead\">\n\t\t\t\t<div class=\"inner\">\n\t\t\t\t\t<!-- logo -->\n\t\t\t\t\t<h1 class=\"logo\"><a href=\"/main/main.do\">아트모아</a></h1>\n                    <div id=\"gnbBg\"></div>\n\t\t\t\t\t<!-- //logo -->\n\t\t\t\t\t<!-- gnb_box -->\n                    <div class=\"wrap-gnb\">\n                        <nav class=\"gnb-box\" id=\"gnb-box\">\n                            <h2 class=\"hide\">주요메뉴</h2>\n                             <div class=\"gnb-wrap\" id=\"art-menu-list1\">\n                                <ul class=\"gnb\" id=\"gnb\">\n\t                                \n    \t                            \t<li><a href=\"/sub/intro/about_artmore.do\" class=\"gnb-title\">ArtMore 안내</a>\n        \t                                <ul class=\"lnb-list1\">\n            \t                            \t\n\t            \t            "
+        },
+        {
+          "tag": "DIV",
+          "id": "jobs",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리정보\n\nArtMore 안내\n일자리 정보\n인재정보\n기업/직업 정보\n뉴스/자료\n커뮤니티\n일자리 상세검색\n장르별\n업종별\n지역별\n\n일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택",
+          "html": "<div id=\"jobs\" class=\"sub\">\n    <div class=\"sub_visual sub_visual02\">\n        <div class=\"wrapper\">\n            <p class=\"sub_vs_title df\">일자리정보</p>\n\n            <div class=\"sub_location\">\n                <ul class=\"sub_location_ul\">\n                    <li><a href=\"/\"><img src=\"/resources/images/home_icon01.png\" alt=\"홈으로\"></a></li>\n                    <li>\n                        <select class=\"sub_location_sel\" onchange=\"location.href=value\">\n                            \n                                <option value=\"/sub/intro/about_artmore.do\">ArtMore 안내</option>\n                            \n                                <option value=\"/sub/recruit/search_list.do\" selected=\"\">일자리 정보</option>\n                            \n                                <option value=\"/sub/human/search_list.do\">인재정보</option>\n                            \n                                <option value=\""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"sub_content\">\n        <div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSiz"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "일자리 상세검색\n\n아트모아 공고만 보기 \n마감/종료 제외\n검색어 \n제목\n회사명\n직무내용\n장르별 장르 선택\n업종별 업종 선택\n지역별 지역 선택\n상세조건설정\n선택초기화\n\n선택조건결과 90,018건\n\n검색하기\n최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력",
+          "html": "<div class=\"wrapper\">\n            <p class=\"sub_title\">일자리 상세검색</p>\n            <!-- 230509 추가 -->\n            <ul class=\"bo_view_type_ul2\">\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk_worknet\">\n                    <label for=\"jobs_ving_chk_worknet\">아트모아 공고만 보기</label>\n                </li>\n                <li class=\"bo_ving2 i-checks\">\n                    <input type=\"checkbox\" id=\"jobs_ving_chk\">\n                    <label for=\"jobs_ving_chk\">마감/종료 제외</label>\n                </li>\n            </ul>\n            <!-- // 230509 추가 -->\n            <div class=\"jobs_sch_wrap\">\n                <form name=\"frm\" id=\"frm\" method=\"post\" action=\"/sub/recruit/search_list.do\">\n                    <input type=\"hidden\" name=\"page\" id=\"page\" value=\"1\">\n                    <input type=\"hidden\" name=\"listSize\" id=\"listSize\" value=\"10\">\n     "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "최근등록일순\n예전등록일순\n회사명 ↓\n회사명 ↑\n임금높은순\n임금낮은순\n학력높은순\n학력낮은순\n경력많은순\n경력낮은순\n마감일순 ↓\n마감일순 ↑\n \n10개씩 보기\n50개씩 보기\n100개씩 보기\n채용정보 목록\n회사명/정보제공처\t채용공고명/담당업무/지원자격\t근무조건\t등록/마감일\t조회수\n\n\n미쓰잭슨 ",
+          "html": "<div class=\"board_tb_wrap jobs_sch_tb_wrap\">\n                <div class=\"bo_view_type\">\n                    <ul class=\"bo_view_type_ul\">\n                        <li class=\"bo_vsort\">\n                            <select id=\"sort_type_select\" class=\"i-select bo_vsort_sel\" title=\"정렬순서\">\n                                <option value=\"1\" selected=\"selected\">최근등록일순</option>\n                                <option value=\"2\">예전등록일순</option>\n                                <option value=\"3\">회사명 ↓</option>\n                                <option value=\"4\">회사명 ↑</option>\n                                <option value=\"5\">임금높은순</option>\n                                <option value=\"6\">임금낮은순</option>\n                                <option value=\"7\">학력높은순</option>\n                                <option value=\"8\">학력낮은순</option>\n                                <option value=\"9\">경력많은순</option>\n        "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "경력무관 학력무관 경기 시흥시 서울대학로 255 (배곧동)",
+          "html": "<div class=\"jobs_dtl_box\">\n                                            <span class=\"jobs_career\">경력무관</span>\n                                            <span class=\"jobs_edu\">학력무관</span>\n                                            <span class=\"jobs_wkplace\">경기 시흥시 서울대학로 255 (배곧동)</span>\n                                        </div>"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "경기 시흥시 서울대학로 255 (배곧동)",
+          "html": "<span class=\"jobs_wkplace\">경기 시흥시 서울대학로 255 (배곧동)</span>"
+        },
+        {
+          "tag": "DIV",
+          "id": "jobs_wkplace_pop",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "지역 선택\n                닫기\n            \n\n            \n                \n\n                    \n                        시/도 선택\n                        \n             ",
+          "html": "<div id=\"jobs_wkplace_pop\" class=\"popup_dim\">\n        <div class=\"popup_wrap\">\n            <div class=\"popup_top\">\n                <span class=\"popup_title\">지역 선택</span>\n                <button type=\"button\" class=\"popup_close_btn\" onclick=\"popClose()\">닫기</button>\n            </div>\n\n            <div class=\"popup_cont\">\n                <div class=\"popup_cont_inner\">\n\n                    <div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "지역 선택\n                닫기\n            \n\n            \n                \n\n                    \n                        시/도 선택\n                        \n             ",
+          "html": "<div class=\"popup_wrap\">\n            <div class=\"popup_top\">\n                <span class=\"popup_title\">지역 선택</span>\n                <button type=\"button\" class=\"popup_close_btn\" onclick=\"popClose()\">닫기</button>\n            </div>\n\n            <div class=\"popup_cont\">\n                <div class=\"popup_cont_inner\">\n\n                    <div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n                                            <label for="
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "시/도 선택\n                        \n                            \n                                \n                                    \n                             ",
+          "html": "<div class=\"popup_cont\">\n                <div class=\"popup_cont_inner\">\n\n                    <div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n                                            <label for=\"area_level_2001\">서울</label>\n                                        </div>\n                                    </li>\n                                \n                                    <li>\n                                        <div class="
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "시/도 선택\n                        \n                            \n                                \n                                    \n                             ",
+          "html": "<div class=\"popup_cont_inner\">\n\n                    <div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n                                            <label for=\"area_level_2001\">서울</label>\n                                        </div>\n                                    </li>\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                              "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "text": "시/도 선택\n                        \n                            \n                                \n                                    \n                             ",
+          "html": "<div class=\"jobs_sch_option\">\n                        <p class=\"jobs_sch_option_title\">시/도 선택</p>\n                        <div class=\"jobs_sch_option_cont\">\n                            <ul class=\"jobs_sch_option_ul jobs_sch_option_radio\">\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"area_level_2001\" value=\"2001\" class=\"area_level_one\">\n                                            <label for=\"area_level_2001\">서울</label>\n                                        </div>\n                                    </li>\n                                \n                                    <li>\n                                        <div class=\"i-radio\">\n                                            <input type=\"radio\" name=\"area\" id=\"ar"
+        }
+      ]
+    },
+    "currentToggleInteracted": true,
+    "regionSelectorOpened": false,
+    "selectedRegionLabels": [],
+    "visibleRegionControls": [],
+    "formStateBeforeSubmit": [
+      {
+        "name": "page",
+        "type": "hidden",
+        "value": "1",
+        "checked": false,
+        "id": "page"
+      },
+      {
+        "name": "listSize",
+        "type": "hidden",
+        "value": "10",
+        "checked": false,
+        "id": "listSize"
+      },
+      {
+        "name": "sort_type",
+        "type": "hidden",
+        "value": "1",
+        "checked": false,
+        "id": "sort_type"
+      },
+      {
+        "name": "exclude_end_yn",
+        "type": "hidden",
+        "value": "Y",
+        "checked": false,
+        "id": "exclude_end_yn"
+      },
+      {
+        "name": "artmore_yn",
+        "type": "hidden",
+        "value": "",
+        "checked": false,
+        "id": "artmore_yn"
+      },
+      {
+        "name": "search_cd",
+        "type": "hidden",
+        "value": "",
+        "checked": false,
+        "id": "search_cd"
+      },
+      {
+        "name": "search_nm",
+        "type": "hidden",
+        "value": "",
+        "checked": false,
+        "id": "search_nm"
+      },
+      {
+        "name": "search_val",
+        "type": "hidden",
+        "value": "",
+        "checked": false,
+        "id": "search_val"
+      },
+      {
+        "name": "keyword",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "jobs_keyword"
+      },
+      {
+        "name": "array_keyword_kind",
+        "type": "checkbox",
+        "value": "1",
+        "checked": true,
+        "id": "jobs_sch_keyword_subj"
+      },
+      {
+        "name": "array_keyword_kind",
+        "type": "checkbox",
+        "value": "2",
+        "checked": true,
+        "id": "jobs_sch_keyword_cname"
+      },
+      {
+        "name": "array_keyword_kind",
+        "type": "checkbox",
+        "value": "3",
+        "checked": true,
+        "id": "jobs_sch_keyword_sector"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2287",
+        "checked": false,
+        "id": "array_employ_type_2287"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2288",
+        "checked": false,
+        "id": "array_employ_type_2288"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2289",
+        "checked": false,
+        "id": "array_employ_type_2289"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2290",
+        "checked": false,
+        "id": "array_employ_type_2290"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2291",
+        "checked": false,
+        "id": "array_employ_type_2291"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2292",
+        "checked": false,
+        "id": "array_employ_type_2292"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2293",
+        "checked": false,
+        "id": "array_employ_type_2293"
+      },
+      {
+        "name": "array_employ_type",
+        "type": "checkbox",
+        "value": "2294",
+        "checked": false,
+        "id": "array_employ_type_2294"
+      },
+      {
+        "name": "array_career_type",
+        "type": "checkbox",
+        "value": "2303",
+        "checked": false,
+        "id": "array_career_type_2303"
+      },
+      {
+        "name": "array_career_type",
+        "type": "checkbox",
+        "value": "2301",
+        "checked": false,
+        "id": "array_career_type_2301"
+      },
+      {
+        "name": "array_career_type",
+        "type": "checkbox",
+        "value": "2302",
+        "checked": false,
+        "id": "array_career_type_2302"
+      },
+      {
+        "name": "start_year",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_career_text01"
+      },
+      {
+        "name": "end_year",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_career_text02"
+      },
+      {
+        "name": "school_code",
+        "type": "select-one",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_edu_sel"
+      },
+      {
+        "name": "school_type",
+        "type": "select-one",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_edu_stat_sel"
+      },
+      {
+        "name": "merit_type",
+        "type": "radio",
+        "value": "",
+        "checked": true,
+        "id": "jobs_sch_option_condition_chkall"
+      },
+      {
+        "name": "merit_type",
+        "type": "radio",
+        "value": "3601",
+        "checked": false,
+        "id": "merit_type_3601"
+      },
+      {
+        "name": "merit_type",
+        "type": "radio",
+        "value": "3602",
+        "checked": false,
+        "id": "merit_type_3602"
+      },
+      {
+        "name": "merit_type",
+        "type": "radio",
+        "value": "3603",
+        "checked": false,
+        "id": "merit_type_3603"
+      },
+      {
+        "name": "pay_type",
+        "type": "select-one",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_paytype"
+      },
+      {
+        "name": "pay_min",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_pay01"
+      },
+      {
+        "name": "pay_max",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "jobs_sch_option_pay02"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "",
+        "checked": true,
+        "id": "jobs_sch_option_register_chkall"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "1",
+        "checked": false,
+        "id": "reg_date_item_3011"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "2",
+        "checked": false,
+        "id": "reg_date_item_3012"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "3",
+        "checked": false,
+        "id": "reg_date_item_3013"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "4",
+        "checked": false,
+        "id": "reg_date_item_3014"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "5",
+        "checked": false,
+        "id": "reg_date_item_3015"
+      },
+      {
+        "name": "reg_date",
+        "type": "radio",
+        "value": "direct",
+        "checked": false,
+        "id": "jobs_sch_option_register_chk06"
+      },
+      {
+        "name": "reg_start_dt",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "reg_start_dt"
+      },
+      {
+        "name": "reg_end_dt",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "reg_end_dt"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "",
+        "checked": true,
+        "id": "jobs_sch_option_deadline_chkall"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "1",
+        "checked": false,
+        "id": "last_date_item_3011"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "2",
+        "checked": false,
+        "id": "last_date_item_3012"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "3",
+        "checked": false,
+        "id": "last_date_item_3013"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "4",
+        "checked": false,
+        "id": "last_date_item_3014"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "5",
+        "checked": false,
+        "id": "last_date_item_3015"
+      },
+      {
+        "name": "last_date",
+        "type": "radio",
+        "value": "direct",
+        "checked": false,
+        "id": "jobs_sch_option_deadline_chk06"
+      },
+      {
+        "name": "last_start_dt",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "last_start_dt"
+      },
+      {
+        "name": "last_end_dt",
+        "type": "text",
+        "value": "",
+        "checked": false,
+        "id": "last_end_dt"
+      },
+      {
+        "name": "array_apy_method_type",
+        "type": "checkbox",
+        "value": "3561",
+        "checked": false,
+        "id": "array_apy_method_3561"
+      },
+      {
+        "name": "array_apy_method_type",
+        "type": "checkbox",
+        "value": "3562",
+        "checked": false,
+        "id": "array_apy_method_3562"
+      },
+      {
+        "name": "array_apy_method_type",
+        "type": "checkbox",
+        "value": "3563",
+        "checked": false,
+        "id": "array_apy_method_3563"
+      },
+      {
+        "name": "array_apy_method_type",
+        "type": "checkbox",
+        "value": "3564",
+        "checked": false,
+        "id": "array_apy_method_3564"
+      },
+      {
+        "name": "array_apy_method_type",
+        "type": "checkbox",
+        "value": "3565",
+        "checked": false,
+        "id": "array_apy_method_3565"
+      },
+      {
+        "name": "array_apy_method_type",
+        "type": "checkbox",
+        "value": "3566",
+        "checked": false,
+        "id": "array_apy_method_3566"
+      }
+    ],
+    "capturedSearchRequests": [
+      {
+        "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+        "method": "GET",
+        "postData": null
+      },
+      {
+        "url": "https://log-artmore.kr:8443/nlog/log/event?v=556035520&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+        "method": "GET",
+        "postData": null
+      },
+      {
+        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788459378961&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=996151329.1788459379&frm=0&pscdl=noapi&rcb=1&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616985~115938465~115938469~118897920~118897930~120385422~120469145~120469153&sid=1788459379&sct=1&seg=0&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=7016",
+        "method": "POST",
+        "postData": null
+      },
+      {
+        "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+        "method": "POST",
+        "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+      },
+      {
+        "url": "https://log-artmore.kr:8443/nlog/log/event?v=1746474158&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D7d451f64-dd54-1987-b25f-862f0d167251-1788459378965%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+        "method": "GET",
+        "postData": null
+      },
+      {
+        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788459382251&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=996151329.1788459379&frm=0&pscdl=noapi&rcb=1&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616986~115938465~115938469~118897920~118897930~120385422~120469145~120469153&sid=1788459379&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1564",
+        "method": "POST",
+        "postData": null
+      },
+      {
+        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788459382251&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=996151329.1788459379&frm=0&pscdl=noapi&rcb=1&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115616986~115938465~115938469~118897920~118897930~120385422~120469145~120469153&sid=1788459379&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=scroll&epn.percent_scrolled=90&_et=2&tfd=6565",
+        "method": "POST",
+        "postData": null
+      },
+      {
+        "url": "https://www.artmore.kr/sub/recruit/search_list.do",
+        "method": "POST",
+        "postData": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date="
+      },
+      {
+        "url": "https://log-artmore.kr:8443/nlog/log/event?v=1605794700&s=artmore.kr&u=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&r=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&a=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20HeadlessChrome%2F151.0.7922.34%20Safari%2F537.36&c=nth_pcid%3D7d451f64-dd54-1987-b25f-862f0d167251-1788459378965%3B%20nth_locale_lang%3Dko%3B%20nth_locale_country%3Dkr%3B%20nth_resolution%3D1280x720%3B%20nth_screen_id%3D%252Fsub%252Frecruit%252Fsearch_list.do%3B%20nth_screen_title%3DARTMORE",
+        "method": "GET",
+        "postData": null
+      },
+      {
+        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-77D9Q1ZCYZ&gtm=45je6920v871751056za200zd871751056&_p=1788459414065&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=996151329.1788459379&frm=0&pscdl=noapi&rcb=5&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938466~115938468~118897920~118897930~120385423~120469145~120469153&sid=1788459379&sct=1&seg=1&dl=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dr=https%3A%2F%2Fwww.artmore.kr%2Fsub%2Frecruit%2Fsearch_list.do&dt=ARTMORE&en=page_view&_ee=1&tfd=1244",
+        "method": "POST",
+        "postData": null
+      }
+    ],
+    "finalPostPayload": "page=1&listSize=10&sort_type=1&exclude_end_yn=Y&artmore_yn=&search_cd=&search_nm=&search_val=&keyword=&array_keyword_kind=1&array_keyword_kind=2&array_keyword_kind=3&school_code=&school_type=&merit_type=&pay_type=&reg_date=&last_date=",
+    "filteredFinalUrl": "https://www.artmore.kr/sub/recruit/search_list.do",
+    "filteredTotal": "선택조건결과 40,900건",
+    "filteredFirstPageIds": [
+      "94856",
+      "94855",
+      "94854",
+      "94853",
+      "94852",
+      "94851",
+      "94862",
+      "94861",
+      "94860",
+      "94859"
+    ],
+    "filteredFirstPageIdCount": 10,
+    "metroTextPresentAfterSubmit": true,
+    "activeOnlyHeuristic": true
+  },
+  "errors": []
+}
