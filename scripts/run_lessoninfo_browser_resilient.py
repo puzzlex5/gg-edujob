@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """Retry only transient empty Lessoninfo list renders before failing closed.
 
-The underlying Chromium collector already preserves the last known-good dataset when traversal
-is incomplete. This wrapper does not retry CAPTCHA/access-denied errors and does not weaken any
-classification or completeness guard. It only retries the specific case where a list page loads
-without any discoverable posting IDs, which has been observed intermittently after a healthy run.
+The integrated runner already applies current-only classification, Seoul/Gyeonggi restriction,
+and explicit official-link capture. This wrapper adds retries only for a transient empty list render;
+it never retries or bypasses CAPTCHA/access-denied challenges and never weakens completeness guards.
 """
 from __future__ import annotations
 
 import asyncio
 
-import run_lessoninfo_browser_fast as fast
+import run_lessoninfo_browser_integrated as integrated
 
-b = fast.b
+b = integrated.b
 _BASE_CRAWL_LIST = b.crawl_list
 MAX_EMPTY_ATTEMPTS = 3
 
