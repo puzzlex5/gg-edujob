@@ -39,7 +39,7 @@ function renderSourceStatus(data){if(!data||!data.sources){$('#sourceStatus').st
 async function load(){try{const r=await fetch('unified_jobs.json',{cache:'no-cache'});if(!r.ok)throw new Error('load');const data=await r.json();sourceData=data;jobs=Array.isArray(data)?data:(data.jobs||[]);if(data.totalSourceCount||data.officialSourceCount)$('#countSources').textContent=data.totalSourceCount||data.officialSourceCount;if(data.updatedAt)$('#updated').textContent='최근 자동 갱신: '+data.updatedAt+' · 매시간 자동 갱신';stats();render();renderSourceStatus(data)}catch(e){jobs=[];stats();render();$('#updated').textContent='채용 데이터 파일을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.';$('#sourceStatus').style.display='none'}}
 $('#searchBtn').addEventListener('click',()=>{state.q=$('#q').value;render()});$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')$('#searchBtn').click()});let searchTimer=0;$('#q').addEventListener('input',e=>{clearTimeout(searchTimer);const value=e.target.value;searchTimer=setTimeout(()=>{state.q=value;render()},180)});$('#sort').addEventListener('change',e=>{state.sort=e.target.value;render()});$('#resetBtn').addEventListener('click',()=>{state.provinces.clear();state.regions.clear();state.schools.clear();state.types.clear();state.q='';state.sort='deadline';$('#q').value='';$('#sort').value='deadline';renderAll(true)});renderChecks();load();
 </script>
-<script src="unified-ui.js?v=20260903c" defer></script>
+<script src="unified-ui.js?v=20260903d" defer></script>
 <script src="mobile-ui.js?v=20260903c" defer></script>
 </body>
 </html>
