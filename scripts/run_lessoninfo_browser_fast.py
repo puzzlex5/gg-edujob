@@ -4,6 +4,10 @@
 The list pages are the authoritative discovery surface. Detail pages are used only to enrich the
 specific discovered posting. Site-wide headings/sidebar text must never replace a list-row title
 or make an old posting look current.
+
+Publication scope is intentionally limited to Seoul and Gyeonggi. The crawler may inspect other
+Lessoninfo rows to prove list traversal, but only postings whose work location can be confirmed as
+Seoul or Gyeonggi are published into 수도권에듀잡.
 """
 from __future__ import annotations
 
@@ -33,6 +37,27 @@ GENERIC_TITLE_RE = re.compile(
 REGISTERED_LABEL_RE = re.compile(
     r"(?:등록일(?:자)?|작성일(?:자)?|게시일(?:자)?|공고일(?:자)?)\s*[:：|]?\s*"
     r"((?:20\d{2}[.\-/년]\s*)?\d{1,2}[.\-/월]\s*\d{1,2})",
+    re.I,
+)
+
+SEOUL_DISTRICTS = (
+    "강남구", "강동구", "강북구", "관악구", "광진구", "구로구", "금천구", "노원구",
+    "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구",
+    "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중랑구",
+)
+GYEONGGI_PLACES = (
+    "수원시", "성남시", "고양시", "용인시", "부천시", "안산시", "안양시", "남양주시",
+    "화성시", "평택시", "의정부시", "시흥시", "파주시", "광명시", "김포시", "군포시",
+    "광주시", "하남시", "오산시", "이천시", "안성시", "구리시", "의왕시", "포천시",
+    "여주시", "동두천시", "과천시", "양평군", "가평군", "연천군",
+    "일산동구", "일산서구", "덕양구", "분당구", "수정구", "중원구", "수지구", "기흥구",
+    "처인구", "영통구", "권선구", "팔달구", "장안구", "만안구", "동안구",
+    "판교", "동탄", "광교", "일산", "분당",
+)
+NON_METRO_RE = re.compile(
+    r"인천(?:광역시)?|부산(?:광역시)?|대구(?:광역시)?|대전(?:광역시)?|광주광역시|"
+    r"울산(?:광역시)?|세종(?:특별자치시)?|강원(?:특별자치도)?|충청북도|충북|충청남도|충남|"
+    r"전북특별자치도|전라북도|전북|전라남도|전남|경상북도|경북|경상남도|경남|제주(?:특별자치도)?",
     re.I,
 )
 
@@ -67,7 +92,6 @@ def clean_candidate(href: str, text: str, row_text: str, target: dict):
         return None
     item["registeredHint"] = _list_registered(item.get("rowText", ""), item.get("titleHint", ""))
     title = re.sub(r"\s+", " ", item.get("titleHint", "")).strip()
-    # A generic page heading is navigation noise, not a recruitment title.
     if target.get("key") == "culture-arts" and GENERIC_TITLE_RE.fullmatch(title):
         return None
     return item
@@ -108,8 +132,6 @@ def _detail_scope(html: str, title_hint: str) -> str:
                 parent = parent.parent
                 depth += 1
     if candidates:
-        # The smallest container that still contains the discovered title is least likely to
-        # include unrelated sidebar jobs, advertisements, or site-wide '상시채용' text.
         return min(candidates, key=len)
     body = soup.body
     if body:
@@ -124,6 +146,50 @@ def _registered_from_scope(scope: str, fallback: str) -> str:
         if d:
             return d
     return _date_not_future(fallback)
+
+
+def _extract_location(signal: str) -> str:
+    for rx in (
+        re.compile(r"(?:지역|근무지역|근무지|소재지|기관주소|주소)\s*[:：|]?\s*([^|\n]{2,80})"),
+        re.compile(r"((?:서울(?:특별시)?|경기(?:도)?|인천(?:광역시)?|부산(?:광역시)?|대구(?:광역시)?|대전(?:광역시)?|광주(?:광역시)?|울산(?:광역시)?|세종(?:특별자치시)?|강원(?:특별자치도)?|충북|충남|전북|전남|경북|경남|제주)\s*\S{0,24})"),
+    ):
+        m = rx.search(signal)
+        if m:
+            return _norm(m.group(1))[:100]
+    return ""
+
+
+def _metro_region(location: str, signal: str) -> str:
+    """Return 서울/경기 only when the posting location is positively identifiable."""
+    loc = _norm(location)
+    full = _norm(signal)
+
+    # An explicit location field wins over incidental place names elsewhere on the page.
+    if loc:
+        if re.search(r"서울(?:특별시|시)?", loc):
+            return "서울"
+        if re.search(r"경기(?:도)?", loc):
+            return "경기"
+        if any(place in loc for place in GYEONGGI_PLACES):
+            return "경기"
+        if any(d in loc for d in SEOUL_DISTRICTS):
+            return "서울"
+        if NON_METRO_RE.search(loc):
+            return ""
+
+    if re.search(r"서울특별시|서울시", full):
+        return "서울"
+    if re.search(r"경기도", full):
+        return "경기"
+    if any(place in full for place in GYEONGGI_PLACES):
+        return "경기"
+    if any(d in full for d in SEOUL_DISTRICTS):
+        return "서울"
+
+    # Bare '서울' is still a useful fallback. Bare '경기' is not, because it can mean a game/event.
+    if re.search(r"(?:^|[\s(\[/])서울(?:[\s)\]/]|$)", full):
+        return "서울"
+    return ""
 
 
 def classify_clean(html: str, text: str, item: dict):
@@ -165,16 +231,13 @@ def classify_clean(html: str, text: str, item: dict):
         if reg < today - timedelta(days=b.NO_DEADLINE_FRESH_DAYS):
             return None, "stale-without-deadline"
 
-    location = ""
     loc_signal = _norm(row + " " + scope[:12000])
-    for rx in (
-        re.compile(r"(?:지역|근무지역|소재지|기관주소|주소)\s*[:：|]?\s*([^|\n]{2,60})"),
-        re.compile(r"((?:서울(?:특별시)?|경기(?:도)?|인천(?:광역시)?|부산(?:광역시)?|대구(?:광역시)?|대전(?:광역시)?|광주(?:광역시)?|울산(?:광역시)?|세종(?:특별자치시)?|강원(?:특별자치도)?|충북|충남|전북|전남|경북|경남|제주)\s*\S{0,18})"),
-    ):
-        m = rx.search(loc_signal)
-        if m:
-            location = _norm(m.group(1))[:80]
-            break
+    location = _extract_location(loc_signal)
+    region = _metro_region(location, _norm(title + " " + loc_signal))
+    if not region:
+        if location and NON_METRO_RE.search(location):
+            return None, "outside-seoul-gyeonggi"
+        return None, "region-unconfirmed"
 
     return {
         "sourceIdentity": item["sourceIdentity"],
@@ -188,7 +251,10 @@ def classify_clean(html: str, text: str, item: dict):
         "registered": registered,
         "applyEnd": deadline,
         "activeReason": deadline_reason or ("always-open" if always_open else "fresh-no-deadline"),
-        "location": location,
+        "province": region,
+        "region": region,
+        "metroRegion": region,
+        "location": location or region,
         "url": item["url"],
         "originalUrl": item["url"],
         "collectedAt": b.now_kst().isoformat(timespec="seconds"),
