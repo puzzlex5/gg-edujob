@@ -43,6 +43,44 @@ if hardened_exclude not in s:
     SP.write_text(s, encoding='utf-8')
 print('RESULT_NOTICE_FILTER_HOTFIX_CHANGED', exclude_changed)
 
+# Central portals must apply the same title exclusion policy as support-office
+# collectors and reconciliation.  Without this, reconciliation removes result
+# notices but the next fast crawl can immediately re-add them.
+s = SP.read_text(encoding='utf-8')
+central_filter_changed = False
+
+gg_start = s.find('def scrape_gyeonggi_central():')
+gg_end = s.find('\n\n# -------------------- 경기 교육지원청', gg_start)
+if gg_start < 0 or gg_end < 0:
+    raise RuntimeError('Gyeonggi central collector section not found')
+gg_block = s[gg_start:gg_end]
+gg_marker = '                title = clean(re.sub(r"^(마감임박|오늘등록|NEW)\\s*", "", title))\n'
+gg_filter = gg_marker + '                if EXCLUDE_WORDS.search(title): continue\n'
+if gg_filter not in gg_block:
+    if gg_marker not in gg_block:
+        raise RuntimeError('Gyeonggi central title marker not found')
+    gg_block = gg_block.replace(gg_marker, gg_filter, 1)
+    s = s[:gg_start] + gg_block + s[gg_end:]
+    central_filter_changed = True
+
+seoul_start = s.find('def scrape_seoul_central():')
+seoul_end = s.find('\n\n# -------------------- 서울 11개 지원청', seoul_start)
+if seoul_start < 0 or seoul_end < 0:
+    raise RuntimeError('Seoul central collector section not found')
+seoul_block = s[seoul_start:seoul_end]
+seoul_marker = '            title=clean(li.select_one(".list_title").get_text(" ",strip=True) if li.select_one(".list_title") else "")\n'
+seoul_filter = seoul_marker + '            if EXCLUDE_WORDS.search(title): continue\n'
+if seoul_filter not in seoul_block:
+    if seoul_marker not in seoul_block:
+        raise RuntimeError('Seoul central title marker not found')
+    seoul_block = seoul_block.replace(seoul_marker, seoul_filter, 1)
+    s = s[:seoul_start] + seoul_block + s[seoul_end:]
+    central_filter_changed = True
+
+if central_filter_changed:
+    SP.write_text(s, encoding='utf-8')
+print('CENTRAL_RESULT_NOTICE_FILTER_CHANGED', central_filter_changed)
+
 # The central portal can return an entire page of IDs already seen in an earlier
 # recruitment category.  That is not an end-of-pagination signal: later pages can
 # still contain category-specific postings.  The authoritative 90-day crawler
