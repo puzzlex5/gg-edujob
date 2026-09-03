@@ -38,13 +38,19 @@ def protected_entries(ledger):
     entries = ledger.get("entries", {}) if isinstance(ledger, dict) else {}
     return {
         sid: entry for sid, entry in entries.items()
-        if isinstance(entry, dict) and entry.get("presentInLatestOfficialScan") is True
+        if (
+            isinstance(entry, dict)
+            and entry.get("presentInLatestOfficialScan") is True
+            and rec.is_recruitment_row(entry)
+        )
     }
 
 
 def unique_by_id(rows):
     out = {}
     for row in rows:
+        if not rec.is_recruitment_row(row):
+            continue
         sid = rec.source_id(row)
         if sid and sid not in out:
             out[sid] = row
@@ -105,7 +111,10 @@ def main():
     jobs = payload.get("jobs", []) if isinstance(payload, dict) else []
     ledger = load(LEDGER, {"entries": {}})
     protected = protected_entries(ledger)
-    current_ids = {rec.source_id(j) for j in jobs if rec.source_id(j)}
+    current_ids = {
+        rec.source_id(j) for j in jobs
+        if rec.is_recruitment_row(j) and rec.source_id(j)
+    }
     missing = sorted(set(protected) - current_ids)
 
     grouped = defaultdict(set)
@@ -141,6 +150,10 @@ def main():
         seen.add(sid)
         recovered.append(sid)
 
+    # Keep targeted restore aligned with the reconciliation publication boundary.  A result or
+    # selection notice that survives in an old ledger must never be reintroduced by this path.
+    jobs = [job for job in jobs if rec.is_recruitment_row(job)]
+    seen = {rec.source_id(job) for job in jobs if rec.source_id(job)}
     unresolved = sorted(set(protected) - seen)
     jobs.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
     payload["jobs"] = jobs
