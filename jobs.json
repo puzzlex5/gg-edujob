@@ -954,7 +954,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-03 22:08 KST",
+    "checkedAt": "2026-09-03 22:41 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -993,7 +993,7 @@
         }
       ]
     },
-    "previousTotal": 18912,
+    "previousTotal": 18913,
     "currentTotal": 18913
   },
   "jobs": [
@@ -7028,6 +7028,39 @@
       "bbsId": "10111",
       "mi": "10118",
       "detailLinkResolved": true
+    },
+    {
+      "id": "goe-complete-dc12fd12b7e1f8acbc",
+      "province": "경기",
+      "school": "일동고등학교",
+      "title": "[일동고등학교] 2026학년도 시간강사 (음악, 체육, 수학) 채용 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "포천시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "2026/09/03",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/09/21",
+      "workEnd": "2026/09/28",
+      "registered": "2026/09/03",
+      "headcount": "",
+      "source": "포천교육지원청",
+      "checkedSources": [
+        "포천교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goepc.kr/goepc/na/ntt/selectNttInfo.do?bbsId=2103&nttSn=1251947&mi=2192",
+      "boardUrl": "https://www.goepc.kr/goepc/na/ntt/selectNttList.do?mi=2192&bbsId=2103",
+      "detailLinkResolved": true,
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "mircms:www.goepc.kr:2103:1251947",
+      "nttSn": "1251947",
+      "bbsId": "2103",
+      "mi": "2192",
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-58932",
@@ -142422,37 +142455,6 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-office2-ca5ecba43ea6a22378",
-      "province": "경기",
-      "school": "초등학교",
-      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
-      "subject": "",
-      "region": "시흥시",
-      "regions": [
-        "시흥시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/08/18",
-      "headcount": "",
-      "source": "시흥교육지원청",
-      "checkedSources": [
-        "시흥교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
-      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
-      "detailLinkResolved": true,
-      "nttSn": "527414",
-      "bbsId": "5511",
-      "mi": "9003",
-      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -524950,11 +524952,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-03 22:07 KST",
+    "checkedAt": "2026-09-03 22:39 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-03 22:07 KST",
+    "checkedAt": "2026-09-03 22:39 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -524975,17 +524977,17 @@
     "seoulTotal": 522
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-03 22:06 KST",
+    "checkedAt": "2026-09-03 22:39 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6245,
-    "detailPagesParsed": 2613,
-    "fieldsFilledThisRun": 4,
-    "missingApplicationPeriod": 1103,
-    "missingWorkPeriod": 2088,
+    "detailPagesParsed": 2612,
+    "fieldsFilledThisRun": 0,
+    "missingApplicationPeriod": 1102,
+    "missingWorkPeriod": 2087,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-03 22:06 KST",
+      "checkedAt": "2026-09-03 22:39 KST",
       "candidates": 246,
       "detailPagesConfirmed": 240,
       "cacheEntriesImproved": 0,
@@ -524995,5 +524997,26 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-03 22:10:02 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17960,
+    "datasetIdCountBefore": 18899,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-03 22:39:53 KST",
+    "protectedOfficialIds": 17960,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
