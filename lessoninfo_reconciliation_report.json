@@ -1,43 +1,38 @@
 {
-  "generatedAt": "2026-09-03T10:22:00+09:00",
+  "generatedAt": "2026-09-03T10:53:44+09:00",
   "policy": "lessoninfo-active-browser-v1",
-  "healthy": true,
-  "traversalComplete": true,
+  "healthy": false,
+  "traversalComplete": false,
   "sourceReports": [
     {
       "surface": "방과후교사•늘봄학교 강사",
       "listUrl": "https://www.lessoninfo.co.kr/board/board.php?board_code=20130529164321_7227&code=&bo_table=20170316171033_6494",
-      "complete": true,
-      "pagesScanned": 12,
-      "ids": 850,
-      "stopReason": "discovery_horizon_crossed"
+      "complete": false,
+      "pagesScanned": 1,
+      "ids": 0,
+      "stopReason": "unexpected_empty_first_page"
     },
     {
       "surface": "문화예술 채용",
       "listUrl": "https://www.lessoninfo.co.kr/culture-jobs/list.php",
-      "complete": true,
-      "pagesScanned": 10,
-      "ids": 617,
-      "stopReason": "end_of_pages"
+      "complete": false,
+      "pagesScanned": 1,
+      "ids": 0,
+      "stopReason": "unexpected_empty_first_page"
     }
   ],
-  "candidateIdCount": 1467,
-  "activeIdCount": 649,
+  "candidateIdCount": 0,
+  "activeIdCount": 0,
   "publishedIdCount": 649,
   "perSurfaceActive": {
-    "afterschool-nulbom": 35,
-    "culture-arts": 614
+    "afterschool-nulbom": 0,
+    "culture-arts": 0
   },
   "missingAfterCount": 0,
   "missingAfterExamples": [],
   "detailErrorCount": 0,
   "detailErrorExamples": [],
-  "classificationCounts": {
-    "active": 649,
-    "expired-deadline": 664,
-    "stale-without-deadline": 142,
-    "closed-marker": 12
-  },
-  "preservedPreviousDataset": false,
+  "classificationCounts": {},
+  "preservedPreviousDataset": true,
   "errors": []
 }
