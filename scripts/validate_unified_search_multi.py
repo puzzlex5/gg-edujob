@@ -44,6 +44,15 @@ def publication_enabled(report):
     return not isinstance(report, dict) or "publicationEnabled" not in report or report.get("publicationEnabled") is True
 
 
+def source_health(spec, report, detail_report):
+    ok = bool(report and report.get("healthy") and report.get("traversalComplete") and int(report.get("missingAfterCount") or 0) == 0)
+    if spec["key"] == "lessoninfo":
+        ok = ok and int(report.get("detailErrorCount") or 0) == 0
+    if spec.get("detail_report"):
+        ok = ok and bool(detail_report and detail_report.get("healthy") and detail_report.get("detailCoverageComplete") and int(detail_report.get("detailErrorCount") or 0) == 0)
+    return ok
+
+
 def row_provinces(row):
     explicit = [str(x) for x in (row.get("provinces") or []) if str(x)]
     if explicit:
@@ -75,26 +84,33 @@ def main():
     missing_by_source = {}
     source_ids_union = set()
     enabled_specs = []
+    degraded_specs = []
     non_metro = banned = expired = future = 0
     for spec in SPECS:
         src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
         drep = load(spec["detail_report"], {}) if spec.get("detail_report") else None
-        enabled = publication_enabled(rep)
-        source_reports[spec["key"]] = {"count":len(src),"report":rep,"detailReport":drep,"publicationEnabled":enabled}
-        if not enabled:
+        configured_enabled = publication_enabled(rep)
+        healthy = source_health(spec, rep, drep)
+        effective_enabled = configured_enabled and healthy
+        source_reports[spec["key"]] = {
+            "count": len(src),
+            "report": rep,
+            "detailReport": drep,
+            "configuredPublicationEnabled": configured_enabled,
+            "publicationEnabled": effective_enabled,
+            "degraded": configured_enabled and not healthy,
+        }
+        if configured_enabled and not healthy:
+            degraded_specs.append(spec)
+            warnings.append(f"{spec['name']} is degraded and excluded from this unified publication")
+        if not effective_enabled:
             missing_by_source[spec["key"]] = []
             continue
 
         enabled_specs.append(spec)
         source_ids = {str(j.get("sourceIdentity") or "") for j in src if j.get("sourceIdentity")}
         source_ids_union |= source_ids
-        if not rep.get("healthy") or not rep.get("traversalComplete") or int(rep.get("missingAfterCount") or 0) != 0:
-            errors.append(f"{spec['name']} source reconciliation is not healthy/complete")
-        if spec["key"] == "lessoninfo" and int(rep.get("detailErrorCount") or 0) != 0:
-            errors.append(f"{spec['name']} detailErrorCount={rep.get('detailErrorCount')}")
-        if drep is not None and (not drep.get("healthy") or not drep.get("detailCoverageComplete") or int(drep.get("detailErrorCount") or 0) != 0):
-            errors.append(f"{spec['name']} detail link validation is not healthy/complete")
         missing = sorted(source_ids - represented)
         missing_by_source[spec["key"]] = missing
         if missing:
@@ -110,10 +126,10 @@ def main():
 
     extra_private = sorted(represented - source_ids_union)
     if extra_private: errors.append(f"Unified dataset invented {len(extra_private)} private stable IDs")
-    if non_metro: errors.append(f"Canonical private datasets contain {non_metro} non-Seoul/Gyeonggi rows")
-    if banned: errors.append(f"Canonical private datasets contain {banned} banned non-recruitment titles")
-    if expired: errors.append(f"Canonical private datasets contain {expired} expired postings")
-    if future: errors.append(f"Canonical private datasets contain {future} future registration dates")
+    if non_metro: errors.append(f"Publication-effective private datasets contain {non_metro} non-Seoul/Gyeonggi rows")
+    if banned: errors.append(f"Publication-effective private datasets contain {banned} banned non-recruitment titles")
+    if expired: errors.append(f"Publication-effective private datasets contain {expired} expired postings")
+    if future: errors.append(f"Publication-effective private datasets contain {future} future registration dates")
     if bad_alias_evidence: errors.append(f"Unified dataset has {len(bad_alias_evidence)} aliases without strong exact evidence")
 
     ids = [str(j.get("sourceIdentity") or "") for j in jobs if j.get("sourceIdentity")]
@@ -124,7 +140,6 @@ def main():
     no_search_text = [j for j in jobs if not str(j.get("searchText") or "").strip()]
     if no_search_text: errors.append(f"Unified dataset has {len(no_search_text)} rows without searchText")
 
-    # Projected rows must also preserve valid province evidence, including multi-province jobs.
     projected_non_metro = [j for j in private if not row_provinces(j) or not row_provinces(j).issubset(ALLOWED_PROVINCES)]
     if projected_non_metro:
         errors.append(f"Unified private projection contains {len(projected_non_metro)} non-metro province sets")
@@ -136,17 +151,20 @@ def main():
     if int(data.get("officialSourceCount") or 0) != 38:
         warnings.append(f"officialSourceCount={data.get('officialSourceCount')} expected 38")
     if int(data.get("totalSourceCount") or 0) != expected_total_sources:
-        errors.append(f"Unified source count does not match 38 official plus {len(enabled_specs)} publication-enabled private sources")
+        errors.append(f"Unified source count does not match 38 official plus {len(enabled_specs)} publication-effective private sources")
     private_meta = data.get("privateSources", {})
     for spec in SPECS:
         meta = private_meta.get(spec["key"]) or {}
         expected_enabled = spec in enabled_specs
+        expected_degraded = spec in degraded_specs
         if bool(meta.get("publicationEnabled")) != expected_enabled:
-            errors.append(f"Embedded publication gate disagrees for {spec['name']}")
+            errors.append(f"Embedded effective publication gate disagrees for {spec['name']}")
+        if bool(meta.get("degraded")) != expected_degraded:
+            errors.append(f"Embedded degraded state disagrees for {spec['name']}")
         if expected_enabled and not meta.get("ok"):
             errors.append(f"Embedded source health false for {spec['name']}")
         if not expected_enabled and int(meta.get("count") or 0) != 0:
-            errors.append(f"Publication-disabled source {spec['name']} contributes rows to unified search")
+            errors.append(f"Publication-disabled/degraded source {spec['name']} contributes rows to unified search")
 
     report = {
         "generatedAt": datetime.now(KST).isoformat(timespec="seconds"),
@@ -155,6 +173,7 @@ def main():
         "official": len(official),
         "privateDisplayed": len(private),
         "enabledPrivateSources": [spec["key"] for spec in enabled_specs],
+        "degradedPrivateSources": [spec["key"] for spec in degraded_specs],
         "privateStableIds": len(source_ids_union),
         "privateRepresentedDirectly": len(direct_ids),
         "privateRepresentedByOfficial": len(alias_ids),
