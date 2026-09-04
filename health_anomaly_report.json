@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-04T12:08:23+09:00",
+  "generatedAt": "2026-09-04T13:08:48+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-04T12:08:23+09:00",
+    "generatedAt": "2026-09-04T13:08:48+09:00",
     "official": {
       "datasetCount": 18987,
       "officialIdCount": 17995,
@@ -12,22 +12,22 @@
       "totalSources": 38
     },
     "lessoninfo": {
-      "datasetCount": 1436,
-      "publishedIdCount": 1436,
+      "datasetCount": 1442,
+      "publishedIdCount": 1442,
       "missingAfter": 0,
       "detailErrors": 0,
       "healthy": true,
       "traversalComplete": true,
       "perSurface": {
         "afterschool-nulbom": 82,
-        "culture-arts": 1354
+        "culture-arts": 1360
       }
     },
     "unified": {
-      "publishedJobs": 4589,
+      "publishedJobs": 4595,
       "officialDisplayed": 3168,
-      "privateDisplayed": 1421,
-      "privateDiscovered": 1436,
+      "privateDisplayed": 1427,
+      "privateDiscovered": 1442,
       "officialPrivateAliases": 15,
       "healthy": true,
       "missingLessoninfoIds": 0,
@@ -252,14 +252,14 @@
           "changeRatio": 0.006
         },
         "lessoninfo.publishedIdCount": {
-          "current": 1436,
+          "current": 1442,
           "baseline": 1431,
-          "changeRatio": 0.0035
+          "changeRatio": 0.0077
         },
         "unified.publishedJobs": {
-          "current": 4589,
+          "current": 4595,
           "baseline": 4715,
-          "changeRatio": -0.0267
+          "changeRatio": -0.0255
         },
         "unified.officialDisplayed": {
           "current": 3168,
@@ -267,9 +267,9 @@
           "changeRatio": -0.0397
         },
         "unified.privateDiscovered": {
-          "current": 1436,
+          "current": 1442,
           "baseline": 1431,
-          "changeRatio": 0.0035
+          "changeRatio": 0.0077
         }
       }
     },
