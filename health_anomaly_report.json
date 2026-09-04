@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-04T21:11:03+09:00",
+  "generatedAt": "2026-09-04T22:07:57+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-04T21:11:03+09:00",
+    "generatedAt": "2026-09-04T22:07:57+09:00",
     "official": {
-      "datasetCount": 19233,
+      "datasetCount": 19236,
       "officialIdCount": 18099,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -24,10 +24,10 @@
       }
     },
     "unified": {
-      "publishedJobs": 4908,
-      "officialDisplayed": 3418,
-      "privateDisplayed": 1490,
-      "privateDiscovered": 1505,
+      "publishedJobs": 4938,
+      "officialDisplayed": 3420,
+      "privateDisplayed": 1518,
+      "privateDiscovered": 1533,
       "officialPrivateAliases": 15,
       "healthy": true,
       "missingLessoninfoIds": 0,
@@ -56,7 +56,7 @@
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10395,
+        "count": 10397,
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -184,7 +184,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -247,12 +247,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-03T21:11:36+09:00",
+      "baselineAt": "2026-09-03T22:08:40+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19233,
+          "current": 19236,
           "baseline": 18912,
-          "changeRatio": 0.017
+          "changeRatio": 0.0171
         },
         "official.officialIdCount": {
           "current": 18099,
@@ -265,19 +265,19 @@
           "changeRatio": 0.0077
         },
         "unified.publishedJobs": {
-          "current": 4908,
+          "current": 4938,
           "baseline": 4716,
-          "changeRatio": 0.0407
+          "changeRatio": 0.0471
         },
         "unified.officialDisplayed": {
-          "current": 3418,
+          "current": 3420,
           "baseline": 3300,
-          "changeRatio": 0.0358
+          "changeRatio": 0.0364
         },
         "unified.privateDiscovered": {
-          "current": 1505,
+          "current": 1533,
           "baseline": 1431,
-          "changeRatio": 0.0517
+          "changeRatio": 0.0713
         }
       }
     },
