@@ -23,6 +23,13 @@ PRIVATE_SOURCES = [
         "report": "jobteacher_reconciliation_report.json",
         "detail_report": "jobteacher_detail_link_report.json",
     },
+    {
+        "key": "artmore",
+        "name": "아트모아",
+        "jobs": "artmore_jobs.json",
+        "report": "artmore_reconciliation_report.json",
+        "detail_report": "artmore_detail_link_report.json",
+    },
 ]
 
 
