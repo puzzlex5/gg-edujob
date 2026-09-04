@@ -1,39 +1,50 @@
 {
-  "generatedAt": "2026-09-04T23:51:17+09:00",
-  "healthy": true,
-  "total": 4942,
-  "official": 3424,
-  "privateDisplayed": 1518,
+  "generatedAt": "2026-09-05T00:01:16+09:00",
+  "healthy": false,
+  "total": 3568,
+  "official": 3128,
+  "privateDisplayed": 440,
   "enabledPrivateSources": [
     "lessoninfo",
     "artmore",
     "gonggonggangsa"
   ],
   "degradedPrivateSources": [],
-  "privateStableIds": 1533,
-  "privateRepresentedDirectly": 1518,
-  "privateRepresentedByOfficial": 15,
-  "missingPrivateIds": 0,
+  "privateStableIds": 459,
+  "privateRepresentedDirectly": 440,
+  "privateRepresentedByOfficial": 12,
+  "missingPrivateIds": 7,
   "missingPrivateBySource": {
     "lessoninfo": 0,
     "jobteacher": 0,
     "artmore": 0,
-    "gonggonggangsa": 0
+    "gonggonggangsa": 7
   },
   "missingPrivateExamples": {
     "lessoninfo": [],
     "jobteacher": [],
     "artmore": [],
-    "gonggonggangsa": []
+    "gonggonggangsa": [
+      "gonggonggangsa:23025",
+      "gonggonggangsa:23197",
+      "gonggonggangsa:23198",
+      "gonggonggangsa:23201",
+      "gonggonggangsa:23205",
+      "gonggonggangsa:23230",
+      "gonggonggangsa:23263"
+    ]
   },
   "nonMetroPrivate": 0,
   "projectedNonMetroPrivate": 0,
   "bannedPrivate": 0,
-  "expiredPrivate": 0,
+  "expiredPrivate": 7,
   "futurePrivateDates": 0,
   "duplicateStableIds": 0,
   "missingLinks": 0,
   "badCrossSourceAliasEvidence": 0,
-  "errors": [],
+  "errors": [
+    "Unified dataset dropped 7 current 공공강사 stable IDs",
+    "Publication-effective private datasets contain 7 expired postings"
+  ],
   "warnings": []
 }
