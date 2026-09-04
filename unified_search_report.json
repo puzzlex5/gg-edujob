@@ -1,19 +1,21 @@
 {
-  "generatedAt": "2026-09-04T20:17:43+09:00",
+  "generatedAt": "2026-09-04T20:18:44+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 19234,
-  "canonicalPrivateJobs": 1531,
+  "canonicalPrivateJobs": 1503,
   "selectedOfficialJobs": 3418,
-  "selectedPrivateJobs": 1531,
-  "publishedJobs": 4934,
+  "selectedPrivateJobs": 1503,
+  "publishedJobs": 4906,
   "perFeed": {
     "official": 3418,
-    "private": 1516
+    "private": 1488
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
+      "configuredPublicationEnabled": true,
       "publicationEnabled": true,
+      "degraded": false,
       "ok": true,
       "candidateCount": 1442,
       "count": 1442,
@@ -24,8 +26,10 @@
     },
     "jobteacher": {
       "name": "잡티처",
+      "configuredPublicationEnabled": false,
       "publicationEnabled": false,
-      "ok": false,
+      "degraded": false,
+      "ok": true,
       "candidateCount": 4037,
       "count": 0,
       "lastVerifiedAt": "2026-09-04T19:58:34+09:00",
@@ -35,18 +39,22 @@
     },
     "artmore": {
       "name": "아트모아",
-      "publicationEnabled": true,
+      "configuredPublicationEnabled": true,
+      "publicationEnabled": false,
+      "degraded": true,
       "ok": false,
       "candidateCount": 28,
-      "count": 28,
+      "count": 0,
       "lastVerifiedAt": "2026-09-04T19:58:19+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 28
+      "displayedAsPrivate": 0
     },
     "gonggonggangsa": {
       "name": "공공강사",
+      "configuredPublicationEnabled": true,
       "publicationEnabled": true,
+      "degraded": false,
       "ok": true,
       "candidateCount": 61,
       "count": 61,
@@ -61,5 +69,8 @@
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "review-only-never-auto-delete",
-  "allPrivateSourcesHealthy": false
+  "degradedPrivateSources": [
+    "artmore"
+  ],
+  "allPublicationEnabledSourcesHealthy": false
 }
