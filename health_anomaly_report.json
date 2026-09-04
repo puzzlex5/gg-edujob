@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-04T16:08:21+09:00",
+  "generatedAt": "2026-09-04T17:09:07+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-04T16:08:21+09:00",
+    "generatedAt": "2026-09-04T17:09:07+09:00",
     "official": {
-      "datasetCount": 19169,
+      "datasetCount": 19168,
       "officialIdCount": 18099,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -24,10 +24,10 @@
       }
     },
     "unified": {
-      "publishedJobs": 4790,
+      "publishedJobs": 4808,
       "officialDisplayed": 3353,
-      "privateDisplayed": 1437,
-      "privateDiscovered": 1452,
+      "privateDisplayed": 1455,
+      "privateDiscovered": 1470,
       "officialPrivateAliases": 15,
       "healthy": true,
       "missingLessoninfoIds": 0,
@@ -184,7 +184,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -250,7 +250,7 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19169,
+          "current": 19168,
           "baseline": 18911,
           "changeRatio": 0.0136
         },
@@ -265,9 +265,9 @@
           "changeRatio": 0.0077
         },
         "unified.publishedJobs": {
-          "current": 4790,
+          "current": 4808,
           "baseline": 4715,
-          "changeRatio": 0.0159
+          "changeRatio": 0.0197
         },
         "unified.officialDisplayed": {
           "current": 3353,
@@ -275,9 +275,9 @@
           "changeRatio": 0.0164
         },
         "unified.privateDiscovered": {
-          "current": 1452,
+          "current": 1470,
           "baseline": 1431,
-          "changeRatio": 0.0147
+          "changeRatio": 0.0273
         }
       }
     },
