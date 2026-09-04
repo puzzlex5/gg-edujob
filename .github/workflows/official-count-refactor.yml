@@ -38,8 +38,19 @@ jobs:
             scripts/update_collector_status.py
           python scripts/validate_official_source_registry_usage.py
           python scripts/validate_reconciliation_policy.py
-      - name: Commit branch-only refactor result
+      - name: Stage workflow edits as ordinary files and commit safe branch changes
         run: |
+          mkdir -p staged_workflows
+          cp .github/workflows/daily-deep-audit.yml staged_workflows/daily-deep-audit.yml.txt
+          cp .github/workflows/recover-missing-jobs.yml staged_workflows/recover-missing-jobs.yml.txt
+          cp .github/workflows/source-id-reconciliation.yml staged_workflows/source-id-reconciliation.yml.txt
+          cp .github/workflows/official-registry-safety.yml staged_workflows/official-registry-safety.yml.txt
+
+          git restore .github/workflows/daily-deep-audit.yml
+          git restore .github/workflows/recover-missing-jobs.yml
+          git restore .github/workflows/source-id-reconciliation.yml
+          rm .github/workflows/official-registry-safety.yml
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
@@ -49,10 +60,7 @@ jobs:
             scripts/verify_central_reconciliation_consistency.py \
             scripts/update_collector_status.py \
             scripts/validate_official_source_registry_usage.py \
-            .github/workflows/daily-deep-audit.yml \
-            .github/workflows/recover-missing-jobs.yml \
-            .github/workflows/source-id-reconciliation.yml \
-            .github/workflows/official-registry-safety.yml
+            staged_workflows
           git diff --cached --quiet && exit 0
           git commit -m 'Derive official completeness checks from source registry'
           git push origin HEAD:gpt/official-count-registry-20260904
