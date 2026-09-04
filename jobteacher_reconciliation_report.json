@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T00:53:27+09:00",
+  "generatedAt": "2026-09-05T00:59:03+09:00",
   "source": "잡티처",
   "policy": "jobteacher-active-browser-v2",
   "healthy": true,
@@ -24,10 +24,20 @@
   "publishedIdCount": 4037,
   "missingAfterCount": 0,
   "missingAfter": [],
+  "missingRegisteredCount": 0,
+  "missingRegistered": [],
+  "detailDateFallbackRecoveredCount": 4,
+  "detailDateFallbackRecovered": [
+    "jobteacher:559286",
+    "jobteacher:203136",
+    "jobteacher:559294",
+    "jobteacher:559291"
+  ],
+  "detailDateFallbackErrors": [],
   "errors": [],
   "previousPublishedCount": 4037,
   "severeDrop": false,
   "preservedPreviousDataset": false,
   "publicationEnabled": false,
-  "nextGate": "re-crawl with multi-region/date normalization, then unified validator"
+  "nextGate": "verify current-posting freshness semantics, then unified validator"
 }
