@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05 01:25 KST",
+  "updatedAt": "2026-09-05 05:30 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -954,12 +954,12 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-05 04:31 KST",
+    "checkedAt": "2026-09-05 06:05 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7575,
-      "resolved": 7575,
+      "total": 7576,
+      "resolved": 7576,
       "unresolved": 0,
       "examples": []
     },
@@ -993,8 +993,8 @@
         }
       ]
     },
-    "previousTotal": 19232,
-    "currentTotal": 19231
+    "previousTotal": 19231,
+    "currentTotal": 19232
   },
   "jobs": [
     {
@@ -151869,6 +151869,37 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office2-ca5ecba43ea6a22378",
+      "province": "경기",
+      "school": "초등학교",
+      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+      "subject": "",
+      "region": "시흥시",
+      "regions": [
+        "시흥시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/08/18",
+      "headcount": "",
+      "source": "시흥교육지원청",
+      "checkedSources": [
+        "시흥교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
+      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
+      "detailLinkResolved": true,
+      "nttSn": "527414",
+      "bbsId": "5511",
+      "mi": "9003",
+      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -533764,7 +533795,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-05 01:51 KST",
+      "checkedAt": "2026-09-05 05:58 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
@@ -533775,42 +533806,42 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-05 04:28 KST",
+    "checkedAt": "2026-09-05 06:03 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-05 04:28 KST",
+    "checkedAt": "2026-09-05 06:03 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 16949,
-    "previousCount": 19235,
+    "previousCount": 19231,
     "mergedCount": 19228,
     "carriedForward": 2279,
     "officialIdProtected": 18185,
     "officialIdCarryForward": 1237,
     "enrichedFromPrevious": 7232,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-05 01:55 KST"
+    "generatedAt": "2026-09-05 06:02 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 7050,
-    "gyeonggiTotal": 7050,
+    "gyeonggiExact": 7051,
+    "gyeonggiTotal": 7051,
     "seoulExact": 525,
     "seoulTotal": 525
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-05 04:28 KST",
+    "checkedAt": "2026-09-05 06:02 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6217,
+    "recentSupportJobs": 6218,
     "detailPagesParsed": 2578,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1093,
-    "missingWorkPeriod": 2068,
+    "missingApplicationPeriod": 1094,
+    "missingWorkPeriod": 2069,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-05 04:28 KST",
+      "checkedAt": "2026-09-05 06:02 KST",
       "candidates": 249,
       "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
@@ -533820,26 +533851,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "sourceReconciliation": {
-    "generatedAt": "2026-09-05 03:52:48 KST",
-    "lookbackDays": 90,
-    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 18185,
-    "datasetIdCountBefore": 19217,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "reconciledOffices": 38,
-    "totalOffices": 38
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-05 04:28:56 KST",
-    "protectedOfficialIds": 18185,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
