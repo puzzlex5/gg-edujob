@@ -53,7 +53,10 @@ def source_health(spec, report, detail_report) -> bool:
         and report.get("traversalComplete")
         and int(report.get("missingAfterCount") or 0) == 0
     )
-    if spec["key"] == "lessoninfo":
+    # Some sources (currently Lessoninfo) keep detail-link evidence in their main reconciliation
+    # report rather than a separate detail report. Treat the presence of the field as the contract
+    # instead of hard-coding a source key so future sources cannot silently skip this guard.
+    if isinstance(report, dict) and "detailErrorCount" in report:
         ok = ok and int(report.get("detailErrorCount") or 0) == 0
     if spec.get("detail_report"):
         ok = ok and bool(
