@@ -20,7 +20,7 @@ permissions:
 
 concurrency:
   group: metro-edujob-lessoninfo
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   collect:
@@ -47,6 +47,12 @@ jobs:
 
       - name: Syntax check
         run: python -m py_compile scripts/crawl_lessoninfo_jobs.py scripts/crawl_lessoninfo_browser.py scripts/run_lessoninfo_browser_fast.py scripts/run_lessoninfo_browser_integrated.py scripts/run_lessoninfo_browser_resilient.py
+
+      - name: Snapshot previous Lessoninfo health baseline
+        run: |
+          if [ -f lessoninfo_reconciliation_report.json ]; then
+            cp lessoninfo_reconciliation_report.json /tmp/lessoninfo_reconciliation_report.prev.json
+          fi
 
       - name: Collect current Lessoninfo jobs in Chromium
         id: collect
@@ -97,6 +103,35 @@ jobs:
           if r.get('detailErrorCount') != 0:
               raise SystemExit('one or more Lessoninfo detail postings could not be verified')
 
+          # Fail closed on a sudden active-population collapse. Parser/location hardening can
+          # legitimately remove bad rows, but a >40% one-run drop needs review before replacing
+          # the last-known-good dataset. This is count-regression evidence, never a completeness
+          # proof by itself.
+          prevp = pathlib.Path('/tmp/lessoninfo_reconciliation_report.prev.json')
+          if prevp.exists():
+              prev = json.loads(prevp.read_text(encoding='utf-8'))
+              if prev.get('healthy'):
+                  prev_total = int(prev.get('activeIdCount') or prev.get('publishedIdCount') or 0)
+                  cur_total = int(r.get('activeIdCount') or 0)
+                  if prev_total >= 50 and cur_total * 100 < prev_total * 60:
+                      raise SystemExit(
+                          f'Lessoninfo abnormal active drop: {cur_total}/{prev_total} '
+                          f'({cur_total / prev_total:.1%}); last-known-good preserved'
+                      )
+                  prev_surface = prev.get('perSurfaceActive') or {}
+                  cur_surface = r.get('perSurfaceActive') or {}
+                  for key, old_raw in prev_surface.items():
+                      old = int(old_raw or 0)
+                      new = int(cur_surface.get(key) or 0)
+                      if old >= 20 and new * 100 < old * 60:
+                          raise SystemExit(
+                              f'Lessoninfo abnormal surface drop for {key}: {new}/{old} '
+                              f'({new / old:.1%}); last-known-good preserved'
+                          )
+
+          counts = r.get('classificationCounts') or {}
+          print('Lessoninfo region-unconfirmed candidates:', int(counts.get('region-unconfirmed') or 0))
+
           jp = pathlib.Path('lessoninfo_jobs.json')
           if not jp.exists():
               raise SystemExit('missing Lessoninfo published dataset')
@@ -133,8 +168,25 @@ jobs:
           print(f'Lessoninfo metro-only guard passed: {len(jobs)} Seoul/Gyeonggi jobs; explicit official links captured on {linked} rows')
           PY
 
+      - name: Preserve failed Lessoninfo diagnostics
+        if: steps.collect.outcome != 'success' || steps.validate.outcome != 'success'
+        run: |
+          mkdir -p /tmp/lessoninfo-diagnostics
+          cp lessoninfo_reconciliation_report.json /tmp/lessoninfo-diagnostics/ 2>/dev/null || true
+          cp lessoninfo_collection_state.json /tmp/lessoninfo-diagnostics/ 2>/dev/null || true
+          cp lessoninfo_jobs.json /tmp/lessoninfo-diagnostics/ 2>/dev/null || true
+
+      - name: Upload failed Lessoninfo diagnostics
+        if: steps.collect.outcome != 'success' || steps.validate.outcome != 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lessoninfo-failed-diagnostics-${{ github.run_id }}
+          path: /tmp/lessoninfo-diagnostics
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Commit collection evidence and healthy dataset
-        if: always()
+        if: steps.collect.outcome == 'success' && steps.validate.outcome == 'success'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
