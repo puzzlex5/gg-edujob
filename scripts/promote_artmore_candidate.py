@@ -18,6 +18,8 @@ CANDIDATE_LEDGER = Path("artmore_source_id_ledger.candidate.json")
 CANDIDATE_REPORT = Path("artmore_reconciliation_report.candidate.json")
 CANDIDATE_STATE = Path("artmore_collection_state.candidate.json")
 DETAIL_REPORT = Path("artmore_detail_link_report.json")
+CANONICAL_LEDGER = Path("artmore_source_id_ledger.json")
+CANONICAL_JOBS = Path("artmore_jobs.json")
 
 
 def load(path: Path):
@@ -28,6 +30,52 @@ def stable_id_from_url(url: str) -> str:
     q = parse_qs(urlparse(url).query)
     vals = q.get("rec_idx") or []
     return str(vals[0]) if vals else ""
+
+
+def stable_ids_from_ledger(path: Path) -> set[str]:
+    if not path.exists():
+        return set()
+    data = load(path)
+    if isinstance(data, dict):
+        for key in ("stableIds", "ids", "sourceIds"):
+            vals = data.get(key)
+            if isinstance(vals, list):
+                return {str(x) for x in vals if str(x)}
+        rows = data.get("rows") or data.get("items") or data.get("jobs")
+        if isinstance(rows, list):
+            return {
+                str(x.get("stableId") or x.get("id") or "")
+                for x in rows if isinstance(x, dict) and str(x.get("stableId") or x.get("id") or "")
+            }
+    if isinstance(data, list):
+        return {
+            str(x.get("stableId") or x.get("id") or x) if isinstance(x, dict) else str(x)
+            for x in data
+            if x
+        }
+    return set()
+
+
+def canonical_count() -> int:
+    ids = stable_ids_from_ledger(CANONICAL_LEDGER)
+    if ids:
+        return len(ids)
+    if CANONICAL_JOBS.exists():
+        data = load(CANONICAL_JOBS)
+        jobs = data.get("jobs", []) if isinstance(data, dict) else []
+        return len(jobs)
+    return 0
+
+
+def abnormal_drop(candidate_count: int, previous_count: int) -> tuple[bool, float]:
+    if candidate_count <= 0:
+        return True, 1.0 if previous_count else 0.0
+    if previous_count < 10:
+        return False, max(0.0, (previous_count - candidate_count) / previous_count) if previous_count else 0.0
+    drop_ratio = max(0.0, (previous_count - candidate_count) / previous_count)
+    # A verified public source should not lose >=40% of its active corpus in one promotion cycle.
+    # Preserve the last known-good canonical dataset and require a later healthy run instead.
+    return candidate_count < previous_count * 0.60, drop_ratio
 
 
 async def validate_links(jobs: list[dict]) -> tuple[list[dict], list[dict]]:
@@ -50,7 +98,6 @@ async def validate_links(jobs: list[dict]) -> tuple[list[dict], list[dict]]:
                     raise RuntimeError("human-check/block page detected")
                 if len(body.strip()) < 200:
                     raise RuntimeError("detail body unexpectedly short")
-                # The detail page must remain on the same durable rec_idx target.
                 if stable_id_from_url(page.url) != sid:
                     raise RuntimeError(f"detail redirected away from rec_idx={sid}: {page.url}")
                 verified.append({"sourceIdentity": job.get("sourceIdentity"), "stableId": sid, "url": page.url, "httpStatus": status})
@@ -79,6 +126,28 @@ async def main() -> int:
     if not preconditions:
         raise SystemExit("ArtMore candidate reconciliation gate is not healthy")
 
+    previous_count = canonical_count()
+    drop_blocked, drop_ratio = abnormal_drop(len(jobs), previous_count)
+    if drop_blocked:
+        detail_report = {
+            "generatedAt": generated,
+            "source": "아트모아",
+            "healthy": False,
+            "detailCoverageComplete": False,
+            "candidateCount": len(jobs),
+            "verifiedCount": 0,
+            "detailErrorCount": 0,
+            "abnormalDrop": True,
+            "previousCanonicalCount": previous_count,
+            "candidateDropRatio": round(drop_ratio, 4),
+            "preservedPublishedDataset": True,
+            "errors": [{"error": "abnormal candidate drop; canonical publication preserved"}],
+            "verifiedExamples": [],
+        }
+        DETAIL_REPORT.write_text(json.dumps(detail_report, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps(detail_report, ensure_ascii=False, indent=2))
+        return 3
+
     verified, errors = await validate_links(jobs)
     healthy = not errors and len(verified) == len(jobs)
     detail_report = {
@@ -89,6 +158,9 @@ async def main() -> int:
         "candidateCount": len(jobs),
         "verifiedCount": len(verified),
         "detailErrorCount": len(errors),
+        "abnormalDrop": False,
+        "previousCanonicalCount": previous_count,
+        "candidateDropRatio": round(drop_ratio, 4),
         "errors": errors,
         "verifiedExamples": verified[:20],
     }
@@ -97,7 +169,7 @@ async def main() -> int:
         print(json.dumps(detail_report, ensure_ascii=False, indent=2))
         return 2
 
-    # Promote only after all detail links pass. Existing canonical files remain untouched on failure.
+    # Promote only after all gates pass. Existing canonical files remain untouched on any failure.
     shutil.copyfile(CANDIDATE_JOBS, "artmore_jobs.json")
     shutil.copyfile(CANDIDATE_LEDGER, "artmore_source_id_ledger.json")
 
@@ -107,6 +179,9 @@ async def main() -> int:
         "policy": "artmore-active-browser-v1",
         "publicationEnabled": True,
         "detailErrorCount": 0,
+        "abnormalDrop": False,
+        "previousCanonicalCount": previous_count,
+        "candidateDropRatio": round(drop_ratio, 4),
         "nextGate": "unified multi-source validation",
     })
     Path("artmore_reconciliation_report.json").write_text(json.dumps(canonical_report, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -118,9 +193,12 @@ async def main() -> int:
         "promoted": True,
         "canonicalJobs": len(jobs),
         "detailCoverageComplete": True,
+        "abnormalDrop": False,
+        "previousCanonicalCount": previous_count,
+        "candidateDropRatio": round(drop_ratio, 4),
     })
     Path("artmore_collection_state.json").write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"healthy": True, "promoted": len(jobs), "detailErrors": 0}, ensure_ascii=False, indent=2))
+    print(json.dumps({"healthy": True, "promoted": len(jobs), "detailErrors": 0, "abnormalDrop": False}, ensure_ascii=False, indent=2))
     return 0
 
 
