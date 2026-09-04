@@ -6,6 +6,7 @@ on:
       - 'audit/jobteacher-publication-gate'
     paths:
       - 'scripts/audit_jobteacher_publication_gate.py'
+      - 'scripts/probe_jobteacher_row_schema.py'
       - '.github/workflows/audit-jobteacher-publication-gate.yml'
   workflow_dispatch:
 
@@ -19,21 +20,27 @@ concurrency:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install row-probe dependencies
+        run: |
+          python -m pip install --disable-pip-version-check beautifulsoup4 playwright
+          python -m playwright install --with-deps chromium
       - name: Compile audit
-        run: python -m py_compile scripts/audit_jobteacher_publication_gate.py
+        run: python -m py_compile scripts/audit_jobteacher_publication_gate.py scripts/probe_jobteacher_row_schema.py
       - name: Audit existing canonical JobTeacher dataset
         run: python scripts/audit_jobteacher_publication_gate.py
-      - name: Commit audit report to isolated branch
+      - name: Probe live public row schema
+        run: python scripts/probe_jobteacher_row_schema.py
+      - name: Commit audit reports to isolated branch
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobteacher_publication_gate_audit.json
+          git add jobteacher_publication_gate_audit.json jobteacher_row_schema_probe.json
           if git diff --cached --quiet; then
             exit 0
           fi
