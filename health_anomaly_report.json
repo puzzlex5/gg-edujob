@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-04T20:08:06+09:00",
+  "generatedAt": "2026-09-04T21:11:03+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-04T20:08:06+09:00",
+    "generatedAt": "2026-09-04T21:11:03+09:00",
     "official": {
-      "datasetCount": 19234,
+      "datasetCount": 19233,
       "officialIdCount": 18099,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -24,10 +24,10 @@
       }
     },
     "unified": {
-      "publishedJobs": 4934,
+      "publishedJobs": 4908,
       "officialDisplayed": 3418,
-      "privateDisplayed": 1516,
-      "privateDiscovered": 1531,
+      "privateDisplayed": 1490,
+      "privateDiscovered": 1505,
       "officialPrivateAliases": 15,
       "healthy": true,
       "missingLessoninfoIds": 0,
@@ -184,7 +184,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -247,12 +247,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-03T19:59:07+09:00",
+      "baselineAt": "2026-09-03T21:11:36+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19234,
-          "baseline": 18911,
-          "changeRatio": 0.0171
+          "current": 19233,
+          "baseline": 18912,
+          "changeRatio": 0.017
         },
         "official.officialIdCount": {
           "current": 18099,
@@ -265,19 +265,19 @@
           "changeRatio": 0.0077
         },
         "unified.publishedJobs": {
-          "current": 4934,
-          "baseline": 4715,
-          "changeRatio": 0.0464
+          "current": 4908,
+          "baseline": 4716,
+          "changeRatio": 0.0407
         },
         "unified.officialDisplayed": {
           "current": 3418,
-          "baseline": 3299,
-          "changeRatio": 0.0361
+          "baseline": 3300,
+          "changeRatio": 0.0358
         },
         "unified.privateDiscovered": {
-          "current": 1531,
+          "current": 1505,
           "baseline": 1431,
-          "changeRatio": 0.0699
+          "changeRatio": 0.0517
         }
       }
     },
