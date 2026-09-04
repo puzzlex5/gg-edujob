@@ -954,12 +954,12 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-05 00:04 KST",
+    "checkedAt": "2026-09-05 00:38 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7579,
-      "resolved": 7579,
+      "total": 7578,
+      "resolved": 7578,
       "unresolved": 0,
       "examples": []
     },
@@ -993,8 +993,8 @@
         }
       ]
     },
-    "previousTotal": 19240,
-    "currentTotal": 19233
+    "previousTotal": 19233,
+    "currentTotal": 19235
   },
   "jobs": [
     {
@@ -1326,6 +1326,33 @@
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109715",
+      "province": "서울",
+      "school": "서울청량초등학교",
+      "title": "수업시수 경감 강사 구인_초등자격",
+      "subject": "1학년 담임부장 지원(국어, 수학, 통합, 창체, 급식 지도)",
+      "region": "동대문구",
+      "regions": [
+        "동대문구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/05",
+      "applyEnd": "2026/09/30",
+      "workStart": "2026/11/10",
+      "workEnd": "2026/12/22",
+      "registered": "2026/09/04",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109715",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109715"
     },
     {
       "id": "sen-109766",
@@ -6200,6 +6227,33 @@
       "reconciliationCarryForward": true
     },
     {
+      "id": "sen-109755",
+      "province": "서울",
+      "school": "서울서일초등학교",
+      "title": "(서울서일초)초 1,2학년 무용 및 놀이체육 협력강사 채용",
+      "subject": "초 1,2학년 무용 및 놀이체육 협력 강사",
+      "region": "서초구",
+      "regions": [
+        "서초구"
+      ],
+      "type": "자원봉사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/09",
+      "workStart": "2026/09/14",
+      "workEnd": "2026/12/11",
+      "registered": "2026/09/04",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109755",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109755"
+    },
+    {
       "id": "goe-59068",
       "province": "경기",
       "school": "과천문원중학교",
@@ -8999,6 +9053,33 @@
       "nttSn": "1405413",
       "bbsId": "8653",
       "mi": "16003"
+    },
+    {
+      "id": "goe-59105",
+      "province": "경기",
+      "school": "상봉초등학교",
+      "title": "상봉초등학교 계약제교원(초등 기간제교사) 채용 공고",
+      "subject": "4학년담임",
+      "region": "화성시",
+      "regions": [
+        "화성시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/04",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/10/01",
+      "workEnd": "2027/02/28",
+      "registered": "2026/09/04",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59105",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:59105"
     },
     {
       "id": "goe-59095",
@@ -151773,37 +151854,6 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-office2-ca5ecba43ea6a22378",
-      "province": "경기",
-      "school": "초등학교",
-      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
-      "subject": "",
-      "region": "시흥시",
-      "regions": [
-        "시흥시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/08/18",
-      "headcount": "",
-      "source": "시흥교육지원청",
-      "checkedSources": [
-        "시흥교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
-      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
-      "detailLinkResolved": true,
-      "nttSn": "527414",
-      "bbsId": "5511",
-      "mi": "9003",
-      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -533811,11 +533861,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-05 00:03 KST",
+    "checkedAt": "2026-09-05 00:36 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-05 00:03 KST",
+    "checkedAt": "2026-09-05 00:36 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -533830,23 +533880,23 @@
     "generatedAt": "2026-09-05 00:02 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 7053,
-    "gyeonggiTotal": 7053,
+    "gyeonggiExact": 7052,
+    "gyeonggiTotal": 7052,
     "seoulExact": 526,
     "seoulTotal": 526
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-05 00:02 KST",
+    "checkedAt": "2026-09-05 00:36 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6218,
+    "recentSupportJobs": 6217,
     "detailPagesParsed": 2578,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1094,
-    "missingWorkPeriod": 2069,
+    "missingApplicationPeriod": 1093,
+    "missingWorkPeriod": 2068,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-05 00:02 KST",
+      "checkedAt": "2026-09-05 00:36 KST",
       "candidates": 249,
       "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
@@ -533856,5 +533906,26 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-05 00:06:11 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 18185,
+    "datasetIdCountBefore": 19218,
+    "missingBefore": 3,
+    "recoveredNow": 3,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-05 00:36:56 KST",
+    "protectedOfficialIds": 18185,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
