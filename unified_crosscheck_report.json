@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-04T21:08:13+09:00",
+  "generatedAt": "2026-09-04T21:35:34+09:00",
   "policy": "explicit-url-strong; semantic-review-only; no-title-based-delete; publication-effective-private-only",
-  "privateJobs": 1505,
+  "privateJobs": 1533,
   "officialJobs": 19233,
   "privateSources": {
     "lessoninfo": {
@@ -23,9 +23,9 @@
     "artmore": {
       "name": "아트모아",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": false,
-      "degraded": true,
-      "ok": false,
+      "publicationEnabled": true,
+      "degraded": false,
+      "ok": true,
       "canonicalCount": 28
     },
     "gonggonggangsa": {
@@ -51,10 +51,10 @@
       "officialGapCandidates": 0
     },
     "artmore": {
-      "jobs": 0,
+      "jobs": 28,
       "strongOfficialMatches": 0,
       "semanticReviewCandidates": 0,
-      "officialGapCandidates": 0
+      "officialGapCandidates": 2
     },
     "gonggonggangsa": {
       "jobs": 63,
@@ -65,7 +65,7 @@
   },
   "strongOfficialMatches": 75,
   "semanticReviewCandidates": 0,
-  "officialGapCandidates": 32,
+  "officialGapCandidates": 34,
   "strongMatches": [
     {
       "privateSource": "lessoninfo",
@@ -1430,6 +1430,30 @@
       ],
       "registered": "2026-04-28",
       "url": "https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=92601",
+      "reason": "school-or-afterschool-private-post-with-no-official-candidate"
+    },
+    {
+      "privateSource": "artmore",
+      "privateSourceName": "아트모아",
+      "privateId": "artmore:94844",
+      "privateTitle": "진행중 한국공학대학교 계약직원 채용 공고(도서관)",
+      "provinces": [
+        "경기"
+      ],
+      "registered": "2026-09-02",
+      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94844",
+      "reason": "school-or-afterschool-private-post-with-no-official-candidate"
+    },
+    {
+      "privateSource": "artmore",
+      "privateSourceName": "아트모아",
+      "privateId": "artmore:94842",
+      "privateTitle": "진행중 다지기 에듀짐 장애인 주간&방과후 센터 사...",
+      "provinces": [
+        "경기"
+      ],
+      "registered": "2026-09-02",
+      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94842",
       "reason": "school-or-afterschool-private-post-with-no-official-candidate"
     },
     {
