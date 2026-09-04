@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/crawl_artmore_browser.py'
+      - 'scripts/crawl_artmore_browser_v2.py'
       - '.github/workflows/update-artmore-candidate.yml'
   schedule:
     - cron: '47 */2 * * *'
@@ -36,13 +37,13 @@ jobs:
           python -m pip install --disable-pip-version-check playwright
           python -m playwright install --with-deps chromium
       - name: Syntax check
-        run: python -m py_compile scripts/crawl_artmore_browser.py
+        run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v2.py
       - name: Collect isolated ArtMore candidate
         id: collect
         continue-on-error: true
         env:
           ARTMORE_MAX_PAGES: '250'
-        run: python scripts/crawl_artmore_browser.py
+        run: python scripts/crawl_artmore_browser_v2.py
       - name: Validate candidate safety gate
         id: validate
         continue-on-error: true
