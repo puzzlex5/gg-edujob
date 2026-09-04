@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Build rolling 1d/7d/30d health evidence for 수도권에듀잡.
 
-This observer never mutates canonical recruitment data. It snapshots official, Lessoninfo and
-unified-search health, compares the current state with prior baselines, and emits warnings for
-sudden drops or source-level stalls. Hard integrity failures remain fail-closed signals.
+This observer never mutates canonical recruitment data. It snapshots official, every validated
+private source from the shared registry, and unified-search health, compares the current state
+with prior baselines, and emits warnings for sudden drops or source-level stalls. Hard integrity
+failures remain fail-closed signals.
 """
 from __future__ import annotations
 
@@ -14,10 +15,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from private_source_registry import private_source_specs, publication_enabled, source_health
+
 KST = timezone(timedelta(hours=9))
 HISTORY = Path("health_trend_history.json")
 REPORT = Path("health_anomaly_report.json")
-MAX_SNAPSHOTS = 800
+MAX_SNAPSHOTS = 1000
 DATE_RE = re.compile(r"(20\d{2})[./-](\d{1,2})[./-](\d{1,2})")
 
 
@@ -75,6 +78,36 @@ def official_source_stats(jobs: list[dict[str, Any]]) -> dict[str, dict[str, Any
     return {k: {"count": counts[k], "latestRegistered": latest.get(k, "")} for k in sorted(counts)}
 
 
+def private_source_snapshot(validation: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    populations = validation.get("sourceValidationPopulations") or {}
+    enabled = set(validation.get("enabledPrivateSources") or [])
+    out: dict[str, dict[str, Any]] = {}
+    for spec in private_source_specs():
+        key = spec["key"]
+        report = load(spec["report"], {})
+        detail = load(spec["detail_report"], {}) if spec.get("detail_report") else {}
+        jobs = jobs_of(load(spec["jobs"], {}))
+        latest = max((date_key(j.get("registered")) for j in jobs), default="")
+        pop = populations.get(key) if isinstance(populations, dict) else {}
+        current = int((pop or {}).get("currentCount") or len(jobs))
+        raw = int((pop or {}).get("rawCount") or len(jobs))
+        detail_errors = int((detail or {}).get("detailErrorCount") or report.get("detailErrorCount") or 0)
+        is_enabled = key in enabled or (not enabled and publication_enabled(report))
+        out[key] = {
+            "name": spec["name"],
+            "enabled": is_enabled,
+            "healthy": source_health(spec, report, detail),
+            "datasetCount": len(jobs),
+            "rawCount": raw,
+            "currentCount": current,
+            "missingAfter": int(report.get("missingAfterCount") or 0),
+            "detailErrors": detail_errors,
+            "traversalComplete": report.get("traversalComplete") is True,
+            "latestRegistered": latest,
+        }
+    return out
+
+
 def nearest_prior(snaps: list[dict[str, Any]], now: datetime, hours: int) -> dict[str, Any] | None:
     target = now - timedelta(hours=hours)
     candidates = []
@@ -85,7 +118,6 @@ def nearest_prior(snaps: list[dict[str, Any]], now: datetime, hours: int) -> dic
     if not candidates:
         return None
     candidates.sort(key=lambda x: x[0])
-    # Avoid pretending a very recent snapshot is a 30-day baseline.
     chosen = candidates[0]
     tolerance = max(6, hours * 0.35) * 3600
     return chosen[2] if chosen[0] <= tolerance else None
@@ -108,15 +140,23 @@ def comparison(cur: dict[str, Any], prev: dict[str, Any] | None) -> dict[str, An
     pairs = [
         ("official", "datasetCount"),
         ("official", "officialIdCount"),
-        ("lessoninfo", "publishedIdCount"),
         ("unified", "publishedJobs"),
         ("unified", "officialDisplayed"),
         ("unified", "privateDiscovered"),
     ]
-    out = {"baselineAt": prev.get("generatedAt", ""), "metrics": {}}
+    out: dict[str, Any] = {"baselineAt": prev.get("generatedAt", ""), "metrics": {}, "privateSources": {}}
     for group, key in pairs:
         c, p = metric(cur, group, key), metric(prev, group, key)
         out["metrics"][f"{group}.{key}"] = {"current": c, "baseline": p, "changeRatio": ratio_change(c, p)}
+    cur_private = cur.get("privateSources") or {}
+    prev_private = prev.get("privateSources") or {}
+    for key, info in cur_private.items():
+        if not isinstance(info, dict):
+            continue
+        old = prev_private.get(key) if isinstance(prev_private, dict) else {}
+        p = int((old or {}).get("currentCount") or 0) if isinstance(old, dict) else 0
+        c = int(info.get("currentCount") or 0)
+        out["privateSources"][key] = {"current": c, "baseline": p, "changeRatio": ratio_change(c, p)}
     return out
 
 
@@ -126,11 +166,12 @@ def main() -> int:
     official_jobs = jobs_of(official_data)
     rec = load("source_reconciliation_report.json", {})
     rec_summary = rec.get("summary", {}) if isinstance(rec, dict) else {}
-    lesson = load("lessoninfo_reconciliation_report.json", {})
-    lesson_jobs = jobs_of(load("lessoninfo_jobs.json", {}))
     unified = load("unified_search_report.json", {})
     validation = load("unified_validation_report.json", {})
+    if not isinstance(validation, dict):
+        validation = {}
 
+    private_sources = private_source_snapshot(validation)
     snapshot = {
         "generatedAt": now.isoformat(timespec="seconds"),
         "official": {
@@ -140,40 +181,36 @@ def main() -> int:
             "reconciledSources": int(rec_summary.get("reconciledSources") or 0),
             "totalSources": int(rec_summary.get("totalSources") or 0),
         },
-        "lessoninfo": {
-            "datasetCount": len(lesson_jobs),
-            "publishedIdCount": int(lesson.get("publishedIdCount") or lesson.get("activeIdCount") or 0),
-            "missingAfter": int(lesson.get("missingAfterCount") or 0),
-            "detailErrors": int(lesson.get("detailErrorCount") or 0),
-            "healthy": lesson.get("healthy") is True,
-            "traversalComplete": lesson.get("traversalComplete") is True,
-            "perSurface": lesson.get("perSurfaceActive") or {},
-        },
         "unified": {
             "publishedJobs": int(unified.get("publishedJobs") or validation.get("total") or 0),
             "officialDisplayed": int((unified.get("perFeed") or {}).get("official") or validation.get("official") or 0),
             "privateDisplayed": int((unified.get("perFeed") or {}).get("private") or validation.get("privateDisplayed") or 0),
-            "privateDiscovered": int(unified.get("selectedPrivateJobs") or validation.get("lessoninfoStableIds") or 0),
-            "officialPrivateAliases": int(unified.get("explicitOfficialAliasGroupsMerged") or validation.get("lessoninfoRepresentedByOfficial") or 0),
+            "privateDiscovered": int(validation.get("privateStableIds") or unified.get("selectedPrivateJobs") or 0),
+            "officialPrivateAliases": int(validation.get("privateRepresentedByOfficial") or unified.get("explicitOfficialAliasGroupsMerged") or 0),
             "healthy": validation.get("healthy") is True,
-            "missingLessoninfoIds": int(validation.get("missingLessoninfoIds") or 0),
+            "missingPrivateIds": int(validation.get("missingPrivateIds") or validation.get("missingLessoninfoIds") or 0),
             "nonMetroPrivate": int(validation.get("nonMetroPrivate") or 0),
             "bannedPrivate": int(validation.get("bannedPrivate") or 0),
             "expiredPrivate": int(validation.get("expiredPrivate") or 0),
             "futurePrivateDates": int(validation.get("futurePrivateDates") or 0),
             "duplicateStableIds": int(validation.get("duplicateStableIds") or 0),
             "missingLinks": int(validation.get("missingLinks") or 0),
+            "badCrossSourceAliasEvidence": int(validation.get("badCrossSourceAliasEvidence") or 0),
+            "enabledPrivateSources": list(validation.get("enabledPrivateSources") or []),
+            "degradedPrivateSources": list(validation.get("degradedPrivateSources") or []),
         },
         "officialSources": official_source_stats(official_jobs),
+        "privateSources": private_sources,
     }
 
-    hist = load(str(HISTORY), {"version": 1, "snapshots": []})
+    hist = load(str(HISTORY), {"version": 2, "snapshots": []})
     snaps = hist.get("snapshots", []) if isinstance(hist, dict) else []
     snaps = [x for x in snaps if isinstance(x, dict)]
     baselines = {label: nearest_prior(snaps, now, hours) for label, hours in (("1d", 24), ("7d", 168), ("30d", 720))}
     comparisons = {k: comparison(snapshot, v) for k, v in baselines.items()}
 
     anomalies: list[dict[str, Any]] = []
+
     def add(severity: str, code: str, message: str, **evidence: Any) -> None:
         anomalies.append({"severity": severity, "code": code, "message": message, "evidence": evidence})
 
@@ -181,26 +218,73 @@ def main() -> int:
     if o["missingAfter"] > 0 or (o["totalSources"] and o["reconciledSources"] < o["totalSources"]):
         add("critical", "official-reconciliation-failed", "공식 출처 ID 대조가 완전성 기준을 통과하지 못했습니다.", **o)
 
-    li = snapshot["lessoninfo"]
-    if not li["healthy"] or not li["traversalComplete"] or li["missingAfter"] > 0 or li["detailErrors"] > 0:
-        add("critical", "lessoninfo-integrity-failed", "레슨인포 수집/ID 대조/상세검증 중 하나 이상이 실패했습니다.", **li)
+    for key, info in private_sources.items():
+        if info["enabled"] and (
+            not info["healthy"]
+            or not info["traversalComplete"]
+            or info["missingAfter"] > 0
+            or info["detailErrors"] > 0
+        ):
+            add(
+                "critical",
+                "private-source-integrity-failed",
+                "검증 편입된 민간 출처가 수집/ID 대조/상세검증 기준을 통과하지 못했습니다.",
+                source=key,
+                **info,
+            )
 
     u = snapshot["unified"]
-    hard_unified = ["missingLessoninfoIds", "nonMetroPrivate", "bannedPrivate", "expiredPrivate", "futurePrivateDates", "duplicateStableIds", "missingLinks"]
-    if not u["healthy"] or any(int(u[k]) > 0 for k in hard_unified):
+    hard_unified = [
+        "missingPrivateIds",
+        "nonMetroPrivate",
+        "bannedPrivate",
+        "expiredPrivate",
+        "futurePrivateDates",
+        "duplicateStableIds",
+        "missingLinks",
+        "badCrossSourceAliasEvidence",
+    ]
+    if not u["healthy"] or u["degradedPrivateSources"] or any(int(u[k]) > 0 for k in hard_unified):
         add("critical", "unified-search-integrity-failed", "통합검색 검증이 정상 기준을 통과하지 못했습니다.", **u)
 
     one = baselines.get("1d")
     if one:
         for group, key, threshold, min_prev, code in (
             ("official", "datasetCount", -0.35, 500, "official-dataset-sudden-drop"),
-            ("lessoninfo", "publishedIdCount", -0.50, 20, "lessoninfo-sudden-drop"),
             ("unified", "publishedJobs", -0.40, 500, "unified-sudden-drop"),
         ):
             cur, prev = metric(snapshot, group, key), metric(one, group, key)
             ch = ratio_change(cur, prev)
             if isinstance(prev, (int, float)) and prev >= min_prev and ch is not None and ch <= threshold:
                 add("warning", code, f"{group}.{key}가 24시간 기준으로 비정상 급감했습니다.", current=cur, baseline=prev, changeRatio=ch)
+
+        prior_private = one.get("privateSources") or {}
+        for key, info in private_sources.items():
+            if not info["enabled"]:
+                continue
+            old = prior_private.get(key) if isinstance(prior_private, dict) else {}
+            before = int((old or {}).get("currentCount") or 0) if isinstance(old, dict) else 0
+            after = int(info.get("currentCount") or 0)
+            change = ratio_change(after, before)
+            if before >= 20 and change is not None and change <= -0.50:
+                add(
+                    "warning",
+                    "private-source-sudden-drop",
+                    "검증 편입된 민간 출처가 24시간 기준으로 비정상 급감했습니다.",
+                    source=key,
+                    baseline=before,
+                    current=after,
+                    changeRatio=change,
+                )
+            if before >= 5 and after == 0:
+                add(
+                    "warning",
+                    "private-source-zero-drop",
+                    "기존에 공고가 있던 민간 출처가 갑자기 0건이 되었습니다.",
+                    source=key,
+                    baseline=before,
+                    current=after,
+                )
 
         prior_sources = one.get("officialSources") or {}
         current_sources = snapshot["officialSources"]
@@ -231,6 +315,28 @@ def main() -> int:
                     if age >= 7:
                         add("warning", "official-source-freshness-stall", "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.", source=name, latestRegistered=latest, globalLatest=global_latest, ageDays=age)
 
+        prior_private = seven.get("privateSources") or {}
+        for key, info in private_sources.items():
+            if not info["enabled"] or int(info.get("currentCount") or 0) == 0:
+                continue
+            old = prior_private.get(key) if isinstance(prior_private, dict) else {}
+            latest = str(info.get("latestRegistered") or "")
+            old_latest = str((old or {}).get("latestRegistered") or "") if isinstance(old, dict) else ""
+            if latest and old_latest and latest == old_latest:
+                try:
+                    age = (now.date() - datetime.fromisoformat(latest).date()).days
+                except ValueError:
+                    age = 0
+                if age >= 7:
+                    add(
+                        "warning",
+                        "private-source-freshness-stall",
+                        "검증 편입된 민간 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+                        source=key,
+                        latestRegistered=latest,
+                        ageDays=age,
+                    )
+
     critical = [a for a in anomalies if a["severity"] == "critical"]
     warnings = [a for a in anomalies if a["severity"] == "warning"]
     status = "critical" if critical else ("degraded" if warnings else "healthy")
@@ -243,11 +349,11 @@ def main() -> int:
         "anomalies": anomalies,
         "criticalCount": len(critical),
         "warningCount": len(warnings),
-        "policy": "hard integrity failures are critical; trend drops/stalls are warnings until independently verified",
+        "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; trend drops/stalls are warnings until independently verified",
     }
 
     snaps.append(snapshot)
-    hist = {"version": 1, "updatedAt": snapshot["generatedAt"], "snapshots": snaps[-MAX_SNAPSHOTS:]}
+    hist = {"version": 2, "updatedAt": snapshot["generatedAt"], "snapshots": snaps[-MAX_SNAPSHOTS:]}
     HISTORY.write_text(json.dumps(hist, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"status": status, "critical": len(critical), "warnings": len(warnings)}, ensure_ascii=False))
