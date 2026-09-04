@@ -25,7 +25,6 @@ CANDIDATE_LEDGER = Path("gonggonggangsa_source_id_ledger.candidate.json")
 CANDIDATE_STATE = Path("gonggonggangsa_collection_state.candidate.json")
 CANDIDATE_REPORT = Path("gonggonggangsa_reconciliation_report.candidate.json")
 CANDIDATE_DETAIL = Path("gonggonggangsa_detail_link_report.candidate.json")
-
 CANONICAL_JOBS = Path("gonggonggangsa_jobs.json")
 CANONICAL_LEDGER = Path("gonggonggangsa_source_id_ledger.json")
 CANONICAL_STATE = Path("gonggonggangsa_collection_state.json")
@@ -72,8 +71,7 @@ def request_page(session: requests.Session, page: int, size: int = PAGE_SIZE) ->
         try:
             r = session.post(API, json=body, headers=HEADERS, timeout=30)
             r.raise_for_status()
-            payload = r.json()
-            data = payload.get("data") or {}
+            data = (r.json().get("data") or {})
             rows = data.get("list")
             if not isinstance(rows, list):
                 raise RuntimeError("API response missing data.list")
@@ -95,29 +93,26 @@ def row_id(row):
 def ingest_rows(rows, target, *, error_prefix, errors):
     new_ids = []
     duplicates = 0
-    invalid = 0
     for row in rows:
         sid = row_id(row)
         if not sid:
-            invalid += 1
-            errors.append(f"{error_prefix}: invalid row id {sid!r}")
+            errors.append(f"{error_prefix}: invalid row id")
             continue
         if sid in target:
             duplicates += 1
         else:
             new_ids.append(sid)
         target[sid] = row
-    return new_ids, duplicates, invalid
+    return new_ids, duplicates
 
 
 def provinces(row):
     out = []
     for reg in row.get("regions") or []:
-        if not isinstance(reg, dict):
-            continue
-        p = (reg.get("province") or {}).get("name")
-        if p:
-            out.append(str(p))
+        if isinstance(reg, dict):
+            name = ((reg.get("province") or {}).get("name"))
+            if name:
+                out.append(str(name))
     return list(dict.fromkeys(out))
 
 
@@ -136,13 +131,12 @@ def cities(row):
 def is_current_metro(row):
     if str(row.get("state") or "") != "RECRUITING":
         return False
-    ps = set(provinces(row))
-    if not (ps & ALLOWED_PROVINCES):
+    if not (set(provinces(row)) & ALLOWED_PROVINCES):
         return False
     start = parse_dt(row.get("recruitmentAt"))
+    deadline = parse_dt(row.get("deadlineAt"))
     if start and start > NOW:
         return False
-    deadline = parse_dt(row.get("deadlineAt"))
     if deadline and deadline < NOW:
         return False
     return True
@@ -150,27 +144,24 @@ def is_current_metro(row):
 
 def normalize(row):
     sid_num = row_id(row)
-    sid = f"gonggonggangsa:{sid_num}"
     ps = [p for p in provinces(row) if p in ALLOWED_PROVINCES]
     cs = cities(row)
-    fields = [str(x.get("name") or "") for x in (row.get("fields") or []) if isinstance(x, dict) and x.get("name")]
     institution = row.get("institution") or {}
+    fields = [str(x.get("name") or "") for x in (row.get("fields") or []) if isinstance(x, dict) and x.get("name")]
     deadline = parse_dt(row.get("deadlineAt"))
     registered = parse_dt(row.get("recruitmentAt"))
-    province = ps[0] if ps else ""
-    location_bits = list(ps) + cs
-    detail_url = f"{BASE}/recruitments/{sid_num}"
+    url = f"{BASE}/recruitments/{sid_num}"
     return {
-        "sourceIdentity": sid,
+        "sourceIdentity": f"gonggonggangsa:{sid_num}",
         "source": "공공강사",
         "sourceType": "민간 구인",
         "sourceSurface": "public-instructor",
         "sourceSurfaceLabel": "공공강사",
-        "province": province,
+        "province": ps[0] if ps else "",
         "provinces": ps,
         "region": cs[0] if len(cs) == 1 else ", ".join(cs),
         "regions": cs,
-        "location": " ".join(dict.fromkeys(location_bits)),
+        "location": " ".join(dict.fromkeys(ps + cs)),
         "school": str(institution.get("name") or "공공강사 구인"),
         "title": str(row.get("title") or "").strip(),
         "subject": " · ".join(fields),
@@ -178,9 +169,9 @@ def normalize(row):
         "applyStart": registered.strftime("%Y-%m-%d") if registered else "",
         "applyEnd": deadline.strftime("%Y-%m-%d") if deadline else "",
         "registered": registered.strftime("%Y-%m-%d") if registered else "",
-        "url": detail_url,
+        "url": url,
         "boardUrl": f"{BASE}/recruitments",
-        "openUrl": detail_url,
+        "openUrl": url,
         "openMethod": "GET",
         "stableSourceId": sid_num,
         "sourceState": str(row.get("state") or ""),
@@ -198,12 +189,7 @@ def validate_detail(url: str):
 
 
 def catch_up_live_head(session, all_rows_by_id, start_count, errors):
-    """Recover rows inserted at the live feed head during a full traversal.
-
-    Walk from page 1 until an all-known page proves overlap with the completed snapshot,
-    then require the ID union to equal a stable server count exactly. Growth is recovered,
-    never merely tolerated.
-    """
+    """Recover live head inserts and require exact equality to a stabilized server count."""
     rounds = []
     final_count = start_count
     for round_no in range(1, MAX_CATCHUP_ROUNDS + 1):
@@ -217,19 +203,17 @@ def catch_up_live_head(session, all_rows_by_id, start_count, errors):
         new_in_round = []
         pages_scanned = 0
         overlap_reached = False
-        page_no = 1
-        while page_no <= max(1, observed_pages):
+        for page_no in range(1, max(1, observed_pages) + 1):
             data = head if page_no == 1 else request_page(session, page_no)
             rows = data.get("list") or []
             before = set(all_rows_by_id)
-            new_ids, _, _ = ingest_rows(rows, all_rows_by_id, error_prefix=f"catchup round {round_no} page {page_no}", errors=errors)
+            new_ids, _ = ingest_rows(rows, all_rows_by_id, error_prefix=f"catchup round {round_no} page {page_no}", errors=errors)
             new_in_round.extend(new_ids)
             pages_scanned += 1
             valid_ids = [row_id(r) for r in rows if row_id(r)]
             if not rows or (valid_ids and all(sid in before for sid in valid_ids)):
                 overlap_reached = True
                 break
-            page_no += 1
 
         verify = request_page(session, 1)
         final_count = int(verify.get("count") or 0)
@@ -275,6 +259,7 @@ def main() -> int:
     count_after_full_scan = None
     final_count = None
     total_pages = None
+    snapshot_duplicate_ids = 0
 
     session = requests.Session()
     try:
@@ -287,11 +272,10 @@ def main() -> int:
         if initial_count <= 0:
             raise RuntimeError("source returned abnormal zero count")
 
-        snapshot_duplicate_ids = 0
         for page_no in range(1, total_pages + 1):
             data = first if page_no == 1 else request_page(session, page_no)
             rows = data.get("list") or []
-            new_ids, duplicate_ids, _ = ingest_rows(rows, all_rows_by_id, error_prefix=f"page {page_no}", errors=errors)
+            new_ids, duplicate_ids = ingest_rows(rows, all_rows_by_id, error_prefix=f"page {page_no}", errors=errors)
             snapshot_duplicate_ids += duplicate_ids
             pages.append({
                 "page": page_no,
@@ -302,19 +286,18 @@ def main() -> int:
                 "lastId": row_id(rows[-1]) if rows else None,
             })
 
-        post_scan = request_page(session, 1)
-        count_after_full_scan = int(post_scan.get("count") or 0)
+        count_after_full_scan = int(request_page(session, 1).get("count") or 0)
         catchup_rounds, final_count, catchup_complete = catch_up_live_head(session, all_rows_by_id, initial_count, errors)
+        # Page-boundary duplicate IDs are expected when a new row is inserted at the
+        # head during an offset-based scan. They are diagnostic, not a failure, once
+        # head catch-up reaches known data and the unique union equals the stable count.
         traversal_complete = bool(
             not errors
             and len(pages) == total_pages
-            and snapshot_duplicate_ids == 0
             and catchup_complete
             and final_count is not None
             and len(all_rows_by_id) == final_count
         )
-        if snapshot_duplicate_ids:
-            errors.append(f"full traversal had {snapshot_duplicate_ids} duplicate page-boundary IDs")
         if not traversal_complete and not errors:
             errors.append(f"exhaustive traversal proof failed: ids={len(all_rows_by_id)} finalServerCount={final_count}")
     except Exception as exc:
@@ -388,13 +371,14 @@ def main() -> int:
         "serverCountAtStart": initial_count,
         "serverCountAtEnd": final_count,
         "totalPages": total_pages,
+        "pageBoundaryDuplicateCount": snapshot_duplicate_ids,
         "traversalComplete": traversal_complete,
         "healthy": healthy,
     }
     candidate_report = {
         "generatedAt": generated,
         "source": "공공강사",
-        "policy": "gonggonggangsa-post-api-live-head-catchup-v2",
+        "policy": "gonggonggangsa-post-api-live-head-catchup-v3",
         "publicationEnabled": False,
         "healthy": healthy,
         "traversalComplete": traversal_complete,
@@ -404,6 +388,7 @@ def main() -> int:
         "countGrowthDuringScan": (final_count - initial_count) if isinstance(final_count, int) and isinstance(initial_count, int) else None,
         "totalPages": total_pages,
         "pagesVisited": len(pages),
+        "pageBoundaryDuplicateCount": snapshot_duplicate_ids,
         "headCatchupRounds": catchup_rounds,
         "headCatchupNewIdCount": sum(int(x.get("newIdCount") or 0) for x in catchup_rounds),
         "allSourceIdCount": len(all_rows_by_id),
@@ -460,6 +445,7 @@ def main() -> int:
         "candidateIdCount": len(jobs),
         "missingAfterCount": len(missing_after),
         "detailErrorCount": len(detail_errors),
+        "pageBoundaryDuplicateCount": snapshot_duplicate_ids,
         "headCatchupNewIdCount": sum(int(x.get("newIdCount") or 0) for x in catchup_rounds),
         "abnormalDrop": abnormal_drop,
         "errors": errors[:10],
