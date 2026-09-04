@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-04T20:58:01+09:00",
+  "generatedAt": "2026-09-04T21:38:34+09:00",
   "source": "잡티처",
-  "policy": "jobteacher-active-browser-v1",
+  "policy": "jobteacher-active-browser-v2",
   "healthy": true,
   "traversalComplete": true,
   "sourceReports": [
@@ -29,5 +29,5 @@
   "severeDrop": false,
   "preservedPreviousDataset": false,
   "publicationEnabled": false,
-  "nextGate": "detail-link validation + generic unified-search adapter"
+  "nextGate": "re-crawl with multi-region/date normalization, then unified validator"
 }
