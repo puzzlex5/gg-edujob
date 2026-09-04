@@ -3,6 +3,7 @@ name: Reconcile official recruitment source IDs
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - '.github/workflows/source-id-reconciliation.yml'
       - 'scripts/reconcile_source_ids.py'
@@ -12,6 +13,7 @@ on:
       - 'scripts/verify_central_pagination.py'
       - 'scripts/verify_central_reconciliation_consistency.py'
       - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/source_registry.py'
   schedule:
     - cron: '37 0,4,8,12 * * *' # 09:37, 13:37, 17:37, 21:37 KST; independent 38-source proof four times daily
 
@@ -58,7 +60,7 @@ jobs:
       - name: Require full recent 90-day Gyeonggi central population
         run: python scripts/harden_reconciliation_central_lookback.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py scripts/source_registry.py
       - name: Prove central portal pagination independently
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
@@ -121,14 +123,18 @@ jobs:
           python scripts/validate_reconciliation_policy.py
           python - <<'PY'
           import json
+          import sys
           from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from source_registry import official_source_count
+          expected_sources=official_source_count()
           r=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
           s=r.get('summary',{})
           if int(s.get('missingAfter') or 0): raise SystemExit(f'Official IDs still missing: {s}')
           reconciled=int(s.get('reconciledSources') or 0)
           total=int(s.get('totalSources') or 0)
-          if total != 38 or reconciled != total:
-              raise SystemExit(f'38-source reconciliation incomplete: {s}')
+          if total != expected_sources or reconciled != total:
+              raise SystemExit(f'{expected_sources}-source reconciliation incomplete: {s}')
           c=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
           if not c.get('complete'):
               raise SystemExit(f'Central pagination proof incomplete: {c}')

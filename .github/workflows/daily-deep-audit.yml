@@ -199,7 +199,11 @@ jobs:
           echo publication-guard >/tmp/deep_audit_stage
           python - <<'PY'
           import json
+          import sys
           from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from source_registry import official_source_count
+          expected_sources=official_source_count()
           before=json.loads(Path('/tmp/jobs_daily_baseline.json').read_text(encoding='utf-8')).get('jobs',[])
           after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
           rec=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
@@ -215,11 +219,11 @@ jobs:
               raise SystemExit(f'Daily official-ID audit still missing {summary.get("missingAfter")} postings')
           reconciled=int(summary.get('reconciledSources') or 0)
           total=int(summary.get('totalSources') or 0)
-          if total != 38 or reconciled != total:
-              raise SystemExit(f'Daily 38-source official-ID audit incomplete: {summary}')
+          if total != expected_sources or reconciled != total:
+              raise SystemExit(f'Daily {expected_sources}-source official-ID audit incomplete: {summary}')
           if int(qsummary.get('publishedJobs') or 0) != len(after):
               raise SystemExit(f'Operational quality snapshot is not bound to publication candidate: {qsummary.get("publishedJobs")} != {len(after)}')
-          if int(qsummary.get('missingOfficialIds') or 0) != 0 or int(qsummary.get('reconciledSources') or 0) != 38:
+          if int(qsummary.get('missingOfficialIds') or 0) != 0 or int(qsummary.get('reconciledSources') or 0) != expected_sources:
               raise SystemExit(f'Operational quality audit disagrees with reconciliation: {qsummary}')
           if int(qsummary.get('missingDetailLinks') or 0) != 0:
               raise SystemExit(f'Operational quality audit found missing detail links: {qsummary}')
