@@ -1,0 +1,91 @@
+name: Lessoninfo sudden-drop guard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lessoninfo_jobs.json'
+      - 'lessoninfo_reconciliation_report.json'
+      - 'lessoninfo_collection_state.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-lessoninfo-drop-guard
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - name: Compare with previous canonical snapshot
+        id: guard
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pathlib, subprocess
+
+          def load_path(path):
+              try:
+                  return json.loads(pathlib.Path(path).read_text(encoding='utf-8'))
+              except Exception:
+                  return None
+
+          def load_parent(path):
+              try:
+                  raw=subprocess.check_output(['git','show',f'HEAD^:{path}'], text=True)
+                  return json.loads(raw)
+              except Exception:
+                  return None
+
+          def jobs_count(payload):
+              if isinstance(payload,list): return len(payload)
+              if isinstance(payload,dict) and isinstance(payload.get('jobs'),list): return len(payload['jobs'])
+              return 0
+
+          current_jobs=load_path('lessoninfo_jobs.json')
+          previous_jobs=load_parent('lessoninfo_jobs.json')
+          current_report=load_path('lessoninfo_reconciliation_report.json') or {}
+          previous_report=load_parent('lessoninfo_reconciliation_report.json') or {}
+          cur=jobs_count(current_jobs); prev=jobs_count(previous_jobs)
+          same_policy=bool(current_report.get('policy')) and current_report.get('policy')==previous_report.get('policy')
+          integrity_claimed=(current_report.get('healthy') is True and current_report.get('traversalComplete') is True and int(current_report.get('missingAfterCount') or 0)==0 and int(current_report.get('detailErrorCount') or 0)==0)
+          severe=prev>=20 and cur < max(10,int(prev*0.45))
+          decision='preserve-current'
+          if severe and same_policy and integrity_claimed:
+              for path in ('lessoninfo_jobs.json','lessoninfo_reconciliation_report.json','lessoninfo_collection_state.json'):
+                  subprocess.check_call(['git','checkout','HEAD^','--',path])
+              decision='restore-last-known-good'
+          evidence={
+              'previousCount':prev,'currentCount':cur,'dropRatio':round((prev-cur)/prev,4) if prev else None,
+              'samePolicy':same_policy,'policy':current_report.get('policy',''),'integrityClaimed':integrity_claimed,
+              'severeDrop':severe,'decision':decision,
+              'rule':'when the same collector policy claims healthy but canonical jobs fall below 45% of the previous nontrivial population, preserve the previous canonical snapshot'
+          }
+          pathlib.Path('lessoninfo_drop_guard_report.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(evidence,ensure_ascii=False))
+          pathlib.Path('/tmp/lessoninfo_guard_decision').write_text(decision,encoding='utf-8')
+          PY
+          echo "decision=$(cat /tmp/lessoninfo_guard_decision)" >> "$GITHUB_OUTPUT"
+      - name: Restore last-known-good canonical evidence
+        if: steps.guard.outputs.decision == 'restore-last-known-good'
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add lessoninfo_jobs.json lessoninfo_reconciliation_report.json lessoninfo_collection_state.json lessoninfo_drop_guard_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Preserve Lessoninfo last-known-good after sudden drop'
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((i*3))
+          done
+          exit 1
+      - name: Keep diagnostic only when no rollback is needed
+        if: steps.guard.outputs.decision != 'restore-last-known-good'
+        run: echo 'No canonical rollback required.'
