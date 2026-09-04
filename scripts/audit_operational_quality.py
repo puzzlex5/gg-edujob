@@ -3,7 +3,7 @@
 
 This is deliberately independent from the source crawler. It measures the published dataset
 for duplicate stable IDs/URLs, likely non-recruitment notices, stale inactive records, source
-freshness and population inflation against the 38-source reconciliation proof.
+freshness and population inflation against the official-source reconciliation proof.
 
 The audit is diagnostic-first: ambiguous semantic duplicates are never deleted. Exact stable-ID
 or URL duplicates are surfaced separately so a repair workflow can act only on strong evidence.
@@ -26,6 +26,9 @@ KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 RESULT_RE = re.compile(r"최종\s*합격|합격자|서류\s*심사|서류전형\s*(?:결과|합격)|면접\s*대상|선정\s*결과|채용\s*결과|전형\s*결과|인사\s*발령")
+TREND_WINDOWS = (1, 7, 30)
+HISTORY_RETENTION_DAYS = 35
+HISTORY_MAX_RUNS = 1000
 
 
 def load(path: Path, default):
@@ -47,6 +50,19 @@ def parse_date(value):
         return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=KST).date()
     except ValueError:
         return None
+
+
+def parse_history_time(value):
+    raw = str(value or "").strip()
+    for fmt in ("%Y-%m-%d %H:%M:%S KST", "%Y-%m-%dT%H:%M:%S%z"):
+        try:
+            dt = datetime.strptime(raw, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=KST)
+            return dt.astimezone(KST)
+        except ValueError:
+            pass
+    return None
 
 
 def canonical_url(raw):
@@ -110,6 +126,29 @@ def sample(job):
     }
 
 
+def trend_counts(jobs, today):
+    dates = [d for d in (parse_date(job.get("registered")) for job in jobs) if d]
+    return {
+        f"registeredLast{days}d": sum(1 for d in dates if today - timedelta(days=days) <= d <= today)
+        for days in TREND_WINDOWS
+    }
+
+
+def previous_source_population(runs, source_name, cutoff):
+    candidates = []
+    for run in runs:
+        ts = parse_history_time(run.get("generatedAt")) if isinstance(run, dict) else None
+        populations = run.get("sourcePopulations") if isinstance(run, dict) else None
+        if ts and ts <= cutoff and isinstance(populations, dict) and source_name in populations:
+            try:
+                candidates.append((ts, int(populations[source_name])))
+            except (TypeError, ValueError):
+                pass
+    if not candidates:
+        return None
+    return max(candidates, key=lambda item: item[0])[1]
+
+
 def main():
     payload = load(JOBS_PATH, {})
     jobs = payload.get("jobs", []) if isinstance(payload, dict) else []
@@ -119,6 +158,9 @@ def main():
     recon = load(RECON_PATH, {})
     summary = recon.get("summary", {}) if isinstance(recon, dict) else {}
     official_count = int(summary.get("officialIdCount") or 0)
+
+    history = load(HISTORY_PATH, {"runs": []})
+    prior_runs = history.get("runs", []) if isinstance(history, dict) else []
 
     by_id = defaultdict(list)
     by_url = defaultdict(list)
@@ -167,6 +209,7 @@ def main():
     semantic_groups = {k: v for k, v in semantic.items() if len(v) > 1}
 
     source_freshness = []
+    source_populations = {}
     recon_sources = recon.get("sources", []) if isinstance(recon, dict) else []
     for src in recon_sources:
         name = str(src.get("name") or "").strip()
@@ -174,12 +217,24 @@ def main():
         dates = [d for d in (parse_date(x.get("registered")) for x in related) if d]
         latest = max(dates) if dates else None
         age = (today - latest).days if latest else None
+        counts = trend_counts(related, today)
+        source_populations[name] = len(related)
+        trend = {}
+        for days in TREND_WINDOWS:
+            previous = previous_source_population(prior_runs, name, NOW - timedelta(days=days))
+            current = len(related)
+            trend[f"population{days}dAgo"] = previous
+            trend[f"populationDelta{days}d"] = None if previous is None else current - previous
+            trend[f"populationRatio{days}d"] = None if not previous else round(current / previous, 3)
         source_freshness.append({
-            "province": src.get("province", ""), "name": name,
+            "province": src.get("province", ""),
+            "name": name,
             "officialIdCount": int(src.get("officialIdCount") or 0),
             "publishedRecords": len(related),
             "latestRegistered": latest.isoformat() if latest else "",
             "freshnessDays": age,
+            **counts,
+            **trend,
             "reconciled": bool(src.get("reconciled")),
             "missingAfterCount": int(src.get("missingAfterCount") or 0),
         })
@@ -199,9 +254,18 @@ def main():
     if inflation is not None and inflation > 2.0:
         findings.append({"severity": "warning", "code": "population-inflation", "ratio": inflation})
 
+    stalled_7d = [x for x in source_freshness if x.get("officialIdCount", 0) > 0 and x.get("registeredLast7d", 0) == 0]
+    if stalled_7d:
+        findings.append({
+            "severity": "warning",
+            "code": "source-new-ingest-stalled-7d",
+            "count": len(stalled_7d),
+            "sources": [x["name"] for x in stalled_7d[:20]],
+        })
+
     report = {
         "generatedAt": NOW.strftime("%Y-%m-%d %H:%M:%S KST"),
-        "policy": "diagnostic-first; stable-ID/URL duplicates are strong evidence, semantic duplicates are review-only",
+        "policy": "diagnostic-first; stable-ID/URL duplicates are strong evidence, semantic duplicates are review-only; source activity uses 1d/7d/30d registration windows",
         "summary": {
             "publishedJobs": len(jobs),
             "officialIds": official_count,
@@ -217,6 +281,7 @@ def main():
             "reconciledSources": int(summary.get("reconciledSources") or 0),
             "totalSources": int(summary.get("totalSources") or 0),
             "missingOfficialIds": int(summary.get("missingAfter") or 0),
+            "sourcesWithNoRegistrations7d": len(stalled_7d),
         },
         "findings": findings,
         "sourceFreshness": source_freshness,
@@ -236,10 +301,22 @@ def main():
     }
     REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    history = load(HISTORY_PATH, {"runs": []})
-    runs = history.get("runs", []) if isinstance(history, dict) else []
-    runs.append({"generatedAt": report["generatedAt"], **report["summary"]})
-    history = {"policy": "rolling 60 quality snapshots for anomaly detection", "runs": runs[-60:]}
+    runs = list(prior_runs)
+    runs.append({
+        "generatedAt": report["generatedAt"],
+        **report["summary"],
+        "sourcePopulations": source_populations,
+    })
+    cutoff = NOW - timedelta(days=HISTORY_RETENTION_DAYS)
+    retained = []
+    for run in runs:
+        ts = parse_history_time(run.get("generatedAt")) if isinstance(run, dict) else None
+        if ts is None or ts >= cutoff:
+            retained.append(run)
+    history = {
+        "policy": f"time-based {HISTORY_RETENTION_DAYS}-day quality history (max {HISTORY_MAX_RUNS} snapshots) for 1d/7d/30d source trend detection",
+        "runs": retained[-HISTORY_MAX_RUNS:],
+    }
     HISTORY_PATH.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(json.dumps(report["summary"], ensure_ascii=False))
