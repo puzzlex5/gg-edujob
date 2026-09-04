@@ -60,7 +60,7 @@ jobs:
         id: build_candidate
         continue-on-error: true
         run: python scripts/build_unified_search_multi.py
-      - name: Validate candidate against every canonical source
+      - name: Validate candidate against every publication-enabled canonical source
         id: validate_candidate
         if: steps.build_candidate.outcome == 'success'
         continue-on-error: true
@@ -81,16 +81,24 @@ jobs:
           import json
           d=json.load(open('unified_jobs.json',encoding='utf-8'))
           assert d.get('dataset') == 'unified-search-v3-multi-private'
-          assert d.get('totalSourceCount',0) >= 41
-          assert {'lessoninfo','jobteacher','artmore'}.issubset(set(d.get('privateSources',{})))
-          assert all((d['privateSources'][k] or {}).get('ok') for k in ('lessoninfo','jobteacher','artmore'))
+          private=d.get('privateSources',{})
+          expected={'lessoninfo','jobteacher','artmore'}
+          assert expected.issubset(set(private))
+          enabled={k for k,v in private.items() if (v or {}).get('publicationEnabled') is True}
+          assert d.get('totalSourceCount') == 38 + len(enabled), (d.get('totalSourceCount'), enabled)
+          assert all((private[k] or {}).get('ok') for k in enabled)
+          assert all(int((private[k] or {}).get('count') or 0) == 0 for k in expected-enabled)
           assert any(j.get('feedKind')=='official' for j in d['jobs'])
           assert any(j.get('feedKind')=='private' for j in d['jobs'])
-          assert any(j.get('source')=='잡티처' for j in d['jobs'])
-          assert any(j.get('source')=='아트모아' for j in d['jobs'])
+          for key in enabled:
+              source_name=(private[key] or {}).get('name')
+              assert any(j.get('source')==source_name for j in d['jobs']) or int((private[key] or {}).get('count') or 0) == 0
+          disabled_names={(private[k] or {}).get('name') for k in expected-enabled}
+          leaked=[j for j in d['jobs'] if j.get('feedKind')=='private' and j.get('source') in disabled_names]
+          assert not leaked, f'publication-disabled private rows: {len(leaked)}'
           bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and j.get('province') not in {'서울','경기'}]
           assert not bad, f'non-metro private rows: {len(bad)}'
-          print('verified multi-source unified publication',len(d['jobs']))
+          print('verified publication-gated multi-source unified publication',len(d['jobs']),sorted(enabled))
           PY
       - name: Commit verified search projection or diagnostics
         if: always()
