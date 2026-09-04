@@ -107,8 +107,6 @@ def main() -> int:
                         "els => els.slice(0,500).map(a => ({href:a.href, text:(a.innerText||'').trim().slice(0,120)}))"
                     ),
                 })
-                if recruit_rows:
-                    break
             except Exception as e:
                 errors.append(f"{url}: {type(e).__name__}: {e}")
 
