@@ -17,6 +17,7 @@ LIST_CANDIDATES = [
     f"{BASE}/recruit/recruitList",
 ]
 BLOCK_RE = re.compile(r"captcha|사람인지|자동입력|비정상적인\s*접근|접근이\s*제한|보안문자", re.I)
+PAID_MAIN_API = "/hunApi/main/prchsSubMainRecruitList"
 
 
 def walk_recruit_rows(value, out, depth=0):
@@ -27,11 +28,11 @@ def walk_recruit_rows(value, out, depth=0):
             out.append({
                 "rcrtNo": value.get("rcrtNo"),
                 "encRcrtNo": value.get("encRcrtNo"),
-                "title": value.get("rcrtNm") or value.get("rcrtTitle") or value.get("title"),
-                "company": value.get("acdmNm") or value.get("entNm") or value.get("companyNm"),
+                "title": value.get("pbancTtl") or value.get("rcrtTtl") or value.get("rcrtNm") or value.get("rcrtTitle") or value.get("title"),
+                "company": value.get("conmNm") or value.get("acdmNm") or value.get("entNm") or value.get("companyNm"),
                 "region": value.get("workRegnNm") or value.get("regionNm") or value.get("addr"),
                 "endDate": value.get("rceptEndDt") or value.get("endDt") or value.get("closeDt"),
-                "status": value.get("rcrtStatNm") or value.get("statusNm") or value.get("rcrtStatCd"),
+                "status": value.get("rcrtPdNm") or value.get("rcrtStatNm") or value.get("statusNm") or value.get("rcrtStatCd"),
             })
         for v in value.values():
             walk_recruit_rows(v, out, depth + 1)
@@ -46,6 +47,7 @@ def main() -> int:
     api_responses = []
     recruit_rows = []
     requests = []
+    navigation_attempts = []
     errors = []
     blocked = False
 
@@ -110,26 +112,55 @@ def main() -> int:
             except Exception as e:
                 errors.append(f"{url}: {type(e).__name__}: {e}")
 
-        # If recruitment cards/buttons are visible, click at most one public navigation target
-        # to expose the application's own list/detail contract. No login, CAPTCHA or auth bypass.
+        # The guessed /recruit/recruitList route currently redirects to home. Discover the
+        # application's own SPA navigation by clicking visible public recruitment controls.
+        # This stays inside a normal TLS-verified browser session and does not bypass auth.
         if not blocked:
             try:
-                candidates = page.locator("a[href*='recruit'], button").all()
-                for el in candidates[:80]:
-                    try:
-                        txt = (el.inner_text(timeout=500) or "").strip()
-                        href = el.get_attribute("href") or ""
-                        if any(k in txt for k in ("채용", "구인", "강사")) or "recruit" in href.lower():
+                page.goto(BASE, wait_until="domcontentloaded", timeout=45000)
+                page.wait_for_timeout(4000)
+                selectors = [
+                    "a:has-text('채용정보')",
+                    "button:has-text('채용정보')",
+                    "[role='button']:has-text('채용정보')",
+                    "text=채용정보",
+                ]
+                for selector in selectors:
+                    loc = page.locator(selector)
+                    count = min(loc.count(), 8)
+                    for i in range(count):
+                        el = loc.nth(i)
+                        try:
+                            before = page.url
+                            txt = (el.inner_text(timeout=700) or "").strip()[:120]
+                            href = el.get_attribute("href") or ""
                             if href:
                                 target = urljoin(BASE, href)
-                                if urlparse(target).netloc.endswith("hunjang.com"):
-                                    page.goto(target, wait_until="domcontentloaded", timeout=30000)
-                                    page.wait_for_timeout(4000)
-                                    break
-                    except Exception:
-                        continue
+                                if not urlparse(target).netloc.endswith("hunjang.com"):
+                                    continue
+                            el.click(timeout=3000)
+                            page.wait_for_timeout(5000)
+                            after = page.url
+                            navigation_attempts.append({"selector": selector, "text": txt, "href": href, "before": before, "after": after})
+                            if after != before:
+                                body = page.locator("body").inner_text(timeout=5000)[:12000]
+                                pages.append({
+                                    "url": after,
+                                    "requestedUrl": "discovered-by-click:채용정보",
+                                    "status": None,
+                                    "title": page.title(),
+                                    "bodySample": body[:8000],
+                                    "links": page.locator("a[href]").evaluate_all(
+                                        "els => els.slice(0,500).map(a => ({href:a.href, text:(a.innerText||'').trim().slice(0,120)}))"
+                                    ),
+                                })
+                                break
+                        except Exception:
+                            continue
+                    if navigation_attempts and navigation_attempts[-1].get("after") != navigation_attempts[-1].get("before"):
+                        break
             except Exception as e:
-                errors.append(f"navigation probe: {type(e).__name__}: {e}")
+                errors.append(f"spa navigation probe: {type(e).__name__}: {e}")
 
         ctx.close()
         browser.close()
@@ -148,7 +179,9 @@ def main() -> int:
     metro_rows = [r for r in unique_rows if any(x in str(r.get("region") or "") for x in ("서울", "경기"))]
 
     detail_api = [x for x in api_responses if "recruitDetail" in x.get("url", "")]
-    list_api = [x for x in api_responses if "/hunApi/" in x.get("url", "") and x.get("recruitRowCount")]
+    all_recruit_api = [x for x in api_responses if "/hunApi/" in x.get("url", "") and x.get("recruitRowCount")]
+    paid_main_api = [x for x in all_recruit_api if PAID_MAIN_API in x.get("url", "")]
+    general_list_api = [x for x in all_recruit_api if PAID_MAIN_API not in x.get("url", "")]
 
     report = {
         "generatedAt": generated_at,
@@ -157,9 +190,12 @@ def main() -> int:
         "publiclyReachable": any((p.get("status") or 0) < 400 for p in pages) and not blocked,
         "humanVerificationDetected": blocked,
         "pages": pages,
+        "navigationAttempts": navigation_attempts,
         "apiRequests": requests[:300],
         "apiResponses": api_responses[:300],
-        "observedListApiCount": len(list_api),
+        "observedRecruitApiCount": len(all_recruit_api),
+        "observedPaidMainApiCount": len(paid_main_api),
+        "observedGeneralListApiCount": len(general_list_api),
         "observedDetailApiCount": len(detail_api),
         "stableIdCandidate": "hunjang:<rcrtNo>" if numeric_ids else None,
         "numericRcrtNoCount": len(numeric_ids),
@@ -168,8 +204,8 @@ def main() -> int:
         "metroRowCount": len(metro_rows),
         "metroRows": metro_rows[:200],
         "errors": errors,
-        "readyForPaginationProbe": bool(numeric_ids and list_api and not blocked),
-        "nextGate": "identify the exact public list request body/query, prove pagination changes IDs and exhaustively traverse before writing any canonical dataset",
+        "readyForPaginationProbe": bool(numeric_ids and general_list_api and not blocked),
+        "nextGate": "identify a non-paid public general recruitment list request, then prove pagination changes IDs and exhaustively traverse before writing any canonical dataset",
         "safety": {
             "tlsVerificationDisabled": False,
             "authenticationBypassed": False,
@@ -178,7 +214,7 @@ def main() -> int:
         },
     }
     Path("hunjang_probe_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({k: report[k] for k in ("generatedAt", "publiclyReachable", "humanVerificationDetected", "numericRcrtNoCount", "observedListApiCount", "readyForPaginationProbe", "nextGate")}, ensure_ascii=False))
+    print(json.dumps({k: report[k] for k in ("generatedAt", "publiclyReachable", "humanVerificationDetected", "numericRcrtNoCount", "observedPaidMainApiCount", "observedGeneralListApiCount", "readyForPaginationProbe", "nextGate")}, ensure_ascii=False))
     return 0 if report["publiclyReachable"] else 2
 
 
