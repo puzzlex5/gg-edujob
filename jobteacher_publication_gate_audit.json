@@ -1,0 +1,447 @@
+{
+  "generatedAt": "2026-09-04T20:23:54+09:00",
+  "source": "잡티처",
+  "policy": "jobteacher-publication-gate-audit-v1",
+  "candidateCount": 4037,
+  "publicationEnabledNow": false,
+  "hardGates": {
+    "reconciliationHealthy": true,
+    "traversalComplete": true,
+    "missingAfterZero": true,
+    "detailHealthy": true,
+    "detailCoverageComplete": true,
+    "detailErrorZero": true,
+    "allStableIdsValid": true,
+    "noDuplicateStableIds": true,
+    "noMissingLinks": true,
+    "onlyMetroProvince": true,
+    "noBannedTitles": true,
+    "noProvablyExpiredRows": true
+  },
+  "hardGatePass": true,
+  "deadlineBuckets": {
+    "open_ended": 3995,
+    "mmdd_current": 37,
+    "active_d_day": 5
+  },
+  "provablyExpiredCount": 0,
+  "deadlineUnknownCount": 0,
+  "deadlineExamples": {
+    "open_ended": [
+      {
+        "id": "jobteacher:688146",
+        "end": "상시채용",
+        "parsed": null,
+        "title": "영어 날다",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:688029",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "유베스타 고척어학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:688028",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "충현미술학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:688026",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "포키즈에듀",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687789",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "삼성영어셀레나수학",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687619",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "리더스수학학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687278",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "접속수학학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687164",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "위트영어학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:686966",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "삼성영어셀레나신동영어교습소",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:686509",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "수학올림학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:686506",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "명륜학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:686498",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "독서로국어해 우장산점",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:686272",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "대치바른교육수학학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:686267",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "다산 이바인어학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:685774",
+        "end": "채용시까지",
+        "parsed": null,
+        "title": "UTM입시전문학원",
+        "province": "경기"
+      }
+    ],
+    "mmdd_current": [
+      {
+        "id": "jobteacher:687389",
+        "end": "~10.26",
+        "parsed": "2026-10-26",
+        "title": "필리아국영수학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687109",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "E&J키라스쿠어학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687095",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "중랑정상어학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687094",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "대명학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687090",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "(주)청담러닝 청담어학원 대치지점",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687065",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "(주)크레버스에프에이프릴어학원분당이매지점",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687063",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "(주)더다른",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687059",
+        "end": "~10.23",
+        "parsed": "2026-10-23",
+        "title": "쥬트정자아뜰리에미술학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687058",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "반석어학보습학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687056",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "플래뮤상도미술학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:687049",
+        "end": "~09.23",
+        "parsed": "2026-09-23",
+        "title": "종로하늘교육아틀라스어학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:686733",
+        "end": "~09.20",
+        "parsed": "2026-09-20",
+        "title": "(주)천재교육",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:686657",
+        "end": "~09.19",
+        "parsed": "2026-09-19",
+        "title": "(주) 그레일어학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:686656",
+        "end": "~09.20",
+        "parsed": "2026-09-20",
+        "title": "조앤북영어학원",
+        "province": "서울"
+      },
+      {
+        "id": "jobteacher:686632",
+        "end": "~09.19",
+        "parsed": "2026-09-19",
+        "title": "(주) 크레버스에프 에이프릴어학원 노원중계지점",
+        "province": "서울"
+      }
+    ],
+    "active_d_day": [
+      {
+        "id": "jobteacher:687055",
+        "end": "D-4",
+        "parsed": null,
+        "title": "동량재학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:687054",
+        "end": "D-4",
+        "parsed": null,
+        "title": "동량재학원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:682878",
+        "end": "D-5",
+        "parsed": null,
+        "title": "스팀에듀앤플레이",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:681975",
+        "end": "D-2",
+        "parsed": null,
+        "title": "꿈열매유치원",
+        "province": "경기"
+      },
+      {
+        "id": "jobteacher:255724",
+        "end": "D-5",
+        "parsed": null,
+        "title": "유니센스일대일영어학원",
+        "province": "서울"
+      }
+    ]
+  },
+  "provinceCounts": {
+    "경기": 2448,
+    "서울": 1589
+  },
+  "sourceSurfaceIdOccurrences": 4200,
+  "crossSurfaceStableIdOverlap": 163,
+  "rowsWithExplicitMultipleProvinces": 0,
+  "rowsWhoseRawTextMentionsBothMetroProvinces": 164,
+  "rawBothExamples": [
+    {
+      "id": "jobteacher:688146",
+      "province": "경기",
+      "text": "영어 날다 영어 날다 서울 전체 경기 전체 외 [영어날다] 온라인 교육 프로그램 운영 및 학습 매니저 (재택·유연근무 가능) 기타 스크랩 새창보기 영어회화 상시채용 09.03 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:687278",
+      "province": "경기",
+      "text": "접속수학학원 접속수학학원 서울 송파구 경기 하남시 외 [위례] 초·중등 수학강사 모집｜주3일/주6일 선택｜신입·경력｜고등수학까지 성장 가능 중/고등부 스크랩 새창보기 수학 채용시까지 08.26 서울 송파구 경기 하남시 외 "
+    },
+    {
+      "id": "jobteacher:684362",
+      "province": "경기",
+      "text": "공플수학 공플수학 경기 하남시 서울 강동구 외 초등 수학 파트타임 선생님을 모십니다 초등부 스크랩 새창보기 수학 채용시까지 07.30 경기 하남시 서울 강동구 외 "
+    },
+    {
+      "id": "jobteacher:684118",
+      "province": "경기",
+      "text": "헬로아트미술학원 헬로아트미술학원 경기 성남시 서울 송파구 초등부 전임강사 모십니다. 유/초등부 스크랩 새창보기 미술 채용시까지 07.28 경기 성남시 서울 송파구 "
+    },
+    {
+      "id": "jobteacher:680358",
+      "province": "경기",
+      "text": "DYB최선어학원 DYB최선어학원 서울 전체 경기 전체 [직영] 최선어학원 영어선생님 채용 초/중/고등부,초/중/고등부 스크랩 새창보기 영어 영어 채용시까지 07.23 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:676829",
+      "province": "경기",
+      "text": "주식회사 시스템에이치(입시찬란) 주식회사 시스템에이치(입시찬란) 서울 전체 경기 전체 외 입시찬란에서 대입 컨설턴트를 모십니다 고등부 스크랩 새창보기 입시컨설팅 채용시까지 05.23 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:672716",
+      "province": "경기",
+      "text": "애나잉글리쉬 애나잉글리쉬 서울 전체 경기 전체 외 교육 전문 프리랜서 학습 플래너 및 지점 원장님 모십니다.(전/부업 가능) 기타 스크랩 새창보기 영어회화 채용시까지 04.12 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:671331",
+      "province": "경기",
+      "text": "위례수학 학원 위례수학 학원 서울 송파구 경기 성남시 중등 수학 전임 또는 월수금 파트 초/중/고등부 스크랩 새창보기 수학 상시채용 03.30 서울 송파구 경기 성남시 "
+    },
+    {
+      "id": "jobteacher:667519",
+      "province": "경기",
+      "text": "(주) ECN글로벌 교육 (주) ECN글로벌 교육 서울 전체 경기 전체 외 [과외신문고] 초/중/고 /국어,영어,수학,과탐,사탐 선생님 초빙합니다. 초/중/고등부 스크랩 새창보기 수학 채용시까지 03.16 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:662622",
+      "province": "경기",
+      "text": "랜드마크어학원 랜드마크어학원 경기 고양시 서울 강서구 외 중학생 입시 영어강사 초빙합니다. 중등부 스크랩 새창보기 영어 채용시까지 01.07 경기 고양시 서울 강서구 외 "
+    },
+    {
+      "id": "jobteacher:659719",
+      "province": "경기",
+      "text": "세이미잉글리쉬 강동천호점 세이미잉글리쉬 강동천호점 서울 전체 경기 전체 외 온라인 영어회화 학습 코칭플래너 및 교육 팀장 모집(재택가능, 요일시간 자율제) 기타 스크랩 새창보기 영어 채용시까지 12.22 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:658936",
+      "province": "경기",
+      "text": "세이미잉글리쉬 세이미잉글리쉬 서울 전체 경기 안양시 외 세이미잉글리쉬 1:1 온라인 코칭플래너 [재택/부업 가능] 기타 스크랩 새창보기 영어 채용시까지 12.05 서울 전체 경기 안양시 외 "
+    },
+    {
+      "id": "jobteacher:657523",
+      "province": "경기",
+      "text": "세이미잉글리쉬 수진모란점 세이미잉글리쉬 수진모란점 서울 전체 경기 전체 온라인 수업 모니터링 [플래너·교육팀장 모집] 재택 근무 가능 투잡 환영 경력 무관 전공 무관 기타 스크랩 새창보기 사무/상담/관리직 상시채용 11.28 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:653695",
+      "province": "경기",
+      "text": "도토리(DOTORE) 도토리(DOTORE) 서울 전체 경기 전체 외 외국인 대상 한국어강사 모집 - 온라인·재택근무 기타 스크랩 새창보기 한국어 채용시까지 10.16 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:653350",
+      "province": "경기",
+      "text": "영어종결센터 신동백학원 영어종결센터 신동백학원 서울 송파구 경기 성남시 외 초중등 전임 영어선생님을 모집합니다. 중등부 스크랩 새창보기 영어 채용시까지 10.13 서울 송파구 경기 성남시 외 "
+    },
+    {
+      "id": "jobteacher:650760",
+      "province": "경기",
+      "text": "뷰티풀마인드 수학학원 뷰티풀마인드 수학학원 서울 전체 경기 전체 외 대치동 수학학원에서 초ㆍ중등부 선생님 모집합니다 초/중등부 스크랩 새창보기 수학 채용시까지 09.15 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:647057",
+      "province": "경기",
+      "text": "지앤지잉글리쉬 지앤지잉글리쉬 서울 전체 경기 전체 외 온라인 코칭플래너 모집합니다. (재택근무가능,시간자유, 요일자유) 기타 스크랩 새창보기 영어 채용시까지 08.11 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:645010",
+      "province": "경기",
+      "text": "꾸그 꾸그 서울 전체 경기 전체 외 꾸그 화상수업 강사 모집 (시간 활용이 유연한 재택 수업) 초등부 스크랩 새창보기 수학 상시채용 07.22 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:644520",
+      "province": "경기",
+      "text": "투멘토 잉글리쉬 선릉점 투멘토 잉글리쉬 선릉점 서울 금천구 경기 수원시 외 [온라인 영어교육 코칭플래너] 온라인 코칭/학생관리 업무 (부업/재택 가능) 기타 스크랩 새창보기 영어 채용시까지 07.17 서울 금천구 경기 수원시 외 "
+    },
+    {
+      "id": "jobteacher:640325",
+      "province": "경기",
+      "text": "리틀러시 문해력 리틀러시 문해력 서울 전체 경기 전체 아동 전문 문해력 학원 리틀러시에서 강사 선생님을 모십니다 유치부 스크랩 새창보기 독서/논술 채용시까지 06.05 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:637253",
+      "province": "경기",
+      "text": "피오니키즈 피오니키즈 서울 전체 경기 전체 외 원어민 선생님 모십니다 초등부 스크랩 새창보기 기타 과목 상시채용 05.05 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:636291",
+      "province": "경기",
+      "text": "최선어학원(리멤버앤컴퍼니) 최선어학원(리멤버앤컴퍼니) 서울 전체 경기 전체 [최선어학원] 영어강사 모집 초/중/고등부 스크랩 새창보기 영어 채용시까지 04.25 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:620951",
+      "province": "경기",
+      "text": "더함에듀학원 더함에듀학원 서울 은평구 경기 고양시 외 초중고) 영어 전임 선생님~ 초/중/고등부 스크랩 새창보기 영어 채용시까지 11.27 서울 은평구 경기 고양시 외 "
+    },
+    {
+      "id": "jobteacher:613047",
+      "province": "경기",
+      "text": "이지홈스쿨봉담영어 이지홈스쿨봉담영어 서울 전체 경기 전체 원어민 온라인 영어 프로그램 -한국인 코칭플래너 선생님 구인 기타 스크랩 새창보기 영어 채용시까지 10.22 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:613043",
+      "province": "경기",
+      "text": "이지홈스쿨봉담영어 이지홈스쿨봉담영어 서울 전체 경기 전체 원어민 온라인 영어 -관리 한국어플래너 선생님 구함 기타 스크랩 새창보기 영어 상시채용 10.22 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:608812",
+      "province": "경기",
+      "text": "뿌리깊은나무학원 뿌리깊은나무학원 서울 송파구 경기 성남시 외 최고의 수학 선생님을 모십니다. 초/중등부 스크랩 새창보기 수학 채용시까지 09.30 서울 송파구 경기 성남시 외 "
+    },
+    {
+      "id": "jobteacher:602319",
+      "province": "경기",
+      "text": "메이드에듀 메이드에듀 서울 강남구 서울 양천구 외 [ 메이드&세이노] 대치 및 서울 경기 전 지점 중/고등부,중/고등부,중/고등부,중/고등부,초/중등부 스크랩 새창보기 과학계열 국어 외 채용시까지 08.28 [ 메이드&세이노] 대치 및 서울 경기 전 지점 중/고등부,중/고등부,중/고등부,중/고등부,초/중등부 스크랩 새창보기 "
+    },
+    {
+      "id": "jobteacher:601426",
+      "province": "경기",
+      "text": "ecntop ecntop 서울 전체 경기 전체 외 회사확장으로 블로그 포스팅 경력자를 초빙합니다. 초/중등부 스크랩 새창보기 사무/상담/관리직 채용시까지 08.23 서울 전체 경기 전체 외 "
+    },
+    {
+      "id": "jobteacher:599291",
+      "province": "경기",
+      "text": "(주)정상제이엘에스 (주)정상제이엘에스 서울 전체 경기 전체 정상어학원[본사직영] - 서울 경기지역 영어 어학원 강사 경력/신입 채용 초/중등부 스크랩 새창보기 영어 상시채용 Today 서울 전체 경기 전체 "
+    },
+    {
+      "id": "jobteacher:599288",
+      "province": "경기",
+      "text": "(주)가디언어학원 (주)가디언어학원 서울 전체 경기 고양시 마포 중/고등 영어강사 채용 중/고등부 스크랩 새창보기 영어 ~09.19 Today 서울 전체 경기 고양시 "
+    }
+  ],
+  "badIdentityCount": 0,
+  "duplicateStableIdCount": 0,
+  "missingLinkCount": 0,
+  "bannedTitleCount": 0,
+  "recommendation": "enable only if hardGatePass and current-state semantics are defensible; otherwise repair crawler before promotion"
+}
