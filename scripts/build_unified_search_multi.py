@@ -88,6 +88,8 @@ def project_private_generic(job, source_name):
 
 def source_health(spec, report, detail_report):
     ok = bool(report and report.get("healthy") and report.get("traversalComplete") and int(report.get("missingAfterCount") or 0) == 0)
+    if "publicationEnabled" in report:
+        ok = ok and report.get("publicationEnabled") is True
     if spec["key"] == "lessoninfo":
         ok = ok and int(report.get("detailErrorCount") or 0) == 0
     if spec.get("detail_report"):
