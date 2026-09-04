@@ -20,9 +20,10 @@ def load_official_registry(path: Path | str = SOURCES_PATH) -> dict:
     return data
 
 
-def official_source_breakdown(path: Path | str = SOURCES_PATH) -> dict[str, int]:
+def official_registry_counts(path: Path | str = SOURCES_PATH) -> dict[str, dict[str, int]]:
+    """Return central/support/total counts for every official registry group."""
     data = load_official_registry(path)
-    out: dict[str, int] = {}
+    out: dict[str, dict[str, int]] = {}
     for key, group in data.items():
         if not isinstance(group, dict):
             raise ValueError(f"invalid official source group: {key}")
@@ -32,8 +33,26 @@ def official_source_breakdown(path: Path | str = SOURCES_PATH) -> dict[str, int]
             raise ValueError(f"invalid central source definition: {key}")
         if not isinstance(support, list):
             raise ValueError(f"invalid supportOffices definition: {key}")
-        out[str(key)] = (1 if central else 0) + len(support)
+        central_count = 1 if central else 0
+        support_count = len(support)
+        out[str(key)] = {
+            "central": central_count,
+            "supportOffices": support_count,
+            "total": central_count + support_count,
+        }
     return out
+
+
+def official_source_breakdown(path: Path | str = SOURCES_PATH) -> dict[str, int]:
+    return {key: counts["total"] for key, counts in official_registry_counts(path).items()}
+
+
+def official_support_office_counts(path: Path | str = SOURCES_PATH) -> dict[str, int]:
+    return {key: counts["supportOffices"] for key, counts in official_registry_counts(path).items()}
+
+
+def official_central_source_count(path: Path | str = SOURCES_PATH) -> int:
+    return sum(counts["central"] for counts in official_registry_counts(path).values())
 
 
 def official_source_count(path: Path | str = SOURCES_PATH) -> int:
