@@ -6,7 +6,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from build_unified_search import private_current
+from build_unified_search import RESULT_RE, private_current
 from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
 from source_registry import official_source_count
 
@@ -52,6 +52,10 @@ def main():
     private = [j for j in jobs if j.get("feedKind") == "private"]
     official = [j for j in jobs if j.get("feedKind") == "official"]
     errors, warnings = [], []
+
+    official_result_like = [j for j in official if RESULT_RE.search(str(j.get("title") or ""))]
+    if official_result_like:
+        errors.append(f"Unified official projection contains {len(official_result_like)} result/selection notices")
 
     direct_ids = {str(j.get("sourceIdentity") or "") for j in private if j.get("sourceIdentity")}
     alias_ids = set()
@@ -179,6 +183,7 @@ def main():
         "missingPrivateIds": sum(len(v) for v in missing_by_source.values()),
         "missingPrivateBySource": {k:len(v) for k,v in missing_by_source.items()},
         "missingPrivateExamples": {k:v[:20] for k,v in missing_by_source.items()},
+        "officialResultLikeNotices": len(official_result_like),
         "nonMetroPrivate": non_metro,
         "projectedNonMetroPrivate": len(projected_non_metro),
         "bannedPrivate": banned,
