@@ -38,10 +38,24 @@ async def run(b,region,code):
         array_vals=await p.locator('input[name="array_area_type"]').evaluate_all('els=>els.map(e=>e.value)')
         if expected not in array_vals:raise RuntimeError(f'expected array_area_type {expected} not committed: {array_vals}')
         cur=p.locator('#jobs_ving_chk')
-        if await cur.count():
-            if not await cur.is_checked(): await cur.click(force=True)
-            await p.wait_for_timeout(300)
+        if not await cur.count():raise RuntimeError('current-only checkbox missing')
+        hidden=p.locator('#exclude_end_yn')
+        if not await hidden.count():raise RuntimeError('current-only hidden input missing')
+        if await hidden.input_value()!='Y':
+            # ArtMore binds the Y/N mutation and an immediate form submit to the checkbox click.
+            # If the box is visually checked while the hidden value is stale, normalize it to
+            # unchecked first, then issue one real click so the site's own handler sets Y.
+            if await cur.is_checked():await cur.evaluate('e=>{e.checked=false}')
+            try:
+                async with p.expect_navigation(wait_until='domcontentloaded',timeout=60000):
+                    await cur.click(force=True)
+            except Exception:
+                # Some runs finish submission before Playwright observes navigation; verify state below.
+                await p.wait_for_load_state('domcontentloaded',timeout=60000)
+            await p.wait_for_timeout(500)
         if await p.locator('#exclude_end_yn').input_value()!='Y':raise RuntimeError('current-only handler did not set Y')
+        array_vals=await p.locator('input[name="array_area_type"]').evaluate_all('els=>els.map(e=>e.value)')
+        if expected not in array_vals:raise RuntimeError(f'area filter lost after current-only submit: {array_vals}')
         state=await p.evaluate("""()=>{const f=document.querySelector('form#frm');return{checked:[...document.querySelectorAll('input[name="area"]:checked')].map(e=>({id:e.id,value:e.value})),selectorVals:[...document.querySelectorAll('input[name="area_selector_val"]')].map(e=>e.value),arrayArea:[...document.querySelectorAll('input[name="array_area_type"]')].map(e=>e.value),current:document.querySelector('#exclude_end_yn')?.value||''}}""")
         if not await visible_click(p.get_by_role('button',name='검색하기')):raise RuntimeError('search button missing')
         await p.wait_for_load_state('domcontentloaded',timeout=60000);await p.wait_for_timeout(600)
