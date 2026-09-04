@@ -49,7 +49,10 @@ def parse_modified_date(cells):
   month,day=int(m.group(2)),int(m.group(3))
   try: d=date(year,month,day)
   except ValueError: continue
-  if not m.group(1) and d>TODAY+timedelta(days=31):
+  # JobTeacher omits the year for modified dates. Any yearless MM.DD
+  # later than today belongs to the previous year; allowing a future
+  # grace window silently turns old postings into future-dated ones.
+  if not m.group(1) and d>TODAY:
    d=date(year-1,month,day)
   return d.isoformat(), raw
  return '', ''
