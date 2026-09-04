@@ -39,6 +39,7 @@ REGISTERED_LABEL_RE = re.compile(
     r"((?:20\d{2}[.\-/년]\s*)?\d{1,2}[.\-/월]\s*\d{1,2})",
     re.I,
 )
+ROW_HEADER_RE = re.compile(r"(?:^|\s)제목\s+(?:날짜|등록일|작성일)\s+(?:기관|작성자)(?:\s|$)", re.I)
 
 SEOUL_DISTRICTS = (
     "강남구", "강동구", "강북구", "관악구", "광진구", "구로구", "금천구", "노원구",
@@ -62,6 +63,10 @@ NON_METRO_RE = re.compile(
 )
 
 
+def _norm(s: str) -> str:
+    return re.sub(r"\s+", " ", s or "").strip()
+
+
 def _date_not_future(raw: str) -> str:
     d = b.parse_date(raw)
     if not d:
@@ -71,6 +76,21 @@ def _date_not_future(raw: str) -> str:
     except ValueError:
         return ""
     return d if dt <= b.now_kst().date() else ""
+
+
+def _specific_row(row: str, title: str) -> str:
+    """Reject container-wide list text; only a compact row may influence a posting."""
+    row = _norm(row)
+    title = _norm(title)
+    if not row:
+        return title
+    if title and title not in row:
+        return title
+    if len(row) > 700 or ROW_HEADER_RE.search(row):
+        return title
+    if title and row.count(title) > 1:
+        return title
+    return row
 
 
 def _list_registered(row: str, title: str) -> str:
@@ -90,8 +110,10 @@ def clean_candidate(href: str, text: str, row_text: str, target: dict):
     item = _BASE_CANDIDATE(href, text, row_text, target)
     if not item:
         return None
-    item["registeredHint"] = _list_registered(item.get("rowText", ""), item.get("titleHint", ""))
-    title = re.sub(r"\s+", " ", item.get("titleHint", "")).strip()
+    title = _norm(item.get("titleHint", ""))
+    row = _specific_row(item.get("rowText", ""), title)
+    item["rowText"] = row
+    item["registeredHint"] = _list_registered(row, title)
     if target.get("key") == "culture-arts" and GENERIC_TITLE_RE.fullmatch(title):
         return None
     return item
@@ -100,11 +122,8 @@ def clean_candidate(href: str, text: str, row_text: str, target: dict):
 b.candidate_from_anchor = clean_candidate
 
 
-def _norm(s: str) -> str:
-    return re.sub(r"\s+", " ", s or "").strip()
-
-
 def _detail_scope(html: str, title_hint: str) -> str:
+    """Return only a title-bound detail container; never fall back to site-wide body text."""
     soup = b.BeautifulSoup(html, "html.parser")
     hint = _norm(title_hint)
     candidates: list[str] = []
@@ -133,9 +152,6 @@ def _detail_scope(html: str, title_hint: str) -> str:
                 depth += 1
     if candidates:
         return min(candidates, key=len)
-    body = soup.body
-    if body:
-        return _norm(" ".join(body.stripped_strings))[:12000]
     return ""
 
 
@@ -164,8 +180,9 @@ def _metro_region(location: str, signal: str) -> str:
     loc = _norm(location)
     full = _norm(signal)
 
-    # An explicit location field wins over incidental place names elsewhere on the page.
     if loc:
+        if NON_METRO_RE.search(loc):
+            return ""
         if re.search(r"서울(?:특별시|시)?", loc):
             return "서울"
         if re.search(r"경기(?:도)?", loc):
@@ -174,9 +191,9 @@ def _metro_region(location: str, signal: str) -> str:
             return "경기"
         if any(d in loc for d in SEOUL_DISTRICTS):
             return "서울"
-        if NON_METRO_RE.search(loc):
-            return ""
 
+    if NON_METRO_RE.search(full):
+        return ""
     if re.search(r"서울특별시|서울시", full):
         return "서울"
     if re.search(r"경기도", full):
@@ -186,8 +203,21 @@ def _metro_region(location: str, signal: str) -> str:
     if any(d in full for d in SEOUL_DISTRICTS):
         return "서울"
 
-    # Bare '서울' is still a useful fallback. Bare '경기' is not, because it can mean a game/event.
     if re.search(r"(?:^|[\s(\[/])서울(?:[\s)\]/]|$)", full):
+        return "서울"
+    return ""
+
+
+def _title_region(title: str) -> str:
+    """Use geography written in the posting title as strong posting-specific evidence."""
+    title = _norm(title)
+    if NON_METRO_RE.search(title):
+        return ""
+    if re.search(r"서울특별시|서울시", title) or any(d in title for d in SEOUL_DISTRICTS):
+        return "서울"
+    if re.search(r"경기도", title) or any(place in title for place in GYEONGGI_PLACES):
+        return "경기"
+    if re.search(r"(?:^|[\s(\[/])서울(?:[\s)\]/]|$)", title):
         return "서울"
     return ""
 
@@ -198,7 +228,7 @@ def classify_clean(html: str, text: str, item: dict):
         return None, "generic-title"
 
     scope = _detail_scope(html, title)
-    row = _norm(item.get("rowText", ""))
+    row = _specific_row(item.get("rowText", ""), title)
     signal = _norm(" ".join((title, row, scope)))
 
     if b.CLOSED_RE.search(title + " " + scope[:12000]):
@@ -231,12 +261,18 @@ def classify_clean(html: str, text: str, item: dict):
         if reg < today - timedelta(days=b.NO_DEADLINE_FRESH_DAYS):
             return None, "stale-without-deadline"
 
-    loc_signal = _norm(row + " " + scope[:12000])
+    # Geography may only come from posting-specific evidence: title, compact list row, or
+    # a title-bound detail container. Never feed the whole list/body into location inference.
+    title_region = _title_region(title)
+    if NON_METRO_RE.search(title) and not title_region:
+        return None, "outside-seoul-gyeonggi"
+
+    loc_signal = _norm(" ".join((row, scope[:12000])))
     location = _extract_location(loc_signal)
-    region = _metro_region(location, _norm(title + " " + loc_signal))
+    if location and NON_METRO_RE.search(location):
+        return None, "outside-seoul-gyeonggi"
+    region = _metro_region(location, _norm(title + " " + loc_signal)) or title_region
     if not region:
-        if location and NON_METRO_RE.search(location):
-            return None, "outside-seoul-gyeonggi"
         return None, "region-unconfirmed"
 
     return {

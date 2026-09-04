@@ -3,6 +3,7 @@ name: Update Lessoninfo recruitment jobs
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - 'scripts/crawl_lessoninfo_jobs.py'
       - 'scripts/run_lessoninfo_jobs_exact.py'
@@ -63,6 +64,8 @@ jobs:
         run: |
           python - <<'PY'
           import json, pathlib
+          from collections import Counter
+
           p = pathlib.Path('lessoninfo_reconciliation_report.json')
           if not p.exists():
               raise SystemExit('missing reconciliation report')
@@ -106,6 +109,26 @@ jobs:
           if bad:
               print(json.dumps(bad[:20], ensure_ascii=False, indent=2))
               raise SystemExit(f'non-Seoul/Gyeonggi Lessoninfo rows published: {len(bad)}')
+
+          # A list-container parsing bug once stamped the same long first-row location onto most
+          # culture-arts postings. Repeated scalar metro labels such as '서울' are fine, but a
+          # long posting-specific-looking location repeated across a large share is contamination.
+          culture = [j for j in jobs if j.get('sourceSurface') == 'culture-arts']
+          specific_locations = [
+              ' '.join(str(j.get('location') or '').split())
+              for j in culture
+              if len(' '.join(str(j.get('location') or '').split())) >= 12
+              and ' '.join(str(j.get('location') or '').split()) not in {'서울', '경기'}
+          ]
+          if specific_locations:
+              location, count = Counter(specific_locations).most_common(1)[0]
+              threshold = max(50, int(len(culture) * 0.20))
+              if count >= threshold:
+                  raise SystemExit(
+                      f'suspicious repeated Lessoninfo culture location contamination: '
+                      f'{count}/{len(culture)} rows share {location[:160]!r}'
+                  )
+
           linked=sum(1 for j in jobs if j.get('linkedOfficialUrls'))
           print(f'Lessoninfo metro-only guard passed: {len(jobs)} Seoul/Gyeonggi jobs; explicit official links captured on {linked} rows')
           PY
