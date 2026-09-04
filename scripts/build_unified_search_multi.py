@@ -82,8 +82,6 @@ def project_private_generic(job, source_name):
     if row.get("school") == "레슨인포 구인" and source_name != "레슨인포":
         row["school"] = source_name + " 구인"
 
-    # Preserve explicit multi-region evidence from source adapters. base.project_private
-    # predates multi-province private sources and otherwise collapses them to one region.
     explicit_provinces = [str(x) for x in (job.get("provinces") or []) if str(x)]
     if explicit_provinces:
         row["provinces"] = list(dict.fromkeys(explicit_provinces))
@@ -130,28 +128,32 @@ def main():
     private_meta = {}
     canonical_private_total = 0
     enabled_private_sources = 0
-    all_sources_healthy = True
+    degraded_private_sources = []
     for spec in PRIVATE_SOURCES:
         pdata = load(spec["jobs"], [])
         preport = load(spec["report"], {})
         dreport = load(spec["detail_report"], {}) if spec.get("detail_report") else None
         jobs = rows_from(pdata)
         projected = [project_private_generic(j, spec["name"]) for j in jobs if base.private_current(j)]
-        enabled = publication_enabled(preport)
+        configured_enabled = publication_enabled(preport)
         healthy = source_health(spec, preport, dreport)
-        if enabled:
+        effective_enabled = configured_enabled and healthy
+        if effective_enabled:
             enabled_private_sources += 1
             canonical_private_total += len(jobs)
             all_private.extend(projected)
-            all_sources_healthy = all_sources_healthy and healthy
+        elif configured_enabled and not healthy:
+            degraded_private_sources.append(spec["key"])
         private_meta[spec["key"]] = {
             "name": spec["name"],
-            "publicationEnabled": enabled,
-            "ok": healthy if enabled else False,
+            "configuredPublicationEnabled": configured_enabled,
+            "publicationEnabled": effective_enabled,
+            "degraded": configured_enabled and not healthy,
+            "ok": healthy,
             "candidateCount": len(projected),
-            "count": len(projected) if enabled else 0,
+            "count": len(projected) if effective_enabled else 0,
             "lastVerifiedAt": (dreport or preport).get("generatedAt") if isinstance((dreport or preport), dict) else None,
-            "missingAfterCount": preport.get("missingAfterCount"),
+            "missingAfterCount": preport.get("missingAfterCount") if isinstance(preport, dict) else None,
             "detailErrorCount": (dreport or preport).get("detailErrorCount") if isinstance((dreport or preport), dict) else None,
         }
 
@@ -203,12 +205,11 @@ def main():
         "exactUrlAliasGroupsMerged": len(exact_url_groups),
         "ambiguousExplicitOfficialLinks": len(ambiguous_aliases),
         "semanticDuplicatePolicy": "review-only-never-auto-delete",
-        "allPrivateSourcesHealthy": all_sources_healthy,
+        "degradedPrivateSources": degraded_private_sources,
+        "allPublicationEnabledSourcesHealthy": not degraded_private_sources,
     }
     Path("unified_search_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
-    if not all_sources_healthy:
-        raise SystemExit(2)
 
 
 if __name__ == "__main__":
