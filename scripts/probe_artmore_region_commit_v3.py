@@ -13,10 +13,43 @@ async def visible_click(loc):
             if await loc.nth(i).is_visible(): await loc.nth(i).click(); return True
         except Exception: pass
     return False
+async def enable_current_only(p):
+    cur=p.locator('#jobs_ving_chk');hidden=p.locator('#exclude_end_yn')
+    if not await cur.count():raise RuntimeError('current-only checkbox missing')
+    if not await hidden.count():raise RuntimeError('current-only hidden input missing')
+    if await hidden.input_value()=='Y':return 'already-Y'
+    # The public ArtMore JS binds a jQuery click handler that sets exclude_end_yn=Y,
+    # resets page=1 and submits #frm. Prefer a normal browser click first.
+    if await cur.is_checked():await cur.evaluate('e=>{e.checked=false}')
+    try:
+        async with p.expect_navigation(wait_until='domcontentloaded',timeout=15000):
+            await cur.click(force=True)
+    except Exception:
+        pass
+    try:await p.wait_for_load_state('domcontentloaded',timeout=15000)
+    except Exception:pass
+    await p.wait_for_timeout(500)
+    if await p.locator('#exclude_end_yn').input_value()=='Y':return 'native-click'
+    # Some headless runs do not execute the delegated jQuery handler through the
+    # native Playwright click. Trigger the site's own bound event as a semantic
+    # fallback; this does not bypass authentication or alter TLS validation.
+    if not await p.evaluate("()=>typeof window.jQuery==='function'"):
+        raise RuntimeError('jQuery unavailable for current-only fallback')
+    await p.evaluate("""()=>{
+      const $=window.jQuery,$c=$('#jobs_ving_chk');
+      if(!$c.length) throw new Error('jobs_ving_chk missing');
+      $c.prop('checked',false);
+      $c.trigger('click');
+    }""")
+    try:await p.wait_for_load_state('domcontentloaded',timeout=30000)
+    except Exception:pass
+    await p.wait_for_timeout(700)
+    if await p.locator('#exclude_end_yn').input_value()!='Y':raise RuntimeError('current-only handler did not set Y')
+    return 'jquery-trigger'
 async def run(b,region,code):
     p=await b.new_page(locale='ko-KR');reqs=[];p.on('request',lambda r:reqs.append({'url':r.url,'method':r.method,'postData':r.post_data}) if 'search_list.do' in r.url else None)
     try:
-        resp=await p.goto(URL,wait_until='domcontentloaded',timeout=60000);await p.wait_for_timeout(600)
+        resp=await p.goto(URL,wait_until='domcontentloaded',timeout=60000);await p.wait_for_timeout(800)
         if BLOCK_RE.search(await p.locator('body').inner_text()):raise RuntimeError('human-check/block page detected')
         if not await visible_click(p.get_by_role('button',name='지역 선택')):raise RuntimeError('region opener missing')
         await p.wait_for_timeout(300)
@@ -34,39 +67,26 @@ async def run(b,region,code):
         if expected not in selector_vals:raise RuntimeError(f'expected area_selector_val {expected} not created: {selector_vals}')
         ok=p.locator('#btn_area_ok')
         if not await visible_click(ok):raise RuntimeError('region selection confirm button missing')
-        await p.wait_for_timeout(300)
+        await p.wait_for_timeout(400)
         array_vals=await p.locator('input[name="array_area_type"]').evaluate_all('els=>els.map(e=>e.value)')
         if expected not in array_vals:raise RuntimeError(f'expected array_area_type {expected} not committed: {array_vals}')
-        cur=p.locator('#jobs_ving_chk')
-        if not await cur.count():raise RuntimeError('current-only checkbox missing')
-        hidden=p.locator('#exclude_end_yn')
-        if not await hidden.count():raise RuntimeError('current-only hidden input missing')
-        if await hidden.input_value()!='Y':
-            # ArtMore binds the Y/N mutation and an immediate form submit to the checkbox click.
-            # If the box is visually checked while the hidden value is stale, normalize it to
-            # unchecked first, then issue one real click so the site's own handler sets Y.
-            if await cur.is_checked():await cur.evaluate('e=>{e.checked=false}')
-            try:
-                async with p.expect_navigation(wait_until='domcontentloaded',timeout=60000):
-                    await cur.click(force=True)
-            except Exception:
-                # Some runs finish submission before Playwright observes navigation; verify state below.
-                await p.wait_for_load_state('domcontentloaded',timeout=60000)
-            await p.wait_for_timeout(500)
-        if await p.locator('#exclude_end_yn').input_value()!='Y':raise RuntimeError('current-only handler did not set Y')
+        current_path=await enable_current_only(p)
         array_vals=await p.locator('input[name="array_area_type"]').evaluate_all('els=>els.map(e=>e.value)')
         if expected not in array_vals:raise RuntimeError(f'area filter lost after current-only submit: {array_vals}')
-        state=await p.evaluate("""()=>{const f=document.querySelector('form#frm');return{checked:[...document.querySelectorAll('input[name="area"]:checked')].map(e=>({id:e.id,value:e.value})),selectorVals:[...document.querySelectorAll('input[name="area_selector_val"]')].map(e=>e.value),arrayArea:[...document.querySelectorAll('input[name="array_area_type"]')].map(e=>e.value),current:document.querySelector('#exclude_end_yn')?.value||''}}""")
-        if not await visible_click(p.get_by_role('button',name='검색하기')):raise RuntimeError('search button missing')
-        await p.wait_for_load_state('domcontentloaded',timeout=60000);await p.wait_for_timeout(600)
+        state=await p.evaluate("""()=>({checked:[...document.querySelectorAll('input[name="area"]:checked')].map(e=>({id:e.id,value:e.value})),selectorVals:[...document.querySelectorAll('input[name="area_selector_val"]')].map(e=>e.value),arrayArea:[...document.querySelectorAll('input[name="array_area_type"]')].map(e=>e.value),current:document.querySelector('#exclude_end_yn')?.value||'',page:document.querySelector('#page')?.value||''})""")
+        # The current-only handler already submits. Only issue an explicit search when
+        # no POST was observed, keeping the probe faithful to the public UI semantics.
+        if not any(x.get('method')=='POST' and x.get('postData') for x in reqs):
+            if not await visible_click(p.get_by_role('button',name='검색하기')):raise RuntimeError('search button missing')
+            await p.wait_for_load_state('domcontentloaded',timeout=60000);await p.wait_for_timeout(600)
         posts=[x for x in reqs if x.get('method')=='POST' and x.get('postData')];payload=posts[-1]['postData'] if posts else None;parsed=parse_qs(payload or '',keep_blank_values=True)
         hrefs=await p.locator('a[href*="rec_idx="]').evaluate_all("els=>els.map(a=>a.href||'')");ids=[]
         for h in hrefs:
             m=REC_RE.search(h)
             if m and m.group(1) not in ids:ids.append(m.group(1))
         rows=await p.locator('a[href*="rec_idx="]').evaluate_all("""els=>els.slice(0,30).map(a=>{let n=a,b='';for(let i=0;i<7&&n;i++,n=n.parentElement){const t=(n.innerText||'').replace(/\s+/g,' ').trim();if(t.length>b.length&&t.length<1200)b=t}return b})""")
-        other='경기' if region=='서울' else '서울';hits=sum(region in x for x in rows);contam=sum(other in x for x in rows)
-        return{'region':region,'code':code,'status':resp.status if resp else None,'preSubmitState':state,'payload':payload,'parsedArea':parsed.get('array_area_type'),'parsedCurrent':parsed.get('exclude_end_yn'),'firstPageIds':ids[:30],'targetHits':hits,'otherMetroContamination':contam,'rowSamples':rows[:10]}
+        other='경기' if region=='서울' else '서울';hits=sum(region in x for x in rows);contam=sum(other in x for x in rows);ended=sum(('마감' in x or '종료' in x) and '진행중' not in x for x in rows)
+        return{'region':region,'code':code,'status':resp.status if resp else None,'currentOnlyPath':current_path,'preSubmitState':state,'payload':payload,'parsedArea':parsed.get('array_area_type'),'parsedCurrent':parsed.get('exclude_end_yn'),'parsedPage':parsed.get('page'),'firstPageIds':ids[:30],'targetHits':hits,'otherMetroContamination':contam,'endedContamination':ended,'rowSamples':rows[:10]}
     finally:await p.close()
 async def main():
     rep={'generatedAt':datetime.now(KST).isoformat(timespec='seconds'),'source':'아트모아','mode':'read-only-region-commit-probe-v3','publicationEnabled':False,'surfaces':[],'errors':[]}
@@ -79,7 +99,7 @@ async def main():
     good=[]
     for x in rep['surfaces']:
         expected=f"2000-{x.get('code')}"
-        if x.get('parsedArea') and expected in x.get('parsedArea',[]) and x.get('parsedCurrent')==['Y'] and x.get('firstPageIds') and x.get('targetHits',0)>0 and x.get('otherMetroContamination',0)==0:good.append(x)
+        if x.get('parsedArea') and expected in x.get('parsedArea',[]) and x.get('parsedCurrent')==['Y'] and x.get('firstPageIds') and x.get('targetHits',0)>0 and x.get('otherMetroContamination',0)==0 and x.get('endedContamination',0)==0:good.append(x)
     rep['summary']={'surfaceCount':len(rep['surfaces']),'errors':len(rep['errors']),'verifiedSurfaceCount':len(good),'readyForCollectorEngineering':len(good)==2 and not rep['errors']}
     OUT.write_text(json.dumps(rep,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps(rep['summary'],ensure_ascii=False));return 0 if rep['surfaces'] else 2
 if __name__=='__main__':raise SystemExit(asyncio.run(main()))
