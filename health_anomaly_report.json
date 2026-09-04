@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-05T01:08:42+09:00",
+  "generatedAt": "2026-09-05T02:08:26+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T01:08:42+09:00",
+    "generatedAt": "2026-09-05T02:08:26+09:00",
     "official": {
-      "datasetCount": 19235,
+      "datasetCount": 19232,
       "officialIdCount": 18185,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -108,7 +108,7 @@
         "latestRegistered": "2026-09-04"
       },
       "구리남양주교육지원청": {
-        "count": 573,
+        "count": 572,
         "latestRegistered": "2026-09-04"
       },
       "군포의왕교육지원청": {
@@ -116,7 +116,7 @@
         "latestRegistered": "2026-09-03"
       },
       "김포교육지원청": {
-        "count": 546,
+        "count": 545,
         "latestRegistered": "2026-09-04"
       },
       "남부교육지원청": {
@@ -132,7 +132,7 @@
         "latestRegistered": "2026-08-12"
       },
       "동작관악교육지원청": {
-        "count": 167,
+        "count": 166,
         "latestRegistered": "2026-09-04"
       },
       "부천교육지원청": {
@@ -148,7 +148,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1191,
+        "count": 1190,
         "latestRegistered": "2026-09-04"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -184,7 +184,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -247,12 +247,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T01:09:17+09:00",
+      "baselineAt": "2026-09-04T02:08:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19235,
-          "baseline": 18913,
-          "changeRatio": 0.017
+          "current": 19232,
+          "baseline": 18917,
+          "changeRatio": 0.0167
         },
         "official.officialIdCount": {
           "current": 18185,
@@ -266,18 +266,18 @@
         },
         "unified.publishedJobs": {
           "current": 3568,
-          "baseline": 4511,
-          "changeRatio": -0.209
+          "baseline": 8554,
+          "changeRatio": -0.5829
         },
         "unified.officialDisplayed": {
           "current": 3128,
-          "baseline": 3090,
-          "changeRatio": 0.0123
+          "baseline": 3096,
+          "changeRatio": 0.0103
         },
         "unified.privateDiscovered": {
           "current": 452,
-          "baseline": 1435,
-          "changeRatio": -0.685
+          "baseline": 5472,
+          "changeRatio": -0.9174
         }
       }
     },
@@ -294,9 +294,19 @@
         "baseline": 1435,
         "changeRatio": -0.7436
       }
+    },
+    {
+      "severity": "warning",
+      "code": "unified-sudden-drop",
+      "message": "unified.publishedJobs가 24시간 기준으로 비정상 급감했습니다.",
+      "evidence": {
+        "current": 3568,
+        "baseline": 8554,
+        "changeRatio": -0.5829
+      }
     }
   ],
   "criticalCount": 0,
-  "warningCount": 1,
+  "warningCount": 2,
   "policy": "hard integrity failures are critical; trend drops/stalls are warnings until independently verified"
 }
