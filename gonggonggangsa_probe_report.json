@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T17:22:56+09:00",
+  "generatedAt": "2026-09-04T18:21:28+09:00",
   "source": "공공강사",
   "baseUrl": "https://00gangsa.com",
   "listUrl": "https://00gangsa.com/recruitments",
@@ -7,87 +7,504 @@
   "pageTitle": "강사 채용공고 | 공공강사",
   "publiclyReachable": true,
   "stableIdPattern": "gonggonggangsa:<numeric id from /recruitments/{id}>",
+  "firstApiUrl": "https://prod-backend.00gangsa.com/v1/provinces",
+  "firstApiSummary": {
+    "valid": true,
+    "count": null,
+    "totalPage": null,
+    "currentPage": null,
+    "hasPrevPage": null,
+    "hasNextPage": null,
+    "listCount": 18,
+    "ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18"
+    ],
+    "states": [
+      ""
+    ],
+    "regions": []
+  },
   "detailIdCountInDomOrResponses": 0,
   "detailIds": [],
   "detailUrls": [],
+  "browserFetchTests": [
+    {
+      "params": {},
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "page": "2"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?page=2",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "page": "3"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?page=3",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "currentPage": "2"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?currentPage=2",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "pageNo": "2"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?pageNo=2",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "size": "100"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?size=100",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "limit": "100"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?limit=100",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "provinceId": "1"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=1",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "provinceId": "2"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=2",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "provinceIds": "1,2"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceIds=1%2C2",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "state": "RECRUITING"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?state=RECRUITING",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "provinceId": "1",
+        "state": "RECRUITING"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=1&state=RECRUITING",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    },
+    {
+      "params": {
+        "provinceId": "2",
+        "state": "RECRUITING"
+      },
+      "status": null,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=2&state=RECRUITING",
+      "error": "TypeError: Failed to fetch",
+      "summary": {
+        "valid": false
+      }
+    }
+  ],
+  "pageParamEvidence": [],
+  "filterEvidence": [],
   "apiCandidates": [
     {
       "method": "GET",
       "url": "https://00gangsa.com/recruitments",
       "resourceType": "document",
-      "postData": ""
-    },
-    {
-      "method": "GET",
-      "url": "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js",
-      "resourceType": "script",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "GET",
       "url": "https://00gangsa.com/_next/static/chunks/app/(main)/recruitments/page-7a951f7b0702bb22.js",
       "resourceType": "script",
-      "postData": ""
-    },
-    {
-      "method": "POST",
-      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788510178960&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=1475410505.1788510179&frm=0&ngs=1&pscdl=noapi&rcb=9&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&sid=1788510179&sct=1&seg=0&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=1305",
-      "resourceType": "fetch",
-      "postData": ""
-    },
-    {
-      "method": "POST",
-      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&rcb=9&npa=0&frm=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=2096534272.1788510179&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=1210354150.1788510179&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
-      "resourceType": "fetch",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/recruitments",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "GET",
-      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788510179195&cv=11&fst=1788510179195&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=4",
+      "url": "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js",
       "resourceType": "script",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "POST",
-      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788510179195&cv=11&fst=1788510179195&fmt=8&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=68&gcp=5",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788513690207&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=194877354.1788513690&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&sid=1788513690&sct=1&seg=0&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=1147",
       "resourceType": "fetch",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "POST",
-      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788510178960&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=1475410505.1788510179&frm=0&ngs=1&pscdl=noapi&rcb=9&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&sid=1788510179&sct=1&seg=0&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&en=scroll&epn.percent_scrolled=90&_et=34&tfd=1401",
+      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&rcb=7&npa=0&frm=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=127143143.1788513690&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=659415258.1788513690&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
       "resourceType": "fetch",
-      "postData": ""
-    },
-    {
-      "method": "POST",
-      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&rcb=9&npa=0&frm=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=2096534272.1788510179&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=1210354150.1788510179&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
-      "resourceType": "fetch",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "GET",
-      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788510179291&cv=11&fst=1788510179291&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=4",
+      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788513690384&cv=11&fst=1788513690384&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=4",
       "resourceType": "script",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "POST",
-      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788510179291&cv=11&fst=1788510179291&fmt=8&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=68&gcp=5",
+      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788513690384&cv=11&fst=1788513690384&fmt=8&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=68&gcp=5",
       "resourceType": "fetch",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "GET",
-      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788510179195&cv=11&fst=1788508800000&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS0wEAQM4h3GQr2R4ufA_bv249CgdupyyC6-NKDJbQ_93lmFuQBmQZjbRbBiKnh7Fnpt-e-7urtNFCRlJ8mf-rxiYttWA7bxmOGjM4ZMPpHE6WEj2u2a-2jWWKoJbV_C1xZQzrnp6GxxjRzXd9MrN8jqNkOSy2wIrq7g12hIO5Fw2Nsdz-CqW6xiWz_3b8rdF4eO515ZwSg_tXz-DVFU_6AfXHdiLkYgY14g3LZkTFtw33syusxtunE3WcuM4zuguGZyB-_sLBpkS7uW1zhZ8jKqaRRu8C&random=2554685891&rmt_tld=0&ipr=y",
-      "resourceType": "image",
-      "postData": ""
+      "url": "https://prod-backend.00gangsa.com/v1/events/pre-registration/count",
+      "resourceType": "xhr",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "accept": "application/json, text/plain, */*"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788513690207&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=194877354.1788513690&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&sid=1788513690&sct=1&seg=0&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&en=scroll&epn.percent_scrolled=90&_et=24&tfd=1212",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&rcb=7&npa=0&frm=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=127143143.1788513690&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=659415258.1788513690&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "method": "GET",
-      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788510179291&cv=11&fst=1788508800000&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS4QEAQM4h3MjFAKnM3rWNTUQ549Kaf-4BW1kW5GvmlC3c-VWqXvJUhvUlmpjpQZbJnHEo2mrS2UTL3K6ykDdV7YP1s9ydhGp-q8zzCVY_cyN91EoPTJvp_1ob8dHpIXsCFT9sdYRQ84VgqJwLjS7iTVixF7XMqBCwcNUw0UtYzN0omUmNogbEaqWCDBY0q2oo4-9mfEsDjn9YXzvRTDLmDyYqg9tWSYudEhwYhqyLjSxLVy_SM3t-RvpNANt2Oz6MhjlNBAkOxFd2rtG0rHe8z1xRiN5EH0wbD86KEhPjyEIkl6A&random=1544953652&rmt_tld=0&ipr=y",
+      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788513690449&cv=11&fst=1788513690449&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=4",
+      "resourceType": "script",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788513690449&cv=11&fst=1788513690449&fmt=8&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=68&gcp=5",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/fields",
+      "resourceType": "xhr",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "accept": "application/json, text/plain, */*"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces",
+      "resourceType": "xhr",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "accept": "application/json, text/plain, */*"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-backend.00gangsa.com/v1/recruitments",
+      "resourceType": "xhr",
+      "postData": "{\"page\":1,\"size\":10,\"order\":\"RECENT\"}",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "accept": "application/json, text/plain, */*",
+        "content-type": "application/json"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788513690384&cv=11&fst=1788512400000&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS0wEAQM4h3PlQnX8BfLJ4PKcB9Xe6j25j4rS5k_AAw4t0a1lx50-NWvp2keEJYZzb2nGTBJLqmd2WgCILB-WQtSafBjG8oiyMskLTNfP0pflzvTaWsZT-zhlgzCO-myUUfMPgnac2io8WtNy5VwnEOWgDc2stQeUJsCPnp5TMF-Q2ISUa2KVSeAw2oLMzi4vCWN4pNQQSsldRXIjZlTCPfHJRoa4S4xn6UvwrvZAyRadulWIWiFladGysXNFr9oE-YyQ1Np_notdIOvxVuDM1uuzJi6Qi&random=4229342209&rmt_tld=0&ipr=y",
       "resourceType": "image",
-      "postData": ""
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788513690449&cv=11&fst=1788512400000&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS4QEAQM4h3OiuXzaLj0Tjyip9o0DC5pu3BA7_IQTsO5qcyzscLKVaKfx2KVu7zuhmE939CrIMAmnedCD0CmcnRZVrjQbccnqlxeYMsyqKlZusacIE4KEEYymuH2f01wvIvkMHniDgWKvU4ngZ5yzSXrvPIMxsF6tsytvGYBmKxePykjMSa15A3KHcjLgcqmwhswmqb3zItRDwEHXAXrxULczEE6HiHebNLRgnPY_7J13gVUmxCSRtRRTk3wAi7i-fz7mmhElAmJbijwyL4Du7z9gfyEs_Brw87uID9vhRDISveRM&random=3766563154&rmt_tld=0&ipr=y",
+      "resourceType": "image",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788513690207&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=194877354.1788513690&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=3&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&sid=1788513690&sct=1&seg=0&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&en=view_section&_ee=1&ep.screen=global_banner&ep.section=ai_pool_banner&_et=37&tfd=6213",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?page=2",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?page=3",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?currentPage=2",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?pageNo=2",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?size=100",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?limit=100",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=1",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=2",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceIds=1%2C2",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?state=RECRUITING",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=1&state=RECRUITING",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-backend.00gangsa.com/v1/provinces?provinceId=2&state=RECRUITING",
+      "resourceType": "fetch",
+      "postData": "",
+      "headers": {
+        "referer": "https://00gangsa.com/",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+      }
     },
     {
       "status": 200,
@@ -106,59 +523,263 @@
     },
     {
       "status": 204,
-      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788510178960&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=1475410505.1788510179&frm=0&ngs=1&pscdl=noapi&rcb=9&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&sid=1788510179&sct=1&seg=0&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=1305",
-      "contentType": "text/plain"
-    },
-    {
-      "status": 204,
-      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&rcb=9&npa=0&frm=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=2096534272.1788510179&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=1210354150.1788510179&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
+      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&rcb=7&npa=0&frm=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=127143143.1788513690&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=659415258.1788513690&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
       "contentType": "text/plain"
     },
     {
       "status": 200,
-      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788510179195&cv=11&fst=1788510179195&fmt=8&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=68&gcp=5",
+      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788513690384&cv=11&fst=1788513690384&fmt=8&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=68&gcp=5",
       "contentType": ""
     },
     {
+      "status": 204,
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788513690207&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=194877354.1788513690&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=1&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&sid=1788513690&sct=1&seg=0&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=1147",
+      "contentType": "text/plain"
+    },
+    {
       "status": 200,
-      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788510179195&cv=11&fst=1788510179195&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=4",
+      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788513690384&cv=11&fst=1788513690384&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=4",
       "contentType": "text/javascript; charset=utf-8"
     },
     {
       "status": 204,
-      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788510178960&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=1475410505.1788510179&frm=0&ngs=1&pscdl=noapi&rcb=9&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&sid=1788510179&sct=1&seg=0&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&en=scroll&epn.percent_scrolled=90&_et=34&tfd=1401",
+      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&rcb=7&npa=0&frm=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=127143143.1788513690&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=659415258.1788513690&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
       "contentType": "text/plain"
     },
     {
       "status": 204,
-      "url": "https://www.google.com/ccm/form-data/16700733744?gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&rcb=9&npa=0&frm=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&ec_mode=a&ecsid2=2096534272.1788510179&em=tv.1~em.oxyUdqrjwDdALp9fAJq8UxJIQ4rQMg8evrYncJZz83E&ecsid=1210354150.1788510179&emd=tvd.1~i1.fem.ma.r15.n15.lSPAN.sbody%253E.flex.flex-col.min-h-screen.bg-white%253Anth-chil&fmt=8",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788513690207&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=194877354.1788513690&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=2&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&sid=1788513690&sct=1&seg=0&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&en=scroll&epn.percent_scrolled=90&_et=24&tfd=1212",
       "contentType": "text/plain"
     },
     {
       "status": 200,
-      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788510179291&cv=11&fst=1788510179291&fmt=8&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=68&gcp=5",
+      "url": "https://www.google.com/rmkt/collect/16700733744/?random=1788513690449&cv=11&fst=1788513690449&fmt=8&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=68&gcp=5",
       "contentType": ""
     },
     {
       "status": 200,
-      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788510179291&cv=11&fst=1788510179291&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=4",
+      "url": "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788513690449&cv=11&fst=1788513690449&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=4",
       "contentType": "text/javascript; charset=utf-8"
     },
     {
       "status": 200,
-      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788510179291&cv=11&fst=1788508800000&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS4QEAQM4h3MjFAKnM3rWNTUQ549Kaf-4BW1kW5GvmlC3c-VWqXvJUhvUlmpjpQZbJnHEo2mrS2UTL3K6ykDdV7YP1s9ydhGp-q8zzCVY_cyN91EoPTJvp_1ob8dHpIXsCFT9sdYRQ84VgqJwLjS7iTVixF7XMqBCwcNUw0UtYzN0omUmNogbEaqWCDBY0q2oo4-9mfEsDjn9YXzvRTDLmDyYqg9tWSYudEhwYhqyLjSxLVy_SM3t-RvpNANt2Oz6MhjlNBAkOxFd2rtG0rHe8z1xRiN5EH0wbD86KEhPjyEIkl6A&random=1544953652&rmt_tld=0&ipr=y",
+      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788513690449&cv=11&fst=1788512400000&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS4QEAQM4h3OiuXzaLj0Tjyip9o0DC5pu3BA7_IQTsO5qcyzscLKVaKfx2KVu7zuhmE939CrIMAmnedCD0CmcnRZVrjQbccnqlxeYMsyqKlZusacIE4KEEYymuH2f01wvIvkMHniDgWKvU4ngZ5yzSXrvPIMxsF6tsytvGYBmKxePykjMSa15A3KHcjLgcqmwhswmqb3zItRDwEHXAXrxULczEE6HiHebNLRgnPY_7J13gVUmxCSRtRRTk3wAi7i-fz7mmhElAmJbijwyL4Du7z9gfyEs_Brw87uID9vhRDISveRM&random=3766563154&rmt_tld=0&ipr=y",
       "contentType": "image/gif"
     },
     {
       "status": 200,
-      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788510179195&cv=11&fst=1788508800000&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS0wEAQM4h3GQr2R4ufA_bv249CgdupyyC6-NKDJbQ_93lmFuQBmQZjbRbBiKnh7Fnpt-e-7urtNFCRlJ8mf-rxiYttWA7bxmOGjM4ZMPpHE6WEj2u2a-2jWWKoJbV_C1xZQzrnp6GxxjRzXd9MrN8jqNkOSy2wIrq7g12hIO5Fw2Nsdz-CqW6xiWz_3b8rdF4eO515ZwSg_tXz-DVFU_6AfXHdiLkYgY14g3LZkTFtw33syusxtunE3WcuM4zuguGZyB-_sLBpkS7uW1zhZ8jKqaRRu8C&random=2554685891&rmt_tld=0&ipr=y",
+      "url": "https://www.google.com/pagead/1p-user-list/16700733744/?random=1788513690384&cv=11&fst=1788512400000&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=3&is_vtc=1&cid=CAQS0wEAQM4h3PlQnX8BfLJ4PKcB9Xe6j25j4rS5k_AAw4t0a1lx50-NWvp2keEJYZzb2nGTBJLqmd2WgCILB-WQtSafBjG8oiyMskLTNfP0pflzvTaWsZT-zhlgzCO-myUUfMPgnac2io8WtNy5VwnEOWgDc2stQeUJsCPnp5TMF-Q2ISUa2KVSeAw2oLMzi4vCWN4pNQQSsldRXIjZlTCPfHJRoa4S4xn6UvwrvZAyRadulWIWiFladGysXNFr9oE-YyQ1Np_notdIOvxVuDM1uuzJi6Qi&random=4229342209&rmt_tld=0&ipr=y",
       "contentType": "image/gif"
+    },
+    {
+      "status": 200,
+      "url": "https://prod-backend.00gangsa.com/v1/provinces",
+      "contentType": "application/json; charset=utf-8",
+      "bodySample": "{\"status\":\"SUCCESS\",\"data\":{\"list\":[{\"id\":1,\"isAll\":false,\"name\":\"서울\",\"cities\":[{\"id\":1,\"isAll\":true,\"name\":\"서울 전체\"},{\"id\":2,\"isAll\":false,\"name\":\"강남구\"},{\"id\":3,\"isAll\":false,\"name\":\"강동구\"},{\"id\":4,\"isAll\":false,\"name\":\"강북구\"},{\"id\":5,\"isAll\":false,\"name\":\"강서구\"},{\"id\":6,\"isAll\":false,\"name\":\"관악구\"},{\"id\":7,\"isAll\":false,\"name\":\"광진구\"},{\"id\":8,\"isAll\":false,\"name\":\"구로구\"},{\"id\":9,\"isAll\":false,\"name\":\"금천구\"},{\"id\":10,\"isAll\":false,\"name\":\"노원구\"},{\"id\":11,\"isAll\":false,\"name\":\"도봉구\"},{\"id\":12,\"isAll\":false,\"name\":\"동대문구\"},{\"id\":13,\"isAll\":false,\"name\":\"동작구\"},{\"id\":14,\"isAll\":false,\"name\":\"마포구\"},{\"id\":15,\"isAll\":false,\"name\":\"서대문구\"},{\"id\":16,\"isAll\":false,\"name\":\"서초구\"},{\"id\":17,\"isAll\":false,\"name\":\"성동구\"},{\"id\":18,\"isAll\":false,\"name\":\"성북구\"},{\"id\":19,\"isAll\":false,\"name\":\"송파구\"},{\"id\":20,\"isAll\":false,\"name\":\"양천구\"},{\"id\":21,\"isAll\":false,\"name\":\"영등포구\"},{\"id\":22,\"isAll\":false,\"name\":\"용산구\"},{\"id\":23,\"isAll\":false,\"name\":\"은평구\"},{\"id\":24,\"isAll\":false,\"name\":\"종로구\"},{\"id\":25,\"isAll\":false,\"name\":\"중구\"},{\"id\":26,\"isAll\":false,\"name\":\"중랑구\"}]},{\"id\":2,\"isAll\":false,\"name\":\"경기\",\"cities\":[{\"id\":27,\"isAll\":true,\"name\":\"경기 전체\"},{\"id\":28,\"isAll\":false,\"name\":\"가평군\"},{\"id\":29,\"isAll\":false,\"name\":\"고양시\"},{\"id\":30,\"isAll\":false,\"name\":\"과천시\"},{\"id\":31,\"isAll\":false,\"name\":\"광명시\"},{\"id\":32,\"isAll\":false,\"name\":\"광주시\"},{\"id\":33,\"isAll\":false,\"name\":\"구리시\"},{\"id\":34,\"isAll\":false,\"name\":\"군포시\"},{\"id\":35,\"isAll\":false,\"name\":\"김포시\"},{\"id\":36,\"isAll\":false,\"name\":\"남양주시\"},{\"id\":37,\"isAll\":false,\"name\":\"동두천시\"},{\"id\":38,\"isAll\":false,\"name\":\"부천시\"},{\"id\":39,\"isAll\":false,\"name\":\"성남시\"},{\"id\":40,\"isAll\":false,\"name\":\"수원시\"},{\"id\":41,\"isAll\":false,\"name\":\"시흥시\"},{\"id\":42,\"isAll\":false,\"name\":\"안산시\"},{\"id\":43,\"isAll\":false,\"name\":\"안성시\"},{\"id\":44,\"isAll\":false,\"name\":\"안양시\"},{\"id\":45,\"isAll\":false,\"name\":\"양주시\"},{\"id\":46,\"isAll\":false,\"name\":\"양평군\"},{\"id\":47,\"isAll\":false,\"name\":\"여주시\"},{\"id\":48,\"isAll\":false,\"name\":\"연천군\"},{\"id\":49,\"isAll\":false,\"name\":\"오산시\"},{\"id\":50,\"isAll\":false,\"name\":\"용인시\"},{\"id\":51,\"isAll\":false,\"name\":\"의왕시\"},{\"id\":52,\"isAll\":false,\"name\":\"의정부시\"},{\"id\":53,\"isAll\":false,\"name\":\"이천시\"},{\"id\":54,\"isAll\":false,\"name\":\"파주시\"},{\"id\":55,\"isAll\":false,\"name\":\"평택시\"},{\"id\":56,\"isAll\":false,\"name\":\"포천시\"},{\"id\":57,\"isAll\":false,\"name\":\"하남시\"},{\"id\":58,\"isAll\":false,\"name\":\"화성시\"}]},{\"id\":3,\"isAll\":false,\"name\":\"부산\",\"cities\":[{\"id\":59,\"isAll\":true,\"name\":\"부산 전체\"},{\"id\":60,\"isAll\":false,\"name\":\"강서구\"},{\"id\":61,\"isAll\":false,\"name\":\"금정구\"},{\"id\":62,\"isAll\":false,\"name\":\"기장군\"},{\"id\":63,\"isAll\":false,\"name\":\"남구\"},{\"id\":64,\"isAll\":false,\"name\":\"동구\"},{\"id\":65,\"isAll\":false,\"name\":\"동래구\"},{\"id\":66,\"isAll\":false,\"name\":\"부산진구\"},{\"id\":67,\"isAll\":false,\"name\":\"북구\"},{\"id\":68,\"isAll\":false,\"name\":\"사상구\"},{\"id\":69,\"isAll\":false,\"name\":\"사하구\"},{\"id\":70,\"isAll\":false,\"name\":\"서구\"},{\"id\":71,\"isAll\":false,\"name\":\"수영구\"},{\"id\":72,\"isAll\":false,\"name\":\"연제구\"},{\"id\":73,\"isAll\":false,\"name\":\"영도구\"},{\"id\":74,\"isAll\":false,\"name\":\"중구\"},{\"id\":75,\"isAll\":false,\"name\":\"해운대구\"}]},{\"id\":4,\"isAll\":false,\"name\":\"대구\",\"cities\":[{\"id\":76,\"isAll\":true,\"name\":\"대구 전체\"},{\"id\":77,\"isAll\":false,\"name\":\"남구\"},{\"id\":78,\"isAll\":false,\"name\":\"달서구\"},{\"id\":79,\"isAll\":false,\"name\":\"달성군\"},{\"id\":80,\"isAll\":false,\"name\":\"동구\"},{\"id\":81,\"isAll\":false,\"name\":\"북구\"},{\"id\":82,\"isAll\":false,\"name\":\"서구\"},{\"id\":83,\"isAll\":false,\"name\":\"수성구\"},{\"id\":84,\"isAll\":false,\"name\":\"중구\"},{\"id\":85,\"isAll\":false,\"name\":\"군위군\"}]},{\"id\":5,\"isAll\":false,\"name\":\"인천\",\"cities\":[{\"id\":86,\"isAll\":true,\"name\":\"인천 전체\"},{\"id\":87,\"isAll\":false,\"name\":\"계양구\"},{\"id\":88,\"isAll\":false,\"name\":\"남동구\"},{\"id\":89,\"isAll\":false,\"name\":\"동구\"},{\"id\":90,\"isAll\":false,\"name\":\"미추홀구\"},{\"id\":91,\"isAll\":false,\"name\":\"부평구\"},{\"id\":92,\"isAll\":false,\"name\":\"서구\"},{\"id\":93,\"isAll\":false,\"name\":\"옹진군\"},{\"id\":94,\"isAll\":false,\"name\":\"연수구\"},{\"id\":95,\"isAll\":false,\"name\":\"중구\"},{\"id\":96,\"isAll\":false,\"name\":\"강화군\"}]},{\"id\":6,\"isAll\":false,\"name\":\"광주\",\"cities\":[{\"id\":97,\"isAll\":true,\"name\":\"광주 전체\"},{\"id\":98,\"isAll\":false,\"name\":\"광산구\"},{\"id\":99,\"isAll\":false,\"name\":\"남구\"},{\"id\":100,\"isAll\":false,\"name\":\"동구\"},{\"id\":101,\"isAll\":false,\"name\":\"북구\"},{\"id\":102,\"isAll\":false,\"name\":\"서구\"}]},{\"id\":7,\"isAll\":false,\"name\":\"대전\",\"cities\":[{\"id\":103,\"isAll\":true,\"name\":\"대전 전체\"},{\"id\":104,\"isAll\":false,\"name\":\"대덕구\"},{\"id\":105,\"isAll\":false,\"name\":\"동구\"},{\"id\":106,\"isAll\":false,\"name\":\"서구\"},{\"id\":107,\"isAll\":false,\"name\":\"유성구\"},{\"id\":108,\"isAll\":false,\"name\":\"중구\"}]},{\"id\":8,\"isAll\":false,\"name\":\"울산\",\"cities\":[{\"id\":109,\"isAll\":true,\"name\":\"울산 전체\"},{\"id\":110,\"isAll\":false,\"name\":\"남구\"},{\"id\":111,\"isAll\":false,\"name\":\"동구\"},{\"id\":112,\"isAll\":false,\"name\":\"북구\"},{\"id\":113,\"isAll\":false,\"name\":\"울주군\"},{\"id\":114,\"isAll\":false,\"name\":\"중구\"}]},{\"id\":9,\"isAll\":false,\"name\":\"세종\",\"cities\":[{\"id\":115,\"isAll\":true,\"name\":\"세종 전체\"}]},{\"id\":10,\"isAll\":false,\"name\":\"충남\",\"cities\":[{\"id\":116,\"isAll\":true,\"name\":\"충남 전체\"},{\"id\":117,\"isAll\":false,\"name\":\"계룡시\"},{\"id\":118,\"isAll\":false,\"name\":\"공주시\"},{\"id\":119,\"isAll\":false,\"name\":\"금산군\"},{\"id\":120,\"isAll\":false,\"name\":\"논산시\"},{\"id\":121,\"isAll\":false,\"name\":\"당진시\"},{\"id\":122,\"isAll\":fal",
+      "summary": {
+        "valid": true,
+        "count": null,
+        "totalPage": null,
+        "currentPage": null,
+        "hasPrevPage": null,
+        "hasNextPage": null,
+        "listCount": 18,
+        "ids": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18"
+        ],
+        "states": [
+          ""
+        ],
+        "regions": []
+      }
+    },
+    {
+      "status": 200,
+      "url": "https://prod-backend.00gangsa.com/v1/fields",
+      "contentType": "application/json; charset=utf-8",
+      "bodySample": "{\"status\":\"SUCCESS\",\"data\":{\"list\":[{\"id\":1,\"icon\":\"https://prod-storage.00gangsa.com/app/field/art.png\",\"name\":\"미술\",\"children\":[{\"id\":39,\"name\":\"아동미술\",\"icon\":null},{\"id\":40,\"name\":\"창의미술\",\"icon\":null},{\"id\":41,\"name\":\"디자인/일러스트\",\"icon\":null},{\"id\":42,\"name\":\"만화/웹툰\",\"icon\":null},{\"id\":43,\"name\":\"캐릭터드로잉\",\"icon\":null},{\"id\":44,\"name\":\"조소/조형\",\"icon\":null},{\"id\":45,\"name\":\"판화\",\"icon\":null},{\"id\":46,\"name\":\"서예/문인화\",\"icon\":null},{\"id\":47,\"name\":\"미술사/미술감상\",\"icon\":null}]},{\"id\":2,\"icon\":\"https://prod-storage.00gangsa.com/app/field/craft.png\",\"name\":\"공예\",\"children\":[{\"id\":60,\"name\":\"가죽공예\",\"icon\":null},{\"id\":61,\"name\":\"토탈공예\",\"icon\":null},{\"id\":62,\"name\":\"목공예/우드버닝\",\"icon\":null},{\"id\":63,\"name\":\"라탄공예\",\"icon\":null},{\"id\":64,\"name\":\"도예/도자기\",\"icon\":null},{\"id\":65,\"name\":\"뜨개질/손뜨개\",\"icon\":null},{\"id\":66,\"name\":\"비누/캔들/조향\",\"icon\":null},{\"id\":67,\"name\":\"레진/제스모나이트\",\"icon\":null},{\"id\":68,\"name\":\"금속공예/주얼리\",\"icon\":null},{\"id\":69,\"name\":\"리본/페이퍼플라워\",\"icon\":null},{\"id\":70,\"name\":\"전통매듭/한지공예\",\"icon\":null},{\"id\":71,\"name\":\"클레이/지점토\",\"icon\":null},{\"id\":72,\"name\":\"천아트/패브릭\",\"icon\":null},{\"id\":73,\"name\":\"퀼트/자수\",\"icon\":null}]},{\"id\":3,\"icon\":\"https://prod-storage.00gangsa.com/app/field/dance.png\",\"name\":\"댄스/무용\",\"children\":[{\"id\":113,\"name\":\"한국무용\",\"icon\":null},{\"id\":114,\"name\":\"라인댄스\",\"icon\":null},{\"id\":115,\"name\":\"방송댄스/K-POP\",\"icon\":null},{\"id\":116,\"name\":\"줌바\",\"icon\":null},{\"id\":117,\"name\":\"발레\",\"icon\":null},{\"id\":118,\"name\":\"벨리댄스\",\"icon\":null},{\"id\":119,\"name\":\"현대무용\",\"icon\":null},{\"id\":120,\"name\":\"힙합/스트릿댄스\",\"icon\":null},{\"id\":121,\"name\":\"댄스스포츠\",\"icon\":null},{\"id\":122,\"name\":\"치어리딩\",\"icon\":null},{\"id\":123,\"name\":\"다이어트댄스\",\"icon\":null},{\"id\":124,\"name\":\"훌라댄스\",\"icon\":null},{\"id\":125,\"name\":\"폴댄스\",\"icon\":null},{\"id\":126,\"name\":\"실버댄스\",\"icon\":null}]},{\"id\":4,\"icon\":\"https://prod-storage.00gangsa.com/app/field/education.png\",\"name\":\"교과목/학업\",\"children\":[{\"id\":164,\"name\":\"영어\",\"icon\":null},{\"id\":165,\"name\":\"수학\",\"icon\":null},{\"id\":166,\"name\":\"과학\",\"icon\":null},{\"id\":167,\"name\":\"국어\",\"icon\":null},{\"id\":168,\"name\":\"한국사/역사\",\"icon\":null},{\"id\":169,\"name\":\"사회\",\"icon\":null},{\"id\":170,\"name\":\"한자\",\"icon\":null},{\"id\":171,\"name\":\"논술/서술형\",\"icon\":null},{\"id\":172,\"name\":\"진로/진학\",\"icon\":null},{\"id\":173,\"name\":\"학습코칭\",\"icon\":null},{\"id\":174,\"name\":\"인성교육\",\"icon\":null},{\"id\":175,\"name\":\"기초학력/문해교육\",\"icon\":null}]},{\"id\":5,\"icon\":\"https://prod-storage.00gangsa.com/app/field/environment.png\",\"name\":\"환경/생태\",\"children\":[{\"id\":245,\"name\":\"환경교육\",\"icon\":null},{\"id\":246,\"name\":\"기후환경/ESG\",\"icon\":null},{\"id\":247,\"name\":\"숲/생태체험\",\"icon\":null},{\"id\":248,\"name\":\"텃밭/도시농업\",\"icon\":null},{\"id\":249,\"name\":\"곤충/동물교실\",\"icon\":null},{\"id\":250,\"name\":\"업사이클링\",\"icon\":null},{\"id\":251,\"name\":\"제로웨이스트\",\"icon\":null},{\"id\":252,\"name\":\"천문/자연관찰\",\"icon\":null},{\"id\":253,\"name\":\"해양/갯벌생태\",\"icon\":null}]},{\"id\":6,\"icon\":\"https://prod-storage.00gangsa.com/app/field/gardening.png\",\"name\":\"원예/플라워\",\"children\":[{\"id\":82,\"name\":\"플라워아트/꽃꽂이\",\"icon\":null},{\"id\":83,\"name\":\"테라리움\",\"icon\":null},{\"id\":84,\"name\":\"가드닝/조경\",\"icon\":null},{\"id\":85,\"name\":\"원예치료\",\"icon\":null},{\"id\":86,\"name\":\"반려식물\",\"icon\":null},{\"id\":87,\"name\":\"압화(누름꽃)\",\"icon\":null},{\"id\":88,\"name\":\"드라이/프리저브드플라워\",\"icon\":null},{\"id\":89,\"name\":\"다육식물\",\"icon\":null}]},{\"id\":7,\"icon\":\"https://prod-storage.00gangsa.com/app/field/handwriting.png\",\"name\":\"손글씨/캘리\",\"children\":[{\"id\":74,\"name\":\"캘리그라피\",\"icon\":null},{\"id\":75,\"name\":\"수채캘리그라피\",\"icon\":null},{\"id\":76,\"name\":\"모던캘리\",\"icon\":null},{\"id\":77,\"name\":\"서예\",\"icon\":null},{\"id\":78,\"name\":\"펜글씨/글씨교정\",\"icon\":null},{\"id\":79,\"name\":\"영문캘리그라피\",\"icon\":null},{\"id\":80,\"name\":\"디지털캘리그라피\",\"icon\":null},{\"id\":81,\"name\":\"POP/손글씨POP\",\"icon\":null}]},{\"id\":8,\"icon\":\"https://prod-storage.00gangsa.com/app/field/humanities.png\",\"name\":\"인문/경제교양\",\"children\":[{\"id\":233,\"name\":\"인문학\",\"icon\":null},{\"id\":234,\"name\":\"역사/문화유산\",\"icon\":null},{\"id\":235,\"name\":\"문학/고전\",\"icon\":null},{\"id\":236,\"name\":\"여행인문학\",\"icon\":null},{\"id\":237,\"name\":\"철학\",\"icon\":null},{\"id\":238,\"name\":\"경제/시사교양\",\"icon\":null},{\"id\":239,\"name\":\"세계시민교육\",\"icon\":null},{\"id\":240,\"name\":\"인권/성평등교육\",\"icon\":null},{\"id\":241,\"name\":\"생활법률\",\"icon\":null},{\"id\":242,\"name\":\"미디어리터러시\",\"icon\":null},{\"id\":243,\"name\":\"문화예술교양\",\"icon\":null},{\"id\":244,\"name\":\"종교/영성\",\"icon\":null}]},{\"id\":9,\"icon\":\"https://prod-storage.00gangsa.com/app/field/instrument.png\",\"name\":\"악기\",\"children\":[{\"id\":90,\"name\":\"피아노\",\"icon\":null},{\"id\":91,\"name\":\"바이올린/비올라\",\"icon\":null},{\"id\":92,\"name\":\"국악기(가야금·해금·대금)\",\"icon\":null},{\"id\":93,\"name\":\"첼로/더블베이스\",\"icon\":null},{\"id\":94,\"name\":\"플루트/클라리넷\",\"icon\":null},{\"id\":95,\"name\":\"기타/우쿨렐레\",\"icon\":null},{\"id\":96,\"name\":\"드럼/타악기\",\"icon\":null},{\"id\":97,\"name\":\"난타/장구\",\"icon\":null},{\"id\":98,\"name\":\"칼림바\",\"icon\":null},{\"id\":99,\"name\":\"색소폰\",\"icon\":null},{\"id\":100,\"name\":\"하모니카\",\"icon\":null},{\"id\":101,\"name\":\"오카리나/리코더\",\"icon\":null},{\"id\":102,\"name\":\"밴드/합주\",\"icon\":null}]},{\"id\":10,\"icon\":\"https://prod-storage.00gangsa.com/app/field/it.png\",\"name\":\"IT/영상사진\",\"children\":[{\"id\":196,\"name\":\"AI/생성형AI\",\"icon\":null},{\"id\":197,\"name\":\"코딩/프로그래밍\",\"icon\":null},{\"id\":198,\"name\":\"컴퓨터활용/자격증\",\"icon\":null},{\"id\":199,\"name\":\"영상촬영/편집\",\"icon\":null},{\"",
+      "summary": {
+        "valid": true,
+        "count": null,
+        "totalPage": null,
+        "currentPage": null,
+        "hasPrevPage": null,
+        "hasNextPage": null,
+        "listCount": 29,
+        "ids": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "22"
+        ],
+        "states": [
+          ""
+        ],
+        "regions": []
+      }
+    },
+    {
+      "status": 200,
+      "url": "https://prod-backend.00gangsa.com/v1/events/pre-registration/count",
+      "contentType": "application/json; charset=utf-8",
+      "bodySample": "{\"status\":\"SUCCESS\",\"data\":{\"count\":9435},\"createdAt\":\"2026-09-04T09:21:30.914Z\"}",
+      "summary": {
+        "valid": false,
+        "keys": [
+          "count"
+        ]
+      }
     },
     {
       "status": 200,
       "url": "https://prod-backend.00gangsa.com/v1/recruitments",
       "contentType": "application/json; charset=utf-8",
-      "bodySample": "{\"status\":\"SUCCESS\",\"data\":{\"count\":22507,\"totalPage\":2251,\"currentPage\":1,\"hasPrevPage\":false,\"hasNextPage\":true,\"list\":[{\"id\":23367,\"type\":\"PROVIDER_SUBMIT\",\"state\":\"RECRUITING\",\"title\":\"화성효행중앙교회 유아체육 강사 구인\",\"description\":null,\"institution\":{\"id\":5,\"name\":\"공공강사\",\"email\":\"choh@8around.kr\",\"phoneNumber\":\"01099022560\"},\"counts\":{\"viewCnt\":40,\"scrapCnt\":0},\"fields\":[{\"id\":149,\"name\":\"유아체육\"}],\"regions\":[{\"province\":{\"id\":2,\"isAll\":false,\"name\":\"경기\"},\"city\":{\"id\":40,\"isAll\":false,\"name\":\"수원시\"}},{\"province\":{\"id\":2,\"isAll\":false,\"name\":\"경기\"},\"city\":{\"id\":50,\"isAll\":false,\"name\":\"용인시\"}},{\"province\":{\"id\":2,\"isAll\":false,\"name\":\"경기\"},\"city\":{\"id\":58,\"isAll\":false,\"name\":\"화성시\"}}],\"recruitmentAt\":\"2026-09-02 16:10:31\",\"deadlineAt\":\"2026-09-06 23:59:59\",\"deadlineDay\":2,\"recruitCount\":2,\"applicationGender\":\"A\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":\"ANY\",\"managerName\":\"오창훈\",\"managerPhoneNumber\":null,\"managerEmail\":null,\"preferred\":\"휴강일 : 9/26 추석, 10/3 개천절, 수업에 필요한 교구 지참 가능한 강사, 7~11세 / 4~6세 둘 중 선택\",\"workDetailAddress\":\"경기 화성시 효행구 봉담읍 삼천병마로 1320\",\"workSchedules\":[{\"id\":211,\"startDate\":\"2026-09-12\",\"endDate\":\"2026-12-05\",\"day\":\"SAT\",\"startTime\":\"11:00:00\",\"endTime\":\"12:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":75000}],\"scrapId\":null,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":true},{\"id\":23278,\"type\":\"PROVIDER_SUBMIT\",\"state\":\"RECRUITING\",\"title\":\"AI 활용교육(공공기관 회계파트) 보조강사\",\"description\":null,\"institution\":{\"id\":17,\"name\":\"상상력집단\",\"email\":\"kyung23@illusionists.co.kr\",\"phoneNumber\":\"01092491482\"},\"counts\":{\"viewCnt\":319,\"scrapCnt\":14},\"fields\":[{\"id\":10,\"name\":\"IT/영상사진\"}],\"regions\":[{\"province\":{\"id\":10,\"isAll\":false,\"name\":\"충남\"},\"city\":{\"id\":128,\"isAll\":false,\"name\":\"천안시\"}}],\"recruitmentAt\":\"2026-08-27 13:24:25\",\"deadlineAt\":\"2026-09-10 23:59:59\",\"deadlineDay\":6,\"recruitCount\":1,\"applicationGender\":\"A\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":\"ANY\",\"managerName\":\"최은경\",\"managerPhoneNumber\":\"01092491482\",\"managerEmail\":\"kyung23@illusionists.co.kr\",\"preferred\":\"- AI 업무자동화 실습 또는 보조해보신 분 \\n- GPT 기능 및 활용에 이해도가 있으신 분 \\n- 천안에 거주하시는 분\",\"workDetailAddress\":\"충남 천안시 동남구 성남면 소노로 1, 소노벨 천안 사파이어2 홀\",\"workSchedules\":[{\"id\":182,\"startDate\":\"2026-09-01\",\"endDate\":\"2026-09-03\",\"day\":\"WED\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":150000},{\"id\":183,\"startDate\":\"2026-09-01\",\"endDate\":\"2026-09-03\",\"day\":\"THU\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":150000},{\"id\":184,\"startDate\":\"2026-09-01\",\"endDate\":\"2026-09-03\",\"day\":\"TUE\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":150000}],\"scrapId\":10343,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":true},{\"id\":23211,\"type\":\"PROVIDER_SUBMIT\",\"state\":\"RECRUITING\",\"title\":\"AI 해외시장·글로벌 마케팅 전문 강사 모집\",\"description\":null,\"institution\":{\"id\":17,\"name\":\"상상력집단\",\"email\":\"kyung23@illusionists.co.kr\",\"phoneNumber\":\"01092491482\"},\"counts\":{\"viewCnt\":376,\"scrapCnt\":6},\"fields\":[{\"id\":10,\"name\":\"IT/영상사진\"}],\"regions\":[{\"province\":{\"id\":18,\"isAll\":true,\"name\":\"전국\"},\"city\":{\"id\":246,\"isAll\":true,\"name\":\"전국 전체\"}}],\"recruitmentAt\":\"2026-08-24 22:56:49\",\"deadlineAt\":\"2026-09-07 23:59:59\",\"deadlineDay\":3,\"recruitCount\":0,\"applicationGender\":\"A\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":\"ANY\",\"managerName\":\"최은경\",\"managerPhoneNumber\":\"01092491482\",\"managerEmail\":\"kyung23@illusionists.co.kr\",\"preferred\":\"AI 활용 + 해외시장 조사·글로벌 마케팅·수출 실무 분야의 강의 및 프로젝트 경험을 보유한 전문가\",\"workDetailAddress\":null,\"workSchedules\":[{\"id\":172,\"startDate\":\"1899-11-30\",\"endDate\":\"1899-11-30\",\"day\":\"ANY\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"ANY\",\"paymentAmount\":0}],\"scrapId\":10275,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":true},{\"id\":23434,\"type\":\"VIEW\",\"state\":\"RECRUITING\",\"title\":\"광주남구가족센터 결혼이민자역량강화지원(한국어 교육) 강사(위촉직) 모집 공고 - 한국어/다문화\",\"description\":null,\"institution\":{\"id\":4766,\"name\":\"국립국어원\",\"email\":null,\"phoneNumber\":null},\"counts\":{\"viewCnt\":2,\"scrapCnt\":0},\"fields\":[{\"id\":179,\"name\":\"한국어/다문화\"}],\"regions\":[{\"province\":{\"id\":6,\"isAll\":false,\"name\":\"광주\"},\"city\":{\"id\":99,\"isAll\":false,\"name\":\"남구\"}}],\"recruitmentAt\":\"2026-09-01 00:00:00\",\"deadlineAt\":\"2026-09-17 23:59:59\",\"deadlineDay\":13,\"recruitCount\":0,\"applicationGender\":\"\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":null,\"managerName\":\"\",\"managerPhoneNumber\":null,\"managerEmail\":null,\"preferred\":null,\"workDetailAddress\":null,\"workSchedules\":[],\"scrapId\":null,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":false},{\"id\":23433,\"type\":\"VIEW\",\"state\":\"RECRUITING\",\"title\":\"[강동구체육회] 생활체육지도자 채용계획 공고 - 체육\",\"description\":null,\"institution\":{\"id\":18,\"name\":\"서울특별시체육회\",\"email\":null,\"phoneNumber\":null},\"counts\":{\"viewCnt\":4,\"scrapCnt\":0},\"fields\":[{\"id\":13,\"name\":\"체육\"}],\"regions\":[{\"province\":{\"id\":1,\"isAll\":false,\"name\":\"서울\"},\"city\":{\"id\":3,\"isAll\":false,\"name\":\"강동구\"}}],\"recruitmentAt\":\"2026-09-01 00:00:00\",\"deadlineAt\":\"2026-09-16 23:59:59\",\"deadlineDay\":12,\"re"
+      "bodySample": "{\"status\":\"SUCCESS\",\"data\":{\"count\":22507,\"totalPage\":2251,\"currentPage\":1,\"hasPrevPage\":false,\"hasNextPage\":true,\"list\":[{\"id\":23367,\"type\":\"PROVIDER_SUBMIT\",\"state\":\"RECRUITING\",\"title\":\"화성효행중앙교회 유아체육 강사 구인\",\"description\":null,\"institution\":{\"id\":5,\"name\":\"공공강사\",\"email\":\"choh@8around.kr\",\"phoneNumber\":\"01099022560\"},\"counts\":{\"viewCnt\":41,\"scrapCnt\":0},\"fields\":[{\"id\":149,\"name\":\"유아체육\"}],\"regions\":[{\"province\":{\"id\":2,\"isAll\":false,\"name\":\"경기\"},\"city\":{\"id\":40,\"isAll\":false,\"name\":\"수원시\"}},{\"province\":{\"id\":2,\"isAll\":false,\"name\":\"경기\"},\"city\":{\"id\":50,\"isAll\":false,\"name\":\"용인시\"}},{\"province\":{\"id\":2,\"isAll\":false,\"name\":\"경기\"},\"city\":{\"id\":58,\"isAll\":false,\"name\":\"화성시\"}}],\"recruitmentAt\":\"2026-09-02 16:10:31\",\"deadlineAt\":\"2026-09-06 23:59:59\",\"deadlineDay\":2,\"recruitCount\":2,\"applicationGender\":\"A\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":\"ANY\",\"managerName\":\"오창훈\",\"managerPhoneNumber\":null,\"managerEmail\":null,\"preferred\":\"휴강일 : 9/26 추석, 10/3 개천절, 수업에 필요한 교구 지참 가능한 강사, 7~11세 / 4~6세 둘 중 선택\",\"workDetailAddress\":\"경기 화성시 효행구 봉담읍 삼천병마로 1320\",\"workSchedules\":[{\"id\":211,\"startDate\":\"2026-09-12\",\"endDate\":\"2026-12-05\",\"day\":\"SAT\",\"startTime\":\"11:00:00\",\"endTime\":\"12:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":75000}],\"scrapId\":null,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":true},{\"id\":23278,\"type\":\"PROVIDER_SUBMIT\",\"state\":\"RECRUITING\",\"title\":\"AI 활용교육(공공기관 회계파트) 보조강사\",\"description\":null,\"institution\":{\"id\":17,\"name\":\"상상력집단\",\"email\":\"kyung23@illusionists.co.kr\",\"phoneNumber\":\"01092491482\"},\"counts\":{\"viewCnt\":319,\"scrapCnt\":14},\"fields\":[{\"id\":10,\"name\":\"IT/영상사진\"}],\"regions\":[{\"province\":{\"id\":10,\"isAll\":false,\"name\":\"충남\"},\"city\":{\"id\":128,\"isAll\":false,\"name\":\"천안시\"}}],\"recruitmentAt\":\"2026-08-27 13:24:25\",\"deadlineAt\":\"2026-09-10 23:59:59\",\"deadlineDay\":6,\"recruitCount\":1,\"applicationGender\":\"A\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":\"ANY\",\"managerName\":\"최은경\",\"managerPhoneNumber\":\"01092491482\",\"managerEmail\":\"kyung23@illusionists.co.kr\",\"preferred\":\"- AI 업무자동화 실습 또는 보조해보신 분 \\n- GPT 기능 및 활용에 이해도가 있으신 분 \\n- 천안에 거주하시는 분\",\"workDetailAddress\":\"충남 천안시 동남구 성남면 소노로 1, 소노벨 천안 사파이어2 홀\",\"workSchedules\":[{\"id\":182,\"startDate\":\"2026-09-01\",\"endDate\":\"2026-09-03\",\"day\":\"WED\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":150000},{\"id\":183,\"startDate\":\"2026-09-01\",\"endDate\":\"2026-09-03\",\"day\":\"THU\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":150000},{\"id\":184,\"startDate\":\"2026-09-01\",\"endDate\":\"2026-09-03\",\"day\":\"TUE\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"PER_SESSION\",\"paymentAmount\":150000}],\"scrapId\":10343,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":true},{\"id\":23211,\"type\":\"PROVIDER_SUBMIT\",\"state\":\"RECRUITING\",\"title\":\"AI 해외시장·글로벌 마케팅 전문 강사 모집\",\"description\":null,\"institution\":{\"id\":17,\"name\":\"상상력집단\",\"email\":\"kyung23@illusionists.co.kr\",\"phoneNumber\":\"01092491482\"},\"counts\":{\"viewCnt\":378,\"scrapCnt\":6},\"fields\":[{\"id\":10,\"name\":\"IT/영상사진\"}],\"regions\":[{\"province\":{\"id\":18,\"isAll\":true,\"name\":\"전국\"},\"city\":{\"id\":246,\"isAll\":true,\"name\":\"전국 전체\"}}],\"recruitmentAt\":\"2026-08-24 22:56:49\",\"deadlineAt\":\"2026-09-07 23:59:59\",\"deadlineDay\":3,\"recruitCount\":0,\"applicationGender\":\"A\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":\"ANY\",\"managerName\":\"최은경\",\"managerPhoneNumber\":\"01092491482\",\"managerEmail\":\"kyung23@illusionists.co.kr\",\"preferred\":\"AI 활용 + 해외시장 조사·글로벌 마케팅·수출 실무 분야의 강의 및 프로젝트 경험을 보유한 전문가\",\"workDetailAddress\":null,\"workSchedules\":[{\"id\":172,\"startDate\":\"1899-11-30\",\"endDate\":\"1899-11-30\",\"day\":\"ANY\",\"startTime\":\"00:00:00\",\"endTime\":\"00:00:00\",\"paymentType\":\"ANY\",\"paymentAmount\":0}],\"scrapId\":10275,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":true},{\"id\":23434,\"type\":\"VIEW\",\"state\":\"RECRUITING\",\"title\":\"광주남구가족센터 결혼이민자역량강화지원(한국어 교육) 강사(위촉직) 모집 공고 - 한국어/다문화\",\"description\":null,\"institution\":{\"id\":4766,\"name\":\"국립국어원\",\"email\":null,\"phoneNumber\":null},\"counts\":{\"viewCnt\":2,\"scrapCnt\":0},\"fields\":[{\"id\":179,\"name\":\"한국어/다문화\"}],\"regions\":[{\"province\":{\"id\":6,\"isAll\":false,\"name\":\"광주\"},\"city\":{\"id\":99,\"isAll\":false,\"name\":\"남구\"}}],\"recruitmentAt\":\"2026-09-01 00:00:00\",\"deadlineAt\":\"2026-09-17 23:59:59\",\"deadlineDay\":13,\"recruitCount\":0,\"applicationGender\":\"\",\"applicationMinAge\":0,\"applicationMaxAge\":0,\"applicationEducation\":null,\"managerName\":\"\",\"managerPhoneNumber\":null,\"managerEmail\":null,\"preferred\":null,\"workDetailAddress\":null,\"workSchedules\":[],\"scrapId\":null,\"isScrap\":false,\"hasCurriculum\":null,\"isAd\":false},{\"id\":23433,\"type\":\"VIEW\",\"state\":\"RECRUITING\",\"title\":\"[강동구체육회] 생활체육지도자 채용계획 공고 - 체육\",\"description\":null,\"institution\":{\"id\":18,\"name\":\"서울특별시체육회\",\"email\":null,\"phoneNumber\":null},\"counts\":{\"viewCnt\":4,\"scrapCnt\":0},\"fields\":[{\"id\":13,\"name\":\"체육\"}],\"regions\":[{\"province\":{\"id\":1,\"isAll\":false,\"name\":\"서울\"},\"city\":{\"id\":3,\"isAll\":false,\"name\":\"강동구\"}}],\"recruitmentAt\":\"2026-09-01 00:00:00\",\"deadlineAt\":\"2026-09-16 23:59:59\",\"deadlineDay\":12,\"re",
+      "summary": {
+        "valid": true,
+        "count": 22507,
+        "totalPage": 2251,
+        "currentPage": 1,
+        "hasPrevPage": false,
+        "hasNextPage": true,
+        "listCount": 10,
+        "ids": [
+          "23367",
+          "23278",
+          "23211",
+          "23434",
+          "23433",
+          "23432",
+          "23431",
+          "23429",
+          "23428",
+          "23424"
+        ],
+        "states": [
+          "RECRUITING"
+        ],
+        "regions": [
+          {
+            "provinceId": 2,
+            "province": "경기",
+            "cityId": 40,
+            "city": "수원시"
+          },
+          {
+            "provinceId": 2,
+            "province": "경기",
+            "cityId": 50,
+            "city": "용인시"
+          },
+          {
+            "provinceId": 2,
+            "province": "경기",
+            "cityId": 58,
+            "city": "화성시"
+          },
+          {
+            "provinceId": 10,
+            "province": "충남",
+            "cityId": 128,
+            "city": "천안시"
+          },
+          {
+            "provinceId": 18,
+            "province": "전국",
+            "cityId": 246,
+            "city": "전국 전체"
+          },
+          {
+            "provinceId": 6,
+            "province": "광주",
+            "cityId": 99,
+            "city": "남구"
+          },
+          {
+            "provinceId": 1,
+            "province": "서울",
+            "cityId": 3,
+            "city": "강동구"
+          },
+          {
+            "provinceId": 2,
+            "province": "경기",
+            "cityId": 40,
+            "city": "수원시"
+          },
+          {
+            "provinceId": 5,
+            "province": "인천",
+            "cityId": 92,
+            "city": "서구"
+          },
+          {
+            "provinceId": 1,
+            "province": "서울",
+            "cityId": 15,
+            "city": "서대문구"
+          },
+          {
+            "provinceId": 5,
+            "province": "인천",
+            "cityId": 88,
+            "city": "남동구"
+          },
+          {
+            "provinceId": 2,
+            "province": "경기",
+            "cityId": 39,
+            "city": "성남시"
+          }
+        ]
+      }
+    },
+    {
+      "status": 204,
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-920TNDTLWF&gtm=45je6921v9197885988za200zd9197885988&_p=1788513690207&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=194877354.1788513690&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=1280x720&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=ko-kr&_s=3&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&sid=1788513690&sct=1&seg=0&dl=https%3A%2F%2F00gangsa.com%2Frecruitments&dt=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&en=view_section&_ee=1&ep.screen=global_banner&ep.section=ai_pool_banner&_et=37&tfd=6213",
+      "contentType": "text/plain"
     }
   ],
   "scriptUrls": [
@@ -185,11 +806,16 @@
     "https://00gangsa.com/_next/static/chunks/28-b1db178f53540960.js",
     "https://00gangsa.com/_next/static/chunks/7535-2d84e8d05fd0c74a.js",
     "https://00gangsa.com/_next/static/chunks/app/(main)/layout-98df9189dedae5bc.js",
+    "https://00gangsa.com/_next/static/chunks/1235-b6d94a3466e61221.js",
+    "https://00gangsa.com/_next/static/chunks/1062-e59dcbd0c84b7969.js",
+    "https://00gangsa.com/_next/static/chunks/6399-ea49810ee7e442f8.js",
+    "https://00gangsa.com/_next/static/chunks/3952-d9205b2a0335da3b.js",
+    "https://00gangsa.com/_next/static/chunks/app/(main)/recruitments/page-7a951f7b0702bb22.js",
     "https://00gangsa.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
     "https://r.00gangsa.com/static/exception-autocapture.js?v=1.404.1",
     "https://r.00gangsa.com/array/phc_ooHNLoR9NVZGCN6nwpTx8tdT3mEXrnetACrZ453pajmX/config.js",
-    "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788510179195&cv=11&fst=1788510179195&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=4",
-    "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788510179291&cv=11&fst=1788510179291&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118897920~118897930~120213116~120385423~120469145~120469153&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=9&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1054090307.1788510179&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=4",
+    "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788513690384&cv=11&fst=1788513690384&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&frm=0&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dpage_view&ept=9&rfmt=3&fmt=4",
+    "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/16700733744/?random=1788513690449&cv=11&fst=1788513690449&bg=ffffff&guid=ON&async=1&en=view_section&gtm=45je6921v9197885988za200zd9197885988xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~118897920~118897930~119381664~120213116~120385423~120469145~120469153~120474862&u_w=1280&u_h=720&url=https%3A%2F%2F00gangsa.com%2Frecruitments&rcb=7&frm=0&tiba=%EA%B0%95%EC%82%AC%20%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0%20%7C%20%EA%B3%B5%EA%B3%B5%EA%B0%95%EC%82%AC&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=1438971392.1788513690&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uamb=0&uam=&uap=Linux&uapv=&uaw=0&data=event%3Dview_section%3Bscreen%3Dglobal_banner%3Bsection%3Dai_pool_banner&ept=9&rfmt=3&fmt=4",
     "https://r.00gangsa.com/static/posthog-recorder.js?v=1.404.1",
     "https://r.00gangsa.com/static/surveys.js?v=1.404.1",
     "https://r.00gangsa.com/static/dead-clicks-autocapture.js?v=1.404.1",
@@ -315,7 +941,7 @@
       "dataUrl": null,
       "dataId": null,
       "recruitmentId": null,
-      "text": "매칭 걱정은 NO, 최대 80% 할인\n9,434명\n강사님이 현재 혜택 받고 있는 중\n풀에 빠지러 가기\n→"
+      "text": "매칭 걱정은 NO, 최대 80% 할인\n9,435명\n강사님이 현재 혜택 받고 있는 중\n풀에 빠지러 가기\n→"
     },
     {
       "tag": "A",
@@ -408,7 +1034,8 @@
       "text": ""
     }
   ],
-  "bodyTextSample": "홈\n모집공고\n전체\n회원가입/로그인\n매칭 걱정은 NO, 최대 80% 할인\n9,434명\n강사님이 현재 혜택 받고 있는 중\n풀에 빠지러 가기\n→\n지역\n분야\n모집상태\n공고유형\n총 22,507건\n추천순\n등록순\n마감순\n인기순\nAD\n공공강사\n화성효행중앙교회 유아체육 강사 구인\n체육\n·\n유아체육\n경기 수원시 · 경기 용인시 · 경기 화성시\n2026.09.06 마감\n바로 지원\nD-2\nAD\n상상력집단\nAI 활용교육(공공기관 회계파트) 보조강사\nIT/영상사진\n·\n전체\n충남 천안시\n2026.09.10 마감\n바로 지원\nD-6\nAD\n상상력집단\nAI 해외시장·글로벌 마케팅 전문 강사 모집\nIT/영상사진\n·\n전체\n전국 전체\n2026.09.07 마감\n바로 지원\nD-3\n국립국어원\n광주남구가족센터 결혼이민자역량강화지원(한국어 교육) 강사(위촉직) 모집 공고 - 한국어/다문화\n언어\n·\n한국어/다문화\n광주 남구\n2026.09.17 마감\nD-13\n서울특별시체육회\n[강동구체육회] 생활체육지도자 채용계획 공고 - 체육\n체육\n·\n전체\n서울 강동구\n2026.09.16 마감\nD-12\n수원시청소년청년재단\n2026년 제 6회 권선배움마루 체육프로그램 강사 공개채용 - 배드민턴\n체육\n·\n배드민턴\n경기 수원시\n2026.09.10 마감\nD-6\n인천광역시교육청\n2026학년도 인천심곡초등학교 학생 대상 디지털 소양 교육을 위한 강사 채용 공고 - 코딩/프로그래밍, AI/생성형AI\nIT/영상사진\n·\nAI/생성형AI\n+1\n외 1개\n인천 서구\n2026.09.08 마감\nD-4\n시립서대문농아인복지관\n바리스타 훈련 강사 모집(~9/8) - 바리스타/커피\n요리/커피\n·\n바리스타/커피\n서울 서대문구\n2026.09.08 마감\nD-4\n인천광역시교육청\n2026학년도 인천동방중학교 학교예술동아리 강사(밴드부) 채용 공고 - 밴드/합주\n악기\n·\n밴드/합주\n인천 남동구\n2026.09.08 마감\nD-4\n성남시청\n태평1동 주민자치센터 강사 모집(바둑) - 바둑/체스\n놀이/게임\n·\n바둑/체스\n경기 성남시\n2026.09.16 마감\nD-12\n\n에잇어라운드|대표자: 박제영\n\n서울시 금천구 범안로15길 22-5, 401호\n\n사업자등록번호: 102-17-93384|직업정보제공사업 신고번호: 서울북부 제2024-5호\n\n이메일: help@8around.kr\n\n고객센터 070-8058-9843\n\n평일 10am - 6pm\n\n서비스 이용약관\n개인정보처리방침\n\nCopyright © 2026 에잇어라운드 All Rights Reserved.",
+  "bodyTextSample": "홈\n모집공고\n전체\n회원가입/로그인\n매칭 걱정은 NO, 최대 80% 할인\n9,435명\n강사님이 현재 혜택 받고 있는 중\n풀에 빠지러 가기\n→\n지역\n분야\n모집상태\n공고유형\n총 22,507건\n추천순\n등록순\n마감순\n인기순\nAD\n공공강사\n화성효행중앙교회 유아체육 강사 구인\n체육\n·\n유아체육\n경기 수원시 · 경기 용인시 · 경기 화성시\n2026.09.06 마감\n바로 지원\nD-2\nAD\n상상력집단\nAI 활용교육(공공기관 회계파트) 보조강사\nIT/영상사진\n·\n전체\n충남 천안시\n2026.09.10 마감\n바로 지원\nD-6\nAD\n상상력집단\nAI 해외시장·글로벌 마케팅 전문 강사 모집\nIT/영상사진\n·\n전체\n전국 전체\n2026.09.07 마감\n바로 지원\nD-3\n국립국어원\n광주남구가족센터 결혼이민자역량강화지원(한국어 교육) 강사(위촉직) 모집 공고 - 한국어/다문화\n언어\n·\n한국어/다문화\n광주 남구\n2026.09.17 마감\nD-13\n서울특별시체육회\n[강동구체육회] 생활체육지도자 채용계획 공고 - 체육\n체육\n·\n전체\n서울 강동구\n2026.09.16 마감\nD-12\n수원시청소년청년재단\n2026년 제 6회 권선배움마루 체육프로그램 강사 공개채용 - 배드민턴\n체육\n·\n배드민턴\n경기 수원시\n2026.09.10 마감\nD-6\n인천광역시교육청\n2026학년도 인천심곡초등학교 학생 대상 디지털 소양 교육을 위한 강사 채용 공고 - 코딩/프로그래밍, AI/생성형AI\nIT/영상사진\n·\nAI/생성형AI\n+1\n외 1개\n인천 서구\n2026.09.08 마감\nD-4\n시립서대문농아인복지관\n바리스타 훈련 강사 모집(~9/8) - 바리스타/커피\n요리/커피\n·\n바리스타/커피\n서울 서대문구\n2026.09.08 마감\nD-4\n인천광역시교육청\n2026학년도 인천동방중학교 학교예술동아리 강사(밴드부) 채용 공고 - 밴드/합주\n악기\n·\n밴드/합주\n인천 남동구\n2026.09.08 마감\nD-4\n성남시청\n태평1동 주민자치센터 강사 모집(바둑) - 바둑/체스\n놀이/게임\n·\n바둑/체스\n경기 성남시\n2026.09.16 마감\nD-12\n\n에잇어라운드|대표자: 박제영\n\n서울시 금천구 범안로15길 22-5, 401호\n\n사업자등록번호: 102-17-93384|직업정보제공사업 신고번호: 서울북부 제2024-5호\n\n이메일: help@8around.kr\n\n고객센터 070-8058-9843\n\n평일 10am - 6pm\n\n서비스 이용약관\n개인정보처리방침\n\nCopyright © 2026 에잇어라운드 All Rights Reserved.",
   "errors": [],
-  "nextGate": "identify list API/pagination and prove exhaustive Seoul/Gyeonggi active traversal; do not publish before missingAfter=0"
+  "readyForTraversal": false,
+  "nextGate": "prove exhaustive Seoul/Gyeonggi active traversal and missingAfter=0; do not publish until candidate validator passes"
 }
