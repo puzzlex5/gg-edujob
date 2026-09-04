@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-05T00:07:59+09:00",
-  "status": "critical",
-  "healthy": false,
+  "generatedAt": "2026-09-05T01:08:42+09:00",
+  "status": "degraded",
+  "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T00:07:59+09:00",
+    "generatedAt": "2026-09-05T01:08:42+09:00",
     "official": {
-      "datasetCount": 19233,
-      "officialIdCount": 18194,
+      "datasetCount": 19235,
+      "officialIdCount": 18185,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
@@ -24,16 +24,16 @@
       }
     },
     "unified": {
-      "publishedJobs": 3567,
-      "officialDisplayed": 3127,
+      "publishedJobs": 3568,
+      "officialDisplayed": 3128,
       "privateDisplayed": 440,
       "privateDiscovered": 452,
       "officialPrivateAliases": 12,
-      "healthy": false,
+      "healthy": true,
       "missingLessoninfoIds": 0,
       "nonMetroPrivate": 0,
       "bannedPrivate": 0,
-      "expiredPrivate": 7,
+      "expiredPrivate": 0,
       "futurePrivateDates": 0,
       "duplicateStableIds": 0,
       "missingLinks": 0
@@ -56,7 +56,7 @@
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10398,
+        "count": 10399,
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -148,7 +148,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1189,
+        "count": 1191,
         "latestRegistered": "2026-09-04"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -184,7 +184,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -247,37 +247,37 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T00:08:29+09:00",
+      "baselineAt": "2026-09-04T01:09:17+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19233,
+          "current": 19235,
           "baseline": 18913,
-          "changeRatio": 0.0169
+          "changeRatio": 0.017
         },
         "official.officialIdCount": {
-          "current": 18194,
+          "current": 18185,
           "baseline": 17960,
-          "changeRatio": 0.013
+          "changeRatio": 0.0125
         },
         "lessoninfo.publishedIdCount": {
           "current": 368,
-          "baseline": 1431,
-          "changeRatio": -0.7428
+          "baseline": 1435,
+          "changeRatio": -0.7436
         },
         "unified.publishedJobs": {
-          "current": 3567,
-          "baseline": 4718,
-          "changeRatio": -0.244
+          "current": 3568,
+          "baseline": 4511,
+          "changeRatio": -0.209
         },
         "unified.officialDisplayed": {
-          "current": 3127,
-          "baseline": 3302,
-          "changeRatio": -0.053
+          "current": 3128,
+          "baseline": 3090,
+          "changeRatio": 0.0123
         },
         "unified.privateDiscovered": {
           "current": 452,
-          "baseline": 1431,
-          "changeRatio": -0.6841
+          "baseline": 1435,
+          "changeRatio": -0.685
         }
       }
     },
@@ -286,37 +286,17 @@
   },
   "anomalies": [
     {
-      "severity": "critical",
-      "code": "unified-search-integrity-failed",
-      "message": "통합검색 검증이 정상 기준을 통과하지 못했습니다.",
-      "evidence": {
-        "publishedJobs": 3567,
-        "officialDisplayed": 3127,
-        "privateDisplayed": 440,
-        "privateDiscovered": 452,
-        "officialPrivateAliases": 12,
-        "healthy": false,
-        "missingLessoninfoIds": 0,
-        "nonMetroPrivate": 0,
-        "bannedPrivate": 0,
-        "expiredPrivate": 7,
-        "futurePrivateDates": 0,
-        "duplicateStableIds": 0,
-        "missingLinks": 0
-      }
-    },
-    {
       "severity": "warning",
       "code": "lessoninfo-sudden-drop",
       "message": "lessoninfo.publishedIdCount가 24시간 기준으로 비정상 급감했습니다.",
       "evidence": {
         "current": 368,
-        "baseline": 1431,
-        "changeRatio": -0.7428
+        "baseline": 1435,
+        "changeRatio": -0.7436
       }
     }
   ],
-  "criticalCount": 1,
+  "criticalCount": 0,
   "warningCount": 1,
   "policy": "hard integrity failures are critical; trend drops/stalls are warnings until independently verified"
 }
