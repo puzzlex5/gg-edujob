@@ -6,17 +6,15 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
+from source_registry import official_source_count
+
 KST = timezone(timedelta(hours=9))
 TODAY = datetime.now(KST).date()
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 BANNED = re.compile(r"구직|학원\s*매매|악기\s*(?:판매|매매)|연습실|원생\s*모집|학생\s*모집|레슨생\s*모집|팝니다|삽니다|권리금|임대", re.I)
 PROMO_ONLY = re.compile(r"(?:홍보|광고)\s*(?:글|게시글|게시|합니다|드립니다|안내)$", re.I)
-SPECS = [
-    {"key":"lessoninfo","name":"레슨인포","jobs":"lessoninfo_jobs.json","report":"lessoninfo_reconciliation_report.json","detail_report":None},
-    {"key":"jobteacher","name":"잡티처","jobs":"jobteacher_jobs.json","report":"jobteacher_reconciliation_report.json","detail_report":"jobteacher_detail_link_report.json"},
-    {"key":"artmore","name":"아트모아","jobs":"artmore_jobs.json","report":"artmore_reconciliation_report.json","detail_report":"artmore_detail_link_report.json"},
-    {"key":"gonggonggangsa","name":"공공강사","jobs":"gonggonggangsa_jobs.json","report":"gonggonggangsa_reconciliation_report.json","detail_report":"gonggonggangsa_detail_link_report.json"},
-]
+SPECS = PRIVATE_SOURCES
 ALLOWED_PROVINCES = {"서울", "경기"}
 
 
@@ -38,19 +36,6 @@ def parse_date(v):
     if not m: return None
     try: return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=KST).date()
     except ValueError: return None
-
-
-def publication_enabled(report):
-    return not isinstance(report, dict) or "publicationEnabled" not in report or report.get("publicationEnabled") is True
-
-
-def source_health(spec, report, detail_report):
-    ok = bool(report and report.get("healthy") and report.get("traversalComplete") and int(report.get("missingAfterCount") or 0) == 0)
-    if spec["key"] == "lessoninfo":
-        ok = ok and int(report.get("detailErrorCount") or 0) == 0
-    if spec.get("detail_report"):
-        ok = ok and bool(detail_report and detail_report.get("healthy") and detail_report.get("detailCoverageComplete") and int(detail_report.get("detailErrorCount") or 0) == 0)
-    return ok
 
 
 def row_provinces(row):
@@ -147,11 +132,16 @@ def main():
     counts = data.get("counts", {})
     if int(counts.get("private", -1)) != len(private) or int(counts.get("official", -1)) != len(official):
         errors.append("Embedded unified display counts disagree with actual rows")
-    expected_total_sources = 38 + len(enabled_specs)
-    if int(data.get("officialSourceCount") or 0) != 38:
-        warnings.append(f"officialSourceCount={data.get('officialSourceCount')} expected 38")
+    expected_official_sources = official_source_count()
+    expected_total_sources = expected_official_sources + len(enabled_specs)
+    if int(data.get("officialSourceCount") or 0) != expected_official_sources:
+        warnings.append(
+            f"officialSourceCount={data.get('officialSourceCount')} expected {expected_official_sources} from sources.json"
+        )
     if int(data.get("totalSourceCount") or 0) != expected_total_sources:
-        errors.append(f"Unified source count does not match 38 official plus {len(enabled_specs)} publication-effective private sources")
+        errors.append(
+            f"Unified source count does not match {expected_official_sources} official plus {len(enabled_specs)} publication-effective private sources"
+        )
     private_meta = data.get("privateSources", {})
     for spec in SPECS:
         meta = private_meta.get(spec["key"]) or {}
