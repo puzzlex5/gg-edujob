@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T13:54:52+09:00",
+  "generatedAt": "2026-09-04T17:59:10+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1",
   "publicationEnabled": true,
@@ -13,21 +13,6 @@
     {
       "region": "서울",
       "code": "2001",
-      "pagesVisited": 1,
-      "ids": 9,
-      "pages": [
-        {
-          "page": 1,
-          "rowCount": 9,
-          "newIdCount": 9,
-          "firstId": "94866",
-          "lastId": "94857"
-        }
-      ]
-    },
-    {
-      "region": "경기",
-      "code": "2083",
       "pagesVisited": 2,
       "ids": 19,
       "pages": [
@@ -35,15 +20,30 @@
           "page": 1,
           "rowCount": 10,
           "newIdCount": 10,
-          "firstId": "94867",
-          "lastId": "94807"
+          "firstId": "94869",
+          "lastId": "94851"
         },
         {
           "page": 2,
           "rowCount": 9,
           "newIdCount": 9,
-          "firstId": "94822",
-          "lastId": "94770"
+          "firstId": "94857",
+          "lastId": "94818"
+        }
+      ]
+    },
+    {
+      "region": "경기",
+      "code": "2083",
+      "pagesVisited": 1,
+      "ids": 9,
+      "pages": [
+        {
+          "page": 1,
+          "rowCount": 9,
+          "newIdCount": 9,
+          "firstId": "94870",
+          "lastId": "94816"
         }
       ]
     }
@@ -54,5 +54,8 @@
     "경기"
   ],
   "nextGate": "unified multi-source validation",
-  "detailErrorCount": 0
+  "detailErrorCount": 0,
+  "abnormalDrop": false,
+  "previousCanonicalCount": 28,
+  "candidateDropRatio": 0.0
 }
