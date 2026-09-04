@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-05T02:08:26+09:00",
+  "generatedAt": "2026-09-05T03:09:48+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T02:08:26+09:00",
+    "generatedAt": "2026-09-05T03:09:48+09:00",
     "official": {
       "datasetCount": 19232,
       "officialIdCount": 18185,
@@ -24,10 +24,10 @@
       }
     },
     "unified": {
-      "publishedJobs": 3568,
+      "publishedJobs": 7605,
       "officialDisplayed": 3128,
-      "privateDisplayed": 440,
-      "privateDiscovered": 452,
+      "privateDisplayed": 4477,
+      "privateDiscovered": 4489,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingLessoninfoIds": 0,
@@ -247,7 +247,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T02:08:07+09:00",
+      "baselineAt": "2026-09-04T03:10:06+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19232,
@@ -265,9 +265,9 @@
           "changeRatio": -0.7436
         },
         "unified.publishedJobs": {
-          "current": 3568,
-          "baseline": 8554,
-          "changeRatio": -0.5829
+          "current": 7605,
+          "baseline": 4517,
+          "changeRatio": 0.6836
         },
         "unified.officialDisplayed": {
           "current": 3128,
@@ -275,9 +275,9 @@
           "changeRatio": 0.0103
         },
         "unified.privateDiscovered": {
-          "current": 452,
-          "baseline": 5472,
-          "changeRatio": -0.9174
+          "current": 4489,
+          "baseline": 1435,
+          "changeRatio": 2.1282
         }
       }
     },
@@ -294,19 +294,9 @@
         "baseline": 1435,
         "changeRatio": -0.7436
       }
-    },
-    {
-      "severity": "warning",
-      "code": "unified-sudden-drop",
-      "message": "unified.publishedJobs가 24시간 기준으로 비정상 급감했습니다.",
-      "evidence": {
-        "current": 3568,
-        "baseline": 8554,
-        "changeRatio": -0.5829
-      }
     }
   ],
   "criticalCount": 0,
-  "warningCount": 2,
+  "warningCount": 1,
   "policy": "hard integrity failures are critical; trend drops/stalls are warnings until independently verified"
 }
