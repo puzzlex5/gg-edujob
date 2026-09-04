@@ -38,6 +38,10 @@ def parse_date(v):
     except ValueError: return None
 
 
+def publication_enabled(report):
+    return not isinstance(report, dict) or "publicationEnabled" not in report or report.get("publicationEnabled") is True
+
+
 def main():
     data = load("unified_jobs.next.json", {})
     jobs = data.get("jobs", [])
@@ -60,14 +64,21 @@ def main():
     source_reports = {}
     missing_by_source = {}
     source_ids_union = set()
+    enabled_specs = []
     non_metro = banned = expired = future = 0
     for spec in SPECS:
         src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
         drep = load(spec["detail_report"], {}) if spec.get("detail_report") else None
+        enabled = publication_enabled(rep)
+        source_reports[spec["key"]] = {"count":len(src),"report":rep,"detailReport":drep,"publicationEnabled":enabled}
+        if not enabled:
+            missing_by_source[spec["key"]] = []
+            continue
+
+        enabled_specs.append(spec)
         source_ids = {str(j.get("sourceIdentity") or "") for j in src if j.get("sourceIdentity")}
         source_ids_union |= source_ids
-        source_reports[spec["key"]] = {"count":len(src),"report":rep,"detailReport":drep}
         if not rep.get("healthy") or not rep.get("traversalComplete") or int(rep.get("missingAfterCount") or 0) != 0:
             errors.append(f"{spec['name']} source reconciliation is not healthy/complete")
         if spec["key"] == "lessoninfo" and int(rep.get("detailErrorCount") or 0) != 0:
@@ -102,15 +113,21 @@ def main():
     counts = data.get("counts", {})
     if int(counts.get("private", -1)) != len(private) or int(counts.get("official", -1)) != len(official):
         errors.append("Embedded unified display counts disagree with actual rows")
-    expected_total_sources = 38 + len(SPECS)
+    expected_total_sources = 38 + len(enabled_specs)
     if int(data.get("officialSourceCount") or 0) != 38:
         warnings.append(f"officialSourceCount={data.get('officialSourceCount')} expected 38")
-    if int(data.get("totalSourceCount") or 0) < expected_total_sources:
-        errors.append(f"Unified source count does not include 38 official plus {len(SPECS)} private sources")
+    if int(data.get("totalSourceCount") or 0) != expected_total_sources:
+        errors.append(f"Unified source count does not match 38 official plus {len(enabled_specs)} publication-enabled private sources")
     private_meta = data.get("privateSources", {})
     for spec in SPECS:
-        if not (private_meta.get(spec["key"]) or {}).get("ok"):
+        meta = private_meta.get(spec["key"]) or {}
+        expected_enabled = spec in enabled_specs
+        if bool(meta.get("publicationEnabled")) != expected_enabled:
+            errors.append(f"Embedded publication gate disagrees for {spec['name']}")
+        if expected_enabled and not meta.get("ok"):
             errors.append(f"Embedded source health false for {spec['name']}")
+        if not expected_enabled and int(meta.get("count") or 0) != 0:
+            errors.append(f"Publication-disabled source {spec['name']} contributes rows to unified search")
 
     report = {
         "generatedAt": datetime.now(KST).isoformat(timespec="seconds"),
@@ -118,6 +135,7 @@ def main():
         "total": len(jobs),
         "official": len(official),
         "privateDisplayed": len(private),
+        "enabledPrivateSources": [spec["key"] for spec in enabled_specs],
         "privateStableIds": len(source_ids_union),
         "privateRepresentedDirectly": len(direct_ids),
         "privateRepresentedByOfficial": len(alias_ids),
