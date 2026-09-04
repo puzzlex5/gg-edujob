@@ -82,6 +82,69 @@ jobs:
           assert missing_dates == 0, f'missing source-reported modified date: {missing_dates}'
           print(json.dumps({'healthy':r['healthy'],'count':len(jobs),'detailVerified':d['verifiedCurrentCount'],'multiProvince':multi,'missingDates':missing_dates,'sources':r['sourceReports']},ensure_ascii=False))
           PY
+      - name: Verify current-posting semantics and enable publication
+        id: promote
+        if: steps.validate.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import json, pathlib, re
+          from datetime import date, datetime, timedelta, timezone
+
+          KST=timezone(timedelta(hours=9))
+          today=datetime.now(KST).date()
+          jobs=json.loads(pathlib.Path('jobteacher_jobs.json').read_text(encoding='utf-8'))
+          report_path=pathlib.Path('jobteacher_reconciliation_report.json')
+          report=json.loads(report_path.read_text(encoding='utf-8'))
+
+          closed=re.compile(r'마감|채용완료|모집완료|종료')
+          indefinite=re.compile(r'상시채용|채용시까지')
+          dday=re.compile(r'D-(\d+)')
+          monthday=re.compile(r'~\s*(\d{1,2})[.]\s*(\d{1,2})')
+          bad=[]
+          kinds={'indefinite':0,'dday':0,'dated':0}
+
+          for j in jobs:
+              raw=' '.join(str(j.get(k) or '') for k in ('applyEndText','rawRowText'))
+              deadline=str(j.get('applyEndText') or '').strip()
+              if closed.search(raw):
+                  bad.append((j.get('sourceIdentity'),'closed-marker',deadline)); continue
+              if indefinite.search(deadline):
+                  kinds['indefinite']+=1; continue
+              m=dday.search(deadline)
+              if m:
+                  kinds['dday']+=1; continue
+              m=monthday.search(deadline)
+              if m:
+                  month,day=map(int,m.groups())
+                  try:
+                      end=date(today.year,month,day)
+                  except ValueError:
+                      bad.append((j.get('sourceIdentity'),'invalid-deadline',deadline)); continue
+                  # JobTeacher omits the year. If MM.DD is far behind today, it
+                  # would be an expired row; a late-year date early in the year
+                  # is the only legitimate rollover case.
+                  if end < today and (today-end).days > 180:
+                      end=date(today.year+1,month,day)
+                  if end < today:
+                      bad.append((j.get('sourceIdentity'),'expired-deadline',deadline)); continue
+                  kinds['dated']+=1; continue
+              bad.append((j.get('sourceIdentity'),'unclassified-deadline',deadline))
+
+          assert not bad, f'current-posting semantics failed: {bad[:20]} (total={len(bad)})'
+          assert sum(kinds.values()) == len(jobs)
+          report['publicationEnabled']=True
+          report['currentPostingSemantics']={
+              'policy':'source-visible-open-row-v1',
+              'verifiedAt':datetime.now(KST).isoformat(timespec='seconds'),
+              'rule':'public listing row must have no closed marker and deadline must be indefinite, nonnegative D-day, or nonexpired MM.DD',
+              'counts':kinds,
+              'rejectedCount':0,
+          }
+          report['nextGate']='unified candidate + validator + regression'
+          report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({'publicationEnabled':True,'count':len(jobs),'deadlineKinds':kinds},ensure_ascii=False))
+          PY
       - name: Commit isolated evidence and healthy dataset
         if: always()
         run: |
@@ -96,5 +159,5 @@ jobs:
             done
           fi
       - name: Fail after preserving diagnostics
-        if: steps.collect.outcome != 'success' || steps.detail_links.outcome != 'success' || steps.validate.outcome != 'success'
+        if: steps.collect.outcome != 'success' || steps.detail_links.outcome != 'success' || steps.validate.outcome != 'success' || steps.promote.outcome != 'success'
         run: exit 1
