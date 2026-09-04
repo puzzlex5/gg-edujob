@@ -121,10 +121,10 @@ jobs:
                       end=date(today.year,month,day)
                   except ValueError:
                       bad.append((j.get('sourceIdentity'),'invalid-deadline',deadline)); continue
-                  # JobTeacher omits the year. If MM.DD is far behind today, it
-                  # would be an expired row; a late-year date early in the year
-                  # is the only legitimate rollover case.
-                  if end < today and (today-end).days > 180:
+                  # JobTeacher omits the year. Only permit a year rollover in the
+                  # narrow, unambiguous New-Year window: Jan/Feb scanning a Nov/Dec
+                  # deadline. At all other times, a past MM.DD is expired.
+                  if end < today and today.month <= 2 and month >= 11:
                       end=date(today.year+1,month,day)
                   if end < today:
                       bad.append((j.get('sourceIdentity'),'expired-deadline',deadline)); continue
@@ -137,7 +137,7 @@ jobs:
           report['currentPostingSemantics']={
               'policy':'source-visible-open-row-v1',
               'verifiedAt':datetime.now(KST).isoformat(timespec='seconds'),
-              'rule':'public listing row must have no closed marker and deadline must be indefinite, nonnegative D-day, or nonexpired MM.DD',
+              'rule':'public listing row must have no closed marker and deadline must be indefinite, nonnegative D-day, or nonexpired MM.DD; year rollover is allowed only Jan/Feb -> Nov/Dec',
               'counts':kinds,
               'rejectedCount':0,
           }
