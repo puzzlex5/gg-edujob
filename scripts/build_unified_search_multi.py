@@ -33,10 +33,6 @@ PRIVATE_SOURCES = [
     },
 ]
 
-# The legacy canonicalizer intentionally kept only official/lessoninfo query IDs.
-# ArtMore detail URLs are identical except for rec_idx, so stripping rec_idx made
-# 28 distinct postings look like one exact-URL duplicate group. Extend URL
-# identity locally without weakening the strong-evidence dedupe policy.
 _BASE_CANONICAL_URL = base.canonical_url
 
 
@@ -86,10 +82,12 @@ def project_private_generic(job, source_name):
     return row
 
 
+def publication_enabled(report):
+    return not isinstance(report, dict) or "publicationEnabled" not in report or report.get("publicationEnabled") is True
+
+
 def source_health(spec, report, detail_report):
     ok = bool(report and report.get("healthy") and report.get("traversalComplete") and int(report.get("missingAfterCount") or 0) == 0)
-    if "publicationEnabled" in report:
-        ok = ok and report.get("publicationEnabled") is True
     if spec["key"] == "lessoninfo":
         ok = ok and int(report.get("detailErrorCount") or 0) == 0
     if spec.get("detail_report"):
@@ -107,21 +105,27 @@ def main():
     all_private = []
     private_meta = {}
     canonical_private_total = 0
+    enabled_private_sources = 0
     all_sources_healthy = True
     for spec in PRIVATE_SOURCES:
         pdata = load(spec["jobs"], [])
         preport = load(spec["report"], {})
         dreport = load(spec["detail_report"], {}) if spec.get("detail_report") else None
         jobs = rows_from(pdata)
-        canonical_private_total += len(jobs)
         projected = [project_private_generic(j, spec["name"]) for j in jobs if base.private_current(j)]
-        all_private.extend(projected)
+        enabled = publication_enabled(preport)
         healthy = source_health(spec, preport, dreport)
-        all_sources_healthy = all_sources_healthy and healthy
+        if enabled:
+            enabled_private_sources += 1
+            canonical_private_total += len(jobs)
+            all_private.extend(projected)
+            all_sources_healthy = all_sources_healthy and healthy
         private_meta[spec["key"]] = {
             "name": spec["name"],
-            "ok": healthy,
-            "count": len(projected),
+            "publicationEnabled": enabled,
+            "ok": healthy if enabled else False,
+            "candidateCount": len(projected),
+            "count": len(projected) if enabled else 0,
             "lastVerifiedAt": (dreport or preport).get("generatedAt") if isinstance((dreport or preport), dict) else None,
             "missingAfterCount": preport.get("missingAfterCount"),
             "detailErrorCount": (dreport or preport).get("detailErrorCount") if isinstance((dreport or preport), dict) else None,
@@ -149,7 +153,7 @@ def main():
         "updatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),
         "dataset": "unified-search-v3-multi-private",
         "officialSourceCount": official_source_count,
-        "totalSourceCount": official_source_count + len(PRIVATE_SOURCES),
+        "totalSourceCount": official_source_count + enabled_private_sources,
         "sources": official_data.get("sources", {}) if isinstance(official_data, dict) else {},
         "privateSources": private_meta,
         "counts": {
