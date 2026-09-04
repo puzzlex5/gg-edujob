@@ -1,29 +1,35 @@
 {
-  "generatedAt": "2026-09-04 21:53:29 KST",
+  "generatedAt": "2026-09-04 23:50:58 KST",
   "policy": "diagnostic-first; stable-ID/URL duplicates are strong evidence, semantic duplicates are review-only",
   "summary": {
-    "publishedJobs": 19233,
-    "officialIds": 18099,
-    "publishedToOfficialRatio": 1.063,
+    "publishedJobs": 19240,
+    "officialIds": 18194,
+    "publishedToOfficialRatio": 1.057,
     "exactStableIdDuplicateGroups": 0,
     "exactStableIdExtraRecords": 0,
     "exactUrlDuplicateGroups": 0,
     "exactUrlExtraRecords": 0,
-    "semanticDuplicateGroupsReviewOnly": 265,
-    "resultLikeNotices": 0,
+    "semanticDuplicateGroupsReviewOnly": 268,
+    "resultLikeNotices": 1,
     "staleInactiveOver120Days": 0,
     "missingDetailLinks": 0,
     "reconciledSources": 38,
     "totalSources": 38,
     "missingOfficialIds": 0
   },
-  "findings": [],
+  "findings": [
+    {
+      "severity": "warning",
+      "code": "result-notice-contamination",
+      "count": 1
+    }
+  ],
   "sourceFreshness": [
     {
       "province": "경기",
       "name": "경기도교육청 통합 구인구직",
-      "officialIdCount": 10271,
-      "publishedRecords": 10430,
+      "officialIdCount": 10332,
+      "publishedRecords": 10433,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
       "reconciled": true,
@@ -32,7 +38,7 @@
     {
       "province": "서울",
       "name": "서울교육일자리포털",
-      "officialIdCount": 386,
+      "officialIdCount": 380,
       "publishedRecords": 1211,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -52,8 +58,8 @@
     {
       "province": "경기",
       "name": "고양교육지원청",
-      "officialIdCount": 220,
-      "publishedRecords": 223,
+      "officialIdCount": 221,
+      "publishedRecords": 224,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
       "reconciled": true,
@@ -62,7 +68,7 @@
     {
       "province": "경기",
       "name": "광명교육지원청",
-      "officialIdCount": 307,
+      "officialIdCount": 309,
       "publishedRecords": 311,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -72,7 +78,7 @@
     {
       "province": "경기",
       "name": "광주하남교육지원청",
-      "officialIdCount": 342,
+      "officialIdCount": 347,
       "publishedRecords": 350,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -82,7 +88,7 @@
     {
       "province": "경기",
       "name": "구리남양주교육지원청",
-      "officialIdCount": 564,
+      "officialIdCount": 569,
       "publishedRecords": 579,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -102,7 +108,7 @@
     {
       "province": "경기",
       "name": "김포교육지원청",
-      "officialIdCount": 539,
+      "officialIdCount": 542,
       "publishedRecords": 546,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -112,8 +118,8 @@
     {
       "province": "경기",
       "name": "동두천양주교육지원청",
-      "officialIdCount": 498,
-      "publishedRecords": 519,
+      "officialIdCount": 503,
+      "publishedRecords": 520,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
       "reconciled": true,
@@ -122,7 +128,7 @@
     {
       "province": "경기",
       "name": "부천교육지원청",
-      "officialIdCount": 729,
+      "officialIdCount": 734,
       "publishedRecords": 737,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -132,7 +138,7 @@
     {
       "province": "경기",
       "name": "성남교육지원청",
-      "officialIdCount": 986,
+      "officialIdCount": 990,
       "publishedRecords": 1003,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -153,7 +159,7 @@
       "province": "경기",
       "name": "시흥교육지원청",
       "officialIdCount": 65,
-      "publishedRecords": 65,
+      "publishedRecords": 66,
       "latestRegistered": "2026-09-02",
       "freshnessDays": 2,
       "reconciled": true,
@@ -172,8 +178,8 @@
     {
       "province": "경기",
       "name": "안성교육지원청",
-      "officialIdCount": 213,
-      "publishedRecords": 217,
+      "officialIdCount": 215,
+      "publishedRecords": 218,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
       "reconciled": true,
@@ -212,7 +218,7 @@
     {
       "province": "경기",
       "name": "연천교육지원청",
-      "officialIdCount": 88,
+      "officialIdCount": 89,
       "publishedRecords": 95,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -222,7 +228,7 @@
     {
       "province": "경기",
       "name": "용인교육지원청",
-      "officialIdCount": 131,
+      "officialIdCount": 132,
       "publishedRecords": 135,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -252,7 +258,7 @@
     {
       "province": "경기",
       "name": "파주교육지원청",
-      "officialIdCount": 481,
+      "officialIdCount": 482,
       "publishedRecords": 486,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -272,7 +278,7 @@
     {
       "province": "경기",
       "name": "포천교육지원청",
-      "officialIdCount": 199,
+      "officialIdCount": 202,
       "publishedRecords": 214,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -342,7 +348,7 @@
     {
       "province": "서울",
       "name": "강동송파교육지원청",
-      "officialIdCount": 5,
+      "officialIdCount": 6,
       "publishedRecords": 20,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -352,7 +358,7 @@
     {
       "province": "서울",
       "name": "강서양천교육지원청",
-      "officialIdCount": 145,
+      "officialIdCount": 146,
       "publishedRecords": 149,
       "latestRegistered": "2026-09-04",
       "freshnessDays": 0,
@@ -403,7 +409,17 @@
   "examples": {
     "exactStableIdDuplicates": [],
     "exactUrlDuplicates": [],
-    "resultLikeNotices": [],
+    "resultLikeNotices": [
+      {
+        "province": "경기",
+        "source": "시흥교육지원청",
+        "school": "초등학교",
+        "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+        "registered": "2026/08/18",
+        "applyEnd": "",
+        "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414"
+      }
+    ],
     "staleInactive": [],
     "missingDetailLinks": []
   }
