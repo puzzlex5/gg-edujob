@@ -54,7 +54,8 @@ jobs:
         run: |
           python - <<'PY'
           import json, pathlib
-          from datetime import date
+          from datetime import datetime, timedelta, timezone
+          kst_today=datetime.now(timezone(timedelta(hours=9))).date()
           r=json.loads(pathlib.Path('jobteacher_reconciliation_report.json').read_text(encoding='utf-8'))
           d=json.loads(pathlib.Path('jobteacher_detail_link_report.json').read_text(encoding='utf-8'))
           assert r.get('policy')=='jobteacher-active-browser-v2'
@@ -74,7 +75,7 @@ jobs:
           assert all(str(j.get('sourceIdentity','')).startswith('jobteacher:') for j in jobs)
           assert d.get('currentIdCount') == len(jobs)
           assert all(set(j.get('provinces') or []) <= {'서울','경기'} and (j.get('provinces') or []) for j in jobs)
-          assert all((not j.get('registered')) or date.fromisoformat(j['registered']) <= date.today() for j in jobs)
+          assert all((not j.get('registered')) or datetime.fromisoformat(j['registered']).date() <= kst_today for j in jobs)
           multi=sum(1 for j in jobs if len(j.get('provinces') or [])>1)
           missing_dates=sum(1 for j in jobs if not j.get('registered'))
           assert multi > 0, 'expected cross-region postings to retain both provinces'
