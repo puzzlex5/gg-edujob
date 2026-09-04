@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - name: Compare with previous canonical snapshot
         id: guard
         run: |
@@ -36,9 +36,19 @@ jobs:
               except Exception:
                   return None
 
-          def load_parent(path):
+          def prior_canonical_ref(path):
               try:
-                  raw=subprocess.check_output(['git','show',f'HEAD^:{path}'], text=True)
+                  return subprocess.check_output(
+                      ['git','log','-1','--format=%H','HEAD^','--',path], text=True
+                  ).strip() or None
+              except Exception:
+                  return None
+
+          def load_ref(ref, path):
+              if not ref:
+                  return None
+              try:
+                  raw=subprocess.check_output(['git','show',f'{ref}:{path}'], text=True)
                   return json.loads(raw)
               except Exception:
                   return None
@@ -49,23 +59,25 @@ jobs:
               return 0
 
           current_jobs=load_path('lessoninfo_jobs.json')
-          previous_jobs=load_parent('lessoninfo_jobs.json')
           current_report=load_path('lessoninfo_reconciliation_report.json') or {}
-          previous_report=load_parent('lessoninfo_reconciliation_report.json') or {}
+          previous_ref=prior_canonical_ref('lessoninfo_jobs.json')
+          previous_jobs=load_ref(previous_ref,'lessoninfo_jobs.json')
+          previous_report=load_ref(previous_ref,'lessoninfo_reconciliation_report.json') or {}
           cur=jobs_count(current_jobs); prev=jobs_count(previous_jobs)
           same_policy=bool(current_report.get('policy')) and current_report.get('policy')==previous_report.get('policy')
           integrity_claimed=(current_report.get('healthy') is True and current_report.get('traversalComplete') is True and int(current_report.get('missingAfterCount') or 0)==0 and int(current_report.get('detailErrorCount') or 0)==0)
           severe=prev>=20 and cur < max(10,int(prev*0.45))
           decision='preserve-current'
-          if severe and same_policy and integrity_claimed:
+          if severe and same_policy and integrity_claimed and previous_ref:
               for path in ('lessoninfo_jobs.json','lessoninfo_reconciliation_report.json','lessoninfo_collection_state.json'):
-                  subprocess.check_call(['git','checkout','HEAD^','--',path])
+                  subprocess.check_call(['git','checkout',previous_ref,'--',path])
               decision='restore-last-known-good'
           evidence={
+              'previousRef':previous_ref,
               'previousCount':prev,'currentCount':cur,'dropRatio':round((prev-cur)/prev,4) if prev else None,
               'samePolicy':same_policy,'policy':current_report.get('policy',''),'integrityClaimed':integrity_claimed,
               'severeDrop':severe,'decision':decision,
-              'rule':'when the same collector policy claims healthy but canonical jobs fall below 45% of the previous nontrivial population, preserve the previous canonical snapshot'
+              'rule':'when the same collector policy claims healthy but canonical jobs fall below 45% of the previous canonical population, preserve the most recent prior commit that actually changed lessoninfo_jobs.json'
           }
           pathlib.Path('lessoninfo_drop_guard_report.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(evidence,ensure_ascii=False))
