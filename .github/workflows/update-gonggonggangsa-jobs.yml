@@ -1,0 +1,90 @@
+name: Update Gonggonggangsa jobs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 * * * *'
+  push:
+    paths:
+      - 'scripts/crawl_gonggonggangsa_jobs.py'
+      - '.github/workflows/update-gonggonggangsa-jobs.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-gonggonggangsa-jobs
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Syntax check
+        run: python -m py_compile scripts/crawl_gonggonggangsa_jobs.py
+      - name: Collect isolated candidate
+        id: collect
+        continue-on-error: true
+        run: python scripts/crawl_gonggonggangsa_jobs.py
+      - name: Verify fail-safe report semantics
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('gonggonggangsa_reconciliation_report.candidate.json')
+          assert p.exists(), 'candidate reconciliation report missing'
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d.get('publicationEnabled') is False
+          if d.get('healthy'):
+              assert d.get('traversalComplete') is True
+              assert int(d.get('missingAfterCount') or 0) == 0
+              assert int(d.get('detailErrorCount') or 0) == 0
+              assert int(d.get('regionContaminationCount') or 0) == 0
+              assert int(d.get('expiredCount') or 0) == 0
+              assert d.get('abnormalDrop') is False
+              canonical=json.loads(pathlib.Path('gonggonggangsa_reconciliation_report.json').read_text(encoding='utf-8'))
+              assert canonical.get('publicationEnabled') is True
+              assert canonical.get('healthy') is True
+          print(json.dumps({k:d.get(k) for k in ('healthy','traversalComplete','serverCountAtStart','serverCountAtEnd','allSourceIdCount','candidateIdCount','missingAfterCount','detailErrorCount','abnormalDrop','errors')}, ensure_ascii=False))
+          PY
+      - name: Commit isolated source artifacts
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gonggonggangsa_jobs.candidate.json \
+            gonggonggangsa_source_id_ledger.candidate.json \
+            gonggonggangsa_collection_state.candidate.json \
+            gonggonggangsa_reconciliation_report.candidate.json \
+            gonggonggangsa_detail_link_report.candidate.json 2>/dev/null || true
+          for f in \
+            gonggonggangsa_jobs.json \
+            gonggonggangsa_source_id_ledger.json \
+            gonggonggangsa_collection_state.json \
+            gonggonggangsa_reconciliation_report.json \
+            gonggonggangsa_detail_link_report.json; do
+            [ -f "$f" ] && git add "$f"
+          done
+          git diff --cached --quiet && exit 0
+          git commit -m 'Update isolated Gonggonggangsa dataset'
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break
+            sleep $((i*5))
+          done
+      - name: Fail after preserving diagnostics
+        if: steps.collect.outcome != 'success'
+        run: exit 1
