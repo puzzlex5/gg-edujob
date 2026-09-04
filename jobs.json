@@ -954,21 +954,32 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-04 16:04 KST",
-    "message": "원문 링크 일시/본문증거 확인 필요 1/50개",
+    "checkedAt": "2026-09-04 16:35 KST",
+    "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7560,
-      "resolved": 7560,
+      "total": 7559,
+      "resolved": 7559,
       "unresolved": 0,
       "examples": []
     },
     "linkChecks": {
       "checked": 50,
       "failed": 0,
-      "soft": 1,
+      "soft": 2,
       "supportFailed": 0,
       "failures": [
+        {
+          "title": "26.9.17.자. 창영초등학교 병설유치원 기간제교원 채용 공고",
+          "source": "부천교육지원청",
+          "sourceType": "교육지원청 개별 게시판",
+          "province": "경기",
+          "url": "https://www.goebc.kr/goebc/na/ntt/selectNttInfo.do?bbsId=6381&nttSn=1230696",
+          "status": 200,
+          "hard": false,
+          "reason": "title-evidence-missing",
+          "finalUrl": "https://www.goebc.kr/goebc/na/ntt/selectNttInfo.do?bbsId=6381&nttSn=1230696"
+        },
         {
           "title": "2026학년도 2학기 금릉초 수익자 방과후 및 돌봄교실 보조강사 모집 공고",
           "source": "파주교육지원청",
@@ -982,8 +993,8 @@
         }
       ]
     },
-    "previousTotal": 19117,
-    "currentTotal": 19169
+    "previousTotal": 19169,
+    "currentTotal": 19168
   },
   "jobs": [
     {
@@ -149794,37 +149805,6 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-office2-ca5ecba43ea6a22378",
-      "province": "경기",
-      "school": "초등학교",
-      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
-      "subject": "",
-      "region": "시흥시",
-      "regions": [
-        "시흥시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/08/18",
-      "headcount": "",
-      "source": "시흥교육지원청",
-      "checkedSources": [
-        "시흥교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
-      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
-      "detailLinkResolved": true,
-      "nttSn": "527414",
-      "bbsId": "5511",
-      "mi": "9003",
-      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -532130,11 +532110,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-04 16:03 KST",
+    "checkedAt": "2026-09-04 16:33 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-04 16:03 KST",
+    "checkedAt": "2026-09-04 16:33 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -532175,5 +532155,12 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-04 16:33:45 KST",
+    "protectedOfficialIds": 18099,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
