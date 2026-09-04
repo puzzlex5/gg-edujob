@@ -18,12 +18,16 @@ on:
       - 'artmore_detail_link_report.json'
       - 'jobteacher_jobs.json'
       - 'lessoninfo_jobs.json'
+      - 'gonggonggangsa_jobs.json'
+      - 'gonggonggangsa_reconciliation_report.json'
+      - 'gonggonggangsa_detail_link_report.json'
   workflow_run:
     workflows:
       - 'Update 수도권 education jobs'
       - 'Update Lessoninfo recruitment jobs'
       - 'Update JobTeacher recruitment jobs'
       - 'Promote verified ArtMore jobs'
+      - 'Update Gonggonggangsa jobs'
     types: [completed]
   schedule:
     - cron: '47 * * * *'
@@ -82,7 +86,7 @@ jobs:
           d=json.load(open('unified_jobs.json',encoding='utf-8'))
           assert d.get('dataset') == 'unified-search-v3-multi-private'
           private=d.get('privateSources',{})
-          expected={'lessoninfo','jobteacher','artmore'}
+          expected={'lessoninfo','jobteacher','artmore','gonggonggangsa'}
           assert expected.issubset(set(private))
           enabled={k for k,v in private.items() if (v or {}).get('publicationEnabled') is True}
           assert d.get('totalSourceCount') == 38 + len(enabled), (d.get('totalSourceCount'), enabled)
@@ -96,7 +100,14 @@ jobs:
           disabled_names={(private[k] or {}).get('name') for k in expected-enabled}
           leaked=[j for j in d['jobs'] if j.get('feedKind')=='private' and j.get('source') in disabled_names]
           assert not leaked, f'publication-disabled private rows: {len(leaked)}'
-          bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and j.get('province') not in {'서울','경기'}]
+          allowed={'서울','경기'}
+          def provinces(j):
+              ps={str(x) for x in (j.get('provinces') or []) if str(x)}
+              if ps:
+                  return ps
+              p=str(j.get('province') or '')
+              return {p} if p else set()
+          bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and (not provinces(j) or not provinces(j).issubset(allowed))]
           assert not bad, f'non-metro private rows: {len(bad)}'
           print('verified publication-gated multi-source unified publication',len(d['jobs']),sorted(enabled))
           PY
