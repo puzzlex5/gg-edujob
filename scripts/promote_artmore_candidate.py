@@ -73,8 +73,6 @@ def abnormal_drop(candidate_count: int, previous_count: int) -> tuple[bool, floa
     if previous_count < 10:
         return False, max(0.0, (previous_count - candidate_count) / previous_count) if previous_count else 0.0
     drop_ratio = max(0.0, (previous_count - candidate_count) / previous_count)
-    # A verified public source should not lose >=40% of its active corpus in one promotion cycle.
-    # Preserve the last known-good canonical dataset and require a later healthy run instead.
     return candidate_count < previous_count * 0.60, drop_ratio
 
 
@@ -115,6 +113,7 @@ async def main() -> int:
         raise SystemExit(f"missing candidate files: {missing}")
 
     candidate_report = load(CANDIDATE_REPORT)
+    candidate_state = load(CANDIDATE_STATE)
     data = load(CANDIDATE_JOBS)
     jobs = data.get("jobs", []) if isinstance(data, dict) else []
     preconditions = bool(
@@ -126,7 +125,10 @@ async def main() -> int:
     if not preconditions:
         raise SystemExit("ArtMore candidate reconciliation gate is not healthy")
 
-    previous_count = canonical_count()
+    # candidate_state.previousLedgerIds is captured before the candidate collector overwrites its
+    # own ledger. Keep it in the baseline so an already-degraded canonical cannot normalize away
+    # the very drop that the fail-safe is supposed to catch.
+    previous_count = max(canonical_count(), int(candidate_state.get("previousLedgerIds") or 0))
     drop_blocked, drop_ratio = abnormal_drop(len(jobs), previous_count)
     if drop_blocked:
         detail_report = {
@@ -169,7 +171,6 @@ async def main() -> int:
         print(json.dumps(detail_report, ensure_ascii=False, indent=2))
         return 2
 
-    # Promote only after all gates pass. Existing canonical files remain untouched on any failure.
     shutil.copyfile(CANDIDATE_JOBS, "artmore_jobs.json")
     shutil.copyfile(CANDIDATE_LEDGER, "artmore_source_id_ledger.json")
 
@@ -186,7 +187,7 @@ async def main() -> int:
     })
     Path("artmore_reconciliation_report.json").write_text(json.dumps(canonical_report, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    state = load(CANDIDATE_STATE)
+    state = dict(candidate_state)
     state.update({
         "generatedAt": generated,
         "healthy": True,
