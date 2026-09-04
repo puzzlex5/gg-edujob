@@ -1,123 +1,862 @@
 {
-  "generatedAt": "2026-09-04T14:56:23+09:00",
+  "generatedAt": "2026-09-04T19:45:37+09:00",
   "source": "공공강사",
   "api": "https://prod-backend.00gangsa.com/v1/recruitments",
+  "method": "POST",
   "mode": "read-only-api-contract-probe",
   "publicationEnabled": false,
-  "tests": [],
-  "errors": [
+  "tests": [
     {
-      "params": {},
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments"
+      "body": {
+        "page": 1,
+        "size": 10,
+        "order": "RECENT"
+      },
+      "status": 200,
+      "count": 22523,
+      "totalPage": 2253,
+      "currentPage": 1,
+      "hasPrevPage": false,
+      "hasNextPage": true,
+      "listCount": 10,
+      "ids": [
+        "23367",
+        "23278",
+        "23211",
+        "23472",
+        "23471",
+        "23470",
+        "23469",
+        "23467",
+        "23466",
+        "23464"
+      ],
+      "states": [
+        "RECRUITING",
+        "SCHEDULED"
+      ],
+      "provinces": [
+        "강원",
+        "경기",
+        "경남",
+        "대구",
+        "서울",
+        "전국",
+        "제주",
+        "충남"
+      ],
+      "sample": [
+        {
+          "id": 23367,
+          "type": "PROVIDER_SUBMIT",
+          "state": "RECRUITING",
+          "title": "화성효행중앙교회 유아체육 강사 구인",
+          "description": null,
+          "institution": {
+            "id": 5,
+            "name": "공공강사",
+            "email": "choh@8around.kr",
+            "phoneNumber": "01099022560"
+          },
+          "counts": {
+            "viewCnt": 41,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 149,
+              "name": "유아체육"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 40,
+                "isAll": false,
+                "name": "수원시"
+              }
+            },
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 50,
+                "isAll": false,
+                "name": "용인시"
+              }
+            },
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 58,
+                "isAll": false,
+                "name": "화성시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-02 16:10:31",
+          "deadlineAt": "2026-09-06 23:59:59",
+          "deadlineDay": 2,
+          "recruitCount": 2,
+          "applicationGender": "A",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": "ANY",
+          "managerName": "오창훈",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": "휴강일 : 9/26 추석, 10/3 개천절, 수업에 필요한 교구 지참 가능한 강사, 7~11세 / 4~6세 둘 중 선택",
+          "workDetailAddress": "경기 화성시 효행구 봉담읍 삼천병마로 1320",
+          "workSchedules": [
+            {
+              "id": 211,
+              "startDate": "2026-09-12",
+              "endDate": "2026-12-05",
+              "day": "SAT",
+              "startTime": "11:00:00",
+              "endTime": "12:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 75000
+            }
+          ],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": true
+        },
+        {
+          "id": 23278,
+          "type": "PROVIDER_SUBMIT",
+          "state": "RECRUITING",
+          "title": "AI 활용교육(공공기관 회계파트) 보조강사",
+          "description": null,
+          "institution": {
+            "id": 17,
+            "name": "상상력집단",
+            "email": "kyung23@illusionists.co.kr",
+            "phoneNumber": "01092491482"
+          },
+          "counts": {
+            "viewCnt": 320,
+            "scrapCnt": 14
+          },
+          "fields": [
+            {
+              "id": 10,
+              "name": "IT/영상사진"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 10,
+                "isAll": false,
+                "name": "충남"
+              },
+              "city": {
+                "id": 128,
+                "isAll": false,
+                "name": "천안시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-08-27 13:24:25",
+          "deadlineAt": "2026-09-10 23:59:59",
+          "deadlineDay": 6,
+          "recruitCount": 1,
+          "applicationGender": "A",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": "ANY",
+          "managerName": "최은경",
+          "managerPhoneNumber": "01092491482",
+          "managerEmail": "kyung23@illusionists.co.kr",
+          "preferred": "- AI 업무자동화 실습 또는 보조해보신 분 \n- GPT 기능 및 활용에 이해도가 있으신 분 \n- 천안에 거주하시는 분",
+          "workDetailAddress": "충남 천안시 동남구 성남면 소노로 1, 소노벨 천안 사파이어2 홀",
+          "workSchedules": [
+            {
+              "id": 182,
+              "startDate": "2026-09-01",
+              "endDate": "2026-09-03",
+              "day": "WED",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 150000
+            },
+            {
+              "id": 183,
+              "startDate": "2026-09-01",
+              "endDate": "2026-09-03",
+              "day": "THU",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 150000
+            },
+            {
+              "id": 184,
+              "startDate": "2026-09-01",
+              "endDate": "2026-09-03",
+              "day": "TUE",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 150000
+            }
+          ],
+          "scrapId": 10343,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": true
+        }
+      ]
     },
     {
-      "params": {
-        "page": 2
+      "body": {
+        "page": 2,
+        "size": 10,
+        "order": "RECENT"
       },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?page=2"
+      "status": 200,
+      "count": 22523,
+      "totalPage": 2253,
+      "currentPage": 2,
+      "hasPrevPage": true,
+      "hasNextPage": true,
+      "listCount": 10,
+      "ids": [
+        "23463",
+        "23462",
+        "23460",
+        "23459",
+        "23458",
+        "23453",
+        "23452",
+        "23449",
+        "23445",
+        "23434"
+      ],
+      "states": [
+        "RECRUITING",
+        "SCHEDULED"
+      ],
+      "provinces": [
+        "강원",
+        "경기",
+        "경북",
+        "광주",
+        "대구",
+        "세종"
+      ],
+      "sample": [
+        {
+          "id": 23463,
+          "type": "VIEW",
+          "state": "SCHEDULED",
+          "title": "2026년 전문강사와 함께하는 바르게 걷기교실 운동강사 모집 공고 - 체육",
+          "description": "<div id=\"FormatStyle\" style=\"line-height: 1.5; text-align: left;\"><p style=\"\"><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">모집기간</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">2026. 9. 7.(월) ~ 2026. 9. 17.(목)</span><br><br><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">모집분야</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">운동강사, 보조 강사</span><br><br><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">지원자격</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">운동강사: 체육관련 전공자 또는 체육 관련 자격증 보유자, 운동 분야의 1년 이상 실무 경력이 있는 자<br>보조강사: 체육 관련 자격증 보유자 또는 운동 분야의 관련 실무 경력이 있는 자</span><br><br><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">접수방법</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">방문접수 또는 전자우편(aa411000@korea.kr) 접수</span><br></p></div>",
+          "institution": {
+            "id": 2764,
+            "name": "세종시청",
+            "email": null,
+            "phoneNumber": null
+          },
+          "counts": {
+            "viewCnt": 0,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 13,
+              "name": "체육"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 9,
+                "isAll": false,
+                "name": "세종"
+              },
+              "city": {
+                "id": 115,
+                "isAll": true,
+                "name": "세종 전체"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-07 00:00:00",
+          "deadlineAt": "2026-09-17 23:59:59",
+          "deadlineDay": 13,
+          "recruitCount": 0,
+          "applicationGender": "",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": null,
+          "managerName": "",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": null,
+          "workDetailAddress": null,
+          "workSchedules": [],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": false
+        },
+        {
+          "id": 23462,
+          "type": "VIEW",
+          "state": "SCHEDULED",
+          "title": "2026학년도 선산고등학교 방과후학교 강사 채용 공고(가야금) - 국악기(가야금·해금·대금)",
+          "description": null,
+          "institution": {
+            "id": 3482,
+            "name": "경상북도교육청",
+            "email": null,
+            "phoneNumber": null
+          },
+          "counts": {
+            "viewCnt": 0,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 92,
+              "name": "국악기(가야금·해금·대금)"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 13,
+                "isAll": false,
+                "name": "경북"
+              },
+              "city": {
+                "id": 167,
+                "isAll": false,
+                "name": "구미시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-07 00:00:00",
+          "deadlineAt": "2026-09-11 23:59:59",
+          "deadlineDay": 7,
+          "recruitCount": 0,
+          "applicationGender": "",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": null,
+          "managerName": "",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": null,
+          "workDetailAddress": null,
+          "workSchedules": [],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": false
+        }
+      ]
     },
     {
-      "params": {
-        "page": 3
+      "body": {
+        "page": 3,
+        "size": 10,
+        "order": "RECENT"
       },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?page=3"
+      "status": 200,
+      "count": 22523,
+      "totalPage": 2253,
+      "currentPage": 3,
+      "hasPrevPage": true,
+      "hasNextPage": true,
+      "listCount": 10,
+      "ids": [
+        "23433",
+        "23432",
+        "23431",
+        "23429",
+        "23428",
+        "23424",
+        "23415",
+        "23414",
+        "23413",
+        "23412"
+      ],
+      "states": [
+        "RECRUITING"
+      ],
+      "provinces": [
+        "강원",
+        "경기",
+        "광주",
+        "서울",
+        "인천"
+      ],
+      "sample": [
+        {
+          "id": 23433,
+          "type": "VIEW",
+          "state": "RECRUITING",
+          "title": "[강동구체육회] 생활체육지도자 채용계획 공고 - 체육",
+          "description": null,
+          "institution": {
+            "id": 18,
+            "name": "서울특별시체육회",
+            "email": null,
+            "phoneNumber": null
+          },
+          "counts": {
+            "viewCnt": 4,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 13,
+              "name": "체육"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 1,
+                "isAll": false,
+                "name": "서울"
+              },
+              "city": {
+                "id": 3,
+                "isAll": false,
+                "name": "강동구"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-01 00:00:00",
+          "deadlineAt": "2026-09-16 23:59:59",
+          "deadlineDay": 12,
+          "recruitCount": 0,
+          "applicationGender": "",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": null,
+          "managerName": "",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": null,
+          "workDetailAddress": null,
+          "workSchedules": [],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": false
+        },
+        {
+          "id": 23432,
+          "type": "VIEW",
+          "state": "RECRUITING",
+          "title": "2026년 제 6회 권선배움마루 체육프로그램 강사 공개채용 - 배드민턴",
+          "description": null,
+          "institution": {
+            "id": 1100,
+            "name": "수원시청소년청년재단",
+            "email": null,
+            "phoneNumber": null
+          },
+          "counts": {
+            "viewCnt": 2,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 135,
+              "name": "배드민턴"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 40,
+                "isAll": false,
+                "name": "수원시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-03 00:00:00",
+          "deadlineAt": "2026-09-10 23:59:59",
+          "deadlineDay": 6,
+          "recruitCount": 0,
+          "applicationGender": "",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": null,
+          "managerName": "",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": null,
+          "workDetailAddress": null,
+          "workSchedules": [],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": false
+        }
+      ]
     },
     {
-      "params": {
-        "size": 100
+      "body": {
+        "page": 1,
+        "size": 100,
+        "order": "RECENT"
       },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?size=100"
-    },
-    {
-      "params": {
-        "limit": 100
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?limit=100"
-    },
-    {
-      "params": {
-        "provinceId": 1
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=1"
-    },
-    {
-      "params": {
-        "provinceId": 2
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=2"
-    },
-    {
-      "params": {
-        "provinceIds": "1,2"
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=1%2C2"
-    },
-    {
-      "params": {
-        "provinceIds": 1
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=1"
-    },
-    {
-      "params": {
-        "provinceIds": 2
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=2"
-    },
-    {
-      "params": {
-        "provinceIds[]": 1
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds%5B%5D=1"
-    },
-    {
-      "params": {
-        "provinceIds[]": 2
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds%5B%5D=2"
-    },
-    {
-      "params": {
-        "state": "RECRUITING"
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?state=RECRUITING"
-    },
-    {
-      "params": {
-        "states": "RECRUITING"
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?states=RECRUITING"
-    },
-    {
-      "params": {
-        "provinceId": 1,
-        "state": "RECRUITING"
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=1&state=RECRUITING"
-    },
-    {
-      "params": {
-        "provinceId": 2,
-        "state": "RECRUITING"
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=2&state=RECRUITING"
-    },
-    {
-      "params": {
-        "provinceIds": "1,2",
-        "state": "RECRUITING"
-      },
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=1%2C2&state=RECRUITING"
+      "status": 200,
+      "count": 22523,
+      "totalPage": 226,
+      "currentPage": 1,
+      "hasPrevPage": false,
+      "hasNextPage": true,
+      "listCount": 100,
+      "ids": [
+        "23367",
+        "23278",
+        "23211",
+        "23472",
+        "23471",
+        "23470",
+        "23469",
+        "23467",
+        "23466",
+        "23464",
+        "23463",
+        "23462",
+        "23460",
+        "23459",
+        "23458",
+        "23453",
+        "23452",
+        "23449",
+        "23445",
+        "23434",
+        "23433",
+        "23432",
+        "23431",
+        "23429",
+        "23428",
+        "23424",
+        "23415",
+        "23414",
+        "23413",
+        "23412",
+        "23411",
+        "23410",
+        "23409",
+        "23408",
+        "23407",
+        "23405",
+        "23404",
+        "23403",
+        "23402",
+        "23400",
+        "23399",
+        "23398",
+        "23396",
+        "23395",
+        "23394",
+        "23393",
+        "23392",
+        "23391",
+        "23388",
+        "23387",
+        "23385",
+        "23384",
+        "23382",
+        "23380",
+        "23379",
+        "23378",
+        "23377",
+        "23376",
+        "23375",
+        "23374",
+        "23373",
+        "23372",
+        "23371",
+        "23370",
+        "23369",
+        "23368",
+        "23366",
+        "23365",
+        "23364",
+        "23363",
+        "23362",
+        "23361",
+        "23360",
+        "23358",
+        "23356",
+        "23355",
+        "23353",
+        "23350",
+        "23349",
+        "23348",
+        "23346",
+        "23345",
+        "23344",
+        "23343",
+        "23342",
+        "23340",
+        "23339",
+        "23338",
+        "23337",
+        "23336",
+        "23335",
+        "23333",
+        "23331",
+        "23330",
+        "23327",
+        "23325",
+        "23324",
+        "23322",
+        "23321",
+        "23320"
+      ],
+      "states": [
+        "RECRUITING",
+        "SCHEDULED"
+      ],
+      "provinces": [
+        "강원",
+        "경기",
+        "경남",
+        "경북",
+        "광주",
+        "대구",
+        "부산",
+        "서울",
+        "세종",
+        "인천",
+        "전국",
+        "전북",
+        "제주",
+        "충남",
+        "충북"
+      ],
+      "sample": [
+        {
+          "id": 23367,
+          "type": "PROVIDER_SUBMIT",
+          "state": "RECRUITING",
+          "title": "화성효행중앙교회 유아체육 강사 구인",
+          "description": null,
+          "institution": {
+            "id": 5,
+            "name": "공공강사",
+            "email": "choh@8around.kr",
+            "phoneNumber": "01099022560"
+          },
+          "counts": {
+            "viewCnt": 41,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 149,
+              "name": "유아체육"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 40,
+                "isAll": false,
+                "name": "수원시"
+              }
+            },
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 50,
+                "isAll": false,
+                "name": "용인시"
+              }
+            },
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 58,
+                "isAll": false,
+                "name": "화성시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-02 16:10:31",
+          "deadlineAt": "2026-09-06 23:59:59",
+          "deadlineDay": 2,
+          "recruitCount": 2,
+          "applicationGender": "A",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": "ANY",
+          "managerName": "오창훈",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": "휴강일 : 9/26 추석, 10/3 개천절, 수업에 필요한 교구 지참 가능한 강사, 7~11세 / 4~6세 둘 중 선택",
+          "workDetailAddress": "경기 화성시 효행구 봉담읍 삼천병마로 1320",
+          "workSchedules": [
+            {
+              "id": 211,
+              "startDate": "2026-09-12",
+              "endDate": "2026-12-05",
+              "day": "SAT",
+              "startTime": "11:00:00",
+              "endTime": "12:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 75000
+            }
+          ],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": true
+        },
+        {
+          "id": 23278,
+          "type": "PROVIDER_SUBMIT",
+          "state": "RECRUITING",
+          "title": "AI 활용교육(공공기관 회계파트) 보조강사",
+          "description": null,
+          "institution": {
+            "id": 17,
+            "name": "상상력집단",
+            "email": "kyung23@illusionists.co.kr",
+            "phoneNumber": "01092491482"
+          },
+          "counts": {
+            "viewCnt": 320,
+            "scrapCnt": 14
+          },
+          "fields": [
+            {
+              "id": 10,
+              "name": "IT/영상사진"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 10,
+                "isAll": false,
+                "name": "충남"
+              },
+              "city": {
+                "id": 128,
+                "isAll": false,
+                "name": "천안시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-08-27 13:24:25",
+          "deadlineAt": "2026-09-10 23:59:59",
+          "deadlineDay": 6,
+          "recruitCount": 1,
+          "applicationGender": "A",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": "ANY",
+          "managerName": "최은경",
+          "managerPhoneNumber": "01092491482",
+          "managerEmail": "kyung23@illusionists.co.kr",
+          "preferred": "- AI 업무자동화 실습 또는 보조해보신 분 \n- GPT 기능 및 활용에 이해도가 있으신 분 \n- 천안에 거주하시는 분",
+          "workDetailAddress": "충남 천안시 동남구 성남면 소노로 1, 소노벨 천안 사파이어2 홀",
+          "workSchedules": [
+            {
+              "id": 182,
+              "startDate": "2026-09-01",
+              "endDate": "2026-09-03",
+              "day": "WED",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 150000
+            },
+            {
+              "id": 183,
+              "startDate": "2026-09-01",
+              "endDate": "2026-09-03",
+              "day": "THU",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 150000
+            },
+            {
+              "id": 184,
+              "startDate": "2026-09-01",
+              "endDate": "2026-09-03",
+              "day": "TUE",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "PER_SESSION",
+              "paymentAmount": 150000
+            }
+          ],
+          "scrapId": 10343,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": true
+        }
+      ]
     }
   ],
+  "errors": [],
   "summary": {
-    "pageParamWorks": false,
-    "filterEvidenceCount": 0,
-    "readyForCollector": false
+    "pageParamWorks": true,
+    "sizeParamWorks": true,
+    "metadataConsistent": true,
+    "readyForCollector": true
   },
-  "filterEvidence": [],
+  "collectorContract": {
+    "bodyTemplate": {
+      "page": "<n>",
+      "size": 100,
+      "order": "RECENT"
+    },
+    "stableId": "gonggonggangsa:<row.id>",
+    "detailUrl": "https://00gangsa.com/recruitments/<row.id>",
+    "localCurrentMetroFilter": "row.state == RECRUITING and any(row.regions[].province.name in {서울, 경기}) and deadlineAt not expired"
+  },
   "policy": {
     "publishBeforeValidation": false,
-    "nextGate": "isolated Seoul/Gyeonggi recruiting traversal + missingAfter=0"
+    "nextGate": "exhaustive POST traversal + independent dataset/ledger/state/report + missingAfter=0"
   }
 }
