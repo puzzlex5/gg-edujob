@@ -121,14 +121,20 @@ jobs:
           python scripts/validate_reconciliation_policy.py
           python - <<'PY'
           import json
+          import sys
           from pathlib import Path
+          sys.path.insert(0, str(Path('scripts').resolve()))
+          from source_registry import official_source_count
           r=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
           s=r.get('summary',{})
           if int(s.get('missingAfter') or 0): raise SystemExit(f'Official IDs still missing: {s}')
+          expected=official_source_count()
           reconciled=int(s.get('reconciledSources') or 0)
           total=int(s.get('totalSources') or 0)
-          if total != 38 or reconciled != total:
-              raise SystemExit(f'38-source reconciliation incomplete: {s}')
+          if total != expected or reconciled != expected:
+              raise SystemExit(
+                  f'Registry reconciliation incomplete: expected={expected}, reconciled={reconciled}, total={total}, summary={s}'
+              )
           c=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
           if not c.get('complete'):
               raise SystemExit(f'Central pagination proof incomplete: {c}')
