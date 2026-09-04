@@ -1,27 +1,15 @@
 {
-  "generatedAt": "2026-09-05T07:08:20+09:00",
-  "status": "degraded",
+  "generatedAt": "2026-09-05T07:14:55+09:00",
+  "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T07:08:20+09:00",
+    "generatedAt": "2026-09-05T07:14:55+09:00",
     "official": {
       "datasetCount": 19232,
       "officialIdCount": 18185,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
-    },
-    "lessoninfo": {
-      "datasetCount": 368,
-      "publishedIdCount": 368,
-      "missingAfter": 0,
-      "detailErrors": 0,
-      "healthy": true,
-      "traversalComplete": true,
-      "perSurface": {
-        "afterschool-nulbom": 82,
-        "culture-arts": 286
-      }
     },
     "unified": {
       "publishedJobs": 7605,
@@ -30,13 +18,21 @@
       "privateDiscovered": 4489,
       "officialPrivateAliases": 12,
       "healthy": true,
-      "missingLessoninfoIds": 0,
+      "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
       "bannedPrivate": 0,
       "expiredPrivate": 0,
       "futurePrivateDates": 0,
       "duplicateStableIds": 0,
-      "missingLinks": 0
+      "missingLinks": 0,
+      "badCrossSourceAliasEvidence": 0,
+      "enabledPrivateSources": [
+        "lessoninfo",
+        "jobteacher",
+        "artmore",
+        "gonggonggangsa"
+      ],
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -243,6 +239,56 @@
         "count": 53,
         "latestRegistered": "2026-09-04"
       }
+    },
+    "privateSources": {
+      "lessoninfo": {
+        "name": "레슨인포",
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 368,
+        "rawCount": 368,
+        "currentCount": 368,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-03"
+      },
+      "jobteacher": {
+        "name": "잡티처",
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 4037,
+        "rawCount": 4037,
+        "currentCount": 4037,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-05"
+      },
+      "artmore": {
+        "name": "아트모아",
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 28,
+        "rawCount": 28,
+        "currentCount": 28,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-04"
+      },
+      "gonggonggangsa": {
+        "name": "공공강사",
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 56,
+        "rawCount": 56,
+        "currentCount": 56,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-04"
+      }
     }
   },
   "comparisons": {
@@ -259,11 +305,6 @@
           "baseline": 17947,
           "changeRatio": 0.0133
         },
-        "lessoninfo.publishedIdCount": {
-          "current": 368,
-          "baseline": 1435,
-          "changeRatio": -0.7436
-        },
         "unified.publishedJobs": {
           "current": 7605,
           "baseline": 4513,
@@ -279,24 +320,35 @@
           "baseline": 1435,
           "changeRatio": 2.1282
         }
+      },
+      "privateSources": {
+        "lessoninfo": {
+          "current": 368,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "jobteacher": {
+          "current": 4037,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "artmore": {
+          "current": 28,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "gonggonggangsa": {
+          "current": 56,
+          "baseline": 0,
+          "changeRatio": null
+        }
       }
     },
     "7d": null,
     "30d": null
   },
-  "anomalies": [
-    {
-      "severity": "warning",
-      "code": "lessoninfo-sudden-drop",
-      "message": "lessoninfo.publishedIdCount가 24시간 기준으로 비정상 급감했습니다.",
-      "evidence": {
-        "current": 368,
-        "baseline": 1435,
-        "changeRatio": -0.7436
-      }
-    }
-  ],
+  "anomalies": [],
   "criticalCount": 0,
-  "warningCount": 1,
-  "policy": "hard integrity failures are critical; trend drops/stalls are warnings until independently verified"
+  "warningCount": 0,
+  "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; trend drops/stalls are warnings until independently verified"
 }
