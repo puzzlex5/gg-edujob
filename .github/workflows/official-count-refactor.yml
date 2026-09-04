@@ -1,0 +1,58 @@
+name: Temporary official count refactor
+
+on:
+  push:
+    branches: [gpt/official-count-registry-20260904]
+    paths:
+      - '.github/workflows/official-count-refactor.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-count-refactor-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Apply exact registry refactor
+        run: python scripts/refactor_official_count_registry.py
+      - name: Compile and validate changed official-count consumers
+        run: |
+          python -m py_compile \
+            scripts/source_registry.py \
+            scripts/validate_official_source_registry_usage.py \
+            scripts/validate_reconciliation_policy.py \
+            scripts/verify_jobs.py \
+            scripts/verify_support_completeness.py \
+            scripts/verify_central_reconciliation_consistency.py \
+            scripts/update_collector_status.py
+          python scripts/validate_official_source_registry_usage.py
+          python scripts/validate_reconciliation_policy.py
+      - name: Commit branch-only refactor result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            scripts/validate_reconciliation_policy.py \
+            scripts/verify_jobs.py \
+            scripts/verify_support_completeness.py \
+            scripts/verify_central_reconciliation_consistency.py \
+            scripts/update_collector_status.py \
+            scripts/validate_official_source_registry_usage.py \
+            .github/workflows/daily-deep-audit.yml \
+            .github/workflows/recover-missing-jobs.yml \
+            .github/workflows/source-id-reconciliation.yml \
+            .github/workflows/official-registry-safety.yml
+          git diff --cached --quiet && exit 0
+          git commit -m 'Derive official completeness checks from source registry'
+          git push origin HEAD:gpt/official-count-registry-20260904
