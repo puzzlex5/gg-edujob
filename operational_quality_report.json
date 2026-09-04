@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-04 23:50:58 KST",
+  "generatedAt": "2026-09-05 01:48:46 KST",
   "policy": "diagnostic-first; stable-ID/URL duplicates are strong evidence, semantic duplicates are review-only",
   "summary": {
-    "publishedJobs": 19240,
-    "officialIds": 18194,
-    "publishedToOfficialRatio": 1.057,
+    "publishedJobs": 19235,
+    "officialIds": 18185,
+    "publishedToOfficialRatio": 1.058,
     "exactStableIdDuplicateGroups": 0,
     "exactStableIdExtraRecords": 0,
     "exactUrlDuplicateGroups": 0,
     "exactUrlExtraRecords": 0,
     "semanticDuplicateGroupsReviewOnly": 268,
-    "resultLikeNotices": 1,
-    "staleInactiveOver120Days": 0,
+    "resultLikeNotices": 0,
+    "staleInactiveOver120Days": 1,
     "missingDetailLinks": 0,
     "reconciledSources": 38,
     "totalSources": 38,
@@ -20,7 +20,7 @@
   "findings": [
     {
       "severity": "warning",
-      "code": "result-notice-contamination",
+      "code": "stale-inactive-overcollection",
       "count": 1
     }
   ],
@@ -28,20 +28,20 @@
     {
       "province": "경기",
       "name": "경기도교육청 통합 구인구직",
-      "officialIdCount": 10332,
-      "publishedRecords": 10433,
+      "officialIdCount": 10333,
+      "publishedRecords": 10434,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
     {
       "province": "서울",
       "name": "서울교육일자리포털",
-      "officialIdCount": 380,
-      "publishedRecords": 1211,
+      "officialIdCount": 375,
+      "publishedRecords": 1209,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -51,7 +51,7 @@
       "officialIdCount": 97,
       "publishedRecords": 98,
       "latestRegistered": "2026-09-02",
-      "freshnessDays": 2,
+      "freshnessDays": 3,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -61,7 +61,7 @@
       "officialIdCount": 221,
       "publishedRecords": 224,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -71,7 +71,7 @@
       "officialIdCount": 309,
       "publishedRecords": 311,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -81,17 +81,17 @@
       "officialIdCount": 347,
       "publishedRecords": 350,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
     {
       "province": "경기",
       "name": "구리남양주교육지원청",
-      "officialIdCount": 569,
+      "officialIdCount": 568,
       "publishedRecords": 579,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -101,17 +101,17 @@
       "officialIdCount": 7,
       "publishedRecords": 7,
       "latestRegistered": "2026-09-03",
-      "freshnessDays": 1,
+      "freshnessDays": 2,
       "reconciled": true,
       "missingAfterCount": 0
     },
     {
       "province": "경기",
       "name": "김포교육지원청",
-      "officialIdCount": 542,
+      "officialIdCount": 541,
       "publishedRecords": 546,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -121,7 +121,7 @@
       "officialIdCount": 503,
       "publishedRecords": 520,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -131,7 +131,7 @@
       "officialIdCount": 734,
       "publishedRecords": 737,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -141,7 +141,7 @@
       "officialIdCount": 990,
       "publishedRecords": 1003,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -151,7 +151,7 @@
       "officialIdCount": 15,
       "publishedRecords": 15,
       "latestRegistered": "2026-09-03",
-      "freshnessDays": 1,
+      "freshnessDays": 2,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -159,9 +159,9 @@
       "province": "경기",
       "name": "시흥교육지원청",
       "officialIdCount": 65,
-      "publishedRecords": 66,
+      "publishedRecords": 65,
       "latestRegistered": "2026-09-02",
-      "freshnessDays": 2,
+      "freshnessDays": 3,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -171,7 +171,7 @@
       "officialIdCount": 81,
       "publishedRecords": 81,
       "latestRegistered": "2026-09-02",
-      "freshnessDays": 2,
+      "freshnessDays": 3,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -181,7 +181,7 @@
       "officialIdCount": 215,
       "publishedRecords": 218,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -191,7 +191,7 @@
       "officialIdCount": 10,
       "publishedRecords": 10,
       "latestRegistered": "2026-09-03",
-      "freshnessDays": 1,
+      "freshnessDays": 2,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -201,7 +201,7 @@
       "officialIdCount": 190,
       "publishedRecords": 190,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -211,7 +211,7 @@
       "officialIdCount": 9,
       "publishedRecords": 9,
       "latestRegistered": "2026-09-01",
-      "freshnessDays": 3,
+      "freshnessDays": 4,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -221,7 +221,7 @@
       "officialIdCount": 89,
       "publishedRecords": 95,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -231,7 +231,7 @@
       "officialIdCount": 132,
       "publishedRecords": 135,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -239,9 +239,9 @@
       "province": "경기",
       "name": "의정부교육지원청",
       "officialIdCount": 345,
-      "publishedRecords": 363,
+      "publishedRecords": 362,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -251,7 +251,7 @@
       "officialIdCount": 11,
       "publishedRecords": 11,
       "latestRegistered": "2026-09-02",
-      "freshnessDays": 2,
+      "freshnessDays": 3,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -261,7 +261,7 @@
       "officialIdCount": 482,
       "publishedRecords": 486,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -271,7 +271,7 @@
       "officialIdCount": 778,
       "publishedRecords": 790,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -281,7 +281,7 @@
       "officialIdCount": 202,
       "publishedRecords": 214,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -291,7 +291,7 @@
       "officialIdCount": 52,
       "publishedRecords": 53,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -301,7 +301,7 @@
       "officialIdCount": 0,
       "publishedRecords": 1,
       "latestRegistered": "2026-08-12",
-      "freshnessDays": 23,
+      "freshnessDays": 24,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -311,17 +311,17 @@
       "officialIdCount": 4,
       "publishedRecords": 12,
       "latestRegistered": "2026-09-03",
-      "freshnessDays": 1,
+      "freshnessDays": 2,
       "reconciled": true,
       "missingAfterCount": 0
     },
     {
       "province": "서울",
       "name": "남부교육지원청",
-      "officialIdCount": 14,
+      "officialIdCount": 12,
       "publishedRecords": 41,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -331,7 +331,7 @@
       "officialIdCount": 0,
       "publishedRecords": 1,
       "latestRegistered": "2026-09-01",
-      "freshnessDays": 3,
+      "freshnessDays": 4,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -341,7 +341,7 @@
       "officialIdCount": 52,
       "publishedRecords": 52,
       "latestRegistered": "2026-09-01",
-      "freshnessDays": 3,
+      "freshnessDays": 4,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -349,9 +349,9 @@
       "province": "서울",
       "name": "강동송파교육지원청",
       "officialIdCount": 6,
-      "publishedRecords": 20,
+      "publishedRecords": 19,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -359,9 +359,9 @@
       "province": "서울",
       "name": "강서양천교육지원청",
       "officialIdCount": 146,
-      "publishedRecords": 149,
+      "publishedRecords": 148,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -371,17 +371,17 @@
       "officialIdCount": 97,
       "publishedRecords": 105,
       "latestRegistered": "2026-09-03",
-      "freshnessDays": 1,
+      "freshnessDays": 2,
       "reconciled": true,
       "missingAfterCount": 0
     },
     {
       "province": "서울",
       "name": "동작관악교육지원청",
-      "officialIdCount": 166,
+      "officialIdCount": 165,
       "publishedRecords": 177,
       "latestRegistered": "2026-09-04",
-      "freshnessDays": 0,
+      "freshnessDays": 1,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -391,7 +391,7 @@
       "officialIdCount": 0,
       "publishedRecords": 1,
       "latestRegistered": "2026-08-20",
-      "freshnessDays": 15,
+      "freshnessDays": 16,
       "reconciled": true,
       "missingAfterCount": 0
     },
@@ -401,7 +401,7 @@
       "officialIdCount": 2,
       "publishedRecords": 2,
       "latestRegistered": "2026-09-01",
-      "freshnessDays": 3,
+      "freshnessDays": 4,
       "reconciled": true,
       "missingAfterCount": 0
     }
@@ -409,18 +409,18 @@
   "examples": {
     "exactStableIdDuplicates": [],
     "exactUrlDuplicates": [],
-    "resultLikeNotices": [
+    "resultLikeNotices": [],
+    "staleInactive": [
       {
-        "province": "경기",
-        "source": "시흥교육지원청",
-        "school": "초등학교",
-        "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
-        "registered": "2026/08/18",
-        "applyEnd": "",
-        "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414"
+        "province": "서울",
+        "source": "서울교육일자리포털",
+        "school": "한양제일유치원",
+        "title": "2026년 한양제일유치원 하모니 채용 공고",
+        "registered": "2024/06/27",
+        "applyEnd": "2026/09/04",
+        "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=35409"
       }
     ],
-    "staleInactive": [],
     "missingDetailLinks": []
   }
 }
