@@ -18,6 +18,11 @@ LIST_CANDIDATES = [
 ]
 BLOCK_RE = re.compile(r"captcha|사람인지|자동입력|비정상적인\s*접근|접근이\s*제한|보안문자", re.I)
 PAID_MAIN_API = "/hunApi/main/prchsSubMainRecruitList"
+NON_GENERAL_API_FRAGMENTS = (
+    "/hunApi/main/",
+    "/hunApi/common/",
+    "/logApi/",
+)
 
 
 def walk_recruit_rows(value, out, depth=0):
@@ -112,9 +117,9 @@ def main() -> int:
             except Exception as e:
                 errors.append(f"{url}: {type(e).__name__}: {e}")
 
-        # The guessed /recruit/recruitList route currently redirects to home. Discover the
-        # application's own SPA navigation by clicking visible public recruitment controls.
-        # This stays inside a normal TLS-verified browser session and does not bypass auth.
+        # Discover the site's own public recruitment navigation. A route change is not
+        # required: some SPA controls can keep the same URL while replacing the view and
+        # issuing new XHRs, so body/API deltas are recorded as evidence as well.
         if not blocked:
             try:
                 page.goto(BASE, wait_until="domcontentloaded", timeout=45000)
@@ -124,6 +129,12 @@ def main() -> int:
                     "button:has-text('채용정보')",
                     "[role='button']:has-text('채용정보')",
                     "text=채용정보",
+                    "a:has-text('서울')",
+                    "button:has-text('서울')",
+                    "text=서울",
+                    "a:has-text('경기')",
+                    "button:has-text('경기')",
+                    "text=경기",
                 ]
                 for selector in selectors:
                     loc = page.locator(selector)
@@ -131,7 +142,9 @@ def main() -> int:
                     for i in range(count):
                         el = loc.nth(i)
                         try:
-                            before = page.url
+                            before_url = page.url
+                            before_body = page.locator("body").inner_text(timeout=3000)[:12000]
+                            before_requests = len(requests)
                             txt = (el.inner_text(timeout=700) or "").strip()[:120]
                             href = el.get_attribute("href") or ""
                             if href:
@@ -140,25 +153,37 @@ def main() -> int:
                                     continue
                             el.click(timeout=3000)
                             page.wait_for_timeout(5000)
-                            after = page.url
-                            navigation_attempts.append({"selector": selector, "text": txt, "href": href, "before": before, "after": after})
-                            if after != before:
-                                body = page.locator("body").inner_text(timeout=5000)[:12000]
+                            after_url = page.url
+                            after_body = page.locator("body").inner_text(timeout=5000)[:12000]
+                            api_delta = requests[before_requests:]
+                            changed = after_url != before_url or after_body != before_body or bool(api_delta)
+                            navigation_attempts.append({
+                                "selector": selector,
+                                "text": txt,
+                                "href": href,
+                                "before": before_url,
+                                "after": after_url,
+                                "bodyChanged": after_body != before_body,
+                                "newApiRequests": api_delta[:40],
+                            })
+                            if changed:
                                 pages.append({
-                                    "url": after,
-                                    "requestedUrl": "discovered-by-click:채용정보",
+                                    "url": after_url,
+                                    "requestedUrl": f"discovered-by-click:{txt or selector}",
                                     "status": None,
                                     "title": page.title(),
-                                    "bodySample": body[:8000],
+                                    "bodySample": after_body[:8000],
                                     "links": page.locator("a[href]").evaluate_all(
                                         "els => els.slice(0,500).map(a => ({href:a.href, text:(a.innerText||'').trim().slice(0,120)}))"
                                     ),
                                 })
+                                # Reset before trying another public navigation control so one
+                                # successful SPA transition does not hide the region probes.
+                                page.goto(BASE, wait_until="domcontentloaded", timeout=45000)
+                                page.wait_for_timeout(2500)
                                 break
                         except Exception:
                             continue
-                    if navigation_attempts and navigation_attempts[-1].get("after") != navigation_attempts[-1].get("before"):
-                        break
             except Exception as e:
                 errors.append(f"spa navigation probe: {type(e).__name__}: {e}")
 
@@ -181,7 +206,10 @@ def main() -> int:
     detail_api = [x for x in api_responses if "recruitDetail" in x.get("url", "")]
     all_recruit_api = [x for x in api_responses if "/hunApi/" in x.get("url", "") and x.get("recruitRowCount")]
     paid_main_api = [x for x in all_recruit_api if PAID_MAIN_API in x.get("url", "")]
-    general_list_api = [x for x in all_recruit_api if PAID_MAIN_API not in x.get("url", "")]
+    general_list_api = [
+        x for x in all_recruit_api
+        if not any(fragment in x.get("url", "") for fragment in NON_GENERAL_API_FRAGMENTS)
+    ]
 
     report = {
         "generatedAt": generated_at,
@@ -191,11 +219,12 @@ def main() -> int:
         "humanVerificationDetected": blocked,
         "pages": pages,
         "navigationAttempts": navigation_attempts,
-        "apiRequests": requests[:300],
-        "apiResponses": api_responses[:300],
+        "apiRequests": requests[:500],
+        "apiResponses": api_responses[:500],
         "observedRecruitApiCount": len(all_recruit_api),
         "observedPaidMainApiCount": len(paid_main_api),
         "observedGeneralListApiCount": len(general_list_api),
+        "observedGeneralListApiUrls": sorted({x.get("url") for x in general_list_api if x.get("url")}),
         "observedDetailApiCount": len(detail_api),
         "stableIdCandidate": "hunjang:<rcrtNo>" if numeric_ids else None,
         "numericRcrtNoCount": len(numeric_ids),
@@ -205,7 +234,7 @@ def main() -> int:
         "metroRows": metro_rows[:200],
         "errors": errors,
         "readyForPaginationProbe": bool(numeric_ids and general_list_api and not blocked),
-        "nextGate": "identify a non-paid public general recruitment list request, then prove pagination changes IDs and exhaustively traverse before writing any canonical dataset",
+        "nextGate": "identify a non-main public general recruitment list request, then prove pagination changes IDs and exhaustively traverse before writing any canonical dataset",
         "safety": {
             "tlsVerificationDisabled": False,
             "authenticationBypassed": False,
@@ -214,7 +243,7 @@ def main() -> int:
         },
     }
     Path("hunjang_probe_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({k: report[k] for k in ("generatedAt", "publiclyReachable", "humanVerificationDetected", "numericRcrtNoCount", "observedPaidMainApiCount", "observedGeneralListApiCount", "readyForPaginationProbe", "nextGate")}, ensure_ascii=False))
+    print(json.dumps({k: report[k] for k in ("generatedAt", "publiclyReachable", "humanVerificationDetected", "numericRcrtNoCount", "observedPaidMainApiCount", "observedGeneralListApiCount", "observedGeneralListApiUrls", "readyForPaginationProbe", "nextGate")}, ensure_ascii=False))
     return 0 if report["publiclyReachable"] else 2
 
 
