@@ -1,72 +1,19 @@
 {
-  "generatedAt": "2026-09-04T16:00:28+09:00",
+  "generatedAt": "2026-09-04T16:34:10+09:00",
   "source": "아트모아",
-  "healthy": true,
-  "detailCoverageComplete": true,
+  "healthy": false,
+  "detailCoverageComplete": false,
   "candidateCount": 10,
-  "verifiedCount": 10,
+  "verifiedCount": 0,
   "detailErrorCount": 0,
-  "errors": [],
-  "verifiedExamples": [
+  "abnormalDrop": true,
+  "previousCanonicalCount": 28,
+  "candidateDropRatio": 0.6429,
+  "preservedPublishedDataset": true,
+  "errors": [
     {
-      "sourceIdentity": "artmore:94869",
-      "stableId": "94869",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94869",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94867",
-      "stableId": "94867",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94867",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94863",
-      "stableId": "94863",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94863",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94855",
-      "stableId": "94855",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94855",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94833",
-      "stableId": "94833",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94833",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94844",
-      "stableId": "94844",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94844",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94842",
-      "stableId": "94842",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94842",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94817",
-      "stableId": "94817",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94817",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94816",
-      "stableId": "94816",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94816",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94812",
-      "stableId": "94812",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94812",
-      "httpStatus": 200
+      "error": "abnormal candidate drop; canonical publication preserved"
     }
-  ]
+  ],
+  "verifiedExamples": []
 }
