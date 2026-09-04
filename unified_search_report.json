@@ -1,101 +1,48 @@
 {
-  "generatedAt": "2026-09-04T13:53:08+09:00",
-  "policy": "unified-search-v2-explicit-official-identity-only",
+  "generatedAt": "2026-09-04T13:55:19+09:00",
+  "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 18987,
-  "canonicalPrivateJobs": 1442,
+  "canonicalPrivateJobs": 5479,
   "selectedOfficialJobs": 3168,
-  "selectedPrivateJobs": 1442,
-  "publishedJobs": 4595,
+  "selectedPrivateJobs": 5479,
+  "publishedJobs": 8632,
   "perFeed": {
     "official": 3168,
-    "private": 1427
+    "private": 5464
   },
-  "perPrivateSurface": {
-    "afterschool-nulbom": 82,
-    "culture-arts": 1360
+  "privateSources": {
+    "lessoninfo": {
+      "name": "레슨인포",
+      "ok": true,
+      "count": 1442,
+      "lastVerifiedAt": "2026-09-04T13:52:29+09:00",
+      "missingAfterCount": 0,
+      "detailErrorCount": 0,
+      "displayedAsPrivate": 1427
+    },
+    "jobteacher": {
+      "name": "잡티처",
+      "ok": true,
+      "count": 4037,
+      "lastVerifiedAt": "2026-09-04T12:57:24+09:00",
+      "missingAfterCount": 0,
+      "detailErrorCount": 0,
+      "displayedAsPrivate": 4037
+    },
+    "artmore": {
+      "name": "아트모아",
+      "ok": false,
+      "count": 0,
+      "lastVerifiedAt": null,
+      "missingAfterCount": null,
+      "detailErrorCount": null,
+      "displayedAsPrivate": 0
+    }
   },
   "protectedOfficialIds": 17995,
   "explicitOfficialAliasGroupsMerged": 15,
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
-  "explicitAliasExamples": [
-    {
-      "officialId": "goe-central:58832",
-      "privateId": "board:20170316171033_6494:7621",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58832"
-    },
-    {
-      "officialId": "seoul:jbedu.sen.go.kr:3439",
-      "privateId": "board:20170316171033_6494:7620",
-      "evidenceUrl": "https://jbedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=3439"
-    },
-    {
-      "officialId": "seoul:nbedu.sen.go.kr:11367",
-      "privateId": "board:20170316171033_6494:7619",
-      "evidenceUrl": "https://nbedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=11367"
-    },
-    {
-      "officialId": "seoul:sbgbedu.sen.go.kr:3045",
-      "privateId": "board:20170316171033_6494:7618",
-      "evidenceUrl": "https://sbgbedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=3045"
-    },
-    {
-      "officialId": "goe-central:58658",
-      "privateId": "board:20170316171033_6494:7617",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58658"
-    },
-    {
-      "officialId": "goe-central:58700",
-      "privateId": "board:20170316171033_6494:7616",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58700"
-    },
-    {
-      "officialId": "goe-central:58723",
-      "privateId": "board:20170316171033_6494:7615",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58723"
-    },
-    {
-      "officialId": "goe-central:58717",
-      "privateId": "board:20170316171033_6494:7614",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58717"
-    },
-    {
-      "officialId": "goe-central:58332",
-      "privateId": "board:20170316171033_6494:7613",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58332"
-    },
-    {
-      "officialId": "goe-central:58347",
-      "privateId": "board:20170316171033_6494:7612",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58347"
-    },
-    {
-      "officialId": "goe-central:58352",
-      "privateId": "board:20170316171033_6494:7611",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58352"
-    },
-    {
-      "officialId": "seoul:dgedu.sen.go.kr:10240",
-      "privateId": "board:20170316171033_6494:7609",
-      "evidenceUrl": "https://dgedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=10240"
-    },
-    {
-      "officialId": "goe-central:58122",
-      "privateId": "board:20170316171033_6494:7608",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58122"
-    },
-    {
-      "officialId": "goe-central:58286",
-      "privateId": "board:20170316171033_6494:7605",
-      "evidenceUrl": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58286"
-    },
-    {
-      "officialId": "seoul:gnscedu.sen.go.kr:14235",
-      "privateId": "board:20170316171033_6494:7584",
-      "evidenceUrl": "https://gnscedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=14235"
-    }
-  ],
-  "ambiguousAliasExamples": [],
   "semanticDuplicatePolicy": "review-only-never-auto-delete",
-  "privateSourceHealthy": true
+  "allPrivateSourcesHealthy": false
 }
