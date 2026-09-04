@@ -15,7 +15,9 @@ SPECS = [
     {"key":"lessoninfo","name":"레슨인포","jobs":"lessoninfo_jobs.json","report":"lessoninfo_reconciliation_report.json","detail_report":None},
     {"key":"jobteacher","name":"잡티처","jobs":"jobteacher_jobs.json","report":"jobteacher_reconciliation_report.json","detail_report":"jobteacher_detail_link_report.json"},
     {"key":"artmore","name":"아트모아","jobs":"artmore_jobs.json","report":"artmore_reconciliation_report.json","detail_report":"artmore_detail_link_report.json"},
+    {"key":"gonggonggangsa","name":"공공강사","jobs":"gonggonggangsa_jobs.json","report":"gonggonggangsa_reconciliation_report.json","detail_report":"gonggonggangsa_detail_link_report.json"},
 ]
+ALLOWED_PROVINCES = {"서울", "경기"}
 
 
 def load(path, default=None):
@@ -40,6 +42,14 @@ def parse_date(v):
 
 def publication_enabled(report):
     return not isinstance(report, dict) or "publicationEnabled" not in report or report.get("publicationEnabled") is True
+
+
+def row_provinces(row):
+    explicit = [str(x) for x in (row.get("provinces") or []) if str(x)]
+    if explicit:
+        return set(explicit)
+    scalar = str(row.get("province") or "")
+    return {scalar} if scalar else set()
 
 
 def main():
@@ -89,7 +99,11 @@ def main():
         missing_by_source[spec["key"]] = missing
         if missing:
             errors.append(f"Unified dataset dropped {len(missing)} current {spec['name']} stable IDs")
-        non_metro += sum(1 for j in src if j.get("province") not in {"서울","경기"})
+
+        for j in src:
+            ps = row_provinces(j)
+            if not ps or not ps.issubset(ALLOWED_PROVINCES):
+                non_metro += 1
         banned += sum(1 for j in src if BANNED.search(str(j.get("title") or "")) or PROMO_ONLY.search(str(j.get("title") or "")))
         expired += sum(1 for j in src if parse_date(j.get("applyEnd")) and parse_date(j.get("applyEnd")) < TODAY)
         future += sum(1 for j in src if parse_date(j.get("registered")) and parse_date(j.get("registered")) > TODAY)
@@ -109,6 +123,11 @@ def main():
     if missing_links: errors.append(f"Unified dataset has {len(missing_links)} rows without usable links")
     no_search_text = [j for j in jobs if not str(j.get("searchText") or "").strip()]
     if no_search_text: errors.append(f"Unified dataset has {len(no_search_text)} rows without searchText")
+
+    # Projected rows must also preserve valid province evidence, including multi-province jobs.
+    projected_non_metro = [j for j in private if not row_provinces(j) or not row_provinces(j).issubset(ALLOWED_PROVINCES)]
+    if projected_non_metro:
+        errors.append(f"Unified private projection contains {len(projected_non_metro)} non-metro province sets")
 
     counts = data.get("counts", {})
     if int(counts.get("private", -1)) != len(private) or int(counts.get("official", -1)) != len(official):
@@ -143,6 +162,7 @@ def main():
         "missingPrivateBySource": {k:len(v) for k,v in missing_by_source.items()},
         "missingPrivateExamples": {k:v[:20] for k,v in missing_by_source.items()},
         "nonMetroPrivate": non_metro,
+        "projectedNonMetroPrivate": len(projected_non_metro),
         "bannedPrivate": banned,
         "expiredPrivate": expired,
         "futurePrivateDates": future,
