@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04 21:31 KST",
+  "updatedAt": "2026-09-04 22:56 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -954,12 +954,12 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-04 22:44 KST",
+    "checkedAt": "2026-09-04 23:27 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7581,
-      "resolved": 7581,
+      "total": 7582,
+      "resolved": 7582,
       "unresolved": 0,
       "examples": []
     },
@@ -993,8 +993,8 @@
         }
       ]
     },
-    "previousTotal": 19236,
-    "currentTotal": 19239
+    "previousTotal": 19239,
+    "currentTotal": 19240
   },
   "jobs": [
     {
@@ -1081,7 +1081,10 @@
       "nttSn": "1683442",
       "bbsId": "10228",
       "mi": "10336",
-      "periodStatus": "parsed"
+      "periodStatus": "parsed",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-58982",
@@ -1399,7 +1402,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109719",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -1854,7 +1857,7 @@
       "detailLinkResolved": true,
       "mi": "",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -3314,7 +3317,10 @@
       "nttSn": "1103523",
       "bbsId": "2727",
       "mi": "4464",
-      "periodStatus": "parsed"
+      "periodStatus": "parsed",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-59104",
@@ -6188,7 +6194,10 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59099",
       "recoveredBy": "official-source-id-reconciliation",
-      "sourceIdentity": "goe-central:59099"
+      "sourceIdentity": "goe-central:59099",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-59068",
@@ -9131,7 +9140,7 @@
       "recoveredBy": "official-source-id-reconciliation",
       "sourceIdentity": "seoul-central:109753",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -9798,7 +9807,10 @@
       "nttSn": "1225919",
       "bbsId": "11674",
       "mi": "21048",
-      "periodStatus": "parsed"
+      "periodStatus": "parsed",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-office-6f4620f6c14f69e818c2",
@@ -16474,7 +16486,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109622",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -16639,7 +16651,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109676",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -16667,7 +16679,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109626",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -16695,7 +16707,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109645",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -25237,7 +25249,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58796",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -25265,7 +25277,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109599",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -25293,7 +25305,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109550",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -25348,7 +25360,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109575",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -33351,7 +33363,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109516",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -33379,7 +33391,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109487",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -33407,7 +33419,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109450",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -33435,7 +33447,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109531",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -33463,7 +33475,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109522",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -39528,7 +39540,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109373",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -40637,7 +40649,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109432",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -40665,7 +40677,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109382",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -40693,7 +40705,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109344",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -47734,7 +47746,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109278",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -47762,7 +47774,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109326",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -47790,7 +47802,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109319",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -55797,7 +55809,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109227",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -84160,7 +84172,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108815",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -125331,7 +125343,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108478",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -136886,7 +136898,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=108287",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
     },
     {
@@ -151761,6 +151773,37 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office2-ca5ecba43ea6a22378",
+      "province": "경기",
+      "school": "초등학교",
+      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+      "subject": "",
+      "region": "시흥시",
+      "regions": [
+        "시흥시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/08/18",
+      "headcount": "",
+      "source": "시흥교육지원청",
+      "checkedSources": [
+        "시흥교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
+      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
+      "detailLinkResolved": true,
+      "nttSn": "527414",
+      "bbsId": "5511",
+      "mi": "9003",
+      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -534055,7 +534098,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-04 21:58 KST",
+      "checkedAt": "2026-09-04 23:21 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
@@ -534066,42 +534109,42 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-04 22:42 KST",
+    "checkedAt": "2026-09-04 23:26 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-04 22:42 KST",
+    "checkedAt": "2026-09-04 23:26 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 16965,
-    "previousCount": 19233,
-    "mergedCount": 19232,
-    "carriedForward": 2267,
-    "officialIdProtected": 18099,
-    "officialIdCarryForward": 1253,
+    "previousCount": 19239,
+    "mergedCount": 19236,
+    "carriedForward": 2271,
+    "officialIdProtected": 18194,
+    "officialIdCarryForward": 1230,
     "enrichedFromPrevious": 7234,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-04 22:03 KST"
+    "generatedAt": "2026-09-04 23:25 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 7053,
-    "gyeonggiTotal": 7053,
+    "gyeonggiExact": 7054,
+    "gyeonggiTotal": 7054,
     "seoulExact": 528,
     "seoulTotal": 528
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-04 22:42 KST",
+    "checkedAt": "2026-09-04 23:25 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6354,
+    "recentSupportJobs": 6355,
     "detailPagesParsed": 2643,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1120,
-    "missingWorkPeriod": 2118,
+    "missingApplicationPeriod": 1121,
+    "missingWorkPeriod": 2119,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-04 22:42 KST",
+      "checkedAt": "2026-09-04 23:26 KST",
       "candidates": 251,
       "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
@@ -534111,26 +534154,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "sourceReconciliation": {
-    "generatedAt": "2026-09-04 22:06:31 KST",
-    "lookbackDays": 90,
-    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 18194,
-    "datasetIdCountBefore": 19221,
-    "missingBefore": 4,
-    "recoveredNow": 4,
-    "missingAfter": 0,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "reconciledOffices": 38,
-    "totalOffices": 38
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-04 22:42:38 KST",
-    "protectedOfficialIds": 18194,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
