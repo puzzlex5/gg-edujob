@@ -70,6 +70,65 @@ def reconciliation_age_hours(generated_at):
     return max(age, 0.0)
 
 
+def validate_source_evidence(report, expected_sources):
+    """Verify every registry-counted source, not only reconciliation summary totals."""
+    sources = report.get("sources") if isinstance(report, dict) else None
+    if not isinstance(sources, list) or len(sources) != expected_sources:
+        raise SystemExit(
+            "Per-source reconciliation evidence does not match registry: "
+            f"registry={expected_sources}, sourceRecords={len(sources) if isinstance(sources, list) else 'invalid'}"
+        )
+    if report.get("incompleteSources") or report.get("incompleteOffices"):
+        raise SystemExit(
+            "Reconciliation explicitly reports incomplete sources/offices: "
+            f"sources={len(report.get('incompleteSources') or [])}, "
+            f"offices={len(report.get('incompleteOffices') or [])}"
+        )
+
+    failures = []
+    board_failures = 0
+    total_access_errors = 0
+    for src in sources:
+        name = str(src.get("name") or "<unnamed>")
+        access_errors = int(src.get("accessErrors") or 0)
+        total_access_errors += access_errors
+        reasons = []
+        if src.get("reconciled") is not True:
+            reasons.append("reconciled=false")
+        if int(src.get("missingAfterCount") or 0) != 0:
+            reasons.append(f"missingAfter={src.get('missingAfterCount')}")
+        if src.get("coverageComplete") is not True:
+            reasons.append("coverageComplete=false")
+        if access_errors != 0:
+            reasons.append(f"accessErrors={access_errors}")
+
+        for board in src.get("boardHealth") or []:
+            if (
+                board.get("accessError") is True
+                or board.get("paginationRepeated") is True
+                or board.get("coverageComplete") is not True
+            ):
+                board_failures += 1
+                reasons.append("board-pagination/access-incomplete")
+                break
+        if reasons:
+            failures.append({"source": name, "reasons": reasons})
+
+    if failures:
+        preview = "; ".join(
+            f"{item['source']}({','.join(item['reasons'])})" for item in failures[:5]
+        )
+        raise SystemExit(
+            f"Per-source reconciliation evidence is incomplete for {len(failures)} source(s): {preview}"
+        )
+    return {
+        "sourceRecords": len(sources),
+        "accessErrors": total_access_errors,
+        "boardFailures": board_failures,
+        "allCoverageComplete": True,
+    }
+
+
 def guard_fast_publication_shape():
     """Reject unexplained large fast-run population changes and keep the last published baseline.
 
@@ -129,6 +188,7 @@ def main():
     if report.get("generatedAt") != ledger.get("generatedAt"):
         raise SystemExit("Reconciliation report and stable-ID ledger are not from the same scan")
 
+    source_evidence = validate_source_evidence(report, expected_sources)
     evidence_age_hours = reconciliation_age_hours(report.get("generatedAt"))
     fast_shape = guard_fast_publication_shape()
     print(json.dumps({
@@ -140,6 +200,7 @@ def main():
         "expectedSources": expected_sources,
         "reconciledSources": reconciled_sources,
         "missingAfter": summary.get("missingAfter"),
+        "sourceEvidence": source_evidence,
         "fastPublicationShape": fast_shape,
     }, ensure_ascii=False))
 
