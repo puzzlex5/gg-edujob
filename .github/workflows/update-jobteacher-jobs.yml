@@ -54,9 +54,10 @@ jobs:
         run: |
           python - <<'PY'
           import json, pathlib
+          from datetime import date
           r=json.loads(pathlib.Path('jobteacher_reconciliation_report.json').read_text(encoding='utf-8'))
           d=json.loads(pathlib.Path('jobteacher_detail_link_report.json').read_text(encoding='utf-8'))
-          assert r.get('policy')=='jobteacher-active-browser-v1'
+          assert r.get('policy')=='jobteacher-active-browser-v2'
           assert r.get('publicationEnabled') is False
           assert r.get('healthy') is True
           assert r.get('traversalComplete') is True
@@ -72,7 +73,13 @@ jobs:
           assert jobs and all(j.get('province') in {'서울','경기'} for j in jobs)
           assert all(str(j.get('sourceIdentity','')).startswith('jobteacher:') for j in jobs)
           assert d.get('currentIdCount') == len(jobs)
-          print(json.dumps({'healthy':r['healthy'],'count':len(jobs),'detailVerified':d['verifiedCurrentCount'],'sources':r['sourceReports']},ensure_ascii=False))
+          assert all(set(j.get('provinces') or []) <= {'서울','경기'} and (j.get('provinces') or []) for j in jobs)
+          assert all((not j.get('registered')) or date.fromisoformat(j['registered']) <= date.today() for j in jobs)
+          multi=sum(1 for j in jobs if len(j.get('provinces') or [])>1)
+          missing_dates=sum(1 for j in jobs if not j.get('registered'))
+          assert multi > 0, 'expected cross-region postings to retain both provinces'
+          assert missing_dates == 0, f'missing source-reported modified date: {missing_dates}'
+          print(json.dumps({'healthy':r['healthy'],'count':len(jobs),'detailVerified':d['verifiedCurrentCount'],'multiProvince':multi,'missingDates':missing_dates,'sources':r['sourceReports']},ensure_ascii=False))
           PY
       - name: Commit isolated evidence and healthy dataset
         if: always()
