@@ -1,42 +1,25 @@
 {
-  "generatedAt": "2026-09-04T14:49:50+09:00",
-  "healthy": false,
+  "generatedAt": "2026-09-04T14:53:35+09:00",
+  "healthy": true,
   "total": 4757,
   "official": 3302,
   "privateDisplayed": 1455,
-  "privateStableIds": 5507,
+  "enabledPrivateSources": [
+    "lessoninfo",
+    "artmore"
+  ],
+  "privateStableIds": 1470,
   "privateRepresentedDirectly": 1455,
   "privateRepresentedByOfficial": 15,
-  "missingPrivateIds": 4037,
+  "missingPrivateIds": 0,
   "missingPrivateBySource": {
     "lessoninfo": 0,
-    "jobteacher": 4037,
+    "jobteacher": 0,
     "artmore": 0
   },
   "missingPrivateExamples": {
     "lessoninfo": [],
-    "jobteacher": [
-      "jobteacher:100242",
-      "jobteacher:100837",
-      "jobteacher:100839",
-      "jobteacher:101078",
-      "jobteacher:101340",
-      "jobteacher:101341",
-      "jobteacher:101846",
-      "jobteacher:102005",
-      "jobteacher:102284",
-      "jobteacher:102753",
-      "jobteacher:102754",
-      "jobteacher:102755",
-      "jobteacher:102792",
-      "jobteacher:103524",
-      "jobteacher:103530",
-      "jobteacher:104053",
-      "jobteacher:104112",
-      "jobteacher:104115",
-      "jobteacher:104176",
-      "jobteacher:104177"
-    ],
+    "jobteacher": [],
     "artmore": []
   },
   "nonMetroPrivate": 0,
@@ -46,10 +29,6 @@
   "duplicateStableIds": 0,
   "missingLinks": 0,
   "badCrossSourceAliasEvidence": 0,
-  "errors": [
-    "Unified dataset dropped 4037 current 잡티처 stable IDs",
-    "Unified source count does not include 38 official plus 3 private sources",
-    "Embedded source health false for 잡티처"
-  ],
+  "errors": [],
   "warnings": []
 }
