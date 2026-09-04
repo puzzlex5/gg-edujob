@@ -21,6 +21,8 @@ BLOCK_RE=re.compile(r'captcha|자동입력|사람인지|접근이\s*제한|비�
 BANNED_RE=re.compile(r'구직|학원\s*매매|악기\s*(?:판매|매매)|연습실|원생\s*모집|학생\s*모집|레슨생\s*모집|팝니다|삽니다|권리금|임대',re.I)
 CLOSED_RE=re.compile(r'마감|채용완료|모집완료|종료')
 DATE_RE=re.compile(r'^(?:(20\d{2})[./-])?(\d{1,2})[./-](\d{1,2})$')
+DETAIL_DATE_LABEL_RE=re.compile(r'수정일|등록일|작성일')
+DETAIL_DATE_TOKEN_RE=re.compile(r'(?i)\b(?:today|yesterday)\b|20\d{2}[./-]\d{1,2}[./-]\d{1,2}|(?<!\d)\d{1,2}[./-]\d{1,2}(?!\d)')
 
 
 def with_page(url,n):
@@ -37,24 +39,53 @@ def max_page(soup):
     if str(v).isdigit(): vals.append(int(v))
  return max(vals)
 
+def parse_date_token(raw):
+ raw=' '.join(str(raw).split()).strip()
+ low=raw.lower()
+ if low=='today': return TODAY.isoformat(), raw
+ if low=='yesterday': return (TODAY-timedelta(days=1)).isoformat(), raw
+ m=DATE_RE.fullmatch(raw)
+ if not m: return '', ''
+ year=int(m.group(1)) if m.group(1) else TODAY.year
+ month,day=int(m.group(2)),int(m.group(3))
+ try: d=date(year,month,day)
+ except ValueError: return '', ''
+ # JobTeacher omits the year for modified dates. Any yearless MM.DD
+ # later than today belongs to the previous year; allowing a future
+ # grace window silently turns old postings into future-dated ones.
+ if not m.group(1) and d>TODAY:
+  d=date(year-1,month,day)
+ return d.isoformat(), raw
+
 def parse_modified_date(cells):
  for cell in reversed(cells):
-  raw=' '.join(str(cell).split()).strip()
-  low=raw.lower()
-  if low=='today': return TODAY.isoformat(), raw
-  if low=='yesterday': return (TODAY-timedelta(days=1)).isoformat(), raw
-  m=DATE_RE.fullmatch(raw)
-  if not m: continue
-  year=int(m.group(1)) if m.group(1) else TODAY.year
-  month,day=int(m.group(2)),int(m.group(3))
-  try: d=date(year,month,day)
-  except ValueError: continue
-  # JobTeacher omits the year for modified dates. Any yearless MM.DD
-  # later than today belongs to the previous year; allowing a future
-  # grace window silently turns old postings into future-dated ones.
-  if not m.group(1) and d>TODAY:
-   d=date(year-1,month,day)
-  return d.isoformat(), raw
+  parsed=parse_date_token(cell)
+  if parsed[0]: return parsed
+ return '', ''
+
+def parse_detail_modified_date(html):
+ """Read only dates explicitly associated with a detail-page date label."""
+ soup=BeautifulSoup(html,'html.parser')
+ for node in soup.find_all(['tr','li','dt','dd','div','p','span','th','td']):
+  text=' '.join(node.stripped_strings)
+  if not text or not DETAIL_DATE_LABEL_RE.search(text): continue
+  candidates=[text]
+  parent=node.parent
+  if parent is not None:
+   parent_text=' '.join(parent.stripped_strings)
+   if parent_text and parent_text!=text: candidates.append(parent_text)
+  sibling=node.find_next_sibling()
+  if sibling is not None:
+   sibling_text=' '.join(sibling.stripped_strings)
+   if sibling_text: candidates.append(sibling_text)
+  for candidate in candidates:
+   if not DETAIL_DATE_LABEL_RE.search(candidate): continue
+   label_match=DETAIL_DATE_LABEL_RE.search(candidate)
+   tail=candidate[label_match.end():] if label_match else candidate
+   m=DETAIL_DATE_TOKEN_RE.search(tail)
+   if not m: continue
+   parsed=parse_date_token(m.group(0))
+   if parsed[0]: return parsed
  return '', ''
 
 def region_tokens(text):
@@ -73,12 +104,10 @@ def merge_duplicate(existing,new):
  if merged.get('province') not in provinces and provinces: merged['province']=provinces[0]
  merged['regions']=regions
  merged['location']=' / '.join(locations)
- # Keep the richer title/raw row while preserving the earliest stable identity/url.
  if len(str(new.get('title') or ''))>len(str(merged.get('title') or '')): merged['title']=new['title']
  if len(str(new.get('rawRowText') or ''))>len(str(merged.get('rawRowText') or '')): merged['rawRowText']=new['rawRowText']
- # Use the most recent source-reported modification date when both surfaces expose one.
  if str(new.get('registered') or '')>str(merged.get('registered') or ''):
-  merged['registered']=new.get('registered',''); merged['registeredText']=new.get('registeredText','')
+  merged['registered']=new.get('registered',''); merged['registeredText']=new.get('registeredText',''); merged['registeredSource']=new.get('registeredSource','')
  return merged
 
 def parse_rows(html,surface):
@@ -100,7 +129,7 @@ def parse_rows(html,surface):
   if token not in provinces: provinces.append(token)
   deadline=next((c for c in cells if re.search(r'(?:D-\d+|상시채용|채용시까지|~\s*\d{1,2}\.\d{1,2})',c)), '')
   registered,registered_text=parse_modified_date(cells)
-  out.append({'sourceIdentity':f'jobteacher:{m.group(1)}','sourceId':m.group(1),'source':'잡티처','sourceType':'민간 구인','sourceSurface':'academy-recruitment','sourceSurfaceLabel':'잡티처','province':provinces[0] if provinces else token,'provinces':provinces,'regions':locations,'location':location,'title':title,'applyEndText':deadline,'registered':registered,'registeredText':registered_text,'url':href,'rawRowText':text[:900]})
+  out.append({'sourceIdentity':f'jobteacher:{m.group(1)}','sourceId':m.group(1),'source':'잡티처','sourceType':'민간 구인','sourceSurface':'academy-recruitment','sourceSurfaceLabel':'잡티처','province':provinces[0] if provinces else token,'provinces':provinces,'regions':locations,'location':location,'title':title,'applyEndText':deadline,'registered':registered,'registeredText':registered_text,'registeredSource':'list-modified' if registered else '','url':href,'rawRowText':text[:900]})
  return out
 
 def load_json(path,default):
@@ -110,7 +139,7 @@ def load_json(path,default):
 def main():
  previous=load_json('jobteacher_jobs.json',[]); prev_jobs=previous if isinstance(previous,list) else previous.get('jobs',[])
  old_ledger=load_json('jobteacher_source_id_ledger.json',{'entries':{}}); old_entries=old_ledger.get('entries',{}) if isinstance(old_ledger,dict) else {}
- discovered={}; reports=[]; errors=[]
+ discovered={}; reports=[]; errors=[]; detail_date_errors=[]; detail_date_recovered=[]
  with sync_playwright() as pw:
   browser=pw.chromium.launch(headless=True); ctx=browser.new_context(locale='ko-KR'); page=ctx.new_page()
   for surface,start in SURFACES.items():
@@ -130,18 +159,32 @@ def main():
      if n<last and empty_streak>=3: raise RuntimeError(f'premature-empty-streak-at-{n}-of-{last}')
     reports.append({'surface':surface,'pagesExpected':last,'pagesTraversed':traversed,'ids':len(seen),'complete':traversed==last})
    except Exception as e: errors.append({'surface':surface,'error':f'{type(e).__name__}: {e}'})
+  # Rare list rows omit the modified-date cell. Recover only from an explicitly
+  # labeled date field on the public detail page; never substitute crawl time.
+  for sid,j in discovered.items():
+   if j.get('registered'): continue
+   try:
+    r=page.goto(j['url'],wait_until='domcontentloaded',timeout=45000); page.wait_for_timeout(250); html=page.content()
+    if not r or r.status!=200 or BLOCK_RE.search(' '.join(BeautifulSoup(html,'html.parser').stripped_strings)):
+     raise RuntimeError(f'detail-http-{r.status if r else 0}')
+    registered,registered_text=parse_detail_modified_date(html)
+    if not registered: raise RuntimeError('no-labeled-detail-date')
+    j['registered']=registered; j['registeredText']=registered_text; j['registeredSource']='detail-labeled-date'; detail_date_recovered.append(sid)
+   except Exception as e:
+    detail_date_errors.append({'sourceIdentity':sid,'url':j.get('url'),'error':f'{type(e).__name__}: {e}'})
   ctx.close(); browser.close()
  jobs=sorted(discovered.values(),key=lambda j:int(j['sourceId']),reverse=True)
  now=datetime.now(KST).isoformat(timespec='seconds'); discovered_ids=set(discovered); published_ids={j.get('sourceIdentity') for j in jobs}; missing=sorted(discovered_ids-published_ids)
+ missing_registered=sorted(j['sourceIdentity'] for j in jobs if not j.get('registered'))
  traversal_complete=(len(reports)==2 and all(r['complete'] and r['ids']>0 for r in reports) and not errors)
  prev_count=len(prev_jobs); severe_drop=prev_count>=20 and len(jobs)<max(10,int(prev_count*0.45))
- healthy=traversal_complete and not missing and len(jobs)>0 and not severe_drop
+ healthy=traversal_complete and not missing and len(jobs)>0 and not severe_drop and not missing_registered
  entries=dict(old_entries)
  for sid,j in discovered.items(): entries[sid]={'sourceId':j['sourceId'],'url':j['url'],'lastSeenAt':now,'presentInLatestScan':True,'province':j['province'],'provinces':j.get('provinces',[])}
  for sid,e in entries.items():
   if sid not in discovered_ids and isinstance(e,dict): e['presentInLatestScan']=False
  ledger={'updatedAt':now,'source':'잡티처','entries':entries,'latestDiscoveredIds':sorted(discovered_ids)}
- report={'generatedAt':now,'source':'잡티처','policy':'jobteacher-active-browser-v2','healthy':healthy,'traversalComplete':traversal_complete,'sourceReports':reports,'candidateIdCount':len(discovered_ids),'publishedIdCount':len(published_ids),'missingAfterCount':len(missing),'missingAfter':missing[:100],'errors':errors,'previousPublishedCount':prev_count,'severeDrop':severe_drop,'preservedPreviousDataset':not healthy and bool(prev_jobs),'publicationEnabled':False,'nextGate':'re-crawl with multi-region/date normalization, then unified validator'}
+ report={'generatedAt':now,'source':'잡티처','policy':'jobteacher-active-browser-v2','healthy':healthy,'traversalComplete':traversal_complete,'sourceReports':reports,'candidateIdCount':len(discovered_ids),'publishedIdCount':len(published_ids),'missingAfterCount':len(missing),'missingAfter':missing[:100],'missingRegisteredCount':len(missing_registered),'missingRegistered':missing_registered[:100],'detailDateFallbackRecoveredCount':len(detail_date_recovered),'detailDateFallbackRecovered':detail_date_recovered,'detailDateFallbackErrors':detail_date_errors[:100],'errors':errors,'previousPublishedCount':prev_count,'severeDrop':severe_drop,'preservedPreviousDataset':not healthy and bool(prev_jobs),'publicationEnabled':False,'nextGate':'verify current-posting freshness semantics, then unified validator'}
  state={'updatedAt':now,'healthy':healthy,'count':len(jobs) if healthy else prev_count,'lastAttemptCount':len(jobs),'preservedPreviousDataset':not healthy and bool(prev_jobs)}
  if healthy: Path('jobteacher_jobs.json').write_text(json.dumps(jobs,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  Path('jobteacher_source_id_ledger.json').write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
