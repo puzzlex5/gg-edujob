@@ -2,6 +2,19 @@ name: Unified recruitment search
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/build_unified_search.py'
+      - 'scripts/build_unified_search_multi.py'
+      - 'scripts/validate_unified_search.py'
+      - 'scripts/validate_unified_search_multi.py'
+      - 'scripts/crosscheck_private_official.py'
+      - 'scripts/source_registry.py'
+      - 'scripts/private_source_registry.py'
+      - 'scripts/apply_unified_frontend.py'
+      - 'unified-ui.js'
+      - 'mobile-ui.js'
+      - '.github/workflows/unified-search.yml'
   push:
     paths:
       - 'scripts/build_unified_search.py'
@@ -9,6 +22,8 @@ on:
       - 'scripts/validate_unified_search.py'
       - 'scripts/validate_unified_search_multi.py'
       - 'scripts/crosscheck_private_official.py'
+      - 'scripts/source_registry.py'
+      - 'scripts/private_source_registry.py'
       - 'scripts/apply_unified_frontend.py'
       - 'unified-ui.js'
       - 'mobile-ui.js'
@@ -17,7 +32,10 @@ on:
       - 'artmore_reconciliation_report.json'
       - 'artmore_detail_link_report.json'
       - 'jobteacher_jobs.json'
+      - 'jobteacher_reconciliation_report.json'
+      - 'jobteacher_detail_link_report.json'
       - 'lessoninfo_jobs.json'
+      - 'lessoninfo_reconciliation_report.json'
       - 'gonggonggangsa_jobs.json'
       - 'gonggonggangsa_reconciliation_report.json'
       - 'gonggonggangsa_detail_link_report.json'
@@ -36,7 +54,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: metro-edujob-data
+  group: metro-edujob-data-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -48,7 +66,8 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Synchronize latest canonical datasets
+      - name: Synchronize latest canonical datasets for production runs
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
         run: |
           git fetch origin main
           git checkout -B main origin/main
@@ -57,9 +76,23 @@ jobs:
           python-version: '3.12'
       - name: Syntax check unified multi-source pipeline and UI
         run: |
-          python -m py_compile scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/apply_unified_frontend.py
+          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/apply_unified_frontend.py
           node --check unified-ui.js
           node --check mobile-ui.js
+      - name: Verify source registries resolve independently
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts')
+          from source_registry import official_source_count
+          from private_source_registry import private_source_keys
+          official=official_source_count()
+          private=private_source_keys()
+          assert official > 0
+          assert len(private) == len(set(private))
+          assert set(private) >= {'lessoninfo','jobteacher','artmore','gonggonggangsa'}
+          print('registry check', official, private)
+          PY
       - name: Build disposable multi-source unified candidate
         id: build_candidate
         continue-on-error: true
@@ -82,14 +115,19 @@ jobs:
           grep -q "fetch('unified_jobs.json',{cache:'no-cache'})" index.html
           grep -q 'unified-ui.js' index.html
           python - <<'PY'
-          import json
+          import json,sys
+          sys.path.insert(0,'scripts')
+          from private_source_registry import private_source_keys
+          from source_registry import official_source_count
           d=json.load(open('unified_jobs.json',encoding='utf-8'))
           assert d.get('dataset') == 'unified-search-v3-multi-private'
           private=d.get('privateSources',{})
-          expected={'lessoninfo','jobteacher','artmore','gonggonggangsa'}
-          assert expected.issubset(set(private))
+          expected=set(private_source_keys())
+          assert set(private) == expected, (set(private), expected)
+          official_count=official_source_count()
+          assert int(d.get('officialSourceCount') or 0) == official_count
           enabled={k for k,v in private.items() if (v or {}).get('publicationEnabled') is True}
-          assert d.get('totalSourceCount') == 38 + len(enabled), (d.get('totalSourceCount'), enabled)
+          assert d.get('totalSourceCount') == official_count + len(enabled), (d.get('totalSourceCount'), official_count, enabled)
           assert all((private[k] or {}).get('ok') for k in enabled)
           assert all(int((private[k] or {}).get('count') or 0) == 0 for k in expected-enabled)
           assert any(j.get('feedKind')=='official' for j in d['jobs'])
@@ -109,10 +147,10 @@ jobs:
               return {p} if p else set()
           bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and (not provinces(j) or not provinces(j).issubset(allowed))]
           assert not bad, f'non-metro private rows: {len(bad)}'
-          print('verified publication-gated multi-source unified publication',len(d['jobs']),sorted(enabled))
+          print('verified publication-gated multi-source unified publication',len(d['jobs']),official_count,sorted(enabled))
           PY
       - name: Commit verified search projection or diagnostics
-        if: always()
+        if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'))
         run: |
           rm -f unified_jobs.next.json
           git config user.name 'github-actions[bot]'
@@ -127,6 +165,9 @@ jobs:
             git pull --rebase origin main && git push origin HEAD:main && break
             sleep $((i*4))
           done
+      - name: Clean branch/PR test artifacts
+        if: always() && !(github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'))
+        run: rm -f unified_jobs.next.json
       - name: Fail after preserving diagnostics
         if: steps.build_candidate.outcome != 'success' || steps.validate_candidate.outcome != 'success' || steps.crosscheck.outcome == 'failure'
         run: exit 1
