@@ -14,6 +14,7 @@ PROMO_ONLY = re.compile(r"(?:홍보|광고)\s*(?:글|게시글|게시|합니다|
 SPECS = [
     {"key":"lessoninfo","name":"레슨인포","jobs":"lessoninfo_jobs.json","report":"lessoninfo_reconciliation_report.json","detail_report":None},
     {"key":"jobteacher","name":"잡티처","jobs":"jobteacher_jobs.json","report":"jobteacher_reconciliation_report.json","detail_report":"jobteacher_detail_link_report.json"},
+    {"key":"artmore","name":"아트모아","jobs":"artmore_jobs.json","report":"artmore_reconciliation_report.json","detail_report":"artmore_detail_link_report.json"},
 ]
 
 
