@@ -24,6 +24,8 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from source_registry import official_source_count
+
 ROOT = Path(__file__).resolve().parents[1]
 CENTRAL = ROOT / "central_pagination_report.json"
 RECON = ROOT / "source_reconciliation_report.json"
@@ -63,10 +65,15 @@ def within_live_drift(a, b):
 def main():
     central = load(CENTRAL)
     recon = load(RECON)
+    expected_sources = official_source_count()
     if not central.get("complete"):
         raise SystemExit("Central pagination report is not complete")
-    if int((recon.get("summary") or {}).get("reconciledSources") or 0) != 38:
-        raise SystemExit("38-source reconciliation is not complete")
+    summary = recon.get("summary") or {}
+    if (
+        int(summary.get("reconciledSources") or 0) != expected_sources
+        or int(summary.get("totalSources") or 0) != expected_sources
+    ):
+        raise SystemExit(f"{expected_sources}-source reconciliation is not complete")
     if int((recon.get("summary") or {}).get("missingAfter") or 0) != 0:
         raise SystemExit("38-source reconciliation still has missing IDs")
 

@@ -1,0 +1,64 @@
+\
+name: Official source registry safety
+
+on:
+  pull_request:
+    paths:
+      - 'sources.json'
+      - 'scripts/source_registry.py'
+      - 'scripts/validate_official_source_registry_usage.py'
+      - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/verify_jobs.py'
+      - 'scripts/verify_support_completeness.py'
+      - 'scripts/verify_central_reconciliation_consistency.py'
+      - 'scripts/update_collector_status.py'
+      - '.github/workflows/daily-deep-audit.yml'
+      - '.github/workflows/recover-missing-jobs.yml'
+      - '.github/workflows/source-id-reconciliation.yml'
+      - '.github/workflows/official-registry-safety.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'sources.json'
+      - 'scripts/source_registry.py'
+      - 'scripts/validate_official_source_registry_usage.py'
+      - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/verify_jobs.py'
+      - 'scripts/verify_support_completeness.py'
+      - 'scripts/verify_central_reconciliation_consistency.py'
+      - 'scripts/update_collector_status.py'
+      - '.github/workflows/daily-deep-audit.yml'
+      - '.github/workflows/recover-missing-jobs.yml'
+      - '.github/workflows/source-id-reconciliation.yml'
+      - '.github/workflows/official-registry-safety.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: official-registry-safety-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Compile official count consumers
+        run: |
+          python -m py_compile \
+            scripts/source_registry.py \
+            scripts/validate_official_source_registry_usage.py \
+            scripts/validate_reconciliation_policy.py \
+            scripts/verify_jobs.py \
+            scripts/verify_support_completeness.py \
+            scripts/verify_central_reconciliation_consistency.py \
+            scripts/update_collector_status.py
+      - name: Verify registry-derived official completeness invariants
+        run: python scripts/validate_official_source_registry_usage.py
+      - name: Re-run current reconciliation policy gate
+        run: python scripts/validate_reconciliation_policy.py

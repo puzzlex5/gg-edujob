@@ -18,6 +18,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from source_registry import official_source_count
+
 ROOT = Path(__file__).resolve().parents[1]
 JOBS_PATH = ROOT / "jobs.json"
 RECON_PATH = ROOT / "source_reconciliation_report.json"
@@ -66,7 +68,11 @@ def same_candidate_reconciliation():
     # Matching generatedAt prevents a stale successful report from blessing a newer candidate.
     if str(summary.get("generatedAt") or "") != str(embedded.get("generatedAt") or ""):
         return {}
-    if int(summary.get("reconciledSources") or 0) != 38 or int(summary.get("totalSources") or 0) != 38:
+    expected_sources = official_source_count()
+    if (
+        int(summary.get("reconciledSources") or 0) != expected_sources
+        or int(summary.get("totalSources") or 0) != expected_sources
+    ):
         return {}
     if int(summary.get("missingAfter") or 0) != 0:
         return {}

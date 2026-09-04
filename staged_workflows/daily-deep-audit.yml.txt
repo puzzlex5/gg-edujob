@@ -1,0 +1,281 @@
+name: Daily deep recruitment audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 19 * * *' # 매일 04:23 KST, 최근 90일 전체 정밀감사
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest main after any queue delay
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Preserve published baseline
+        run: |
+          echo baseline >/tmp/deep_audit_stage
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+          jobs=d.get('jobs',[]) if isinstance(d,dict) else []
+          if len(jobs)<100: raise SystemExit(f'Unsafe baseline: {len(jobs)} jobs')
+          PY
+          cp jobs.json /tmp/jobs_daily_baseline.json
+          python scripts/update_deep_audit_status.py baseline running
+      - name: Validate deep collectors and retry policy
+        run: |
+          echo hardening >/tmp/deep_audit_stage
+          python -m py_compile scripts/*.py
+          python - <<'PY'
+          from pathlib import Path
+
+          checks = {
+              'scripts/repair_gyeonggi_support.py': [
+                  'data_id = clean(str(a.get("data-id", "")))',
+                  'return f"mircms|{host}|{bbs}|{ntt}"',
+              ],
+              'scripts/complete_support_coverage.py': [
+                  'MAX_PAGES = 500',
+                  'ended_on_structural_empty',
+                  'naturalEnd',
+                  'any pagination request failure makes traversal incomplete',
+                  'plausible = [d for d in ds if d and d <= today_s]',
+              ],
+              'scripts/verify_support_completeness.py': [
+                  'no explicit termination proof',
+              ],
+              'scripts/reconcile_source_ids.py': [
+                  'import crawl_gyeonggi_central_recent as central_recent',
+                  'stable-id-38-v2-gyeonggi-central-90d',
+                  'central_recent.scrape_gyeonggi_central_recent()',
+              ],
+          }
+          missing = []
+          for name, markers in checks.items():
+              text = Path(name).read_text(encoding='utf-8')
+              for marker in markers:
+                  if marker not in text:
+                      missing.append(f'{name}: {marker}')
+          if missing:
+              raise SystemExit('Committed deep-audit hardening is incomplete: ' + '; '.join(missing))
+          print('Committed deep-audit hardening markers validated')
+          PY
+          python scripts/update_deep_audit_status.py hardening running
+      - name: Discover newly linked official recruitment boards
+        run: |
+          echo board-discovery >/tmp/deep_audit_stage
+          python scripts/discover_recruitment_boards.py
+          python scripts/update_deep_audit_status.py board-discovery running
+      - name: Re-discover and collect all configured official sources
+        run: |
+          echo primary-crawl >/tmp/deep_audit_stage
+          python scripts/scrape_jobs.py
+          python scripts/update_deep_audit_status.py primary-crawl running
+      - name: Re-check all Gyeonggi support-office boards
+        run: |
+          echo gyeonggi-recheck >/tmp/deep_audit_stage
+          python scripts/repair_gyeonggi_support.py
+          python scripts/update_deep_audit_status.py gyeonggi-recheck running
+      - name: Deep 90-day completeness traversal pass 1
+        run: |
+          echo coverage-pass-1 >/tmp/deep_audit_stage
+          python scripts/complete_support_coverage.py
+          python scripts/update_deep_audit_status.py coverage-pass-1 running
+      - name: Deep 90-day completeness traversal pass 2
+        run: |
+          echo coverage-pass-2 >/tmp/deep_audit_stage
+          sleep 12
+          python scripts/complete_support_coverage.py
+          python scripts/update_deep_audit_status.py coverage-pass-2 running
+      - name: Prove central portal pagination independently
+        run: |
+          echo central-pagination-proof >/tmp/deep_audit_stage
+          python scripts/verify_central_pagination.py
+          python scripts/update_deep_audit_status.py central-pagination-proof running
+      - name: Independent official posting-ID reconciliation and exact recovery
+        run: |
+          echo source-id-reconciliation >/tmp/deep_audit_stage
+          python scripts/reconcile_source_ids.py
+          python scripts/update_deep_audit_status.py source-id-reconciliation running
+      - name: Re-prove central IDs and require independent agreement
+        run: |
+          echo central-cross-check >/tmp/deep_audit_stage
+          python scripts/verify_central_pagination.py
+          python scripts/verify_central_reconciliation_consistency.py
+          python scripts/update_deep_audit_status.py central-cross-check running
+      - name: Require persistent independent Gyeonggi 90-day evidence
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          p=Path('gyeonggi_central_90d_report.json')
+          if not p.exists() or p.stat().st_size < 100:
+              raise SystemExit('Independent Gyeonggi 90-day proof artifact missing')
+          r=json.loads(p.read_text(encoding='utf-8'))
+          if not r.get('complete'):
+              raise SystemExit(f'Independent Gyeonggi 90-day proof incomplete: {r}')
+          recon=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          gg=next((x for x in recon.get('sources',[]) if x.get('name')=='경기도교육청 통합 구인구직'), None)
+          if not gg:
+              raise SystemExit('Gyeonggi central reconciliation source missing')
+          kst=timezone(timedelta(hours=9))
+          fmt='%Y-%m-%d %H:%M:%S KST'
+          try:
+              rt=datetime.strptime(recon.get('generatedAt',''), fmt).replace(tzinfo=kst)
+              gt=datetime.strptime(r.get('generatedAt',''), fmt).replace(tzinfo=kst)
+          except Exception as exc:
+              raise SystemExit(f'Cannot bind persistent Gyeonggi proof timestamps: {type(exc).__name__}')
+          skew=abs((gt-rt).total_seconds())/60
+          if skew > 45:
+              raise SystemExit(f'Persistent Gyeonggi proof outside audit window: {skew:.1f} minutes')
+          print('Persistent Gyeonggi 90-day proof present', {
+              'independent': r.get('stableIdCount'),
+              'reconciliation': gg.get('officialIdCount'),
+              'skewMinutes': round(skew,2),
+          })
+          PY
+          python scripts/verify_central_reconciliation_consistency.py
+      - name: Sanitize impossible registration dates
+        run: |
+          echo date-sanitize >/tmp/deep_audit_stage
+          python scripts/sanitize_job_dates.py
+          python scripts/update_deep_audit_status.py date-sanitize running
+      - name: Preserve still-active postings from baseline if a crawl transiently missed them
+        run: |
+          echo baseline-merge >/tmp/deep_audit_stage
+          python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_daily_baseline.json --report daily_missing_recovery_report.json
+          python scripts/update_deep_audit_status.py baseline-merge running
+      - name: Resolve individual detail links and enrich dates
+        run: |
+          echo detail-enrichment >/tmp/deep_audit_stage
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
+          python scripts/update_deep_audit_status.py detail-enrichment running
+      - name: Require all 25+11 support offices to have proven traversal
+        run: |
+          echo completeness-verification >/tmp/deep_audit_stage
+          python scripts/verify_support_completeness.py
+          python scripts/update_deep_audit_status.py completeness-verification running
+      - name: Independent publication verification
+        run: |
+          echo publication-verification >/tmp/deep_audit_stage
+          python scripts/verify_jobs.py --previous /tmp/jobs_daily_baseline.json
+          python scripts/update_deep_audit_status.py publication-verification running
+      - name: Persist durable recruitment ledger and checkpoints
+        run: |
+          echo ledger >/tmp/deep_audit_stage
+          python scripts/update_collection_state.py
+          python scripts/update_deep_audit_status.py ledger running
+      - name: Audit operational quality against reconciled IDs
+        run: |
+          echo operational-quality >/tmp/deep_audit_stage
+          python scripts/audit_operational_quality.py
+          python scripts/update_deep_audit_status.py operational-quality running
+      - name: Final daily audit publication guard
+        run: |
+          echo publication-guard >/tmp/deep_audit_stage
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from source_registry import official_source_count
+          expected_sources=official_source_count()
+          before=json.loads(Path('/tmp/jobs_daily_baseline.json').read_text(encoding='utf-8')).get('jobs',[])
+          after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
+          rec=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          summary=rec.get('summary',{})
+          central=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
+          gg90=json.loads(Path('gyeonggi_central_90d_report.json').read_text(encoding='utf-8'))
+          quality=json.loads(Path('operational_quality_report.json').read_text(encoding='utf-8'))
+          qsummary=quality.get('summary',{})
+          if len(after)<100: raise SystemExit(f'Daily audit output too small: {len(after)}')
+          if len(before)>=100 and len(after)<len(before)*0.70:
+              raise SystemExit(f'Daily audit lost >30% of baseline: {len(before)} -> {len(after)}')
+          if int(summary.get('missingAfter') or 0) != 0:
+              raise SystemExit(f'Daily official-ID audit still missing {summary.get("missingAfter")} postings')
+          reconciled=int(summary.get('reconciledSources') or 0)
+          total=int(summary.get('totalSources') or 0)
+          if total != expected_sources or reconciled != total:
+              raise SystemExit(f'Daily {expected_sources}-source official-ID audit incomplete: {summary}')
+          if int(qsummary.get('publishedJobs') or 0) != len(after):
+              raise SystemExit(f'Operational quality snapshot is not bound to publication candidate: {qsummary.get("publishedJobs")} != {len(after)}')
+          if int(qsummary.get('missingOfficialIds') or 0) != 0 or int(qsummary.get('reconciledSources') or 0) != expected_sources:
+              raise SystemExit(f'Operational quality audit disagrees with reconciliation: {qsummary}')
+          if int(qsummary.get('missingDetailLinks') or 0) != 0:
+              raise SystemExit(f'Operational quality audit found missing detail links: {qsummary}')
+          if not central.get('complete'):
+              raise SystemExit(f'Daily central pagination proof incomplete: {central}')
+          if not gg90.get('complete'):
+              raise SystemExit(f'Daily independent Gyeonggi 90-day proof incomplete: {gg90}')
+          print(f'Daily deep audit guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
+          PY
+          python scripts/verify_central_reconciliation_consistency.py
+          python scripts/update_deep_audit_status.py complete success
+      - name: Commit only verified deep-audit recovery
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          test -s gyeonggi_central_90d_report.json
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json deep_audit_status.json board_cache.json support_coverage_report.json source_reconciliation_report.json central_pagination_report.json support_link_resolution.json support_period_cache.json daily_missing_recovery_report.json date_anomaly_report.json board_discovery_report.json operational_quality_report.json operational_quality_history.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/discover_recruitment_boards.py scripts/harden_deep_audit.py
+          git add -f gyeonggi_central_90d_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Daily deep audit reconciled official recruitment IDs'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+      - name: Record failed deep-audit stage without publishing unverified data
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage="$(cat /tmp/deep_audit_stage 2>/dev/null || echo unknown)"
+
+          mkdir -p /tmp/deep-audit-diagnostics
+          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/deep-audit-diagnostics/$f"; fi
+          done
+
+          git reset --hard HEAD
+          git clean -fd
+          python scripts/update_deep_audit_status.py "$stage" failed
+
+          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
+            if [ -f "/tmp/deep-audit-diagnostics/$f" ]; then cp "/tmp/deep-audit-diagnostics/$f" "$f"; fi
+          done
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add deep_audit_status.json
+          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+          if [ -f gyeonggi_central_90d_report.json ]; then git add -f gyeonggi_central_90d_report.json; fi
+          git diff --cached --quiet && exit 0
+          git commit -m "Record failed deep audit diagnostics: $stage"
+          git reset --hard HEAD
+          git pull --rebase
+          git push

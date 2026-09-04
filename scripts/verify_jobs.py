@@ -11,6 +11,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
+from source_registry import official_source_count
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "jobs.json"
 KST = timezone(timedelta(hours=9))
@@ -39,9 +41,10 @@ def authoritative_central_count(province):
     if not isinstance(report, dict):
         return None
     summary = report.get("summary") or {}
+    expected_sources = official_source_count()
     if (
-        int(summary.get("totalSources") or 0) != 38
-        or int(summary.get("reconciledSources") or 0) != 38
+        int(summary.get("totalSources") or 0) != expected_sources
+        or int(summary.get("reconciledSources") or 0) != expected_sources
         or int(summary.get("missingAfter") or -1) != 0
         or int(summary.get("lookbackDays") or report.get("lookbackDays") or 0) != 90
     ):

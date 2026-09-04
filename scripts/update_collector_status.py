@@ -13,6 +13,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from source_registry import official_source_count
+
 ROOT = Path(__file__).resolve().parents[1]
 STATUS = ROOT / "collector_status.json"
 KST = timezone(timedelta(hours=9))
@@ -186,6 +188,7 @@ def support_coverage_evidence():
 def reconciliation_evidence():
     report = load_json(ROOT / "source_reconciliation_report.json", {})
     summary = report.get("summary", {}) if isinstance(report, dict) else {}
+    expected_sources = official_source_count()
     central = load_json(ROOT / "central_pagination_report.json", {})
     ledger = load_json(ROOT / "source_id_ledger.json", {})
     payload = jobs_payload()
@@ -228,8 +231,8 @@ def reconciliation_evidence():
     dataset_bound = bool(required_ids and not missing_from_current)
 
     complete = bool(
-        total == 38
-        and reconciled == 38
+        total == expected_sources
+        and reconciled == expected_sources
         and missing_after == 0
         and central.get("complete") is True
         and required_ids

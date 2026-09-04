@@ -3,6 +3,8 @@
 import json
 from pathlib import Path
 
+from source_registry import official_source_count
+
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = "stable-id-38-v2-gyeonggi-central-90d"
 FAST_BASELINE = Path("/tmp/jobs_previous.json")
@@ -66,6 +68,7 @@ def guard_fast_publication_shape():
 
 
 def main():
+    expected_sources = official_source_count()
     report = load("source_reconciliation_report.json")
     ledger = load("source_id_ledger.json")
     summary = report.get("summary", {}) if isinstance(report, dict) else {}
@@ -77,8 +80,13 @@ def main():
             f"Reconciliation evidence predates current 90-day policy: report={report_policy!r}, ledger={ledger_policy!r}"
         )
 
-    if int(summary.get("totalSources") or 0) != 38 or int(summary.get("reconciledSources") or 0) != 38:
-        raise SystemExit("Current-policy reconciliation is not 38/38")
+    if (
+        int(summary.get("totalSources") or 0) != expected_sources
+        or int(summary.get("reconciledSources") or 0) != expected_sources
+    ):
+        raise SystemExit(
+            f"Current-policy reconciliation is not {expected_sources}/{expected_sources}"
+        )
     if int(summary.get("missingAfter") or 0) != 0:
         raise SystemExit(f"Current-policy reconciliation still has missingAfter={summary.get('missingAfter')}")
     if report.get("generatedAt") != ledger.get("generatedAt"):

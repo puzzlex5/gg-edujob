@@ -1,0 +1,256 @@
+name: Recover missing 수도권 education jobs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 1,7,13,16 * * *' # KST 10:47,16:47,22:47,01:47; 04:23~06:53 정밀감사 창 보호
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest main after any queue delay
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+          git rev-parse HEAD >/tmp/recovery_base_sha
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Preserve current verified publication
+        run: |
+          python scripts/update_collector_status.py --workflow recovery --stage baseline --state running
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+          jobs=d.get('jobs',[]) if isinstance(d,dict) else []
+          if len(jobs)<100: raise SystemExit(f'Unsafe recovery baseline: {len(jobs)} jobs')
+          PY
+          cp jobs.json /tmp/jobs_recovery_base.json
+
+      - name: Prepare resilient deep audit collectors
+        run: |
+          python scripts/hotfix_sources.py
+          python scripts/hotfix_repair_links.py
+          python scripts/harden_deep_audit.py
+          python scripts/harden_network_retries.py
+          python scripts/harden_central_pagination.py
+          python -m py_compile scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/harden_central_pagination.py scripts/merge_recovery_snapshot.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/verify_support_completeness.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py scripts/sanitize_job_dates.py scripts/harden_deep_audit.py scripts/source_registry.py
+
+      - name: Prove central portal pagination independently
+        run: python scripts/verify_central_pagination.py
+
+      - name: Fresh crawl of central portals and support offices
+        run: python scripts/scrape_jobs.py
+
+      - name: Re-check Gyeonggi support-office boards
+        run: python scripts/repair_gyeonggi_support.py
+
+      - name: Gap audit pass 1 through recent 90-day boundary
+        run: python scripts/complete_support_coverage.py
+
+      - name: Gap audit pass 2 after transient-failure delay
+        run: |
+          sleep 12
+          python scripts/complete_support_coverage.py
+
+      - name: Reconcile official posting IDs and recover exact missing source occurrences
+        run: python scripts/reconcile_source_ids.py
+
+      - name: Re-prove central IDs and require independent agreement
+        run: |
+          python scripts/verify_central_pagination.py
+          python scripts/verify_central_reconciliation_consistency.py
+
+      - name: Sanitize impossible registration dates
+        run: python scripts/sanitize_job_dates.py
+
+      - name: Merge fresh snapshot with previously published active postings
+        run: python scripts/merge_recovery_snapshot.py --previous /tmp/jobs_recovery_base.json --report missing_recovery_report.json
+
+      - name: Resolve exact links and periods
+        run: |
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
+
+      - name: Require proven support-office traversal and exact links
+        run: python scripts/verify_support_completeness.py
+
+      - name: Validate recovered dataset against published baseline
+        run: python scripts/verify_jobs.py --previous /tmp/jobs_recovery_base.json
+
+      - name: Persist append-only recruitment ledger and checkpoints
+        run: python scripts/update_collection_state.py
+
+      - name: Recovery loss guard
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from source_registry import official_source_count
+          expected_sources=official_source_count()
+          before=json.loads(Path('/tmp/jobs_recovery_base.json').read_text(encoding='utf-8')).get('jobs',[])
+          after=json.loads(Path('jobs.json').read_text(encoding='utf-8')).get('jobs',[])
+          rec=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          summary=rec.get('summary',{})
+          central=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
+          if len(after)<100: raise SystemExit(f'Recovery output too small: {len(after)}')
+          if len(before)>=100 and len(after)<len(before)*0.70:
+              raise SystemExit(f'Recovery unexpectedly lost >30%: {len(before)} -> {len(after)}')
+          if int(summary.get('missingAfter') or 0) != 0:
+              raise SystemExit(f'Official ID reconciliation still missing {summary.get("missingAfter")} postings')
+          reconciled=int(summary.get('reconciledSources') or 0)
+          total=int(summary.get('totalSources') or 0)
+          if total != expected_sources or reconciled != total:
+              raise SystemExit(f'Not all {expected_sources} official sources reconciled: {summary}')
+          if not central.get('complete'):
+              raise SystemExit(f'Central pagination proof incomplete: {central}')
+          sources=central.get('sources') or []
+          if len(sources) != 2 or any(not s.get('complete') for s in sources):
+              raise SystemExit(f'Both central sources must independently prove pagination: {sources}')
+          print(f'Recovery guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}; central pagination complete')
+          PY
+          python scripts/verify_central_reconciliation_consistency.py
+          python scripts/update_collector_status.py --workflow recovery --stage complete --state success
+          python scripts/sync_effective_audit_status.py
+
+      - name: Commit only verified recovered postings
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # Generated datasets are snapshots, not generally mergeable. A concurrent quality audit,
+          # however, only changes its two diagnostic artifacts and must not invalidate an otherwise
+          # verified recovery candidate. Replay the candidate on top of that diagnostic-only commit;
+          # any other concurrent change still wins and causes this candidate to be discarded.
+          git fetch origin main
+          base_sha="$(cat /tmp/recovery_base_sha)"
+          remote_sha="$(git rev-parse origin/main)"
+          if [ "$remote_sha" != "$base_sha" ]; then
+            changed_paths="$(git diff --name-only "$base_sha" "$remote_sha")"
+            unsafe_paths="$(printf '%s\n' "$changed_paths" | grep -Ev '^(operational_quality_report\.json|operational_quality_history\.json)$' || true)"
+            if [ -n "$unsafe_paths" ]; then
+              echo "Recovery candidate superseded by newer data/code on main: baseline=$base_sha origin/main=$remote_sha"
+              printf '%s\n' "$unsafe_paths"
+              git reset --hard origin/main
+              exit 0
+            fi
+            echo "Only diagnostic quality artifacts advanced main; replaying verified recovery candidate"
+            git stash push -u -m recovery-candidate >/dev/null
+            git reset --hard origin/main
+            if ! git stash pop; then
+              echo "Recovery candidate could not be replayed cleanly; preserving newer main"
+              git reset --hard origin/main
+              git stash drop >/dev/null 2>&1 || true
+              exit 0
+            fi
+          fi
+
+          rm -f recovery_failure_report.json
+          git add jobs.json job_ledger.json source_id_ledger.json collection_state.json collector_status.json deep_audit_status.json board_cache.json missing_recovery_report.json source_reconciliation_report.json central_pagination_report.json date_anomaly_report.json support_coverage_report.json support_link_resolution.json support_period_cache.json sources.json scripts/scrape_jobs.py scripts/repair_gyeonggi_support.py scripts/complete_support_coverage.py scripts/reconcile_source_ids.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/harden_central_pagination.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/enrich_support_periods.py scripts/enrich_seoul_get_fallback.py scripts/harden_deep_audit.py
+          git ls-files --error-unmatch recovery_failure_report.json >/dev/null 2>&1 && git add -u -- recovery_failure_report.json || true
+          git diff --cached --quiet && exit 0
+          git commit -m 'Recover and reconcile official recruitment posting IDs'
+
+          # Close the tiny fetch-to-push race without force-pushing. A newer verified publication
+          # wins, and the next recovery will start from it.
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            echo "Recovery publish lost race to newer main; discarding superseded candidate"
+            git reset --hard origin/main
+            exit 0
+          fi
+
+      - name: Preserve failed recovery diagnostics without publishing unverified data
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/recovery-diagnostics
+          for f in support_coverage_report.json support_link_resolution.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json missing_recovery_report.json date_anomaly_report.json; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/recovery-diagnostics/$f"; fi
+          done
+
+          # A failed candidate must never replace canonical evidence. Also recover from any
+          # interrupted rebase/detached HEAD before recording the isolated diagnostic.
+          git rebase --abort >/dev/null 2>&1 || true
+          git fetch origin main
+          git checkout -B main origin/main
+          git clean -fd
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+
+          src = Path('/tmp/recovery-diagnostics')
+          def load(name):
+              p = src / name
+              if not p.exists():
+                  return None
+              try:
+                  return json.loads(p.read_text(encoding='utf-8'))
+              except Exception as e:
+                  return {'readError': type(e).__name__}
+
+          rec = load('source_reconciliation_report.json')
+          ledger = load('source_id_ledger.json')
+          central = load('central_pagination_report.json')
+          coverage = load('support_coverage_report.json')
+          links = load('support_link_resolution.json')
+          missing = load('missing_recovery_report.json')
+          dates = load('date_anomaly_report.json')
+
+          report = {
+              'generatedAt': datetime.now(timezone(timedelta(hours=9))).strftime('%Y-%m-%d %H:%M:%S KST'),
+              'policy': 'failed recovery candidate evidence is isolated; canonical jobs/evidence remain last-known-good',
+              'sourceReconciliationSummary': (rec or {}).get('summary') if isinstance(rec, dict) else None,
+              'sourceIdLedger': {
+                  'generatedAt': (ledger or {}).get('generatedAt'),
+                  'knownIdCount': len((ledger or {}).get('entries') or {}) if isinstance(ledger, dict) else None,
+              },
+              'centralPagination': {
+                  'generatedAt': (central or {}).get('generatedAt'),
+                  'complete': (central or {}).get('complete'),
+                  'sources': (central or {}).get('sources'),
+              } if isinstance(central, dict) else None,
+              'supportCoverageSummary': (coverage or {}).get('summary') if isinstance(coverage, dict) else None,
+              'supportCompleteness': (coverage or {}).get('supportCompleteness') if isinstance(coverage, dict) else None,
+              'supportLinkResolution': {
+                  'gyeonggi': (links or {}).get('gyeonggi'),
+                  'seoul': (links or {}).get('seoul'),
+              } if isinstance(links, dict) else None,
+              'missingRecoverySummary': (missing or {}).get('summary') if isinstance(missing, dict) else None,
+              'dateAnomalySummary': (dates or {}).get('summary') if isinstance(dates, dict) else None,
+          }
+          Path('recovery_failure_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+
+          python scripts/update_collector_status.py --workflow recovery --stage recovery --state failed
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add collector_status.json recovery_failure_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record failed official-ID recovery candidate separately'
+          git push origin HEAD:main || true

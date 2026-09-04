@@ -1,0 +1,229 @@
+name: Reconcile official recruitment source IDs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/source-id-reconciliation.yml'
+      - 'scripts/reconcile_source_ids.py'
+      - 'scripts/harden_reconciliation_central_lookback.py'
+      - 'scripts/crawl_gyeonggi_central_recent.py'
+      - 'scripts/verify_gyeonggi_central_90d.py'
+      - 'scripts/verify_central_pagination.py'
+      - 'scripts/verify_central_reconciliation_consistency.py'
+      - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/source_registry.py'
+  schedule:
+    - cron: '37 0,4,8,12 * * *' # 09:37, 13:37, 17:37, 21:37 KST; independent 38-source proof four times daily
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-data
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Synchronize latest main after any queue delay
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Mark reconciliation start
+        run: python scripts/update_collector_status.py --workflow reconciliation --stage baseline --state running
+      - name: Preserve verified publication baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('jobs.json').read_text(encoding='utf-8'))
+          jobs=d.get('jobs',[]) if isinstance(d,dict) else []
+          if len(jobs)<100: raise SystemExit(f'Unsafe reconciliation baseline: {len(jobs)}')
+          PY
+          cp jobs.json /tmp/jobs_source_id_baseline.json
+      - name: Remove fixed central portal page caps
+        run: python scripts/harden_central_pagination.py
+      - name: Require full recent 90-day Gyeonggi central population
+        run: python scripts/harden_reconciliation_central_lookback.py
+      - name: Compile reconciliation code
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py scripts/source_registry.py
+      - name: Prove central portal pagination independently
+        run: python scripts/verify_central_pagination.py
+      - name: Crawl official IDs and recover missing source occurrences
+        run: python scripts/reconcile_source_ids.py
+      - name: Require current reconciliation population policy
+        run: python scripts/validate_reconciliation_policy.py
+      - name: Re-prove central IDs and require independent agreement
+        run: |
+          python scripts/verify_central_pagination.py
+          python scripts/verify_central_reconciliation_consistency.py
+      - name: Require persistent independent Gyeonggi 90-day evidence
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+          p=Path('gyeonggi_central_90d_report.json')
+          if not p.exists() or p.stat().st_size < 100:
+              raise SystemExit('Independent Gyeonggi 90-day proof artifact missing')
+          r=json.loads(p.read_text(encoding='utf-8'))
+          if not r.get('complete'):
+              raise SystemExit(f'Independent Gyeonggi 90-day proof incomplete: {r}')
+          recon=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          gg=next((x for x in recon.get('sources',[]) if x.get('name')=='경기도교육청 통합 구인구직'), None)
+          if not gg:
+              raise SystemExit('Gyeonggi central reconciliation source missing')
+          kst=timezone(timedelta(hours=9))
+          fmt='%Y-%m-%d %H:%M:%S KST'
+          try:
+              rt=datetime.strptime(recon.get('generatedAt',''), fmt).replace(tzinfo=kst)
+              gt=datetime.strptime(r.get('generatedAt',''), fmt).replace(tzinfo=kst)
+          except Exception as exc:
+              raise SystemExit(f'Cannot bind persistent Gyeonggi proof timestamps: {type(exc).__name__}')
+          skew=abs((gt-rt).total_seconds())/60
+          if skew > 45:
+              raise SystemExit(f'Persistent Gyeonggi proof outside audit window: {skew:.1f} minutes')
+          print('Persistent Gyeonggi 90-day proof present', {
+              'independent': r.get('stableIdCount'),
+              'reconciliation': gg.get('officialIdCount'),
+              'skewMinutes': round(skew,2),
+          })
+          PY
+          python scripts/verify_central_reconciliation_consistency.py
+      - name: Re-resolve recovered details and sanitize dates
+        run: |
+          python scripts/sanitize_job_dates.py
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
+      - name: Restore any official IDs lost during enrichment
+        run: |
+          python scripts/restore_reconciled_ids.py
+          python scripts/sanitize_job_dates.py
+          python scripts/resolve_support_links.py
+          python scripts/enrich_support_periods.py
+          python scripts/enrich_seoul_get_fallback.py
+      - name: Verify reconciled publication
+        run: |
+          python scripts/verify_jobs.py --previous /tmp/jobs_source_id_baseline.json
+          python scripts/validate_reconciliation_policy.py
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from source_registry import official_source_count
+          expected_sources=official_source_count()
+          r=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
+          s=r.get('summary',{})
+          if int(s.get('missingAfter') or 0): raise SystemExit(f'Official IDs still missing: {s}')
+          reconciled=int(s.get('reconciledSources') or 0)
+          total=int(s.get('totalSources') or 0)
+          if total != expected_sources or reconciled != total:
+              raise SystemExit(f'{expected_sources}-source reconciliation incomplete: {s}')
+          c=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
+          if not c.get('complete'):
+              raise SystemExit(f'Central pagination proof incomplete: {c}')
+          restore=json.loads(Path('official_id_restore_report.json').read_text(encoding='utf-8'))
+          rs=restore.get('summary',{})
+          if int(rs.get('missingAfter') or 0):
+              raise SystemExit(f'Official IDs lost after enrichment: {rs}')
+          print('Official source-ID reconciliation passed', s, 'finalRestore', rs)
+          PY
+          python scripts/verify_central_reconciliation_consistency.py
+      - name: Persist durable ledgers, checkpoints, and effective audit health
+        run: |
+          python scripts/update_collection_state.py
+          python scripts/update_collector_status.py --workflow reconciliation --stage complete --state success
+          python scripts/sync_effective_audit_status.py
+      - name: Commit only fully reconciled data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
+          test -s gyeonggi_central_90d_report.json
+          if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
+            git rm -f reconciliation_failure_report.json
+          fi
+          git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json deep_audit_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
+          git add -f gyeonggi_central_90d_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Reconcile official recruitment source IDs'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
+      - name: Preserve reconciliation diagnostics on failure
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/source-id-diagnostics
+          for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json official_id_restore_report.json; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/source-id-diagnostics/$f"; fi
+          done
+          git reset --hard HEAD
+          git clean -fd
+          python - <<'PY'
+          import json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          root=Path('/tmp/source-id-diagnostics')
+          def load(name):
+              p=root/name
+              if not p.exists(): return {}
+              try: return json.loads(p.read_text(encoding='utf-8'))
+              except Exception: return {'readError': True}
+
+          recon=load('source_reconciliation_report.json')
+          central=load('central_pagination_report.json')
+          gg90=load('gyeonggi_central_90d_report.json')
+          restore=load('official_id_restore_report.json')
+          ledger=load('source_id_ledger.json')
+          kst=timezone(timedelta(hours=9))
+          report={
+              'generatedAt': datetime.now(kst).strftime('%Y-%m-%d %H:%M:%S KST'),
+              'policy': 'Rejected reconciliation diagnostics are isolated from canonical published proof files.',
+              'candidate': {
+                  'reconciliation': recon.get('summary',{}),
+                  'centralPagination': {
+                      'generatedAt': central.get('generatedAt'),
+                      'complete': central.get('complete'),
+                      'sources': central.get('sources',[]),
+                  },
+                  'gyeonggiCentral90d': {
+                      'generatedAt': gg90.get('generatedAt'),
+                      'stableIdCount': gg90.get('stableIdCount'),
+                      'complete': gg90.get('complete'),
+                  },
+                  'finalRestore': restore.get('summary',{}),
+                  'sourceIdLedger': {
+                      'generatedAt': ledger.get('generatedAt'),
+                      'officialIdCount': len(ledger.get('ids',{})) if isinstance(ledger.get('ids'),dict) else ledger.get('officialIdCount'),
+                  },
+              },
+          }
+          Path('reconciliation_failure_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+          python scripts/update_collector_status.py --workflow reconciliation --stage source-id-reconciliation --state failed
+          git config user.name 'github-actions[bot]'
+          git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
+          git add collector_status.json reconciliation_failure_report.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record isolated official source-ID reconciliation failure'
+          git reset --hard HEAD
+          git pull --rebase
+          git push
