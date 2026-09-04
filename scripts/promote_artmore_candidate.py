@@ -17,7 +17,8 @@ CANDIDATE_JOBS = Path("artmore_jobs.candidate.json")
 CANDIDATE_LEDGER = Path("artmore_source_id_ledger.candidate.json")
 CANDIDATE_REPORT = Path("artmore_reconciliation_report.candidate.json")
 CANDIDATE_STATE = Path("artmore_collection_state.candidate.json")
-DETAIL_REPORT = Path("artmore_detail_link_report.json")
+CANDIDATE_DETAIL_REPORT = Path("artmore_detail_link_report.candidate.json")
+CANONICAL_DETAIL_REPORT = Path("artmore_detail_link_report.json")
 CANONICAL_LEDGER = Path("artmore_source_id_ledger.json")
 CANONICAL_JOBS = Path("artmore_jobs.json")
 
@@ -146,7 +147,9 @@ async def main() -> int:
             "errors": [{"error": "abnormal candidate drop; canonical publication preserved"}],
             "verifiedExamples": [],
         }
-        DETAIL_REPORT.write_text(json.dumps(detail_report, ensure_ascii=False, indent=2), encoding="utf-8")
+        # Failed candidate diagnostics are candidate-scoped. Never replace the last verified
+        # canonical detail report, because unified publication consumes that canonical evidence.
+        CANDIDATE_DETAIL_REPORT.write_text(json.dumps(detail_report, ensure_ascii=False, indent=2), encoding="utf-8")
         print(json.dumps(detail_report, ensure_ascii=False, indent=2))
         return 3
 
@@ -166,13 +169,14 @@ async def main() -> int:
         "errors": errors,
         "verifiedExamples": verified[:20],
     }
-    DETAIL_REPORT.write_text(json.dumps(detail_report, ensure_ascii=False, indent=2), encoding="utf-8")
+    CANDIDATE_DETAIL_REPORT.write_text(json.dumps(detail_report, ensure_ascii=False, indent=2), encoding="utf-8")
     if not healthy:
         print(json.dumps(detail_report, ensure_ascii=False, indent=2))
         return 2
 
     shutil.copyfile(CANDIDATE_JOBS, "artmore_jobs.json")
     shutil.copyfile(CANDIDATE_LEDGER, "artmore_source_id_ledger.json")
+    shutil.copyfile(CANDIDATE_DETAIL_REPORT, CANONICAL_DETAIL_REPORT)
 
     canonical_report = dict(candidate_report)
     canonical_report.update({
