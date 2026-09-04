@@ -63,6 +63,8 @@ jobs:
         run: python scripts/verify_central_pagination.py
       - name: Crawl official IDs and recover missing source occurrences
         run: python scripts/reconcile_source_ids.py
+      - name: Refresh independent Gyeonggi 90-day evidence
+        run: python scripts/verify_gyeonggi_central_90d.py
       - name: Require current reconciliation population policy
         run: python scripts/validate_reconciliation_policy.py
       - name: Re-prove central IDs and require independent agreement
