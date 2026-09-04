@@ -1,0 +1,68 @@
+name: Probe Public Instructor source
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/probe_public_instructor.py'
+      - '.github/workflows/probe-public-instructor.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-public-instructor-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Syntax check
+        run: python -m py_compile scripts/probe_public_instructor.py
+      - name: Probe public recruitment structure
+        id: probe
+        continue-on-error: true
+        run: python scripts/probe_public_instructor.py
+      - name: Validate isolation guard
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('public_instructor_probe_report.json')
+          assert p.exists(), 'probe report missing'
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d.get('publicationEnabled') is False
+          assert d.get('mode') == 'read-only-onboarding-probe'
+          print(json.dumps(d.get('summary',{}), ensure_ascii=False, indent=2))
+          PY
+      - name: Commit probe evidence
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public_instructor_probe_report.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record Public Instructor source probe'
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break
+            sleep $((i*4))
+          done
+      - name: Fail after preserving diagnostics
+        if: steps.probe.outcome != 'success'
+        run: exit 1
