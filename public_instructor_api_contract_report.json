@@ -1,0 +1,123 @@
+{
+  "generatedAt": "2026-09-04T14:56:23+09:00",
+  "source": "공공강사",
+  "api": "https://prod-backend.00gangsa.com/v1/recruitments",
+  "mode": "read-only-api-contract-probe",
+  "publicationEnabled": false,
+  "tests": [],
+  "errors": [
+    {
+      "params": {},
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments"
+    },
+    {
+      "params": {
+        "page": 2
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?page=2"
+    },
+    {
+      "params": {
+        "page": 3
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?page=3"
+    },
+    {
+      "params": {
+        "size": 100
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?size=100"
+    },
+    {
+      "params": {
+        "limit": 100
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?limit=100"
+    },
+    {
+      "params": {
+        "provinceId": 1
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=1"
+    },
+    {
+      "params": {
+        "provinceId": 2
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=2"
+    },
+    {
+      "params": {
+        "provinceIds": "1,2"
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=1%2C2"
+    },
+    {
+      "params": {
+        "provinceIds": 1
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=1"
+    },
+    {
+      "params": {
+        "provinceIds": 2
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=2"
+    },
+    {
+      "params": {
+        "provinceIds[]": 1
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds%5B%5D=1"
+    },
+    {
+      "params": {
+        "provinceIds[]": 2
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds%5B%5D=2"
+    },
+    {
+      "params": {
+        "state": "RECRUITING"
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?state=RECRUITING"
+    },
+    {
+      "params": {
+        "states": "RECRUITING"
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?states=RECRUITING"
+    },
+    {
+      "params": {
+        "provinceId": 1,
+        "state": "RECRUITING"
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=1&state=RECRUITING"
+    },
+    {
+      "params": {
+        "provinceId": 2,
+        "state": "RECRUITING"
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceId=2&state=RECRUITING"
+    },
+    {
+      "params": {
+        "provinceIds": "1,2",
+        "state": "RECRUITING"
+      },
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://prod-backend.00gangsa.com/v1/recruitments?provinceIds=1%2C2&state=RECRUITING"
+    }
+  ],
+  "summary": {
+    "pageParamWorks": false,
+    "filterEvidenceCount": 0,
+    "readyForCollector": false
+  },
+  "filterEvidence": [],
+  "policy": {
+    "publishBeforeValidation": false,
+    "nextGate": "isolated Seoul/Gyeonggi recruiting traversal + missingAfter=0"
+  }
+}
