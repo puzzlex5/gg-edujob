@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-04T11:08:27+09:00",
+  "generatedAt": "2026-09-04T12:08:23+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-04T11:08:27+09:00",
+    "generatedAt": "2026-09-04T12:08:23+09:00",
     "official": {
       "datasetCount": 18987,
       "officialIdCount": 17995,
@@ -12,14 +12,14 @@
       "totalSources": 38
     },
     "lessoninfo": {
-      "datasetCount": 1435,
-      "publishedIdCount": 1435,
+      "datasetCount": 1436,
+      "publishedIdCount": 1436,
       "missingAfter": 0,
       "detailErrors": 0,
       "healthy": true,
       "traversalComplete": true,
       "perSurface": {
-        "afterschool-nulbom": 81,
+        "afterschool-nulbom": 82,
         "culture-arts": 1354
       }
     },
@@ -27,8 +27,8 @@
       "publishedJobs": 4589,
       "officialDisplayed": 3168,
       "privateDisplayed": 1421,
-      "privateDiscovered": 1435,
-      "officialPrivateAliases": 14,
+      "privateDiscovered": 1436,
+      "officialPrivateAliases": 15,
       "healthy": true,
       "missingLessoninfoIds": 0,
       "nonMetroPrivate": 0,
@@ -238,7 +238,41 @@
     }
   },
   "comparisons": {
-    "1d": null,
+    "1d": {
+      "baselineAt": "2026-09-03T19:59:07+09:00",
+      "metrics": {
+        "official.datasetCount": {
+          "current": 18987,
+          "baseline": 18911,
+          "changeRatio": 0.004
+        },
+        "official.officialIdCount": {
+          "current": 17995,
+          "baseline": 17887,
+          "changeRatio": 0.006
+        },
+        "lessoninfo.publishedIdCount": {
+          "current": 1436,
+          "baseline": 1431,
+          "changeRatio": 0.0035
+        },
+        "unified.publishedJobs": {
+          "current": 4589,
+          "baseline": 4715,
+          "changeRatio": -0.0267
+        },
+        "unified.officialDisplayed": {
+          "current": 3168,
+          "baseline": 3299,
+          "changeRatio": -0.0397
+        },
+        "unified.privateDiscovered": {
+          "current": 1436,
+          "baseline": 1431,
+          "changeRatio": 0.0035
+        }
+      }
+    },
     "7d": null,
     "30d": null
   },
