@@ -1,19 +1,21 @@
 {
-  "generatedAt": "2026-09-04T14:30:16+09:00",
+  "generatedAt": "2026-09-04T14:31:05+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 19092,
-  "canonicalPrivateJobs": 5507,
+  "canonicalPrivateJobs": 1470,
   "selectedOfficialJobs": 3276,
-  "selectedPrivateJobs": 5507,
-  "publishedJobs": 8768,
+  "selectedPrivateJobs": 1470,
+  "publishedJobs": 4731,
   "perFeed": {
     "official": 3276,
-    "private": 5492
+    "private": 1455
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
+      "publicationEnabled": true,
       "ok": true,
+      "candidateCount": 1442,
       "count": 1442,
       "lastVerifiedAt": "2026-09-04T13:52:29+09:00",
       "missingAfterCount": 0,
@@ -22,16 +24,20 @@
     },
     "jobteacher": {
       "name": "잡티처",
+      "publicationEnabled": false,
       "ok": false,
-      "count": 4037,
+      "candidateCount": 4037,
+      "count": 0,
       "lastVerifiedAt": "2026-09-04T13:58:57+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 4037
+      "displayedAsPrivate": 0
     },
     "artmore": {
       "name": "아트모아",
+      "publicationEnabled": true,
       "ok": true,
+      "candidateCount": 28,
       "count": 28,
       "lastVerifiedAt": "2026-09-04T13:54:52+09:00",
       "missingAfterCount": 0,
@@ -44,5 +50,5 @@
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "review-only-never-auto-delete",
-  "allPrivateSourcesHealthy": false
+  "allPrivateSourcesHealthy": true
 }
