@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-09-04T13:58:36+09:00",
+  "source": "공공강사",
+  "baseUrl": "https://00gangsa.com",
+  "mode": "read-only-onboarding-probe",
+  "publicationEnabled": false,
+  "surfaces": [
+    {
+      "surface": "recruitments",
+      "requestedUrl": "https://00gangsa.com/recruitments",
+      "httpStatus": 200,
+      "reachable": true,
+      "detailLinkCount": 0,
+      "candidateStableIdCount": 0,
+      "candidateStableIdExamples": [],
+      "paginationLinkCount": 0,
+      "paginationExamples": [],
+      "metroTextPresent": true,
+      "statusTextPresent": true,
+      "rowSamples": [],
+      "detailVerification": []
+    }
+  ],
+  "summary": {
+    "reachable": true,
+    "stableIdEvidence": false,
+    "detailUrlEvidence": false,
+    "metroTextEvidence": true,
+    "statusEvidence": true,
+    "paginationEvidence": false,
+    "readyForCollectorDesign": false,
+    "errors": 0
+  },
+  "errors": [],
+  "policy": {
+    "publishBeforeValidation": false,
+    "regionsAllowed": [
+      "서울",
+      "경기"
+    ],
+    "nextGate": "discover complete pagination/filter contract, then isolated full traversal + missingAfter=0"
+  }
+}
