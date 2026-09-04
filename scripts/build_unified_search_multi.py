@@ -31,6 +31,13 @@ PRIVATE_SOURCES = [
         "report": "artmore_reconciliation_report.json",
         "detail_report": "artmore_detail_link_report.json",
     },
+    {
+        "key": "gonggonggangsa",
+        "name": "공공강사",
+        "jobs": "gonggonggangsa_jobs.json",
+        "report": "gonggonggangsa_reconciliation_report.json",
+        "detail_report": "gonggonggangsa_detail_link_report.json",
+    },
 ]
 
 _BASE_CANONICAL_URL = base.canonical_url
@@ -74,9 +81,26 @@ def project_private_generic(job, source_name):
     row["sourceSurfaceLabel"] = str(job.get("sourceSurfaceLabel") or source_name)
     if row.get("school") == "레슨인포 구인" and source_name != "레슨인포":
         row["school"] = source_name + " 구인"
+
+    # Preserve explicit multi-region evidence from source adapters. base.project_private
+    # predates multi-province private sources and otherwise collapses them to one region.
+    explicit_provinces = [str(x) for x in (job.get("provinces") or []) if str(x)]
+    if explicit_provinces:
+        row["provinces"] = list(dict.fromkeys(explicit_provinces))
+        if row.get("province") not in row["provinces"]:
+            row["province"] = row["provinces"][0]
+    else:
+        row["provinces"] = [row.get("province")] if row.get("province") else []
+
+    explicit_regions = [str(x) for x in (job.get("regions") or []) if str(x)]
+    if explicit_regions:
+        row["regions"] = list(dict.fromkeys(explicit_regions))
+        row["region"] = str(job.get("region") or row["region"] or row["regions"][0])
+
     row["searchText"] = base.norm(" ".join(map(str, [
         row.get("school"), row.get("title"), row.get("subject"), row.get("region"),
-        row.get("province"), row.get("location"), row.get("source"),
+        " ".join(row.get("regions") or []), row.get("province"),
+        " ".join(row.get("provinces") or []), row.get("location"), row.get("source"),
         row.get("sourceSurfaceLabel"), row.get("type"), " ".join(row.get("categories") or [])
     ])))
     return row
