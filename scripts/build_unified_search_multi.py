@@ -7,38 +7,10 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import build_unified_search as base
+from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
+from source_registry import official_source_count
 
 KST = timezone(timedelta(hours=9))
-PRIVATE_SOURCES = [
-    {
-        "key": "lessoninfo",
-        "name": "레슨인포",
-        "jobs": "lessoninfo_jobs.json",
-        "report": "lessoninfo_reconciliation_report.json",
-        "detail_report": None,
-    },
-    {
-        "key": "jobteacher",
-        "name": "잡티처",
-        "jobs": "jobteacher_jobs.json",
-        "report": "jobteacher_reconciliation_report.json",
-        "detail_report": "jobteacher_detail_link_report.json",
-    },
-    {
-        "key": "artmore",
-        "name": "아트모아",
-        "jobs": "artmore_jobs.json",
-        "report": "artmore_reconciliation_report.json",
-        "detail_report": "artmore_detail_link_report.json",
-    },
-    {
-        "key": "gonggonggangsa",
-        "name": "공공강사",
-        "jobs": "gonggonggangsa_jobs.json",
-        "report": "gonggonggangsa_reconciliation_report.json",
-        "detail_report": "gonggonggangsa_detail_link_report.json",
-    },
-]
 
 _BASE_CANONICAL_URL = base.canonical_url
 
@@ -104,19 +76,6 @@ def project_private_generic(job, source_name):
     return row
 
 
-def publication_enabled(report):
-    return not isinstance(report, dict) or "publicationEnabled" not in report or report.get("publicationEnabled") is True
-
-
-def source_health(spec, report, detail_report):
-    ok = bool(report and report.get("healthy") and report.get("traversalComplete") and int(report.get("missingAfterCount") or 0) == 0)
-    if spec["key"] == "lessoninfo":
-        ok = ok and int(report.get("detailErrorCount") or 0) == 0
-    if spec.get("detail_report"):
-        ok = ok and bool(detail_report and detail_report.get("healthy") and detail_report.get("detailCoverageComplete") and int(detail_report.get("detailErrorCount") or 0) == 0)
-    return ok
-
-
 def main():
     official_data = load("jobs.json", {})
     official_jobs = rows_from(official_data)
@@ -174,12 +133,18 @@ def main():
     for spec in PRIVATE_SOURCES:
         private_meta[spec["key"]]["displayedAsPrivate"] = per_private_source_displayed[spec["key"]]
 
-    official_source_count = int(official_data.get("officialSourceCount", 38)) if isinstance(official_data, dict) else 38
+    expected_official_sources = official_source_count()
+    embedded_official_sources = official_data.get("officialSourceCount") if isinstance(official_data, dict) else None
+    if embedded_official_sources is not None and int(embedded_official_sources) != expected_official_sources:
+        raise SystemExit(
+            f"jobs.json officialSourceCount={embedded_official_sources} does not match sources.json={expected_official_sources}"
+        )
+
     payload = {
         "updatedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),
         "dataset": "unified-search-v3-multi-private",
-        "officialSourceCount": official_source_count,
-        "totalSourceCount": official_source_count + enabled_private_sources,
+        "officialSourceCount": expected_official_sources,
+        "totalSourceCount": expected_official_sources + enabled_private_sources,
         "sources": official_data.get("sources", {}) if isinstance(official_data, dict) else {},
         "privateSources": private_meta,
         "counts": {
