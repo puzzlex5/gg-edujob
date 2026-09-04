@@ -1,15 +1,30 @@
 {
-  "generatedAt": "2026-09-04T12:27:46+09:00",
+  "generatedAt": "2026-09-04T13:33:48+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": false,
-  "traversalComplete": false,
-  "candidateIdCount": 19,
-  "publishedIdCount": 19,
+  "healthy": true,
+  "traversalComplete": true,
+  "candidateIdCount": 28,
+  "publishedIdCount": 28,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
+    {
+      "region": "서울",
+      "code": "2001",
+      "pagesVisited": 1,
+      "ids": 9,
+      "pages": [
+        {
+          "page": 1,
+          "rowCount": 9,
+          "newIdCount": 9,
+          "firstId": "94866",
+          "lastId": "94857"
+        }
+      ]
+    },
     {
       "region": "경기",
       "code": "2083",
@@ -33,12 +48,7 @@
       ]
     }
   ],
-  "errors": [
-    {
-      "region": "서울",
-      "error": "RuntimeError: cross-metro contamination in 서울: 94803 주식회사 마이스코리아 진행중 MICE행사 운영 계약직 모집 경력 학력무관 서울특별시 강남구 도곡로 126 월급 3,000,000원 ~ 5,000,000원 계약직 주5일 D-7 2026-08-31 등록 2026-09-11 마감 128 홍익대학교 산학협력단 진행중 (복사) 2026 홍익대 대학로 아트센터 무대감독 채용공고 경"
-    }
-  ],
+  "errors": [],
   "regionsAllowed": [
     "서울",
     "경기"
