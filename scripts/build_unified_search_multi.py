@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import build_unified_search as base
 
@@ -31,6 +32,29 @@ PRIVATE_SOURCES = [
         "detail_report": "artmore_detail_link_report.json",
     },
 ]
+
+# The legacy canonicalizer intentionally kept only official/lessoninfo query IDs.
+# ArtMore detail URLs are identical except for rec_idx, so stripping rec_idx made
+# 28 distinct postings look like one exact-URL duplicate group. Extend URL
+# identity locally without weakening the strong-evidence dedupe policy.
+_BASE_CANONICAL_URL = base.canonical_url
+
+
+def canonical_url_multi(raw):
+    if not raw:
+        return ""
+    try:
+        p = urlparse(str(raw))
+        q = parse_qs(p.query, keep_blank_values=True)
+        rec = str((q.get("rec_idx") or [""])[0])
+        if rec.isdigit() and (p.hostname or "").lower().endswith("artmore.kr"):
+            return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"rec_idx": rec}), ""))
+    except Exception:
+        pass
+    return _BASE_CANONICAL_URL(raw)
+
+
+base.canonical_url = canonical_url_multi
 
 
 def load(path, default=None):
