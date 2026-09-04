@@ -6,6 +6,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from build_unified_search import private_current
 from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
 from source_registry import official_source_count
 
@@ -71,14 +72,21 @@ def main():
     degraded_specs = []
     non_metro = banned = expired = future = 0
     for spec in PRIVATE_SOURCES:
-        src = rows_from(load(spec["jobs"], []))
+        raw_src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
         drep = load(spec["detail_report"], {}) if spec.get("detail_report") else None
         configured_enabled = publication_enabled(rep)
         healthy = source_health(spec, rep, drep)
         effective_enabled = configured_enabled and healthy
+
+        # The canonical source files may intentionally retain expired/history rows for audit
+        # and reconciliation. The builder applies private_current() before projecting into the
+        # unified search, so completeness and contamination checks must validate that same
+        # current-only population rather than demanding that expired archive rows be displayed.
+        src = [j for j in raw_src if private_current(j)] if effective_enabled else []
         source_reports[spec["key"]] = {
-            "count": len(src),
+            "rawCount": len(raw_src),
+            "currentCount": len(src),
             "report": rep,
             "detailReport": drep,
             "configuredPublicationEnabled": configured_enabled,
@@ -179,6 +187,10 @@ def main():
         "duplicateStableIds": duplicate_ids,
         "missingLinks": len(missing_links),
         "badCrossSourceAliasEvidence": len(bad_alias_evidence),
+        "sourceValidationPopulations": {
+            key: {"rawCount": info["rawCount"], "currentCount": info["currentCount"]}
+            for key, info in source_reports.items()
+        },
         "errors": errors,
         "warnings": warnings,
     }
