@@ -3,6 +3,8 @@
 import json
 from pathlib import Path
 
+from source_registry import official_source_count
+
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = "stable-id-38-v2-gyeonggi-central-90d"
 FAST_BASELINE = Path("/tmp/jobs_previous.json")
@@ -77,8 +79,14 @@ def main():
             f"Reconciliation evidence predates current 90-day policy: report={report_policy!r}, ledger={ledger_policy!r}"
         )
 
-    if int(summary.get("totalSources") or 0) != 38 or int(summary.get("reconciledSources") or 0) != 38:
-        raise SystemExit("Current-policy reconciliation is not 38/38")
+    expected_sources = official_source_count()
+    total_sources = int(summary.get("totalSources") or 0)
+    reconciled_sources = int(summary.get("reconciledSources") or 0)
+    if total_sources != expected_sources or reconciled_sources != expected_sources:
+        raise SystemExit(
+            "Current-policy reconciliation source count does not match registry: "
+            f"registry={expected_sources}, reconciled={reconciled_sources}, total={total_sources}"
+        )
     if int(summary.get("missingAfter") or 0) != 0:
         raise SystemExit(f"Current-policy reconciliation still has missingAfter={summary.get('missingAfter')}")
     if report.get("generatedAt") != ledger.get("generatedAt"):
@@ -89,7 +97,8 @@ def main():
         "populationPolicy": POLICY,
         "generatedAt": report.get("generatedAt"),
         "officialIdCount": summary.get("officialIdCount"),
-        "reconciledSources": summary.get("reconciledSources"),
+        "expectedSources": expected_sources,
+        "reconciledSources": reconciled_sources,
         "missingAfter": summary.get("missingAfter"),
         "fastPublicationShape": fast_shape,
     }, ensure_ascii=False))
