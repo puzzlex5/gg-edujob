@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import json
 import math
-import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
@@ -13,11 +12,11 @@ import requests
 
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
-TODAY = NOW.date()
 API = "https://prod-backend.00gangsa.com/v1/recruitments"
 BASE = "https://00gangsa.com"
 PAGE_SIZE = 100
 MAX_RETRIES = 4
+MAX_CATCHUP_ROUNDS = 4
 DROP_CRITICAL_RATIO = 0.65
 ALLOWED_PROVINCES = {"서울", "경기"}
 
@@ -59,7 +58,8 @@ def parse_dt(value):
     raw = str(value).strip()
     for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
         try:
-            return datetime.strptime(raw[:19 if "%H" in fmt else 10], fmt).replace(tzinfo=KST)
+            cut = 19 if "%H" in fmt else 10
+            return datetime.strptime(raw[:cut], fmt).replace(tzinfo=KST)
         except ValueError:
             continue
     return None
@@ -85,6 +85,29 @@ def request_page(session: requests.Session, page: int, size: int = PAGE_SIZE) ->
             if attempt + 1 < MAX_RETRIES:
                 time.sleep(1.5 * (attempt + 1))
     raise RuntimeError(f"page {page} failed after retries: {type(last_exc).__name__}: {last_exc}")
+
+
+def row_id(row):
+    sid = str((row or {}).get("id") or "")
+    return sid if sid.isdigit() else ""
+
+
+def ingest_rows(rows, target, *, error_prefix, errors):
+    new_ids = []
+    duplicates = 0
+    invalid = 0
+    for row in rows:
+        sid = row_id(row)
+        if not sid:
+            invalid += 1
+            errors.append(f"{error_prefix}: invalid row id {sid!r}")
+            continue
+        if sid in target:
+            duplicates += 1
+        else:
+            new_ids.append(sid)
+        target[sid] = row
+    return new_ids, duplicates, invalid
 
 
 def provinces(row):
@@ -126,7 +149,7 @@ def is_current_metro(row):
 
 
 def normalize(row):
-    sid_num = str(row.get("id") or "")
+    sid_num = row_id(row)
     sid = f"gonggonggangsa:{sid_num}"
     ps = [p for p in provinces(row) if p in ALLOWED_PROVINCES]
     cs = cities(row)
@@ -134,11 +157,8 @@ def normalize(row):
     institution = row.get("institution") or {}
     deadline = parse_dt(row.get("deadlineAt"))
     registered = parse_dt(row.get("recruitmentAt"))
-    province = ps[0] if len(ps) == 1 else "서울·경기" if len(ps) > 1 else ""
-    location_bits = []
-    if province:
-        location_bits.append(province)
-    location_bits.extend(cs)
+    province = ps[0] if ps else ""
+    location_bits = list(ps) + cs
     detail_url = f"{BASE}/recruitments/{sid_num}"
     return {
         "sourceIdentity": sid,
@@ -147,9 +167,10 @@ def normalize(row):
         "sourceSurface": "public-instructor",
         "sourceSurfaceLabel": "공공강사",
         "province": province,
+        "provinces": ps,
         "region": cs[0] if len(cs) == 1 else ", ".join(cs),
         "regions": cs,
-        "location": " ".join(location_bits),
+        "location": " ".join(dict.fromkeys(location_bits)),
         "school": str(institution.get("name") or "공공강사 구인"),
         "title": str(row.get("title") or "").strip(),
         "subject": " · ".join(fields),
@@ -176,11 +197,70 @@ def validate_detail(url: str):
         return {"url": url, "ok": False, "status": None, "finalUrl": None, "error": f"{type(exc).__name__}: {exc}"}
 
 
+def catch_up_live_head(session, all_rows_by_id, start_count, errors):
+    """Recover rows inserted at the live feed head during a full traversal.
+
+    Walk from page 1 until an all-known page proves overlap with the completed snapshot,
+    then require the ID union to equal a stable server count exactly. Growth is recovered,
+    never merely tolerated.
+    """
+    rounds = []
+    final_count = start_count
+    for round_no in range(1, MAX_CATCHUP_ROUNDS + 1):
+        head = request_page(session, 1)
+        observed_count = int(head.get("count") or 0)
+        observed_pages = int(head.get("totalPage") or 0)
+        if observed_count < start_count:
+            errors.append(f"source count dropped during traversal: {start_count} -> {observed_count}")
+            return rounds, observed_count, False
+
+        new_in_round = []
+        pages_scanned = 0
+        overlap_reached = False
+        page_no = 1
+        while page_no <= max(1, observed_pages):
+            data = head if page_no == 1 else request_page(session, page_no)
+            rows = data.get("list") or []
+            before = set(all_rows_by_id)
+            new_ids, _, _ = ingest_rows(rows, all_rows_by_id, error_prefix=f"catchup round {round_no} page {page_no}", errors=errors)
+            new_in_round.extend(new_ids)
+            pages_scanned += 1
+            valid_ids = [row_id(r) for r in rows if row_id(r)]
+            if not rows or (valid_ids and all(sid in before for sid in valid_ids)):
+                overlap_reached = True
+                break
+            page_no += 1
+
+        verify = request_page(session, 1)
+        final_count = int(verify.get("count") or 0)
+        rounds.append({
+            "round": round_no,
+            "serverCountBefore": observed_count,
+            "serverCountAfter": final_count,
+            "pagesScanned": pages_scanned,
+            "newIdCount": len(set(new_in_round)),
+            "newIds": sorted(set(new_in_round), key=lambda x: int(x), reverse=True)[:200],
+            "overlapReached": overlap_reached,
+            "unionCount": len(all_rows_by_id),
+        })
+        if final_count < start_count:
+            errors.append(f"source count dropped during catch-up: {start_count} -> {final_count}")
+            return rounds, final_count, False
+        if overlap_reached and final_count == observed_count and len(all_rows_by_id) == final_count:
+            return rounds, final_count, True
+        if len(all_rows_by_id) > final_count:
+            errors.append(f"source IDs exceed current server count during catch-up: ids={len(all_rows_by_id)} server={final_count}")
+            return rounds, final_count, False
+
+    errors.append(f"live head did not stabilize after {MAX_CATCHUP_ROUNDS} catch-up rounds: ids={len(all_rows_by_id)} server={final_count}")
+    return rounds, final_count, False
+
+
 def main() -> int:
     generated = NOW.isoformat(timespec="seconds")
-    previous_state = load_json(CANONICAL_STATE, {})
     previous_jobs = load_json(CANONICAL_JOBS, [])
-    previous_count = len(previous_jobs if isinstance(previous_jobs, list) else previous_jobs.get("jobs", [])) if previous_jobs else 0
+    previous_rows = previous_jobs if isinstance(previous_jobs, list) else previous_jobs.get("jobs", []) if isinstance(previous_jobs, dict) else []
+    previous_count = len(previous_rows)
     previous_ledger = load_json(CANONICAL_LEDGER, {"entries": {}})
     if not isinstance(previous_ledger, dict):
         previous_ledger = {"entries": {}}
@@ -188,9 +268,11 @@ def main() -> int:
 
     errors = []
     pages = []
+    catchup_rounds = []
     all_rows_by_id = {}
     traversal_complete = False
     initial_count = None
+    count_after_full_scan = None
     final_count = None
     total_pages = None
 
@@ -202,45 +284,39 @@ def main() -> int:
         expected_pages = math.ceil(initial_count / PAGE_SIZE) if initial_count else 0
         if total_pages != expected_pages:
             raise RuntimeError(f"totalPage inconsistent: api={total_pages} expected={expected_pages}")
+        if initial_count <= 0:
+            raise RuntimeError("source returned abnormal zero count")
 
+        snapshot_duplicate_ids = 0
         for page_no in range(1, total_pages + 1):
             data = first if page_no == 1 else request_page(session, page_no)
             rows = data.get("list") or []
-            new_ids = 0
-            duplicate_ids = 0
-            for row in rows:
-                sid = str(row.get("id") or "")
-                if not sid.isdigit():
-                    errors.append(f"page {page_no}: invalid row id {sid!r}")
-                    continue
-                if sid in all_rows_by_id:
-                    duplicate_ids += 1
-                else:
-                    new_ids += 1
-                all_rows_by_id[sid] = row
+            new_ids, duplicate_ids, _ = ingest_rows(rows, all_rows_by_id, error_prefix=f"page {page_no}", errors=errors)
+            snapshot_duplicate_ids += duplicate_ids
             pages.append({
                 "page": page_no,
                 "rowCount": len(rows),
-                "newIdCount": new_ids,
+                "newIdCount": len(new_ids),
                 "duplicateIdCount": duplicate_ids,
-                "firstId": str(rows[0].get("id")) if rows else None,
-                "lastId": str(rows[-1].get("id")) if rows else None,
+                "firstId": row_id(rows[0]) if rows else None,
+                "lastId": row_id(rows[-1]) if rows else None,
             })
 
-        end = request_page(session, 1)
-        final_count = int(end.get("count") or 0)
-        traversal_complete = (
+        post_scan = request_page(session, 1)
+        count_after_full_scan = int(post_scan.get("count") or 0)
+        catchup_rounds, final_count, catchup_complete = catch_up_live_head(session, all_rows_by_id, initial_count, errors)
+        traversal_complete = bool(
             not errors
-            and initial_count > 0
-            and final_count == initial_count
             and len(pages) == total_pages
-            and len(all_rows_by_id) == initial_count
-            and sum(p["duplicateIdCount"] for p in pages) == 0
+            and snapshot_duplicate_ids == 0
+            and catchup_complete
+            and final_count is not None
+            and len(all_rows_by_id) == final_count
         )
-        if final_count != initial_count:
-            errors.append(f"source count changed during traversal: {initial_count} -> {final_count}")
-        if len(all_rows_by_id) != initial_count:
-            errors.append(f"unique source ID mismatch: discovered={len(all_rows_by_id)} serverCount={initial_count}")
+        if snapshot_duplicate_ids:
+            errors.append(f"full traversal had {snapshot_duplicate_ids} duplicate page-boundary IDs")
+        if not traversal_complete and not errors:
+            errors.append(f"exhaustive traversal proof failed: ids={len(all_rows_by_id)} finalServerCount={final_count}")
     except Exception as exc:
         errors.append(f"{type(exc).__name__}: {exc}")
 
@@ -251,7 +327,7 @@ def main() -> int:
     stored_ids = {x.get("sourceIdentity") for x in jobs if x.get("sourceIdentity")}
     missing_after = sorted(discovered_ids - stored_ids)
 
-    contamination = [x["sourceIdentity"] for x in jobs if not (set(provinces(x.get("raw") or {})) & ALLOWED_PROVINCES)]
+    contamination = [x["sourceIdentity"] for x in jobs if not set(x.get("provinces") or []) or not set(x.get("provinces") or []).issubset(ALLOWED_PROVINCES)]
     state_errors = [x["sourceIdentity"] for x in jobs if str(x.get("sourceState")) != "RECRUITING"]
     expired = []
     future = []
@@ -285,18 +361,7 @@ def main() -> int:
         drop_ratio = (previous_count - len(jobs)) / previous_count
         abnormal_drop = drop_ratio >= DROP_CRITICAL_RATIO
 
-    healthy = bool(
-        traversal_complete
-        and jobs
-        and not errors
-        and not missing_after
-        and not contamination
-        and not state_errors
-        and not expired
-        and not future
-        and detail_complete
-        and not abnormal_drop
-    )
+    healthy = bool(traversal_complete and jobs and not errors and not missing_after and not contamination and not state_errors and not expired and not future and detail_complete and not abnormal_drop)
 
     ledger_entries = dict(previous_ledger.get("entries") or {})
     for x in jobs:
@@ -320,7 +385,8 @@ def main() -> int:
         "source": "공공강사",
         "currentMetroCount": len(jobs),
         "allSourceIdCount": len(all_rows_by_id),
-        "serverCount": initial_count,
+        "serverCountAtStart": initial_count,
+        "serverCountAtEnd": final_count,
         "totalPages": total_pages,
         "traversalComplete": traversal_complete,
         "healthy": healthy,
@@ -328,14 +394,18 @@ def main() -> int:
     candidate_report = {
         "generatedAt": generated,
         "source": "공공강사",
-        "policy": "gonggonggangsa-post-api-v1",
+        "policy": "gonggonggangsa-post-api-live-head-catchup-v2",
         "publicationEnabled": False,
         "healthy": healthy,
         "traversalComplete": traversal_complete,
         "serverCountAtStart": initial_count,
+        "serverCountAfterFullScan": count_after_full_scan,
         "serverCountAtEnd": final_count,
+        "countGrowthDuringScan": (final_count - initial_count) if isinstance(final_count, int) and isinstance(initial_count, int) else None,
         "totalPages": total_pages,
         "pagesVisited": len(pages),
+        "headCatchupRounds": catchup_rounds,
+        "headCatchupNewIdCount": sum(int(x.get("newIdCount") or 0) for x in catchup_rounds),
         "allSourceIdCount": len(all_rows_by_id),
         "candidateIdCount": len(discovered_ids),
         "publishedIdCount": len(stored_ids) if healthy else previous_count,
@@ -384,11 +454,13 @@ def main() -> int:
     print(json.dumps({
         "healthy": healthy,
         "traversalComplete": traversal_complete,
-        "serverCount": initial_count,
+        "serverCountAtStart": initial_count,
+        "serverCountAtEnd": final_count,
         "allSourceIdCount": len(all_rows_by_id),
         "candidateIdCount": len(jobs),
         "missingAfterCount": len(missing_after),
         "detailErrorCount": len(detail_errors),
+        "headCatchupNewIdCount": sum(int(x.get("newIdCount") or 0) for x in catchup_rounds),
         "abnormalDrop": abnormal_drop,
         "errors": errors[:10],
     }, ensure_ascii=False))
