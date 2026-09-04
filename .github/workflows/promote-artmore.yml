@@ -1,0 +1,83 @@
+name: Promote verified ArtMore jobs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/promote_artmore_candidate.py'
+      - '.github/workflows/promote-artmore.yml'
+  workflow_run:
+    workflows:
+      - 'Update ArtMore candidate jobs'
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-artmore-promotion
+  cancel-in-progress: true
+
+jobs:
+  promote:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Syntax check
+        run: python -m py_compile scripts/promote_artmore_candidate.py
+      - name: Validate every ArtMore detail and promote only if complete
+        id: promote
+        continue-on-error: true
+        run: python scripts/promote_artmore_candidate.py
+      - name: Validate canonical promotion gate
+        id: validate
+        if: steps.promote.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          r=json.loads(pathlib.Path('artmore_reconciliation_report.json').read_text(encoding='utf-8'))
+          d=json.loads(pathlib.Path('artmore_detail_link_report.json').read_text(encoding='utf-8'))
+          j=json.loads(pathlib.Path('artmore_jobs.json').read_text(encoding='utf-8')).get('jobs',[])
+          assert r.get('healthy') and r.get('traversalComplete') and r.get('missingAfterCount') == 0
+          assert r.get('publicationEnabled') is True
+          assert d.get('healthy') and d.get('detailCoverageComplete') and d.get('detailErrorCount') == 0
+          assert d.get('verifiedCount') == len(j) and len(j) > 0
+          assert all(x.get('province') in {'서울','경기'} for x in j)
+          assert all(x.get('sourceIdentity') and x.get('originalUrl') for x in j)
+          print(f'ArtMore canonical promotion verified: {len(j)} jobs')
+          PY
+      - name: Commit canonical ArtMore dataset or diagnostics
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add artmore_detail_link_report.json 2>/dev/null || true
+          if [ "${{ steps.promote.outcome }}" = success ] && [ "${{ steps.validate.outcome }}" = success ]; then
+            git add artmore_jobs.json artmore_source_id_ledger.json artmore_reconciliation_report.json artmore_collection_state.json
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -m 'Promote verified ArtMore recruitment source'
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              sleep $((i*5))
+            done
+          fi
+      - name: Fail after preserving diagnostics
+        if: steps.promote.outcome != 'success' || steps.validate.outcome != 'success'
+        run: exit 1
