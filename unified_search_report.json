@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-04T18:59:35+09:00",
+  "generatedAt": "2026-09-04T20:05:37+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
-  "canonicalOfficialJobs": 19168,
-  "canonicalPrivateJobs": 1470,
-  "selectedOfficialJobs": 3353,
-  "selectedPrivateJobs": 1470,
-  "publishedJobs": 4808,
+  "canonicalOfficialJobs": 19234,
+  "canonicalPrivateJobs": 1531,
+  "selectedOfficialJobs": 3418,
+  "selectedPrivateJobs": 1531,
+  "publishedJobs": 4934,
   "perFeed": {
-    "official": 3353,
-    "private": 1455
+    "official": 3418,
+    "private": 1516
   },
   "privateSources": {
     "lessoninfo": {
@@ -17,7 +17,7 @@
       "ok": true,
       "candidateCount": 1442,
       "count": 1442,
-      "lastVerifiedAt": "2026-09-04T18:54:56+09:00",
+      "lastVerifiedAt": "2026-09-04T19:52:23+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 1427
@@ -28,7 +28,7 @@
       "ok": false,
       "candidateCount": 4037,
       "count": 0,
-      "lastVerifiedAt": "2026-09-04T18:58:59+09:00",
+      "lastVerifiedAt": "2026-09-04T19:58:34+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 0
@@ -36,13 +36,24 @@
     "artmore": {
       "name": "아트모아",
       "publicationEnabled": true,
-      "ok": true,
+      "ok": false,
       "candidateCount": 28,
       "count": 28,
-      "lastVerifiedAt": "2026-09-04T17:59:10+09:00",
+      "lastVerifiedAt": "2026-09-04T19:58:19+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 28
+    },
+    "gonggonggangsa": {
+      "name": "공공강사",
+      "publicationEnabled": true,
+      "ok": true,
+      "candidateCount": 61,
+      "count": 61,
+      "lastVerifiedAt": "2026-09-04T19:58:07+09:00",
+      "missingAfterCount": 0,
+      "detailErrorCount": 0,
+      "displayedAsPrivate": 61
     }
   },
   "protectedOfficialIds": 18099,
@@ -50,5 +61,5 @@
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "review-only-never-auto-delete",
-  "allPrivateSourcesHealthy": true
+  "allPrivateSourcesHealthy": false
 }
