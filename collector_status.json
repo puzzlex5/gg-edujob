@@ -1,7 +1,7 @@
 {
   "fast": {
-    "state": "success",
-    "updatedAt": "2026-09-05T06:05:05+09:00",
+    "state": "failed",
+    "updatedAt": "2026-09-05T07:01:53+09:00",
     "jobsCount": 19232,
     "artifacts": {
       "jobLedger": true,
@@ -13,8 +13,8 @@
       "missingRecoveryReport": true,
       "boardDiscoveryReport": true
     },
-    "stage": "complete",
-    "lastFailureAt": "2026-09-01T06:24:33+09:00",
+    "stage": "publication-guard",
+    "lastFailureAt": "2026-09-05T07:01:53+09:00",
     "lastSuccessAt": "2026-09-05T06:05:05+09:00",
     "artifactGeneratedAt": {
       "coverageReport": "2026-09-03T21:38:34.130620+00:00",
@@ -27,7 +27,7 @@
     },
     "coverageEvidence": {
       "generatedAt": "2026-09-03T21:38:34.130620+00:00",
-      "ageHours": 23.44,
+      "ageHours": 24.39,
       "freshWithinHours": 30,
       "fresh": true,
       "gyeonggiComplete": 25,
@@ -42,11 +42,10 @@
       "currentSupportExactLinks": true,
       "datasetBound": true,
       "currentComplete": true,
-      "proof": "38-source-reconciliation",
-      "reconciliationAuthoritative": true,
+      "proof": "support-coverage",
       "supportCoverage": {
         "generatedAt": "2026-09-03T21:38:34.130620+00:00",
-        "ageHours": 23.44,
+        "ageHours": 24.39,
         "freshWithinHours": 30,
         "fresh": true,
         "gyeonggiComplete": 25,
@@ -64,7 +63,7 @@
       },
       "sourceReconciliation": {
         "generatedAt": "2026-09-05 03:52:48 KST",
-        "ageHours": 2.2,
+        "ageHours": 3.15,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
@@ -72,10 +71,10 @@
         "missingAfter": 0,
         "centralPaginationComplete": true,
         "centralGeneratedAt": "2026-09-05 04:16:49 KST",
-        "centralAgeHours": 1.8,
+        "centralAgeHours": 2.75,
         "ledgerPresent": true,
         "ledgerGeneratedAt": "2026-09-05 03:52:48 KST",
-        "ledgerAgeHours": 2.2,
+        "ledgerAgeHours": 3.15,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
         "reportCentralSkewHours": 0.4,
