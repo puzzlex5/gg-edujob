@@ -1,0 +1,42 @@
+name: Audit JobTeacher publication gate
+
+on:
+  push:
+    branches:
+      - 'audit/jobteacher-publication-gate'
+    paths:
+      - 'scripts/audit_jobteacher_publication_gate.py'
+      - '.github/workflows/audit-jobteacher-publication-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: audit-jobteacher-publication-gate
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile audit
+        run: python -m py_compile scripts/audit_jobteacher_publication_gate.py
+      - name: Audit existing canonical JobTeacher dataset
+        run: python scripts/audit_jobteacher_publication_gate.py
+      - name: Commit audit report to isolated branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobteacher_publication_gate_audit.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'Record JobTeacher publication gate audit'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
