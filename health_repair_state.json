@@ -12,7 +12,13 @@
       "workflow": "update-lessoninfo-jobs.yml",
       "result": "dispatched",
       "reason": "lessoninfo.publishedIdCount가 24시간 기준으로 비정상 급감했습니다."
+    },
+    "unified-sudden-drop": {
+      "lastAttemptAt": "2026-09-05T02:19:59+09:00",
+      "workflow": "unified-search.yml",
+      "result": "dispatched",
+      "reason": "unified.publishedJobs가 24시간 기준으로 비정상 급감했습니다."
     }
   },
-  "lastUpdatedAt": "2026-09-05T01:22:51+09:00"
+  "lastUpdatedAt": "2026-09-05T02:19:59+09:00"
 }
