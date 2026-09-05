@@ -1,15 +1,37 @@
 {
-  "generatedAt": "2026-09-05T11:56:50+09:00",
+  "generatedAt": "2026-09-05T13:55:57+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": false,
-  "traversalComplete": false,
-  "candidateIdCount": 9,
-  "publishedIdCount": 9,
+  "healthy": true,
+  "traversalComplete": true,
+  "candidateIdCount": 28,
+  "publishedIdCount": 28,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
+    {
+      "region": "서울",
+      "code": "2001",
+      "pagesVisited": 2,
+      "ids": 19,
+      "pages": [
+        {
+          "page": 1,
+          "rowCount": 10,
+          "newIdCount": 10,
+          "firstId": "94877",
+          "lastId": "94854"
+        },
+        {
+          "page": 2,
+          "rowCount": 9,
+          "newIdCount": 9,
+          "firstId": "94853",
+          "lastId": "94841"
+        }
+      ]
+    },
     {
       "region": "경기",
       "code": "2083",
@@ -26,16 +48,7 @@
       ]
     }
   ],
-  "errors": [
-    {
-      "region": "서울",
-      "error": "Error: Page.goto: net::ERR_TIMED_OUT at https://www.artmore.kr/sub/recruit/search_list.do\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_list.do\", waiting until \"domcontentloaded\"\n"
-    },
-    {
-      "region": "all",
-      "error": "suspicious drop: previous=28 current=9"
-    }
-  ],
+  "errors": [],
   "regionsAllowed": [
     "서울",
     "경기"
