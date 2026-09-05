@@ -61,7 +61,8 @@ def is_direct_post(job: dict) -> tuple[bool, str]:
 
     if sid.startswith("seoul-central:"):
         rid = _digits((q.get("q_rcrtSn") or q.get("rcrtSn") or [""])[0])
-        return bool(rid and not GENERIC_PATH_RE.search(path)), "seoul-central-rcrtSn"
+        exact_detail_path = path.endswith("/work/search/recInfo/BD_selectRecDetail.do")
+        return bool(rid and exact_detail_path), "seoul-central-rcrtSn"
 
     if sid.startswith("mircms:"):
         bbs = _digits((q.get("bbsId") or [job.get("bbsId") or ""])[0])
