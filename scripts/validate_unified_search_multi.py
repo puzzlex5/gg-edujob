@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from build_unified_search import RESULT_RE, private_current
-from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
+from private_source_registry import PRIVATE_SOURCES, detail_url_is_specific, publication_enabled, source_health
 from source_registry import official_source_count
 
 KST = timezone(timedelta(hours=9))
@@ -75,6 +75,7 @@ def main():
     enabled_specs = []
     degraded_specs = []
     non_metro = banned = expired = future = 0
+    non_detail_links = []
     for spec in PRIVATE_SOURCES:
         raw_src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
@@ -116,6 +117,14 @@ def main():
             ps = row_provinces(j)
             if not ps or not ps.issubset(ALLOWED_PROVINCES):
                 non_metro += 1
+            detail_url = j.get("detailUrl") or j.get("originalUrl") or j.get("openUrl") or j.get("url") or ""
+            if not detail_url_is_specific(spec, detail_url):
+                non_detail_links.append({
+                    "source": spec["key"],
+                    "sourceIdentity": j.get("sourceIdentity"),
+                    "title": j.get("title"),
+                    "url": detail_url,
+                })
         banned += sum(1 for j in src if BANNED.search(str(j.get("title") or "")) or PROMO_ONLY.search(str(j.get("title") or "")))
         expired += sum(1 for j in src if parse_date(j.get("applyEnd")) and parse_date(j.get("applyEnd")) < TODAY)
         future += sum(1 for j in src if parse_date(j.get("registered")) and parse_date(j.get("registered")) > TODAY)
@@ -126,6 +135,7 @@ def main():
     if banned: errors.append(f"Publication-effective private datasets contain {banned} banned non-recruitment titles")
     if expired: errors.append(f"Publication-effective private datasets contain {expired} expired postings")
     if future: errors.append(f"Publication-effective private datasets contain {future} future registration dates")
+    if non_detail_links: errors.append(f"Publication-effective private datasets contain {len(non_detail_links)} rows without exact per-post detail URLs")
     if bad_alias_evidence: errors.append(f"Unified dataset has {len(bad_alias_evidence)} aliases without strong exact evidence")
 
     ids = [str(j.get("sourceIdentity") or "") for j in jobs if j.get("sourceIdentity")]
@@ -189,6 +199,8 @@ def main():
         "bannedPrivate": banned,
         "expiredPrivate": expired,
         "futurePrivateDates": future,
+        "nonDirectPrivateLinks": len(non_detail_links),
+        "nonDirectPrivateLinkExamples": non_detail_links[:20],
         "duplicateStableIds": duplicate_ids,
         "missingLinks": len(missing_links),
         "badCrossSourceAliasEvidence": len(bad_alias_evidence),
