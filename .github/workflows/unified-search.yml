@@ -11,9 +11,12 @@ on:
       - 'scripts/crosscheck_private_official.py'
       - 'scripts/source_registry.py'
       - 'scripts/private_source_registry.py'
+      - 'scripts/direct_post_links.py'
+      - 'scripts/audit_direct_post_links.py'
       - 'scripts/apply_unified_frontend.py'
       - 'unified-ui.js'
       - 'mobile-ui.js'
+      - 'direct-link-guard.js'
       - '.github/workflows/unified-search.yml'
   push:
     paths:
@@ -24,9 +27,12 @@ on:
       - 'scripts/crosscheck_private_official.py'
       - 'scripts/source_registry.py'
       - 'scripts/private_source_registry.py'
+      - 'scripts/direct_post_links.py'
+      - 'scripts/audit_direct_post_links.py'
       - 'scripts/apply_unified_frontend.py'
       - 'unified-ui.js'
       - 'mobile-ui.js'
+      - 'direct-link-guard.js'
       - '.github/workflows/unified-search.yml'
       - 'artmore_jobs.json'
       - 'artmore_reconciliation_report.json'
@@ -76,9 +82,10 @@ jobs:
           python-version: '3.12'
       - name: Syntax check unified multi-source pipeline and UI
         run: |
-          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/apply_unified_frontend.py
+          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py
           node --check unified-ui.js
           node --check mobile-ui.js
+          node --check direct-link-guard.js
       - name: Verify source registries resolve independently
         run: |
           python - <<'PY'
@@ -97,9 +104,14 @@ jobs:
         id: build_candidate
         continue-on-error: true
         run: python scripts/build_unified_search_multi.py
+      - name: Repair stable-ID links and audit exact posting destinations
+        id: link_audit
+        if: steps.build_candidate.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/audit_direct_post_links.py --input unified_jobs.next.json --repair-in-place --strict-clickable
       - name: Validate candidate against every publication-enabled canonical source
         id: validate_candidate
-        if: steps.build_candidate.outcome == 'success'
+        if: steps.build_candidate.outcome == 'success' && steps.link_audit.outcome == 'success'
         continue-on-error: true
         run: python scripts/validate_unified_search_multi.py
       - name: Crosscheck private school signals against official data
@@ -108,17 +120,19 @@ jobs:
         continue-on-error: true
         run: python scripts/crosscheck_private_official.py
       - name: Publish only verified unified dataset
-        if: steps.build_candidate.outcome == 'success' && steps.validate_candidate.outcome == 'success'
+        if: steps.build_candidate.outcome == 'success' && steps.link_audit.outcome == 'success' && steps.validate_candidate.outcome == 'success'
         run: |
           mv unified_jobs.next.json unified_jobs.json
           python scripts/apply_unified_frontend.py
           grep -q "fetch('unified_jobs.json',{cache:'no-cache'})" index.html
           grep -q 'unified-ui.js' index.html
+          grep -q 'direct-link-guard.js' index.html
           python - <<'PY'
           import json,sys
           sys.path.insert(0,'scripts')
           from private_source_registry import private_source_keys
           from source_registry import official_source_count
+          from direct_post_links import is_direct_post
           d=json.load(open('unified_jobs.json',encoding='utf-8'))
           assert d.get('dataset') == 'unified-search-v3-multi-private'
           private=d.get('privateSources',{})
@@ -147,6 +161,8 @@ jobs:
               return {p} if p else set()
           bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and (not provinces(j) or not provinces(j).issubset(allowed))]
           assert not bad, f'non-metro private rows: {len(bad)}'
+          unsafe=[j for j in d['jobs'] if j.get('detailLinkVerified') is not False and not is_direct_post(j)[0]]
+          assert not unsafe, f'unsafe clickable posting links: {len(unsafe)}'
           print('verified publication-gated multi-source unified publication',len(d['jobs']),official_count,sorted(enabled))
           PY
       - name: Commit verified search projection or diagnostics
@@ -155,8 +171,8 @@ jobs:
           rm -f unified_jobs.next.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add unified_search_report.json unified_validation_report.json unified_crosscheck_report.json 2>/dev/null || true
-          if [ "${{ steps.build_candidate.outcome }}" = success ] && [ "${{ steps.validate_candidate.outcome }}" = success ]; then
+          git add unified_search_report.json unified_validation_report.json unified_crosscheck_report.json direct_post_link_report.json 2>/dev/null || true
+          if [ "${{ steps.build_candidate.outcome }}" = success ] && [ "${{ steps.link_audit.outcome }}" = success ] && [ "${{ steps.validate_candidate.outcome }}" = success ]; then
             git add unified_jobs.json index.html
           fi
           git diff --cached --quiet && exit 0
@@ -169,5 +185,5 @@ jobs:
         if: always() && !(github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'))
         run: rm -f unified_jobs.next.json
       - name: Fail after preserving diagnostics
-        if: steps.build_candidate.outcome != 'success' || steps.validate_candidate.outcome != 'success' || steps.crosscheck.outcome == 'failure'
+        if: steps.build_candidate.outcome != 'success' || steps.link_audit.outcome == 'failure' || steps.validate_candidate.outcome != 'success' || steps.crosscheck.outcome == 'failure'
         run: exit 1
