@@ -103,6 +103,11 @@ def validate_source_evidence(report, expected_sources):
             reasons.append(f"accessErrors={access_errors}")
 
         for board in src.get("boardHealth") or []:
+            # A MirCMS menu alias is ignorable only after the reconciler proves that its stable-ID
+            # set is a subset of a fully traversed representative and that the alias itself has no
+            # access/pagination error. Do not reclassify that explicitly proven alias as a failure.
+            if board.get("ignoredAsDuplicateMenuAlias") is True:
+                continue
             if (
                 board.get("accessError") is True
                 or board.get("paginationRepeated") is True
