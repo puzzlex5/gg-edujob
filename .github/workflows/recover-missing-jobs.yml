@@ -8,8 +8,14 @@ on:
 permissions:
   contents: write
 
+# The recovery workflow performs long network scans before it is ready to publish.
+# Keep those scans serialized with each other, but do not hold the shared data-writer
+# queue for hours. Publication below is optimistic/non-force: it re-checks origin/main
+# against the captured baseline, discards on unsafe concurrent changes, and discards
+# again if the final push loses a race. This lets hourly reconciliation create fresh
+# proof windows without weakening last-known-good publication guards.
 concurrency:
-  group: metro-edujob-data
+  group: metro-edujob-recovery-scan
   cancel-in-progress: false
 
 jobs:
