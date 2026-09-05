@@ -2,12 +2,12 @@
   "version": 1,
   "dispatchHistory": {
     "update-jobs.yml": {
-      "lastAttemptAt": "2026-09-05T14:15:46+09:00",
+      "lastAttemptAt": "2026-09-05T19:16:38+09:00",
       "lastResult": "dispatched",
-      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
+      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
       "lastCode": "fast-collector-unhealthy",
-      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
-      "count": 7
+      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "count": 8
     },
     "daily-deep-audit.yml": {
       "lastAttemptAt": "2026-09-01T04:09:45+09:00",
@@ -134,16 +134,25 @@
       "lastCode": "fast-collector-unhealthy",
       "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
       "count": 7
+    },
+    {
+      "workflow": "update-jobs.yml",
+      "lastAttemptAt": "2026-09-05T19:16:38+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "lastCode": "fast-collector-unhealthy",
+      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "count": 8
     }
   ],
-  "lastUpdatedAt": "2026-09-05T14:15:46+09:00",
+  "lastUpdatedAt": "2026-09-05T19:16:38+09:00",
   "lastHealth": "critical",
   "lastPlanSummary": {
-    "generatedAt": "2026-09-05T14:15:40+09:00",
+    "generatedAt": "2026-09-05T19:16:33+09:00",
     "selectedAction": {
       "workflow": "update-jobs.yml",
       "code": "fast-collector-unhealthy",
-      "reason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
+      "reason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
       "priority": 105,
       "severity": "critical",
       "cooldown_hours": 3
