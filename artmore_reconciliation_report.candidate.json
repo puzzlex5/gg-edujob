@@ -1,54 +1,41 @@
 {
-  "generatedAt": "2026-09-05T15:56:28+09:00",
+  "generatedAt": "2026-09-05T17:56:19+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": true,
-  "traversalComplete": true,
-  "candidateIdCount": 20,
-  "publishedIdCount": 20,
+  "healthy": false,
+  "traversalComplete": false,
+  "candidateIdCount": 9,
+  "publishedIdCount": 9,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
     {
-      "region": "서울",
-      "code": "2001",
-      "pagesVisited": 2,
-      "ids": 19,
-      "pages": [
-        {
-          "page": 1,
-          "rowCount": 10,
-          "newIdCount": 10,
-          "firstId": "94878",
-          "lastId": "94856"
-        },
-        {
-          "page": 2,
-          "rowCount": 9,
-          "newIdCount": 9,
-          "firstId": "94854",
-          "lastId": "94840"
-        }
-      ]
-    },
-    {
       "region": "경기",
       "code": "2083",
       "pagesVisited": 1,
-      "ids": 1,
+      "ids": 9,
       "pages": [
         {
           "page": 1,
-          "rowCount": 1,
-          "newIdCount": 1,
+          "rowCount": 9,
+          "newIdCount": 9,
           "firstId": "94870",
-          "lastId": "94870"
+          "lastId": "94817"
         }
       ]
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "region": "서울",
+      "error": "RuntimeError: area filter lost after current-only submit"
+    },
+    {
+      "region": "all",
+      "error": "suspicious drop: previous=20 current=9"
+    }
+  ],
   "regionsAllowed": [
     "서울",
     "경기"
