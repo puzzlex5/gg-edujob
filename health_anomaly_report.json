@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-05T10:07:06+09:00",
+  "generatedAt": "2026-09-05T10:41:53+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T10:07:06+09:00",
+    "generatedAt": "2026-09-05T10:41:53+09:00",
     "official": {
       "datasetCount": 19228,
       "officialIdCount": 18186,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7603,
+      "publishedJobs": 7604,
       "officialDisplayed": 3126,
-      "privateDisplayed": 4477,
-      "privateDiscovered": 4489,
+      "privateDisplayed": 4478,
+      "privateDiscovered": 4490,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -281,9 +281,9 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 56,
-        "rawCount": 56,
-        "currentCount": 56,
+        "datasetCount": 57,
+        "rawCount": 57,
+        "currentCount": 57,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -293,32 +293,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T10:06:57+09:00",
+      "baselineAt": "2026-09-04T11:08:27+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19228,
-          "baseline": 18973,
-          "changeRatio": 0.0134
+          "baseline": 18987,
+          "changeRatio": 0.0127
         },
         "official.officialIdCount": {
           "current": 18186,
-          "baseline": 17947,
-          "changeRatio": 0.0133
+          "baseline": 17995,
+          "changeRatio": 0.0106
         },
         "unified.publishedJobs": {
-          "current": 7603,
-          "baseline": 4574,
-          "changeRatio": 0.6622
+          "current": 7604,
+          "baseline": 4589,
+          "changeRatio": 0.657
         },
         "unified.officialDisplayed": {
           "current": 3126,
-          "baseline": 3153,
-          "changeRatio": -0.0086
+          "baseline": 3168,
+          "changeRatio": -0.0133
         },
         "unified.privateDiscovered": {
-          "current": 4489,
+          "current": 4490,
           "baseline": 1435,
-          "changeRatio": 2.1282
+          "changeRatio": 2.1289
         }
       },
       "privateSources": {
@@ -338,7 +338,7 @@
           "changeRatio": null
         },
         "gonggonggangsa": {
-          "current": 56,
+          "current": 57,
           "baseline": 0,
           "changeRatio": null
         }

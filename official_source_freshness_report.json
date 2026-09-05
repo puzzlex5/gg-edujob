@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-09-05T10:41:53+09:00",
+  "registrySourceCount": 38,
+  "observedSourceCount": 38,
+  "staleAfterDays": 7,
+  "warningCount": 2,
+  "warnings": [
+    {
+      "code": "official-source-freshness-stall",
+      "source": "동부교육지원청",
+      "latestRegistered": "2026-08-12",
+      "ageDays": 24,
+      "stableIdCount": 0,
+      "baselineRequired": false
+    },
+    {
+      "code": "official-source-freshness-stall",
+      "source": "성동광진교육지원청",
+      "latestRegistered": "2026-08-20",
+      "ageDays": 16,
+      "stableIdCount": 0,
+      "baselineRequired": false
+    }
+  ],
+  "policy": "surface already-stale official sources immediately; rolling baselines remain independent corroboration"
+}
