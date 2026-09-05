@@ -1,4 +1,9 @@
 (()=>{
+  // index.html may include this bundle more than once while cache-busting versions overlap.
+  // Make initialization idempotent so duplicate loads cannot attach duplicate click handlers.
+  if(window.__edujobMobileUiLoaded)return;
+  window.__edujobMobileUiLoaded=true;
+
   const top=document.querySelector('.top');
   const brand=document.querySelector('.brand');
   if(top&&brand&&!document.getElementById('edujobTabs')){
