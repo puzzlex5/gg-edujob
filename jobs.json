@@ -1719,7 +1719,7 @@
   "errors": [],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-05 12:56 KST",
+    "checkedAt": "2026-09-05 16:39 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -1758,10 +1758,64 @@
         }
       ]
     },
-    "previousTotal": 19228,
-    "currentTotal": 19232
+    "previousTotal": 19232,
+    "currentTotal": 19234
   },
   "jobs": [
+    {
+      "id": "sen-109767",
+      "province": "서울",
+      "school": "서울대현초등학교",
+      "title": "서울대현초 배움터지킴이 봉사자 모집 공고",
+      "subject": "배움터 지킴이",
+      "region": "강남구",
+      "regions": [
+        "강남구"
+      ],
+      "type": "자원봉사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/05",
+      "applyEnd": "2026/09/08",
+      "workStart": "2026/09/10",
+      "workEnd": "2026/12/24",
+      "registered": "2026/09/05",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109767",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109767"
+    },
+    {
+      "id": "sen-109768",
+      "province": "서울",
+      "school": "서울이문초등학교",
+      "title": "(이문초) 초등학교 시간강사(과학, 도덕 교과전담교사) 구인 (9.7~9.23-9월 11, 18일 제외)(총 11일 41시간)",
+      "subject": "시간강사(초등 6학년 과학(34시간), 5학년 음악(7)-요일별 4시간 이내)",
+      "region": "동대문구",
+      "regions": [
+        "동대문구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/05",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/09/07",
+      "workEnd": "2026/09/23",
+      "registered": "2026/09/05",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109768",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109768"
+    },
     {
       "id": "sen-109739",
       "province": "서울",
@@ -322357,7 +322411,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "parsed"
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-af8dca64189e89212b59",
@@ -326271,7 +326325,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-4622985ef159d2664aaa",
@@ -329345,7 +329399,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "parsed"
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-265a4615c4801e439334",
@@ -335032,7 +335086,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-c4727b0db861d1f5c8e6",
@@ -361540,7 +361594,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "parsed"
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-31578ebc765f73200321",
@@ -363606,7 +363660,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-55f5e49033e3f05bbc9e",
@@ -363637,7 +363691,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "parsed"
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-bab02126d745996da7f4",
@@ -406975,7 +407029,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "parsed"
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-2bd8e7a5a99bde9d86e5",
@@ -530952,13 +531006,13 @@
     "warnings": []
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-05 08:58:38 KST",
+    "generatedAt": "2026-09-05 16:03:04 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 18186,
-    "datasetIdCountBefore": 16961,
-    "missingBefore": 1225,
-    "recoveredNow": 1225,
+    "officialIdCount": 18185,
+    "datasetIdCountBefore": 19218,
+    "missingBefore": 2,
+    "recoveredNow": 2,
     "missingAfter": 0,
     "reconciledSources": 38,
     "totalSources": 38,
@@ -530966,11 +531020,11 @@
     "totalOffices": 38
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-05 12:55 KST",
+    "checkedAt": "2026-09-05 16:37 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-05 12:55 KST",
+    "checkedAt": "2026-09-05 16:37 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -530991,17 +531045,17 @@
     "seoulTotal": 525
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-05 09:29 KST",
+    "checkedAt": "2026-09-05 16:37 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6217,
-    "detailPagesParsed": 2578,
+    "detailPagesParsed": 2576,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1093,
     "missingWorkPeriod": 2068,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-05 09:29 KST",
+      "checkedAt": "2026-09-05 16:38 KST",
       "candidates": 249,
       "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
@@ -531011,5 +531065,12 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-05 16:37:49 KST",
+    "protectedOfficialIds": 18185,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
