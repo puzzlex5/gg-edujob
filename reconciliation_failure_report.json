@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-05 12:18:22 KST",
+  "generatedAt": "2026-09-05 14:56:11 KST",
   "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files.",
   "candidate": {
     "reconciliation": {
-      "generatedAt": "2026-09-05 11:49:41 KST",
+      "generatedAt": "2026-09-05 14:08:36 KST",
       "lookbackDays": 90,
       "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-      "officialIdCount": 18187,
+      "officialIdCount": 18188,
       "datasetIdCountBefore": 19218,
-      "missingBefore": 1,
-      "recoveredNow": 1,
+      "missingBefore": 2,
+      "recoveredNow": 2,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38,
@@ -17,7 +17,7 @@
       "totalOffices": 38
     },
     "centralPagination": {
-      "generatedAt": "2026-09-05 11:49:40 KST",
+      "generatedAt": "2026-09-05 14:36:46 KST",
       "complete": true,
       "sources": [
         {
@@ -121,9 +121,9 @@
         {
           "name": "서울교육일자리포털",
           "province": "서울",
-          "stableIdCount": 377,
+          "stableIdCount": 378,
           "pagesScanned": 9,
-          "rawRows": 377,
+          "rawRows": 378,
           "terminalEvidence": "empty-page",
           "accessError": false,
           "parseError": false,
@@ -136,20 +136,20 @@
       ]
     },
     "gyeonggiCentral90d": {
-      "generatedAt": "2026-09-05 12:18:22 KST",
+      "generatedAt": "2026-09-05 14:56:11 KST",
       "stableIdCount": 10339,
       "complete": true
     },
     "finalRestore": {
-      "checkedAt": "2026-09-05 04:28:56 KST",
-      "protectedOfficialIds": 18185,
+      "checkedAt": "2026-09-05 14:49:04 KST",
+      "protectedOfficialIds": 18188,
       "missingBefore": 0,
       "recoveredNow": 0,
       "missingAfter": 0
     },
     "sourceIdLedger": {
-      "generatedAt": "2026-09-05 11:49:41 KST",
-      "officialIdCount": null
+      "generatedAt": "2026-09-05 14:08:36 KST",
+      "officialIdCount": 18188
     }
   }
 }
