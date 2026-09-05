@@ -1,0 +1,67 @@
+name: Reconciliation scan-ID regression
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/restore-official-ids.yml'
+      - '.github/workflows/source-id-reconciliation.yml'
+      - '.github/workflows/scanid-proof-regression.yml'
+      - 'scripts/scan_identity.py'
+      - 'scripts/stamp_reconciliation_scan.py'
+      - 'scripts/preserve_reconciliation_candidate.py'
+      - 'scripts/restore_reconciled_ids.py'
+      - 'scripts/validate_reconciliation_policy.py'
+      - 'tests/test_scan_identity_binding.py'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/restore-official-ids.yml'
+      - '.github/workflows/source-id-reconciliation.yml'
+      - '.github/workflows/scanid-proof-regression.yml'
+      - 'scripts/scan_identity.py'
+      - 'scripts/stamp_reconciliation_scan.py'
+      - 'scripts/preserve_reconciliation_candidate.py'
+      - 'scripts/restore_reconciled_ids.py'
+      - 'scripts/validate_reconciliation_policy.py'
+      - 'tests/test_scan_identity_binding.py'
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Compile proof-binding code
+        run: |
+          python -m py_compile \
+            scripts/scan_identity.py \
+            scripts/stamp_reconciliation_scan.py \
+            scripts/preserve_reconciliation_candidate.py \
+            scripts/restore_reconciled_ids.py \
+            scripts/validate_reconciliation_policy.py
+      - name: Run scan identity regression tests
+        run: python tests/test_scan_identity_binding.py
+      - name: Guard publication-race semantics
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          restore=Path('.github/workflows/restore-official-ids.yml').read_text(encoding='utf-8')
+          tail=restore.split('Preserve diagnostics without publishing incomplete restoration',1)[1]
+          assert 'git reset --hard HEAD' not in tail, 'failure handler must not reset to candidate HEAD'
+          assert 'git checkout -B main origin/main' in tail, 'failure handler must re-anchor to remote main'
+          assert 'for attempt in 1 2 3' in restore, 'restore publication must retry'
+          assert 'git merge-base --is-ancestor HEAD origin/main' in restore, 'restore publication must verify reachability'
+
+          recon=Path('.github/workflows/source-id-reconciliation.yml').read_text(encoding='utf-8')
+          assert 'RECONCILE_SCAN_ID=' in recon, 'workflow must mint one scan ID'
+          assert 'source_id_ledger.candidate.json' in recon, 'failure path must persist candidate ledger'
+          assert 'git checkout -B main origin/main' in recon.split('Preserve reconciliation diagnostics on failure',1)[1]
+          PY
