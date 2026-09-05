@@ -129,6 +129,43 @@ def validate_source_evidence(report, expected_sources):
     }
 
 
+def validate_current_ledger_population(ledger, expected_current_count):
+    """Bind the append-only ledger's current-scan flags to the reconciliation summary.
+
+    ``knownOfficialIdCount`` is intentionally historical and can exceed the current 90-day
+    population. Publication safety therefore depends on entries explicitly marked as present in
+    the latest official scan, not on the append-only total.
+    """
+    entries = ledger.get("entries") if isinstance(ledger, dict) else None
+    if not isinstance(entries, dict):
+        raise SystemExit("Stable-ID ledger has no entries mapping")
+
+    present_ids = []
+    malformed = []
+    for sid, entry in entries.items():
+        if not isinstance(entry, dict):
+            malformed.append(str(sid))
+            continue
+        if entry.get("presentInLatestOfficialScan") is True:
+            present_ids.append(str(sid))
+            if str(entry.get("sourceIdentity") or "") != str(sid):
+                malformed.append(str(sid))
+
+    if malformed:
+        raise SystemExit(
+            f"Stable-ID ledger has malformed current entries: count={len(malformed)}, sample={malformed[:5]}"
+        )
+    if len(present_ids) != expected_current_count:
+        raise SystemExit(
+            "Stable-ID ledger current population disagrees with reconciliation summary: "
+            f"ledgerPresent={len(present_ids)}, reconciliationOfficialIds={expected_current_count}"
+        )
+    return {
+        "knownOfficialIds": int(ledger.get("knownOfficialIdCount") or len(entries)),
+        "presentInLatestOfficialScan": len(present_ids),
+    }
+
+
 def guard_fast_publication_shape():
     """Reject unexplained large fast-run population changes and keep the last published baseline.
 
@@ -188,6 +225,10 @@ def main():
     if report.get("generatedAt") != ledger.get("generatedAt"):
         raise SystemExit("Reconciliation report and stable-ID ledger are not from the same scan")
 
+    official_id_count = int(summary.get("officialIdCount") or 0)
+    if official_id_count <= 0:
+        raise SystemExit(f"Reconciliation summary has invalid officialIdCount={summary.get('officialIdCount')}")
+    ledger_evidence = validate_current_ledger_population(ledger, official_id_count)
     source_evidence = validate_source_evidence(report, expected_sources)
     evidence_age_hours = reconciliation_age_hours(report.get("generatedAt"))
     fast_shape = guard_fast_publication_shape()
@@ -196,7 +237,8 @@ def main():
         "generatedAt": report.get("generatedAt"),
         "evidenceAgeHours": round(evidence_age_hours, 3),
         "maxEvidenceAgeHours": MAX_RECONCILIATION_AGE_HOURS,
-        "officialIdCount": summary.get("officialIdCount"),
+        "officialIdCount": official_id_count,
+        "ledgerEvidence": ledger_evidence,
         "expectedSources": expected_sources,
         "reconciledSources": reconciled_sources,
         "missingAfter": summary.get("missingAfter"),
