@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-05T12:08:21+09:00",
+  "generatedAt": "2026-09-05T13:08:11+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T12:08:21+09:00",
+    "generatedAt": "2026-09-05T13:08:11+09:00",
     "official": {
-      "datasetCount": 19228,
+      "datasetCount": 19232,
       "officialIdCount": 18186,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7604,
-      "officialDisplayed": 3126,
+      "publishedJobs": 7607,
+      "officialDisplayed": 3129,
       "privateDisplayed": 4478,
       "privateDiscovered": 4490,
       "officialPrivateAliases": 12,
@@ -44,7 +44,7 @@
         "latestRegistered": "2026-09-03"
       },
       "강동송파교육지원청": {
-        "count": 15,
+        "count": 19,
         "latestRegistered": "2026-09-04"
       },
       "강서양천교육지원청": {
@@ -293,12 +293,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T12:08:23+09:00",
+      "baselineAt": "2026-09-04T13:08:48+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19228,
+          "current": 19232,
           "baseline": 18987,
-          "changeRatio": 0.0127
+          "changeRatio": 0.0129
         },
         "official.officialIdCount": {
           "current": 18186,
@@ -306,19 +306,19 @@
           "changeRatio": 0.0106
         },
         "unified.publishedJobs": {
-          "current": 7604,
-          "baseline": 4589,
-          "changeRatio": 0.657
+          "current": 7607,
+          "baseline": 4595,
+          "changeRatio": 0.6555
         },
         "unified.officialDisplayed": {
-          "current": 3126,
+          "current": 3129,
           "baseline": 3168,
-          "changeRatio": -0.0133
+          "changeRatio": -0.0123
         },
         "unified.privateDiscovered": {
           "current": 4490,
-          "baseline": 1436,
-          "changeRatio": 2.1267
+          "baseline": 1442,
+          "changeRatio": 2.1137
         }
       },
       "privateSources": {
