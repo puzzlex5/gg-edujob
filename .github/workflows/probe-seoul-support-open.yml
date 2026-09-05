@@ -1,0 +1,78 @@
+name: Probe Seoul support-office detail opening
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Probe Gangnam-Seocho recruitment detail flow
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re, requests
+          from bs4 import BeautifulSoup
+          from urllib.parse import urlparse
+
+          board='https://gnscedu.sen.go.kr/FUS/JO/JOL11.do'
+          detail='https://gnscedu.sen.go.kr/FUS/JO/JOV11.do'
+          h={'User-Agent':'Mozilla/5.0 (Linux; Android 15) AppleWebKit/537.36 Chrome/140 Mobile Safari/537.36','Accept-Language':'ko-KR,ko;q=0.9'}
+          s=requests.Session(); s.headers.update(h)
+          r=s.get(board,timeout=25,allow_redirects=True)
+          print('LIST',r.status_code,r.url,'len',len(r.text),'cookies',s.cookies.get_dict())
+          r.raise_for_status()
+          soup=BeautifulSoup(r.text,'html.parser')
+          target=None
+          for tr in soup.find_all('tr'):
+            text=' '.join(tr.stripped_strings)
+            if '대청중' in text and '음악' in text:
+              target=tr; break
+          if target is None:
+            # print recent candidate rows so parser drift is visible
+            rows=[]
+            for tr in soup.find_all('tr'):
+              text=' '.join(tr.stripped_strings)
+              if '대청' in text or '음악' in text: rows.append(text[:350])
+            print('NO_EXACT_TARGET candidates=',rows[:10])
+            # fall back to first row that has a job_seq
+            for tr in soup.find_all('tr'):
+              html=str(tr)
+              m=re.search(r"(?:fncDetailView\s*\(\s*['\"]?|job_seq[=,'\"() ]+)(\d+)",html,re.I)
+              if m:
+                target=tr; break
+          assert target is not None, 'no recruitment row with a stable job_seq'
+          html=str(target); text=' '.join(target.stripped_strings)
+          print('ROW_TEXT',text[:800])
+          print('ROW_HTML',re.sub(r'\s+',' ',html)[:1800])
+          m=re.search(r"fncDetailView\s*\(\s*['\"]?(\d+)",html,re.I) or re.search(r"job_seq[=,'\"() ]+(\d+)",html,re.I) or re.search(r"JOV11\.do[^\d]+(\d+)",html,re.I)
+          assert m, 'target row has no job_seq'
+          seq=m.group(1); print('SEQ',seq)
+
+          def inspect(label, resp):
+            txt=BeautifulSoup(resp.text,'html.parser').get_text(' ',strip=True)
+            hit_school='대청중학교' in txt
+            hit_music='음악' in txt
+            print(label,'status',resp.status_code,'final',resp.url,'len',len(resp.text),'school',hit_school,'music',hit_music,'elapsed',resp.elapsed.total_seconds())
+            pos=max(txt.find('대청중학교'),txt.find('음악'))
+            print(label,'TEXT',txt[max(0,pos-160):pos+500] if pos>=0 else txt[:600])
+
+          # Four ways: cold/session x POST/GET. Referer mirrors official navigation.
+          c=requests.Session(); c.headers.update(h)
+          inspect('COLD_POST',c.post(detail,data={'job_seq':seq},headers={'Referer':board},timeout=25,allow_redirects=True))
+          inspect('SEEDED_POST',s.post(detail,data={'job_seq':seq},headers={'Referer':board},timeout=25,allow_redirects=True))
+          c2=requests.Session(); c2.headers.update(h)
+          inspect('COLD_GET',c2.get(detail,params={'job_seq':seq},headers={'Referer':board},timeout=25,allow_redirects=True))
+          inspect('SEEDED_GET',s.get(detail,params={'job_seq':seq},headers={'Referer':board},timeout=25,allow_redirects=True))
+          PY
