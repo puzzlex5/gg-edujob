@@ -3,7 +3,8 @@
 
 This is deliberately conservative: it only accepts recent official same-host CMS detail pages
 already surfaced by board_discovery_report.json, requires explicit recruitment language, and
-rejects result/status/personnel notices. Existing jobs always win.
+rejects result/status/personnel notices. Existing jobs always win only when the same persistent
+posting URL is already present; title/date similarity is never used as automatic dedup evidence.
 """
 import hashlib
 import json
@@ -47,10 +48,6 @@ S.mount("https://", HTTPAdapter(max_retries=retry)); S.mount("http://", HTTPAdap
 
 def clean(s):
     return re.sub(r"\s+", " ", s or "").strip()
-
-
-def norm(s):
-    return re.sub(r"[^0-9a-z가-힣]+", "", clean(s).lower())
 
 
 def date_norm(text):
@@ -133,8 +130,7 @@ def main():
     original_jobs = payload.get("jobs", [])
     removed = [j for j in original_jobs if is_recovered_status_notice(j)]
     jobs = [j for j in original_jobs if not is_recovered_status_notice(j)]
-    existing_urls = {j.get("url", "") for j in jobs}
-    existing_semantic = {(norm(j.get("title", "")), j.get("registered", "")) for j in jobs}
+    existing_urls = {j.get("url", "") for j in jobs if j.get("url")}
     accepted, skipped = [], []
     for office_row in report.get("seoul", []):
         office = office_row.get("name", "")
@@ -143,12 +139,13 @@ def main():
             if not job:
                 skipped.append({"office": office, "url": item.get("url", ""), "reason": reason})
                 continue
-            semantic = (norm(job["title"]), job["registered"])
-            if job["url"] in existing_urls or semantic in existing_semantic:
-                skipped.append({"office": office, "url": job["url"], "reason": "already-present"})
+            # A different persistent CMS detail URL is independent evidence of a different posting.
+            # Do not collapse two postings merely because title/date text happens to match.
+            if job["url"] in existing_urls:
+                skipped.append({"office": office, "url": job["url"], "reason": "already-present-url"})
                 continue
             jobs.append(job); accepted.append(job)
-            existing_urls.add(job["url"]); existing_semantic.add(semantic)
+            existing_urls.add(job["url"])
     if accepted or removed:
         jobs.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
         payload["jobs"] = jobs
