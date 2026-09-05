@@ -1,0 +1,25 @@
+name: Mobile filter regression
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'mobile-ui.js'
+      - 'naver-theme.css'
+      - 'tests/test_mobile_filter_idempotence.py'
+      - '.github/workflows/mobile-filter-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Verify mobile filter toggle binding
+        run: python tests/test_mobile_filter_idempotence.py
