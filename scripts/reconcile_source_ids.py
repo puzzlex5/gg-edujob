@@ -315,6 +315,7 @@ def main():
         "generatedAt": NOW_S,
         "populationPolicy": RECONCILIATION_POLICY,
         "policy": "append-only stable official recruitment posting IDs across all 38 sources; result/selection notices are excluded by title policy; title similarity never deletes source evidence",
+        "officialIdCount": len(current_official),
         "knownOfficialIdCount": len(entries), "entries": entries,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
