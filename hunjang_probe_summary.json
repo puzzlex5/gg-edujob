@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-09-05T12:58:21+09:00",
+  "source": "훈장마을",
+  "publiclyReachable": true,
+  "humanVerificationDetected": false,
+  "stableIdCandidate": "hunjang:<rcrtNo>",
+  "numericRcrtNoCount": 153,
+  "encRcrtNoCount": 181,
+  "metroRowCount": 148,
+  "observedRecruitApiCount": 48,
+  "observedPaidMainApiCount": 40,
+  "observedGeneralListApiCount": 0,
+  "observedGeneralListApiUrls": [],
+  "observedGeneralListApiUrlsRaw": [
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+  ],
+  "rejectedNonGeneralRecruitApiUrls": [
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+  ],
+  "observedDetailApiCount": 0,
+  "navigationHunApiUrls": [
+    "https://hunapi.hunjang.com/hunApi/main/prchsSubMainRecruitList",
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recruitCount",
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+  ],
+  "navigationAttemptCount": 13,
+  "readyForPaginationProbe": false,
+  "nextGate": "discover the public general recruitment-list API from the rendered 채용정보 view; recommendation/main/common APIs do not qualify. Then prove page-wise ID changes and an exhaustion boundary before writing any canonical dataset",
+  "errors": [],
+  "safety": {
+    "tlsVerificationDisabled": false,
+    "authenticationBypassed": false,
+    "captchaBypassed": false,
+    "publicationAttempted": false
+  }
+}
