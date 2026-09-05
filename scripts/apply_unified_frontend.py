@@ -43,6 +43,14 @@ elif new_filter not in s:
     raise SystemExit('province filter signature changed; refusing unsafe multi-province patch')
 
 marker='<script src="mobile-ui.js?v='
+if 'direct-link-guard.js' not in s:
+    i=s.find(marker)
+    if i<0: raise SystemExit('mobile-ui script marker missing')
+    s=s[:i]+'<script src="direct-link-guard.js?v=20260905a" defer></script>\n'+s[i:]
+else:
+    s,n=re.subn(r'direct-link-guard\.js\?v=[A-Za-z0-9._-]+','direct-link-guard.js?v=20260905a',s,count=1)
+    if n!=1: raise SystemExit('direct-link-guard asset reference changed')
+
 if 'unified-ui.js' not in s:
     i=s.find(marker)
     if i<0: raise SystemExit('mobile-ui script marker missing')
@@ -54,4 +62,4 @@ else:
 # Keep the data loader compatible with both old and new metadata names.
 s=s.replace("if(data.officialSourceCount)$('#countSources').textContent=data.officialSourceCount;","if(data.totalSourceCount||data.officialSourceCount)$('#countSources').textContent=data.totalSourceCount||data.officialSourceCount;")
 p.write_text(s,encoding='utf-8')
-print('unified frontend patch applied: multi-source search, multi-province filtering, refreshed UI asset')
+print('unified frontend patch applied: multi-source search, multi-province filtering, direct-link guard, refreshed UI asset')
