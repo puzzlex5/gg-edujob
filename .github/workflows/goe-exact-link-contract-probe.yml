@@ -73,7 +73,8 @@ jobs:
           print('CURRENT_IDS',[x[0] for x in cand[:10]])
           if len(cand)<10: raise SystemExit('FAIL: fewer than 10 current rows')
 
-          tests=[(p,t,True) for p,t in cand[:10]]+[(p,'',False) for p in ['23769','35753','55837','55985','57217']]
+          historical=['23769','35753','55837','55985','57341']
+          tests=[(p,t,True) for p,t in cand[:10]]+[(p,'',False) for p in historical]
           bad=[]
           for pid,list_title,current in tests:
               url=f'{DETAIL}?mi=10502&pbancSn={pid}'
@@ -93,6 +94,6 @@ jobs:
               rec={'pbancSn':pid,'current':current,'coldStatus':c.status_code,'seededStatus':sg.status_code,'officialPostStatus':op.status_code,'coldFinal':c.url,'seededFinal':sg.url,'officialPostFinal':op.url,'titleHits':hits,'coldSeededSame':same_get,'officialPostCommonTokens':len(set(common_tokens)),'ok':ok}
               print('RESULT',json.dumps(rec,ensure_ascii=False))
               if not ok: bad.append(pid)
-          print('SUMMARY',json.dumps({'tested':len(tests),'current':10,'historical':5,'bad':len(bad),'badIds':bad},ensure_ascii=False))
+          print('SUMMARY',json.dumps({'tested':len(tests),'current':10,'historical':5,'historicalIds':historical,'bad':len(bad),'badIds':bad},ensure_ascii=False))
           if bad: raise SystemExit('FAIL exact-link mismatch: '+','.join(bad))
           PY
