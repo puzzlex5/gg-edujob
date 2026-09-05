@@ -42,6 +42,23 @@ if old_filter in s:
 elif new_filter not in s:
     raise SystemExit('province filter signature changed; refusing unsafe multi-province patch')
 
+# Deadline sort policy B keeps actual imminent deadlines first, but no longer buries a
+# newly registered official posting solely because its source does not expose applyEnd.
+# No source date is synthesized or mutated; the ranking uses applyEnd/registered read-only.
+rank_helper="function deadlineSortKey(j){const dd=diffDay(j.applyEnd),rd=parseDate(j.registered),r0=rd?new Date(rd.getFullYear(),rd.getMonth(),rd.getDate()):null,age=r0?Math.floor((today0()-r0)/86400000):null,official=(j.feedKind||'official')==='official';let bucket=4,primary=0;if(dd!==null&&dd>=0&&dd<=3){bucket=0;primary=dd}else if(dd!==null&&dd>=4&&dd<=7){bucket=1;primary=dd}else if(dd===null&&official&&age!==null&&age>=0&&age<=7){bucket=2}else if(dd!==null){bucket=3;primary=dd}return [bucket,primary,-(rd?rd.getTime():0),(j.sourceIdentity||j.id||j.url||'').toString()]}function compareDeadline(x,y){const a=deadlineSortKey(x),b=deadlineSortKey(y);return a[0]-b[0]||a[1]-b[1]||a[2]-b[2]||a[3].localeCompare(b[3])}"
+if "function deadlineSortKey(j)" not in s:
+    marker="function matchesSet(set,val){return set.size===0||set.has(val)}function filtered(){"
+    if marker not in s:
+        raise SystemExit('deadline sort insertion point changed; refusing unsafe ranking patch')
+    s=s.replace(marker,"function matchesSet(set,val){return set.size===0||set.has(val)}"+rank_helper+"function filtered(){",1)
+
+old_sort="const dx=diffDay(x.applyEnd),dy=diffDay(y.applyEnd);const ax=dx===null?9999:dx,ay=dy===null?9999:dy;return ax-ay||((parseDate(y.registered)||0)-(parseDate(x.registered)||0))"
+new_sort="return compareDeadline(x,y)"
+if old_sort in s:
+    s=s.replace(old_sort,new_sort,1)
+elif new_sort not in s or "function deadlineSortKey(j)" not in s:
+    raise SystemExit('deadline comparator signature changed; refusing unsafe ranking patch')
+
 marker='<script src="mobile-ui.js?v='
 if 'direct-link-guard.js' not in s:
     i=s.find(marker)
@@ -62,4 +79,4 @@ else:
 # Keep the data loader compatible with both old and new metadata names.
 s=s.replace("if(data.officialSourceCount)$('#countSources').textContent=data.officialSourceCount;","if(data.totalSourceCount||data.officialSourceCount)$('#countSources').textContent=data.totalSourceCount||data.officialSourceCount;")
 p.write_text(s,encoding='utf-8')
-print('unified frontend patch applied: multi-source search, multi-province filtering, direct-link guard, refreshed UI asset')
+print('unified frontend patch applied: multi-source search, multi-province filtering, deterministic deadline ranking B, direct-link guard, refreshed UI asset')

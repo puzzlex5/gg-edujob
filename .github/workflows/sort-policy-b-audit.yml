@@ -1,0 +1,89 @@
+name: Sort policy B audit
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/apply_unified_frontend.py'
+      - 'index.html'
+      - 'unified-ui.js'
+      - '.github/workflows/sort-policy-b-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Materialize production comparator
+        run: |
+          python scripts/apply_unified_frontend.py
+          grep -q 'function deadlineSortKey(j)' index.html
+          grep -q 'return compareDeadline(x,y)' index.html
+      - name: Compare legacy deadline sort C with production policy B
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json, re, statistics
+          from datetime import date, datetime, timedelta, timezone
+          from pathlib import Path
+
+          TODAY = datetime.now(timezone(timedelta(hours=9))).date()
+          payload = json.loads(Path('unified_jobs.json').read_text(encoding='utf-8'))
+          jobs = payload['jobs']
+          before = hashlib.sha256(json.dumps([j.get('applyEnd') for j in jobs], ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+
+          def d(s):
+              if not s: return None
+              m = re.search(r'(20\d{2})[./-](\d{1,2})[./-](\d{1,2})', str(s))
+              if not m: return None
+              try: return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+              except ValueError: return None
+
+          def diff(s):
+              x=d(s); return None if x is None else (x-TODAY).days
+          def reg_age(j):
+              x=d(j.get('registered')); return None if x is None else (TODAY-x).days
+          def reg_ord(j):
+              x=d(j.get('registered')); return x.toordinal() if x else 0
+          def identity(j): return str(j.get('sourceIdentity') or j.get('id') or j.get('url') or '')
+          def active(rows): return [j for j in rows if diff(j.get('applyEnd')) is None or diff(j.get('applyEnd')) >= 0]
+
+          def c_key(j):
+              dd=diff(j.get('applyEnd')); return (9999 if dd is None else dd, -reg_ord(j), identity(j))
+
+          def b_key(j):
+              dd=diff(j.get('applyEnd')); age=reg_age(j); official=(j.get('feedKind','official') == 'official')
+              if dd is not None and 0 <= dd <= 3: bucket=0; primary=dd
+              elif dd is not None and 4 <= dd <= 7: bucket=1; primary=dd
+              elif dd is None and official and age is not None and 0 <= age <= 7: bucket=2; primary=0
+              elif dd is not None: bucket=3; primary=dd
+              else: bucket=4; primary=0
+              return (bucket, primary, -reg_ord(j), identity(j))
+
+          def hay(j):
+              s=j.get('searchText') or ' '.join(str(j.get(k) or '') for k in ('title','subject','type','school','source'))
+              return re.sub(r'\s+',' ',str(s).lower()).strip()
+
+          scenarios={'전체':lambda j:True,'기간제':lambda j:'기간제' in hay(j),'강사':lambda j:'강사' in hay(j),'늘봄':lambda j:'늘봄' in hay(j),'교육공무직':lambda j:'교육공무직' in hay(j),'조리실무사':lambda j:'조리실무사' in hay(j)}
+          failures=[]
+          for name,pred in scenarios.items():
+              rows=active([j for j in jobs if pred(j)]); c=sorted(rows,key=c_key); b=sorted(rows,key=b_key)
+              urgent={identity(j) for j in rows if (lambda x:x is not None and 0<=x<=3)(diff(j.get('applyEnd')))}
+              c50=sum(identity(j) in urgent for j in c[:50]); b50=sum(identity(j) in urgent for j in b[:50])
+              nd=[identity(j) for j in rows if j.get('feedKind','official')=='official' and diff(j.get('applyEnd')) is None and (lambda a:a is not None and 0<=a<=7)(reg_age(j))]
+              cpos={identity(j):i+1 for i,j in enumerate(c)}; bpos={identity(j):i+1 for i,j in enumerate(b)}
+              cm=statistics.median([cpos[x] for x in nd]) if nd else None; bm=statistics.median([bpos[x] for x in nd]) if nd else None
+              print(json.dumps({'scenario':name,'rows':len(rows),'urgentTotal':len(urgent),'urgentTop50C':c50,'urgentTop50B':b50,'recentUnknownOfficial':len(nd),'medianRankC':cm,'medianRankB':bm},ensure_ascii=False))
+              if b50<c50: failures.append(f'{name}: urgent Top50 {c50}->{b50}')
+              if nd and not (bm<cm): failures.append(f'{name}: recent unknown official median {cm}->{bm}')
+
+          after=hashlib.sha256(json.dumps([j.get('applyEnd') for j in jobs],ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+          print(json.dumps({'applyEndHashBefore':before,'applyEndHashAfter':after,'byteIdentical':before==after,'failures':failures},ensure_ascii=False))
+          if before!=after: failures.append('applyEnd changed during audit')
+          if failures: raise SystemExit('B does not dominate C: '+'; '.join(failures))
+          print('PASS: production policy B dominates C under all six acceptance scenarios')
+          PY
