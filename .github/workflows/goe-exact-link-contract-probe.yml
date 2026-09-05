@@ -24,7 +24,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import json, re
+          import json, re, time
           from urllib.parse import urljoin, urlparse, parse_qs
           import requests
           from bs4 import BeautifulSoup
@@ -34,31 +34,29 @@ jobs:
           DETAIL=BASE+'/recruit/ad/func/pb/hnfpPbancInfoView.do'
           H={'User-Agent':'gg-edujob-exact-link-audit/1.0 (+https://github.com/puzzlex5/gg-edujob)'}
           def norm(s): return re.sub(r'\s+',' ',s or '').strip()
-          def get(s,u):
-              r=s.get(u,headers=H,timeout=30,allow_redirects=True); r.raise_for_status(); return r
-          def post(s,u,data):
-              r=s.post(u,headers=H,data=data,timeout=30,allow_redirects=True); r.raise_for_status(); return r
-          def page(r):
-              s=BeautifulSoup(r.text,'html.parser'); return norm(s.get_text(' ',strip=True))
-          def sig(text):
-              # Ignore volatile view counters/whitespace by using recruitment-content keywords and a normalized slice.
-              return re.sub(r'조회수\s*:?\s*\d+','조회수',text)[:5000]
+          def request(method,s,u,**kw):
+              last=None
+              for attempt in range(3):
+                  r=s.request(method,u,headers=H,timeout=30,allow_redirects=True,**kw); last=r
+                  if r.status_code < 500: r.raise_for_status(); return r
+                  print('TRANSIENT_5XX',method,u,r.status_code,'attempt',attempt+1)
+                  time.sleep(2*(attempt+1))
+              last.raise_for_status()
+          def get(s,u): return request('GET',s,u)
+          def post(s,u,data): return request('POST',s,u,data=data)
+          def page(r): return norm(BeautifulSoup(r.text,'html.parser').get_text(' ',strip=True))
+          def sig(text): return re.sub(r'조회수\s*:?\s*\d+','조회수',text)[:5000]
 
           seed=requests.Session(); lr=get(seed,LIST); soup=BeautifulSoup(lr.text,'html.parser')
           scripts='\n'.join(x.get_text('\n') for x in soup.find_all('script'))
           m=re.search(r'function\s+goView\s*\(([^)]*)\)\s*\{(.{0,2500}?)\n?\}',scripts,re.S)
           if not m: raise SystemExit('FAIL: goView function not found')
           body=norm(m.group(2)); print('GOVIEW',body)
-          if '#pbancSn' not in body or 'hnfpPbancInfoView.do' not in body or '.submit()' not in body:
-              raise SystemExit('FAIL: unexpected goView contract')
-
+          if '#pbancSn' not in body or 'hnfpPbancInfoView.do' not in body or '.submit()' not in body: raise SystemExit('FAIL: unexpected goView contract')
           form=soup.select_one('#pbancListForm')
           if not form: raise SystemExit('FAIL: pbancListForm not found')
           method=(form.get('method') or 'get').lower(); action=urljoin(lr.url,form.get('action') or '')
-          base_data=[]
-          for x in form.find_all(['input','select','textarea']):
-              n=x.get('name')
-              if n: base_data.append((n,x.get('value','')))
+          base_data=[(x.get('name'),x.get('value','')) for x in form.find_all(['input','select','textarea']) if x.get('name')]
           print('FORM_CONTRACT',method,action,json.dumps(base_data,ensure_ascii=False)[:3000])
           if method!='post': raise SystemExit('FAIL: official goView form is not POST')
 
@@ -85,19 +83,14 @@ jobs:
               data=[(k,(pid if k=='pbancSn' else v)) for k,v in base_data]
               if not any(k=='pbancSn' for k,_ in data): data.append(('pbancSn',pid))
               op=post(ps,DETAIL,data); ot=page(op)
-              cq=(parse_qs(urlparse(c.url).query).get('pbancSn') or [''])[0]
-              sq=(parse_qs(urlparse(sg.url).query).get('pbancSn') or [''])[0]
-              toks=[x for x in re.split(r'[^0-9A-Za-z가-힣]+',list_title) if len(x)>=2]
-              need=min(3,max(1,len(toks))) if current else 0
+              cq=(parse_qs(urlparse(c.url).query).get('pbancSn') or [''])[0]; sq=(parse_qs(urlparse(sg.url).query).get('pbancSn') or [''])[0]
+              toks=[x for x in re.split(r'[^0-9A-Za-z가-힣]+',list_title) if len(x)>=2]; need=min(3,max(1,len(toks))) if current else 0
               hits=[sum(1 for x in toks[:15] if x in txt) for txt in (ct,st,ot)]
               same_get=sig(ct)==sig(st)
-              # Official POST and GET may differ in navigation state, so require strong overlapping recruitment text rather than byte identity.
               common_tokens=[x for x in re.split(r'[^0-9A-Za-z가-힣]+',ct) if len(x)>=4 and x in ot]
               post_matches=len(set(common_tokens))>=20
-              ok=c.status_code==200 and sg.status_code==200 and op.status_code==200 and cq==pid and sq==pid and same_get and post_matches and ((not current) or min(hits)>=need)
-              rec={'pbancSn':pid,'current':current,'coldStatus':c.status_code,'seededStatus':sg.status_code,'officialPostStatus':op.status_code,
-                   'coldFinal':c.url,'seededFinal':sg.url,'officialPostFinal':op.url,'titleHits':hits,'coldSeededSame':same_get,
-                   'officialPostCommonTokens':len(set(common_tokens)),'ok':ok}
+              ok=all(r.status_code==200 for r in (c,sg,op)) and cq==pid and sq==pid and same_get and post_matches and ((not current) or min(hits)>=need)
+              rec={'pbancSn':pid,'current':current,'coldStatus':c.status_code,'seededStatus':sg.status_code,'officialPostStatus':op.status_code,'coldFinal':c.url,'seededFinal':sg.url,'officialPostFinal':op.url,'titleHits':hits,'coldSeededSame':same_get,'officialPostCommonTokens':len(set(common_tokens)),'ok':ok}
               print('RESULT',json.dumps(rec,ensure_ascii=False))
               if not ok: bad.append(pid)
           print('SUMMARY',json.dumps({'tested':len(tests),'current':10,'historical':5,'bad':len(bad),'badIds':bad},ensure_ascii=False))
