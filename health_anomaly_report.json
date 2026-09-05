@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-05T09:13:08+09:00",
+  "generatedAt": "2026-09-05T10:07:06+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T09:13:08+09:00",
+    "generatedAt": "2026-09-05T10:07:06+09:00",
     "official": {
-      "datasetCount": 19232,
-      "officialIdCount": 18185,
+      "datasetCount": 19228,
+      "officialIdCount": 18186,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7605,
-      "officialDisplayed": 3128,
+      "publishedJobs": 7603,
+      "officialDisplayed": 3126,
       "privateDisplayed": 4477,
       "privateDiscovered": 4489,
       "officialPrivateAliases": 12,
@@ -44,7 +44,7 @@
         "latestRegistered": "2026-09-03"
       },
       "강동송파교육지원청": {
-        "count": 19,
+        "count": 15,
         "latestRegistered": "2026-09-04"
       },
       "강서양천교육지원청": {
@@ -144,7 +144,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1190,
+        "count": 1191,
         "latestRegistered": "2026-09-04"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -180,7 +180,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -293,27 +293,27 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T09:12:09+09:00",
+      "baselineAt": "2026-09-04T10:06:57+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19232,
-          "baseline": 18915,
-          "changeRatio": 0.0168
+          "current": 19228,
+          "baseline": 18973,
+          "changeRatio": 0.0134
         },
         "official.officialIdCount": {
-          "current": 18185,
+          "current": 18186,
           "baseline": 17947,
           "changeRatio": 0.0133
         },
         "unified.publishedJobs": {
-          "current": 7605,
-          "baseline": 4517,
-          "changeRatio": 0.6836
+          "current": 7603,
+          "baseline": 4574,
+          "changeRatio": 0.6622
         },
         "unified.officialDisplayed": {
-          "current": 3128,
-          "baseline": 3096,
-          "changeRatio": 0.0103
+          "current": 3126,
+          "baseline": 3153,
+          "changeRatio": -0.0086
         },
         "unified.privateDiscovered": {
           "current": 4489,
