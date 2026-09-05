@@ -46,6 +46,11 @@ def row_provinces(row):
     return {scalar} if scalar else set()
 
 
+def projected_private_url(row):
+    """Return the URL field the unified card can ultimately expose for a private posting."""
+    return row.get("url") or row.get("originalUrl") or row.get("openUrl") or row.get("detailUrl") or ""
+
+
 def main():
     data = load("unified_jobs.next.json", {})
     jobs = data.get("jobs", [])
@@ -138,6 +143,32 @@ def main():
     if non_detail_links: errors.append(f"Publication-effective private datasets contain {len(non_detail_links)} rows without exact per-post detail URLs")
     if bad_alias_evidence: errors.append(f"Unified dataset has {len(bad_alias_evidence)} aliases without strong exact evidence")
 
+    spec_by_name = {spec["name"]: spec for spec in enabled_specs}
+    projected_private_non_detail = []
+    projected_private_unknown_source = []
+    for row in private:
+        source_name = str(row.get("source") or "")
+        spec = spec_by_name.get(source_name)
+        if spec is None:
+            projected_private_unknown_source.append({
+                "source": source_name,
+                "sourceIdentity": row.get("sourceIdentity"),
+                "title": row.get("title"),
+            })
+            continue
+        card_url = projected_private_url(row)
+        if not detail_url_is_specific(spec, card_url):
+            projected_private_non_detail.append({
+                "source": spec["key"],
+                "sourceIdentity": row.get("sourceIdentity"),
+                "title": row.get("title"),
+                "url": card_url,
+            })
+    if projected_private_unknown_source:
+        errors.append(f"Unified private projection contains {len(projected_private_unknown_source)} rows from unknown/unpublished sources")
+    if projected_private_non_detail:
+        errors.append(f"Unified private projection contains {len(projected_private_non_detail)} cards without exact per-post detail URLs")
+
     ids = [str(j.get("sourceIdentity") or "") for j in jobs if j.get("sourceIdentity")]
     duplicate_ids = len(ids) - len(set(ids))
     if duplicate_ids: errors.append(f"Unified dataset has {duplicate_ids} duplicate primary stable identities")
@@ -201,6 +232,10 @@ def main():
         "futurePrivateDates": future,
         "nonDirectPrivateLinks": len(non_detail_links),
         "nonDirectPrivateLinkExamples": non_detail_links[:20],
+        "projectedNonDirectPrivateLinks": len(projected_private_non_detail),
+        "projectedNonDirectPrivateLinkExamples": projected_private_non_detail[:20],
+        "projectedUnknownPrivateSources": len(projected_private_unknown_source),
+        "projectedUnknownPrivateSourceExamples": projected_private_unknown_source[:20],
         "duplicateStableIds": duplicate_ids,
         "missingLinks": len(missing_links),
         "badCrossSourceAliasEvidence": len(bad_alias_evidence),
