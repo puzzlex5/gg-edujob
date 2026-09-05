@@ -3,11 +3,15 @@ name: Seoul CMS recovery regression check
 on:
   pull_request:
     paths:
+      - 'scripts/discover_seoul_cms_recruitment_deep.py'
       - 'scripts/recover_seoul_office_cms_jobs.py'
+      - '.github/workflows/recover-seoul-office-cms.yml'
       - '.github/workflows/seoul-cms-recovery-check.yml'
   push:
     paths:
+      - 'scripts/discover_seoul_cms_recruitment_deep.py'
       - 'scripts/recover_seoul_office_cms_jobs.py'
+      - '.github/workflows/recover-seoul-office-cms.yml'
       - '.github/workflows/seoul-cms-recovery-check.yml'
   workflow_dispatch:
 
@@ -17,7 +21,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -25,7 +29,9 @@ jobs:
           python-version: '3.12'
       - name: Install collector dependencies
         run: pip install -r requirements.txt
-      - name: Compile recovery path
-        run: python -m py_compile scripts/recover_seoul_office_cms_jobs.py
+      - name: Compile Seoul CMS recovery path
+        run: python -m py_compile scripts/discover_seoul_cms_recruitment_deep.py scripts/recover_seoul_office_cms_jobs.py
       - name: Enforce persistent-URL-only deduplication
         run: python scripts/recover_seoul_office_cms_jobs.py --self-test
+      - name: Verify configured CMS boards can be traversed without pagination ambiguity
+        run: python scripts/discover_seoul_cms_recruitment_deep.py
