@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-05T21:09:20+09:00",
+  "generatedAt": "2026-09-05T22:07:20+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T21:09:20+09:00",
+    "generatedAt": "2026-09-05T22:07:20+09:00",
     "official": {
-      "datasetCount": 19234,
-      "officialIdCount": 18185,
+      "datasetCount": 19238,
+      "officialIdCount": 18184,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7601,
+      "publishedJobs": 7594,
       "officialDisplayed": 3131,
-      "privateDisplayed": 4470,
-      "privateDiscovered": 4482,
+      "privateDisplayed": 4463,
+      "privateDiscovered": 4475,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -40,7 +40,7 @@
         "latestRegistered": "2026-09-02"
       },
       "강남서초교육지원청": {
-        "count": 103,
+        "count": 104,
         "latestRegistered": "2026-09-03"
       },
       "강동송파교육지원청": {
@@ -116,7 +116,7 @@
         "latestRegistered": "2026-09-04"
       },
       "남부교육지원청": {
-        "count": 35,
+        "count": 37,
         "latestRegistered": "2026-09-04"
       },
       "동두천양주교육지원청": {
@@ -144,20 +144,16 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1193,
+        "count": 1197,
         "latestRegistered": "2026-09-05"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
         "count": 2,
         "latestRegistered": "2026-09-02"
       },
-      "서울교육일자리포털 + 강서양천교육지원청": {
-        "count": 1,
-        "latestRegistered": "2026-09-02"
-      },
       "서울교육일자리포털 + 남부교육지원청": {
-        "count": 6,
-        "latestRegistered": "2026-09-04"
+        "count": 3,
+        "latestRegistered": "2026-08-24"
       },
       "서울교육일자리포털 + 동작관악교육지원청": {
         "count": 9,
@@ -180,7 +176,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -245,13 +241,13 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 368,
-        "rawCount": 368,
-        "currentCount": 368,
+        "datasetCount": 361,
+        "rawCount": 361,
+        "currentCount": 361,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-03"
+        "latestRegistered": "2026-09-04"
       },
       "jobteacher": {
         "name": "잡티처",
@@ -293,37 +289,37 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T21:11:03+09:00",
+      "baselineAt": "2026-09-04T22:07:57+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19234,
-          "baseline": 19233,
+          "current": 19238,
+          "baseline": 19236,
           "changeRatio": 0.0001
         },
         "official.officialIdCount": {
-          "current": 18185,
+          "current": 18184,
           "baseline": 18099,
-          "changeRatio": 0.0048
+          "changeRatio": 0.0047
         },
         "unified.publishedJobs": {
-          "current": 7601,
-          "baseline": 4908,
-          "changeRatio": 0.5487
+          "current": 7594,
+          "baseline": 4938,
+          "changeRatio": 0.5379
         },
         "unified.officialDisplayed": {
           "current": 3131,
-          "baseline": 3418,
-          "changeRatio": -0.084
+          "baseline": 3420,
+          "changeRatio": -0.0845
         },
         "unified.privateDiscovered": {
-          "current": 4482,
-          "baseline": 1505,
-          "changeRatio": 1.9781
+          "current": 4475,
+          "baseline": 1533,
+          "changeRatio": 1.9191
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 368,
+          "current": 361,
           "baseline": 0,
           "changeRatio": null
         },
