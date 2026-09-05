@@ -503,10 +503,52 @@ def seoul_seq_from_row(tr):
     return ""
 
 
+
+
+def seoul_detail_anchor_for_seq(tr, seq):
+    """Return the anchor that actually opens this SEN job_seq detail row."""
+    seq = str(seq or "")
+    if not seq:
+        return None
+    for a in tr.find_all("a"):
+        raw = " ".join((a.get("href", "") or "", a.get("onclick", "") or ""))
+        if re.search(rf"fncDetailView\s*\(\s*['\"]?{re.escape(seq)}(?:['\"]|\s|,|\))", raw, re.I):
+            return a
+        if re.search(rf"job_seq\s*[=,'\"() ]+{re.escape(seq)}(?:\D|$)", raw, re.I):
+            return a
+        if re.search(rf"JOV11\.do[^\n]*?(?:job_seq\D*)?{re.escape(seq)}(?:\D|$)", raw, re.I):
+            return a
+    return None
+
+
+def seoul_row_values(table, tr):
+    """Map SEN row cells using the most specific header row with matching width."""
+    tds = tr.find_all("td")
+    if not tds:
+        return {}
+    candidates = []
+    for hr in table.find_all("tr"):
+        if hr is tr:
+            break
+        ths = hr.find_all("th")
+        if not ths:
+            continue
+        headers = [clean(x.get_text(" ", strip=True)) for x in ths]
+        if len(headers) != len(tds):
+            continue
+        score = sum(any(k in h for k in ("제목", "학교", "기관", "직종", "분야", "등록일", "작성일", "마감")) for h in headers)
+        candidates.append((score, headers))
+    headers = max(candidates, key=lambda x: x[0])[1] if candidates else table_headers(table)
+    vals = {}
+    for i, td in enumerate(tds):
+        if i < len(headers) and headers[i]:
+            vals[headers[i]] = clean(td.get_text(" ", strip=True))
+    return vals
+
 def scrape_seoul_office(src):
     office, board, regions = src["name"], src["boardUrl"], src.get("regions",[])
     print("SEOUL OFFICE", office)
-    out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False; consecutive_old_pages=0
+    out, seen = [], set(); raw_rows=0; explicit_empty=False; got_table=False; consecutive_old_pages=0; parse_incomplete=0
     page = 1
     while True:
         r = get(board, params={"pageIndex":page})
@@ -526,20 +568,24 @@ def scrape_seoul_office(src):
                 seq=seoul_seq_from_row(tr)
                 if not seq or seq in seen: continue
                 seen.add(seq); raw_rows+=1; page_raw+=1
-                vals={}
-                for i,td in enumerate(tds):
-                    if i<len(headers) and headers[i]: vals[headers[i]]=clean(td.get_text(" ",strip=True))
+                vals=seoul_row_values(table,tr)
+                detail_anchor=seoul_detail_anchor_for_seq(tr,seq)
                 anchors=[a for a in tr.find_all("a") if clean(a.get_text(" ",strip=True))]
-                title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default=""))
-                if not title: title=first_of(vals,["제목","공고명","분야1","분야"])
+                title=clean(detail_anchor.get_text(" ",strip=True) if detail_anchor else "")
+                if not title:
+                    title=first_of(vals,["제목","공고명"])
+                if not title:
+                    title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default=""))
                 if len(title)<3 or EXCLUDE_WORDS.search(title): continue
                 registered=date_norm(first_of(vals,["등록일","작성일"]))
-                if not registered:
-                    ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=list(dict.fromkeys(d for d in ds if d and d <= today_s)); registered=plausible[0] if len(plausible)==1 else ""
                 if registered: page_dates.append(registered)
                 if registered and not recent_enough(registered,90): continue
                 page_recent+=1
                 school=first_of(vals,["학교명","기관명","작성자"]) or school_from_title(title)
+                title_school_collision = bool(school and norm(title) == norm(school)) or norm(title) == norm(office)
+                if not registered or not detail_anchor or title_school_collision:
+                    parse_incomplete += 1
+                    continue
                 raw_level=first_of(vals,["학교급별","학교급","대상"]); raw_type=first_of(vals,["직종","고용형태","구분"])
                 subject_parts=[first_of(vals,["분야1"]),first_of(vals,["분야2"])]
                 subject=" / ".join(x for x in subject_parts if x) or first_of(vals,["분야(과목)","분야","과목"])
@@ -565,7 +611,9 @@ def scrape_seoul_office(src):
         if consecutive_old_pages >= 2: break
         page += 1
         time.sleep(.04)
-    if raw_rows>0:
+    if parse_incomplete>0:
+        state,ok,msg="warning",False,f"서울 지원청 행 파싱 불완전 {parse_incomplete}건"
+    elif raw_rows>0:
         state,ok,msg="ok",True,"구인 게시판 확인"
     elif explicit_empty:
         state,ok,msg="empty",True,"구인 게시판 확인됨 · 현재 게시물 0건"
@@ -573,7 +621,7 @@ def scrape_seoul_office(src):
         state,ok,msg="warning",False,"게시판 표는 확인했으나 공고 행 분석 필요"
     else:
         state,ok,msg="error",False,"구인 게시판 구조를 읽지 못함"
-    return out,{"name":office,"url":board,"boards":[board],"count":len(out),"rawRows":raw_rows,"ok":ok,"state":state,"message":msg}
+    return out,{"name":office,"url":board,"boards":[board],"count":len(out),"rawRows":raw_rows,"seoulOfficeParseIncomplete":parse_incomplete,"ok":ok,"state":state,"message":msg}
 
 
 def dedupe_merge(jobs):
