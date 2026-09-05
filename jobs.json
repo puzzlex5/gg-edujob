@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06 01:26 KST",
+  "updatedAt": "2026-09-06 05:27 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -956,7 +956,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 367,
+        "count": 368,
         "ok": true,
         "state": "ok"
       }
@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-06 04:38 KST",
+    "checkedAt": "2026-09-06 05:58 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7424,
-      "resolved": 7424,
+      "total": 7425,
+      "resolved": 7425,
       "unresolved": 0,
       "examples": []
     },
@@ -1030,10 +1030,35 @@
         }
       ]
     },
-    "previousTotal": 18874,
-    "currentTotal": 18873
+    "previousTotal": 18873,
+    "currentTotal": 18875
   },
   "jobs": [
+    {
+      "id": "sen-109770",
+      "province": "서울",
+      "school": "서울세곡초등학교",
+      "title": "세곡초4학년6시간(급식포함)_(9월7일)시간강사",
+      "subject": "4학년담임",
+      "region": "구로구",
+      "regions": [
+        "구로구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/06",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/09/07",
+      "workEnd": "2026/09/07",
+      "registered": "2026/09/06",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109770"
+    },
     {
       "id": "sen-109767",
       "province": "서울",
@@ -152105,6 +152130,37 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office2-ca5ecba43ea6a22378",
+      "province": "경기",
+      "school": "초등학교",
+      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+      "subject": "",
+      "region": "시흥시",
+      "regions": [
+        "시흥시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/08/18",
+      "headcount": "",
+      "source": "시흥교육지원청",
+      "checkedSources": [
+        "시흥교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
+      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
+      "detailLinkResolved": true,
+      "nttSn": "527414",
+      "bbsId": "5511",
+      "mi": "9003",
+      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -524006,7 +524062,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-06 01:56 KST",
+      "checkedAt": "2026-09-06 05:52 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
@@ -524017,42 +524073,42 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-06 04:36 KST",
+    "checkedAt": "2026-09-06 05:57 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-06 04:36 KST",
+    "checkedAt": "2026-09-06 05:57 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
-    "freshCount": 16548,
-    "previousCount": 19237,
-    "mergedCount": 18871,
+    "freshCount": 16549,
+    "previousCount": 18873,
+    "mergedCount": 18872,
     "carriedForward": 2323,
     "officialIdProtected": 17816,
     "officialIdCarryForward": 1269,
     "enrichedFromPrevious": 7066,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-06 02:00 KST"
+    "generatedAt": "2026-09-06 05:56 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6911,
-    "gyeonggiTotal": 6911,
+    "gyeonggiExact": 6912,
+    "gyeonggiTotal": 6912,
     "seoulExact": 513,
     "seoulTotal": 513
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-06 04:36 KST",
+    "checkedAt": "2026-09-06 05:56 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6084,
+    "recentSupportJobs": 6085,
     "detailPagesParsed": 2521,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1060,
-    "missingWorkPeriod": 2015,
+    "missingApplicationPeriod": 1061,
+    "missingWorkPeriod": 2016,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-06 04:36 KST",
+      "checkedAt": "2026-09-06 05:56 KST",
       "candidates": 243,
       "detailPagesConfirmed": 239,
       "cacheEntriesImproved": 0,
@@ -524062,28 +524118,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "sourceReconciliation": {
-    "generatedAt": "2026-09-06 04:00:08 KST",
-    "lookbackDays": 90,
-    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 17816,
-    "datasetIdCountBefore": 18857,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "reconciledOffices": 38,
-    "totalOffices": 38,
-    "scanId": "20260905T185937Z-33984915212-1"
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-06 04:36:18 KST",
-    "ledgerScanId": "20260905T185937Z-33984915212-1",
-    "protectedOfficialIds": 17816,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
