@@ -24,146 +24,91 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import json, re, sys
+          import json, re
           from urllib.parse import urljoin, urlparse, parse_qs
           import requests
           from bs4 import BeautifulSoup
 
           BASE = 'https://www.goe.go.kr'
-          LIST = BASE + '/recruit/ad/func/pb/hnfpPbancInfoList.do?mi=10502'
+          LIST = BASE + '/recruit/ad/func/pb/hnfpPbancList.do?mi=10502'
           DETAIL_PATH = '/recruit/ad/func/pb/hnfpPbancInfoView.do'
-          UA = 'gg-edujob-exact-link-audit/1.0 (+https://github.com/puzzlex5/gg-edujob)'
-          headers = {'User-Agent': UA}
+          headers = {'User-Agent': 'gg-edujob-exact-link-audit/1.0 (+https://github.com/puzzlex5/gg-edujob)'}
 
-          def norm(s):
-              return re.sub(r'\s+', ' ', s or '').strip()
+          def norm(s): return re.sub(r'\s+', ' ', s or '').strip()
+          def get(session, url):
+              r = session.get(url, headers=headers, timeout=30, allow_redirects=True)
+              r.raise_for_status(); return r
 
-          def get(session, url, **kw):
-              r = session.get(url, headers=headers, timeout=30, allow_redirects=True, **kw)
-              r.raise_for_status()
-              return r
-
-          cold = requests.Session()
-          list_resp = get(cold, LIST)
+          list_resp = get(requests.Session(), LIST)
           html = list_resp.text
           soup = BeautifulSoup(html, 'html.parser')
           print('LIST_STATUS', list_resp.status_code, list_resp.url, 'bytes', len(html))
 
-          # Record raw goView-like functions and relevant forms without assuming a contract.
           scripts = '\n'.join(x.get_text('\n') for x in soup.find_all('script'))
-          funcs = re.findall(r'function\s+([A-Za-z0-9_]*[Vv]iew[A-Za-z0-9_]*)\s*\(([^)]*)\)\s*\{(.{0,2500}?)\n?\}', scripts, re.S)
+          funcs = re.findall(r'function\s+([A-Za-z0-9_]*[Vv]iew[A-Za-z0-9_]*)\s*\(([^)]*)\)\s*\{(.{0,3500}?)\n?\}', scripts, re.S)
           print('VIEW_FUNCTIONS', len(funcs))
-          for name, args, body in funcs[:20]:
+          for name, args, body in funcs[:30]:
               if 'pbanc' in body.lower() or 'hnfp' in body.lower() or 'view' in name.lower():
-                  print('FUNCTION', name, 'ARGS', norm(args), 'BODY', norm(body)[:1800])
+                  print('FUNCTION', name, 'ARGS', norm(args), 'BODY', norm(body)[:2500])
 
           for i, form in enumerate(soup.find_all('form')):
               action = urljoin(list_resp.url, form.get('action') or '')
               method = (form.get('method') or 'get').lower()
-              fields = []
-              for inp in form.find_all(['input','select','textarea']):
-                  name = inp.get('name')
-                  if not name:
-                      continue
-                  fields.append((name, inp.get('value','')))
-              if any('pbanc' in (k or '').lower() for k,_ in fields) or 'hnfp' in action.lower():
-                  print('FORM', i, 'METHOD', method, 'ACTION', action, 'FIELDS', json.dumps(fields, ensure_ascii=False)[:2500])
+              fields = [(x.get('name'), x.get('value','')) for x in form.find_all(['input','select','textarea']) if x.get('name')]
+              if any('pbanc' in k.lower() for k,_ in fields) or 'hnfp' in action.lower():
+                  print('FORM', i, 'METHOD', method, 'ACTION', action, 'FIELDS', json.dumps(fields, ensure_ascii=False)[:3000])
 
-          # Extract list rows that visibly bind a pbancSn to a title via onclick/href/script data.
-          candidates = []
-          seen = set()
+          candidates=[]; seen=set()
           for tag in soup.find_all(['a','button']):
-              blob = ' '.join(filter(None, [tag.get('href'), tag.get('onclick'), tag.get('data-url')]))
-              m = re.search(r'(?:goView\s*\(\s*[\'\"]?|pbancSn(?:=|,|\s)[\'\"]?)(\d{3,})', blob, re.I)
-              if not m:
-                  continue
-              pid = m.group(1)
-              if pid in seen:
-                  continue
-              title = norm(tag.get_text(' ', strip=True))
+              blob=' '.join(filter(None,[tag.get('href'),tag.get('onclick'),tag.get('data-url')]))
+              m=re.search(r'(?:goView\s*\(\s*[\'\"]?|pbancSn(?:=|,|\s)[\'\"]?)(\d{3,})',blob,re.I)
+              if not m: continue
+              pid=m.group(1)
+              if pid in seen: continue
+              title=norm(tag.get_text(' ',strip=True))
               if not title:
-                  parent = tag.find_parent(['li','tr','div'])
-                  title = norm(parent.get_text(' ', strip=True) if parent else '')
-              if not title:
-                  continue
-              seen.add(pid)
-              candidates.append((pid, title, blob))
-
-          # Fallback: scan row-like blocks for goView(id) plus a substantial visible title.
-          if len(candidates) < 15:
+                  parent=tag.find_parent(['li','tr','div']); title=norm(parent.get_text(' ',strip=True) if parent else '')
+              if not title: continue
+              seen.add(pid); candidates.append((pid,title,blob))
+          if len(candidates)<10:
               for row in soup.find_all(['li','tr','div']):
-                  raw = str(row)
-                  m = re.search(r'goView\s*\(\s*[\'\"]?(\d{3,})', raw, re.I)
-                  if not m:
-                      continue
-                  pid = m.group(1)
-                  if pid in seen:
-                      continue
-                  title = norm(row.get_text(' ', strip=True))
-                  if len(title) < 8:
-                      continue
-                  seen.add(pid)
-                  candidates.append((pid, title, 'row-fallback'))
+                  raw=str(row); m=re.search(r'goView\s*\(\s*[\'\"]?(\d{3,})',raw,re.I)
+                  if not m: continue
+                  pid=m.group(1)
+                  if pid in seen: continue
+                  title=norm(row.get_text(' ',strip=True))
+                  if len(title)<8: continue
+                  seen.add(pid); candidates.append((pid,title,'row-fallback'))
+          print('CANDIDATES',len(candidates))
+          for x in candidates[:20]: print('ROW',x[0],norm(x[1])[:220],norm(x[2])[:300])
+          if len(candidates)<10: raise SystemExit(f'FAIL: only {len(candidates)} current pbancSn rows found')
 
-          print('CANDIDATES', len(candidates))
-          for x in candidates[:20]:
-              print('ROW', x[0], norm(x[1])[:180], norm(x[2])[:300])
-          if len(candidates) < 10:
-              raise SystemExit(f'FAIL: only {len(candidates)} pbancSn rows found; cannot satisfy 10-current acceptance')
-
-          # Prefer 10 current rows; add 5 older known persistent IDs as historical controls.
-          selected = candidates[:10]
-          historical = [('23769','historical-control'),('35753','historical-control'),('55837','historical-control'),('55985','historical-control'),('57217','historical-control')]
-
-          def detail_url(pid):
-              return f'{BASE}{DETAIL_PATH}?mi=10502&pbancSn={pid}'
-
+          selected=candidates[:10]
+          historical=[('23769','historical-control'),('35753','historical-control'),('55837','historical-control'),('55985','historical-control'),('57217','historical-control')]
+          def detail_url(pid): return f'{BASE}{DETAIL_PATH}?mi=10502&pbancSn={pid}'
           def extract_page(resp):
-              s = BeautifulSoup(resp.text, 'html.parser')
-              text = norm(s.get_text(' ', strip=True))
-              h = None
+              s=BeautifulSoup(resp.text,'html.parser'); text=norm(s.get_text(' ',strip=True)); h=''
               for sel in ['h1','h2','h3','h4','.tit','.title']:
-                  node = s.select_one(sel)
-                  if node and len(norm(node.get_text(' ', strip=True))) >= 4:
-                      h = norm(node.get_text(' ', strip=True))
-                      break
-              q = parse_qs(urlparse(resp.url).query)
-              final_id = (q.get('pbancSn') or [''])[0]
-              return text, h or '', final_id
+                  node=s.select_one(sel)
+                  if node and len(norm(node.get_text(' ',strip=True)))>=4: h=norm(node.get_text(' ',strip=True)); break
+              q=parse_qs(urlparse(resp.url).query); fid=(q.get('pbancSn') or [''])[0]
+              return text,h,fid
 
-          results = []
-          for pid, list_title, _ in selected + historical:
-              # (a) cold access: distinct new Session, no list seed
-              cs = requests.Session()
-              cr = get(cs, detail_url(pid))
-              ctext, ctitle, cid = extract_page(cr)
-
-              # (b) fresh list-seeded session then the same stored GET
-              ss = requests.Session()
-              get(ss, LIST)
-              sr = get(ss, detail_url(pid))
-              stext, stitle, sid = extract_page(sr)
-
-              # Content-level evidence: final query ID must agree and current list title words must be represented.
-              tokens = [t for t in re.split(r'[^0-9A-Za-z가-힣]+', list_title) if len(t) >= 2]
-              token_hits_c = sum(1 for t in tokens[:12] if t in ctext)
-              token_hits_s = sum(1 for t in tokens[:12] if t in stext)
-              current = list_title != 'historical-control'
-              title_ok_c = (not current) or token_hits_c >= min(2, max(1, len(tokens)))
-              title_ok_s = (not current) or token_hits_s >= min(2, max(1, len(tokens)))
-              same_body_signature = norm(ctitle) == norm(stitle) or (ctext[:1000] == stext[:1000])
-              ok = cid == pid and sid == pid and title_ok_c and title_ok_s and same_body_signature
-              rec = {
-                  'pbancSn': pid, 'current': current, 'listTitle': list_title[:220],
-                  'cold': {'status': cr.status_code, 'finalUrl': cr.url, 'finalId': cid, 'pageTitle': ctitle[:220], 'tokenHits': token_hits_c},
-                  'seeded': {'status': sr.status_code, 'finalUrl': sr.url, 'finalId': sid, 'pageTitle': stitle[:220], 'tokenHits': token_hits_s},
-                  'coldSeededSame': same_body_signature, 'ok': ok,
-              }
-              print('RESULT', json.dumps(rec, ensure_ascii=False))
-              results.append(rec)
-
-          bad = [r for r in results if not r['ok']]
-          print('SUMMARY', json.dumps({'tested':len(results),'current':sum(r['current'] for r in results),'bad':len(bad),'badIds':[r['pbancSn'] for r in bad]}, ensure_ascii=False))
-          if bad:
-              raise SystemExit('FAIL: content-level exact-link mismatch: ' + ','.join(r['pbancSn'] for r in bad))
+          results=[]
+          for pid,list_title,_ in selected+historical:
+              cs=requests.Session(); cr=get(cs,detail_url(pid)); ctext,ctitle,cid=extract_page(cr)
+              ss=requests.Session(); get(ss,LIST); sr=get(ss,detail_url(pid)); stext,stitle,sid=extract_page(sr)
+              tokens=[t for t in re.split(r'[^0-9A-Za-z가-힣]+',list_title) if len(t)>=2]
+              hc=sum(1 for t in tokens[:12] if t in ctext); hs=sum(1 for t in tokens[:12] if t in stext)
+              current=list_title!='historical-control'; needed=min(2,max(1,len(tokens)))
+              same=(norm(ctitle)==norm(stitle)) or (ctext[:1200]==stext[:1200])
+              ok=cid==pid and sid==pid and ((not current) or (hc>=needed and hs>=needed)) and same
+              rec={'pbancSn':pid,'current':current,'listTitle':list_title[:220],
+                   'cold':{'status':cr.status_code,'finalUrl':cr.url,'finalId':cid,'pageTitle':ctitle[:220],'tokenHits':hc},
+                   'seeded':{'status':sr.status_code,'finalUrl':sr.url,'finalId':sid,'pageTitle':stitle[:220],'tokenHits':hs},
+                   'coldSeededSame':same,'ok':ok}
+              print('RESULT',json.dumps(rec,ensure_ascii=False)); results.append(rec)
+          bad=[r for r in results if not r['ok']]
+          print('SUMMARY',json.dumps({'tested':len(results),'current':sum(r['current'] for r in results),'bad':len(bad),'badIds':[r['pbancSn'] for r in bad]},ensure_ascii=False))
+          if bad: raise SystemExit('FAIL: content-level exact-link mismatch: '+','.join(r['pbancSn'] for r in bad))
           PY
