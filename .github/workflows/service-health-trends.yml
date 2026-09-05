@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/update_health_trends.py'
       - 'scripts/update_official_source_trends.py'
+      - 'scripts/check_official_source_freshness.py'
       - '.github/workflows/service-health-trends.yml'
   schedule:
     - cron: '57 * * * *'
@@ -33,7 +34,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Syntax check trend observers
-        run: python -m py_compile scripts/update_health_trends.py scripts/update_official_source_trends.py
+        run: python -m py_compile scripts/update_health_trends.py scripts/update_official_source_trends.py scripts/check_official_source_freshness.py
       - name: Record rolling health snapshot
         id: trend
         continue-on-error: true
@@ -42,13 +43,17 @@ jobs:
         id: official_trend
         continue-on-error: true
         run: python scripts/update_official_source_trends.py
+      - name: Detect already-stale official sources
+        id: official_freshness
+        continue-on-error: true
+        run: python scripts/check_official_source_freshness.py
       - name: Commit evidence before alerting
         if: always()
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add health_trend_history.json health_anomaly_report.json official_source_trend_history.json official_source_trend_report.json
+          git add health_trend_history.json health_anomaly_report.json official_source_trend_history.json official_source_trend_report.json official_source_freshness_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record recruitment service health trend'
           for i in 1 2 3; do
@@ -57,5 +62,5 @@ jobs:
           done
           exit 1
       - name: Fail visibly only on hard integrity failure
-        if: steps.trend.outcome != 'success' || steps.official_trend.outcome != 'success'
+        if: steps.trend.outcome != 'success' || steps.official_trend.outcome != 'success' || steps.official_freshness.outcome != 'success'
         run: exit 1
