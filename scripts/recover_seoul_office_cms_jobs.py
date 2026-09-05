@@ -3,11 +3,13 @@
 
 This is deliberately conservative: it only accepts recent official same-host CMS detail pages
 already surfaced by board_discovery_report.json, requires explicit recruitment language, and
-rejects result/status/personnel notices. Existing jobs always win.
+rejects result/status/personnel notices. Existing jobs always win only when the same persistent
+posting URL is already present; title/date similarity is never used as automatic dedup evidence.
 """
 import hashlib
 import json
 import re
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
@@ -47,10 +49,6 @@ S.mount("https://", HTTPAdapter(max_retries=retry)); S.mount("http://", HTTPAdap
 
 def clean(s):
     return re.sub(r"\s+", " ", s or "").strip()
-
-
-def norm(s):
-    return re.sub(r"[^0-9a-z가-힣]+", "", clean(s).lower())
 
 
 def date_norm(text):
@@ -125,6 +123,24 @@ def is_recovered_status_notice(job):
     return str(job.get("id", "")).startswith("sen-office-cms-") and bool(EXCLUDE_RE.search(clean(job.get("title", ""))))
 
 
+def should_skip_existing(job, existing_urls):
+    """Only an identical persistent posting URL is sufficient deduplication evidence here."""
+    return bool(job.get("url")) and job["url"] in existing_urls
+
+
+def self_test():
+    existing = {"https://example.sen.go.kr/CMS/recruit/recruit01/1234567_9999.html"}
+    same_url = {"url": next(iter(existing)), "title": "기간제교원 채용", "registered": "2026/09/05"}
+    same_text_different_url = {
+        "url": "https://example.sen.go.kr/CMS/recruit/recruit01/1234568_9999.html",
+        "title": "기간제교원 채용",
+        "registered": "2026/09/05",
+    }
+    assert should_skip_existing(same_url, existing)
+    assert not should_skip_existing(same_text_different_url, existing)
+    print("Seoul CMS stable-URL dedup self-test passed")
+
+
 def main():
     if not JOBS.exists() or not REPORT.exists():
         raise SystemExit("jobs.json or board_discovery_report.json missing")
@@ -133,8 +149,7 @@ def main():
     original_jobs = payload.get("jobs", [])
     removed = [j for j in original_jobs if is_recovered_status_notice(j)]
     jobs = [j for j in original_jobs if not is_recovered_status_notice(j)]
-    existing_urls = {j.get("url", "") for j in jobs}
-    existing_semantic = {(norm(j.get("title", "")), j.get("registered", "")) for j in jobs}
+    existing_urls = {j.get("url", "") for j in jobs if j.get("url")}
     accepted, skipped = [], []
     for office_row in report.get("seoul", []):
         office = office_row.get("name", "")
@@ -143,12 +158,13 @@ def main():
             if not job:
                 skipped.append({"office": office, "url": item.get("url", ""), "reason": reason})
                 continue
-            semantic = (norm(job["title"]), job["registered"])
-            if job["url"] in existing_urls or semantic in existing_semantic:
-                skipped.append({"office": office, "url": job["url"], "reason": "already-present"})
+            # A different persistent CMS detail URL is independent evidence of a different posting.
+            # Do not collapse two postings merely because title/date text happens to match.
+            if should_skip_existing(job, existing_urls):
+                skipped.append({"office": office, "url": job["url"], "reason": "already-present-url"})
                 continue
             jobs.append(job); accepted.append(job)
-            existing_urls.add(job["url"]); existing_semantic.add(semantic)
+            existing_urls.add(job["url"])
     if accepted or removed:
         jobs.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
         payload["jobs"] = jobs
@@ -166,4 +182,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--self-test" in sys.argv:
+        self_test()
+    else:
+        main()
