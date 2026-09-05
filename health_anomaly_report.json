@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-05T15:10:03+09:00",
+  "generatedAt": "2026-09-05T16:07:27+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T15:10:03+09:00",
+    "generatedAt": "2026-09-05T16:07:27+09:00",
     "official": {
       "datasetCount": 19232,
       "officialIdCount": 18186,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7607,
+      "publishedJobs": 7599,
       "officialDisplayed": 3129,
-      "privateDisplayed": 4478,
-      "privateDiscovered": 4490,
+      "privateDisplayed": 4470,
+      "privateDiscovered": 4482,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -269,13 +269,13 @@
         "name": "아트모아",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 28,
-        "rawCount": 28,
-        "currentCount": 28,
+        "datasetCount": 20,
+        "rawCount": 20,
+        "currentCount": 20,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-04"
+        "latestRegistered": "2026-09-05"
       },
       "gonggonggangsa": {
         "name": "공공강사",
@@ -293,12 +293,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T15:10:37+09:00",
+      "baselineAt": "2026-09-04T16:08:21+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19232,
-          "baseline": 19117,
-          "changeRatio": 0.006
+          "baseline": 19169,
+          "changeRatio": 0.0033
         },
         "official.officialIdCount": {
           "current": 18186,
@@ -306,19 +306,19 @@
           "changeRatio": 0.0048
         },
         "unified.publishedJobs": {
-          "current": 7607,
-          "baseline": 4757,
-          "changeRatio": 0.5991
+          "current": 7599,
+          "baseline": 4790,
+          "changeRatio": 0.5864
         },
         "unified.officialDisplayed": {
           "current": 3129,
-          "baseline": 3302,
-          "changeRatio": -0.0524
+          "baseline": 3353,
+          "changeRatio": -0.0668
         },
         "unified.privateDiscovered": {
-          "current": 4490,
-          "baseline": 1470,
-          "changeRatio": 2.0544
+          "current": 4482,
+          "baseline": 1452,
+          "changeRatio": 2.0868
         }
       },
       "privateSources": {
@@ -333,7 +333,7 @@
           "changeRatio": null
         },
         "artmore": {
-          "current": 28,
+          "current": 20,
           "baseline": 0,
           "changeRatio": null
         },
