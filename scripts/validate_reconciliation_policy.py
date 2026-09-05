@@ -26,6 +26,17 @@ def load(name):
         raise SystemExit(f"Unreadable reconciliation artifact {name}: {type(exc).__name__}")
 
 
+def load_optional(name):
+    path = ROOT / name
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
 def load_path(path):
     try:
         return json.loads(Path(path).read_text(encoding="utf-8"))
@@ -68,6 +79,40 @@ def reconciliation_age_hours(generated_at):
             f"maxHours={MAX_RECONCILIATION_AGE_HOURS:.1f}; keep last-known-good publication"
         )
     return max(age, 0.0)
+
+
+def guard_proof_window(report, ledger, summary):
+    """Bind proof artifacts to one immutable reconciliation run.
+
+    The reconciliation report, its summary, the stable-ID ledger, and central pagination proof
+    are mandatory members of the proof window. A legacy restore report that does not claim a
+    ledgerScanId is excluded; once it claims one, it must match exactly.
+    """
+    central = load_optional("central_pagination_report.json")
+    restore = load_optional("official_id_restore_report.json")
+    restore_summary = restore.get("summary", {}) if isinstance(restore, dict) else {}
+    proofs = {
+        "reconciliationReport": report.get("scanId") if isinstance(report, dict) else None,
+        "reconciliationSummary": summary.get("scanId") if isinstance(summary, dict) else None,
+        "sourceIdLedger": ledger.get("scanId") if isinstance(ledger, dict) else None,
+        "centralPagination": central.get("scanId") if isinstance(central, dict) else None,
+    }
+    missing = sorted(name for name, value in proofs.items() if not str(value or "").strip())
+    if missing:
+        raise SystemExit(f"proof-window-mismatch: missing scanId in {missing}")
+    named = {name: str(value) for name, value in proofs.items()}
+    distinct = sorted(set(named.values()))
+    if len(distinct) != 1:
+        raise SystemExit(f"proof-window-mismatch: proofs span multiple scans {named}")
+    scan_id = distinct[0]
+
+    restore_scan_id = str(restore_summary.get("ledgerScanId") or "").strip()
+    if restore_scan_id and restore_scan_id != scan_id:
+        raise SystemExit(
+            "proof-window-mismatch: targeted restore is bound to a different ledger "
+            f"restore={restore_scan_id!r}, proof={scan_id!r}"
+        )
+    return scan_id
 
 
 def validate_source_evidence(report, expected_sources):
@@ -209,6 +254,7 @@ def main():
     report = load("source_reconciliation_report.json")
     ledger = load("source_id_ledger.json")
     summary = report.get("summary", {}) if isinstance(report, dict) else {}
+    scan_id = guard_proof_window(report, ledger, summary)
 
     report_policy = report.get("populationPolicy") or summary.get("populationPolicy")
     ledger_policy = ledger.get("populationPolicy") if isinstance(ledger, dict) else None
@@ -239,6 +285,7 @@ def main():
     fast_shape = guard_fast_publication_shape()
     print(json.dumps({
         "populationPolicy": POLICY,
+        "scanId": scan_id,
         "generatedAt": report.get("generatedAt"),
         "evidenceAgeHours": round(evidence_age_hours, 3),
         "maxEvidenceAgeHours": MAX_RECONCILIATION_AGE_HOURS,

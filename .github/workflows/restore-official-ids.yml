@@ -28,6 +28,8 @@ jobs:
           set -euo pipefail
           git fetch origin main
           git checkout -B main origin/main
+          echo "RESTORE_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "RESTORE_PUSH_STATE=not-attempted" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -50,33 +52,108 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          set_state() { echo "RESTORE_PUSH_STATE=$1" >> "$GITHUB_ENV"; }
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add jobs.json collection_state.json collector_status.json deep_audit_status.json official_id_restore_report.json date_anomaly_report.json
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            set_state no-change
+            exit 0
+          fi
           git commit -m 'Restore missing reconciled official recruitment IDs'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+
+          pushed=0
+          for attempt in 1 2 3; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort || true
+              sleep $((attempt * 5))
+              continue
+            fi
+            if git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+
+            # A transport error can be reported after the remote accepted the commit. Verify before
+            # declaring a failed publication.
+            if git fetch origin main && git merge-base --is-ancestor HEAD origin/main; then
+              set_state verified-after-push-error
+              exit 0
+            fi
+            sleep $((attempt * 5))
+          done
+
+          if [ "$pushed" = "1" ]; then
+            if git fetch origin main && git merge-base --is-ancestor HEAD origin/main; then
+              set_state verified
+              exit 0
+            fi
+            set_state pushed-verification-unavailable
+            echo '::error::restore push returned success but publication verification was unavailable'
+            exit 1
+          fi
+
+          if git fetch origin main; then
+            if git merge-base --is-ancestor HEAD origin/main; then
+              set_state verified-after-push-error
+              exit 0
+            fi
+            set_state push-failed
+            echo '::error::restore push failed after 3 attempts and commit is absent from origin/main'
+          else
+            set_state publication-uncertain
+            echo '::error::restore push failed and origin/main could not be fetched to determine publication state'
+          fi
+          exit 1
       - name: Preserve diagnostics without publishing incomplete restoration
         if: failure()
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/id-restore-diagnostics
-          [ ! -f official_id_restore_report.json ] || cp official_id_restore_report.json /tmp/id-restore-diagnostics/
-          git reset --hard HEAD
-          git clean -fd
-          if [ -f /tmp/id-restore-diagnostics/official_id_restore_report.json ]; then
-            cp /tmp/id-restore-diagnostics/official_id_restore_report.json official_id_restore_report.json
+          push_state="${RESTORE_PUSH_STATE:-not-attempted}"
+          echo "Restore failure publication state: ${push_state}"
+
+          # Always re-anchor on the actual remote branch. Never reset to HEAD here: HEAD may be the
+          # unpublished restore commit, which was the previous failure-handler bug.
+          if ! git fetch origin main; then
+            echo '::error::cannot safely publish restore diagnostics because origin/main is unavailable'
+            exit 1
           fi
-          python scripts/update_collector_status.py --workflow official-id-restore --stage restore --state failed || true
+          git checkout -B main origin/main
+          git clean -fd
+
+          case "$push_state" in
+            pushed-verification-unavailable|publication-uncertain)
+              failure_stage='publication-verification'
+              ;;
+            push-failed)
+              failure_stage='publication'
+              ;;
+            *)
+              failure_stage='restore'
+              ;;
+          esac
+
+          python scripts/update_collector_status.py --workflow official-id-restore --stage "$failure_stage" --state failed || true
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json
-          [ ! -f official_id_restore_report.json ] || git add official_id_restore_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record failed targeted official-ID restoration'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+
+          pushed=0
+          for attempt in 1 2 3; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort || true
+              sleep $((attempt * 5))
+              continue
+            fi
+            if git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            sleep $((attempt * 5))
+          done
+          [ "$pushed" = "1" ] || { echo '::error::failed to publish restore diagnostics after 3 attempts'; exit 1; }
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main || exit 1
