@@ -46,9 +46,9 @@ marker='<script src="mobile-ui.js?v='
 if 'direct-link-guard.js' not in s:
     i=s.find(marker)
     if i<0: raise SystemExit('mobile-ui script marker missing')
-    s=s[:i]+'<script src="direct-link-guard.js?v=20260905a" defer></script>\n'+s[i:]
+    s=s[:i]+'<script src="direct-link-guard.js?v=20260906a" defer></script>\n'+s[i:]
 else:
-    s,n=re.subn(r'direct-link-guard\.js\?v=[A-Za-z0-9._-]+','direct-link-guard.js?v=20260905a',s,count=1)
+    s,n=re.subn(r'direct-link-guard\.js\?v=[A-Za-z0-9._-]+','direct-link-guard.js?v=20260906a',s,count=1)
     if n!=1: raise SystemExit('direct-link-guard asset reference changed')
 
 if 'unified-ui.js' not in s:
