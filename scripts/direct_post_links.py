@@ -23,6 +23,15 @@ def _digits(value) -> str:
     return s if s.isdigit() else ""
 
 
+def _is_seoul_cms_detail(parsed) -> bool:
+    host = (parsed.hostname or "").lower()
+    path = parsed.path or ""
+    return bool(
+        (host == "sen.go.kr" or host.endswith(".sen.go.kr"))
+        and re.search(r"/CMS/.+/\d+_\d+\.html$", path, re.I)
+    )
+
+
 def is_direct_post(job: dict) -> tuple[bool, str]:
     url = str(job.get("url") or job.get("originalUrl") or "").strip()
     sid = str(job.get("sourceIdentity") or "")
@@ -73,8 +82,12 @@ def is_direct_post(job: dict) -> tuple[bool, str]:
         seq = _digits((q.get("job_seq") or [(job.get("openParams") or {}).get("job_seq") or ""])[0])
         return bool(seq and not GENERIC_PATH_RE.search(path)), "seoul-job-seq"
 
-    if sid.startswith("sen-office-cms-"):
-        return bool(re.search(r"/CMS/.+/\d+_\d+\.html$", path, re.I)), "seoul-cms-detail"
+    # Seoul support-office CMS postings use persistent numeric .html detail URLs.
+    # Some unified rows intentionally preserve them under an official-url:* stable
+    # identity, so classify by the trusted sen.go.kr host + exact CMS detail shape
+    # rather than relying on one sourceIdentity prefix.
+    if _is_seoul_cms_detail(p):
+        return True, "seoul-cms-detail"
 
     if not url:
         return False, "missing-url"
