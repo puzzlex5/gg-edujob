@@ -3,6 +3,8 @@ name: Reconcile official recruitment source IDs
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - '.github/workflows/source-id-reconciliation.yml'
       - 'scripts/reconcile_source_ids.py'
@@ -12,6 +14,9 @@ on:
       - 'scripts/verify_central_pagination.py'
       - 'scripts/verify_central_reconciliation_consistency.py'
       - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/scan_identity.py'
+      - 'scripts/stamp_reconciliation_scan.py'
+      - 'scripts/preserve_reconciliation_candidate.py'
   schedule:
     - cron: '37 * * * *' # hourly at :37 UTC; independent 38-source proof every hour
 
@@ -36,6 +41,14 @@ jobs:
           set -euo pipefail
           git fetch origin main
           git checkout -B main origin/main
+      - name: Mint immutable scan identity for this run
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "RECONCILE_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          SCAN_ID="$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "RECONCILE_SCAN_ID=${SCAN_ID}" >> "$GITHUB_ENV"
+          echo "Reconciliation scan: ${SCAN_ID}"
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -58,11 +71,15 @@ jobs:
       - name: Require full recent 90-day Gyeonggi central population
         run: python scripts/harden_reconciliation_central_lookback.py
       - name: Compile reconciliation code
-        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py
+        run: python -m py_compile scripts/harden_central_pagination.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/verify_gyeonggi_central_90d.py scripts/validate_reconciliation_policy.py scripts/verify_central_pagination.py scripts/verify_central_reconciliation_consistency.py scripts/reconcile_source_ids.py scripts/restore_reconciled_ids.py scripts/complete_support_coverage.py scripts/scrape_jobs.py scripts/verify_jobs.py scripts/update_collection_state.py scripts/update_collector_status.py scripts/sync_effective_audit_status.py scripts/scan_identity.py scripts/stamp_reconciliation_scan.py scripts/preserve_reconciliation_candidate.py
       - name: Prove central portal pagination independently
-        run: python scripts/verify_central_pagination.py
+        run: |
+          python scripts/verify_central_pagination.py
+          python scripts/stamp_reconciliation_scan.py --central
       - name: Crawl official IDs and recover missing source occurrences
-        run: python scripts/reconcile_source_ids.py
+        run: |
+          python scripts/reconcile_source_ids.py
+          python scripts/stamp_reconciliation_scan.py --reconciliation
       - name: Refresh independent Gyeonggi 90-day evidence
         run: python scripts/verify_gyeonggi_central_90d.py
       - name: Require current reconciliation population policy
@@ -70,6 +87,7 @@ jobs:
       - name: Re-prove central IDs and require independent agreement
         run: |
           python scripts/verify_central_pagination.py
+          python scripts/stamp_reconciliation_scan.py --central
           python scripts/verify_central_reconciliation_consistency.py
       - name: Require persistent independent Gyeonggi 90-day evidence
         run: |
@@ -153,20 +171,42 @@ jobs:
           python scripts/update_collector_status.py --workflow reconciliation --stage complete --state success
           python scripts/sync_effective_audit_status.py
       - name: Commit only fully reconciled data
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
           test -s gyeonggi_central_90d_report.json
           if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
             git rm -f reconciliation_failure_report.json
           fi
+          if git ls-files --error-unmatch source_id_ledger.candidate.json >/dev/null 2>&1; then
+            git rm -f source_id_ledger.candidate.json
+          fi
           git add jobs.json source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json deep_audit_status.json scripts/scrape_jobs.py scripts/reconcile_source_ids.py scripts/verify_gyeonggi_central_90d.py scripts/verify_central_reconciliation_consistency.py scripts/harden_reconciliation_central_lookback.py scripts/crawl_gyeonggi_central_recent.py scripts/validate_reconciliation_policy.py
           git add -f gyeonggi_central_90d_report.json
           git diff --cached --quiet && exit 0
           git commit -m 'Reconcile official recruitment source IDs'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+
+          pushed=0
+          for attempt in 1 2 3; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort || true
+              sleep $((attempt * 5))
+              continue
+            fi
+            if git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            sleep $((attempt * 5))
+          done
+          [ "$pushed" = "1" ] || { echo '::error::reconciliation push failed after 3 attempts'; exit 1; }
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main || {
+            echo '::error::reconciliation commit is not reachable from origin/main after push'
+            exit 1
+          }
       - name: Preserve reconciliation diagnostics on failure
         if: failure()
         shell: bash
@@ -176,56 +216,35 @@ jobs:
           for f in source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json official_id_restore_report.json; do
             if [ -f "$f" ]; then cp "$f" "/tmp/source-id-diagnostics/$f"; fi
           done
-          git reset --hard HEAD
+
+          # Re-anchor to the actual remote LKG before writing diagnostics. Never use reset --hard HEAD
+          # here: HEAD may already be an unpublished candidate commit created by the failed step.
+          git fetch origin main
+          git checkout -B main origin/main
           git clean -fd
-          python - <<'PY'
-          import json
-          from datetime import datetime, timedelta, timezone
-          from pathlib import Path
 
-          root=Path('/tmp/source-id-diagnostics')
-          def load(name):
-              p=root/name
-              if not p.exists(): return {}
-              try: return json.loads(p.read_text(encoding='utf-8'))
-              except Exception: return {'readError': True}
-
-          recon=load('source_reconciliation_report.json')
-          central=load('central_pagination_report.json')
-          gg90=load('gyeonggi_central_90d_report.json')
-          restore=load('official_id_restore_report.json')
-          ledger=load('source_id_ledger.json')
-          kst=timezone(timedelta(hours=9))
-          report={
-              'generatedAt': datetime.now(kst).strftime('%Y-%m-%d %H:%M:%S KST'),
-              'policy': 'Rejected reconciliation diagnostics are isolated from canonical published proof files.',
-              'candidate': {
-                  'reconciliation': recon.get('summary',{}),
-                  'centralPagination': {
-                      'generatedAt': central.get('generatedAt'),
-                      'complete': central.get('complete'),
-                      'sources': central.get('sources',[]),
-                  },
-                  'gyeonggiCentral90d': {
-                      'generatedAt': gg90.get('generatedAt'),
-                      'stableIdCount': gg90.get('stableIdCount'),
-                      'complete': gg90.get('complete'),
-                  },
-                  'finalRestore': restore.get('summary',{}),
-                  'sourceIdLedger': {
-                      'generatedAt': ledger.get('generatedAt'),
-                      'officialIdCount': len(ledger.get('ids',{})) if isinstance(ledger.get('ids'),dict) else ledger.get('officialIdCount'),
-                  },
-              },
-          }
-          Path('reconciliation_failure_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
-          PY
+          python scripts/preserve_reconciliation_candidate.py --diagnostics-dir /tmp/source-id-diagnostics
           python scripts/update_collector_status.py --workflow reconciliation --stage source-id-reconciliation --state failed
           git config user.name 'github-actions[bot]'
           git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
           git add collector_status.json reconciliation_failure_report.json
+          [ ! -f source_id_ledger.candidate.json ] || git add -f source_id_ledger.candidate.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record isolated official source-ID reconciliation failure'
-          git reset --hard HEAD
-          git pull --rebase
-          git push
+
+          pushed=0
+          for attempt in 1 2 3; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort || true
+              sleep $((attempt * 5))
+              continue
+            fi
+            if git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            sleep $((attempt * 5))
+          done
+          [ "$pushed" = "1" ] || { echo '::error::failed to publish isolated reconciliation diagnostics'; exit 1; }
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main || exit 1
