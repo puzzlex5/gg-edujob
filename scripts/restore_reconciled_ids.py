@@ -159,6 +159,7 @@ def main():
     payload["jobs"] = jobs
     payload["officialIdRestore"] = {
         "checkedAt": datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S KST"),
+        "ledgerScanId": ledger.get("scanId") if isinstance(ledger, dict) else None,
         "protectedOfficialIds": len(protected),
         "missingBefore": len(missing),
         "recoveredNow": len(recovered),
