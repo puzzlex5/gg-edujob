@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
 
 KST = timezone(timedelta(hours=9))
 BASE = "https://www.hunjang.com"
@@ -92,13 +92,31 @@ def main() -> int:
                 item["bodyError"] = f"{type(e).__name__}: {e}"
             api_responses.append(item)
 
+        def goto_best_effort(url: str, label: str):
+            """Navigate without treating a late DOMContentLoaded event as a structural failure.
+
+            Hunjang can keep long-lived third-party/SPA activity alive. We only need a verified
+            same-origin document plus rendered DOM/network evidence, so a navigation timeout is
+            recoverable when Chromium has already committed the requested Hunjang document.
+            """
+            resp = None
+            try:
+                resp = page.goto(url, wait_until="commit", timeout=20000)
+            except PlaywrightTimeoutError as e:
+                current = urlparse(page.url)
+                target = urlparse(url)
+                if not current.netloc.endswith("hunjang.com") or current.netloc != target.netloc:
+                    raise
+                errors.append(f"{label}: navigation commit timeout recovered at {page.url}: {e}")
+            page.wait_for_timeout(4500)
+            return resp
+
         page.on("request", on_request)
         page.on("response", on_response)
 
         for url in LIST_CANDIDATES:
             try:
-                resp = page.goto(url, wait_until="domcontentloaded", timeout=45000)
-                page.wait_for_timeout(5000)
+                resp = goto_best_effort(url, url)
                 body = page.locator("body").inner_text(timeout=7000)[:25000]
                 title = page.title()
                 status = resp.status if resp else None
@@ -122,19 +140,17 @@ def main() -> int:
         # issuing new XHRs, so body/API deltas are recorded as evidence as well.
         if not blocked:
             try:
-                page.goto(BASE, wait_until="domcontentloaded", timeout=45000)
-                page.wait_for_timeout(4000)
+                goto_best_effort(BASE, "spa navigation home")
                 selectors = [
                     "a:has-text('채용정보')",
                     "button:has-text('채용정보')",
                     "[role='button']:has-text('채용정보')",
-                    "text=채용정보",
+                    "nav a:has-text('채용')",
+                    "header a:has-text('채용')",
                     "a:has-text('서울')",
                     "button:has-text('서울')",
-                    "text=서울",
                     "a:has-text('경기')",
                     "button:has-text('경기')",
-                    "text=경기",
                 ]
                 for selector in selectors:
                     loc = page.locator(selector)
@@ -179,10 +195,15 @@ def main() -> int:
                                 })
                                 # Reset before trying another public navigation control so one
                                 # successful SPA transition does not hide the region probes.
-                                page.goto(BASE, wait_until="domcontentloaded", timeout=45000)
-                                page.wait_for_timeout(2500)
+                                goto_best_effort(BASE, f"reset after {txt or selector}")
                                 break
-                        except Exception:
+                        except Exception as e:
+                            navigation_attempts.append({
+                                "selector": selector,
+                                "index": i,
+                                "error": f"{type(e).__name__}: {e}",
+                                "at": page.url,
+                            })
                             continue
             except Exception as e:
                 errors.append(f"spa navigation probe: {type(e).__name__}: {e}")
