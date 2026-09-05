@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-05T23:07:52+09:00",
+  "generatedAt": "2026-09-06T00:07:35+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T23:07:52+09:00",
+    "generatedAt": "2026-09-06T00:07:35+09:00",
     "official": {
-      "datasetCount": 19237,
+      "datasetCount": 19238,
       "officialIdCount": 18184,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -176,7 +176,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -289,12 +289,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T23:08:07+09:00",
+      "baselineAt": "2026-09-05T00:07:59+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19237,
-          "baseline": 19239,
-          "changeRatio": -0.0001
+          "current": 19238,
+          "baseline": 19233,
+          "changeRatio": 0.0003
         },
         "official.officialIdCount": {
           "current": 18184,
@@ -303,18 +303,18 @@
         },
         "unified.publishedJobs": {
           "current": 7597,
-          "baseline": 4942,
-          "changeRatio": 0.5372
+          "baseline": 3567,
+          "changeRatio": 1.1298
         },
         "unified.officialDisplayed": {
           "current": 3134,
-          "baseline": 3424,
-          "changeRatio": -0.0847
+          "baseline": 3127,
+          "changeRatio": 0.0022
         },
         "unified.privateDiscovered": {
           "current": 4475,
-          "baseline": 1533,
-          "changeRatio": 1.9191
+          "baseline": 452,
+          "changeRatio": 8.9004
         }
       },
       "privateSources": {
