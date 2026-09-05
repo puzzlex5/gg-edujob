@@ -23,6 +23,44 @@
     window.addEventListener('resize',fitNav,{passive:true});fitNav();
   }
 
+  // Search results must open the exact posting, not a source's generic list page.
+  // Reconstruct known private-source detail URLs from stable identities when needed,
+  // and refuse a list/home fallback for those sources if no exact detail identity exists.
+  const basePostingLink=typeof postingLink==='function'?postingLink:null;
+  const sidText=j=>String(j?.sourceIdentity||'');
+  const knownPrivate=j=>/^(?:artmore|jobteacher|gonggonggangsa|culture:id|board):/.test(sidText(j))||['아트모아','잡티처','공공강사','레슨인포'].includes(String(j?.source||''));
+  const validPrivateCandidate=(j,raw)=>{
+    if(!raw)return '';
+    try{
+      const u=new URL(String(raw),location.href),sid=sidText(j),src=String(j?.source||'');
+      if(sid.startsWith('artmore:')||src==='아트모아')return /\/sub\/recruit\/search_view\.do$/.test(u.pathname)&&/^\d+$/.test(u.searchParams.get('rec_idx')||'')?u.href:'';
+      if(sid.startsWith('jobteacher:')||src==='잡티처')return /\/employ\/detail\/\d+\/?$/.test(u.pathname)?u.href:'';
+      if(sid.startsWith('gonggonggangsa:')||src==='공공강사')return /\/recruitments\/\d+\/?$/.test(u.pathname)?u.href:'';
+      if(sid.startsWith('culture:id:')||src==='레슨인포'){
+        if(/\/culture-jobs\/detail\.php$/.test(u.pathname)&&/^\d+$/.test(u.searchParams.get('id')||''))return u.href;
+        if(/\/board\/board\.php$/.test(u.pathname)&&u.searchParams.get('bo_table')&&/^\d+$/.test(u.searchParams.get('wr_no')||''))return u.href;
+        return '';
+      }
+    }catch(e){}
+    return '';
+  };
+  const reconstructedPrivateDetail=j=>{
+    const sid=sidText(j),candidates=[j?.detailUrl,j?.originalUrl,j?.openUrl,j?.url];
+    for(const raw of candidates){const valid=validPrivateCandidate(j,raw);if(valid)return valid}
+    let m=sid.match(/^artmore:(\d+)$/);if(m)return `https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=${m[1]}`;
+    m=sid.match(/^jobteacher:(\d+)$/);if(m)return `https://www.jobteacher.kr/employ/detail/${m[1]}`;
+    m=sid.match(/^gonggonggangsa:(\d+)$/);if(m)return `https://00gangsa.com/recruitments/${m[1]}`;
+    m=sid.match(/^culture:id:(\d+)$/);if(m)return `https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=${m[1]}`;
+    m=sid.match(/^board:([^:]+):(\d+)$/);if(m)return `https://www.lessoninfo.co.kr/board/board.php?bo_table=${encodeURIComponent(m[1])}&wr_no=${m[2]}`;
+    return '';
+  };
+  if(basePostingLink){
+    postingLink=function(j){
+      if(j?.feedKind==='private'&&knownPrivate(j))return reconstructedPrivateDetail(j);
+      return basePostingLink(j);
+    };
+  }
+
   const bp=900;
   const panel=document.querySelector('.filter-panel');if(!panel)return;
   const head=panel.querySelector('.filter-head');if(!head)return;
