@@ -8,6 +8,7 @@ on:
     paths:
       - 'scripts/probe_hunjang_browser.py'
       - 'scripts/probe_hunjang_public_bundles.py'
+      - 'scripts/probe_hunjang_public_routes.py'
       - 'scripts/harden_hunjang_probe_gate.py'
       - 'scripts/summarize_hunjang_probe.py'
       - '.github/workflows/probe-hunjang.yml'
@@ -37,6 +38,8 @@ jobs:
         run: python scripts/probe_hunjang_browser.py
       - name: Inspect public Hunjang JS bundle API hints
         run: python scripts/probe_hunjang_public_bundles.py
+      - name: Inventory rendered public recruitment routes
+        run: python scripts/probe_hunjang_public_routes.py
       - name: Enforce general recruitment-list evidence gate
         run: python scripts/harden_hunjang_probe_gate.py
       - name: Write compact probe summary
@@ -55,6 +58,9 @@ jobs:
           fi
           if [ -f hunjang_bundle_probe.json ]; then
             git add hunjang_bundle_probe.json
+          fi
+          if [ -f hunjang_public_route_probe.json ]; then
+            git add hunjang_public_route_probe.json
           fi
           if git diff --cached --quiet; then
             exit 0
