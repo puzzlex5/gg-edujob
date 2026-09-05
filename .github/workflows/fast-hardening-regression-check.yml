@@ -1,0 +1,60 @@
+name: Fast hardening regression check
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/harden_seoul_registration_dates.py'
+      - 'scripts/harden_network_retries.py'
+      - 'scripts/scrape_jobs.py'
+      - 'scripts/complete_support_coverage.py'
+      - '.github/workflows/fast-hardening-regression-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hardening:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Current parser shape must pass Seoul hardening
+        run: python scripts/harden_seoul_registration_dates.py
+
+      - name: Exact fast hardening chain must complete
+        run: python scripts/harden_network_retries.py
+
+      - name: Compile hardened collectors
+        run: python -m py_compile scripts/harden_seoul_registration_dates.py scripts/harden_network_retries.py scripts/scrape_jobs.py scripts/complete_support_coverage.py
+
+      - name: Unknown last-date fallback must fail closed
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp scripts/scrape_jobs.py /tmp/scrape_jobs.safe.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/scrape_jobs.py')
+          s=p.read_text(encoding='utf-8')
+          marker='def scrape_seoul_office(src):\n'
+          if marker not in s:
+              raise SystemExit('Seoul office function marker missing')
+          unsafe='    registered = ds[ -1 ] if len(ds) > 0 else ""  # regression fixture\n'
+          p.write_text(s.replace(marker, marker+unsafe, 1), encoding='utf-8')
+          PY
+          set +e
+          python scripts/harden_seoul_registration_dates.py >/tmp/unsafe.out 2>&1
+          rc=$?
+          set -e
+          cat /tmp/unsafe.out
+          cp /tmp/scrape_jobs.safe.py scripts/scrape_jobs.py
+          if [ "$rc" -eq 0 ]; then
+            echo 'unsafe last-date fallback was not rejected' >&2
+            exit 1
+          fi
+          python scripts/harden_seoul_registration_dates.py
