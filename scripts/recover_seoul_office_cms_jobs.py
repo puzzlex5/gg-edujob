@@ -9,6 +9,7 @@ posting URL is already present; title/date similarity is never used as automatic
 import hashlib
 import json
 import re
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
@@ -122,6 +123,24 @@ def is_recovered_status_notice(job):
     return str(job.get("id", "")).startswith("sen-office-cms-") and bool(EXCLUDE_RE.search(clean(job.get("title", ""))))
 
 
+def should_skip_existing(job, existing_urls):
+    """Only an identical persistent posting URL is sufficient deduplication evidence here."""
+    return bool(job.get("url")) and job["url"] in existing_urls
+
+
+def self_test():
+    existing = {"https://example.sen.go.kr/CMS/recruit/recruit01/1234567_9999.html"}
+    same_url = {"url": next(iter(existing)), "title": "기간제교원 채용", "registered": "2026/09/05"}
+    same_text_different_url = {
+        "url": "https://example.sen.go.kr/CMS/recruit/recruit01/1234568_9999.html",
+        "title": "기간제교원 채용",
+        "registered": "2026/09/05",
+    }
+    assert should_skip_existing(same_url, existing)
+    assert not should_skip_existing(same_text_different_url, existing)
+    print("Seoul CMS stable-URL dedup self-test passed")
+
+
 def main():
     if not JOBS.exists() or not REPORT.exists():
         raise SystemExit("jobs.json or board_discovery_report.json missing")
@@ -141,7 +160,7 @@ def main():
                 continue
             # A different persistent CMS detail URL is independent evidence of a different posting.
             # Do not collapse two postings merely because title/date text happens to match.
-            if job["url"] in existing_urls:
+            if should_skip_existing(job, existing_urls):
                 skipped.append({"office": office, "url": job["url"], "reason": "already-present-url"})
                 continue
             jobs.append(job); accepted.append(job)
@@ -163,4 +182,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--self-test" in sys.argv:
+        self_test()
+    else:
+        main()
