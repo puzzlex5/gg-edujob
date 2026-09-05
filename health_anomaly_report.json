@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-05T22:07:20+09:00",
+  "generatedAt": "2026-09-05T23:07:52+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T22:07:20+09:00",
+    "generatedAt": "2026-09-05T23:07:52+09:00",
     "official": {
-      "datasetCount": 19238,
+      "datasetCount": 19237,
       "officialIdCount": 18184,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7594,
-      "officialDisplayed": 3131,
+      "publishedJobs": 7597,
+      "officialDisplayed": 3134,
       "privateDisplayed": 4463,
       "privateDiscovered": 4475,
       "officialPrivateAliases": 12,
@@ -176,7 +176,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -289,27 +289,27 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T22:07:57+09:00",
+      "baselineAt": "2026-09-04T23:08:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19238,
-          "baseline": 19236,
-          "changeRatio": 0.0001
+          "current": 19237,
+          "baseline": 19239,
+          "changeRatio": -0.0001
         },
         "official.officialIdCount": {
           "current": 18184,
-          "baseline": 18099,
-          "changeRatio": 0.0047
+          "baseline": 18194,
+          "changeRatio": -0.0005
         },
         "unified.publishedJobs": {
-          "current": 7594,
-          "baseline": 4938,
-          "changeRatio": 0.5379
+          "current": 7597,
+          "baseline": 4942,
+          "changeRatio": 0.5372
         },
         "unified.officialDisplayed": {
-          "current": 3131,
-          "baseline": 3420,
-          "changeRatio": -0.0845
+          "current": 3134,
+          "baseline": 3424,
+          "changeRatio": -0.0847
         },
         "unified.privateDiscovered": {
           "current": 4475,
