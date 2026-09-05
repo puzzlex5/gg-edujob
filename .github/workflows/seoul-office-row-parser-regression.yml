@@ -1,0 +1,76 @@
+name: Seoul office row parser regression
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/harden_seoul_office_row_parser.py'
+      - 'scripts/scrape_jobs.py'
+      - '.github/workflows/seoul-office-row-parser-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/harden_seoul_office_row_parser.py'
+      - 'scripts/scrape_jobs.py'
+      - '.github/workflows/seoul-office-row-parser-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Apply idempotent Seoul parser hardening
+        run: python scripts/harden_seoul_office_row_parser.py
+      - name: Compile scraper
+        run: python -m py_compile scripts/scrape_jobs.py scripts/harden_seoul_office_row_parser.py
+      - name: Regression fixture - detail anchor beats longer school anchor and dates map by header
+        run: |
+          python - <<'PY'
+          from bs4 import BeautifulSoup
+          import scripts.scrape_jobs as s
+          html = '''<table><thead><tr><th>번호</th><th>학교명</th><th>제목</th><th>직종</th><th>등록일</th><th>마감일</th></tr></thead><tbody><tr><td>1</td><td><a href="/school">아주아주긴학교기관명초등학교</a></td><td><a href="#" onclick="fncDetailView('5593');">기간제교원 채용 공고</a></td><td>기간제교원</td><td>2026.09.05</td><td>2026.09.10</td></tr></tbody></table>'''
+          soup = BeautifulSoup(html, 'html.parser')
+          table = soup.table; tr = table.tbody.tr
+          assert s.seoul_seq_from_row(tr) == '5593'
+          a = s.seoul_detail_anchor_for_seq(tr, '5593')
+          assert s.clean(a.get_text(' ', strip=True)) == '기간제교원 채용 공고'
+          vals = s.seoul_row_values(table, tr)
+          assert s.date_norm(s.first_of(vals, ['등록일','작성일'])) == '2026/09/05'
+          assert s.date_norm(s.first_of(vals, ['마감일','접수마감일'])) == '2026/09/10'
+          print('fixture ok')
+          PY
+      - name: Fail if generated hardening is not idempotent
+        run: |
+          before=$(sha256sum scripts/scrape_jobs.py | cut -d' ' -f1)
+          python scripts/harden_seoul_office_row_parser.py
+          after=$(sha256sum scripts/scrape_jobs.py | cut -d' ' -f1)
+          test "$before" = "$after"
+      - name: Persist hardened parser on main only
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if git diff --quiet -- scripts/scrape_jobs.py; then
+            echo 'scraper already hardened'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/scrape_jobs.py
+          git commit -m 'Harden Seoul office detail-row parsing'
+          for n in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((n * 5))
+          done
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main || {
+            echo 'parser hardening commit was not published to main' >&2
+            exit 1
+          }
