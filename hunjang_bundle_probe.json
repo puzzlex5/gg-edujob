@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-09-05T15:15:37+09:00",
+  "source": "훈장마을",
+  "publiclyReachable": true,
+  "humanVerificationDetected": false,
+  "scriptCount": 15,
+  "scriptsWithRecruitApiHints": 1,
+  "observedRecruitApiStrings": [
+    "/hunApi/academy/recruitMng/getCheckRegistRecruitCount"
+  ],
+  "generalListApiStringCandidates": [
+    "/hunApi/academy/recruitMng/getCheckRegistRecruitCount"
+  ],
+  "findings": [
+    {
+      "scriptUrl": "https://www.hunjang.com/assets/index.27e07b8b.js",
+      "status": 200,
+      "apiCandidates": [
+        "/hunApi/academy/recruitMng/getCheckRegistRecruitCount"
+      ]
+    }
+  ],
+  "errors": [],
+  "safety": {
+    "tlsVerificationDisabled": false,
+    "authenticationBypassed": false,
+    "captchaBypassed": false,
+    "publicationAttempted": false
+  },
+  "nextGate": "Treat bundle strings only as discovery hints. A candidate qualifies only after the rendered public recruitment view actually emits the request and pagination proves changing stable IDs plus an exhaustion boundary."
+}
