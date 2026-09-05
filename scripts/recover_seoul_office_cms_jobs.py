@@ -2,8 +2,10 @@
 """Recover official Seoul support-office recruitment detail posts that live outside FUS/JOL11.
 
 This is deliberately conservative: it only accepts recent official same-host CMS detail pages
-already surfaced by board_discovery_report.json, requires explicit recruitment language, and
-rejects result/status/personnel notices. Existing jobs always win.
+surfaced by either the general board discovery or the verified deep CMS list traversal, requires
+explicit recruitment language, and rejects result/status/personnel notices. Existing jobs always
+win. The deep discovery is an alternative board surface of an existing support office, not a new
+conceptual official source.
 """
 import hashlib
 import json
@@ -20,25 +22,25 @@ from urllib3.util.retry import Retry
 ROOT = Path(__file__).resolve().parents[1]
 JOBS = ROOT / "jobs.json"
 REPORT = ROOT / "board_discovery_report.json"
+DEEP_REPORT = ROOT / "seoul_cms_deep_discovery_report.json"
 OUT_REPORT = ROOT / "seoul_office_cms_recovery_report.json"
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 
 DETAIL_RE = re.compile(r"/CMS/.+/\d+_\d+\.html$", re.I)
-RECRUIT_RE = re.compile(r"채용|구인|모집|기간제|계약제|전문상담사|교육공무직|대체인력|대체직원|근로자", re.I)
+RECRUIT_RE = re.compile(r"채용|구인|모집|기간제|계약제|전문상담사|교육공무직|대체인력|대체직원|근로자|업무보조원|인력풀|강사|교원|교사|전담조사관", re.I)
 # Status/result notices often contain the word '채용' but are not recruitment opportunities.
-# Keep this deliberately broad: preserving a genuine opening is less important than avoiding
-# expired/procedural notices masquerading as active jobs in this supplemental recovery path.
+# Keep status phrases specific enough that recruitment notices mentioning 서류 제출 are not lost.
 EXCLUDE_RE = re.compile(
-    r"합격|응시현황|응시원서\s*접수\s*현황|원서\s*접수\s*현황|접수\s*현황|"
-    r"서류전형|면접대상|면접\s*대상|채용결과|선정결과|최종\s*결과|"
-    r"인사발령|보도자료|경쟁률|접수인원|응시인원",
+    r"합격자|합격\s*명단|명단\s*공개|응시\s*현황|응시원서\s*접수\s*현황|원서\s*접수\s*현황|접수\s*현황|"
+    r"서류\s*(?:심사|전형)\s*(?:합격|결과|대상)?|면접\s*(?:대상|일정|결과)|채용\s*(?:결과|완료|취소)|"
+    r"선정\s*결과|최종\s*결과|인사발령|보도자료|경쟁률|접수\s*인원|응시\s*인원",
     re.I,
 )
 DATE_RE = re.compile(r"(20\d{2})[./-]\s*(\d{1,2})[./-]\s*(\d{1,2})")
 
 S = requests.Session()
-S.headers.update({"User-Agent": "Mozilla/5.0 (compatible; metro-edujob-seoul-cms-recovery/1.0)", "Accept-Language": "ko-KR,ko;q=0.9"})
+S.headers.update({"User-Agent": "Mozilla/5.0 (compatible; metro-edujob-seoul-cms-recovery/1.1)", "Accept-Language": "ko-KR,ko;q=0.9"})
 retry = Retry(total=3, connect=3, read=3, status=3, backoff_factor=0.8,
               status_forcelist=(408,429,500,502,503,504), allowed_methods=frozenset(("GET",)),
               respect_retry_after_header=True, raise_on_status=False)
@@ -69,8 +71,8 @@ def recent(ds):
 
 
 def guess_type(text):
-    if re.search(r"교육공무직|대체직원|대체인력|근로자|조리실무", text): return "교육공무직/기간제근로자"
-    if re.search(r"강사|튜터", text): return "시간강사/강사"
+    if re.search(r"교육공무직|대체직원|대체인력|근로자|조리실무|업무보조원", text): return "교육공무직/기간제근로자"
+    if re.search(r"강사|튜터|조사관", text): return "시간강사/강사"
     if re.search(r"기간제|계약제|교원|교사|전문상담", text): return "기간제교원"
     return "기타"
 
@@ -105,7 +107,9 @@ def fetch_job(office, item):
         m = re.search(pat, body)
         if m: registered = date_norm(m.group(1)); break
     if not registered:
-        registered = date_norm(body)
+        # Deep-list discovery supplies posting-specific list dates. Use them only when the detail
+        # page has no explicit registered/written label; never use crawl time as a substitute.
+        registered = date_norm(item.get("registered", "")) or date_norm(body)
     if not recent(registered):
         return None, "not-recent"
     return {
@@ -116,7 +120,7 @@ def fetch_job(office, item):
         "applyStart": "", "applyEnd": "", "workStart": "", "workEnd": "",
         "registered": registered, "headcount": "", "source": office,
         "checkedSources": [office], "sourceType": "교육지원청 자체 채용공고",
-        "url": url, "boardUrl": url
+        "url": url, "boardUrl": item.get("boardUrl") or url
     }, "accepted"
 
 
@@ -125,18 +129,70 @@ def is_recovered_status_notice(job):
     return str(job.get("id", "")).startswith("sen-office-cms-") and bool(EXCLUDE_RE.search(clean(job.get("title", ""))))
 
 
+def load_json(path):
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def discovered_offices():
+    """Merge shallow and deep discovery candidates by exact detail URL, preserving office identity."""
+    merged = {}
+    inputs = []
+    shallow = load_json(REPORT)
+    if shallow:
+        inputs.append(REPORT.name)
+        for office_row in shallow.get("seoul", []):
+            office = office_row.get("name", "")
+            if not office:
+                continue
+            bucket = merged.setdefault(office, {})
+            for item in office_row.get("candidates", []):
+                url = item.get("url", "")
+                if url:
+                    bucket.setdefault(url, dict(item))
+
+    deep = load_json(DEEP_REPORT)
+    if deep:
+        inputs.append(DEEP_REPORT.name)
+        if not deep.get("healthy"):
+            raise SystemExit("deep Seoul CMS discovery is unhealthy; refusing supplemental recovery")
+        for office_row in deep.get("seoul", []):
+            office = office_row.get("name", "")
+            if not office:
+                continue
+            bucket = merged.setdefault(office, {})
+            for item in office_row.get("candidates", []):
+                url = item.get("url", "")
+                if not url:
+                    continue
+                enriched = dict(item)
+                enriched.setdefault("boardUrl", office_row.get("boardUrl", ""))
+                bucket[url] = enriched
+
+    return [
+        {"name": office, "candidates": list(items.values())}
+        for office, items in sorted(merged.items())
+    ], inputs
+
+
 def main():
-    if not JOBS.exists() or not REPORT.exists():
-        raise SystemExit("jobs.json or board_discovery_report.json missing")
+    if not JOBS.exists():
+        raise SystemExit("jobs.json missing")
+    office_rows, discovery_inputs = discovered_offices()
+    if not office_rows:
+        raise SystemExit("no Seoul CMS discovery evidence available")
     payload = json.loads(JOBS.read_text(encoding="utf-8"))
-    report = json.loads(REPORT.read_text(encoding="utf-8"))
     original_jobs = payload.get("jobs", [])
     removed = [j for j in original_jobs if is_recovered_status_notice(j)]
     jobs = [j for j in original_jobs if not is_recovered_status_notice(j)]
     existing_urls = {j.get("url", "") for j in jobs}
     existing_semantic = {(norm(j.get("title", "")), j.get("registered", "")) for j in jobs}
     accepted, skipped = [], []
-    for office_row in report.get("seoul", []):
+    for office_row in office_rows:
         office = office_row.get("name", "")
         for item in office_row.get("candidates", []):
             job, reason = fetch_job(office, item)
@@ -153,16 +209,17 @@ def main():
         jobs.sort(key=lambda j: (j.get("registered", ""), j.get("applyEnd", "")), reverse=True)
         payload["jobs"] = jobs
         payload.setdefault("verification", {})["seoulOfficeCmsRecovery"] = {
-            "added": len(accepted), "removedStatusNotices": len(removed), "state": "pending-verification"
+            "added": len(accepted), "removedStatusNotices": len(removed), "state": "pending-verification",
+            "discoveryInputs": discovery_inputs,
         }
         JOBS.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     result = {"generatedAt": NOW.isoformat(timespec="seconds"), "added": len(accepted),
-              "removedStatusNotices": len(removed),
+              "removedStatusNotices": len(removed), "discoveryInputs": discovery_inputs,
               "removed": [{k:v for k,v in j.items() if k in ("source","title","registered","url")} for j in removed],
               "accepted": [{k:v for k,v in j.items() if k in ("source","title","registered","url")} for j in accepted],
-              "skippedCount": len(skipped), "skipped": skipped[:200]}
+              "skippedCount": len(skipped), "skipped": skipped[:300]}
     OUT_REPORT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Seoul office CMS recovery: added={len(accepted)} removed_status={len(removed)} skipped={len(skipped)}")
+    print(f"Seoul office CMS recovery: added={len(accepted)} removed_status={len(removed)} skipped={len(skipped)} inputs={discovery_inputs}")
 
 
 if __name__ == "__main__":
