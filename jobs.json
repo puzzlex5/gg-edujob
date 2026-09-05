@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05 21:24 KST",
+  "updatedAt": "2026-09-05 23:23 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-05 23:18 KST",
+    "checkedAt": "2026-09-05 23:54 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7575,
-      "resolved": 7575,
+      "total": 7576,
+      "resolved": 7576,
       "unresolved": 0,
       "examples": []
     },
@@ -1031,7 +1031,7 @@
       ]
     },
     "previousTotal": 19237,
-    "currentTotal": 19237
+    "currentTotal": 19238
   },
   "jobs": [
     {
@@ -36457,7 +36457,9 @@
       ],
       "sourceType": "교육지원청 자체 채용공고",
       "url": "https://gnscedu.sen.go.kr/CMS/openedu/openedu02/openedu0201/1358841_3667.html",
-      "boardUrl": "https://gnscedu.sen.go.kr/CMS/openedu/openedu02/openedu0201/1358841_3667.html"
+      "boardUrl": "https://gnscedu.sen.go.kr/CMS/openedu/openedu02/openedu0201/1358841_3667.html",
+      "recoveryCarryForward": true,
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-office-cms-7718a410bfa903299e46",
@@ -36481,7 +36483,9 @@
       ],
       "sourceType": "교육지원청 자체 채용공고",
       "url": "http://nbedu.sen.go.kr/CMS/admininfo/admininfo01/admininfo0102/1358849_4146.html",
-      "boardUrl": "http://nbedu.sen.go.kr/CMS/admininfo/admininfo01/admininfo0102/1358849_4146.html"
+      "boardUrl": "http://nbedu.sen.go.kr/CMS/admininfo/admininfo01/admininfo0102/1358849_4146.html",
+      "recoveryCarryForward": true,
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109393",
@@ -63344,7 +63348,9 @@
       ],
       "sourceType": "교육지원청 자체 채용공고",
       "url": "http://nbedu.sen.go.kr/CMS/admininfo/admininfo01/admininfo0102/1358718_4146.html",
-      "boardUrl": "http://nbedu.sen.go.kr/CMS/admininfo/admininfo01/admininfo0102/1358718_4146.html"
+      "boardUrl": "http://nbedu.sen.go.kr/CMS/admininfo/admininfo01/admininfo0102/1358718_4146.html",
+      "recoveryCarryForward": true,
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109107",
@@ -152095,6 +152101,37 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office2-ca5ecba43ea6a22378",
+      "province": "경기",
+      "school": "초등학교",
+      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+      "subject": "",
+      "region": "시흥시",
+      "regions": [
+        "시흥시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/08/18",
+      "headcount": "",
+      "source": "시흥교육지원청",
+      "checkedSources": [
+        "시흥교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
+      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
+      "detailLinkResolved": true,
+      "nttSn": "527414",
+      "bbsId": "5511",
+      "mi": "9003",
+      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -534176,7 +534213,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-05 21:53 KST",
+      "checkedAt": "2026-09-05 23:48 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
@@ -534187,42 +534224,42 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-05 23:16 KST",
+    "checkedAt": "2026-09-05 23:53 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-05 23:16 KST",
+    "checkedAt": "2026-09-05 23:53 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 16872,
-    "previousCount": 19234,
-    "mergedCount": 19231,
-    "carriedForward": 2359,
+    "previousCount": 19237,
+    "mergedCount": 19234,
+    "carriedForward": 2362,
     "officialIdProtected": 18184,
     "officialIdCarryForward": 1313,
     "enrichedFromPrevious": 7209,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-05 21:58 KST"
+    "generatedAt": "2026-09-05 23:52 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 7050,
-    "gyeonggiTotal": 7050,
+    "gyeonggiExact": 7051,
+    "gyeonggiTotal": 7051,
     "seoulExact": 525,
     "seoulTotal": 525
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-05 23:16 KST",
+    "checkedAt": "2026-09-05 23:52 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6217,
+    "recentSupportJobs": 6218,
     "detailPagesParsed": 2576,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1093,
-    "missingWorkPeriod": 2068,
+    "missingApplicationPeriod": 1094,
+    "missingWorkPeriod": 2069,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-05 23:16 KST",
+      "checkedAt": "2026-09-05 23:52 KST",
       "candidates": 249,
       "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
@@ -534232,26 +534269,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "sourceReconciliation": {
-    "generatedAt": "2026-09-05 22:42:39 KST",
-    "lookbackDays": 90,
-    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 18184,
-    "datasetIdCountBefore": 19220,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "reconciledOffices": 38,
-    "totalOffices": 38
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-05 23:16:42 KST",
-    "protectedOfficialIds": 18184,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
   }
 }
