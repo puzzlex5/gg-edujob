@@ -40,7 +40,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 25,
+        "viewCnt": 26,
         "scrapCnt": 0
       },
       "fields": [
@@ -124,7 +124,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 130,
+        "viewCnt": 132,
         "scrapCnt": 5
       },
       "fields": [
@@ -272,7 +272,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 15,
+        "viewCnt": 16,
         "scrapCnt": 0
       },
       "fields": [
@@ -356,7 +356,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 23,
+        "viewCnt": 24,
         "scrapCnt": 0
       },
       "fields": [
@@ -444,7 +444,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 14,
+        "viewCnt": 15,
         "scrapCnt": 0
       },
       "fields": [
@@ -528,7 +528,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 19,
+        "viewCnt": 20,
         "scrapCnt": 0
       },
       "fields": [
@@ -612,7 +612,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 16,
+        "viewCnt": 17,
         "scrapCnt": 0
       },
       "fields": [
@@ -696,7 +696,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 14,
+        "viewCnt": 15,
         "scrapCnt": 0
       },
       "fields": [
@@ -780,7 +780,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 14,
+        "viewCnt": 15,
         "scrapCnt": 0
       },
       "fields": [
@@ -817,6 +817,141 @@
       "preferred": null,
       "workDetailAddress": null,
       "workSchedules": [],
+      "scrapId": null,
+      "isScrap": false,
+      "hasCurriculum": null,
+      "isAd": false
+    }
+  },
+  {
+    "sourceIdentity": "gonggonggangsa:23436",
+    "source": "공공강사",
+    "sourceType": "민간 구인",
+    "sourceSurface": "public-instructor",
+    "sourceSurfaceLabel": "공공강사",
+    "province": "경기",
+    "provinces": [
+      "경기"
+    ],
+    "region": "양주시",
+    "regions": [
+      "양주시"
+    ],
+    "location": "경기 양주시",
+    "school": "뉴팀즈",
+    "title": "(양주_주 5일_자격증반) 「컴퓨터활용능력 2급 실기 대비반」",
+    "subject": "자격증 취득과정",
+    "type": "시간강사/강사",
+    "applyStart": "2026-09-04",
+    "applyEnd": "2026-09-08",
+    "registered": "2026-09-04",
+    "url": "https://00gangsa.com/recruitments/23436",
+    "boardUrl": "https://00gangsa.com/recruitments",
+    "openUrl": "https://00gangsa.com/recruitments/23436",
+    "openMethod": "GET",
+    "stableSourceId": "23436",
+    "sourceState": "RECRUITING",
+    "raw": {
+      "id": 23436,
+      "type": "PROVIDER_SUBMIT",
+      "state": "RECRUITING",
+      "title": "(양주_주 5일_자격증반) 「컴퓨터활용능력 2급 실기 대비반」",
+      "description": null,
+      "institution": {
+        "id": 70,
+        "name": "뉴팀즈",
+        "email": "hyunjin@newteamz.com",
+        "phoneNumber": "01055567474"
+      },
+      "counts": {
+        "viewCnt": 0,
+        "scrapCnt": 0
+      },
+      "fields": [
+        {
+          "id": 301,
+          "name": "자격증 취득과정"
+        }
+      ],
+      "regions": [
+        {
+          "province": {
+            "id": 2,
+            "isAll": false,
+            "name": "경기"
+          },
+          "city": {
+            "id": 45,
+            "isAll": false,
+            "name": "양주시"
+          }
+        }
+      ],
+      "recruitmentAt": "2026-09-04 10:25:12",
+      "deadlineAt": "2026-09-08 23:59:59",
+      "deadlineDay": 3,
+      "recruitCount": 1,
+      "applicationGender": "A",
+      "applicationMinAge": 25,
+      "applicationMaxAge": 50,
+      "applicationEducation": "ANY",
+      "managerName": "노현진",
+      "managerPhoneNumber": "01055567474",
+      "managerEmail": "hyunjin@newteamz.com",
+      "preferred": "컴퓨터활용능력 2급 실기 시험 대비\n엑셀 주요 기능 및 출제 유형 학습\n기출·예상문제 풀이 및 실전 실습\n시험 대비 핵심 포인트 및 문제풀이 전략\n\n■ 모집 강사\n컴퓨터활용능력 2급 실기 강의가 가능한 강사\n관련 자격증 강의 및 시험 대비 교육 경험자 우대\n5일 전체 일정 진행 가능자 우대",
+      "workDetailAddress": null,
+      "workSchedules": [
+        {
+          "id": 214,
+          "startDate": "2026-10-12",
+          "endDate": "2026-10-16",
+          "day": "TUE",
+          "startTime": "14:00:00",
+          "endTime": "17:00:00",
+          "paymentType": "MONTHLY",
+          "paymentAmount": 1200000
+        },
+        {
+          "id": 215,
+          "startDate": "2026-10-12",
+          "endDate": "2026-10-16",
+          "day": "WED",
+          "startTime": "14:00:00",
+          "endTime": "17:00:00",
+          "paymentType": "MONTHLY",
+          "paymentAmount": 1200000
+        },
+        {
+          "id": 216,
+          "startDate": "2026-10-12",
+          "endDate": "2026-10-16",
+          "day": "THU",
+          "startTime": "14:00:00",
+          "endTime": "17:00:00",
+          "paymentType": "MONTHLY",
+          "paymentAmount": 1200000
+        },
+        {
+          "id": 217,
+          "startDate": "2026-10-12",
+          "endDate": "2026-10-16",
+          "day": "FRI",
+          "startTime": "14:00:00",
+          "endTime": "17:00:00",
+          "paymentType": "MONTHLY",
+          "paymentAmount": 1200000
+        },
+        {
+          "id": 218,
+          "startDate": "2026-10-12",
+          "endDate": "2026-10-16",
+          "day": "MON",
+          "startTime": "14:00:00",
+          "endTime": "17:00:00",
+          "paymentType": "MONTHLY",
+          "paymentAmount": 1200000
+        }
+      ],
       "scrapId": null,
       "isScrap": false,
       "hasCurriculum": null,
@@ -864,7 +999,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 13,
+        "viewCnt": 14,
         "scrapCnt": 0
       },
       "fields": [
@@ -948,7 +1083,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 16,
+        "viewCnt": 17,
         "scrapCnt": 0
       },
       "fields": [
@@ -1032,7 +1167,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 23,
+        "viewCnt": 24,
         "scrapCnt": 1
       },
       "fields": [
@@ -1116,7 +1251,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 13,
+        "viewCnt": 14,
         "scrapCnt": 0
       },
       "fields": [
@@ -1204,7 +1339,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 16,
+        "viewCnt": 17,
         "scrapCnt": 0
       },
       "fields": [
@@ -1289,7 +1424,7 @@
         "phoneNumber": "01029062506"
       },
       "counts": {
-        "viewCnt": 34,
+        "viewCnt": 35,
         "scrapCnt": 0
       },
       "fields": [
@@ -1400,7 +1535,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 28,
+        "viewCnt": 29,
         "scrapCnt": 0
       },
       "fields": [
@@ -1484,7 +1619,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 37,
+        "viewCnt": 38,
         "scrapCnt": 0
       },
       "fields": [
@@ -1576,7 +1711,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 18,
+        "viewCnt": 19,
         "scrapCnt": 0
       },
       "fields": [
@@ -1660,7 +1795,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 32,
+        "viewCnt": 33,
         "scrapCnt": 0
       },
       "fields": [
@@ -1752,7 +1887,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 28,
+        "viewCnt": 29,
         "scrapCnt": 0
       },
       "fields": [
@@ -1836,7 +1971,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 22,
+        "viewCnt": 23,
         "scrapCnt": 0
       },
       "fields": [
@@ -1920,7 +2055,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 19,
+        "viewCnt": 20,
         "scrapCnt": 0
       },
       "fields": [
@@ -2004,7 +2139,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 20,
+        "viewCnt": 21,
         "scrapCnt": 0
       },
       "fields": [
@@ -2088,7 +2223,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 54,
+        "viewCnt": 55,
         "scrapCnt": 2
       },
       "fields": [
@@ -2204,7 +2339,7 @@
         "phoneNumber": "01090863208"
       },
       "counts": {
-        "viewCnt": 27,
+        "viewCnt": 28,
         "scrapCnt": 0
       },
       "fields": [
@@ -2305,7 +2440,7 @@
         "phoneNumber": "01099022560"
       },
       "counts": {
-        "viewCnt": 59,
+        "viewCnt": 60,
         "scrapCnt": 0
       },
       "fields": [
@@ -2424,7 +2559,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 46,
+        "viewCnt": 47,
         "scrapCnt": 0
       },
       "fields": [
@@ -2508,7 +2643,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 20,
+        "viewCnt": 21,
         "scrapCnt": 0
       },
       "fields": [
@@ -2592,7 +2727,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 21,
+        "viewCnt": 22,
         "scrapCnt": 1
       },
       "fields": [
@@ -2676,7 +2811,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 17,
+        "viewCnt": 18,
         "scrapCnt": 0
       },
       "fields": [
@@ -2760,7 +2895,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 154,
+        "viewCnt": 155,
         "scrapCnt": 4
       },
       "fields": [
@@ -2868,7 +3003,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 23,
+        "viewCnt": 24,
         "scrapCnt": 0
       },
       "fields": [
@@ -2952,7 +3087,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 23,
+        "viewCnt": 24,
         "scrapCnt": 0
       },
       "fields": [
@@ -3036,7 +3171,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 34,
+        "viewCnt": 35,
         "scrapCnt": 0
       },
       "fields": [
@@ -3120,7 +3255,7 @@
         "phoneNumber": "01041545261"
       },
       "counts": {
-        "viewCnt": 108,
+        "viewCnt": 109,
         "scrapCnt": 3
       },
       "fields": [
@@ -3283,7 +3418,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 49,
+        "viewCnt": 50,
         "scrapCnt": 3
       },
       "fields": [
@@ -3367,7 +3502,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 34,
+        "viewCnt": 35,
         "scrapCnt": 0
       },
       "fields": [
@@ -3451,7 +3586,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 38,
+        "viewCnt": 39,
         "scrapCnt": 0
       },
       "fields": [
@@ -3535,7 +3670,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 41,
+        "viewCnt": 42,
         "scrapCnt": 2
       },
       "fields": [
@@ -3621,7 +3756,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 25,
+        "viewCnt": 26,
         "scrapCnt": 0
       },
       "fields": [
@@ -3717,7 +3852,7 @@
         "phoneNumber": "01093073545"
       },
       "counts": {
-        "viewCnt": 83,
+        "viewCnt": 84,
         "scrapCnt": 2
       },
       "fields": [
@@ -3832,7 +3967,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 30,
+        "viewCnt": 31,
         "scrapCnt": 0
       },
       "fields": [
@@ -3916,7 +4051,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 39,
+        "viewCnt": 40,
         "scrapCnt": 0
       },
       "fields": [
@@ -4000,7 +4135,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 90,
+        "viewCnt": 91,
         "scrapCnt": 3
       },
       "fields": [
@@ -4088,7 +4223,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 28,
+        "viewCnt": 29,
         "scrapCnt": 0
       },
       "fields": [
@@ -4172,7 +4307,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 66,
+        "viewCnt": 67,
         "scrapCnt": 1
       },
       "fields": [
@@ -4260,7 +4395,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 67,
+        "viewCnt": 68,
         "scrapCnt": 2
       },
       "fields": [
@@ -4348,7 +4483,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 73,
+        "viewCnt": 74,
         "scrapCnt": 1
       },
       "fields": [
@@ -4432,7 +4567,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 22,
+        "viewCnt": 23,
         "scrapCnt": 0
       },
       "fields": [
@@ -4516,7 +4651,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 56,
+        "viewCnt": 57,
         "scrapCnt": 1
       },
       "fields": [
@@ -4600,7 +4735,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 36,
+        "viewCnt": 37,
         "scrapCnt": 0
       },
       "fields": [
@@ -4688,7 +4823,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 59,
+        "viewCnt": 60,
         "scrapCnt": 2
       },
       "fields": [
@@ -4776,7 +4911,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 139,
+        "viewCnt": 140,
         "scrapCnt": 5
       },
       "fields": [
@@ -4860,7 +4995,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 67,
+        "viewCnt": 68,
         "scrapCnt": 1
       },
       "fields": [
@@ -4944,7 +5079,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 191,
+        "viewCnt": 192,
         "scrapCnt": 3
       },
       "fields": [
@@ -5028,7 +5163,7 @@
         "phoneNumber": null
       },
       "counts": {
-        "viewCnt": 200,
+        "viewCnt": 201,
         "scrapCnt": 5
       },
       "fields": [
