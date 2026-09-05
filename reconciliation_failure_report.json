@@ -1,0 +1,155 @@
+{
+  "generatedAt": "2026-09-06 00:24:17 KST",
+  "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files.",
+  "candidate": {
+    "reconciliation": {
+      "generatedAt": "2026-09-05 23:55:39 KST",
+      "lookbackDays": 90,
+      "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+      "officialIdCount": 18181,
+      "datasetIdCountBefore": 19220,
+      "missingBefore": 0,
+      "recoveredNow": 0,
+      "missingAfter": 0,
+      "reconciledSources": 38,
+      "totalSources": 38,
+      "reconciledOffices": 38,
+      "totalOffices": 38
+    },
+    "centralPagination": {
+      "generatedAt": "2026-09-06 00:20:08 KST",
+      "complete": true,
+      "sources": [
+        {
+          "name": "경기도교육청 통합 구인구직",
+          "province": "경기",
+          "stableIdCount": 651,
+          "complete": true,
+          "categories": [
+            {
+              "code": "A",
+              "name": "기간제/사립교원",
+              "pagesScanned": 5,
+              "rawRows": 201,
+              "stableIdCount": 200,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "B",
+              "name": "초중등시간강사",
+              "pagesScanned": 8,
+              "rawRows": 308,
+              "stableIdCount": 307,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "C",
+              "name": "교육공무직원",
+              "pagesScanned": 3,
+              "rawRows": 75,
+              "stableIdCount": 74,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "D",
+              "name": "사립학교 교원정규채용",
+              "pagesScanned": 2,
+              "rawRows": 11,
+              "stableIdCount": 10,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "E",
+              "name": "사립학교 사무직정규채용",
+              "pagesScanned": 2,
+              "rawRows": 4,
+              "stableIdCount": 3,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "F",
+              "name": "자원봉사자",
+              "pagesScanned": 3,
+              "rawRows": 58,
+              "stableIdCount": 57,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            }
+          ]
+        },
+        {
+          "name": "서울교육일자리포털",
+          "province": "서울",
+          "stableIdCount": 367,
+          "pagesScanned": 9,
+          "rawRows": 367,
+          "terminalEvidence": "empty-page",
+          "accessError": false,
+          "parseError": false,
+          "partialParseCards": 0,
+          "parseErrorSample": "",
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": true
+        }
+      ]
+    },
+    "gyeonggiCentral90d": {
+      "generatedAt": "2026-09-06 00:24:17 KST",
+      "stableIdCount": 10129,
+      "complete": true
+    },
+    "finalRestore": {
+      "checkedAt": "2026-09-05 23:16:42 KST",
+      "protectedOfficialIds": 18184,
+      "missingBefore": 0,
+      "recoveredNow": 0,
+      "missingAfter": 0
+    },
+    "sourceIdLedger": {
+      "generatedAt": "2026-09-05 23:55:39 KST",
+      "officialIdCount": 18181
+    }
+  }
+}
