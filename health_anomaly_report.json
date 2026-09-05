@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-05T16:07:27+09:00",
+  "generatedAt": "2026-09-05T17:08:29+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-05T16:07:27+09:00",
+    "generatedAt": "2026-09-05T17:08:29+09:00",
     "official": {
-      "datasetCount": 19232,
-      "officialIdCount": 18186,
+      "datasetCount": 19234,
+      "officialIdCount": 18185,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7599,
-      "officialDisplayed": 3129,
+      "publishedJobs": 7601,
+      "officialDisplayed": 3131,
       "privateDisplayed": 4470,
       "privateDiscovered": 4482,
       "officialPrivateAliases": 12,
@@ -144,8 +144,8 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1191,
-        "latestRegistered": "2026-09-04"
+        "count": 1193,
+        "latestRegistered": "2026-09-05"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
         "count": 2,
@@ -293,32 +293,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-04T16:08:21+09:00",
+      "baselineAt": "2026-09-04T17:09:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19232,
-          "baseline": 19169,
-          "changeRatio": 0.0033
+          "current": 19234,
+          "baseline": 19168,
+          "changeRatio": 0.0034
         },
         "official.officialIdCount": {
-          "current": 18186,
+          "current": 18185,
           "baseline": 18099,
           "changeRatio": 0.0048
         },
         "unified.publishedJobs": {
-          "current": 7599,
-          "baseline": 4790,
-          "changeRatio": 0.5864
+          "current": 7601,
+          "baseline": 4808,
+          "changeRatio": 0.5809
         },
         "unified.officialDisplayed": {
-          "current": 3129,
+          "current": 3131,
           "baseline": 3353,
-          "changeRatio": -0.0668
+          "changeRatio": -0.0662
         },
         "unified.privateDiscovered": {
           "current": 4482,
-          "baseline": 1452,
-          "changeRatio": 2.0868
+          "baseline": 1470,
+          "changeRatio": 2.049
         }
       },
       "privateSources": {
