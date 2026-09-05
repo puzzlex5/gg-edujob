@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-06 00:32 KST",
+    "checkedAt": "2026-09-06 01:21 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [
       {
@@ -1030,7 +1030,7 @@
         }
       ]
     },
-    "previousTotal": 19238,
+    "previousTotal": 19237,
     "currentTotal": 19237
   },
   "jobs": [
@@ -534193,11 +534193,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-06 00:31 KST",
+    "checkedAt": "2026-09-06 01:19 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-06 00:31 KST",
+    "checkedAt": "2026-09-06 01:19 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -534212,23 +534212,23 @@
     "generatedAt": "2026-09-05 23:52 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 7051,
-    "gyeonggiTotal": 7051,
+    "gyeonggiExact": 7050,
+    "gyeonggiTotal": 7050,
     "seoulExact": 525,
     "seoulTotal": 525
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-05 23:52 KST",
+    "checkedAt": "2026-09-06 01:19 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6218,
-    "detailPagesParsed": 2576,
+    "recentSupportJobs": 6085,
+    "detailPagesParsed": 2521,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1094,
-    "missingWorkPeriod": 2069,
+    "missingApplicationPeriod": 1061,
+    "missingWorkPeriod": 2016,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-05 23:52 KST",
+      "checkedAt": "2026-09-06 01:19 KST",
       "candidates": 249,
       "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
@@ -534240,10 +534240,24 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-06 00:31:52 KST",
-    "protectedOfficialIds": 18184,
+    "checkedAt": "2026-09-06 01:19:04 KST",
+    "protectedOfficialIds": 17816,
     "missingBefore": 0,
     "recoveredNow": 0,
     "missingAfter": 0
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-06 00:41:16 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17816,
+    "datasetIdCountBefore": 19220,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38
   }
 }
