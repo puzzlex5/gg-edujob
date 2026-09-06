@@ -79,6 +79,7 @@ jobs:
         if: always() && github.event_name != 'pull_request'
         run: |
           rm -f unified_jobs.next.json
+          git restore --worktree unified_search_report.json 2>/dev/null || true
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add boramyc_jobs.candidate.json boramyc_reconciliation_report.candidate.json 2>/dev/null || true
@@ -87,13 +88,25 @@ jobs:
           fi
           git diff --cached --quiet && exit 0
           git commit -m 'Update verified Boramae instructor jobs'
+          pushed=0
           for i in 1 2 3; do
-            git pull --rebase origin main && git push origin HEAD:main && break
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
             sleep $((i*5))
           done
-      - name: Clean PR artifacts
+          if [ "$pushed" -ne 1 ]; then
+            echo 'Boramae source artifacts were verified but could not be persisted to main' >&2
+            exit 1
+          fi
+      - name: Clean PR artifacts and verify disposable report cleanup
         if: always() && github.event_name == 'pull_request'
-        run: rm -f unified_jobs.next.json boramyc_jobs.json boramyc_reconciliation_report.json boramyc_jobs.candidate.json boramyc_reconciliation_report.candidate.json
+        run: |
+          rm -f unified_jobs.next.json boramyc_jobs.json boramyc_reconciliation_report.json boramyc_jobs.candidate.json boramyc_reconciliation_report.candidate.json
+          git restore --worktree unified_search_report.json 2>/dev/null || true
+          git diff --quiet -- unified_search_report.json
       - name: Fail after preserving diagnostics
         if: steps.collect.outcome != 'success'
         run: exit 1
