@@ -181,6 +181,77 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
           test -s gyeonggi_central_90d_report.json
+
+          publish_mode="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8')).get('summary',{})
+          restore=json.loads(Path('official_id_restore_report.json').read_text(encoding='utf-8')).get('summary',{})
+          no_data_change=(
+              int(s.get('missingBefore') or 0) == 0 and
+              int(s.get('recoveredNow') or 0) == 0 and
+              int(s.get('missingAfter') or 0) == 0 and
+              int(restore.get('missingBefore') or 0) == 0 and
+              int(restore.get('recoveredNow') or 0) == 0 and
+              int(restore.get('missingAfter') or 0) == 0
+          )
+          print('proof-only' if no_data_change else 'data')
+          PY
+          )"
+
+          if [ "$publish_mode" = "proof-only" ]; then
+            mkdir -p /tmp/reconciliation-proof
+            for f in source_id_ledger.json source_reconciliation_report.json central_pagination_report.json gyeonggi_central_90d_report.json official_id_restore_report.json; do
+              cp "$f" "/tmp/reconciliation-proof/$f"
+            done
+
+            pushed=0
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git checkout -B main origin/main
+              git reset --hard origin/main
+              git clean -fd
+              cp /tmp/reconciliation-proof/* .
+
+              # Re-check the latest published dataset against this scan before publishing
+              # proof. If another writer lost an official ID, fail closed instead of
+              # turning stale proof into the canonical state.
+              python scripts/restore_reconciled_ids.py
+              python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('official_id_restore_report.json').read_text(encoding='utf-8')).get('summary',{})
+          if any(int(s.get(k) or 0) for k in ('missingBefore','recoveredNow','missingAfter')):
+              raise SystemExit(f'Latest main changed official-ID population during proof-only publish: {s}')
+          PY
+              python scripts/validate_reconciliation_policy.py
+              python scripts/update_collector_status.py --workflow reconciliation --stage complete --state success
+
+              if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
+                git rm -f reconciliation_failure_report.json
+              fi
+              if git ls-files --error-unmatch source_id_ledger.candidate.json >/dev/null 2>&1; then
+                git rm -f source_id_ledger.candidate.json
+              fi
+              git add source_id_ledger.json source_reconciliation_report.json central_pagination_report.json official_id_restore_report.json collector_status.json
+              git add -f gyeonggi_central_90d_report.json
+              git diff --cached --quiet && { pushed=1; break; }
+              git commit -m 'Publish verified reconciliation proof without replacing newer data'
+              if git push origin HEAD:main; then
+                pushed=1
+                break
+              fi
+              sleep $((attempt * 5))
+            done
+            [ "$pushed" = "1" ] || { echo '::error::proof-only reconciliation push failed after 3 attempts'; exit 1; }
+            git fetch origin main
+            git merge-base --is-ancestor HEAD origin/main || {
+              echo '::error::proof-only reconciliation commit is not reachable from origin/main after push'
+              exit 1
+            }
+            exit 0
+          fi
+
           if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
             git rm -f reconciliation_failure_report.json
           fi
