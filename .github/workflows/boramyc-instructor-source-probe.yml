@@ -26,45 +26,27 @@ jobs:
           from urllib.parse import urljoin,urlparse,parse_qs
           import requests
           from bs4 import BeautifulSoup
-
-          BASE='https://www.boramyc.or.kr'
-          LIST=BASE+'/sub06/sub01.php'
+          BASE='https://www.boramyc.or.kr'; LIST=BASE+'/sub06/sub01.php'
           H={'User-Agent':'gg-edujob-source-audit/1.0 (+https://github.com/puzzlex5/gg-edujob)'}
-          target='시립보라매청소년센터 생활체육(당구) 강사 채용 공고'
-          s=requests.Session()
+          target='시립보라매청소년센터 생활체육(당구) 강사 채용 공고'; s=requests.Session()
           def get(url,**kw):
-              r=s.get(url,headers=H,timeout=30,allow_redirects=True,**kw)
-              print('HTTP',r.status_code,r.url,'bytes',len(r.text))
-              r.raise_for_status(); return r
-          rows={}
-          page_sets=[]
+              r=s.get(url,headers=H,timeout=30,allow_redirects=True,**kw); print('HTTP',r.status_code,r.url,'bytes',len(r.text)); r.raise_for_status(); return r
+          rows={}; page_sets=[]
           for page in range(1,5):
-              r=get(LIST,params={'code':'notice','page':page})
-              soup=BeautifulSoup(r.text,'html.parser')
-              ids=set()
+              r=get(LIST,params={'code':'notice','page':page}); soup=BeautifulSoup(r.text,'html.parser'); ids=set()
               for a in soup.find_all('a',href=True):
-                  title=re.sub(r'\s+',' ',a.get_text(' ',strip=True)).strip()
-                  href=urljoin(r.url,a.get('href') or '')
-                  q=parse_qs(urlparse(href).query)
+                  title=re.sub(r'\s+',' ',a.get_text(' ',strip=True)).strip(); href=urljoin(r.url,a.get('href') or ''); q=parse_qs(urlparse(href).query)
                   idx=str((q.get('idx') or [''])[0]); ptype=str((q.get('ptype') or [''])[0])
-                  if idx.isdigit() and ptype=='view' and title:
-                      ids.add(idx); rows[idx]=(title,href)
-              print('PAGE',page,'IDS',sorted(ids)[:10], 'count',len(ids))
+                  if idx.isdigit() and ptype=='view' and title: ids.add(idx); rows[idx]=(title,href)
+              print('PAGE',page,'IDS',sorted(ids)[:10],'count',len(ids));
               if ids: page_sets.append(ids)
-          print('ROW_COUNT',len(rows))
-          matches=[(idx,title,href) for idx,(title,href) in rows.items() if target in title]
-          print('MATCHES',json.dumps(matches,ensure_ascii=False))
+          matches=[(idx,title,href) for idx,(title,href) in rows.items() if target in title]; print('MATCHES',json.dumps(matches,ensure_ascii=False))
           if len(matches)!=1: raise SystemExit('FAIL target row identity not unique')
-          idx,title,href=matches[0]
-          r=get(href)
-          q=parse_qs(urlparse(r.url).query)
-          final_idx=str((q.get('idx') or [idx])[0])
+          idx,title,href=matches[0]; r=get(href); q=parse_qs(urlparse(r.url).query); final_idx=str((q.get('idx') or [idx])[0])
           text=re.sub(r'\s+',' ',BeautifulSoup(r.text,'html.parser').get_text(' ',strip=True)).strip()
-          print('DETAIL',idx,'FINAL',final_idx,'TITLE_OK',target in text)
-          print('DETAIL_TEXT',text[:5000])
           if final_idx!=idx or target not in text: raise SystemExit('FAIL exact detail identity mismatch')
-          deadline_ok=bool(re.search(r'(?:접수|모집|지원|마감)[^\n]{0,120}2026\D*9\D*11|2026\D*9\D*11[^\n]{0,120}(?:까지|마감)',text,re.I))
-          if not deadline_ok: raise SystemExit('FAIL live 2026-09-11 deadline not found in official detail')
+          deadline_ok=bool(re.search(r'접수기간\s*:\s*2026\D*8\D*26[^0-9]{0,30}(?:~|부터)[^0-9]{0,30}(?:2026\D*)?9\D*10',text,re.I))
+          if not deadline_ok: raise SystemExit('FAIL official 2026-09-10 deadline not found')
           if not page_sets or len(set().union(*page_sets))<=len(page_sets[0]): raise SystemExit('FAIL pagination/stable-id traversal not demonstrated')
-          print('PASS',json.dumps({'idx':idx,'url':r.url,'deadline':'2026-09-11','pages':len(page_sets),'ids':len(rows)},ensure_ascii=False))
+          print('PASS',json.dumps({'idx':idx,'url':r.url,'deadline':'2026-09-10','pages':len(page_sets),'ids':len(rows)},ensure_ascii=False))
           PY
