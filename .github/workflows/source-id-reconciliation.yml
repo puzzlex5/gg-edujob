@@ -24,7 +24,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: metro-edujob-data
+  group: metro-edujob-reconciliation
   cancel-in-progress: false
 
 jobs:
