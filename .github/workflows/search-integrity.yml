@@ -59,7 +59,7 @@ jobs:
       - name: Commit search UI repair only after all checks pass
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '418982d+github-actions[bot]@users.noreply.github.com'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           git diff --cached --quiet && exit 0
           git commit -m 'Keep search aligned with collected job data'
