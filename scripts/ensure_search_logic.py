@@ -10,7 +10,6 @@ new_norm = "const $=s=>document.querySelector(s);const norm=s=>(s||'').toString(
 old_search = "if(state.q){const hay=norm([j.school,j.title,j.subject,j.region,(j.regions||[]).join(' '),j.type,j.source].join(' '));if(!hay.includes(norm(state.q)))return false}"
 new_search = "if(state.q&&!matchesQuery(j,state.q))return false;"
 
-# Repair the exact malformed sequence from the first search-autofix release, if present.
 s = s.replace("if(state.q&&!matchesQuery(j,state.q))return falsereturn true", "if(state.q&&!matchesQuery(j,state.q))return false;return true")
 
 if old_norm in s:
@@ -25,7 +24,11 @@ elif "if(state.q&&!matchesQuery(j,state.q))return false;" not in s:
 
 s = s.replace("최근 자동 갱신: '+data.updatedAt+' · 매일 오전 7시대 자동 갱신", "최근 자동 갱신: '+data.updatedAt+' · 매시간 자동 갱신")
 
-# Never write a file containing the known fatal corruption pattern.
+if "direct-link-guard.js?v=20260906a" in s:
+    s = s.replace("direct-link-guard.js?v=20260906a", "direct-link-guard.js?v=20260906c", 1)
+elif "direct-link-guard.js?v=20260906c" not in s:
+    raise SystemExit("direct-link-guard asset marker not found")
+
 if "falsereturn" in s or "trueraise" in s:
     raise SystemExit("Refusing to write malformed JavaScript")
 

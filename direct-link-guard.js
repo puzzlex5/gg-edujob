@@ -30,6 +30,11 @@
 
   postingLink=function(j){
     if(j&&j.detailLinkVerified===false) return '';
+    // Lessoninfo culture-jobs detail.php?id=... has been observed to work only in a
+    // list-seeded/warm session while a cold mobile browser falls back to the culture
+    // list. Until a persistent public detail contract is cold-context verified, keep
+    // these cards visible/searchable but do not expose a misleading individual link.
+    if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts') return '';
     const direct=seoulSupportGet(j);
     if(direct) return direct;
     return basePostingLink(j);
