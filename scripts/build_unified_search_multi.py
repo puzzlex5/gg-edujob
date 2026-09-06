@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import build_unified_search as base
-from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
+from private_source_registry import PRIVATE_SOURCES, lessoninfo_culture_failclosed, publication_enabled, source_health
 from source_registry import official_source_count
 
 KST = timezone(timedelta(hours=9))
@@ -55,6 +55,13 @@ def project_private_generic(job, source_name):
     explicit_regions = [str(x) for x in (job.get("regions") or []) if str(x)]
     if explicit_regions:
         row["regions"] = list(dict.fromkeys(explicit_regions)); row["region"] = str(job.get("region") or row["region"] or row["regions"][0])
+    # Lessoninfo culture detail.php?id=... is not a proven persistent cold-browser route.
+    # Preserve the stable row and searchable fields, but make the unified projection fail closed.
+    if source_name == "레슨인포" and lessoninfo_culture_failclosed(job):
+        row["url"] = ""
+        row["originalUrl"] = ""
+        row["detailLinkVerified"] = False
+        row["detailLinkReason"] = "lessoninfo-culture-cold-route-unverified"
     row["searchText"] = base.norm(" ".join(map(str, [row.get("school"), row.get("title"), row.get("subject"), row.get("region"), " ".join(row.get("regions") or []), row.get("province"), " ".join(row.get("provinces") or []), row.get("location"), row.get("source"), row.get("sourceSurfaceLabel"), row.get("type"), " ".join(row.get("categories") or [])])))
     return row
 
