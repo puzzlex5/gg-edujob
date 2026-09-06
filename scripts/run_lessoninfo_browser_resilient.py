@@ -6,9 +6,10 @@ and explicit official-link capture. This wrapper adds three fail-closed postcond
 
 1. retry only a transient empty list render (never CAPTCHA/access-denied challenges),
 2. normalize accidentally contaminated location text without inventing a region,
-3. require every published Lessoninfo item to resolve to its exact individual detail identity and
-   bind to the expected posting title. A redirect to a list/home page is a normal inactive/rejected
-   classification, not a transient detail error that should retain stale last-known-good content.
+3. require every published Lessoninfo item to resolve to its exact individual URL identity; for
+   culture-jobs, also bind the expected list-row title to the final detail body. A redirect to a
+   list/home page is a normal inactive/rejected classification, not a transient detail error that
+   should retain stale last-known-good content.
 
 Culture-job titles can also carry an explicit deadline such as ``(~8.21.)``. That evidence is
 converted to the existing labelled-deadline format before base classification so an already expired
@@ -102,11 +103,11 @@ def _detail_route_matches(item: dict, final_url: str) -> bool:
 
 
 def _detail_content_matches(item: dict, text: str) -> bool:
-    """Require the list-row title to be represented in the final detail body.
+    """Require the culture list-row title to be represented in the final detail body.
 
-    This is intentionally stricter than URL-shape validation: a wrong individual target is worse
-    than a non-clickable result. ``(복사)`` is ignored because Lessoninfo duplicates sometimes add
-    that marker only on the list row.
+    ``(복사)`` is ignored because Lessoninfo duplicates sometimes add that marker only on the list
+    row. The afterschool board already carries strong ``wr_no`` + ``bo_table`` identity and is not
+    subjected to this extra title-text rule, avoiding false negatives on legacy board title markup.
     """
     expected = _compact_title(str(item.get("titleHint") or ""))
     if len(expected) < 6:
@@ -122,8 +123,6 @@ def _compact_verified_location(job: dict) -> None:
     if not location or region not in {"서울", "경기"}:
         return
 
-    # Normal addresses/location labels are already useful. The contamination regression produced
-    # long concatenated fragments containing institution names, titles, dates, and adjacent rows.
     noisy = (
         len(location) > 45
         or bool(re.search(r"\b\d{1,2}[./-]\d{1,2}\b", location))
@@ -160,8 +159,6 @@ def _compact_verified_location(job: dict) -> None:
 
 
 def classify_with_location_postcondition(html: str, text: str, item: dict):
-    # Preserve an explicit title-tail deadline as labelled evidence for the existing base parser.
-    # This fixes rows such as "... 감독 모집(~8.21.)" being treated as no-deadline for 30 days.
     title_deadline = _title_deadline(
         str(item.get("titleHint") or ""), str(item.get("registeredHint") or "")
     )
@@ -185,12 +182,11 @@ async def fetch_detail_with_identity_guard(
             html, text = await b.load(page, item["url"])
             if not _detail_route_matches(item, page.url):
                 return item["sourceIdentity"], None, "detail-route-mismatch", ""
-            if not _detail_content_matches(item, text):
+            if item.get("sourceSurface") == "culture-arts" and not _detail_content_matches(item, text):
                 return item["sourceIdentity"], None, "detail-content-mismatch", ""
             job, reason = b.classify_detail(html, text, item)
             return item["sourceIdentity"], job, reason, ""
         except Exception as exc:
-            # Network/challenge failures remain true detail errors and preserve the previous LKG.
             return (
                 item["sourceIdentity"],
                 None,
