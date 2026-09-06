@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-06T23:08:10+09:00",
+  "generatedAt": "2026-09-07T00:08:11+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-06T23:08:10+09:00",
+    "generatedAt": "2026-09-07T00:08:11+09:00",
     "official": {
-      "datasetCount": 18902,
-      "officialIdCount": 17809,
+      "datasetCount": 18905,
+      "officialIdCount": 17810,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7533,
-      "officialDisplayed": 3076,
-      "privateDisplayed": 4457,
-      "privateDiscovered": 4469,
-      "officialPrivateAliases": 12,
+      "publishedJobs": 7431,
+      "officialDisplayed": 2976,
+      "privateDisplayed": 4455,
+      "privateDiscovered": 4466,
+      "officialPrivateAliases": 11,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -102,8 +102,8 @@
         "latestRegistered": "2026-09-04"
       },
       "광주하남교육지원청": {
-        "count": 340,
-        "latestRegistered": "2026-09-04"
+        "count": 341,
+        "latestRegistered": "2026-09-06"
       },
       "구리남양주교육지원청": {
         "count": 564,
@@ -146,7 +146,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1199,
+        "count": 1200,
         "latestRegistered": "2026-09-06"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -178,7 +178,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -281,7 +281,7 @@
         "healthy": true,
         "datasetCount": 57,
         "rawCount": 57,
-        "currentCount": 57,
+        "currentCount": 54,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -315,32 +315,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-05T23:07:52+09:00",
+      "baselineAt": "2026-09-06T00:07:35+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18902,
-          "baseline": 19237,
-          "changeRatio": -0.0174
+          "current": 18905,
+          "baseline": 19238,
+          "changeRatio": -0.0173
         },
         "official.officialIdCount": {
-          "current": 17809,
+          "current": 17810,
           "baseline": 18184,
           "changeRatio": -0.0206
         },
         "unified.publishedJobs": {
-          "current": 7533,
+          "current": 7431,
           "baseline": 7597,
-          "changeRatio": -0.0084
+          "changeRatio": -0.0219
         },
         "unified.officialDisplayed": {
-          "current": 3076,
+          "current": 2976,
           "baseline": 3134,
-          "changeRatio": -0.0185
+          "changeRatio": -0.0504
         },
         "unified.privateDiscovered": {
-          "current": 4469,
+          "current": 4466,
           "baseline": 4475,
-          "changeRatio": -0.0013
+          "changeRatio": -0.002
         }
       },
       "privateSources": {
@@ -360,9 +360,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 57,
+          "current": 54,
           "baseline": 57,
-          "changeRatio": 0.0
+          "changeRatio": -0.0526
         },
         "seekle": {
           "current": 1,
