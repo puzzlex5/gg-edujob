@@ -1,0 +1,100 @@
+name: Update Seekle instructor jobs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '31 * * * *'
+  pull_request:
+    paths:
+      - 'scripts/crawl_seekle_instructor_jobs.py'
+      - 'scripts/private_source_registry.py'
+      - 'scripts/build_unified_search_multi.py'
+      - 'scripts/direct_post_links.py'
+      - 'seekle_jobs.json'
+      - 'seekle_reconciliation_report.json'
+      - '.github/workflows/update-seekle-instructor-jobs.yml'
+  push:
+    paths:
+      - 'scripts/crawl_seekle_instructor_jobs.py'
+      - '.github/workflows/update-seekle-instructor-jobs.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-seekle-instructor-jobs-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'main' }}
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync latest main for production runs
+        if: github.event_name != 'pull_request'
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Syntax check
+        run: python -m py_compile scripts/crawl_seekle_instructor_jobs.py scripts/private_source_registry.py scripts/build_unified_search_multi.py scripts/direct_post_links.py
+      - name: Collect fail-closed source candidate
+        id: collect
+        continue-on-error: true
+        run: python scripts/crawl_seekle_instructor_jobs.py
+      - name: Verify live source, exact link, and search exposure
+        if: steps.collect.outcome == 'success'
+        run: |
+          python scripts/build_unified_search_multi.py
+          python - <<'PY'
+          import json, sys
+          sys.path.insert(0,'scripts')
+          from direct_post_links import is_direct_post
+          report=json.load(open('seekle_reconciliation_report.json',encoding='utf-8'))
+          assert report.get('publicationEnabled') is True
+          assert report.get('healthy') is True
+          assert report.get('traversalComplete') is True
+          assert int(report.get('missingAfterCount') or 0) == 0
+          assert int(report.get('detailErrorCount') or 0) == 0
+          d=json.load(open('unified_jobs.next.json',encoding='utf-8'))
+          rows=[j for j in d.get('jobs',[]) if j.get('sourceIdentity')=='seekle:21827']
+          assert len(rows)==1, len(rows)
+          j=rows[0]
+          assert j.get('source')=='시립광진청소년센터'
+          assert j.get('province')=='서울' and j.get('region')=='광진구'
+          assert j.get('applyEnd')=='2026-09-18'
+          assert '강사' in j.get('searchText','')
+          assert '문화예술' in j.get('searchText','')
+          assert is_direct_post(j)[0], is_direct_post(j)
+          assert 'idx=21827' in j.get('url','') and 'ptype=view' in j.get('url','')
+          print('PASS seekle:21827 live collection + search + exact detail')
+          PY
+      - name: Preserve source artifacts on main only
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          rm -f unified_jobs.next.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add seekle_jobs.candidate.json seekle_reconciliation_report.candidate.json 2>/dev/null || true
+          if [ "${{ steps.collect.outcome }}" = success ]; then
+            git add seekle_jobs.json seekle_reconciliation_report.json
+          fi
+          git diff --cached --quiet && exit 0
+          git commit -m 'Update verified Seekle instructor jobs'
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break
+            sleep $((i*5))
+          done
+      - name: Clean PR artifacts
+        if: always() && github.event_name == 'pull_request'
+        run: rm -f unified_jobs.next.json
+      - name: Fail after preserving diagnostics
+        if: steps.collect.outcome != 'success'
+        run: exit 1
