@@ -1,21 +1,31 @@
 {
-  "generatedAt": "2026-09-06 20:14:20 KST",
+  "generatedAt": "2026-09-06 21:12:49 KST",
   "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files; candidate stable-ID deltas are retained for audit.",
   "candidateAvailable": true,
   "canonicalScanId": "20260906T094123Z-34025325944-1",
-  "candidateScanId": "20260906T104057Z-34028079175-1",
+  "candidateScanId": "20260906T114019Z-34030889927-1",
   "canonicalOfficialIdCount": 17809,
-  "candidateOfficialIdCount": 17809,
-  "removedSinceCanonical": [],
+  "candidateOfficialIdCount": 17808,
+  "removedSinceCanonical": [
+    {
+      "sourceIdentity": "seoul-central:109768",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "(이문초) 초등학교 시간강사(과학, 도덕 교과전담교사) 구인 (9.7~9.23-9월 11, 18일 제외)(총 11일 41시간)",
+      "registered": "2026/09/05",
+      "firstSeen": "2026-09-05 16:03:04 KST",
+      "lastSeen": "2026-09-06 18:46:11 KST"
+    }
+  ],
   "addedSinceCanonical": [],
   "deltaConsistent": true,
-  "symmetricDifferenceCount": 0,
+  "symmetricDifferenceCount": 1,
   "candidate": {
     "reconciliation": {
-      "generatedAt": "2026-09-06 19:46:33 KST",
+      "generatedAt": "2026-09-06 20:45:47 KST",
       "lookbackDays": 90,
       "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-      "officialIdCount": 17809,
+      "officialIdCount": 17808,
       "datasetIdCountBefore": 18862,
       "missingBefore": 0,
       "recoveredNow": 0,
@@ -24,11 +34,11 @@
       "totalSources": 38,
       "reconciledOffices": 38,
       "totalOffices": 38,
-      "scanId": "20260906T104057Z-34028079175-1"
+      "scanId": "20260906T114019Z-34030889927-1"
     },
     "centralPagination": {
-      "scanId": "20260906T104057Z-34028079175-1",
-      "generatedAt": "2026-09-06 20:10:23 KST",
+      "scanId": "20260906T114019Z-34030889927-1",
+      "generatedAt": "2026-09-06 21:09:03 KST",
       "complete": true,
       "sources": [
         {
@@ -132,9 +142,9 @@
         {
           "name": "서울교육일자리포털",
           "province": "서울",
-          "stableIdCount": 359,
+          "stableIdCount": 358,
           "pagesScanned": 9,
-          "rawRows": 359,
+          "rawRows": 358,
           "terminalEvidence": "empty-page",
           "accessError": false,
           "parseError": false,
@@ -147,22 +157,22 @@
       ]
     },
     "gyeonggiCentral90d": {
-      "generatedAt": "2026-09-06 19:46:33 KST",
+      "generatedAt": "2026-09-06 20:45:46 KST",
       "stableIdCount": 10129,
       "complete": true
     },
     "finalRestore": {
-      "checkedAt": "2026-09-06 20:11:19 KST",
-      "ledgerScanId": "20260906T104057Z-34028079175-1",
-      "protectedOfficialIds": 17809,
+      "checkedAt": "2026-09-06 21:09:55 KST",
+      "ledgerScanId": "20260906T114019Z-34030889927-1",
+      "protectedOfficialIds": 17808,
       "missingBefore": 0,
       "recoveredNow": 0,
       "missingAfter": 0
     },
     "sourceIdLedger": {
-      "scanId": "20260906T104057Z-34028079175-1",
-      "generatedAt": "2026-09-06 19:46:33 KST",
-      "officialIdCount": 17809
+      "scanId": "20260906T114019Z-34030889927-1",
+      "generatedAt": "2026-09-06 20:45:47 KST",
+      "officialIdCount": 17808
     }
   }
 }
