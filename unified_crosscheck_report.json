@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-06T19:13:47+09:00",
+  "generatedAt": "2026-09-06T19:15:56+09:00",
   "policy": "explicit-url-strong; semantic-review-only; no-title-based-delete; publication-effective-private-only",
-  "privateJobs": 4473,
+  "privateJobs": 4479,
   "officialJobs": 18902,
   "privateSources": {
     "lessoninfo": {
@@ -47,10 +47,10 @@
     "boramyc": {
       "name": "시립보라매청소년센터",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": false,
-      "degraded": true,
-      "ok": false,
-      "canonicalCount": 0
+      "publicationEnabled": true,
+      "degraded": false,
+      "ok": true,
+      "canonicalCount": 6
     }
   },
   "perSource": {
@@ -85,7 +85,7 @@
       "officialGapCandidates": 0
     },
     "boramyc": {
-      "jobs": 0,
+      "jobs": 6,
       "strongOfficialMatches": 0,
       "semanticReviewCandidates": 0,
       "officialGapCandidates": 0

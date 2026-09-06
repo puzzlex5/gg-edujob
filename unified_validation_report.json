@@ -1,21 +1,20 @@
 {
-  "generatedAt": "2026-09-06T19:13:44+09:00",
+  "generatedAt": "2026-09-06T19:15:53+09:00",
   "healthy": true,
-  "total": 7531,
+  "total": 7536,
   "official": 3076,
-  "privateDisplayed": 4455,
+  "privateDisplayed": 4460,
   "enabledPrivateSources": [
     "lessoninfo",
     "jobteacher",
     "artmore",
     "gonggonggangsa",
-    "seekle"
-  ],
-  "degradedPrivateSources": [
+    "seekle",
     "boramyc"
   ],
-  "privateStableIds": 4467,
-  "privateRepresentedDirectly": 4455,
+  "degradedPrivateSources": [],
+  "privateStableIds": 4472,
+  "privateRepresentedDirectly": 4460,
   "privateRepresentedByOfficial": 12,
   "missingPrivateIds": 0,
   "missingPrivateBySource": {
@@ -71,12 +70,10 @@
       "currentCount": 1
     },
     "boramyc": {
-      "rawCount": 0,
-      "currentCount": 0
+      "rawCount": 6,
+      "currentCount": 5
     }
   },
   "errors": [],
-  "warnings": [
-    "시립보라매청소년센터 is degraded and excluded from this unified publication"
-  ]
+  "warnings": []
 }
