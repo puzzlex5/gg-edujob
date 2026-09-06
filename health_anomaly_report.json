@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-06T19:08:16+09:00",
+  "generatedAt": "2026-09-06T20:07:37+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-06T19:08:16+09:00",
+    "generatedAt": "2026-09-06T20:07:37+09:00",
     "official": {
-      "datasetCount": 18901,
-      "officialIdCount": 17813,
+      "datasetCount": 18903,
+      "officialIdCount": 17809,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7530,
-      "officialDisplayed": 3075,
-      "privateDisplayed": 4455,
-      "privateDiscovered": 4467,
+      "publishedJobs": 7533,
+      "officialDisplayed": 3076,
+      "privateDisplayed": 4457,
+      "privateDiscovered": 4469,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -31,7 +31,8 @@
         "jobteacher",
         "artmore",
         "gonggonggangsa",
-        "seekle"
+        "seekle",
+        "boramyc"
       ],
       "degradedPrivateSources": []
     },
@@ -145,7 +146,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1198,
+        "count": 1199,
         "latestRegistered": "2026-09-06"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -177,7 +178,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -297,37 +298,49 @@
         "detailErrors": 0,
         "traversalComplete": true,
         "latestRegistered": "2026-09-04"
+      },
+      "boramyc": {
+        "name": "시립보라매청소년센터",
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 6,
+        "rawCount": 6,
+        "currentCount": 2,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-08-26"
       }
     }
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-05T19:07:48+09:00",
+      "baselineAt": "2026-09-05T20:07:19+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18901,
+          "current": 18903,
           "baseline": 19234,
-          "changeRatio": -0.0173
+          "changeRatio": -0.0172
         },
         "official.officialIdCount": {
-          "current": 17813,
+          "current": 17809,
           "baseline": 18185,
-          "changeRatio": -0.0205
+          "changeRatio": -0.0207
         },
         "unified.publishedJobs": {
-          "current": 7530,
+          "current": 7533,
           "baseline": 7601,
-          "changeRatio": -0.0093
+          "changeRatio": -0.0089
         },
         "unified.officialDisplayed": {
-          "current": 3075,
+          "current": 3076,
           "baseline": 3131,
-          "changeRatio": -0.0179
+          "changeRatio": -0.0176
         },
         "unified.privateDiscovered": {
-          "current": 4467,
+          "current": 4469,
           "baseline": 4482,
-          "changeRatio": -0.0033
+          "changeRatio": -0.0029
         }
       },
       "privateSources": {
@@ -353,6 +366,11 @@
         },
         "seekle": {
           "current": 1,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "boramyc": {
+          "current": 2,
           "baseline": 0,
           "changeRatio": null
         }
