@@ -1724,12 +1724,12 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-06 08:29 KST",
+    "checkedAt": "2026-09-06 16:46 KST",
     "message": "원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [],
     "supportExactLinks": {
-      "total": 7424,
-      "resolved": 7424,
+      "total": 7425,
+      "resolved": 7425,
       "unresolved": 0,
       "examples": []
     },
@@ -1763,10 +1763,70 @@
         }
       ]
     },
-    "previousTotal": 18871,
-    "currentTotal": 18898
+    "previousTotal": 18898,
+    "currentTotal": 18900
   },
   "jobs": [
+    {
+      "id": "sen-109771",
+      "province": "서울",
+      "school": "인헌중학교",
+      "title": "낙성대역 인헌중학교 대체 시간강사 채용 공고(영어)",
+      "subject": "3학년 영어",
+      "region": "관악구",
+      "regions": [
+        "관악구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/06",
+      "applyEnd": "2026/09/10",
+      "workStart": "2026/09/18",
+      "workEnd": "2026/09/22",
+      "registered": "2026/09/06",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109771",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109771"
+    },
+    {
+      "id": "goe-complete-266c72f1b058a9dac6",
+      "province": "경기",
+      "school": "상원여자중학교",
+      "title": "상원여자중학교 시간강사 채용 공고(과학)",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "성남시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "",
+      "applyEnd": "2026/09/09",
+      "workStart": "2026/11/02",
+      "workEnd": "2026/11/04",
+      "registered": "2026/09/06",
+      "headcount": "",
+      "source": "성남교육지원청",
+      "checkedSources": [
+        "성남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesn.kr/goesn/na/ntt/selectNttInfo.do?bbsId=17872&nttSn=1953320&mi=23603",
+      "boardUrl": "https://www.goesn.kr/goesn/na/ntt/selectNttList.do?bbsId=17872&mi=23603",
+      "detailLinkResolved": true,
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "mircms:www.goesn.kr:17872:1953320",
+      "nttSn": "1953320",
+      "bbsId": "17872",
+      "mi": "23603",
+      "periodStatus": "parsed"
+    },
     {
       "id": "sen-109770",
       "province": "서울",
@@ -322747,7 +322807,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-af8dca64189e89212b59",
@@ -329783,7 +329843,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-265a4615c4801e439334",
@@ -361975,7 +362035,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-31578ebc765f73200321",
@@ -364072,7 +364132,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-bab02126d745996da7f4",
@@ -407433,7 +407493,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-2bd8e7a5a99bde9d86e5",
@@ -521637,25 +521697,26 @@
     "warnings": []
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-06 07:48:48 KST",
+    "generatedAt": "2026-09-06 16:22:01 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 17817,
-    "datasetIdCountBefore": 16638,
-    "missingBefore": 1179,
-    "recoveredNow": 1179,
+    "officialIdCount": 17813,
+    "datasetIdCountBefore": 18858,
+    "missingBefore": 2,
+    "recoveredNow": 2,
     "missingAfter": 0,
     "reconciledSources": 38,
     "totalSources": 38,
     "reconciledOffices": 38,
-    "totalOffices": 38
+    "totalOffices": 38,
+    "scanId": "20260906T071705Z-34018709104-1"
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-06 08:28 KST",
+    "checkedAt": "2026-09-06 16:45 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-06 08:28 KST",
+    "checkedAt": "2026-09-06 16:45 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -521670,23 +521731,23 @@
     "generatedAt": "2026-09-06 08:17 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6911,
-    "gyeonggiTotal": 6911,
+    "gyeonggiExact": 6912,
+    "gyeonggiTotal": 6912,
     "seoulExact": 513,
     "seoulTotal": 513
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-06 08:18 KST",
+    "checkedAt": "2026-09-06 16:45 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6084,
-    "detailPagesParsed": 2521,
+    "recentSupportJobs": 6085,
+    "detailPagesParsed": 2527,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1060,
     "missingWorkPeriod": 2015,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-06 08:18 KST",
+      "checkedAt": "2026-09-06 16:45 KST",
       "candidates": 243,
       "detailPagesConfirmed": 239,
       "cacheEntriesImproved": 0,
@@ -521696,5 +521757,13 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-06 16:45:02 KST",
+    "ledgerScanId": "20260906T071705Z-34018709104-1",
+    "protectedOfficialIds": 17813,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
