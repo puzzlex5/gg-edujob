@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Isolated fail-closed probe: never publishes candidate data.
 import html as htmlmod
 import json
 import re
