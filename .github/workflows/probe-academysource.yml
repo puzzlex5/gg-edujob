@@ -1,0 +1,28 @@
+name: Probe academysource public jobs
+
+on:
+  push:
+    branches: [probe-academysource-v1]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe public job listing and direct details
+        run: python scripts/probe_academysource_public_jobs.py
+      - name: Upload probe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: academysource-probe-report
+          path: academysource_probe_report.json
+          if-no-files-found: warn
