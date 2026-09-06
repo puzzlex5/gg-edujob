@@ -15,6 +15,16 @@ LIST = "https://www.boramyc.or.kr/sub06/sub01.php"
 HEADERS = {"User-Agent": "gg-edujob-source-audit/1.0 (+https://github.com/puzzlex5/gg-edujob)"}
 MAX_PAGES = 8
 DATE_RE = re.compile(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
+PERIOD_RE = re.compile(
+    r"접수기간\s*:\s*(20\d{2})\D+(\d{1,2})\D+(\d{1,2})"
+    r"[^0-9]{0,50}(?:(20\d{2})\D+)?(\d{1,2})\D+(\d{1,2})",
+    re.I,
+)
+DEADLINE_RE = re.compile(
+    r"(?:접수\s*마감|마감일|접수\s*기한|지원\s*기한)\s*:?\s*"
+    r"(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})",
+    re.I,
+)
 INSTRUCTOR_RE = re.compile(r"(?:강사\s*(?:채용|모집)|(?:채용|모집)[^\n]{0,30}강사)", re.I)
 RESULT_RE = re.compile(r"합격|결과|서류\s*(?:전형\s*)?결과|면접\s*(?:안내|대상)", re.I)
 
@@ -26,6 +36,31 @@ def iso_date(text):
     if not m: return ""
     try: return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3))).date().isoformat()
     except ValueError: return ""
+
+def parse_apply_end(text):
+    raw = str(text or "")
+    m = PERIOD_RE.search(raw)
+    if m:
+        start_year, start_month = int(m.group(1)), int(m.group(2))
+        explicit_end_year = int(m.group(4)) if m.group(4) else None
+        end_month, end_day = int(m.group(5)), int(m.group(6))
+        end_year = explicit_end_year if explicit_end_year is not None else start_year + (1 if end_month < start_month else 0)
+        try: return datetime(end_year, end_month, end_day).date().isoformat()
+        except ValueError: return ""
+    m = DEADLINE_RE.search(raw)
+    return iso_date(m.group(1)) if m else ""
+
+def parser_regression():
+    cases = {
+        "접수기간 : 2026. 8. 26.(수) ~ 9. 10.(목)": "2026-09-10",
+        "접수기간 : 2025. 11. 29. ~ 12. 16.": "2025-12-16",
+        "접수기간 : 2025. 12. 20. ~ 1. 5.": "2026-01-05",
+        "접수기간 : 2025. 12. 20. ~ 2026. 1. 5.": "2026-01-05",
+        "접수 마감: 2026-09-18": "2026-09-18",
+    }
+    for sample, expected in cases.items():
+        actual = parse_apply_end(sample)
+        if actual != expected: raise RuntimeError(f"deadline parser regression: {sample!r}: {actual!r} != {expected!r}")
 
 def exact_url(idx):
     return f"{LIST}?{urlencode({'code':'notice','idx':str(idx),'ptype':'view'})}"
@@ -65,21 +100,7 @@ def detail(session, meta):
     registered = ""
     m = re.search(r"작성일\s*:\s*(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})", text)
     if m: registered = iso_date(m.group(1))
-    apply_end = ""
-    for pat in (
-        r"접수기간\s*:\s*20\d{2}\D+\d{1,2}\D+\d{1,2}[^0-9]{0,40}(?:20\d{2}\D*)?(\d{1,2})\D+(\d{1,2})",
-        r"(?:접수|지원|모집)[^20]{0,80}(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})",
-    ):
-        m = re.search(pat, text, re.I)
-        if not m: continue
-        if len(m.groups()) == 2:
-            try:
-                apply_end = datetime(2026, int(m.group(1)), int(m.group(2))).date().isoformat()
-            except ValueError:
-                apply_end = ""
-        else:
-            apply_end = iso_date(m.group(1))
-        if apply_end: break
+    apply_end = parse_apply_end(text)
     terms = []
     for term in ("당구","탁구","포켓볼","체육","생활체육","음악","미술","연극","무용","국악","오케스트라","합창","방과후","늘봄"):
         if term in text and term not in terms: terms.append(term)
@@ -93,6 +114,7 @@ def detail(session, meta):
     }
 
 def main():
+    parser_regression()
     session = requests.Session(); errors = []; all_rows = {}; page_sets = []
     for page in range(1, MAX_PAGES + 1):
         rows = list_rows(session, page); ids = {x["idx"] for x in rows}
@@ -111,6 +133,12 @@ def main():
     if not target: errors.append("current live instructor posting boramyc:25441 missing")
     elif target.get("applyEnd") != "2026-09-10" or "당구" not in target.get("subject", ""):
         errors.append("boramyc:25441 content/deadline mismatch")
+    stale_year_errors = [
+        j["sourceIdentity"] for j in jobs
+        if str(j.get("registered") or "").startswith("2025-") and str(j.get("applyEnd") or "").startswith("2026-")
+        and not (str(j.get("registered") or "").startswith("2025-12-") and str(j.get("applyEnd") or "").startswith("2026-01-"))
+    ]
+    if stale_year_errors: errors.append("implausible yearless deadline rollover: " + ",".join(stale_year_errors))
     healthy = traversal_complete and bool(jobs) and not errors
     report = {
         "generatedAt": datetime.now(KST).isoformat(timespec="seconds"), "source": "시립보라매청소년센터",
