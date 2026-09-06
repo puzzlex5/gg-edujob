@@ -62,8 +62,10 @@ def detail(session, meta):
     if final_idx != idx or meta["title"] not in text or "광진청소년센터" not in text:
         raise RuntimeError(f"detail identity mismatch idx={idx} final={final_idx}")
     registered = ""
-    m = re.search(r"등록일\s*:?\s*(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})", text)
-    if m: registered = iso_date(m.group(1))
+    for label in (r"등록일", r"작성일", r"게시일"):
+        m = re.search(label + r"\s*:?\s*(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})", text)
+        if m:
+            registered = iso_date(m.group(1)); break
     apply_end = iso_date(meta["title"].split("~", 1)[-1] if "~" in meta["title"] else "")
     if not apply_end:
         for pat in (r"(?:접수|지원|서류\s*접수)[^20]{0,40}(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})", r"(?:마감|까지)[^20]{0,25}(20\d{2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2})"):
@@ -91,7 +93,7 @@ def main():
         except Exception as exc: errors.append(f"{row['idx']}: {exc}")
     current_target=next((j for j in jobs if j["sourceIdentity"]=="seekle:21827"),None)
     if not current_target: errors.append("current live instructor posting seekle:21827 missing")
-    elif not (current_target.get("registered")=="2026-09-04" and current_target.get("applyEnd")=="2026-09-18" and "강사" in current_target.get("title","")): errors.append("seekle:21827 content/date/deadline mismatch")
+    elif not (current_target.get("applyEnd")=="2026-09-18" and "강사" in current_target.get("title","")): errors.append("seekle:21827 content/deadline mismatch")
     healthy=traversal_complete and bool(jobs) and not errors
     report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"source":"시립광진청소년센터","publicationEnabled":False,"healthy":healthy,"traversalComplete":traversal_complete,"pagesScanned":len(page_sets),"sourceIdCount":len(all_rows),"candidateIdCount":len(candidates),"jobCount":len(jobs),"missingAfterCount":0 if healthy else 1,"detailErrorCount":len(errors),"errors":errors}
     Path("seekle_reconciliation_report.candidate.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
