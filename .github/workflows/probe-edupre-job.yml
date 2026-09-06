@@ -1,0 +1,28 @@
+name: Probe edupre JOB public jobs
+
+on:
+  push:
+    branches: [probe/edupre-job-public-20260906]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe public listing pagination and direct details
+        run: python scripts/probe_edupre_job_public.py
+      - name: Upload probe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edupre-job-probe-report
+          path: edupre_job_probe_report.json
+          if-no-files-found: warn
