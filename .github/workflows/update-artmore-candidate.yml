@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/crawl_artmore_browser.py'
       - 'scripts/crawl_artmore_browser_v2.py'
+      - 'scripts/crawl_artmore_browser_v3.py'
       - '.github/workflows/update-artmore-candidate.yml'
   schedule:
     - cron: '47 */2 * * *'
@@ -37,13 +38,13 @@ jobs:
           python -m pip install --disable-pip-version-check playwright
           python -m playwright install --with-deps chromium
       - name: Syntax check
-        run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v2.py
+        run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v2.py scripts/crawl_artmore_browser_v3.py
       - name: Collect isolated ArtMore candidate
         id: collect
         continue-on-error: true
         env:
           ARTMORE_MAX_PAGES: '250'
-        run: python scripts/crawl_artmore_browser_v2.py
+        run: python scripts/crawl_artmore_browser_v3.py
       - name: Validate candidate safety gate
         id: validate
         continue-on-error: true
@@ -60,6 +61,10 @@ jobs:
           reports=r.get('sourceReports') or []
           if {x.get('region') for x in reports} != {'서울','경기'}: raise SystemExit('both metro regions not verified')
           if any((x.get('ids') or 0) <= 0 for x in reports): raise SystemExit('zero region IDs')
+          if any(not x.get('traversalComplete') for x in reports): raise SystemExit('unproven regional traversal')
+          proven={'pagination_exhausted','no_raw_rows_confirmed'}
+          bad_term=[(x.get('region'),x.get('terminationReason')) for x in reports if x.get('terminationReason') not in proven]
+          if bad_term: raise SystemExit(f'unproven termination: {bad_term}')
           d=json.loads(pathlib.Path('artmore_jobs.candidate.json').read_text(encoding='utf-8'))
           jobs=d.get('jobs') or []
           if not jobs: raise SystemExit('zero candidate jobs')
@@ -67,6 +72,9 @@ jobs:
           if bad: raise SystemExit(f'non-metro rows: {len(bad)}')
           missing=[j for j in jobs if not j.get('sourceIdentity') or not j.get('originalUrl')]
           if missing: raise SystemExit(f'missing identity/link: {len(missing)}')
+          amb=r.get('ambiguousRows') or []
+          conflict=[x for x in amb if x.get('reason')=='ended-label' and x.get('hasFutureDeadlineSignal')]
+          print(json.dumps({'ambiguousRows':len(amb),'futureConflicts':len(conflict)},ensure_ascii=False))
           PY
       - name: Commit candidate evidence
         if: always()
@@ -76,10 +84,18 @@ jobs:
           git add artmore_jobs.candidate.json artmore_source_id_ledger.candidate.json artmore_reconciliation_report.candidate.json artmore_collection_state.candidate.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'Record isolated ArtMore candidate collection'
+            pushed=0
             for i in 1 2 3; do
-              git pull --rebase origin main && git push origin HEAD:main && break
+              if git pull --rebase origin main && git push origin HEAD:main; then
+                pushed=1
+                break
+              fi
               sleep $((i*5))
             done
+            if [ "$pushed" -ne 1 ]; then
+              echo 'candidate evidence push failed' >&2
+              exit 1
+            fi
           fi
       - name: Fail visibly after preserving diagnostics
         if: steps.collect.outcome != 'success' || steps.validate.outcome != 'success'
