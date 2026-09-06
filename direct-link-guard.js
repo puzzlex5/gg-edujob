@@ -32,15 +32,12 @@
     // Any row explicitly rejected by the exact-detail audit remains non-clickable.
     if(j&&j.detailLinkVerified===false) return '';
 
-    // Culture-arts used to be blanket-blocked even after the unified exact-detail
-    // audit had verified a concrete /culture-jobs/detail.php?id=... destination.
-    // Fail closed only for unverified rows; verified exact detail rows must remain
-    // clickable. This keeps broken/generic destinations blocked without discarding
-    // real culture-foundation postings.
-    if(
-      j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts'&&
-      j.detailLinkVerified!==true
-    ) return '';
+    // Lessoninfo culture detail.php?id=... is not a proven persistent public contract:
+    // culture:id:94673 was observed to fall back to the culture list in a cold mobile
+    // browser even though warm/list-seeded verification could bind the same URL. Static
+    // shape/title/ID checks therefore cannot authorize an individual link. Keep culture
+    // cards visible/searchable but fail closed until cold-context persistence is proven.
+    if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts') return '';
 
     const direct=seoulSupportGet(j);
     if(direct) return direct;
