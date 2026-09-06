@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import re
 
 p = Path(__file__).resolve().parents[1] / "index.html"
 s = p.read_text(encoding="utf-8")
@@ -24,9 +25,13 @@ elif "if(state.q&&!matchesQuery(j,state.q))return false;" not in s:
 
 s = s.replace("최근 자동 갱신: '+data.updatedAt+' · 매일 오전 7시대 자동 갱신", "최근 자동 갱신: '+data.updatedAt+' · 매시간 자동 갱신")
 
-if "direct-link-guard.js?v=20260906a" in s:
-    s = s.replace("direct-link-guard.js?v=20260906a", "direct-link-guard.js?v=20260906c", 1)
-elif "direct-link-guard.js?v=20260906c" not in s:
+# direct-link-guard is a separately cached frontend asset. Any guard change must
+# advance its query marker, but the previous marker may already have moved on
+# main. Match the actual asset reference instead of one historical version.
+asset_re = re.compile(r'direct-link-guard\.js\?v=[0-9A-Za-z._-]+')
+if asset_re.search(s):
+    s = asset_re.sub("direct-link-guard.js?v=20260907a", s, count=1)
+else:
     raise SystemExit("direct-link-guard asset marker not found")
 
 if "falsereturn" in s or "trueraise" in s:
