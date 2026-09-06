@@ -46,6 +46,16 @@ PRIVATE_SOURCES = (
             r"^https?://(?:www\.)?00gangsa\.com/recruitments/\d+/?(?:[?#].*)?$",
         ),
     },
+    {
+        "key": "seekle",
+        "name": "시립광진청소년센터",
+        "jobs": "seekle_jobs.json",
+        "report": "seekle_reconciliation_report.json",
+        "detail_report": None,
+        "detail_url_patterns": (
+            r"^https?://(?:www\.)?seekle\.or\.kr/sub07/sub01\.php\?[^#]*\bidx=\d+[^#]*\bptype=view(?:[&#].*)?$",
+        ),
+    },
 )
 
 
