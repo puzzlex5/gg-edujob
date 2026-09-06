@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-06T21:10:12+09:00",
+  "generatedAt": "2026-09-06T22:07:34+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-06T21:10:12+09:00",
+    "generatedAt": "2026-09-06T22:07:34+09:00",
     "official": {
-      "datasetCount": 18902,
+      "datasetCount": 18903,
       "officialIdCount": 17809,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -178,7 +178,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 65,
+        "count": 66,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -315,22 +315,22 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-05T21:09:20+09:00",
+      "baselineAt": "2026-09-05T22:07:20+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18902,
-          "baseline": 19234,
-          "changeRatio": -0.0173
+          "current": 18903,
+          "baseline": 19238,
+          "changeRatio": -0.0174
         },
         "official.officialIdCount": {
           "current": 17809,
-          "baseline": 18185,
-          "changeRatio": -0.0207
+          "baseline": 18184,
+          "changeRatio": -0.0206
         },
         "unified.publishedJobs": {
           "current": 7533,
-          "baseline": 7601,
-          "changeRatio": -0.0089
+          "baseline": 7594,
+          "changeRatio": -0.008
         },
         "unified.officialDisplayed": {
           "current": 3076,
@@ -339,15 +339,15 @@
         },
         "unified.privateDiscovered": {
           "current": 4469,
-          "baseline": 4482,
-          "changeRatio": -0.0029
+          "baseline": 4475,
+          "changeRatio": -0.0013
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 353,
-          "baseline": 368,
-          "changeRatio": -0.0408
+          "baseline": 361,
+          "changeRatio": -0.0222
         },
         "jobteacher": {
           "current": 4036,
