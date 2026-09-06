@@ -1,0 +1,37 @@
+name: Probe Hanultari public recruitment structure
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'probe/hanultari-public-jobs-*'
+    paths:
+      - 'scripts/probe_hanultari_public_jobs.py'
+      - '.github/workflows/probe-hanultari.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: probe-hanultari-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install probe dependencies
+        run: pip install requests beautifulsoup4
+      - name: Probe public recruitment structure
+        run: python scripts/probe_hanultari_public_jobs.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hanultari-probe-report
+          path: hanultari_probe_report.json
+          if-no-files-found: ignore
