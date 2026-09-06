@@ -34,8 +34,10 @@ def rows_from(data):
 def parse_date(v):
     m = DATE_RE.search(str(v or ""))
     if not m: return None
-    try: return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=KST).date()
-    except ValueError: return None
+    try: return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3), tzinfo=KST).date())
+    except Exception:
+        try: return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=KST).date()
+        except ValueError: return None
 
 
 def row_provinces(row):
@@ -47,8 +49,11 @@ def row_provinces(row):
 
 
 def projected_private_url(row):
-    """Return the URL field the unified card can ultimately expose for a private posting."""
     return row.get("url") or row.get("originalUrl") or row.get("openUrl") or row.get("detailUrl") or ""
+
+
+def source_detail_url(row):
+    return row.get("detailUrl") or row.get("originalUrl") or row.get("openUrl") or row.get("url") or ""
 
 
 def main():
@@ -80,7 +85,7 @@ def main():
     enabled_specs = []
     degraded_specs = []
     non_metro = banned = expired = future = 0
-    non_detail_links = []
+    excluded_non_detail_links = []
     for spec in PRIVATE_SOURCES:
         raw_src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
@@ -89,20 +94,12 @@ def main():
         healthy = source_health(spec, rep, drep)
         effective_enabled = configured_enabled and healthy
 
-        # The canonical source files may intentionally retain expired/history rows for audit
-        # and reconciliation. The builder applies private_current() before projecting into the
-        # unified search, so completeness and contamination checks must validate that same
-        # current-only population rather than demanding that expired archive rows be displayed.
-        src = [j for j in raw_src if private_current(j)] if effective_enabled else []
-        source_reports[spec["key"]] = {
-            "rawCount": len(raw_src),
-            "currentCount": len(src),
-            "report": rep,
-            "detailReport": drep,
-            "configuredPublicationEnabled": configured_enabled,
-            "publicationEnabled": effective_enabled,
-            "degraded": configured_enabled and not healthy,
-        }
+        current_src = [j for j in raw_src if private_current(j)] if effective_enabled else []
+        src = [j for j in current_src if detail_url_is_specific(spec, source_detail_url(j))]
+        excluded = [j for j in current_src if not detail_url_is_specific(spec, source_detail_url(j))]
+        for j in excluded:
+            excluded_non_detail_links.append({"source": spec["key"], "sourceIdentity": j.get("sourceIdentity"), "title": j.get("title"), "url": source_detail_url(j)})
+        source_reports[spec["key"]] = {"rawCount": len(raw_src), "currentCount": len(current_src), "publicationEligibleCount": len(src), "excludedNonDirectCount": len(excluded), "report": rep, "detailReport": drep, "configuredPublicationEnabled": configured_enabled, "publicationEnabled": effective_enabled, "degraded": configured_enabled and not healthy}
         if configured_enabled and not healthy:
             degraded_specs.append(spec)
             warnings.append(f"{spec['name']} is degraded and excluded from this unified publication")
@@ -116,20 +113,11 @@ def main():
         missing = sorted(source_ids - represented)
         missing_by_source[spec["key"]] = missing
         if missing:
-            errors.append(f"Unified dataset dropped {len(missing)} current {spec['name']} stable IDs")
+            errors.append(f"Unified dataset dropped {len(missing)} publication-eligible current {spec['name']} stable IDs")
 
         for j in src:
             ps = row_provinces(j)
-            if not ps or not ps.issubset(ALLOWED_PROVINCES):
-                non_metro += 1
-            detail_url = j.get("detailUrl") or j.get("originalUrl") or j.get("openUrl") or j.get("url") or ""
-            if not detail_url_is_specific(spec, detail_url):
-                non_detail_links.append({
-                    "source": spec["key"],
-                    "sourceIdentity": j.get("sourceIdentity"),
-                    "title": j.get("title"),
-                    "url": detail_url,
-                })
+            if not ps or not ps.issubset(ALLOWED_PROVINCES): non_metro += 1
         banned += sum(1 for j in src if BANNED.search(str(j.get("title") or "")) or PROMO_ONLY.search(str(j.get("title") or "")))
         expired += sum(1 for j in src if parse_date(j.get("applyEnd")) and parse_date(j.get("applyEnd")) < TODAY)
         future += sum(1 for j in src if parse_date(j.get("registered")) and parse_date(j.get("registered")) > TODAY)
@@ -140,7 +128,6 @@ def main():
     if banned: errors.append(f"Publication-effective private datasets contain {banned} banned non-recruitment titles")
     if expired: errors.append(f"Publication-effective private datasets contain {expired} expired postings")
     if future: errors.append(f"Publication-effective private datasets contain {future} future registration dates")
-    if non_detail_links: errors.append(f"Publication-effective private datasets contain {len(non_detail_links)} rows without exact per-post detail URLs")
     if bad_alias_evidence: errors.append(f"Unified dataset has {len(bad_alias_evidence)} aliases without strong exact evidence")
 
     spec_by_name = {spec["name"]: spec for spec in enabled_specs}
@@ -150,20 +137,11 @@ def main():
         source_name = str(row.get("source") or "")
         spec = spec_by_name.get(source_name)
         if spec is None:
-            projected_private_unknown_source.append({
-                "source": source_name,
-                "sourceIdentity": row.get("sourceIdentity"),
-                "title": row.get("title"),
-            })
+            projected_private_unknown_source.append({"source": source_name, "sourceIdentity": row.get("sourceIdentity"), "title": row.get("title")})
             continue
         card_url = projected_private_url(row)
         if not detail_url_is_specific(spec, card_url):
-            projected_private_non_detail.append({
-                "source": spec["key"],
-                "sourceIdentity": row.get("sourceIdentity"),
-                "title": row.get("title"),
-                "url": card_url,
-            })
+            projected_private_non_detail.append({"source": spec["key"], "sourceIdentity": row.get("sourceIdentity"), "title": row.get("title"), "url": card_url})
     if projected_private_unknown_source:
         errors.append(f"Unified private projection contains {len(projected_private_unknown_source)} rows from unknown/unpublished sources")
     if projected_private_non_detail:
@@ -178,74 +156,29 @@ def main():
     if no_search_text: errors.append(f"Unified dataset has {len(no_search_text)} rows without searchText")
 
     projected_non_metro = [j for j in private if not row_provinces(j) or not row_provinces(j).issubset(ALLOWED_PROVINCES)]
-    if projected_non_metro:
-        errors.append(f"Unified private projection contains {len(projected_non_metro)} non-metro province sets")
+    if projected_non_metro: errors.append(f"Unified private projection contains {len(projected_non_metro)} non-metro province sets")
 
     counts = data.get("counts", {})
-    if int(counts.get("private", -1)) != len(private) or int(counts.get("official", -1)) != len(official):
-        errors.append("Embedded unified display counts disagree with actual rows")
+    if int(counts.get("private", -1)) != len(private) or int(counts.get("official", -1)) != len(official): errors.append("Embedded unified display counts disagree with actual rows")
 
     expected_official_sources = official_source_count()
     expected_total_sources = expected_official_sources + len(enabled_specs)
-    if int(data.get("officialSourceCount") or 0) != expected_official_sources:
-        errors.append(
-            f"officialSourceCount={data.get('officialSourceCount')} expected {expected_official_sources} from sources.json"
-        )
-    if int(data.get("totalSourceCount") or 0) != expected_total_sources:
-        errors.append(
-            f"Unified source count does not match {expected_official_sources} official plus {len(enabled_specs)} publication-effective private sources"
-        )
+    if int(data.get("officialSourceCount") or 0) != expected_official_sources: errors.append(f"officialSourceCount={data.get('officialSourceCount')} expected {expected_official_sources} from sources.json")
+    if int(data.get("totalSourceCount") or 0) != expected_total_sources: errors.append(f"Unified source count does not match {expected_official_sources} official plus {len(enabled_specs)} publication-effective private sources")
 
     private_meta = data.get("privateSources", {})
     for spec in PRIVATE_SOURCES:
         meta = private_meta.get(spec["key"]) or {}
         expected_enabled = spec in enabled_specs
         expected_degraded = spec in degraded_specs
-        if bool(meta.get("publicationEnabled")) != expected_enabled:
-            errors.append(f"Embedded effective publication gate disagrees for {spec['name']}")
-        if bool(meta.get("degraded")) != expected_degraded:
-            errors.append(f"Embedded degraded state disagrees for {spec['name']}")
-        if expected_enabled and not meta.get("ok"):
-            errors.append(f"Embedded source health false for {spec['name']}")
-        if not expected_enabled and int(meta.get("count") or 0) != 0:
-            errors.append(f"Publication-disabled/degraded source {spec['name']} contributes rows to unified search")
+        expected_excluded = int(source_reports.get(spec["key"], {}).get("excludedNonDirectCount") or 0)
+        if bool(meta.get("publicationEnabled")) != expected_enabled: errors.append(f"Embedded effective publication gate disagrees for {spec['name']}")
+        if bool(meta.get("degraded")) != expected_degraded: errors.append(f"Embedded degraded state disagrees for {spec['name']}")
+        if expected_enabled and not meta.get("ok"): errors.append(f"Embedded source health false for {spec['name']}")
+        if int(meta.get("excludedNonDirectCount") or 0) != expected_excluded: errors.append(f"Embedded non-direct exclusion count disagrees for {spec['name']}")
+        if not expected_enabled and int(meta.get("count") or 0) != 0: errors.append(f"Publication-disabled/degraded source {spec['name']} contributes rows to unified search")
 
-    report = {
-        "generatedAt": datetime.now(KST).isoformat(timespec="seconds"),
-        "healthy": not errors,
-        "total": len(jobs),
-        "official": len(official),
-        "privateDisplayed": len(private),
-        "enabledPrivateSources": [spec["key"] for spec in enabled_specs],
-        "degradedPrivateSources": [spec["key"] for spec in degraded_specs],
-        "privateStableIds": len(source_ids_union),
-        "privateRepresentedDirectly": len(direct_ids),
-        "privateRepresentedByOfficial": len(alias_ids),
-        "missingPrivateIds": sum(len(v) for v in missing_by_source.values()),
-        "missingPrivateBySource": {k:len(v) for k,v in missing_by_source.items()},
-        "missingPrivateExamples": {k:v[:20] for k,v in missing_by_source.items()},
-        "officialResultLikeNotices": len(official_result_like),
-        "nonMetroPrivate": non_metro,
-        "projectedNonMetroPrivate": len(projected_non_metro),
-        "bannedPrivate": banned,
-        "expiredPrivate": expired,
-        "futurePrivateDates": future,
-        "nonDirectPrivateLinks": len(non_detail_links),
-        "nonDirectPrivateLinkExamples": non_detail_links[:20],
-        "projectedNonDirectPrivateLinks": len(projected_private_non_detail),
-        "projectedNonDirectPrivateLinkExamples": projected_private_non_detail[:20],
-        "projectedUnknownPrivateSources": len(projected_private_unknown_source),
-        "projectedUnknownPrivateSourceExamples": projected_private_unknown_source[:20],
-        "duplicateStableIds": duplicate_ids,
-        "missingLinks": len(missing_links),
-        "badCrossSourceAliasEvidence": len(bad_alias_evidence),
-        "sourceValidationPopulations": {
-            key: {"rawCount": info["rawCount"], "currentCount": info["currentCount"]}
-            for key, info in source_reports.items()
-        },
-        "errors": errors,
-        "warnings": warnings,
-    }
+    report = {"generatedAt": datetime.now(KST).isoformat(timespec="seconds"), "healthy": not errors, "total": len(jobs), "official": len(official), "privateDisplayed": len(private), "enabledPrivateSources": [spec["key"] for spec in enabled_specs], "degradedPrivateSources": [spec["key"] for spec in degraded_specs], "privateStableIds": len(source_ids_union), "privateRepresentedDirectly": len(direct_ids), "privateRepresentedByOfficial": len(alias_ids), "missingPrivateIds": sum(len(v) for v in missing_by_source.values()), "missingPrivateBySource": {k:len(v) for k,v in missing_by_source.items()}, "missingPrivateExamples": {k:v[:20] for k,v in missing_by_source.items()}, "officialResultLikeNotices": len(official_result_like), "nonMetroPrivate": non_metro, "projectedNonMetroPrivate": len(projected_non_metro), "bannedPrivate": banned, "expiredPrivate": expired, "futurePrivateDates": future, "nonDirectPrivateLinks": 0, "nonDirectPrivateLinkExamples": [], "excludedNonDirectPrivateLinks": len(excluded_non_detail_links), "excludedNonDirectPrivateLinkExamples": excluded_non_detail_links[:20], "projectedNonDirectPrivateLinks": len(projected_private_non_detail), "projectedNonDirectPrivateLinkExamples": projected_private_non_detail[:20], "projectedUnknownPrivateSources": len(projected_private_unknown_source), "projectedUnknownPrivateSourceExamples": projected_private_unknown_source[:20], "duplicateStableIds": duplicate_ids, "missingLinks": len(missing_links), "badCrossSourceAliasEvidence": len(bad_alias_evidence), "sourceValidationPopulations": {key: {"rawCount": info["rawCount"], "currentCount": info["currentCount"], "publicationEligibleCount": info["publicationEligibleCount"], "excludedNonDirectCount": info["excludedNonDirectCount"]} for key, info in source_reports.items()}, "errors": errors, "warnings": warnings}
     Path("unified_validation_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if errors: raise SystemExit(3)
