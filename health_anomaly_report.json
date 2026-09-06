@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-06T13:08:19+09:00",
+  "generatedAt": "2026-09-06T14:07:44+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-06T13:08:19+09:00",
+    "generatedAt": "2026-09-06T14:07:44+09:00",
     "official": {
       "datasetCount": 18898,
       "officialIdCount": 17817,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7527,
+      "publishedJobs": 7526,
       "officialDisplayed": 3072,
-      "privateDisplayed": 4455,
-      "privateDiscovered": 4467,
+      "privateDisplayed": 4454,
+      "privateDiscovered": 4466,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -241,13 +241,13 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 354,
-        "rawCount": 354,
-        "currentCount": 354,
+        "datasetCount": 353,
+        "rawCount": 353,
+        "currentCount": 353,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-04"
+        "latestRegistered": "2026-09-05"
       },
       "jobteacher": {
         "name": "잡티처",
@@ -289,7 +289,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-05T13:08:11+09:00",
+      "baselineAt": "2026-09-05T14:07:42+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18898,
@@ -302,9 +302,9 @@
           "changeRatio": -0.0203
         },
         "unified.publishedJobs": {
-          "current": 7527,
+          "current": 7526,
           "baseline": 7607,
-          "changeRatio": -0.0105
+          "changeRatio": -0.0106
         },
         "unified.officialDisplayed": {
           "current": 3072,
@@ -312,16 +312,16 @@
           "changeRatio": -0.0182
         },
         "unified.privateDiscovered": {
-          "current": 4467,
+          "current": 4466,
           "baseline": 4490,
-          "changeRatio": -0.0051
+          "changeRatio": -0.0053
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 354,
+          "current": 353,
           "baseline": 368,
-          "changeRatio": -0.038
+          "changeRatio": -0.0408
         },
         "jobteacher": {
           "current": 4036,
