@@ -60,13 +60,23 @@ def detail_url_is_specific(spec, url: str) -> bool:
     raw = str(url or "").strip()
     return any(re.search(pattern, raw, re.I) for pattern in patterns)
 
-def _lessoninfo_exact_link_coverage(spec) -> bool:
-    """Fail closed if the active-only Lessoninfo dataset contains an unbound detail row.
+def lessoninfo_culture_failclosed(row) -> bool:
+    """True for Lessoninfo culture rows that must remain searchable but non-clickable.
 
-    The resilient collector deliberately preserves fresh list-only culture postings when a detail
-    route cannot be proven. Keeping those rows in the canonical Lessoninfo dataset is useful for
-    recovery, but they must not enter the clickable unified search until every current row has an
-    exact per-post destination.
+    Lessoninfo's culture detail route is not a persistent cold-browser contract. The list row is
+    still useful evidence that a current opportunity exists, so publication health must not be
+    coupled to that unverified detail URL. This exception is intentionally surface-specific;
+    afterschool/nulbom rows still require an exact per-post wr_no route.
+    """
+    return str((row or {}).get("sourceSurface") or "") == "culture-arts"
+
+def _lessoninfo_exact_link_coverage(spec) -> bool:
+    """Require exact links for Lessoninfo surfaces whose public deep-link contract is verified.
+
+    Current culture-arts rows are allowed to publish only through the separate fail-closed path:
+    their stable IDs and searchable content survive, while the unified projection removes the
+    unverified individual URL. Afterschool/nulbom and any other Lessoninfo surface still fail the
+    source health gate when an exact per-post destination is missing.
     """
     try:
         data = json.loads(Path(spec["jobs"]).read_text(encoding="utf-8"))
@@ -74,6 +84,8 @@ def _lessoninfo_exact_link_coverage(spec) -> bool:
         if not rows:
             return False
         for row in rows:
+            if lessoninfo_culture_failclosed(row):
+                continue
             url = row.get("detailUrl") or row.get("originalUrl") or row.get("openUrl") or row.get("url") or ""
             if not detail_url_is_specific(spec, url):
                 return False
