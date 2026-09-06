@@ -17,6 +17,18 @@ RECRUIT_HINT_RE = re.compile(r"recruit|rcrt|채용", re.I)
 NON_GENERAL_RE = re.compile(r"/hunApi/(?:main|common)/|/logApi/|recomm(?:end)?Recruit|recommend", re.I)
 
 
+def compact_context(text: str, start: int, end: int, radius: int = 900) -> str:
+    """Keep a bounded public-bundle snippet around an API string for call-shape discovery.
+
+    The snippet is observational evidence only. It is intentionally bounded and whitespace-
+    normalized so future probes can identify method names, request payload keys, and pagination
+    parameters without treating a static bundle string as a qualifying live API request.
+    """
+    lo = max(0, start - radius)
+    hi = min(len(text), end + radius)
+    return re.sub(r"\s+", " ", text[lo:hi]).strip()[:2400]
+
+
 def main() -> int:
     generated_at = datetime.now(KST).isoformat(timespec="seconds")
     script_urls: list[str] = []
@@ -42,15 +54,27 @@ def main() -> int:
                 if not RECRUIT_HINT_RE.search(text):
                     return
                 matches = set()
+                contexts = []
+                seen_contexts = set()
                 for m in API_RE.finditer(text):
                     candidate = "/" + m.group(1).lstrip("/")
-                    if RECRUIT_HINT_RE.search(candidate):
-                        matches.add(candidate)
+                    if not RECRUIT_HINT_RE.search(candidate):
+                        continue
+                    matches.add(candidate)
+                    key = (candidate, m.start())
+                    if key in seen_contexts:
+                        continue
+                    seen_contexts.add(key)
+                    contexts.append({
+                        "apiCandidate": candidate,
+                        "context": compact_context(text, m.start(), m.end()),
+                    })
                 if matches:
                     script_findings.append({
                         "scriptUrl": resp.url,
                         "status": resp.status,
                         "apiCandidates": sorted(matches)[:200],
+                        "apiContexts": contexts[:80],
                     })
             except Exception as e:
                 errors.append(f"script response {resp.url}: {type(e).__name__}: {e}")
@@ -110,7 +134,7 @@ def main() -> int:
             "captchaBypassed": False,
             "publicationAttempted": False,
         },
-        "nextGate": "Treat bundle strings only as discovery hints. A candidate qualifies only after the rendered public recruitment view actually emits the request and pagination proves changing stable IDs plus an exhaustion boundary.",
+        "nextGate": "Use bundle contexts only to discover the rendered public general-list call shape. A candidate qualifies only after the public recruitment view actually emits the request and pagination proves changing stable IDs plus an exhaustion boundary.",
     }
     Path("hunjang_bundle_probe.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: report[k] for k in ("generatedAt", "publiclyReachable", "humanVerificationDetected", "scriptCount", "scriptsWithRecruitApiHints", "generalListApiStringCandidates", "nextGate")}, ensure_ascii=False))
