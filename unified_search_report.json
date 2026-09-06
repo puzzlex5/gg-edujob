@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T19:10:48+09:00",
+  "generatedAt": "2026-09-06T19:12:23+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 18902,
   "canonicalPrivateJobs": 4473,
@@ -75,6 +75,19 @@
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 1
+    },
+    "boramyc": {
+      "name": "시립보라매청소년센터",
+      "configuredPublicationEnabled": true,
+      "publicationEnabled": false,
+      "degraded": true,
+      "ok": false,
+      "candidateCount": 0,
+      "count": 0,
+      "lastVerifiedAt": null,
+      "missingAfterCount": null,
+      "detailErrorCount": null,
+      "displayedAsPrivate": 0
     }
   },
   "protectedOfficialIds": 17809,
@@ -82,6 +95,8 @@
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "review-only-never-auto-delete",
-  "degradedPrivateSources": [],
-  "allPublicationEnabledSourcesHealthy": true
+  "degradedPrivateSources": [
+    "boramyc"
+  ],
+  "allPublicationEnabledSourcesHealthy": false
 }
