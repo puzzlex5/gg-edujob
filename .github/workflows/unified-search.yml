@@ -14,6 +14,9 @@ on:
       - 'scripts/direct_post_links.py'
       - 'scripts/audit_direct_post_links.py'
       - 'scripts/apply_unified_frontend.py'
+      - 'scripts/crawl_seekle_instructor_jobs.py'
+      - 'seekle_jobs.json'
+      - 'seekle_reconciliation_report.json'
       - 'unified-ui.js'
       - 'mobile-ui.js'
       - 'direct-link-guard.js'
@@ -45,6 +48,8 @@ on:
       - 'gonggonggangsa_jobs.json'
       - 'gonggonggangsa_reconciliation_report.json'
       - 'gonggonggangsa_detail_link_report.json'
+      - 'seekle_jobs.json'
+      - 'seekle_reconciliation_report.json'
   workflow_run:
     workflows:
       - 'Update 수도권 education jobs'
@@ -52,6 +57,7 @@ on:
       - 'Update JobTeacher recruitment jobs'
       - 'Promote verified ArtMore jobs'
       - 'Update Gonggonggangsa jobs'
+      - 'Update Seekle instructor jobs'
     types: [completed]
   schedule:
     - cron: '47 * * * *'
@@ -82,7 +88,7 @@ jobs:
           python-version: '3.12'
       - name: Syntax check unified multi-source pipeline and UI
         run: |
-          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py
+          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py scripts/crawl_seekle_instructor_jobs.py
           node --check unified-ui.js
           node --check mobile-ui.js
           node --check direct-link-guard.js
@@ -97,7 +103,7 @@ jobs:
           private=private_source_keys()
           assert official > 0
           assert len(private) == len(set(private))
-          assert set(private) >= {'lessoninfo','jobteacher','artmore','gonggonggangsa'}
+          assert set(private) >= {'lessoninfo','jobteacher','artmore','gonggonggangsa','seekle'}
           print('registry check', official, private)
           PY
       - name: Build disposable multi-source unified candidate
@@ -163,6 +169,11 @@ jobs:
           assert not bad, f'non-metro private rows: {len(bad)}'
           unsafe=[j for j in d['jobs'] if j.get('detailLinkVerified') is not False and not is_direct_post(j)[0]]
           assert not unsafe, f'unsafe clickable posting links: {len(unsafe)}'
+          seekle=[j for j in d['jobs'] if j.get('sourceIdentity')=='seekle:21827']
+          assert len(seekle)==1
+          assert seekle[0].get('applyEnd')=='2026-09-18'
+          assert '강사' in seekle[0].get('searchText','') and '문화예술' in seekle[0].get('searchText','')
+          assert is_direct_post(seekle[0])[0]
           print('verified publication-gated multi-source unified publication',len(d['jobs']),official_count,sorted(enabled))
           PY
       - name: Commit verified search projection or diagnostics

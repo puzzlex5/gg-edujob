@@ -64,6 +64,13 @@ def is_direct_post(job: dict) -> tuple[bool, str]:
     if source == "공공강사" or sid.startswith("gonggonggangsa:"):
         return bool(re.search(r"/recruitments/\d+(?:/|$)", path)), "gonggonggangsa-detail-id"
 
+    if source == "시립광진청소년센터" or sid.startswith("seekle:"):
+        ident = _digits((q.get("idx") or [""])[0])
+        ptype = str((q.get("ptype") or [""])[0]).lower()
+        host = (p.hostname or "").lower()
+        exact_path = path.endswith("/sub07/sub01.php")
+        return bool(ident and ptype == "view" and host.endswith("seekle.or.kr") and exact_path), "seekle-detail-idx"
+
     if sid.startswith("goe-central:"):
         pb = _digits((q.get("pbancSn") or [""])[0])
         return bool(pb and not GENERIC_PATH_RE.search(path)), "goe-pbancSn"
@@ -82,10 +89,6 @@ def is_direct_post(job: dict) -> tuple[bool, str]:
         seq = _digits((q.get("job_seq") or [(job.get("openParams") or {}).get("job_seq") or ""])[0])
         return bool(seq and not GENERIC_PATH_RE.search(path)), "seoul-job-seq"
 
-    # Seoul support-office CMS postings use persistent numeric .html detail URLs.
-    # Some unified rows intentionally preserve them under an official-url:* stable
-    # identity, so classify by the trusted sen.go.kr host + exact CMS detail shape
-    # rather than relying on one sourceIdentity prefix.
     if _is_seoul_cms_detail(p):
         return True, "seoul-cms-detail"
 
@@ -121,6 +124,11 @@ def recover_direct_post(job: dict) -> tuple[str, str]:
         ident = _digits(sid.rsplit(":", 1)[-1])
         if ident and p.netloc:
             return f"{p.scheme or 'https'}://{p.netloc}/recruitments/{ident}", "gonggonggangsa-source-id"
+
+    if source == "시립광진청소년센터" or sid.startswith("seekle:"):
+        ident = _digits(sid.rsplit(":", 1)[-1])
+        if ident:
+            return f"https://www.seekle.or.kr/sub07/sub01.php?code=notice0&idx={ident}&ptype=view", "seekle-source-id"
 
     if sid.startswith("mircms:"):
         parts = sid.split(":")

@@ -21,9 +21,13 @@ def canonical_url_multi(raw):
     try:
         p = urlparse(str(raw))
         q = parse_qs(p.query, keep_blank_values=True)
+        host = (p.hostname or "").lower()
         rec = str((q.get("rec_idx") or [""])[0])
-        if rec.isdigit() and (p.hostname or "").lower().endswith("artmore.kr"):
+        if rec.isdigit() and host.endswith("artmore.kr"):
             return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"rec_idx": rec}), ""))
+        idx = str((q.get("idx") or [""])[0])
+        if idx.isdigit() and host.endswith("seekle.or.kr") and p.path.endswith("/sub07/sub01.php"):
+            return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"idx": idx, "ptype": "view"}), ""))
     except Exception:
         pass
     return _BASE_CANONICAL_URL(raw)
