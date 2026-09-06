@@ -76,12 +76,12 @@ jobs:
         run: |
           python scripts/verify_central_pagination.py
           python scripts/stamp_reconciliation_scan.py --central
+      - name: Refresh independent Gyeonggi 90-day evidence
+        run: python scripts/verify_gyeonggi_central_90d.py
       - name: Crawl official IDs and recover missing source occurrences
         run: |
           python scripts/reconcile_source_ids.py
           python scripts/stamp_reconciliation_scan.py --reconciliation
-      - name: Refresh independent Gyeonggi 90-day evidence
-        run: python scripts/verify_gyeonggi_central_90d.py
       - name: Require current reconciliation population policy
         run: |
           # A targeted-restore report belongs to the ledger scan that produced it. It is not
@@ -101,28 +101,28 @@ jobs:
           from pathlib import Path
           p=Path('gyeonggi_central_90d_report.json')
           if not p.exists() or p.stat().st_size < 100:
-              raise SystemExit('Independent Gyeonggi 90-day proof artifact missing')
+            raise SystemExit('Independent Gyeonggi 90-day proof artifact missing')
           r=json.loads(p.read_text(encoding='utf-8'))
           if not r.get('complete'):
-              raise SystemExit(f'Independent Gyeonggi 90-day proof incomplete: {r}')
+            raise SystemExit(f'Independent Gyeonggi 90-day proof incomplete: {r}')
           recon=json.loads(Path('source_reconciliation_report.json').read_text(encoding='utf-8'))
           gg=next((x for x in recon.get('sources',[]) if x.get('name')=='경기도교육청 통합 구인구직'), None)
           if not gg:
-              raise SystemExit('Gyeonggi central reconciliation source missing')
+            raise SystemExit('Gyeonggi central reconciliation source missing')
           kst=timezone(timedelta(hours=9))
           fmt='%Y-%m-%d %H:%M:%S KST'
           try:
-              rt=datetime.strptime(recon.get('generatedAt',''), fmt).replace(tzinfo=kst)
-              gt=datetime.strptime(r.get('generatedAt',''), fmt).replace(tzinfo=kst)
+            rt=datetime.strptime(recon.get('generatedAt',''), fmt).replace(tzinfo=kst)
+            gt=datetime.strptime(r.get('generatedAt',''), fmt).replace(tzinfo=kst)
           except Exception as exc:
-              raise SystemExit(f'Cannot bind persistent Gyeonggi proof timestamps: {type(exc).__name__}')
+            raise SystemExit(f'Cannot bind persistent Gyeonggi proof timestamps: {type(exc).__name__}')
           skew=abs((gt-rt).total_seconds())/60
           if skew > 45:
-              raise SystemExit(f'Persistent Gyeonggi proof outside audit window: {skew:.1f} minutes')
+            raise SystemExit(f'Persistent Gyeonggi proof outside audit window: {skew:.1f} minutes')
           print('Persistent Gyeonggi 90-day proof present', {
-              'independent': r.get('stableIdCount'),
-              'reconciliation': gg.get('officialIdCount'),
-              'skewMinutes': round(skew,2),
+            'independent': r.get('stableIdCount'),
+            'reconciliation': gg.get('officialIdCount'),
+            'skewMinutes': round(skew,2),
           })
           PY
           python scripts/verify_central_reconciliation_consistency.py
@@ -156,16 +156,16 @@ jobs:
           reconciled=int(s.get('reconciledSources') or 0)
           total=int(s.get('totalSources') or 0)
           if total != expected or reconciled != expected:
-              raise SystemExit(
-                  f'Registry reconciliation incomplete: expected={expected}, reconciled={reconciled}, total={total}, summary={s}'
-              )
+            raise SystemExit(
+              f'Registry reconciliation incomplete: expected={expected}, reconciled={reconciled}, total={total}, summary={s}'
+            )
           c=json.loads(Path('central_pagination_report.json').read_text(encoding='utf-8'))
           if not c.get('complete'):
-              raise SystemExit(f'Central pagination proof incomplete: {c}')
+            raise SystemExit(f'Central pagination proof incomplete: {c}')
           restore=json.loads(Path('official_id_restore_report.json').read_text(encoding='utf-8'))
           rs=restore.get('summary',{})
           if int(rs.get('missingAfter') or 0):
-              raise SystemExit(f'Official IDs lost after enrichment: {rs}')
+            raise SystemExit(f'Official IDs lost after enrichment: {rs}')
           print('Official source-ID reconciliation passed', s, 'finalRestore', rs)
           PY
           python scripts/verify_central_reconciliation_consistency.py
