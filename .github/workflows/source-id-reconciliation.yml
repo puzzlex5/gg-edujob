@@ -76,12 +76,12 @@ jobs:
         run: |
           python scripts/verify_central_pagination.py
           python scripts/stamp_reconciliation_scan.py --central
+      - name: Refresh independent Gyeonggi 90-day evidence
+        run: python scripts/verify_gyeonggi_central_90d.py
       - name: Crawl official IDs and recover missing source occurrences
         run: |
           python scripts/reconcile_source_ids.py
           python scripts/stamp_reconciliation_scan.py --reconciliation
-      - name: Refresh independent Gyeonggi 90-day evidence
-        run: python scripts/verify_gyeonggi_central_90d.py
       - name: Require current reconciliation population policy
         run: |
           # A targeted-restore report belongs to the ledger scan that produced it. It is not
