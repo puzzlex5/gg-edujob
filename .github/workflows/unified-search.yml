@@ -15,8 +15,11 @@ on:
       - 'scripts/audit_direct_post_links.py'
       - 'scripts/apply_unified_frontend.py'
       - 'scripts/crawl_seekle_instructor_jobs.py'
+      - 'scripts/crawl_boramyc_instructor_jobs.py'
       - 'seekle_jobs.json'
       - 'seekle_reconciliation_report.json'
+      - 'boramyc_jobs.json'
+      - 'boramyc_reconciliation_report.json'
       - 'unified-ui.js'
       - 'mobile-ui.js'
       - 'direct-link-guard.js'
@@ -50,6 +53,8 @@ on:
       - 'gonggonggangsa_detail_link_report.json'
       - 'seekle_jobs.json'
       - 'seekle_reconciliation_report.json'
+      - 'boramyc_jobs.json'
+      - 'boramyc_reconciliation_report.json'
   workflow_run:
     workflows:
       - 'Update 수도권 education jobs'
@@ -58,6 +63,7 @@ on:
       - 'Promote verified ArtMore jobs'
       - 'Update Gonggonggangsa jobs'
       - 'Update Seekle instructor jobs'
+      - 'Update Boramae instructor jobs'
     types: [completed]
   schedule:
     - cron: '47 * * * *'
@@ -88,7 +94,7 @@ jobs:
           python-version: '3.12'
       - name: Syntax check unified multi-source pipeline and UI
         run: |
-          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py scripts/crawl_seekle_instructor_jobs.py
+          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py scripts/crawl_seekle_instructor_jobs.py scripts/crawl_boramyc_instructor_jobs.py
           node --check unified-ui.js
           node --check mobile-ui.js
           node --check direct-link-guard.js
@@ -99,11 +105,10 @@ jobs:
           sys.path.insert(0,'scripts')
           from source_registry import official_source_count
           from private_source_registry import private_source_keys
-          official=official_source_count()
-          private=private_source_keys()
+          official=official_source_count(); private=private_source_keys()
           assert official > 0
           assert len(private) == len(set(private))
-          assert set(private) >= {'lessoninfo','jobteacher','artmore','gonggonggangsa','seekle'}
+          assert set(private) >= {'lessoninfo','jobteacher','artmore','gonggonggangsa','seekle','boramyc'}
           print('registry check', official, private)
           PY
       - name: Build disposable multi-source unified candidate
@@ -141,11 +146,9 @@ jobs:
           from direct_post_links import is_direct_post
           d=json.load(open('unified_jobs.json',encoding='utf-8'))
           assert d.get('dataset') == 'unified-search-v3-multi-private'
-          private=d.get('privateSources',{})
-          expected=set(private_source_keys())
+          private=d.get('privateSources',{}); expected=set(private_source_keys())
           assert set(private) == expected, (set(private), expected)
-          official_count=official_source_count()
-          assert int(d.get('officialSourceCount') or 0) == official_count
+          official_count=official_source_count(); assert int(d.get('officialSourceCount') or 0) == official_count
           enabled={k for k,v in private.items() if (v or {}).get('publicationEnabled') is True}
           assert d.get('totalSourceCount') == official_count + len(enabled), (d.get('totalSourceCount'), official_count, enabled)
           assert all((private[k] or {}).get('ok') for k in enabled)
@@ -161,8 +164,7 @@ jobs:
           allowed={'서울','경기'}
           def provinces(j):
               ps={str(x) for x in (j.get('provinces') or []) if str(x)}
-              if ps:
-                  return ps
+              if ps: return ps
               p=str(j.get('province') or '')
               return {p} if p else set()
           bad=[j for j in d['jobs'] if j.get('feedKind')=='private' and (not provinces(j) or not provinces(j).issubset(allowed))]
@@ -170,10 +172,14 @@ jobs:
           unsafe=[j for j in d['jobs'] if j.get('detailLinkVerified') is not False and not is_direct_post(j)[0]]
           assert not unsafe, f'unsafe clickable posting links: {len(unsafe)}'
           seekle=[j for j in d['jobs'] if j.get('sourceIdentity')=='seekle:21827']
-          assert len(seekle)==1
-          assert seekle[0].get('applyEnd')=='2026-09-18'
-          assert '강사' in seekle[0].get('searchText','') and '문화예술' in seekle[0].get('searchText','')
-          assert is_direct_post(seekle[0])[0]
+          assert len(seekle)==1 and seekle[0].get('applyEnd')=='2026-09-18'
+          assert '강사' in seekle[0].get('searchText','') and '문화예술' in seekle[0].get('searchText','') and is_direct_post(seekle[0])[0]
+          if 'boramyc' in enabled:
+              boramyc=[j for j in d['jobs'] if j.get('sourceIdentity')=='boramyc:25441']
+              assert len(boramyc)==1
+              assert boramyc[0].get('applyEnd')=='2026-09-10'
+              assert '강사' in boramyc[0].get('searchText','') and '당구' in boramyc[0].get('searchText','') and '체육' in boramyc[0].get('searchText','')
+              assert is_direct_post(boramyc[0])[0]
           print('verified publication-gated multi-source unified publication',len(d['jobs']),official_count,sorted(enabled))
           PY
       - name: Commit verified search projection or diagnostics
