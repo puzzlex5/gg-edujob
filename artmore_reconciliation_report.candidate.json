@@ -1,39 +1,27 @@
 {
-  "generatedAt": "2026-09-06T13:56:10+09:00",
+  "generatedAt": "2026-09-06T15:58:07+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
   "healthy": false,
   "traversalComplete": false,
-  "candidateIdCount": 9,
-  "publishedIdCount": 9,
+  "candidateIdCount": 0,
+  "publishedIdCount": 0,
   "missingAfterCount": 0,
   "missingAfter": [],
-  "sourceReports": [
-    {
-      "region": "경기",
-      "code": "2083",
-      "pagesVisited": 1,
-      "ids": 9,
-      "pages": [
-        {
-          "page": 1,
-          "rowCount": 9,
-          "newIdCount": 9,
-          "firstId": "94870",
-          "lastId": "94817"
-        }
-      ]
-    }
-  ],
+  "sourceReports": [],
   "errors": [
     {
       "region": "서울",
+      "error": "RuntimeError: ended row on current-only surface: 94880 (주) 백암아트홀 종료 백암아트홀과 함께할 하우스 안내원을 모집합니다. 경력무관 학력무관 서울 강남구 테헤란로113길 7 (삼성동) 시급 10,500원 ~ 17,000원 시간선택제 주3일 D-14 2026-09-05 등록 2026-09-20 마감 19"
+    },
+    {
+      "region": "경기",
       "error": "RuntimeError: area filter lost after current-only submit"
     },
     {
       "region": "all",
-      "error": "suspicious drop: previous=20 current=9"
+      "error": "suspicious drop: previous=20 current=0"
     }
   ],
   "regionsAllowed": [
