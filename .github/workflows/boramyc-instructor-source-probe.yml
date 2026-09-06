@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install --disable-pip-version-check requests beautifulsoup4
-      - name: Verify list identity, exact detail and live deadline
+      - name: Verify complete list traversal, exact detail and live deadline
         run: |
           python - <<'PY'
           import json,re
@@ -31,15 +31,27 @@ jobs:
           target='시립보라매청소년센터 생활체육(당구) 강사 채용 공고'; s=requests.Session()
           def get(url,**kw):
               r=s.get(url,headers=H,timeout=30,allow_redirects=True,**kw); print('HTTP',r.status_code,r.url,'bytes',len(r.text)); r.raise_for_status(); return r
-          rows={}; page_sets=[]
-          for page in range(1,5):
+          rows={}; page_sets=[]; seen_sets={}; terminal=''; max_declared=1
+          for page in range(1,61):
               r=get(LIST,params={'code':'notice','page':page}); soup=BeautifulSoup(r.text,'html.parser'); ids=set()
               for a in soup.find_all('a',href=True):
                   title=re.sub(r'\s+',' ',a.get_text(' ',strip=True)).strip(); href=urljoin(r.url,a.get('href') or ''); q=parse_qs(urlparse(href).query)
+                  pg=str((q.get('page') or [''])[0]);
+                  if pg.isdigit(): max_declared=max(max_declared,int(pg))
                   idx=str((q.get('idx') or [''])[0]); ptype=str((q.get('ptype') or [''])[0])
                   if idx.isdigit() and ptype=='view' and title: ids.add(idx); rows[idx]=(title,href)
-              print('PAGE',page,'IDS',sorted(ids)[:10],'count',len(ids));
-              if ids: page_sets.append(ids)
+              print('PAGE',page,'IDS',sorted(ids)[:10],'count',len(ids),'max_declared',max_declared)
+              if not ids:
+                  terminal='empty-page'; break
+              frozen=frozenset(ids)
+              if frozen in seen_sets:
+                  terminal=f'repeated-page:{seen_sets[frozen]}->{page}'; break
+              seen_sets[frozen]=page; page_sets.append(ids)
+              if page>max_declared and page>=2:
+                  terminal='past-declared-last-page'; break
+          if not terminal: raise SystemExit('FAIL complete traversal terminal condition not reached before page cap')
+          if not page_sets or len(set().union(*page_sets))<=len(page_sets[0]): raise SystemExit('FAIL pagination/stable-id traversal not demonstrated')
+          if len(page_sets)<max_declared: raise SystemExit(f'FAIL traversal stopped before declared last page {max_declared}')
           matches=[(idx,title,href) for idx,(title,href) in rows.items() if target in title]; print('MATCHES',json.dumps(matches,ensure_ascii=False))
           if len(matches)!=1: raise SystemExit('FAIL target row identity not unique')
           idx,title,href=matches[0]; r=get(href); q=parse_qs(urlparse(r.url).query); final_idx=str((q.get('idx') or [idx])[0])
@@ -47,6 +59,5 @@ jobs:
           if final_idx!=idx or target not in text: raise SystemExit('FAIL exact detail identity mismatch')
           deadline_ok=bool(re.search(r'접수기간\s*:\s*2026\D*8\D*26[^0-9]{0,30}(?:~|부터)[^0-9]{0,30}(?:2026\D*)?9\D*10',text,re.I))
           if not deadline_ok: raise SystemExit('FAIL official 2026-09-10 deadline not found')
-          if not page_sets or len(set().union(*page_sets))<=len(page_sets[0]): raise SystemExit('FAIL pagination/stable-id traversal not demonstrated')
-          print('PASS',json.dumps({'idx':idx,'url':r.url,'deadline':'2026-09-10','pages':len(page_sets),'ids':len(rows)},ensure_ascii=False))
+          print('PASS',json.dumps({'idx':idx,'url':r.url,'deadline':'2026-09-10','pages':len(page_sets),'ids':len(rows),'maxDeclaredPage':max_declared,'terminal':terminal},ensure_ascii=False))
           PY
