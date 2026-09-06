@@ -28,8 +28,37 @@ jobs:
       - name: Unit-test supervisor policy
         run: python -m unittest tests/test_autonomous_supervisor.py
 
+      - name: Prepare authoritative deep-audit evidence
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          src = Path('deep_audit_status.json')
+          dst = Path('deep_audit_status.supervisor.json')
+          deep = json.loads(src.read_text(encoding='utf-8')) if src.exists() else {}
+          evidence = deep.get('effectiveEvidence') or {}
+          proof = deep.get('effectiveProof') or ''
+          reconciled = int(evidence.get('reconciledSources') or 0)
+          total = int(evidence.get('totalSources') or 0)
+          authoritative_complete = (
+              proof == '38-source-reconciliation'
+              and evidence.get('currentComplete') is True
+              and total > 0
+              and reconciled == total
+              and int(evidence.get('missingAfter') or 0) == 0
+              and int(evidence.get('missingOfficialIdsFromCurrentDataset') or 0) == 0
+              and evidence.get('centralPaginationComplete') is True
+          )
+          if authoritative_complete:
+              evidence['supportCoverageCurrentComplete'] = True
+              deep['effectiveEvidence'] = evidence
+          dst.write_text(json.dumps(deep, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
       - name: Build one-action repair plan
-        run: python scripts/autonomous_supervisor.py plan --state agent_status.json --output agent_plan.json
+        run: python scripts/autonomous_supervisor.py plan --deep deep_audit_status.supervisor.json --state agent_status.json --output agent_plan.json
 
       - name: Publish plan to workflow summary
         shell: bash
