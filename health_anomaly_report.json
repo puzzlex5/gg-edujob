@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T02:07:10+09:00",
-  "status": "healthy",
-  "healthy": true,
+  "generatedAt": "2026-09-07T03:09:23+09:00",
+  "status": "critical",
+  "healthy": false,
   "snapshot": {
-    "generatedAt": "2026-09-07T02:07:10+09:00",
+    "generatedAt": "2026-09-07T03:09:23+09:00",
     "official": {
       "datasetCount": 18668,
       "officialIdCount": 17543,
@@ -12,19 +12,19 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7403,
+      "publishedJobs": 7319,
       "officialDisplayed": 2944,
-      "privateDisplayed": 4459,
-      "privateDiscovered": 4470,
+      "privateDisplayed": 4375,
+      "privateDiscovered": 4386,
       "officialPrivateAliases": 11,
-      "healthy": true,
+      "healthy": false,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
       "bannedPrivate": 0,
       "expiredPrivate": 0,
       "futurePrivateDates": 0,
       "duplicateStableIds": 0,
-      "missingLinks": 0,
+      "missingLinks": 135,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
         "lessoninfo",
@@ -239,9 +239,9 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 353,
-        "rawCount": 353,
-        "currentCount": 353,
+        "datasetCount": 269,
+        "rawCount": 269,
+        "currentCount": 269,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -311,7 +311,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T02:07:18+09:00",
+      "baselineAt": "2026-09-06T03:09:14+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18668,
@@ -324,9 +324,9 @@
           "changeRatio": -0.0153
         },
         "unified.publishedJobs": {
-          "current": 7403,
+          "current": 7319,
           "baseline": 7515,
-          "changeRatio": -0.0149
+          "changeRatio": -0.0261
         },
         "unified.officialDisplayed": {
           "current": 2944,
@@ -334,16 +334,16 @@
           "changeRatio": -0.0379
         },
         "unified.privateDiscovered": {
-          "current": 4470,
+          "current": 4386,
           "baseline": 4467,
-          "changeRatio": 0.0007
+          "changeRatio": -0.0181
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 353,
+          "current": 269,
           "baseline": 354,
-          "changeRatio": -0.0028
+          "changeRatio": -0.2401
         },
         "jobteacher": {
           "current": 4036,
@@ -375,8 +375,39 @@
     "7d": null,
     "30d": null
   },
-  "anomalies": [],
-  "criticalCount": 0,
+  "anomalies": [
+    {
+      "severity": "critical",
+      "code": "unified-search-integrity-failed",
+      "message": "통합검색 검증이 정상 기준을 통과하지 못했습니다.",
+      "evidence": {
+        "publishedJobs": 7319,
+        "officialDisplayed": 2944,
+        "privateDisplayed": 4375,
+        "privateDiscovered": 4386,
+        "officialPrivateAliases": 11,
+        "healthy": false,
+        "missingPrivateIds": 0,
+        "nonMetroPrivate": 0,
+        "bannedPrivate": 0,
+        "expiredPrivate": 0,
+        "futurePrivateDates": 0,
+        "duplicateStableIds": 0,
+        "missingLinks": 135,
+        "badCrossSourceAliasEvidence": 0,
+        "enabledPrivateSources": [
+          "lessoninfo",
+          "jobteacher",
+          "artmore",
+          "gonggonggangsa",
+          "seekle",
+          "boramyc"
+        ],
+        "degradedPrivateSources": []
+      }
+    }
+  ],
+  "criticalCount": 1,
   "warningCount": 0,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; trend drops/stalls are warnings until independently verified"
 }
