@@ -1,0 +1,31 @@
+name: Probe edupre full traversal
+
+on:
+  push:
+    branches: [probe/edupre-full-traversal-v2]
+    paths:
+      - 'scripts/probe_edupre_full_traversal.py'
+      - '.github/workflows/probe-edupre-full-traversal.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe complete public pagination and stable details
+        run: python scripts/probe_edupre_full_traversal.py
+      - name: Upload traversal report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: edupre-full-traversal-report
+          path: edupre_full_traversal_report.json
+          if-no-files-found: warn
