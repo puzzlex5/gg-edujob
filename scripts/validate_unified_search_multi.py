@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from build_unified_search import RESULT_RE, private_current
-from private_source_registry import PRIVATE_SOURCES, detail_url_is_specific, publication_enabled, source_health
+from private_source_registry import PRIVATE_SOURCES, detail_url_is_specific, lessoninfo_culture_failclosed, publication_enabled, source_health
 from source_registry import official_source_count
 
 KST = timezone(timedelta(hours=9))
@@ -51,6 +51,14 @@ def projected_private_url(row):
     return row.get("url") or row.get("originalUrl") or row.get("openUrl") or row.get("detailUrl") or ""
 
 
+def is_failclosed_lessoninfo_culture(row, spec=None):
+    if spec is not None and spec.get("key") != "lessoninfo":
+        return False
+    if spec is None and str((row or {}).get("source") or "") != "레슨인포":
+        return False
+    return lessoninfo_culture_failclosed(row)
+
+
 def main():
     data = load("unified_jobs.next.json", {})
     jobs = data.get("jobs", [])
@@ -81,6 +89,7 @@ def main():
     degraded_specs = []
     non_metro = banned = expired = future = 0
     non_detail_links = []
+    failclosed_links = []
     for spec in PRIVATE_SOURCES:
         raw_src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
@@ -124,12 +133,19 @@ def main():
                 non_metro += 1
             detail_url = j.get("detailUrl") or j.get("originalUrl") or j.get("openUrl") or j.get("url") or ""
             if not detail_url_is_specific(spec, detail_url):
-                non_detail_links.append({
-                    "source": spec["key"],
-                    "sourceIdentity": j.get("sourceIdentity"),
-                    "title": j.get("title"),
-                    "url": detail_url,
-                })
+                if is_failclosed_lessoninfo_culture(j, spec):
+                    failclosed_links.append({
+                        "source": spec["key"],
+                        "sourceIdentity": j.get("sourceIdentity"),
+                        "title": j.get("title"),
+                    })
+                else:
+                    non_detail_links.append({
+                        "source": spec["key"],
+                        "sourceIdentity": j.get("sourceIdentity"),
+                        "title": j.get("title"),
+                        "url": detail_url,
+                    })
         banned += sum(1 for j in src if BANNED.search(str(j.get("title") or "")) or PROMO_ONLY.search(str(j.get("title") or "")))
         expired += sum(1 for j in src if parse_date(j.get("applyEnd")) and parse_date(j.get("applyEnd")) < TODAY)
         future += sum(1 for j in src if parse_date(j.get("registered")) and parse_date(j.get("registered")) > TODAY)
@@ -145,6 +161,7 @@ def main():
 
     spec_by_name = {spec["name"]: spec for spec in enabled_specs}
     projected_private_non_detail = []
+    projected_failclosed_links = []
     projected_private_unknown_source = []
     for row in private:
         source_name = str(row.get("source") or "")
@@ -158,12 +175,23 @@ def main():
             continue
         card_url = projected_private_url(row)
         if not detail_url_is_specific(spec, card_url):
-            projected_private_non_detail.append({
-                "source": spec["key"],
-                "sourceIdentity": row.get("sourceIdentity"),
-                "title": row.get("title"),
-                "url": card_url,
-            })
+            if is_failclosed_lessoninfo_culture(row, spec):
+                if card_url:
+                    errors.append(f"Fail-closed Lessoninfo culture row exposes a URL: {row.get('sourceIdentity')}")
+                if row.get("detailLinkVerified") is not False:
+                    errors.append(f"Fail-closed Lessoninfo culture row is not marked non-clickable: {row.get('sourceIdentity')}")
+                projected_failclosed_links.append({
+                    "source": spec["key"],
+                    "sourceIdentity": row.get("sourceIdentity"),
+                    "title": row.get("title"),
+                })
+            else:
+                projected_private_non_detail.append({
+                    "source": spec["key"],
+                    "sourceIdentity": row.get("sourceIdentity"),
+                    "title": row.get("title"),
+                    "url": card_url,
+                })
     if projected_private_unknown_source:
         errors.append(f"Unified private projection contains {len(projected_private_unknown_source)} rows from unknown/unpublished sources")
     if projected_private_non_detail:
@@ -172,7 +200,11 @@ def main():
     ids = [str(j.get("sourceIdentity") or "") for j in jobs if j.get("sourceIdentity")]
     duplicate_ids = len(ids) - len(set(ids))
     if duplicate_ids: errors.append(f"Unified dataset has {duplicate_ids} duplicate primary stable identities")
-    missing_links = [j for j in jobs if not (j.get("url") or j.get("originalUrl") or (j.get("openUrl") and j.get("openParams")))]
+    missing_links = [
+        j for j in jobs
+        if not (j.get("url") or j.get("originalUrl") or (j.get("openUrl") and j.get("openParams")))
+        and not is_failclosed_lessoninfo_culture(j)
+    ]
     if missing_links: errors.append(f"Unified dataset has {len(missing_links)} rows without usable links")
     no_search_text = [j for j in jobs if not str(j.get("searchText") or "").strip()]
     if no_search_text: errors.append(f"Unified dataset has {len(no_search_text)} rows without searchText")
@@ -232,8 +264,12 @@ def main():
         "futurePrivateDates": future,
         "nonDirectPrivateLinks": len(non_detail_links),
         "nonDirectPrivateLinkExamples": non_detail_links[:20],
+        "failClosedLessoninfoCultureLinks": len(failclosed_links),
+        "failClosedLessoninfoCultureLinkExamples": failclosed_links[:20],
         "projectedNonDirectPrivateLinks": len(projected_private_non_detail),
         "projectedNonDirectPrivateLinkExamples": projected_private_non_detail[:20],
+        "projectedFailClosedLessoninfoCultureLinks": len(projected_failclosed_links),
+        "projectedFailClosedLessoninfoCultureLinkExamples": projected_failclosed_links[:20],
         "projectedUnknownPrivateSources": len(projected_private_unknown_source),
         "projectedUnknownPrivateSourceExamples": projected_private_unknown_source[:20],
         "duplicateStableIds": duplicate_ids,
