@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T14:28:36+09:00",
+  "generatedAt": "2026-09-06T15:34:09+09:00",
   "source": "훈장마을",
   "publiclyReachable": true,
   "humanVerificationDetected": false,
@@ -34,14 +34,6 @@
       ]
     },
     {
-      "scriptUrl": "https://www.hunjang.com/assets/popRecruitPreview.9df19607.js",
-      "status": 200,
-      "apiCandidates": [
-        "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
-        "/hunApi/main/recruitSimpleDetail"
-      ]
-    },
-    {
       "scriptUrl": "https://www.hunjang.com/assets/popTodayView.f681e665.js",
       "status": 200,
       "apiCandidates": [
@@ -55,6 +47,14 @@
       "apiCandidates": [
         "/hunApi/instructor/recommRecruit/recruitCount",
         "/hunApi/main/prchsMainRecruitCnt"
+      ]
+    },
+    {
+      "scriptUrl": "https://www.hunjang.com/assets/popRecruitPreview.9df19607.js",
+      "status": 200,
+      "apiCandidates": [
+        "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
+        "/hunApi/main/recruitSimpleDetail"
       ]
     },
     {
