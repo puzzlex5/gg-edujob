@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-06 18:11 KST",
+    "checkedAt": "2026-09-06 18:34 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7426,
-      "resolved": 7426,
+      "total": 7425,
+      "resolved": 7425,
       "unresolved": 0,
       "examples": []
     },
@@ -1031,7 +1031,7 @@
       ]
     },
     "previousTotal": 18902,
-    "currentTotal": 18902
+    "currentTotal": 18901
   },
   "jobs": [
     {
@@ -152316,37 +152316,6 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
-    },
-    {
-      "id": "goe-office2-ca5ecba43ea6a22378",
-      "province": "경기",
-      "school": "초등학교",
-      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
-      "subject": "",
-      "region": "시흥시",
-      "regions": [
-        "시흥시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "초등학교",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/08/18",
-      "headcount": "",
-      "source": "시흥교육지원청",
-      "checkedSources": [
-        "시흥교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
-      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
-      "detailLinkResolved": true,
-      "nttSn": "527414",
-      "bbsId": "5511",
-      "mi": "9003",
-      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -524779,11 +524748,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-06 18:09 KST",
+    "checkedAt": "2026-09-06 18:33 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-06 18:09 KST",
+    "checkedAt": "2026-09-06 18:33 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -524824,5 +524793,13 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-06 18:33:11 KST",
+    "ledgerScanId": "20260906T071705Z-34018709104-1",
+    "protectedOfficialIds": 17813,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
