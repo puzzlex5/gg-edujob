@@ -272,7 +272,7 @@
   },
   "reconciliation": {
     "state": "success",
-    "updatedAt": "2026-09-07T02:58:14+09:00",
+    "updatedAt": "2026-09-07T03:30:02+09:00",
     "jobsCount": 18667,
     "artifacts": {
       "jobLedger": true,
@@ -286,16 +286,16 @@
     },
     "artifactGeneratedAt": {
       "coverageReport": "2026-09-05T23:18:42.357696+00:00",
-      "sourceReconciliationReport": "2026-09-07 02:31:06 KST",
-      "sourceIdLedger": "2026-09-07 02:31:06 KST",
-      "centralPaginationReport": "2026-09-07 02:54:42 KST",
+      "sourceReconciliationReport": "2026-09-07 03:04:08 KST",
+      "sourceIdLedger": "2026-09-07 03:04:08 KST",
+      "centralPaginationReport": "2026-09-07 03:26:50 KST",
       "missingRecoveryReport": "",
       "boardDiscoveryReport": "",
       "collectionState": "2026-09-07 02:03:32 KST"
     },
     "coverageEvidence": {
       "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-      "ageHours": 18.66,
+      "ageHours": 19.19,
       "freshWithinHours": 30,
       "fresh": true,
       "gyeonggiComplete": 25,
@@ -313,7 +313,7 @@
       "proof": "38-source-reconciliation",
       "supportCoverage": {
         "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-        "ageHours": 18.66,
+        "ageHours": 19.19,
         "freshWithinHours": 30,
         "fresh": true,
         "gyeonggiComplete": 25,
@@ -330,22 +330,22 @@
         "currentComplete": false
       },
       "sourceReconciliation": {
-        "generatedAt": "2026-09-07 02:31:06 KST",
-        "ageHours": 0.45,
+        "generatedAt": "2026-09-07 03:04:08 KST",
+        "ageHours": 0.43,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
         "totalSources": 38,
         "missingAfter": 0,
         "centralPaginationComplete": true,
-        "centralGeneratedAt": "2026-09-07 02:54:42 KST",
-        "centralAgeHours": 0.06,
+        "centralGeneratedAt": "2026-09-07 03:26:50 KST",
+        "centralAgeHours": 0.05,
         "ledgerPresent": true,
-        "ledgerGeneratedAt": "2026-09-07 02:31:06 KST",
-        "ledgerAgeHours": 0.45,
+        "ledgerGeneratedAt": "2026-09-07 03:04:08 KST",
+        "ledgerAgeHours": 0.43,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
-        "reportCentralSkewHours": 0.393,
+        "reportCentralSkewHours": 0.378,
         "requiredOfficialIds": 17543,
         "currentMatchedOfficialIds": 17543,
         "missingOfficialIdsFromCurrentDataset": 0,
@@ -357,7 +357,7 @@
       }
     },
     "stage": "complete",
-    "lastSuccessAt": "2026-09-07T02:58:14+09:00",
+    "lastSuccessAt": "2026-09-07T03:30:02+09:00",
     "lastFailureAt": "2026-09-07T02:13:26+09:00"
   }
 }
