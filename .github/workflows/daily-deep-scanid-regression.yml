@@ -5,9 +5,11 @@ on:
     paths:
       - '.github/workflows/daily-deep-audit.yml'
       - '.github/workflows/daily-deep-scanid-regression.yml'
+      - '.github/workflows/source-id-reconciliation.yml'
       - 'scripts/scan_identity.py'
       - 'scripts/stamp_reconciliation_scan.py'
       - 'scripts/validate_reconciliation_policy.py'
+      - 'scripts/verify_central_reconciliation_consistency.py'
 
 permissions:
   contents: read
@@ -39,4 +41,42 @@ jobs:
           if bad in s: raise SystemExit('failed deep audit can still republish candidate canonical proofs')
           print('daily deep scan-binding static contract passed')
           PY
-          python -m py_compile scripts/scan_identity.py scripts/stamp_reconciliation_scan.py scripts/validate_reconciliation_policy.py
+          python -m py_compile scripts/scan_identity.py scripts/stamp_reconciliation_scan.py scripts/validate_reconciliation_policy.py scripts/verify_central_reconciliation_consistency.py
+      - name: Require one explicit 90-day scan and read-only consistency checks
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import ast
+
+          verifier = Path('scripts/verify_central_reconciliation_consistency.py').read_text(encoding='utf-8')
+          workflow = Path('.github/workflows/source-id-reconciliation.yml').read_text(encoding='utf-8')
+          tree = ast.parse(verifier)
+          imports = {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
+          if 'subprocess' in imports:
+              raise SystemExit('consistency verifier must not regenerate live proof via subprocess')
+          if 'verify_gyeonggi_central_90d.py' in verifier:
+              raise SystemExit('consistency verifier must consume, not regenerate, the 90-day proof')
+          explicit = workflow.count('run: python scripts/verify_gyeonggi_central_90d.py')
+          if explicit != 1:
+              raise SystemExit(f'expected exactly one explicit 90-day proof generation step, got {explicit}')
+          if workflow.count('python scripts/verify_central_reconciliation_consistency.py') < 2:
+              raise SystemExit('expected repeated read-only consistency checks in reconciliation workflow')
+          print({'explicit90dScans': explicit, 'readOnlyConsistency': True})
+          PY
+      - name: Reproduce valid original proof window and invalid self-aged window
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          p=Path('scripts/verify_central_reconciliation_consistency.py')
+          spec=importlib.util.spec_from_file_location('consistency',p)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          r=m.parse_kst('2026-09-06 12:11:54 KST')
+          original=m.parse_kst('2026-09-06 12:40:41 KST')
+          self_aged=m.parse_kst('2026-09-06 13:01:41 KST')
+          original_skew=abs((original-r).total_seconds())/60
+          self_aged_skew=abs((self_aged-r).total_seconds())/60
+          assert original_skew < m.MAX_SKEW_MINUTES, (original_skew,m.MAX_SKEW_MINUTES)
+          assert self_aged_skew > m.MAX_SKEW_MINUTES, (self_aged_skew,m.MAX_SKEW_MINUTES)
+          print({'originalProofSkewMinutes':round(original_skew,2),'selfAgedProofSkewMinutes':round(self_aged_skew,2),'bound':m.MAX_SKEW_MINUTES})
+          PY

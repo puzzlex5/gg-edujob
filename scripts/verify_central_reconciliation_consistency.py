@@ -6,9 +6,10 @@ There are deliberately three proofs:
    and paginate correctly (active-oriented Gyeonggi UI + Seoul central list).
 2) `source_reconciliation_report.json` defines the authoritative recent 90-day population used for
    recovery.
-3) `verify_gyeonggi_central_90d.py` independently re-traverses the Gyeonggi central portal with
-   closed postings included and proves the same 90-day boundary without calling the reconciliation
-   crawler.
+3) `gyeonggi_central_90d_report.json` is produced by an explicit independent traversal before this
+   verifier runs. This verifier is read-only: it must not regenerate that proof, because repeated
+   regeneration later in a long reconciliation run moves the proof timestamp forward and can make
+   an otherwise valid single audit window fail its own bounded-skew policy.
 
 The public boards are live during an audit that can take tens of minutes, so exact count equality
 between two complete scans is not a valid invariant: newly posted or boundary-expiring rows can
@@ -19,8 +20,6 @@ fail closed.
 """
 import json
 import math
-import subprocess
-import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -29,10 +28,9 @@ CENTRAL = ROOT / "central_pagination_report.json"
 RECON = ROOT / "source_reconciliation_report.json"
 GG90 = ROOT / "gyeonggi_central_90d_report.json"
 KST = timezone(timedelta(hours=9))
-# A full independent Gyeonggi 90-day traversal currently takes roughly 15-20 minutes after
-# reconciliation and central pagination have completed. 35 minutes was shorter than the actual
-# end-to-end proof chain and caused false failures at ~36 minutes. Keep the window bounded but
-# large enough for one complete audit chain; population drift is still independently capped below.
+# Keep the window bounded to one audit chain. The independent 90-day proof is generated once by
+# the workflow and then reused by this read-only consistency verifier; repeated verifier calls do
+# not move its timestamp forward anymore.
 MAX_SKEW_MINUTES = 45
 MAX_DRIFT_RATIO = 0.01
 MAX_DRIFT_ABSOLUTE = 25
@@ -70,8 +68,8 @@ def main():
     if int((recon.get("summary") or {}).get("missingAfter") or 0) != 0:
         raise SystemExit("38-source reconciliation still has missing IDs")
 
-    # Produce a fresh independent 90-day Gyeonggi proof in this same verification step.
-    subprocess.run([sys.executable, str(ROOT / "scripts" / "verify_gyeonggi_central_90d.py")], check=True)
+    if not GG90.exists() or GG90.stat().st_size < 100:
+        raise SystemExit("Independent Gyeonggi 90-day proof artifact missing")
     gg90 = load(GG90)
     if not gg90.get("complete"):
         raise SystemExit("Independent Gyeonggi 90-day report is not complete")
