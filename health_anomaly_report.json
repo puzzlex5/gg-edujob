@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-07T00:08:11+09:00",
+  "generatedAt": "2026-09-07T01:08:49+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T00:08:11+09:00",
+    "generatedAt": "2026-09-07T01:08:49+09:00",
     "official": {
-      "datasetCount": 18905,
+      "datasetCount": 18904,
       "officialIdCount": 17810,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7431,
+      "publishedJobs": 7435,
       "officialDisplayed": 2976,
-      "privateDisplayed": 4455,
-      "privateDiscovered": 4466,
+      "privateDisplayed": 4459,
+      "privateDiscovered": 4470,
       "officialPrivateAliases": 11,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -178,7 +178,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -261,7 +261,7 @@
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-06"
+        "latestRegistered": "2026-09-07"
       },
       "artmore": {
         "name": "아트모아",
@@ -279,13 +279,13 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 57,
-        "rawCount": 57,
-        "currentCount": 54,
+        "datasetCount": 58,
+        "rawCount": 58,
+        "currentCount": 58,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-04"
+        "latestRegistered": "2026-09-07"
       },
       "seekle": {
         "name": "시립광진청소년센터",
@@ -315,11 +315,11 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T00:07:35+09:00",
+      "baselineAt": "2026-09-06T01:08:15+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18905,
-          "baseline": 19238,
+          "current": 18904,
+          "baseline": 19237,
           "changeRatio": -0.0173
         },
         "official.officialIdCount": {
@@ -328,31 +328,31 @@
           "changeRatio": -0.0206
         },
         "unified.publishedJobs": {
-          "current": 7431,
-          "baseline": 7597,
-          "changeRatio": -0.0219
+          "current": 7435,
+          "baseline": 7571,
+          "changeRatio": -0.018
         },
         "unified.officialDisplayed": {
           "current": 2976,
-          "baseline": 3134,
-          "changeRatio": -0.0504
+          "baseline": 3116,
+          "changeRatio": -0.0449
         },
         "unified.privateDiscovered": {
-          "current": 4466,
-          "baseline": 4475,
-          "changeRatio": -0.002
+          "current": 4470,
+          "baseline": 4467,
+          "changeRatio": 0.0007
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 353,
-          "baseline": 361,
-          "changeRatio": -0.0222
+          "baseline": 354,
+          "changeRatio": -0.0028
         },
         "jobteacher": {
           "current": 4036,
-          "baseline": 4037,
-          "changeRatio": -0.0002
+          "baseline": 4036,
+          "changeRatio": 0.0
         },
         "artmore": {
           "current": 20,
@@ -360,9 +360,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 54,
+          "current": 58,
           "baseline": 57,
-          "changeRatio": -0.0526
+          "changeRatio": 0.0175
         },
         "seekle": {
           "current": 1,
