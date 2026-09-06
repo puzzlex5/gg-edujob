@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-06 17:49:55 KST",
+  "generatedAt": "2026-09-06 19:48:53 KST",
   "policy": "diagnostic-first; stable-ID/URL duplicates are strong evidence, semantic duplicates are review-only; source activity uses 1d/7d/30d registration windows",
   "summary": {
     "publishedJobs": 18902,
-    "officialIds": 17813,
+    "officialIds": 17809,
     "publishedToOfficialRatio": 1.061,
     "exactStableIdDuplicateGroups": 0,
     "exactStableIdExtraRecords": 0,
     "exactUrlDuplicateGroups": 0,
     "exactUrlExtraRecords": 0,
     "semanticDuplicateGroupsReviewOnly": 262,
-    "resultLikeNotices": 1,
+    "resultLikeNotices": 0,
     "staleInactiveOver120Days": 0,
     "missingDetailLinks": 0,
     "reconciledSources": 38,
@@ -18,13 +18,7 @@
     "missingOfficialIds": 0,
     "sourcesWithNoRegistrations7d": 0
   },
-  "findings": [
-    {
-      "severity": "warning",
-      "code": "result-notice-contamination",
-      "count": 1
-    }
-  ],
+  "findings": [],
   "sourceFreshness": [
     {
       "province": "경기",
@@ -51,16 +45,16 @@
     {
       "province": "서울",
       "name": "서울교육일자리포털",
-      "officialIdCount": 363,
-      "publishedRecords": 1212,
+      "officialIdCount": 359,
+      "publishedRecords": 1213,
       "latestRegistered": "2026-09-06",
       "freshnessDays": 0,
-      "registeredLast1d": 5,
-      "registeredLast7d": 411,
-      "registeredLast30d": 1172,
+      "registeredLast1d": 6,
+      "registeredLast7d": 412,
+      "registeredLast30d": 1173,
       "population1dAgo": 1211,
-      "populationDelta1d": 1,
-      "populationRatio1d": 1.001,
+      "populationDelta1d": 2,
+      "populationRatio1d": 1.002,
       "population7dAgo": null,
       "populationDelta7d": null,
       "populationRatio7d": null,
@@ -316,15 +310,15 @@
       "province": "경기",
       "name": "시흥교육지원청",
       "officialIdCount": 64,
-      "publishedRecords": 66,
+      "publishedRecords": 65,
       "latestRegistered": "2026-09-02",
       "freshnessDays": 4,
       "registeredLast1d": 0,
       "registeredLast7d": 4,
-      "registeredLast30d": 20,
+      "registeredLast30d": 19,
       "population1dAgo": 65,
-      "populationDelta1d": 1,
-      "populationRatio1d": 1.015,
+      "populationDelta1d": 0,
+      "populationRatio1d": 1.0,
       "population7dAgo": null,
       "populationDelta7d": null,
       "populationRatio7d": null,
@@ -866,17 +860,7 @@
   "examples": {
     "exactStableIdDuplicates": [],
     "exactUrlDuplicates": [],
-    "resultLikeNotices": [
-      {
-        "province": "경기",
-        "source": "시흥교육지원청",
-        "school": "초등학교",
-        "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
-        "registered": "2026/08/18",
-        "applyEnd": "",
-        "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414"
-      }
-    ],
+    "resultLikeNotices": [],
     "staleInactive": [],
     "missingDetailLinks": []
   }
