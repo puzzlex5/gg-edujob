@@ -244,7 +244,7 @@ def main() -> int:
         "missingLinks",
         "badCrossSourceAliasEvidence",
     ]
-    if not u["healthy"] or u["degradedPrivateSources"] or any(int(u[k]) > 0 for k in hard_unified):
+    if not u["healthy"] or any(int(u[k]) > 0 for k in hard_unified):
         add("critical", "unified-search-integrity-failed", "통합검색 검증이 정상 기준을 통과하지 못했습니다.", **u)
 
     one = baselines.get("1d")
@@ -349,7 +349,7 @@ def main() -> int:
         "anomalies": anomalies,
         "criticalCount": len(critical),
         "warningCount": len(warnings),
-        "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; trend drops/stalls are warnings until independently verified",
+        "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified",
     }
 
     snaps.append(snapshot)
