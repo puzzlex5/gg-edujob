@@ -6,6 +6,8 @@ on:
     paths:
       - 'index.html'
       - 'jobs.json'
+      - 'direct-link-guard.js'
+      - 'tests/test_lessoninfo_culture_failclosed.js'
       - 'scripts/ensure_search_logic.py'
       - 'scripts/verify_search.py'
       - '.github/workflows/search-integrity.yml'
@@ -37,8 +39,11 @@ jobs:
         run: python -m py_compile scripts/ensure_search_logic.py scripts/verify_search.py
       - name: Enforce robust frontend search logic
         run: python scripts/ensure_search_logic.py
+      - name: Verify Lessoninfo culture links fail closed until cold-safe
+        run: node tests/test_lessoninfo_culture_failclosed.js
       - name: Check inline JavaScript syntax before any commit
         run: |
+          node --check direct-link-guard.js
           python - <<'PY'
           from pathlib import Path
           import re
@@ -54,7 +59,7 @@ jobs:
       - name: Commit search UI repair only after all checks pass
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '418982d+github-actions[bot]@users.noreply.github.com'
           git add index.html
           git diff --cached --quiet && exit 0
           git commit -m 'Keep search aligned with collected job data'
