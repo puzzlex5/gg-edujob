@@ -29,12 +29,19 @@
   };
 
   postingLink=function(j){
+    // Any row explicitly rejected by the exact-detail audit remains non-clickable.
     if(j&&j.detailLinkVerified===false) return '';
-    // Lessoninfo culture-jobs detail.php?id=... has been observed to work only in a
-    // list-seeded/warm session while a cold mobile browser falls back to the culture
-    // list. Until a persistent public detail contract is cold-context verified, keep
-    // these cards visible/searchable but do not expose a misleading individual link.
-    if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts') return '';
+
+    // Culture-arts used to be blanket-blocked even after the unified exact-detail
+    // audit had verified a concrete /culture-jobs/detail.php?id=... destination.
+    // Fail closed only for unverified rows; verified exact detail rows must remain
+    // clickable. This keeps broken/generic destinations blocked without discarding
+    // real culture-foundation postings.
+    if(
+      j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts'&&
+      j.detailLinkVerified!==true
+    ) return '';
+
     const direct=seoulSupportGet(j);
     if(direct) return direct;
     return basePostingLink(j);
