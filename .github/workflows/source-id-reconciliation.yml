@@ -83,7 +83,11 @@ jobs:
       - name: Refresh independent Gyeonggi 90-day evidence
         run: python scripts/verify_gyeonggi_central_90d.py
       - name: Require current reconciliation population policy
-        run: python scripts/validate_reconciliation_policy.py
+        run: |
+          # A targeted-restore report belongs to the ledger scan that produced it. It is not
+          # evidence for the newly minted reconciliation scan until this run performs restoration.
+          rm -f official_id_restore_report.json
+          python scripts/validate_reconciliation_policy.py
       - name: Re-prove central IDs and require independent agreement
         run: |
           python scripts/verify_central_pagination.py
@@ -217,10 +221,11 @@ jobs:
             if [ -f "$f" ]; then cp "$f" "/tmp/source-id-diagnostics/$f"; fi
           done
 
-          # Re-anchor to the actual remote LKG before writing diagnostics. Never use reset --hard HEAD
-          # here: HEAD may already be an unpublished candidate commit created by the failed step.
+          # Re-anchor to the actual remote LKG before writing diagnostics. HEAD may be an
+          # unpublished candidate, so clean tracked changes against origin/main explicitly.
           git fetch origin main
           git checkout -B main origin/main
+          git reset --hard origin/main
           git clean -fd
 
           python scripts/preserve_reconciliation_candidate.py --diagnostics-dir /tmp/source-id-diagnostics
