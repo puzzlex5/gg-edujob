@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T04:07:04+09:00",
+  "generatedAt": "2026-09-07T05:08:29+09:00",
   "status": "critical",
   "healthy": false,
   "snapshot": {
-    "generatedAt": "2026-09-07T04:07:04+09:00",
+    "generatedAt": "2026-09-07T05:08:29+09:00",
     "official": {
       "datasetCount": 18668,
       "officialIdCount": 17543,
@@ -24,7 +24,7 @@
       "expiredPrivate": 0,
       "futurePrivateDates": 0,
       "duplicateStableIds": 0,
-      "missingLinks": 136,
+      "missingLinks": 135,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
         "lessoninfo",
@@ -311,11 +311,11 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T04:07:12+09:00",
+      "baselineAt": "2026-09-06T05:08:07+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18668,
-          "baseline": 18874,
+          "baseline": 18873,
           "changeRatio": -0.0109
         },
         "official.officialIdCount": {
@@ -393,7 +393,7 @@
         "expiredPrivate": 0,
         "futurePrivateDates": 0,
         "duplicateStableIds": 0,
-        "missingLinks": 136,
+        "missingLinks": 135,
         "badCrossSourceAliasEvidence": 0,
         "enabledPrivateSources": [
           "lessoninfo",
