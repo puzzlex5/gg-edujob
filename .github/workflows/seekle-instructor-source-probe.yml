@@ -1,0 +1,86 @@
+name: Seekle instructor source probe
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/seekle-instructor-source-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check requests beautifulsoup4
+      - name: Verify pagination, stable IDs, and exact instructor detail links
+        run: |
+          python - <<'PY'
+          import requests
+          from bs4 import BeautifulSoup
+          from urllib.parse import urljoin, urlparse, parse_qs
+
+          LIST='https://www.seekle.or.kr/sub07/sub01.php'
+          H={'User-Agent':'gg-edujob-source-audit/1.0 (+https://github.com/puzzlex5/gg-edujob)'}
+          s=requests.Session()
+
+          def page_rows(page):
+              r=s.get(LIST,params={'page':page,'code':'notice0'},headers=H,timeout=30)
+              r.raise_for_status()
+              soup=BeautifulSoup(r.text,'html.parser')
+              rows=[]
+              for a in soup.find_all('a', href=True):
+                  title=' '.join(a.get_text(' ',strip=True).split())
+                  href=urljoin(r.url,a['href'])
+                  q=parse_qs(urlparse(href).query)
+                  idx=(q.get('idx') or [''])[0]
+                  ptype=(q.get('ptype') or [''])[0]
+                  if idx.isdigit() and ptype=='view':
+                      rows.append((idx,title,href))
+              dedup={idx:(idx,title,href) for idx,title,href in rows}
+              return r.url,list(dedup.values())
+
+          pages=[]
+          for page in range(1,6):
+              u, rows = page_rows(page)
+              ids=[x[0] for x in rows]
+              print('PAGE',page,'URL',u,'COUNT',len(ids),'IDS',ids[:12])
+              if not ids:
+                  raise SystemExit(f'FAIL: page {page} returned no detail IDs')
+              pages.append(ids)
+
+          if pages[0] == pages[1]:
+              raise SystemExit('FAIL: page=2 is identical to page=1; pagination not proven')
+          if not any(set(pages[i]) != set(pages[i+1]) for i in range(len(pages)-1)):
+              raise SystemExit('FAIL: no changing ID set across pages')
+          union=set().union(*map(set,pages))
+          if len(union) <= len(set(pages[0])):
+              raise SystemExit('FAIL: multi-page traversal did not expand stable-ID coverage')
+
+          page1_rows=page_rows(1)[1]
+          instructor=[x for x in page1_rows if ('강사채용' in x[1] or '신규강사' in x[1]) and '합격자' not in x[1]]
+          print('CURRENT_PAGE_INSTRUCTOR_ROWS',instructor[:10])
+          if not any(x[0]=='21827' for x in instructor):
+              raise SystemExit('FAIL: current instructor posting idx=21827 not discoverable')
+
+          required={'21827':'2026년 7차 교육문화프로그램 신규강사 모집','21766':'2026년 6차 교육문화프로그램 신규강사 모집','21711':'2026년 5차 교육문화프로그램 신규강사 모집'}
+          for idx, needle in required.items():
+              u=f'{LIST}?idx={idx}&ptype=view'
+              d=s.get(u,headers=H,timeout=30,allow_redirects=True); d.raise_for_status()
+              text=' '.join(BeautifulSoup(d.text,'html.parser').get_text(' ',strip=True).split())
+              final=(parse_qs(urlparse(d.url).query).get('idx') or [idx])[0]
+              ok=(needle in text and final==idx and '광진청소년센터' in text)
+              if idx=='21827':
+                  ok=ok and '2026.9.18' in text and '로봇교실' in text and '한문서예교실' in text
+              print('DETAIL',idx,d.status_code,d.url,'ok=',ok)
+              if not ok:
+                  raise SystemExit(f'FAIL detail mismatch {idx}')
+
+          print('PASS: Seekle exposes changing paginated stable-ID lists and exact individual instructor detail links')
+          PY
