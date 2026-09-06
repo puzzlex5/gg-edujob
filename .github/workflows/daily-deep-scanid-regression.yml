@@ -1,0 +1,42 @@
+name: Daily deep scanId regression check
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/daily-deep-audit.yml'
+      - '.github/workflows/daily-deep-scanid-regression.yml'
+      - 'scripts/scan_identity.py'
+      - 'scripts/stamp_reconciliation_scan.py'
+      - 'scripts/validate_reconciliation_policy.py'
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Validate workflow syntax and scan binding contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('.github/workflows/daily-deep-audit.yml')
+          s=p.read_text(encoding='utf-8')
+          required=[
+            'RECONCILE_SCAN_ID=${SCAN_ID}',
+            'python scripts/stamp_reconciliation_scan.py --central',
+            'python scripts/stamp_reconciliation_scan.py --reconciliation',
+            'python scripts/validate_reconciliation_policy.py',
+            'Failure diagnostics must never overwrite canonical reconciliation proofs.',
+          ]
+          missing=[x for x in required if x not in s]
+          if missing: raise SystemExit('missing daily deep scan-binding guards: '+repr(missing))
+          bad='cp "/tmp/deep-audit-diagnostics/$f" "$f"'
+          if bad in s: raise SystemExit('failed deep audit can still republish candidate canonical proofs')
+          print('daily deep scan-binding static contract passed')
+          PY
+          python -m py_compile scripts/scan_identity.py scripts/stamp_reconciliation_scan.py scripts/validate_reconciliation_policy.py

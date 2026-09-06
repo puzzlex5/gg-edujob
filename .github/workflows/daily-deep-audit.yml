@@ -26,6 +26,14 @@ jobs:
           set -euo pipefail
           git fetch origin main
           git checkout -B main origin/main
+      - name: Mint immutable scan identity for this deep audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "RECONCILE_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          SCAN_ID="$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "RECONCILE_SCAN_ID=${SCAN_ID}" >> "$GITHUB_ENV"
+          echo "Deep-audit reconciliation scan: ${SCAN_ID}"
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -70,6 +78,17 @@ jobs:
                   'stable-id-38-v2-gyeonggi-central-90d',
                   'central_recent.scrape_gyeonggi_central_recent()',
               ],
+              'scripts/scan_identity.py': [
+                  'RECONCILE_SCAN_ID',
+                  'must never fabricate a fallback identity',
+              ],
+              'scripts/stamp_reconciliation_scan.py': [
+                  'stamp_central',
+                  'stamp_reconciliation',
+              ],
+              'scripts/validate_reconciliation_policy.py': [
+                  'proof-window-mismatch',
+              ],
           }
           missing = []
           for name, markers in checks.items():
@@ -112,16 +131,19 @@ jobs:
         run: |
           echo central-pagination-proof >/tmp/deep_audit_stage
           python scripts/verify_central_pagination.py
+          python scripts/stamp_reconciliation_scan.py --central
           python scripts/update_deep_audit_status.py central-pagination-proof running
       - name: Independent official posting-ID reconciliation and exact recovery
         run: |
           echo source-id-reconciliation >/tmp/deep_audit_stage
           python scripts/reconcile_source_ids.py
+          python scripts/stamp_reconciliation_scan.py --reconciliation
           python scripts/update_deep_audit_status.py source-id-reconciliation running
       - name: Re-prove central IDs and require independent agreement
         run: |
           echo central-cross-check >/tmp/deep_audit_stage
           python scripts/verify_central_pagination.py
+          python scripts/stamp_reconciliation_scan.py --central
           python scripts/verify_central_reconciliation_consistency.py
           python scripts/update_deep_audit_status.py central-cross-check running
       - name: Require persistent independent Gyeonggi 90-day evidence
@@ -197,6 +219,8 @@ jobs:
       - name: Final daily audit publication guard
         run: |
           echo publication-guard >/tmp/deep_audit_stage
+          rm -f official_id_restore_report.json
+          python scripts/validate_reconciliation_policy.py
           python - <<'PY'
           import json
           from pathlib import Path
@@ -208,6 +232,9 @@ jobs:
           gg90=json.loads(Path('gyeonggi_central_90d_report.json').read_text(encoding='utf-8'))
           quality=json.loads(Path('operational_quality_report.json').read_text(encoding='utf-8'))
           qsummary=quality.get('summary',{})
+          scan=rec.get('scanId')
+          if not scan or summary.get('scanId') != scan or central.get('scanId') != scan:
+              raise SystemExit(f'Daily proof-window mismatch: report={scan!r}, summary={summary.get("scanId")!r}, central={central.get("scanId")!r}')
           if len(after)<100: raise SystemExit(f'Daily audit output too small: {len(after)}')
           if len(before)>=100 and len(after)<len(before)*0.70:
               raise SystemExit(f'Daily audit lost >30% of baseline: {len(before)} -> {len(after)}')
@@ -227,7 +254,7 @@ jobs:
               raise SystemExit(f'Daily central pagination proof incomplete: {central}')
           if not gg90.get('complete'):
               raise SystemExit(f'Daily independent Gyeonggi 90-day proof incomplete: {gg90}')
-          print(f'Daily deep audit guard passed: {len(before)} -> {len(after)}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
+          print(f'Daily deep audit guard passed: {len(before)} -> {len(after)}; scanId={scan}; official IDs={summary.get("officialIdCount")}, recovered={summary.get("recoveredNow")}')
           PY
           python scripts/verify_central_reconciliation_consistency.py
           python scripts/update_deep_audit_status.py complete success
@@ -259,19 +286,13 @@ jobs:
           git clean -fd
           python scripts/update_deep_audit_status.py "$stage" failed
 
-          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json gyeonggi_central_90d_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
-            if [ -f "/tmp/deep-audit-diagnostics/$f" ]; then cp "/tmp/deep-audit-diagnostics/$f" "$f"; fi
-          done
-
+          # Failure diagnostics must never overwrite canonical reconciliation proofs.
+          # Preserve only the deep-audit status; scan-bound candidate proof files stay isolated in the failed run logs.
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add deep_audit_status.json
-          for f in support_coverage_report.json source_reconciliation_report.json source_id_ledger.json central_pagination_report.json support_link_resolution.json board_discovery_report.json daily_missing_recovery_report.json date_anomaly_report.json operational_quality_report.json operational_quality_history.json; do
-            if [ -f "$f" ]; then git add "$f"; fi
-          done
-          if [ -f gyeonggi_central_90d_report.json ]; then git add -f gyeonggi_central_90d_report.json; fi
           git diff --cached --quiet && exit 0
-          git commit -m "Record failed deep audit diagnostics: $stage"
+          git commit -m "Record failed deep audit status: $stage"
           git reset --hard HEAD
           git pull --rebase
           git push
