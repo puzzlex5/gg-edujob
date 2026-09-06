@@ -1,0 +1,81 @@
+name: Lessoninfo detail binding regression
+
+on:
+  push:
+    branches:
+      - fix/lessoninfo-detail-binding-20260906
+    paths:
+      - 'scripts/run_lessoninfo_browser_resilient.py'
+      - 'tests/test_lessoninfo_detail_binding.py'
+      - '.github/workflows/lessoninfo-detail-binding-regression.yml'
+  pull_request:
+    paths:
+      - 'scripts/run_lessoninfo_browser_resilient.py'
+      - 'tests/test_lessoninfo_detail_binding.py'
+      - '.github/workflows/lessoninfo-detail-binding-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements.txt playwright
+          python -m playwright install --with-deps chromium
+      - name: Syntax and deterministic regression
+        run: |
+          python -m py_compile scripts/run_lessoninfo_browser_resilient.py tests/test_lessoninfo_detail_binding.py
+          python tests/test_lessoninfo_detail_binding.py
+      - name: Live cold-mobile route acceptance
+        run: |
+          python - <<'PY'
+          import asyncio, sys
+          from urllib.parse import urlparse
+          sys.path.insert(0, 'scripts')
+          import run_lessoninfo_browser_resilient as r
+          from playwright.async_api import async_playwright
+
+          UA='Mozilla/5.0 (Linux; Android 14; SM-S928N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36'
+          CASES=[
+              ('stale-user-94673','https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94673','국립박물관문화재단',False),
+              ('stale-user-94619','https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94619','광명문화재단',False),
+              ('stale-user-94603','https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94603','광명문화재단',False),
+              ('live-culture-94870','https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94870','포천문화관광재단',True),
+              ('live-culture-94879','https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94879','광림아트센터',True),
+              ('afterschool-control-7584','https://www.lessoninfo.co.kr/board/board.php?bo_table=20170316171033_6494&board_code=20130529164321_7227&code=&wr_no=7584','음악',True),
+          ]
+
+          async def main():
+              async with async_playwright() as pw:
+                  browser=await pw.chromium.launch(headless=True,args=['--disable-dev-shm-usage'])
+                  for label,url,needle,should_bind in CASES:
+                      ctx=await browser.new_context(user_agent=UA,locale='ko-KR',timezone_id='Asia/Seoul',viewport={'width':390,'height':844})
+                      page=await ctx.new_page()
+                      try:
+                          await page.goto(url,wait_until='domcontentloaded',timeout=45000)
+                          await page.wait_for_timeout(1200)
+                          text=await page.locator('body').inner_text(timeout=8000)
+                          surface='culture-arts' if '/culture-jobs/' in url else 'afterschool-nulbom'
+                          item={'url':url,'sourceSurface':surface,'titleHint':needle}
+                          route=r._detail_route_matches(item,page.url)
+                          content=r._detail_content_matches(item,text) if surface == 'culture-arts' else True
+                          bound=route and content
+                          print(label,'requested=',url,'final=',page.url,'route=',route,'content=',content,'bound=',bound)
+                          if bound != should_bind:
+                              raise SystemExit(f'{label}: expected bound={should_bind}, got {bound}')
+                          if should_bind and urlparse(page.url).path.endswith('/culture-jobs/list.php'):
+                              raise SystemExit(f'{label}: live exact control fell to list')
+                      finally:
+                          await ctx.close()
+                  await browser.close()
+          asyncio.run(main())
+          PY
