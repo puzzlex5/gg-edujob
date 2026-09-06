@@ -40,7 +40,7 @@ async function load(){try{const r=await fetch('unified_jobs.json',{cache:'no-cac
 $('#searchBtn').addEventListener('click',()=>{state.q=$('#q').value;render()});$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')$('#searchBtn').click()});let searchTimer=0;$('#q').addEventListener('input',e=>{clearTimeout(searchTimer);const value=e.target.value;searchTimer=setTimeout(()=>{state.q=value;render()},180)});$('#sort').addEventListener('change',e=>{state.sort=e.target.value;render()});$('#resetBtn').addEventListener('click',()=>{state.provinces.clear();state.regions.clear();state.schools.clear();state.types.clear();state.q='';state.sort='deadline';$('#q').value='';$('#sort').value='deadline';renderAll(true)});renderChecks();load();
 </script>
 <script src="unified-ui.js?v=20260904a" defer></script>
-<script src="direct-link-guard.js?v=20260906d" defer></script>
+<script src="direct-link-guard.js?v=20260907a" defer></script>
 <script src="mobile-ui.js?v=20260903c" defer></script>
 <script src="mobile-ui.js?v=20260823" defer></script>
 </body>
