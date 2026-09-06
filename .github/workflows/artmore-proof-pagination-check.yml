@@ -1,0 +1,109 @@
+name: ArtMore proof pagination regression
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/crawl_artmore_browser.py'
+      - 'scripts/crawl_artmore_browser_v3.py'
+      - '.github/workflows/update-artmore-candidate.yml'
+      - '.github/workflows/artmore-proof-pagination-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Static and offline semantics
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import pathlib
+          import sys
+          from datetime import timedelta
+
+          p=pathlib.Path('scripts/crawl_artmore_browser_v3.py')
+          src=p.read_text(encoding='utf-8')
+          required=[
+              'PAGINATION_SELECTORS = ("#paging", ".paging", ".pagination")',
+              "root.querySelectorAll('a,button')",
+              'hasNextEnabled:null',
+              'navigation_stuck',
+              'repeated_page',
+              'safety_cap',
+              'no_raw_rows_confirmed',
+              'pagination_exhausted',
+              'await browser.close()',
+              'endedLabelQuarantineRatio',
+              'futureConflictRatio',
+          ]
+          for token in required:
+              if token not in src:
+                  raise SystemExit(f'missing required proof semantic: {token}')
+          forbidden=[
+              "document.querySelectorAll('a,button')",
+              'len(rows) < 10',
+              'bool(apply_end)',
+          ]
+          for token in forbidden:
+              if token in src:
+                  raise SystemExit(f'forbidden unsafe semantic present: {token}')
+
+          sys.path.insert(0, str(pathlib.Path('scripts').resolve()))
+          spec=importlib.util.spec_from_file_location('artmore_v3', p)
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          today=mod.base.TODAY
+          if mod.deadline_signal((today-timedelta(days=1)).isoformat(), ''):
+              raise SystemExit('past deadline incorrectly treated as future signal')
+          if not mod.deadline_signal(today.isoformat(), ''):
+              raise SystemExit('today deadline must be active signal')
+          if not mod.deadline_signal('', 'D-3'):
+              raise SystemExit('D-n signal not recognised')
+          if mod.deadline_signal('', ''):
+              raise SystemExit('empty deadline incorrectly treated as future signal')
+          print('static/offline ArtMore proof semantics passed')
+          PY
+      - name: Syntax check
+        run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v3.py
+      - name: Run live isolated candidate
+        env:
+          ARTMORE_MAX_PAGES: '250'
+        run: python scripts/crawl_artmore_browser_v3.py
+      - name: Validate live traversal proof
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          r=json.loads(pathlib.Path('artmore_reconciliation_report.candidate.json').read_text(encoding='utf-8'))
+          print(json.dumps(r,ensure_ascii=False,indent=2))
+          if r.get('publicationEnabled') is not False: raise SystemExit('candidate publication unexpectedly enabled')
+          if not r.get('healthy') or not r.get('traversalComplete'): raise SystemExit('live ArtMore traversal is not proven')
+          reports=r.get('sourceReports') or []
+          if {x.get('region') for x in reports} != {'서울','경기'}: raise SystemExit('both metro regions not present')
+          proven={'pagination_exhausted','no_raw_rows_confirmed'}
+          for s in reports:
+              if not s.get('traversalComplete'): raise SystemExit(f"unproven region {s.get('region')}")
+              if s.get('terminationReason') not in proven: raise SystemExit(f"bad termination {s.get('region')}: {s.get('terminationReason')}")
+              if (s.get('rawIdCount') or 0) <= 0: raise SystemExit(f"zero raw IDs {s.get('region')}")
+              for p in s.get('pages') or []:
+                  if 'rawRowCount' not in p or 'rawNewIdCount' not in p: raise SystemExit('raw pagination evidence missing')
+          print(json.dumps({'candidateIdCount':r.get('candidateIdCount'),'rawIdCount':r.get('rawIdCount'),'ambiguousRows':len(r.get('ambiguousRows') or [])},ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artmore-proof-candidate
+          path: |
+            artmore_jobs.candidate.json
+            artmore_source_id_ledger.candidate.json
+            artmore_reconciliation_report.candidate.json
+            artmore_collection_state.candidate.json
