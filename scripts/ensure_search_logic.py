@@ -25,6 +25,12 @@ elif "if(state.q&&!matchesQuery(j,state.q))return false;" not in s:
 
 s = s.replace("최근 자동 갱신: '+data.updatedAt+' · 매일 오전 7시대 자동 갱신", "최근 자동 갱신: '+data.updatedAt+' · 매시간 자동 갱신")
 
+# Bust the exact-link guard cache when the Lessoninfo culture cold-link fail-close changes.
+if "direct-link-guard.js?v=20260906a" in s:
+    s = s.replace("direct-link-guard.js?v=20260906a", "direct-link-guard.js?v=20260906c", 1)
+elif "direct-link-guard.js?v=20260906c" not in s:
+    raise SystemExit("direct-link-guard asset marker not found")
+
 # Never write a file containing the known fatal corruption pattern.
 if "falsereturn" in s or "trueraise" in s:
     raise SystemExit("Refusing to write malformed JavaScript")
