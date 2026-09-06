@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-06 13:01:42 KST",
+  "generatedAt": "2026-09-06 15:01:28 KST",
   "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files; candidate stable-ID deltas are retained for audit.",
   "candidateAvailable": true,
   "canonicalScanId": null,
-  "candidateScanId": "20260906T031113Z-34007113616-1",
+  "candidateScanId": "20260906T051337Z-34012132323-1",
   "canonicalOfficialIdCount": 17817,
   "candidateOfficialIdCount": 17816,
   "removedSinceCanonical": [
@@ -33,15 +33,15 @@
       "province": "서울",
       "title": "낙성대역 인헌중학교 대체 시간강사 채용 공고(영어)",
       "registered": "2026/09/06",
-      "firstSeen": "2026-09-06 12:11:54 KST",
-      "lastSeen": "2026-09-06 12:11:54 KST"
+      "firstSeen": "2026-09-06 14:14:12 KST",
+      "lastSeen": "2026-09-06 14:14:12 KST"
     }
   ],
   "deltaConsistent": true,
   "symmetricDifferenceCount": 3,
   "candidate": {
     "reconciliation": {
-      "generatedAt": "2026-09-06 12:11:54 KST",
+      "generatedAt": "2026-09-06 14:14:12 KST",
       "lookbackDays": 90,
       "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
       "officialIdCount": 17816,
@@ -53,11 +53,11 @@
       "totalSources": 38,
       "reconciledOffices": 38,
       "totalOffices": 38,
-      "scanId": "20260906T031113Z-34007113616-1"
+      "scanId": "20260906T051337Z-34012132323-1"
     },
     "centralPagination": {
-      "scanId": "20260906T031113Z-34007113616-1",
-      "generatedAt": "2026-09-06 12:41:16 KST",
+      "scanId": "20260906T051337Z-34012132323-1",
+      "generatedAt": "2026-09-06 14:42:33 KST",
       "complete": true,
       "sources": [
         {
@@ -176,21 +176,21 @@
       ]
     },
     "gyeonggiCentral90d": {
-      "generatedAt": "2026-09-06 13:01:41 KST",
+      "generatedAt": "2026-09-06 15:01:27 KST",
       "stableIdCount": 10129,
       "complete": true
     },
     "finalRestore": {
-      "checkedAt": "2026-09-06 12:54:20 KST",
-      "ledgerScanId": "20260906T031113Z-34007113616-1",
+      "checkedAt": "2026-09-06 14:54:30 KST",
+      "ledgerScanId": "20260906T051337Z-34012132323-1",
       "protectedOfficialIds": 17816,
       "missingBefore": 0,
       "recoveredNow": 0,
       "missingAfter": 0
     },
     "sourceIdLedger": {
-      "scanId": "20260906T031113Z-34007113616-1",
-      "generatedAt": "2026-09-06 12:11:54 KST",
+      "scanId": "20260906T051337Z-34012132323-1",
+      "generatedAt": "2026-09-06 14:14:12 KST",
       "officialIdCount": 17816
     }
   }
