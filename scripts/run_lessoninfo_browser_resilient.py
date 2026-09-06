@@ -2,14 +2,14 @@
 """Hardened Lessoninfo browser runner.
 
 The integrated runner already applies current-only classification, Seoul/Gyeonggi restriction,
-and explicit official-link capture. This wrapper adds three fail-closed postconditions:
+and explicit official-link capture. This wrapper adds fail-closed postconditions:
 
 1. retry only a transient empty list render (never CAPTCHA/access-denied challenges),
 2. normalize accidentally contaminated location text without inventing a region,
-3. require every published Lessoninfo item to resolve to its exact individual URL identity; for
-   culture-jobs, also bind the expected list-row title to the final detail body. A redirect to a
-   list/home page is a normal inactive/rejected classification, not a transient detail error that
-   should retain stale last-known-good content.
+3. require every clickable Lessoninfo item to resolve to its exact individual URL identity; for
+   culture-jobs, also bind the expected list-row title to the final detail body,
+4. when a culture detail route cannot be proven, preserve only fresh Seoul/Gyeonggi list-visible
+   recruitment metadata with the link explicitly unverified instead of dropping the opportunity.
 
 Culture-job titles can also carry an explicit deadline such as ``(~8.21.)``. That evidence is
 converted to the existing labelled-deadline format before base classification so an already expired
@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import asyncio
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import parse_qs, urlparse
 
 import run_lessoninfo_browser_integrated as integrated
@@ -36,6 +36,7 @@ _TITLE_DEADLINE_RE = re.compile(
     r"(?:\(|\[|（)\s*[~～]\s*((?:20\d{2}[.\-/])?\d{1,2}[.\-/]\d{1,2})\s*\.?\s*(?:\)|\]|）)",
     re.I,
 )
+_CULTURE_NUMERIC_ID_RE = re.compile(r"^culture:id:\d+$")
 
 
 def _norm(value: str) -> str:
@@ -103,17 +104,95 @@ def _detail_route_matches(item: dict, final_url: str) -> bool:
 
 
 def _detail_content_matches(item: dict, text: str) -> bool:
-    """Require the culture list-row title to be represented in the final detail body.
-
-    ``(복사)`` is ignored because Lessoninfo duplicates sometimes add that marker only on the list
-    row. The afterschool board already carries strong ``wr_no`` + ``bo_table`` identity and is not
-    subjected to this extra title-text rule, avoiding false negatives on legacy board title markup.
-    """
+    """Require the culture list-row title to be represented in the final detail body."""
     expected = _compact_title(str(item.get("titleHint") or ""))
     if len(expected) < 6:
         return False
     actual = _compact_title(text[:12000])
     return expected in actual
+
+
+def _culture_list_fallback(item: dict, mismatch_reason: str) -> dict | None:
+    """Preserve a fresh metro culture opportunity using only authoritative list-row evidence.
+
+    This is deliberately narrower than normal detail classification. It is allowed only for a
+    numeric culture ``id`` discovered on the live culture list, requires a compact row, a current
+    registration date, a positive recruitment signal and positive Seoul/Gyeonggi geography. The
+    unverified detail route is never exposed as ``url``/``originalUrl``; it is retained only in a
+    diagnostic field so downstream clients cannot accidentally bypass the link guard.
+    """
+    if item.get("sourceSurface") != "culture-arts":
+        return None
+    sid = str(item.get("sourceIdentity") or "")
+    if not _CULTURE_NUMERIC_ID_RE.fullmatch(sid):
+        return None
+
+    fast = integrated.run_lessoninfo_browser_fast
+    title = _norm(str(item.get("titleHint") or ""))
+    row = fast._specific_row(str(item.get("rowText") or ""), title)
+    if not title or fast.GENERIC_TITLE_RE.fullmatch(title):
+        return None
+    signal = _norm(f"{title} {row}")
+    if b.CLOSED_RE.search(signal):
+        return None
+    if b.EXCLUDE_RE.search(title) and not b.RECRUIT_RE.search(title):
+        return None
+    if not b.RECRUIT_RE.search(signal):
+        return None
+
+    registered = str(item.get("registeredHint") or "")
+    if not registered:
+        return None
+    try:
+        reg = datetime.strptime(registered, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+    today = b.now_kst().date()
+    if reg > today or reg < today - timedelta(days=b.NO_DEADLINE_FRESH_DAYS):
+        return None
+
+    deadline = _title_deadline(title, registered)
+    if deadline:
+        try:
+            if datetime.strptime(deadline, "%Y-%m-%d").date() < today:
+                return None
+        except ValueError:
+            return None
+
+    title_region = fast._title_region(title)
+    if fast.NON_METRO_RE.search(title) and not title_region:
+        return None
+    location = fast._extract_location(row)
+    if location and fast.NON_METRO_RE.search(location):
+        return None
+    region = fast._metro_region(location, signal) or title_region
+    if region not in {"서울", "경기"}:
+        return None
+
+    return {
+        "sourceIdentity": sid,
+        "source": "레슨인포",
+        "sourceType": "민간 구인",
+        "trustLevel": "민간출처",
+        "category": "private-recruitment",
+        "sourceSurface": item["sourceSurface"],
+        "sourceSurfaceLabel": item["sourceSurfaceLabel"],
+        "title": title[:300],
+        "registered": registered,
+        "applyEnd": deadline,
+        "activeReason": "explicit-title-deadline" if deadline else "fresh-list-only",
+        "province": region,
+        "region": region,
+        "metroRegion": region,
+        "location": location or region,
+        "url": "",
+        "originalUrl": "",
+        "unverifiedDetailUrl": str(item.get("url") or ""),
+        "detailLinkVerified": False,
+        "detailLinkVerificationReason": mismatch_reason,
+        "linkedOfficialUrls": [],
+        "collectedAt": b.now_kst().isoformat(timespec="seconds"),
+    }
 
 
 def _compact_verified_location(job: dict) -> None:
@@ -169,20 +248,31 @@ def classify_with_location_postcondition(html: str, text: str, item: dict):
     job, reason = _BASE_CLASSIFY_DETAIL(html, classified_text, item)
     if job:
         _compact_verified_location(job)
+        if item.get("sourceSurface") == "culture-arts":
+            # The scheduled collector is list-seeded; that is not sufficient proof for a cold
+            # public deep link. Keep culture links unverified until the separate cold acceptance
+            # establishes a persistent contract.
+            job["detailLinkVerified"] = False
     return job, reason
 
 
 async def fetch_detail_with_identity_guard(
     context, sem: asyncio.Semaphore, item: dict
 ) -> tuple[str, dict | None, str, str]:
-    """Load one detail page and reject redirects/wrong content without stale-LKG retention."""
+    """Load one detail page; preserve culture list evidence but never an unproven culture link."""
     async with sem:
         page = await context.new_page()
         try:
             html, text = await b.load(page, item["url"])
             if not _detail_route_matches(item, page.url):
+                fallback = _culture_list_fallback(item, "detail-route-mismatch")
+                if fallback:
+                    return item["sourceIdentity"], fallback, "active", ""
                 return item["sourceIdentity"], None, "detail-route-mismatch", ""
             if item.get("sourceSurface") == "culture-arts" and not _detail_content_matches(item, text):
+                fallback = _culture_list_fallback(item, "detail-content-mismatch")
+                if fallback:
+                    return item["sourceIdentity"], fallback, "active", ""
                 return item["sourceIdentity"], None, "detail-content-mismatch", ""
             job, reason = b.classify_detail(html, text, item)
             return item["sourceIdentity"], job, reason, ""
