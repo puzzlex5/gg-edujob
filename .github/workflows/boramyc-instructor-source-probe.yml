@@ -32,7 +32,7 @@ jobs:
           def get(url,**kw):
               r=s.get(url,headers=H,timeout=30,allow_redirects=True,**kw); print('HTTP',r.status_code,r.url,'bytes',len(r.text)); r.raise_for_status(); return r
           rows={}; page_sets=[]; seen_sets={}; terminal=''; max_declared=1
-          for page in range(1,61):
+          for page in range(1,201):
               r=get(LIST,params={'code':'notice','page':page}); soup=BeautifulSoup(r.text,'html.parser'); ids=set()
               for a in soup.find_all('a',href=True):
                   title=re.sub(r'\s+',' ',a.get_text(' ',strip=True)).strip(); href=urljoin(r.url,a.get('href') or ''); q=parse_qs(urlparse(href).query)
