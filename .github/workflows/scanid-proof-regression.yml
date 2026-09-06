@@ -49,7 +49,7 @@ jobs:
             scripts/validate_reconciliation_policy.py
       - name: Run scan identity regression tests
         run: python tests/test_scan_identity_binding.py
-      - name: Guard publication-race semantics
+      - name: Guard publication-race and queue-isolation semantics
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -64,4 +64,10 @@ jobs:
           assert 'RECONCILE_SCAN_ID=' in recon, 'workflow must mint one scan ID'
           assert 'source_id_ledger.candidate.json' in recon, 'failure path must persist candidate ledger'
           assert 'git checkout -B main origin/main' in recon.split('Preserve reconciliation diagnostics on failure',1)[1]
+          assert 'group: metro-edujob-reconciliation' in recon, 'long reconciliation must not share the general writer pending slot'
+          assert 'group: metro-edujob-data' not in recon, 'shared writer queue can starve hourly reconciliation before jobs start'
+          assert 'cancel-in-progress: false' in recon, 'a newer reconciliation must not cancel an in-progress scan'
+          assert 'for attempt in 1 2 3' in recon, 'reconciliation publication must retry after concurrent main updates'
+          assert 'git merge-base --is-ancestor HEAD origin/main' in recon, 'reconciliation publication must verify reachability after push'
+          assert 'git fetch origin main' in recon and 'git checkout -B main origin/main' in recon, 'reconciliation must synchronize latest main before scanning/preserving failures'
           PY
