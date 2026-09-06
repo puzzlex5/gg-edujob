@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import build_unified_search as base
-from private_source_registry import PRIVATE_SOURCES, publication_enabled, source_health
+from private_source_registry import PRIVATE_SOURCES, detail_url_is_specific, publication_enabled, source_health
 from source_registry import official_source_count
 
 KST = timezone(timedelta(hours=9))
@@ -65,12 +65,16 @@ def main():
     all_private=[]; private_meta={}; canonical_private_total=0; enabled_private_sources=0; degraded_private_sources=[]
     for spec in PRIVATE_SOURCES:
         pdata=load(spec["jobs"], []); preport=load(spec["report"], {}); dreport=load(spec["detail_report"], {}) if spec.get("detail_report") else None
-        jobs=rows_from(pdata); projected=[project_private_generic(j,spec["name"]) for j in jobs if base.private_current(j)]
+        jobs=rows_from(pdata)
+        current_jobs=[j for j in jobs if base.private_current(j)]
+        direct_jobs=[j for j in current_jobs if detail_url_is_specific(spec, str(j.get("url") or ""))]
+        excluded_non_direct=len(current_jobs)-len(direct_jobs)
+        projected=[project_private_generic(j,spec["name"]) for j in direct_jobs]
         configured_enabled=publication_enabled(preport); healthy=source_health(spec,preport,dreport); effective_enabled=configured_enabled and healthy
         if effective_enabled:
             enabled_private_sources += 1; canonical_private_total += len(jobs); all_private.extend(projected)
         elif configured_enabled and not healthy: degraded_private_sources.append(spec["key"])
-        private_meta[spec["key"]]={"name":spec["name"],"configuredPublicationEnabled":configured_enabled,"publicationEnabled":effective_enabled,"degraded":configured_enabled and not healthy,"ok":healthy,"candidateCount":len(projected),"count":len(projected) if effective_enabled else 0,"lastVerifiedAt":(dreport or preport).get("generatedAt") if isinstance((dreport or preport),dict) else None,"missingAfterCount":preport.get("missingAfterCount") if isinstance(preport,dict) else None,"detailErrorCount":(dreport or preport).get("detailErrorCount") if isinstance((dreport or preport),dict) else None}
+        private_meta[spec["key"]]={"name":spec["name"],"configuredPublicationEnabled":configured_enabled,"publicationEnabled":effective_enabled,"degraded":configured_enabled and not healthy,"ok":healthy,"candidateCount":len(projected),"count":len(projected) if effective_enabled else 0,"excludedNonDirectCount":excluded_non_direct,"lastVerifiedAt":(dreport or preport).get("generatedAt") if isinstance((dreport or preport),dict) else None,"missingAfterCount":preport.get("missingAfterCount") if isinstance(preport,dict) else None,"detailErrorCount":(dreport or preport).get("detailErrorCount") if isinstance((dreport or preport),dict) else None}
     remaining_private, explicit_aliases, ambiguous_aliases = base.merge_explicit_official_aliases(projected_official, all_private)
     rows, exact_url_groups = base.dedupe_strong(projected_official + remaining_private)
     rows.sort(key=lambda j:(j.get("registered") or "",j.get("applyEnd") or "9999-12-31",j.get("sourceIdentity") or ""), reverse=True)
@@ -87,7 +91,7 @@ def main():
         raise SystemExit(f"jobs.json officialSourceCount={embedded_official_sources} does not match sources.json={expected_official_sources}")
     payload={"updatedAt":datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),"dataset":"unified-search-v3-multi-private","officialSourceCount":expected_official_sources,"totalSourceCount":expected_official_sources+enabled_private_sources,"sources":official_data.get("sources",{}) if isinstance(official_data,dict) else {},"privateSources":private_meta,"counts":{"total":len(rows),**per_feed,"privateSourceOccurrences":{spec["key"]:private_meta[spec["key"]]["count"] for spec in PRIVATE_SOURCES}},"jobs":rows}
     Path("unified_jobs.next.json").write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
-    report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"policy":"unified-search-v3-multi-private-strong-evidence-only","canonicalOfficialJobs":len(official_jobs),"canonicalPrivateJobs":canonical_private_total,"selectedOfficialJobs":len(projected_official),"selectedPrivateJobs":len(all_private),"publishedJobs":len(rows),"perFeed":per_feed,"privateSources":private_meta,"protectedOfficialIds":len(protected),"explicitOfficialAliasGroupsMerged":len(explicit_aliases),"exactUrlAliasGroupsMerged":len(exact_url_groups),"ambiguousExplicitOfficialLinks":len(ambiguous_aliases),"semanticDuplicatePolicy":"review-only-never-auto-delete","degradedPrivateSources":degraded_private_sources,"allPublicationEnabledSourcesHealthy":not degraded_private_sources}
+    report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"policy":"unified-search-v3-multi-private-direct-detail-only","canonicalOfficialJobs":len(official_jobs),"canonicalPrivateJobs":canonical_private_total,"selectedOfficialJobs":len(projected_official),"selectedPrivateJobs":len(all_private),"publishedJobs":len(rows),"perFeed":per_feed,"privateSources":private_meta,"protectedOfficialIds":len(protected),"explicitOfficialAliasGroupsMerged":len(explicit_aliases),"exactUrlAliasGroupsMerged":len(exact_url_groups),"ambiguousExplicitOfficialLinks":len(ambiguous_aliases),"semanticDuplicatePolicy":"review-only-never-auto-delete","degradedPrivateSources":degraded_private_sources,"allPublicationEnabledSourcesHealthy":not degraded_private_sources}
     Path("unified_search_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report,ensure_ascii=False,indent=2))
 
