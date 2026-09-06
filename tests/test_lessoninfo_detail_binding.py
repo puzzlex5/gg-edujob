@@ -86,7 +86,47 @@ def main() -> int:
         not r._detail_content_matches(item, "전혀 다른 기관의 채용 공고"),
     )
 
-    print("passed=9 failed=0")
+    fallback_item = {
+        "sourceIdentity": "culture:id:94879",
+        "sourceSurface": "culture-arts",
+        "sourceSurfaceLabel": "문화예술 채용",
+        "url": "https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94879",
+        "titleHint": "[광림아트센터] BBCH홀 / 장천홀 공연장안내원 모집공고",
+        "rowText": "서울 강남구 [광림아트센터] BBCH홀 / 장천홀 공연장안내원 모집공고 09.05 광림아트센터",
+        "registeredHint": "2026-09-05",
+    }
+    fallback = r._culture_list_fallback(fallback_item, "detail-route-mismatch")
+    check(
+        "fresh metro culture row survives an unverified detail route",
+        bool(fallback)
+        and fallback.get("sourceIdentity") == "culture:id:94879"
+        and fallback.get("metroRegion") == "서울",
+    )
+    check(
+        "list-only culture fallback cannot expose the unverified individual link",
+        bool(fallback)
+        and fallback.get("url") == ""
+        and fallback.get("originalUrl") == ""
+        and fallback.get("detailLinkVerified") is False
+        and fallback.get("unverifiedDetailUrl", "").endswith("id=94879"),
+    )
+
+    nonmetro = dict(fallback_item)
+    nonmetro["sourceIdentity"] = "culture:id:94880"
+    nonmetro["rowText"] = "부산 해운대구 공연장 안내원 모집 09.05 기관"
+    check(
+        "list-only fallback still rejects non-metro culture rows",
+        r._culture_list_fallback(nonmetro, "detail-route-mismatch") is None,
+    )
+
+    unstable = dict(fallback_item)
+    unstable["sourceIdentity"] = "culture:url:deadbeef"
+    check(
+        "list-only fallback requires a numeric stable culture identity",
+        r._culture_list_fallback(unstable, "detail-route-mismatch") is None,
+    )
+
+    print("passed=13 failed=0")
     return 0
 
 
