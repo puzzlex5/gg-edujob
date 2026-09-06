@@ -1,0 +1,88 @@
+name: Probe Lessoninfo screenshot cases
+
+on:
+  push:
+    branches:
+      - diagnose/lessoninfo-cold-deeplinks-20260906
+    paths:
+      - '.github/workflows/probe-lessoninfo-screenshot-cases.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Probe exact screenshot rows
+        run: |
+          python - <<'PY'
+          import asyncio, json, re
+          from pathlib import Path
+          from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+          from playwright.async_api import async_playwright
+
+          data=json.loads(Path('lessoninfo_jobs.json').read_text(encoding='utf-8'))
+          jobs=data.get('jobs',data) if isinstance(data,dict) else data
+          needles=['국립박물관문화재단 2026년 3차 직원 채용','광명문화재단 꿈의 무용단 예비거점기관 감독 모집']
+          selected=[]
+          for n in needles:
+              hits=[j for j in jobs if n in str(j.get('title') or '')]
+              selected.extend(hits[:4])
+          seen=set(); rows=[]
+          for j in selected:
+              k=j.get('sourceIdentity') or j.get('url')
+              if k in seen: continue
+              seen.add(k); rows.append(j)
+
+          UA='Mozilla/5.0 (Linux; Android 14; SM-S928N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36'
+          def plus_attempt(u):
+              p=urlparse(u); q=parse_qs(p.query,keep_blank_values=True); q['ckattempt']=['1']
+              query=urlencode([(k,v) for k,vals in q.items() for v in vals])
+              return urlunparse((p.scheme,p.netloc,p.path,p.params,query,p.fragment))
+
+          async def probe(browser,j,url,label):
+              ctx=await browser.new_context(user_agent=UA,locale='ko-KR',timezone_id='Asia/Seoul',viewport={'width':390,'height':844})
+              page=await ctx.new_page()
+              try:
+                  r=await page.goto(url,wait_until='domcontentloaded',timeout=45000)
+                  await page.wait_for_timeout(1200)
+                  text=await page.locator('body').inner_text(timeout=8000)
+                  title=str(j.get('title') or '')
+                  key='국립박물관문화재단' if '국립박물관문화재단' in title else '광명문화재단'
+                  return {'label':label,'status':r.status if r else None,'requested':url,'finalUrl':page.url,'title':title,'sourceIdentity':j.get('sourceIdentity'),'registered':j.get('registered'),'applyEnd':j.get('applyEnd'),'activeReason':j.get('activeReason'),'keyHit':key in text,'listLike':urlparse(page.url).path.endswith('/culture-jobs/list.php'),'bodyPrefix':re.sub(r'\\s+',' ',text)[:700]}
+              except Exception as e:
+                  return {'label':label,'requested':url,'error':f'{type(e).__name__}: {e}'}
+              finally:
+                  await ctx.close()
+
+          async def main():
+              async with async_playwright() as pw:
+                  browser=await pw.chromium.launch(headless=True,args=['--disable-dev-shm-usage'])
+                  out={'matchedDatasetRows':[{'sourceIdentity':j.get('sourceIdentity'),'title':j.get('title'),'url':j.get('url'),'registered':j.get('registered'),'applyEnd':j.get('applyEnd'),'activeReason':j.get('activeReason')} for j in rows],'probes':[]}
+                  for j in rows:
+                      u=str(j.get('url') or '')
+                      out['probes'].append(await probe(browser,j,u,'plain'))
+                      out['probes'].append(await probe(browser,j,plus_attempt(u),'explicit-ckattempt-1'))
+                  await browser.close()
+              Path('lessoninfo-screenshot-probe.json').write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8')
+              print(json.dumps(out,ensure_ascii=False,indent=2))
+          asyncio.run(main())
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lessoninfo-screenshot-probe-${{ github.run_id }}
+          path: lessoninfo-screenshot-probe.json
+          retention-days: 7
