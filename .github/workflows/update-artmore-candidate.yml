@@ -2,6 +2,11 @@ name: Update ArtMore candidate jobs
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/crawl_artmore_browser.py'
+      - 'scripts/crawl_artmore_browser_v2.py'
+      - '.github/workflows/update-artmore-candidate.yml'
   push:
     paths:
       - 'scripts/crawl_artmore_browser.py'
@@ -12,9 +17,10 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
-  group: metro-edujob-artmore-candidate
+  group: metro-edujob-artmore-candidate-${{ github.event.pull_request.number || 'main' }}
   cancel-in-progress: true
 
 jobs:
@@ -26,6 +32,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Sync latest main
+        if: github.event_name != 'pull_request'
         run: |
           git fetch origin main
           git reset --hard origin/main
@@ -38,20 +45,22 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Syntax check
         run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v2.py
+      - name: Clear stale candidate evidence
+        run: rm -f artmore_jobs.candidate.json artmore_source_id_ledger.candidate.json artmore_reconciliation_report.candidate.json artmore_collection_state.candidate.json
       - name: Collect isolated ArtMore candidate
         id: collect
         continue-on-error: true
         env:
           ARTMORE_MAX_PAGES: '250'
         run: python scripts/crawl_artmore_browser_v2.py
-      - name: Validate candidate safety gate
+      - name: Validate candidate safety gate and pagination proof
         id: validate
         continue-on-error: true
         run: |
           python - <<'PY'
           import json, pathlib
           p=pathlib.Path('artmore_reconciliation_report.candidate.json')
-          if not p.exists(): raise SystemExit('missing ArtMore reconciliation report')
+          if not p.exists(): raise SystemExit('missing fresh ArtMore reconciliation report')
           r=json.loads(p.read_text(encoding='utf-8'))
           print(json.dumps(r,ensure_ascii=False,indent=2))
           if r.get('publicationEnabled') is not False: raise SystemExit('candidate must not publish')
@@ -60,6 +69,16 @@ jobs:
           reports=r.get('sourceReports') or []
           if {x.get('region') for x in reports} != {'서울','경기'}: raise SystemExit('both metro regions not verified')
           if any((x.get('ids') or 0) <= 0 for x in reports): raise SystemExit('zero region IDs')
+          exhaustion={'raw-page-empty','raw-page-repeated','pagination-repeated-page'}
+          for surface in reports:
+            pages=surface.get('pages') or []
+            if not pages: raise SystemExit(f'no page evidence: {surface.get("region")}')
+            reason=pages[-1].get('terminationReason')
+            if reason not in exhaustion:
+              raise SystemExit(f'unproven pagination exhaustion: {surface.get("region")} reason={reason}')
+            for page in pages:
+              if 'rawIdCount' not in page or 'rawNewIdCount' not in page:
+                raise SystemExit(f'missing raw pagination evidence: {surface.get("region")} page={page.get("page")}')
           d=json.loads(pathlib.Path('artmore_jobs.candidate.json').read_text(encoding='utf-8'))
           jobs=d.get('jobs') or []
           if not jobs: raise SystemExit('zero candidate jobs')
@@ -67,19 +86,93 @@ jobs:
           if bad: raise SystemExit(f'non-metro rows: {len(bad)}')
           missing=[j for j in jobs if not j.get('sourceIdentity') or not j.get('originalUrl')]
           if missing: raise SystemExit(f'missing identity/link: {len(missing)}')
+          by_id={str(j.get('stableId')):j for j in jobs}
+          sentinels={
+            '91141': ('문화예술교육','미술'),
+            '92031': ('미술','강사'),
+            '94500': ('종이접기','강사'),
+            '93961': ('종이접기','강사'),
+          }
+          absent=[sid for sid in sentinels if sid not in by_id]
+          if absent: raise SystemExit(f'ArtMore sentinel IDs still missing: {absent}')
+          for sid,tokens in sentinels.items():
+            j=by_id[sid]
+            if j.get('province') != '서울': raise SystemExit(f'sentinel province mismatch: {sid} {j.get("province")}')
+            title=j.get('title') or ''
+            if not all(t in title for t in tokens): raise SystemExit(f'sentinel title mismatch: {sid} {title}')
+            if f'rec_idx={sid}' not in (j.get('originalUrl') or ''): raise SystemExit(f'sentinel exact link mismatch: {sid}')
+          PY
+      - name: Surface fresh PR diagnostics
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+          VALIDATE_OUTCOME: ${{ steps.validate.outcome }}
+        run: |
+          python - <<'PY' > /tmp/artmore-pr-diagnostic.md
+          import json, os, pathlib
+          print('### ArtMore fresh candidate diagnostic')
+          print(f"collect outcome: `{os.environ.get('COLLECT_OUTCOME')}`")
+          print(f"validate outcome: `{os.environ.get('VALIDATE_OUTCOME')}`")
+          rp=pathlib.Path('artmore_reconciliation_report.candidate.json')
+          jp=pathlib.Path('artmore_jobs.candidate.json')
+          if rp.exists():
+            r=json.loads(rp.read_text(encoding='utf-8'))
+            print('```json')
+            print(json.dumps(r,ensure_ascii=False,indent=2))
+            print('```')
+          else:
+            print('No fresh reconciliation report was produced.')
+          if jp.exists():
+            jobs=json.loads(jp.read_text(encoding='utf-8')).get('jobs',[])
+            ids={str(j.get('stableId')) for j in jobs}
+            wanted=['91141','92031','94500','93961']
+            print(f"fresh jobs: `{len(jobs)}`; sentinels present: `{[x for x in wanted if x in ids]}`; missing: `{[x for x in wanted if x not in ids]}`")
+          PY
+          gh pr comment "$PR" --body-file /tmp/artmore-pr-diagnostic.md
+      - name: Validate sentinel detail content
+        if: github.event_name == 'pull_request' && steps.collect.outcome == 'success' && steps.validate.outcome == 'success'
+        run: |
+          python - <<'PY'
+          import asyncio, json
+          from playwright.async_api import async_playwright
+          EXPECT={
+            '91141': ('문화예술교육','미술'),
+            '92031': ('미술','강사'),
+            '94500': ('종이접기','강사'),
+            '93961': ('종이접기','강사'),
+          }
+          async def main():
+            jobs=json.load(open('artmore_jobs.candidate.json',encoding='utf-8')).get('jobs',[])
+            by_id={str(j.get('stableId')):j for j in jobs}
+            async with async_playwright() as pw:
+              browser=await pw.chromium.launch(headless=True)
+              page=await browser.new_page(locale='ko-KR')
+              for sid,tokens in EXPECT.items():
+                j=by_id[sid]
+                await page.goto(j['originalUrl'], wait_until='domcontentloaded', timeout=60000)
+                await page.wait_for_timeout(500)
+                body=' '.join((await page.locator('body').inner_text()).split())
+                if not all(t in body for t in tokens): raise RuntimeError(f'sentinel detail content mismatch: {sid}')
+                if f'rec_idx={sid}' not in page.url: raise RuntimeError(f'sentinel final detail identity mismatch: {sid} final={page.url}')
+              await browser.close()
+          asyncio.run(main())
           PY
       - name: Commit candidate evidence
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add artmore_jobs.candidate.json artmore_source_id_ledger.candidate.json artmore_reconciliation_report.candidate.json artmore_collection_state.candidate.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'Record isolated ArtMore candidate collection'
+            pushed=false
             for i in 1 2 3; do
-              git pull --rebase origin main && git push origin HEAD:main && break
+              if git pull --rebase origin main && git push origin HEAD:main; then pushed=true; break; fi
               sleep $((i*5))
             done
+            if [ "$pushed" != true ]; then exit 1; fi
           fi
       - name: Fail visibly after preserving diagnostics
         if: steps.collect.outcome != 'success' || steps.validate.outcome != 'success'
