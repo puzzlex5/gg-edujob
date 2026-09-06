@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T05:08:29+09:00",
+  "generatedAt": "2026-09-07T06:08:01+09:00",
   "status": "critical",
   "healthy": false,
   "snapshot": {
-    "generatedAt": "2026-09-07T05:08:29+09:00",
+    "generatedAt": "2026-09-07T06:08:01+09:00",
     "official": {
       "datasetCount": 18668,
       "officialIdCount": 17543,
@@ -12,29 +12,30 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7319,
+      "publishedJobs": 7061,
       "officialDisplayed": 2944,
-      "privateDisplayed": 4375,
-      "privateDiscovered": 4386,
-      "officialPrivateAliases": 11,
-      "healthy": false,
+      "privateDisplayed": 4117,
+      "privateDiscovered": 4117,
+      "officialPrivateAliases": 0,
+      "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
       "bannedPrivate": 0,
       "expiredPrivate": 0,
       "futurePrivateDates": 0,
       "duplicateStableIds": 0,
-      "missingLinks": 135,
+      "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
-        "lessoninfo",
         "jobteacher",
         "artmore",
         "gonggonggangsa",
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": []
+      "degradedPrivateSources": [
+        "lessoninfo"
+      ]
     },
     "officialSources": {
       "가평교육지원청": {
@@ -237,8 +238,8 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": true,
-        "healthy": true,
+        "enabled": false,
+        "healthy": false,
         "datasetCount": 269,
         "rawCount": 269,
         "currentCount": 269,
@@ -311,12 +312,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T05:08:07+09:00",
+      "baselineAt": "2026-09-06T06:07:39+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18668,
-          "baseline": 18873,
-          "changeRatio": -0.0109
+          "baseline": 18875,
+          "changeRatio": -0.011
         },
         "official.officialIdCount": {
           "current": 17543,
@@ -324,9 +325,9 @@
           "changeRatio": -0.0153
         },
         "unified.publishedJobs": {
-          "current": 7319,
+          "current": 7061,
           "baseline": 7515,
-          "changeRatio": -0.0261
+          "changeRatio": -0.0604
         },
         "unified.officialDisplayed": {
           "current": 2944,
@@ -334,9 +335,9 @@
           "changeRatio": -0.0379
         },
         "unified.privateDiscovered": {
-          "current": 4386,
+          "current": 4117,
           "baseline": 4467,
-          "changeRatio": -0.0181
+          "changeRatio": -0.0784
         }
       },
       "privateSources": {
@@ -381,29 +382,30 @@
       "code": "unified-search-integrity-failed",
       "message": "통합검색 검증이 정상 기준을 통과하지 못했습니다.",
       "evidence": {
-        "publishedJobs": 7319,
+        "publishedJobs": 7061,
         "officialDisplayed": 2944,
-        "privateDisplayed": 4375,
-        "privateDiscovered": 4386,
-        "officialPrivateAliases": 11,
-        "healthy": false,
+        "privateDisplayed": 4117,
+        "privateDiscovered": 4117,
+        "officialPrivateAliases": 0,
+        "healthy": true,
         "missingPrivateIds": 0,
         "nonMetroPrivate": 0,
         "bannedPrivate": 0,
         "expiredPrivate": 0,
         "futurePrivateDates": 0,
         "duplicateStableIds": 0,
-        "missingLinks": 135,
+        "missingLinks": 0,
         "badCrossSourceAliasEvidence": 0,
         "enabledPrivateSources": [
-          "lessoninfo",
           "jobteacher",
           "artmore",
           "gonggonggangsa",
           "seekle",
           "boramyc"
         ],
-        "degradedPrivateSources": []
+        "degradedPrivateSources": [
+          "lessoninfo"
+        ]
       }
     }
   ],
