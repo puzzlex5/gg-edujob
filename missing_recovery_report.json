@@ -1,14 +1,14 @@
 {
   "summary": {
-    "freshCount": 16540,
-    "previousCount": 18902,
-    "mergedCount": 18884,
-    "carriedForward": 2344,
-    "officialIdProtected": 17809,
+    "freshCount": 16541,
+    "previousCount": 18904,
+    "mergedCount": 18886,
+    "carriedForward": 2345,
+    "officialIdProtected": 17810,
     "officialIdCarryForward": 1270,
-    "enrichedFromPrevious": 7067,
+    "enrichedFromPrevious": 7068,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-06 21:56 KST"
+    "generatedAt": "2026-09-06 23:56 KST"
   },
   "carried": [
     {
@@ -41,7 +41,7 @@
       "registered": "2026/09/05",
       "applyEnd": "2026/09/07",
       "sourceIdentity": "seoul-central:109768",
-      "reason": "present in latest independent official-ID reconciliation",
+      "reason": "previously published posting still within application period",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109768"
     },
     {
@@ -1198,6 +1198,17 @@
       "sourceIdentity": "goe-central:58642",
       "reason": "previously published posting still within application period",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58642"
+    },
+    {
+      "province": "서울",
+      "source": "서울교육일자리포털",
+      "school": "선덕고등학교",
+      "title": "2026학년도 선덕고 계약제교원(시간강사) 채용 공고",
+      "registered": "2026/09/01",
+      "applyEnd": "2026/09/06",
+      "sourceIdentity": "seoul-central:109494",
+      "reason": "present in latest independent official-ID reconciliation",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109494"
     },
     {
       "province": "서울",
