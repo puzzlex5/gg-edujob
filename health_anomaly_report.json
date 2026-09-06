@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-06T18:08:12+09:00",
+  "generatedAt": "2026-09-06T19:08:16+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-06T18:08:12+09:00",
+    "generatedAt": "2026-09-06T19:08:16+09:00",
     "official": {
-      "datasetCount": 18902,
+      "datasetCount": 18901,
       "officialIdCount": 17813,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7529,
+      "publishedJobs": 7530,
       "officialDisplayed": 3075,
-      "privateDisplayed": 4454,
-      "privateDiscovered": 4466,
+      "privateDisplayed": 4455,
+      "privateDiscovered": 4467,
       "officialPrivateAliases": 12,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -30,7 +30,8 @@
         "lessoninfo",
         "jobteacher",
         "artmore",
-        "gonggonggangsa"
+        "gonggonggangsa",
+        "seekle"
       ],
       "degradedPrivateSources": []
     },
@@ -176,7 +177,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 65,
         "latestRegistered": "2026-09-02"
       },
       "안산교육지원청": {
@@ -284,15 +285,27 @@
         "detailErrors": 0,
         "traversalComplete": true,
         "latestRegistered": "2026-09-04"
+      },
+      "seekle": {
+        "name": "시립광진청소년센터",
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 7,
+        "rawCount": 7,
+        "currentCount": 1,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-04"
       }
     }
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-05T18:07:46+09:00",
+      "baselineAt": "2026-09-05T19:07:48+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18902,
+          "current": 18901,
           "baseline": 19234,
           "changeRatio": -0.0173
         },
@@ -302,9 +315,9 @@
           "changeRatio": -0.0205
         },
         "unified.publishedJobs": {
-          "current": 7529,
+          "current": 7530,
           "baseline": 7601,
-          "changeRatio": -0.0095
+          "changeRatio": -0.0093
         },
         "unified.officialDisplayed": {
           "current": 3075,
@@ -312,9 +325,9 @@
           "changeRatio": -0.0179
         },
         "unified.privateDiscovered": {
-          "current": 4466,
+          "current": 4467,
           "baseline": 4482,
-          "changeRatio": -0.0036
+          "changeRatio": -0.0033
         }
       },
       "privateSources": {
@@ -337,6 +350,11 @@
           "current": 57,
           "baseline": 57,
           "changeRatio": 0.0
+        },
+        "seekle": {
+          "current": 1,
+          "baseline": 0,
+          "changeRatio": null
         }
       }
     },
