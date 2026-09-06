@@ -1,0 +1,68 @@
+name: diffDay hotfix check
+
+# Guards the calendar-day diffDay hotfix:
+#  1. deterministic date/bucket boundary tests (no data-dependent constants)
+#  2. proof that this PR changes no collected data or collection logic
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tests/test_diffday_calendar.js'
+      - '.github/workflows/diffday-hotfix-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deterministic diffDay and 5-bucket boundary tests
+        run: node tests/test_diffday_calendar.js
+
+      - name: Data files unchanged in this PR
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          if [ -z "$BASE" ]; then
+            echo "No PR context; skipping base..head data comparison."
+            exit 0
+          fi
+          echo "base=$BASE head=$HEAD"
+
+          # applyEnd 원본을 포함한 수집 데이터가 이 PR 에서 바뀌지 않았음을 증명한다.
+          # 같은 파일을 두 번 파싱하는 검사는 동어반복이므로 쓰지 않는다.
+          git diff --exit-code "$BASE" "$HEAD" -- \
+            unified_jobs.json jobs.json \
+            '*_jobs.json' '*_ledger.json' 'source_id_ledger.json' \
+            || { echo '::error::this PR must not modify collected data'; exit 1; }
+
+          # 수집기·링크 정확성·안정 ID 로직도 이 PR 범위 밖이다.
+          git diff --exit-code "$BASE" "$HEAD" -- \
+            scripts/ direct-link-guard.js sources.json \
+            || { echo '::error::this PR must not modify collectors or link/ID logic'; exit 1; }
+
+          echo "OK: data, collectors, link/ID logic unchanged."
+
+      - name: Report applyEnd hash (observational)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f unified_jobs.json ]; then
+            node -e "
+              const d=require('./unified_jobs.json');
+              const j=d.jobs||d;
+              const crypto=require('crypto');
+              const h=crypto.createHash('sha256')
+                .update(JSON.stringify(j.map(x=>x.applyEnd))).digest('hex');
+              console.log('applyEnd vector sha256:', h);
+              console.log('rows:', j.length);
+            "
+          fi
