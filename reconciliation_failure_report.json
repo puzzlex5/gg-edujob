@@ -1,34 +1,63 @@
 {
-  "generatedAt": "2026-09-06 10:17:09 KST",
+  "generatedAt": "2026-09-06 13:01:42 KST",
   "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files; candidate stable-ID deltas are retained for audit.",
   "candidateAvailable": true,
   "canonicalScanId": null,
-  "candidateScanId": "20260906T002839Z-34001356321-1",
+  "candidateScanId": "20260906T031113Z-34007113616-1",
   "canonicalOfficialIdCount": 17817,
-  "candidateOfficialIdCount": 17817,
-  "removedSinceCanonical": [],
-  "addedSinceCanonical": [],
+  "candidateOfficialIdCount": 17816,
+  "removedSinceCanonical": [
+    {
+      "sourceIdentity": "seoul-central:109292",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "2026학년도 특수교사 수업 부담 경감 사간강사 채용 공고",
+      "registered": "2026/08/28",
+      "firstSeen": "2026-08-31 00:13:00 KST",
+      "lastSeen": "2026-09-06 07:48:48 KST"
+    },
+    {
+      "sourceIdentity": "seoul-central:109445",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "기초학력 수학 협력수업 강사",
+      "registered": "2026/09/01",
+      "firstSeen": "2026-09-01 12:23:42 KST",
+      "lastSeen": "2026-09-06 07:48:48 KST"
+    }
+  ],
+  "addedSinceCanonical": [
+    {
+      "sourceIdentity": "seoul-central:109771",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "낙성대역 인헌중학교 대체 시간강사 채용 공고(영어)",
+      "registered": "2026/09/06",
+      "firstSeen": "2026-09-06 12:11:54 KST",
+      "lastSeen": "2026-09-06 12:11:54 KST"
+    }
+  ],
   "deltaConsistent": true,
-  "symmetricDifferenceCount": 0,
+  "symmetricDifferenceCount": 3,
   "candidate": {
     "reconciliation": {
-      "generatedAt": "2026-09-06 09:29:17 KST",
+      "generatedAt": "2026-09-06 12:11:54 KST",
       "lookbackDays": 90,
       "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-      "officialIdCount": 17817,
+      "officialIdCount": 17816,
       "datasetIdCountBefore": 18858,
-      "missingBefore": 0,
-      "recoveredNow": 0,
+      "missingBefore": 1,
+      "recoveredNow": 1,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38,
       "reconciledOffices": 38,
       "totalOffices": 38,
-      "scanId": "20260906T002839Z-34001356321-1"
+      "scanId": "20260906T031113Z-34007113616-1"
     },
     "centralPagination": {
-      "scanId": "20260906T002839Z-34001356321-1",
-      "generatedAt": "2026-09-06 09:58:23 KST",
+      "scanId": "20260906T031113Z-34007113616-1",
+      "generatedAt": "2026-09-06 12:41:16 KST",
       "complete": true,
       "sources": [
         {
@@ -132,9 +161,9 @@
         {
           "name": "서울교육일자리포털",
           "province": "서울",
-          "stableIdCount": 369,
+          "stableIdCount": 367,
           "pagesScanned": 9,
-          "rawRows": 369,
+          "rawRows": 367,
           "terminalEvidence": "empty-page",
           "accessError": false,
           "parseError": false,
@@ -147,22 +176,22 @@
       ]
     },
     "gyeonggiCentral90d": {
-      "generatedAt": "2026-09-06 10:17:07 KST",
+      "generatedAt": "2026-09-06 13:01:41 KST",
       "stableIdCount": 10129,
       "complete": true
     },
     "finalRestore": {
-      "checkedAt": "2026-09-06 10:09:51 KST",
-      "ledgerScanId": "20260906T002839Z-34001356321-1",
-      "protectedOfficialIds": 17817,
+      "checkedAt": "2026-09-06 12:54:20 KST",
+      "ledgerScanId": "20260906T031113Z-34007113616-1",
+      "protectedOfficialIds": 17816,
       "missingBefore": 0,
       "recoveredNow": 0,
       "missingAfter": 0
     },
     "sourceIdLedger": {
-      "scanId": "20260906T002839Z-34001356321-1",
-      "generatedAt": "2026-09-06 09:29:17 KST",
-      "officialIdCount": 17817
+      "scanId": "20260906T031113Z-34007113616-1",
+      "generatedAt": "2026-09-06 12:11:54 KST",
+      "officialIdCount": 17816
     }
   }
 }
