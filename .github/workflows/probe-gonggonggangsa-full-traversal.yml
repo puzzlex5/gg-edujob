@@ -1,0 +1,166 @@
+name: Probe Gonggonggangsa full traversal
+
+on:
+  push:
+    branches:
+      - probe/gonggonggangsa-full-traversal-v2
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run isolated full traversal probe
+        shell: python
+        run: |
+          import json, random, sys, time
+          from pathlib import Path
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          API = "https://www.00gangsa.com/api/appeal/list"
+          DETAIL = "https://www.00gangsa.com/appeal/detail/{}"
+          SIZE = 100
+          MAX_PAGES = 5000
+          MAX_ELEMENTS = 100000
+          OUT = Path("gonggonggangsa_full_traversal_probe_report.json")
+
+          def get_json(page):
+              url = API + "?" + urlencode({"page": page, "size": SIZE})
+              req = Request(url, headers={"User-Agent": "gg-edujob-isolated-probe/1.0", "Accept": "application/json"})
+              with urlopen(req, timeout=30) as r:
+                  if r.status != 200:
+                      raise RuntimeError(f"list HTTP {r.status} page={page}")
+                  return json.load(r), url
+
+          def rows_from(obj):
+              if isinstance(obj.get("content"), list):
+                  return obj["content"]
+              emb = obj.get("_embedded")
+              if isinstance(emb, dict):
+                  lists = [v for v in emb.values() if isinstance(v, list)]
+                  if len(lists) == 1:
+                      return lists[0]
+                  for v in lists:
+                      if v and isinstance(v[0], dict) and "seq" in v[0]:
+                          return v
+              raise RuntimeError("could not locate row list")
+
+          report = {
+              "source": "공공강사",
+              "api": API,
+              "detailPattern": DETAIL,
+              "size": SIZE,
+              "tlsVerificationDisabled": False,
+              "authenticationBypassed": False,
+              "captchaBypassed": False,
+              "traversalComplete": False,
+              "readyForCollector": False,
+              "errors": [],
+          }
+
+          try:
+              first, first_url = get_json(0)
+              first_rows = rows_from(first)
+              total_elements = int(first.get("totalElements"))
+              total_pages = int(first.get("totalPages"))
+              returned_number = first.get("number")
+              report.update({
+                  "firstUrl": first_url,
+                  "totalElementsDeclared": total_elements,
+                  "totalPagesDeclared": total_pages,
+                  "firstReturnedNumber": returned_number,
+              })
+              if not (0 < total_elements <= MAX_ELEMENTS):
+                  raise RuntimeError(f"unsafe totalElements={total_elements}")
+              if not (0 < total_pages <= MAX_PAGES):
+                  raise RuntimeError(f"unsafe totalPages={total_pages}")
+              if returned_number not in (0, None):
+                  raise RuntimeError(f"unexpected first page number={returned_number}")
+              if not first_rows:
+                  raise RuntimeError("first page unexpectedly empty")
+
+              all_ids = []
+              page_signatures = set()
+              page_counts = []
+              for page in range(total_pages):
+                  obj, url = (first, first_url) if page == 0 else get_json(page)
+                  rows = rows_from(obj)
+                  number = obj.get("number")
+                  if number is not None and int(number) != page:
+                      raise RuntimeError(f"page number mismatch requested={page} returned={number}")
+                  ids = [str(r.get("seq")) for r in rows if r.get("seq") is not None]
+                  if len(ids) != len(rows):
+                      raise RuntimeError(f"missing seq on page={page}")
+                  if not ids:
+                      raise RuntimeError(f"premature empty page={page}/{total_pages}")
+                  if len(ids) != len(set(ids)):
+                      raise RuntimeError(f"duplicate stable ID inside page={page}")
+                  sig = tuple(ids)
+                  if sig in page_signatures:
+                      raise RuntimeError(f"repeated page signature page={page}")
+                  page_signatures.add(sig)
+                  all_ids.extend(ids)
+                  page_counts.append(len(ids))
+                  if page and page % 50 == 0:
+                      print(f"page {page}/{total_pages - 1}: ids={len(all_ids)}")
+                  time.sleep(0.03)
+
+              unique_ids = set(all_ids)
+              report.update({
+                  "pagesTraversed": total_pages,
+                  "pageCounts": page_counts,
+                  "idsSeen": len(all_ids),
+                  "uniqueStableIds": len(unique_ids),
+                  "duplicateStableIdsAcrossPages": len(all_ids) - len(unique_ids),
+                  "firstStableIds": all_ids[:10],
+                  "lastStableIds": all_ids[-10:],
+              })
+              if len(all_ids) != total_elements:
+                  raise RuntimeError(f"count mismatch declared={total_elements} traversed={len(all_ids)}")
+              if len(unique_ids) != total_elements:
+                  raise RuntimeError(f"cross-page duplicate/missing IDs declared={total_elements} unique={len(unique_ids)}")
+
+              # Prove persistent detail URLs on a deterministic spread of IDs. This is
+              # only a traversal gate; candidate-specific detail URLs are validated in
+              # full before publication.
+              positions = sorted(set([0, len(all_ids)//4, len(all_ids)//2, (3*len(all_ids))//4, len(all_ids)-1]))
+              detail_checks = []
+              for pos in positions:
+                  sid = all_ids[pos]
+                  url = DETAIL.format(sid)
+                  req = Request(url, headers={"User-Agent": "gg-edujob-isolated-probe/1.0"})
+                  with urlopen(req, timeout=30) as r:
+                      final_url = r.geturl()
+                      status = r.status
+                      body = r.read(300000).decode("utf-8", "ignore")
+                  ok = status == 200 and sid in final_url and sid in body
+                  detail_checks.append({"id": sid, "url": url, "finalUrl": final_url, "status": status, "idPreservedInUrlAndBody": ok})
+                  if not ok:
+                      raise RuntimeError(f"detail URL did not preserve stable ID {sid}")
+
+              report["detailChecks"] = detail_checks
+              report["traversalComplete"] = True
+              report["readyForCollector"] = True
+          except Exception as e:
+              report["errors"].append(f"{type(e).__name__}: {e}")
+          finally:
+              OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+              print(OUT.read_text(encoding="utf-8"))
+
+          if not report["readyForCollector"]:
+              sys.exit(1)
+
+      - name: Upload probe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gonggonggangsa-full-traversal-probe
+          path: gonggonggangsa_full_traversal_probe_report.json
+          if-no-files-found: error
