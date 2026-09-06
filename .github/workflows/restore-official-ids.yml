@@ -55,7 +55,9 @@ jobs:
           set_state() { echo "RESTORE_PUSH_STATE=$1" >> "$GITHUB_ENV"; }
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add jobs.json collection_state.json collector_status.json deep_audit_status.json official_id_restore_report.json date_anomaly_report.json
+          # update_collection_state.py refreshes job_ledger.json as part of the same verified
+          # checkpoint. Stage it with the rest so pull --rebase never sees a dirty worktree.
+          git add jobs.json job_ledger.json collection_state.json collector_status.json deep_audit_status.json official_id_restore_report.json date_anomaly_report.json
           if git diff --cached --quiet; then
             set_state no-change
             exit 0
@@ -113,13 +115,14 @@ jobs:
           push_state="${RESTORE_PUSH_STATE:-not-attempted}"
           echo "Restore failure publication state: ${push_state}"
 
-          # Always re-anchor on the actual remote branch. Never reset to HEAD here: HEAD may be the
-          # unpublished restore commit, which was the previous failure-handler bug.
+          # Re-anchor on the actual remote LKG. HEAD may be an unpublished restore commit, so
+          # discard tracked candidate residue specifically against origin/main before diagnostics.
           if ! git fetch origin main; then
             echo '::error::cannot safely publish restore diagnostics because origin/main is unavailable'
             exit 1
           fi
           git checkout -B main origin/main
+          git reset --hard origin/main
           git clean -fd
 
           case "$push_state" in
