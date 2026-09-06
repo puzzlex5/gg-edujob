@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-06 22:33 KST",
+    "checkedAt": "2026-09-06 23:14 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 2/50개",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7425,
-      "resolved": 7425,
+      "total": 7426,
+      "resolved": 7426,
       "unresolved": 0,
       "examples": []
     },
@@ -1030,8 +1030,8 @@
         }
       ]
     },
-    "previousTotal": 18903,
-    "currentTotal": 18902
+    "previousTotal": 18902,
+    "currentTotal": 18904
   },
   "jobs": [
     {
@@ -1169,6 +1169,67 @@
       "recoveryCarryForward": true,
       "recoveryReason": "previously published posting still within application period",
       "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109744",
+      "province": "서울",
+      "school": "서울서래초등학교",
+      "title": "(긴급 서래초) 6학년 시간강사님을 모십니다.",
+      "subject": "6학년 담임수업",
+      "region": "서초구",
+      "regions": [
+        "서초구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/06",
+      "applyEnd": "2026/09/07",
+      "workStart": "2026/09/07",
+      "workEnd": "2026/09/07",
+      "registered": "2026/09/06",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109744",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109744"
+    },
+    {
+      "id": "goe-complete-58407acc3c8c3bedb1",
+      "province": "경기",
+      "school": "덕풍초",
+      "title": "[덕풍초] 2학기 기간제 교원 채용 공고 1차",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "광주시",
+        "하남시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "2026/09/10",
+      "applyEnd": "2026/09/06",
+      "workStart": "2026/09/14",
+      "workEnd": "2026/10/16",
+      "registered": "2026/09/06",
+      "headcount": "",
+      "source": "광주하남교육지원청",
+      "checkedSources": [
+        "광주하남교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegh.kr/goegh/na/ntt/selectNttInfo.do?bbsId=5088&nttSn=1223725&mi=8754",
+      "boardUrl": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
+      "detailLinkResolved": true,
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "mircms:www.goegh.kr:5088:1223725",
+      "nttSn": "1223725",
+      "bbsId": "5088",
+      "mi": "8754",
+      "periodStatus": "parsed"
     },
     {
       "id": "sen-109767",
@@ -524778,11 +524839,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-06 22:31 KST",
+    "checkedAt": "2026-09-06 23:12 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-06 22:31 KST",
+    "checkedAt": "2026-09-06 23:12 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -524803,17 +524864,17 @@
     "seoulTotal": 513
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-06 21:56 KST",
+    "checkedAt": "2026-09-06 23:12 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6086,
     "detailPagesParsed": 2527,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1061,
-    "missingWorkPeriod": 2016,
+    "missingApplicationPeriod": 1060,
+    "missingWorkPeriod": 2015,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-06 21:56 KST",
+      "checkedAt": "2026-09-06 23:12 KST",
       "candidates": 243,
       "detailPagesConfirmed": 239,
       "cacheEntriesImproved": 0,
@@ -524825,11 +524886,26 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-06 22:31:46 KST",
-    "ledgerScanId": "20260906T094123Z-34025325944-1",
-    "protectedOfficialIds": 17809,
+    "checkedAt": "2026-09-06 23:12:33 KST",
+    "ledgerScanId": "20260906T134112Z-34036818101-1",
+    "protectedOfficialIds": 17810,
     "missingBefore": 0,
     "recoveredNow": 0,
     "missingAfter": 0
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-06 22:46:46 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17810,
+    "datasetIdCountBefore": 18862,
+    "missingBefore": 2,
+    "recoveredNow": 2,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38,
+    "scanId": "20260906T134112Z-34036818101-1"
   }
 }
