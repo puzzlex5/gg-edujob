@@ -29,15 +29,20 @@
   };
 
   postingLink=function(j){
-    // Any row explicitly rejected by the exact-detail audit remains non-clickable.
+    // Any row explicitly rejected by an exact-detail audit remains non-clickable.
     if(j&&j.detailLinkVerified===false) return '';
 
-    // Lessoninfo culture detail.php?id=... is not a proven persistent public contract:
-    // culture:id:94673 was observed to fall back to the culture list in a cold mobile
-    // browser even though warm/list-seeded verification could bind the same URL. Static
-    // shape/title/ID checks therefore cannot authorize an individual link. Keep culture
-    // cards visible/searchable but fail closed until cold-context persistence is proven.
-    if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts') return '';
+    // Lessoninfo culture links are authorized per posting by the independent cold-browser
+    // verifier. Never infer safety merely from a detail.php?id=... URL shape. Require the
+    // explicit true flag and the exact verified destination produced by that verifier.
+    if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts'){
+      // Defense in depth: this real-device regression sentinel must never become clickable even
+      // if stale data accidentally carries detailLinkVerified=true.
+      if(j.sourceIdentity==='culture:id:94673') return '';
+      if(j.detailLinkVerified!==true) return '';
+      const verified=String(j.verifiedUrl||'').trim();
+      return verified;
+    }
 
     const direct=seoulSupportGet(j);
     if(direct) return direct;
