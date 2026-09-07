@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T19:45:37+09:00",
+  "generatedAt": "2026-09-07T10:13:55+09:00",
   "source": "공공강사",
   "api": "https://prod-backend.00gangsa.com/v1/recruitments",
   "method": "POST",
@@ -13,14 +13,13 @@
         "order": "RECENT"
       },
       "status": 200,
-      "count": 22523,
-      "totalPage": 2253,
+      "count": 22549,
+      "totalPage": 2255,
       "currentPage": 1,
       "hasPrevPage": false,
       "hasNextPage": true,
       "listCount": 10,
       "ids": [
-        "23367",
         "23278",
         "23211",
         "23472",
@@ -29,113 +28,23 @@
         "23469",
         "23467",
         "23466",
-        "23464"
+        "23464",
+        "23463"
       ],
       "states": [
-        "RECRUITING",
-        "SCHEDULED"
+        "RECRUITING"
       ],
       "provinces": [
         "강원",
-        "경기",
         "경남",
         "대구",
         "서울",
+        "세종",
         "전국",
         "제주",
         "충남"
       ],
       "sample": [
-        {
-          "id": 23367,
-          "type": "PROVIDER_SUBMIT",
-          "state": "RECRUITING",
-          "title": "화성효행중앙교회 유아체육 강사 구인",
-          "description": null,
-          "institution": {
-            "id": 5,
-            "name": "공공강사",
-            "email": "choh@8around.kr",
-            "phoneNumber": "01099022560"
-          },
-          "counts": {
-            "viewCnt": 41,
-            "scrapCnt": 0
-          },
-          "fields": [
-            {
-              "id": 149,
-              "name": "유아체육"
-            }
-          ],
-          "regions": [
-            {
-              "province": {
-                "id": 2,
-                "isAll": false,
-                "name": "경기"
-              },
-              "city": {
-                "id": 40,
-                "isAll": false,
-                "name": "수원시"
-              }
-            },
-            {
-              "province": {
-                "id": 2,
-                "isAll": false,
-                "name": "경기"
-              },
-              "city": {
-                "id": 50,
-                "isAll": false,
-                "name": "용인시"
-              }
-            },
-            {
-              "province": {
-                "id": 2,
-                "isAll": false,
-                "name": "경기"
-              },
-              "city": {
-                "id": 58,
-                "isAll": false,
-                "name": "화성시"
-              }
-            }
-          ],
-          "recruitmentAt": "2026-09-02 16:10:31",
-          "deadlineAt": "2026-09-06 23:59:59",
-          "deadlineDay": 2,
-          "recruitCount": 2,
-          "applicationGender": "A",
-          "applicationMinAge": 0,
-          "applicationMaxAge": 0,
-          "applicationEducation": "ANY",
-          "managerName": "오창훈",
-          "managerPhoneNumber": null,
-          "managerEmail": null,
-          "preferred": "휴강일 : 9/26 추석, 10/3 개천절, 수업에 필요한 교구 지참 가능한 강사, 7~11세 / 4~6세 둘 중 선택",
-          "workDetailAddress": "경기 화성시 효행구 봉담읍 삼천병마로 1320",
-          "workSchedules": [
-            {
-              "id": 211,
-              "startDate": "2026-09-12",
-              "endDate": "2026-12-05",
-              "day": "SAT",
-              "startTime": "11:00:00",
-              "endTime": "12:00:00",
-              "paymentType": "PER_SESSION",
-              "paymentAmount": 75000
-            }
-          ],
-          "scrapId": null,
-          "isScrap": false,
-          "hasCurriculum": null,
-          "isAd": true
-        },
         {
           "id": 23278,
           "type": "PROVIDER_SUBMIT",
@@ -149,7 +58,7 @@
             "phoneNumber": "01092491482"
           },
           "counts": {
-            "viewCnt": 320,
+            "viewCnt": 333,
             "scrapCnt": 14
           },
           "fields": [
@@ -174,7 +83,7 @@
           ],
           "recruitmentAt": "2026-08-27 13:24:25",
           "deadlineAt": "2026-09-10 23:59:59",
-          "deadlineDay": 6,
+          "deadlineDay": 3,
           "recruitCount": 1,
           "applicationGender": "A",
           "applicationMinAge": 0,
@@ -221,6 +130,72 @@
           "isScrap": false,
           "hasCurriculum": null,
           "isAd": true
+        },
+        {
+          "id": 23211,
+          "type": "PROVIDER_SUBMIT",
+          "state": "RECRUITING",
+          "title": "AI 해외시장·글로벌 마케팅 전문 강사 모집",
+          "description": null,
+          "institution": {
+            "id": 17,
+            "name": "상상력집단",
+            "email": "kyung23@illusionists.co.kr",
+            "phoneNumber": "01092491482"
+          },
+          "counts": {
+            "viewCnt": 403,
+            "scrapCnt": 8
+          },
+          "fields": [
+            {
+              "id": 10,
+              "name": "IT/영상사진"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 18,
+                "isAll": true,
+                "name": "전국"
+              },
+              "city": {
+                "id": 246,
+                "isAll": true,
+                "name": "전국 전체"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-08-24 22:56:49",
+          "deadlineAt": "2026-09-07 23:59:59",
+          "deadlineDay": 0,
+          "recruitCount": 0,
+          "applicationGender": "A",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": "ANY",
+          "managerName": "최은경",
+          "managerPhoneNumber": "01092491482",
+          "managerEmail": "kyung23@illusionists.co.kr",
+          "preferred": "AI 활용 + 해외시장 조사·글로벌 마케팅·수출 실무 분야의 강의 및 프로젝트 경험을 보유한 전문가",
+          "workDetailAddress": null,
+          "workSchedules": [
+            {
+              "id": 172,
+              "startDate": "1899-11-30",
+              "endDate": "1899-11-30",
+              "day": "ANY",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "ANY",
+              "paymentAmount": 0
+            }
+          ],
+          "scrapId": 10275,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": true
         }
       ]
     },
@@ -231,23 +206,23 @@
         "order": "RECENT"
       },
       "status": 200,
-      "count": 22523,
-      "totalPage": 2253,
+      "count": 22549,
+      "totalPage": 2255,
       "currentPage": 2,
       "hasPrevPage": true,
       "hasNextPage": true,
       "listCount": 10,
       "ids": [
-        "23463",
         "23462",
         "23460",
         "23459",
         "23458",
+        "23457",
+        "23456",
+        "23455",
+        "23454",
         "23453",
-        "23452",
-        "23449",
-        "23445",
-        "23434"
+        "23452"
       ],
       "states": [
         "RECRUITING",
@@ -256,71 +231,16 @@
       "provinces": [
         "강원",
         "경기",
+        "경남",
         "경북",
-        "광주",
         "대구",
-        "세종"
+        "전남"
       ],
       "sample": [
         {
-          "id": 23463,
-          "type": "VIEW",
-          "state": "SCHEDULED",
-          "title": "2026년 전문강사와 함께하는 바르게 걷기교실 운동강사 모집 공고 - 체육",
-          "description": "<div id=\"FormatStyle\" style=\"line-height: 1.5; text-align: left;\"><p style=\"\"><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">모집기간</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">2026. 9. 7.(월) ~ 2026. 9. 17.(목)</span><br><br><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">모집분야</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">운동강사, 보조 강사</span><br><br><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">지원자격</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">운동강사: 체육관련 전공자 또는 체육 관련 자격증 보유자, 운동 분야의 1년 이상 실무 경력이 있는 자<br>보조강사: 체육 관련 자격증 보유자 또는 운동 분야의 관련 실무 경력이 있는 자</span><br><br><b style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">접수방법</b><br><span style=\"color: rgb(0, 0, 0); font-family: &quot;Pretendard Variable&quot;, sans-serif; font-size: 14px;\">방문접수 또는 전자우편(aa411000@korea.kr) 접수</span><br></p></div>",
-          "institution": {
-            "id": 2764,
-            "name": "세종시청",
-            "email": null,
-            "phoneNumber": null
-          },
-          "counts": {
-            "viewCnt": 0,
-            "scrapCnt": 0
-          },
-          "fields": [
-            {
-              "id": 13,
-              "name": "체육"
-            }
-          ],
-          "regions": [
-            {
-              "province": {
-                "id": 9,
-                "isAll": false,
-                "name": "세종"
-              },
-              "city": {
-                "id": 115,
-                "isAll": true,
-                "name": "세종 전체"
-              }
-            }
-          ],
-          "recruitmentAt": "2026-09-07 00:00:00",
-          "deadlineAt": "2026-09-17 23:59:59",
-          "deadlineDay": 13,
-          "recruitCount": 0,
-          "applicationGender": "",
-          "applicationMinAge": 0,
-          "applicationMaxAge": 0,
-          "applicationEducation": null,
-          "managerName": "",
-          "managerPhoneNumber": null,
-          "managerEmail": null,
-          "preferred": null,
-          "workDetailAddress": null,
-          "workSchedules": [],
-          "scrapId": null,
-          "isScrap": false,
-          "hasCurriculum": null,
-          "isAd": false
-        },
-        {
           "id": 23462,
           "type": "VIEW",
-          "state": "SCHEDULED",
+          "state": "RECRUITING",
           "title": "2026학년도 선산고등학교 방과후학교 강사 채용 공고(가야금) - 국악기(가야금·해금·대금)",
           "description": null,
           "institution": {
@@ -330,7 +250,7 @@
             "phoneNumber": null
           },
           "counts": {
-            "viewCnt": 0,
+            "viewCnt": 1,
             "scrapCnt": 0
           },
           "fields": [
@@ -355,7 +275,62 @@
           ],
           "recruitmentAt": "2026-09-07 00:00:00",
           "deadlineAt": "2026-09-11 23:59:59",
-          "deadlineDay": 7,
+          "deadlineDay": 4,
+          "recruitCount": 0,
+          "applicationGender": "",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": null,
+          "managerName": "",
+          "managerPhoneNumber": null,
+          "managerEmail": null,
+          "preferred": null,
+          "workDetailAddress": null,
+          "workSchedules": [],
+          "scrapId": null,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": false
+        },
+        {
+          "id": 23460,
+          "type": "VIEW",
+          "state": "RECRUITING",
+          "title": "차 의과학대학교 글로벌교육원 한국어 강사 채용 공고 - 한국어/다문화",
+          "description": null,
+          "institution": {
+            "id": 4766,
+            "name": "국립국어원",
+            "email": null,
+            "phoneNumber": null
+          },
+          "counts": {
+            "viewCnt": 65,
+            "scrapCnt": 0
+          },
+          "fields": [
+            {
+              "id": 179,
+              "name": "한국어/다문화"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 2,
+                "isAll": false,
+                "name": "경기"
+              },
+              "city": {
+                "id": 56,
+                "isAll": false,
+                "name": "포천시"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-09-04 00:00:00",
+          "deadlineAt": "2026-09-07 23:59:59",
+          "deadlineDay": 0,
           "recruitCount": 0,
           "applicationGender": "",
           "applicationMinAge": 0,
@@ -381,74 +356,74 @@
         "order": "RECENT"
       },
       "status": 200,
-      "count": 22523,
-      "totalPage": 2253,
+      "count": 22549,
+      "totalPage": 2255,
       "currentPage": 3,
       "hasPrevPage": true,
       "hasNextPage": true,
       "listCount": 10,
       "ids": [
-        "23433",
-        "23432",
-        "23431",
-        "23429",
-        "23428",
-        "23424",
-        "23415",
-        "23414",
-        "23413",
-        "23412"
+        "23451",
+        "23450",
+        "23449",
+        "23448",
+        "23447",
+        "23446",
+        "23444",
+        "23443",
+        "23442",
+        "23441"
       ],
       "states": [
         "RECRUITING"
       ],
       "provinces": [
-        "강원",
         "경기",
-        "광주",
-        "서울",
-        "인천"
+        "부산",
+        "인천",
+        "충남",
+        "충북"
       ],
       "sample": [
         {
-          "id": 23433,
+          "id": 23451,
           "type": "VIEW",
           "state": "RECRUITING",
-          "title": "[강동구체육회] 생활체육지도자 채용계획 공고 - 체육",
+          "title": "태평2동 주민자치센터 프로그램 신규 강사 모집 공고 - 댄스/무용",
           "description": null,
           "institution": {
-            "id": 18,
-            "name": "서울특별시체육회",
+            "id": 1049,
+            "name": "성남시청",
             "email": null,
             "phoneNumber": null
           },
           "counts": {
-            "viewCnt": 4,
+            "viewCnt": 78,
             "scrapCnt": 0
           },
           "fields": [
             {
-              "id": 13,
-              "name": "체육"
+              "id": 3,
+              "name": "댄스/무용"
             }
           ],
           "regions": [
             {
               "province": {
-                "id": 1,
+                "id": 2,
                 "isAll": false,
-                "name": "서울"
+                "name": "경기"
               },
               "city": {
-                "id": 3,
+                "id": 39,
                 "isAll": false,
-                "name": "강동구"
+                "name": "성남시"
               }
             }
           ],
-          "recruitmentAt": "2026-09-01 00:00:00",
-          "deadlineAt": "2026-09-16 23:59:59",
-          "deadlineDay": 12,
+          "recruitmentAt": "2026-09-04 00:00:00",
+          "deadlineAt": "2026-09-14 23:59:59",
+          "deadlineDay": 7,
           "recruitCount": 0,
           "applicationGender": "",
           "applicationMinAge": 0,
@@ -466,44 +441,44 @@
           "isAd": false
         },
         {
-          "id": 23432,
+          "id": 23450,
           "type": "VIEW",
           "state": "RECRUITING",
-          "title": "2026년 제 6회 권선배움마루 체육프로그램 강사 공개채용 - 배드민턴",
+          "title": "2026. 2학기 방과후학교 개인위탁 강사 추가 모집 공고(서전중) - 기타/우쿨렐레, 악기",
           "description": null,
           "institution": {
-            "id": 1100,
-            "name": "수원시청소년청년재단",
+            "id": 3076,
+            "name": "충청북도교육청",
             "email": null,
             "phoneNumber": null
           },
           "counts": {
-            "viewCnt": 2,
+            "viewCnt": 6,
             "scrapCnt": 0
           },
           "fields": [
             {
-              "id": 135,
-              "name": "배드민턴"
+              "id": 9,
+              "name": "악기"
             }
           ],
           "regions": [
             {
               "province": {
-                "id": 2,
+                "id": 11,
                 "isAll": false,
-                "name": "경기"
+                "name": "충북"
               },
               "city": {
-                "id": 40,
+                "id": 141,
                 "isAll": false,
-                "name": "수원시"
+                "name": "진천군"
               }
             }
           ],
-          "recruitmentAt": "2026-09-03 00:00:00",
-          "deadlineAt": "2026-09-10 23:59:59",
-          "deadlineDay": 6,
+          "recruitmentAt": "2026-09-04 00:00:00",
+          "deadlineAt": "2026-09-08 23:59:59",
+          "deadlineDay": 1,
           "recruitCount": 0,
           "applicationGender": "",
           "applicationMinAge": 0,
@@ -529,14 +504,13 @@
         "order": "RECENT"
       },
       "status": 200,
-      "count": 22523,
+      "count": 22549,
       "totalPage": 226,
       "currentPage": 1,
       "hasPrevPage": false,
       "hasNextPage": true,
       "listCount": 100,
       "ids": [
-        "23367",
         "23278",
         "23211",
         "23472",
@@ -551,17 +525,42 @@
         "23460",
         "23459",
         "23458",
+        "23457",
+        "23456",
+        "23455",
+        "23454",
         "23453",
         "23452",
+        "23451",
+        "23450",
         "23449",
-        "23445",
+        "23448",
+        "23447",
+        "23446",
+        "23444",
+        "23443",
+        "23442",
+        "23441",
+        "23440",
+        "23439",
+        "23436",
+        "23435",
         "23434",
         "23433",
         "23432",
         "23431",
+        "23430",
         "23429",
         "23428",
+        "23427",
         "23424",
+        "23423",
+        "23421",
+        "23420",
+        "23419",
+        "23418",
+        "23417",
+        "23416",
         "23415",
         "23414",
         "23413",
@@ -581,24 +580,16 @@
         "23396",
         "23395",
         "23394",
-        "23393",
         "23392",
         "23391",
         "23388",
-        "23387",
         "23385",
-        "23384",
-        "23382",
         "23380",
-        "23379",
         "23378",
-        "23377",
         "23376",
         "23375",
         "23374",
         "23373",
-        "23372",
-        "23371",
         "23370",
         "23369",
         "23368",
@@ -613,29 +604,13 @@
         "23356",
         "23355",
         "23353",
-        "23350",
-        "23349",
         "23348",
         "23346",
         "23345",
         "23344",
         "23343",
         "23342",
-        "23340",
-        "23339",
-        "23338",
-        "23337",
-        "23336",
-        "23335",
-        "23333",
-        "23331",
-        "23330",
-        "23327",
-        "23325",
-        "23324",
-        "23322",
-        "23321",
-        "23320"
+        "23340"
       ],
       "states": [
         "RECRUITING",
@@ -653,102 +628,13 @@
         "세종",
         "인천",
         "전국",
+        "전남",
         "전북",
         "제주",
         "충남",
         "충북"
       ],
       "sample": [
-        {
-          "id": 23367,
-          "type": "PROVIDER_SUBMIT",
-          "state": "RECRUITING",
-          "title": "화성효행중앙교회 유아체육 강사 구인",
-          "description": null,
-          "institution": {
-            "id": 5,
-            "name": "공공강사",
-            "email": "choh@8around.kr",
-            "phoneNumber": "01099022560"
-          },
-          "counts": {
-            "viewCnt": 41,
-            "scrapCnt": 0
-          },
-          "fields": [
-            {
-              "id": 149,
-              "name": "유아체육"
-            }
-          ],
-          "regions": [
-            {
-              "province": {
-                "id": 2,
-                "isAll": false,
-                "name": "경기"
-              },
-              "city": {
-                "id": 40,
-                "isAll": false,
-                "name": "수원시"
-              }
-            },
-            {
-              "province": {
-                "id": 2,
-                "isAll": false,
-                "name": "경기"
-              },
-              "city": {
-                "id": 50,
-                "isAll": false,
-                "name": "용인시"
-              }
-            },
-            {
-              "province": {
-                "id": 2,
-                "isAll": false,
-                "name": "경기"
-              },
-              "city": {
-                "id": 58,
-                "isAll": false,
-                "name": "화성시"
-              }
-            }
-          ],
-          "recruitmentAt": "2026-09-02 16:10:31",
-          "deadlineAt": "2026-09-06 23:59:59",
-          "deadlineDay": 2,
-          "recruitCount": 2,
-          "applicationGender": "A",
-          "applicationMinAge": 0,
-          "applicationMaxAge": 0,
-          "applicationEducation": "ANY",
-          "managerName": "오창훈",
-          "managerPhoneNumber": null,
-          "managerEmail": null,
-          "preferred": "휴강일 : 9/26 추석, 10/3 개천절, 수업에 필요한 교구 지참 가능한 강사, 7~11세 / 4~6세 둘 중 선택",
-          "workDetailAddress": "경기 화성시 효행구 봉담읍 삼천병마로 1320",
-          "workSchedules": [
-            {
-              "id": 211,
-              "startDate": "2026-09-12",
-              "endDate": "2026-12-05",
-              "day": "SAT",
-              "startTime": "11:00:00",
-              "endTime": "12:00:00",
-              "paymentType": "PER_SESSION",
-              "paymentAmount": 75000
-            }
-          ],
-          "scrapId": null,
-          "isScrap": false,
-          "hasCurriculum": null,
-          "isAd": true
-        },
         {
           "id": 23278,
           "type": "PROVIDER_SUBMIT",
@@ -762,7 +648,7 @@
             "phoneNumber": "01092491482"
           },
           "counts": {
-            "viewCnt": 320,
+            "viewCnt": 333,
             "scrapCnt": 14
           },
           "fields": [
@@ -787,7 +673,7 @@
           ],
           "recruitmentAt": "2026-08-27 13:24:25",
           "deadlineAt": "2026-09-10 23:59:59",
-          "deadlineDay": 6,
+          "deadlineDay": 3,
           "recruitCount": 1,
           "applicationGender": "A",
           "applicationMinAge": 0,
@@ -831,6 +717,72 @@
             }
           ],
           "scrapId": 10343,
+          "isScrap": false,
+          "hasCurriculum": null,
+          "isAd": true
+        },
+        {
+          "id": 23211,
+          "type": "PROVIDER_SUBMIT",
+          "state": "RECRUITING",
+          "title": "AI 해외시장·글로벌 마케팅 전문 강사 모집",
+          "description": null,
+          "institution": {
+            "id": 17,
+            "name": "상상력집단",
+            "email": "kyung23@illusionists.co.kr",
+            "phoneNumber": "01092491482"
+          },
+          "counts": {
+            "viewCnt": 403,
+            "scrapCnt": 8
+          },
+          "fields": [
+            {
+              "id": 10,
+              "name": "IT/영상사진"
+            }
+          ],
+          "regions": [
+            {
+              "province": {
+                "id": 18,
+                "isAll": true,
+                "name": "전국"
+              },
+              "city": {
+                "id": 246,
+                "isAll": true,
+                "name": "전국 전체"
+              }
+            }
+          ],
+          "recruitmentAt": "2026-08-24 22:56:49",
+          "deadlineAt": "2026-09-07 23:59:59",
+          "deadlineDay": 0,
+          "recruitCount": 0,
+          "applicationGender": "A",
+          "applicationMinAge": 0,
+          "applicationMaxAge": 0,
+          "applicationEducation": "ANY",
+          "managerName": "최은경",
+          "managerPhoneNumber": "01092491482",
+          "managerEmail": "kyung23@illusionists.co.kr",
+          "preferred": "AI 활용 + 해외시장 조사·글로벌 마케팅·수출 실무 분야의 강의 및 프로젝트 경험을 보유한 전문가",
+          "workDetailAddress": null,
+          "workSchedules": [
+            {
+              "id": 172,
+              "startDate": "1899-11-30",
+              "endDate": "1899-11-30",
+              "day": "ANY",
+              "startTime": "00:00:00",
+              "endTime": "00:00:00",
+              "paymentType": "ANY",
+              "paymentAmount": 0
+            }
+          ],
+          "scrapId": 10275,
           "isScrap": false,
           "hasCurriculum": null,
           "isAd": true
