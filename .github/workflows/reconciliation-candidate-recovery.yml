@@ -103,7 +103,10 @@ jobs:
             if git ls-files --error-unmatch source_id_ledger.candidate.json >/dev/null 2>&1; then
               git rm -f source_id_ledger.candidate.json
             fi
-            git add jobs.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json deep_audit_status.json
+            # deep_audit_status.json is derived health state owned by audit workflows. Do not
+            # publish it from candidate recovery: staging it creates avoidable write conflicts
+            # and can overwrite fresher audit evidence from another writer.
+            git add jobs.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json
             git diff --cached --quiet && { pushed=1; break; }
             git commit -m 'Recover isolated reconciliation candidate onto latest main'
             if git push origin HEAD:main; then
