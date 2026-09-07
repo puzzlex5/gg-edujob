@@ -2,6 +2,11 @@ name: Recover isolated reconciliation candidate
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - 'Reconcile official recruitment source IDs'
+    types:
+      - completed
   push:
     branches:
       - main
@@ -19,6 +24,7 @@ concurrency:
 
 jobs:
   recover:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
