@@ -51,12 +51,30 @@ def projected_private_url(row):
     return row.get("url") or row.get("originalUrl") or row.get("openUrl") or row.get("detailUrl") or ""
 
 
-def is_failclosed_lessoninfo_culture(row, spec=None):
+def is_lessoninfo_culture(row, spec=None):
     if spec is not None and spec.get("key") != "lessoninfo":
         return False
     if spec is None and str((row or {}).get("source") or "") != "레슨인포":
         return False
-    return lessoninfo_culture_failclosed(row)
+    return str((row or {}).get("sourceSurface") or "") == "culture-arts"
+
+
+def is_failclosed_lessoninfo_culture(row, spec=None):
+    return is_lessoninfo_culture(row, spec) and lessoninfo_culture_failclosed(row)
+
+
+def verified_lessoninfo_culture_card_ok(row, spec, card_url: str) -> bool:
+    """Validate the user-facing destination for an individually cold-verified culture row.
+
+    A verified culture card may intentionally point to an official institution URL, so it must not
+    be forced through Lessoninfo's URL-shape regex. The exact Lessoninfo identity is retained in the
+    canonical row's ``detailUrl``; the projected card must instead equal the cold verifier's
+    ``verifiedUrl`` and carry an explicit true flag.
+    """
+    if not is_lessoninfo_culture(row, spec) or row.get("detailLinkVerified") is not True:
+        return False
+    verified = str(row.get("verifiedUrl") or "").strip()
+    return bool(verified and card_url and str(card_url) == verified)
 
 
 def main():
@@ -90,6 +108,7 @@ def main():
     non_metro = banned = expired = future = 0
     non_detail_links = []
     failclosed_links = []
+    verified_culture_links = []
     for spec in PRIVATE_SOURCES:
         raw_src = rows_from(load(spec["jobs"], []))
         rep = load(spec["report"], {})
@@ -132,8 +151,25 @@ def main():
             if not ps or not ps.issubset(ALLOWED_PROVINCES):
                 non_metro += 1
             detail_url = j.get("detailUrl") or j.get("originalUrl") or j.get("openUrl") or j.get("url") or ""
-            if not detail_url_is_specific(spec, detail_url):
+            if is_lessoninfo_culture(j, spec) and j.get("detailLinkVerified") is True:
+                if not detail_url_is_specific(spec, detail_url) or not str(j.get("verifiedUrl") or "").strip():
+                    non_detail_links.append({
+                        "source": spec["key"],
+                        "sourceIdentity": j.get("sourceIdentity"),
+                        "title": j.get("title"),
+                        "url": detail_url,
+                    })
+                else:
+                    verified_culture_links.append({
+                        "source": spec["key"],
+                        "sourceIdentity": j.get("sourceIdentity"),
+                        "verifiedUrl": j.get("verifiedUrl"),
+                        "resolvedUrlType": j.get("resolvedUrlType"),
+                    })
+            elif not detail_url_is_specific(spec, detail_url):
                 if is_failclosed_lessoninfo_culture(j, spec):
+                    if j.get("detailLinkVerified") is not False or j.get("url") or j.get("originalUrl") or j.get("verifiedUrl"):
+                        errors.append(f"Fail-closed Lessoninfo culture canonical row leaks a URL or lacks explicit false: {j.get('sourceIdentity')}")
                     failclosed_links.append({
                         "source": spec["key"],
                         "sourceIdentity": j.get("sourceIdentity"),
@@ -156,12 +192,13 @@ def main():
     if banned: errors.append(f"Publication-effective private datasets contain {banned} banned non-recruitment titles")
     if expired: errors.append(f"Publication-effective private datasets contain {expired} expired postings")
     if future: errors.append(f"Publication-effective private datasets contain {future} future registration dates")
-    if non_detail_links: errors.append(f"Publication-effective private datasets contain {len(non_detail_links)} rows without exact per-post detail URLs")
+    if non_detail_links: errors.append(f"Publication-effective private datasets contain {len(non_detail_links)} rows without exact per-post detail evidence")
     if bad_alias_evidence: errors.append(f"Unified dataset has {len(bad_alias_evidence)} aliases without strong exact evidence")
 
     spec_by_name = {spec["name"]: spec for spec in enabled_specs}
     projected_private_non_detail = []
     projected_failclosed_links = []
+    projected_verified_culture_links = []
     projected_private_unknown_source = []
     for row in private:
         source_name = str(row.get("source") or "")
@@ -174,6 +211,14 @@ def main():
             })
             continue
         card_url = projected_private_url(row)
+        if verified_lessoninfo_culture_card_ok(row, spec, card_url):
+            projected_verified_culture_links.append({
+                "source": spec["key"],
+                "sourceIdentity": row.get("sourceIdentity"),
+                "verifiedUrl": row.get("verifiedUrl"),
+                "resolvedUrlType": row.get("resolvedUrlType"),
+            })
+            continue
         if not detail_url_is_specific(spec, card_url):
             if is_failclosed_lessoninfo_culture(row, spec):
                 if card_url:
@@ -264,8 +309,12 @@ def main():
         "futurePrivateDates": future,
         "nonDirectPrivateLinks": len(non_detail_links),
         "nonDirectPrivateLinkExamples": non_detail_links[:20],
+        "verifiedLessoninfoCultureLinks": len(verified_culture_links),
+        "verifiedLessoninfoCultureLinkExamples": verified_culture_links[:20],
         "failClosedLessoninfoCultureLinks": len(failclosed_links),
         "failClosedLessoninfoCultureLinkExamples": failclosed_links[:20],
+        "projectedVerifiedLessoninfoCultureLinks": len(projected_verified_culture_links),
+        "projectedVerifiedLessoninfoCultureLinkExamples": projected_verified_culture_links[:20],
         "projectedNonDirectPrivateLinks": len(projected_private_non_detail),
         "projectedNonDirectPrivateLinkExamples": projected_private_non_detail[:20],
         "projectedFailClosedLessoninfoCultureLinks": len(projected_failclosed_links),
