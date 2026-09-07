@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-08T00:08:46+09:00",
+  "generatedAt": "2026-09-08T01:08:46+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T00:08:46+09:00",
+    "generatedAt": "2026-09-08T01:08:46+09:00",
     "official": {
       "datasetCount": 19079,
       "officialIdCount": 17852,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7353,
+      "publishedJobs": 7350,
       "officialDisplayed": 2974,
-      "privateDisplayed": 4379,
-      "privateDiscovered": 4386,
+      "privateDisplayed": 4376,
+      "privateDiscovered": 4383,
       "officialPrivateAliases": 7,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -245,9 +245,9 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 269,
-        "rawCount": 269,
-        "currentCount": 269,
+        "datasetCount": 268,
+        "rawCount": 268,
+        "currentCount": 268,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -269,13 +269,13 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4038,
-        "rawCount": 4038,
-        "currentCount": 4038,
+        "datasetCount": 4036,
+        "rawCount": 4036,
+        "currentCount": 4036,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-07"
+        "latestRegistered": "2026-09-08"
       },
       "artmore": {
         "name": "아트모아",
@@ -293,8 +293,8 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 60,
-        "rawCount": 60,
+        "datasetCount": 56,
+        "rawCount": 56,
         "currentCount": 56,
         "missingAfter": 0,
         "detailErrors": 0,
@@ -329,12 +329,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T00:08:11+09:00",
+      "baselineAt": "2026-09-07T01:08:49+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19079,
-          "baseline": 18905,
-          "changeRatio": 0.0092
+          "baseline": 18904,
+          "changeRatio": 0.0093
         },
         "official.officialIdCount": {
           "current": 17852,
@@ -342,9 +342,9 @@
           "changeRatio": 0.0024
         },
         "unified.publishedJobs": {
-          "current": 7353,
-          "baseline": 7431,
-          "changeRatio": -0.0105
+          "current": 7350,
+          "baseline": 7435,
+          "changeRatio": -0.0114
         },
         "unified.officialDisplayed": {
           "current": 2974,
@@ -352,16 +352,16 @@
           "changeRatio": -0.0007
         },
         "unified.privateDiscovered": {
-          "current": 4386,
-          "baseline": 4466,
-          "changeRatio": -0.0179
+          "current": 4383,
+          "baseline": 4470,
+          "changeRatio": -0.0195
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 269,
+          "current": 268,
           "baseline": 353,
-          "changeRatio": -0.238
+          "changeRatio": -0.2408
         },
         "cleaneye": {
           "current": 0,
@@ -369,9 +369,9 @@
           "changeRatio": null
         },
         "jobteacher": {
-          "current": 4038,
+          "current": 4036,
           "baseline": 4036,
-          "changeRatio": 0.0005
+          "changeRatio": 0.0
         },
         "artmore": {
           "current": 20,
@@ -380,8 +380,8 @@
         },
         "gonggonggangsa": {
           "current": 56,
-          "baseline": 54,
-          "changeRatio": 0.037
+          "baseline": 58,
+          "changeRatio": -0.0345
         },
         "seekle": {
           "current": 1,
