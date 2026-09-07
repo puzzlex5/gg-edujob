@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-09-08T08:48:50+09:00",
+  "generatedAt": "2026-09-08T08:50:37+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 18817,
-  "canonicalPrivateJobs": 4420,
+  "canonicalPrivateJobs": 4152,
   "selectedOfficialJobs": 2959,
-  "selectedPrivateJobs": 4409,
-  "publishedJobs": 7361,
+  "selectedPrivateJobs": 4141,
+  "publishedJobs": 7100,
   "perFeed": {
     "official": 2959,
-    "private": 4402
+    "private": 4141
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": true,
-      "degraded": false,
-      "ok": true,
-      "candidateCount": 268,
-      "count": 268,
-      "lastVerifiedAt": "2026-09-08T07:51:18+09:00",
+      "publicationEnabled": false,
+      "degraded": true,
+      "ok": false,
+      "candidateCount": 270,
+      "count": 0,
+      "lastVerifiedAt": "2026-09-08T08:49:46+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 261
+      "displayedAsPrivate": 0
     },
     "cleaneye": {
       "name": "클린아이 잡플러스",
@@ -104,10 +104,12 @@
     }
   },
   "protectedOfficialIds": 17576,
-  "explicitOfficialAliasGroupsMerged": 7,
+  "explicitOfficialAliasGroupsMerged": 0,
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
-  "degradedPrivateSources": [],
-  "allPublicationEnabledSourcesHealthy": true
+  "degradedPrivateSources": [
+    "lessoninfo"
+  ],
+  "allPublicationEnabledSourcesHealthy": false
 }
