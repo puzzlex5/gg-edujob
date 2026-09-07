@@ -1,27 +1,26 @@
 {
-  "generatedAt": "2026-09-07T11:11:50+09:00",
-  "healthy": true,
-  "total": 7168,
+  "generatedAt": "2026-09-07T11:18:31+09:00",
+  "healthy": false,
+  "total": 7408,
   "official": 3051,
-  "privateDisplayed": 4117,
+  "privateDisplayed": 4357,
   "enabledPrivateSources": [
+    "lessoninfo",
     "jobteacher",
     "artmore",
     "gonggonggangsa",
     "seekle",
     "boramyc"
   ],
-  "degradedPrivateSources": [
-    "lessoninfo"
-  ],
-  "privateStableIds": 4117,
-  "privateRepresentedDirectly": 4117,
-  "privateRepresentedByOfficial": 0,
-  "missingPrivateIds": 0,
+  "degradedPrivateSources": [],
+  "privateStableIds": 4384,
+  "privateRepresentedDirectly": 4357,
+  "privateRepresentedByOfficial": 11,
+  "missingPrivateIds": 16,
   "missingPrivateBySource": {
     "lessoninfo": 0,
     "jobteacher": 0,
-    "artmore": 0,
+    "artmore": 16,
     "gonggonggangsa": 0,
     "seekle": 0,
     "boramyc": 0
@@ -29,7 +28,24 @@
   "missingPrivateExamples": {
     "lessoninfo": [],
     "jobteacher": [],
-    "artmore": [],
+    "artmore": [
+      "artmore:94829",
+      "artmore:94832",
+      "artmore:94834",
+      "artmore:94851",
+      "artmore:94852",
+      "artmore:94853",
+      "artmore:94854",
+      "artmore:94856",
+      "artmore:94864",
+      "artmore:94865",
+      "artmore:94866",
+      "artmore:94868",
+      "artmore:94869",
+      "artmore:94870",
+      "artmore:94877",
+      "artmore:94878"
+    ],
     "gonggonggangsa": [],
     "seekle": [],
     "boramyc": []
@@ -42,14 +58,263 @@
   "futurePrivateDates": 0,
   "nonDirectPrivateLinks": 0,
   "nonDirectPrivateLinkExamples": [],
-  "verifiedLessoninfoCultureLinks": 0,
-  "verifiedLessoninfoCultureLinkExamples": [],
+  "verifiedLessoninfoCultureLinks": 55,
+  "verifiedLessoninfoCultureLinkExamples": [
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94881",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94881",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94880",
+      "verifiedUrl": "https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94880&ckattempt=1",
+      "resolvedUrlType": "lessoninfo"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94879",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94879",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94878",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94878",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94877",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94877",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94870",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94870",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94869",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94869",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94868",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94868",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94867",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94867",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94866",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94866",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94865",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94865",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94864",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94864",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94856",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94856",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94855",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94855",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94854",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94854",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94853",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94853",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94852",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94852",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94851",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94851",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94834",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94834",
+      "resolvedUrlType": "official"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94833",
+      "verifiedUrl": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94833",
+      "resolvedUrlType": "official"
+    }
+  ],
   "failClosedLessoninfoCultureLinks": 0,
   "failClosedLessoninfoCultureLinkExamples": [],
-  "projectedVerifiedLessoninfoCultureLinks": 0,
-  "projectedVerifiedLessoninfoCultureLinkExamples": [],
-  "projectedNonDirectPrivateLinks": 0,
-  "projectedNonDirectPrivateLinkExamples": [],
+  "projectedVerifiedLessoninfoCultureLinks": 1,
+  "projectedVerifiedLessoninfoCultureLinkExamples": [
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94880",
+      "verifiedUrl": "https://www.lessoninfo.co.kr/culture-jobs/detail.php?id=94880&ckattempt=1",
+      "resolvedUrlType": "lessoninfo"
+    }
+  ],
+  "projectedNonDirectPrivateLinks": 54,
+  "projectedNonDirectPrivateLinkExamples": [
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94881",
+      "title": "백암아트홀과 함께할 하우스 안내원을 모집합니다.",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94881"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94879",
+      "title": "[광림아트센터] BBCH홀 / 장천홀 공연장안내원 모집공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94879"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94878",
+      "title": "갤러리 타데우스 로팍 서울 인턴 채용 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94878"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94877",
+      "title": "2026 장애예술 비평 포럼 — 코디네이터 모집",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94877"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94870",
+      "title": "(재)포천문화관광재단 2026년 제5회 직원 공개채용 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94870"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94869",
+      "title": "2026년 제5차 (재)양천문화재단 직원 채용 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94869"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94868",
+      "title": "(주)퀸컴퍼니 기획팀 채용공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94868"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94867",
+      "title": "2026년 제4차 부천아트센터 계약직 근로자 채용 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94867"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94866",
+      "title": "[브러쉬씨어터] 홍보마케팅(신입/경력)/ 디자인 담당자 채용",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94866"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94865",
+      "title": "[장앤파트너스그룹] 프로젝트 전담 연구원 채용",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94865"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94864",
+      "title": "(복사) 2026 홍익대 대학로 아트센터 무대감독 채용공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94864"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94856",
+      "title": "슬립노모어 서울 운영 스탭 모집",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94856"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94855",
+      "title": "시흥아트센터 하우스 어텐던트(공연장 안내원) 채용",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94855"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94854",
+      "title": "(재)국립발레단 사무국장 채용 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94854"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94853",
+      "title": "(재)국립심포니오케스트라 2026년 제3차 경력직 직원 채용 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94853"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94852",
+      "title": "㈜마스트미디어 클래식사업본부 매니지먼트 경력직 채용",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94852"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94851",
+      "title": "㈜마스트미디어 클래식사업본부 홍보마케팅 경력직 채용",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94851"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94834",
+      "title": "[서울경제진흥원] 전문경력계약직 콘텐츠/공간기획 분야 채용공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94834"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94833",
+      "title": "2026년 평택시 문화예술회관 제2차 공연장안내원 인력풀 모집 공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94833"
+    },
+    {
+      "source": "lessoninfo",
+      "sourceIdentity": "culture:id:94832",
+      "title": "(복사) 2026 홍익대 대학로 아트센터 무대감독 채용공고",
+      "url": "https://www.artmore.kr/culture-jobs/detail.php?id=94832"
+    }
+  ],
   "projectedFailClosedLessoninfoCultureLinks": 0,
   "projectedFailClosedLessoninfoCultureLinkExamples": [],
   "projectedUnknownPrivateSources": 0,
@@ -59,8 +324,8 @@
   "badCrossSourceAliasEvidence": 0,
   "sourceValidationPopulations": {
     "lessoninfo": {
-      "rawCount": 269,
-      "currentCount": 0
+      "rawCount": 267,
+      "currentCount": 267
     },
     "jobteacher": {
       "rawCount": 4036,
@@ -83,8 +348,9 @@
       "currentCount": 2
     }
   },
-  "errors": [],
-  "warnings": [
-    "레슨인포 is degraded and excluded from this unified publication"
-  ]
+  "errors": [
+    "Unified dataset dropped 16 current 아트모아 stable IDs",
+    "Unified private projection contains 54 cards without exact per-post detail URLs"
+  ],
+  "warnings": []
 }
