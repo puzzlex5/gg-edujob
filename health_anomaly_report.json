@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T15:11:56+09:00",
+  "generatedAt": "2026-09-07T16:10:29+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T15:11:56+09:00",
+    "generatedAt": "2026-09-07T16:10:29+09:00",
     "official": {
       "datasetCount": 18957,
       "officialIdCount": 17745,
@@ -12,8 +12,8 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7603,
-      "officialDisplayed": 3228,
+      "publishedJobs": 7606,
+      "officialDisplayed": 3231,
       "privateDisplayed": 4375,
       "privateDiscovered": 4386,
       "officialPrivateAliases": 11,
@@ -315,7 +315,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T15:10:13+09:00",
+      "baselineAt": "2026-09-06T16:07:31+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18957,
@@ -328,14 +328,14 @@
           "changeRatio": -0.004
         },
         "unified.publishedJobs": {
-          "current": 7603,
+          "current": 7606,
           "baseline": 7526,
-          "changeRatio": 0.0102
+          "changeRatio": 0.0106
         },
         "unified.officialDisplayed": {
-          "current": 3228,
+          "current": 3231,
           "baseline": 3072,
-          "changeRatio": 0.0508
+          "changeRatio": 0.0518
         },
         "unified.privateDiscovered": {
           "current": 4386,
