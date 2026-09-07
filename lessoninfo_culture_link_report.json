@@ -1,15 +1,26 @@
 {
-  "generatedAt": "2026-09-07T22:36:28+09:00",
-  "startedAt": "2026-09-07T22:25:39+09:00",
+  "generatedAt": "2026-09-07T23:06:55+09:00",
+  "startedAt": "2026-09-07T22:54:59+09:00",
   "policy": "lessoninfo-culture-cold-link-v2",
   "healthy": true,
-  "totalInputJobs": 269,
-  "expiredCultureRemoved": 0,
-  "expiredCultureExamples": [],
+  "totalInputJobs": 271,
+  "expiredCultureRemoved": 2,
+  "expiredCultureExamples": [
+    {
+      "sourceIdentity": "culture:id:94790",
+      "title": "예술의전당 음악당 하우스 어텐던트 2026년 하반기 9월 모집 (~9/1)",
+      "applyEnd": "2026-09-01"
+    },
+    {
+      "sourceIdentity": "culture:id:94780",
+      "title": "예술의전당 음악당 하우스 어텐던트 2026년 하반기 9월 모집 (~9/1)",
+      "applyEnd": "2026-09-01"
+    }
+  ],
   "eligibleCultureRows": 188,
   "verifiedCultureRows": 176,
-  "verifiedOfficialRows": 175,
-  "verifiedLessoninfoRows": 1,
+  "verifiedOfficialRows": 176,
+  "verifiedLessoninfoRows": 0,
   "unverifiedCultureRows": 12,
   "verificationMissingCount": 0,
   "verificationMissingExamples": [],
@@ -17,8 +28,7 @@
     "culture:id:94673"
   ],
   "reasonCounts": {
-    "cold-browser-official-title-match": 54,
-    "cold-browser-id-title-match": 1,
+    "cold-browser-official-title-match": 55,
     "cold-browser-artmore-id-title-match": 121,
     "cold-browser-route-mismatch": 11,
     "known-bad-cold-regression-sentinel": 1
