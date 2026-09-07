@@ -17,8 +17,31 @@ def _is_seoul_cms_detail(parsed) -> bool:
     host=(parsed.hostname or "").lower(); path=parsed.path or ""
     return bool((host=="sen.go.kr" or host.endswith(".sen.go.kr")) and re.search(r"/CMS/.+/\d+_\d+\.html$",path,re.I))
 
+def _cold_verified_destination(job: dict, url: str) -> tuple[bool,str] | None:
+    """Honor an exact destination already proven by the independent Lessoninfo cold verifier.
+
+    This check intentionally runs before source-specific URL reconstruction. A Lessoninfo culture row
+    may safely resolve to a different host (for example another exact recruitment source or a proven
+    institution page). Rebuilding that URL from ``culture:id:*`` would corrupt the verified host by
+    inventing a ``/culture-jobs/detail.php`` path on the destination domain.
+    """
+    if str(job.get("source") or "") != "레슨인포" or str(job.get("sourceSurface") or "") != "culture-arts":
+        return None
+    if job.get("detailLinkVerified") is not True:
+        return None
+    verified=str(job.get("verifiedUrl") or "").strip()
+    if not verified or url != verified:
+        return False,"cold-verified-url-mismatch"
+    p=urlparse(verified)
+    if p.scheme not in {"http","https"} or not p.netloc or GENERIC_PATH_RE.search(p.path or ""):
+        return False,"cold-verified-url-invalid"
+    return True,"cold-browser-verified-url"
+
 def is_direct_post(job: dict) -> tuple[bool,str]:
     url=str(job.get("url") or job.get("originalUrl") or "").strip(); sid=str(job.get("sourceIdentity") or ""); source=str(job.get("source") or "")
+    cold=_cold_verified_destination(job,url)
+    if cold is not None:
+        return cold
     p=urlparse(url) if url else urlparse(""); q=_params(url); path=p.path or ""
     if str(job.get("openMethod") or "").upper()=="POST":
         seq=_digits((job.get("openParams") or {}).get("job_seq"))
@@ -53,6 +76,10 @@ def is_direct_post(job: dict) -> tuple[bool,str]:
     return True,"unclassified-nongeneric-url"
 
 def recover_direct_post(job: dict) -> tuple[str,str]:
+    # Never synthesize a new route for an explicitly cold-verified Lessoninfo culture destination.
+    # Its exact verifiedUrl is the only URL authorized for publication.
+    if str(job.get("source") or "") == "레슨인포" and str(job.get("sourceSurface") or "") == "culture-arts" and job.get("detailLinkVerified") is True:
+        return "","cold-verified-destination-not-repairable"
     url=str(job.get("url") or job.get("originalUrl") or "").strip(); sid=str(job.get("sourceIdentity") or ""); source=str(job.get("source") or ""); p=urlparse(url) if url else urlparse("")
     if source=="아트모아" or sid.startswith("artmore:"):
         ident=_digits(sid.rsplit(":",1)[-1]);
@@ -88,7 +115,18 @@ def recover_direct_post(job: dict) -> tuple[str,str]:
     return "","not-safely-recoverable"
 
 def repair_and_mark(job: dict) -> dict:
-    out=dict(job); ok,reason=is_direct_post(out)
+    out=dict(job)
+    # Cold verifier results are authoritative. Do not overwrite true/false or replace verifiedUrl.
+    if str(out.get("source") or "") == "레슨인포" and str(out.get("sourceSurface") or "") == "culture-arts" and out.get("detailLinkVerified") in {True,False}:
+        ok,reason=is_direct_post(out)
+        if out.get("detailLinkVerified") is True:
+            out["detailLinkVerified"]=bool(ok)
+            out["detailLinkReason"]=reason if not ok else str(out.get("detailLinkReason") or reason)
+        else:
+            out["detailLinkVerified"]=False
+            out["detailLinkReason"]=str(out.get("detailLinkReason") or reason)
+        return out
+    ok,reason=is_direct_post(out)
     if not ok:
         recovered,recovery_reason=recover_direct_post(out)
         if recovered:
