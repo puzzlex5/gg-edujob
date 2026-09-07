@@ -1,0 +1,242 @@
+{
+  "generatedAt": "2026-09-07 20:02:25 KST",
+  "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files; candidate stable-ID deltas are retained for audit.",
+  "candidateAvailable": true,
+  "canonicalScanId": "20260907T084525Z-34102233206-1",
+  "candidateScanId": "20260907T102807Z-34107722085-2",
+  "canonicalOfficialIdCount": 17844,
+  "candidateOfficialIdCount": 17850,
+  "removedSinceCanonical": [
+    {
+      "sourceIdentity": "seoul-central:109634",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "교육연구정보원 시설관리원(전기) 기간제 채용",
+      "registered": "2026/09/03",
+      "firstSeen": "2026-09-03 10:15:00 KST",
+      "lastSeen": "2026-09-07 17:50:16 KST"
+    }
+  ],
+  "addedSinceCanonical": [
+    {
+      "sourceIdentity": "goe-central:59315",
+      "source": "경기도교육청 통합 구인구직",
+      "province": "경기",
+      "title": "[감일고] 역사 기간제 교사 채용",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    },
+    {
+      "sourceIdentity": "goe-central:59316",
+      "source": "경기도교육청 통합 구인구직",
+      "province": "경기",
+      "title": "용인신릉중학교 보건 기간제교사 채용",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    },
+    {
+      "sourceIdentity": "goe-central:59317",
+      "source": "경기도교육청 통합 구인구직",
+      "province": "경기",
+      "title": "(철산중)기간제교사(국어과)채용 공고(2차)",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    },
+    {
+      "sourceIdentity": "goe-central:59318",
+      "source": "경기도교육청 통합 구인구직",
+      "province": "경기",
+      "title": "2026학년도 숭신고등학교 시간강사 채용공고",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    },
+    {
+      "sourceIdentity": "mircms:www.goegh.kr:5088:1223949",
+      "source": "광주하남교육지원청",
+      "province": "경기",
+      "title": "[감일고] 역사 기간제 교사 채용",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    },
+    {
+      "sourceIdentity": "mircms:www.goegm.kr:4225:1259526",
+      "source": "광명교육지원청",
+      "province": "경기",
+      "title": "(철산중)기간제교사(국어과)채용 공고(2차)",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    },
+    {
+      "sourceIdentity": "seoul-central:109880",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "명덕여자고등학교 2026학년도 2학기 영어과 기간제 교사 채용 공고",
+      "registered": "2026/09/07",
+      "firstSeen": "2026-09-07 19:33:50 KST",
+      "lastSeen": "2026-09-07 19:33:50 KST"
+    }
+  ],
+  "deltaConsistent": true,
+  "symmetricDifferenceCount": 8,
+  "candidate": {
+    "reconciliation": {
+      "generatedAt": "2026-09-07 19:33:50 KST",
+      "lookbackDays": 90,
+      "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+      "officialIdCount": 17850,
+      "datasetIdCountBefore": 19032,
+      "missingBefore": 4,
+      "recoveredNow": 4,
+      "missingAfter": 0,
+      "reconciledSources": 38,
+      "totalSources": 38,
+      "reconciledOffices": 38,
+      "totalOffices": 38,
+      "scanId": "20260907T102807Z-34107722085-2"
+    },
+    "centralPagination": {
+      "scanId": "20260907T102807Z-34107722085-2",
+      "generatedAt": "2026-09-07 19:58:13 KST",
+      "complete": true,
+      "sources": [
+        {
+          "name": "경기도교육청 통합 구인구직",
+          "province": "경기",
+          "stableIdCount": 794,
+          "complete": true,
+          "categories": [
+            {
+              "code": "A",
+              "name": "기간제/사립교원",
+              "pagesScanned": 6,
+              "rawRows": 248,
+              "stableIdCount": 247,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "B",
+              "name": "초중등시간강사",
+              "pagesScanned": 9,
+              "rawRows": 383,
+              "stableIdCount": 382,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "C",
+              "name": "교육공무직원",
+              "pagesScanned": 3,
+              "rawRows": 87,
+              "stableIdCount": 86,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "D",
+              "name": "사립학교 교원정규채용",
+              "pagesScanned": 2,
+              "rawRows": 13,
+              "stableIdCount": 12,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "E",
+              "name": "사립학교 사무직정규채용",
+              "pagesScanned": 2,
+              "rawRows": 4,
+              "stableIdCount": 3,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "F",
+              "name": "자원봉사자",
+              "pagesScanned": 3,
+              "rawRows": 65,
+              "stableIdCount": 64,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            }
+          ]
+        },
+        {
+          "name": "서울교육일자리포털",
+          "province": "서울",
+          "stableIdCount": 334,
+          "pagesScanned": 8,
+          "rawRows": 334,
+          "terminalEvidence": "empty-page",
+          "accessError": false,
+          "parseError": false,
+          "partialParseCards": 0,
+          "parseErrorSample": "",
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": true
+        }
+      ]
+    },
+    "gyeonggiCentral90d": {
+      "generatedAt": "2026-09-07 19:33:50 KST",
+      "stableIdCount": 10205,
+      "complete": true
+    },
+    "finalRestore": {
+      "checkedAt": "2026-09-07 19:59:15 KST",
+      "ledgerScanId": "20260907T102807Z-34107722085-2",
+      "protectedOfficialIds": 17850,
+      "missingBefore": 0,
+      "recoveredNow": 0,
+      "missingAfter": 0
+    },
+    "sourceIdLedger": {
+      "scanId": "20260907T102807Z-34107722085-2",
+      "generatedAt": "2026-09-07 19:33:50 KST",
+      "officialIdCount": 17850
+    }
+  }
+}
