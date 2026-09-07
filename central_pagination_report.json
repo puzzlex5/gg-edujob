@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-07 10:19:16 KST",
+  "generatedAt": "2026-09-07 12:37:23 KST",
   "policy": "central sources fail closed: every semantic posting row/card must expose a stable ID; partial-page parsing is a failure; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
   "sources": [
     {
       "name": "경기도교육청 통합 구인구직",
       "province": "경기",
-      "stableIdCount": 665,
+      "stableIdCount": 698,
       "complete": true,
       "categories": [
         {
           "code": "A",
           "name": "기간제/사립교원",
-          "pagesScanned": 5,
-          "rawRows": 194,
-          "stableIdCount": 193,
+          "pagesScanned": 6,
+          "rawRows": 210,
+          "stableIdCount": 209,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -27,8 +27,8 @@
           "code": "B",
           "name": "초중등시간강사",
           "pagesScanned": 8,
-          "rawRows": 324,
-          "stableIdCount": 323,
+          "rawRows": 339,
+          "stableIdCount": 338,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -42,8 +42,8 @@
           "code": "C",
           "name": "교육공무직원",
           "pagesScanned": 3,
-          "rawRows": 78,
-          "stableIdCount": 77,
+          "rawRows": 79,
+          "stableIdCount": 78,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -57,8 +57,8 @@
           "code": "D",
           "name": "사립학교 교원정규채용",
           "pagesScanned": 2,
-          "rawRows": 12,
-          "stableIdCount": 11,
+          "rawRows": 13,
+          "stableIdCount": 12,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -103,9 +103,9 @@
     {
       "name": "서울교육일자리포털",
       "province": "서울",
-      "stableIdCount": 342,
+      "stableIdCount": 337,
       "pagesScanned": 8,
-      "rawRows": 342,
+      "rawRows": 337,
       "terminalEvidence": "empty-page",
       "accessError": false,
       "parseError": false,
@@ -117,5 +117,5 @@
     }
   ],
   "complete": true,
-  "scanId": "20260907T004907Z-34070978450-1"
+  "scanId": "20260907T031106Z-34073878858-2"
 }
