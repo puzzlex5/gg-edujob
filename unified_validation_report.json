@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T23:07:39+09:00",
+  "generatedAt": "2026-09-07T23:14:59+09:00",
   "healthy": true,
   "total": 7735,
   "official": 3356,
@@ -12,13 +12,16 @@
     "seekle",
     "boramyc"
   ],
-  "degradedPrivateSources": [],
+  "degradedPrivateSources": [
+    "cleaneye"
+  ],
   "privateStableIds": 4390,
   "privateRepresentedDirectly": 4379,
   "privateRepresentedByOfficial": 11,
   "missingPrivateIds": 0,
   "missingPrivateBySource": {
     "lessoninfo": 0,
+    "cleaneye": 0,
     "jobteacher": 0,
     "artmore": 0,
     "gonggonggangsa": 0,
@@ -27,6 +30,7 @@
   },
   "missingPrivateExamples": {
     "lessoninfo": [],
+    "cleaneye": [],
     "jobteacher": [],
     "artmore": [],
     "gonggonggangsa": [],
@@ -303,6 +307,10 @@
       "rawCount": 269,
       "currentCount": 269
     },
+    "cleaneye": {
+      "rawCount": 0,
+      "currentCount": 0
+    },
     "jobteacher": {
       "rawCount": 4038,
       "currentCount": 4038
@@ -325,5 +333,7 @@
     }
   },
   "errors": [],
-  "warnings": []
+  "warnings": [
+    "클린아이 잡플러스 is degraded and excluded from this unified publication"
+  ]
 }

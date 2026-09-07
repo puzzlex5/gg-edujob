@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T23:07:42+09:00",
+  "generatedAt": "2026-09-07T23:15:02+09:00",
   "policy": "explicit-url-strong; semantic-review-only; no-title-based-delete; publication-effective-private-only",
   "privateJobs": 4400,
   "officialJobs": 19079,
@@ -11,6 +11,14 @@
       "degraded": false,
       "ok": true,
       "canonicalCount": 269
+    },
+    "cleaneye": {
+      "name": "클린아이 잡플러스",
+      "configuredPublicationEnabled": true,
+      "publicationEnabled": false,
+      "degraded": true,
+      "ok": false,
+      "canonicalCount": 0
     },
     "jobteacher": {
       "name": "잡티처",
@@ -59,6 +67,12 @@
       "strongOfficialMatches": 73,
       "semanticReviewCandidates": 0,
       "officialGapCandidates": 10
+    },
+    "cleaneye": {
+      "jobs": 0,
+      "strongOfficialMatches": 0,
+      "semanticReviewCandidates": 0,
+      "officialGapCandidates": 0
     },
     "jobteacher": {
       "jobs": 4038,

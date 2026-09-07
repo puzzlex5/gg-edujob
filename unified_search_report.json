@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T23:07:38+09:00",
+  "generatedAt": "2026-09-07T23:14:58+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 19079,
   "canonicalPrivateJobs": 4400,
@@ -23,6 +23,19 @@
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 258
+    },
+    "cleaneye": {
+      "name": "클린아이 잡플러스",
+      "configuredPublicationEnabled": true,
+      "publicationEnabled": false,
+      "degraded": true,
+      "ok": false,
+      "candidateCount": 0,
+      "count": 0,
+      "lastVerifiedAt": null,
+      "missingAfterCount": null,
+      "detailErrorCount": null,
+      "displayedAsPrivate": 0
     },
     "jobteacher": {
       "name": "잡티처",
@@ -95,6 +108,8 @@
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
-  "degradedPrivateSources": [],
-  "allPublicationEnabledSourcesHealthy": true
+  "degradedPrivateSources": [
+    "cleaneye"
+  ],
+  "allPublicationEnabledSourcesHealthy": false
 }
