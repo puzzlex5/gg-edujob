@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07 18:32 KST",
+  "updatedAt": "2026-09-07 23:27 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -87,11 +87,11 @@
             "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826",
             "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4242&mi=5879"
           ],
-          "count": 66,
+          "count": 67,
           "rawRows": 120,
           "ok": true,
           "state": "ok",
-          "message": "실제 게시판 행 120건 완전순회 · 최근 채용 66건",
+          "message": "실제 게시판 행 120건 완전순회 · 최근 채용 67건",
           "parser": "gyeonggi-mircms-table-v2.1",
           "boardHealth": [
             {
@@ -802,7 +802,7 @@
       "central": {
         "name": "경기도교육청 통합 구인구직",
         "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502",
-        "count": 10196,
+        "count": 10200,
         "ok": true,
         "state": "ok"
       }
@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-07 23:15 KST",
+    "checkedAt": "2026-09-08 00:03 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7418,
-      "resolved": 7418,
+      "total": 7419,
+      "resolved": 7419,
       "unresolved": 0,
       "examples": []
     },
@@ -1019,8 +1019,8 @@
         }
       ]
     },
-    "previousTotal": 19079,
-    "currentTotal": 19080
+    "previousTotal": 19080,
+    "currentTotal": 19079
   },
   "jobs": [
     {
@@ -1632,6 +1632,31 @@
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109783"
     },
     {
+      "id": "goe-59319",
+      "province": "경기",
+      "school": "고양송암고등학교",
+      "title": "고양송암고 수학과 기간제 교사 모집 공고",
+      "subject": "수학",
+      "region": "고양시",
+      "regions": [
+        "고양시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/18",
+      "workStart": "2026/10/29",
+      "workEnd": "",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59319"
+    },
+    {
       "id": "sen-109876",
       "province": "서울",
       "school": "[강서양천]학교통합지원과",
@@ -1802,34 +1827,6 @@
       "periodStatus": "parsed",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
-      "reconciliationCarryForward": true
-    },
-    {
-      "id": "goe-59319",
-      "province": "경기",
-      "school": "고양송암고등학교",
-      "title": "고양송암고 수학과 기간제 교사 모집 공고",
-      "subject": "수학",
-      "region": "고양시",
-      "regions": [
-        "고양시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "고등학교",
-      "applyStart": "2026/09/07",
-      "applyEnd": "2026/09/18",
-      "workStart": "2026/10/29",
-      "workEnd": "",
-      "registered": "2026/09/07",
-      "headcount": "1",
-      "source": "경기도교육청 통합 구인구직",
-      "checkedSources": [
-        "경기도교육청 통합 구인구직"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59319",
-      "recoveredBy": "targeted-official-id-restore",
-      "sourceIdentity": "goe-central:59319",
       "reconciliationCarryForward": true
     },
     {
@@ -3514,6 +3511,31 @@
       ],
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59120"
+    },
+    {
+      "id": "goe-59318",
+      "province": "경기",
+      "school": "숭신여자고등학교",
+      "title": "2026학년도 숭신고등학교 시간강사 채용공고",
+      "subject": "지리",
+      "region": "성남시",
+      "regions": [
+        "성남시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/11",
+      "workStart": "2026/10/19",
+      "workEnd": "2026/10/21",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59318"
     },
     {
       "id": "goe-59312",
@@ -5488,21 +5510,21 @@
       "reconciliationCarryForward": true
     },
     {
-      "id": "goe-59318",
+      "id": "goe-59317",
       "province": "경기",
-      "school": "숭신여자고등학교",
-      "title": "2026학년도 숭신고등학교 시간강사 채용공고",
-      "subject": "지리",
-      "region": "성남시",
+      "school": "철산중학교",
+      "title": "(철산중)기간제교사(국어과)채용 공고(2차)",
+      "subject": "국어",
+      "region": "광명시",
       "regions": [
-        "성남시"
+        "광명시"
       ],
-      "type": "시간강사/강사",
-      "schoolLevel": "고등학교",
+      "type": "기간제교원",
+      "schoolLevel": "중학교",
       "applyStart": "2026/09/07",
-      "applyEnd": "2026/09/11",
-      "workStart": "2026/10/19",
-      "workEnd": "2026/10/21",
+      "applyEnd": "2026/09/10",
+      "workStart": "2026/09/11",
+      "workEnd": "2026/10/30",
       "registered": "2026/09/07",
       "headcount": "1",
       "source": "경기도교육청 통합 구인구직",
@@ -5510,10 +5532,32 @@
         "경기도교육청 통합 구인구직"
       ],
       "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59318",
-      "recoveredBy": "targeted-official-id-restore",
-      "sourceIdentity": "goe-central:59318",
-      "reconciliationCarryForward": true
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59317"
+    },
+    {
+      "id": "goe-59316",
+      "province": "경기",
+      "school": "용인신릉중학교",
+      "title": "용인신릉중학교 보건 기간제교사 채용",
+      "subject": "보건",
+      "region": "용인시",
+      "regions": [
+        "용인시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/10",
+      "workStart": "2026/09/14",
+      "workEnd": "2026/11/11",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59316"
     },
     {
       "id": "goe-59315",
@@ -7354,7 +7398,7 @@
       "applyStart": "2026/09/07",
       "applyEnd": "2026/09/10",
       "workStart": "2026/09/22",
-      "workEnd": "2027/12/31",
+      "workEnd": "2027/02/28",
       "registered": "2026/09/07",
       "headcount": "1",
       "source": "서울교육일자리포털",
@@ -8262,11 +8306,10 @@
       "sourceType": "교육지원청 개별 게시판",
       "url": "https://www.goegh.kr/goegh/na/ntt/selectNttInfo.do?bbsId=5088&mi=8754&nttSn=1223949",
       "boardUrl": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
-      "detailLinkResolved": true,
       "nttSn": "1223949",
       "bbsId": "5088",
       "mi": "8754",
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-c49b162d238fcf0ca597",
@@ -8975,62 +9018,6 @@
       "periodStatus": "unavailable",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
-      "reconciliationCarryForward": true
-    },
-    {
-      "id": "goe-59316",
-      "province": "경기",
-      "school": "용인신릉중학교",
-      "title": "용인신릉중학교 보건 기간제교사 채용",
-      "subject": "보건",
-      "region": "용인시",
-      "regions": [
-        "용인시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "중학교",
-      "applyStart": "2026/09/07",
-      "applyEnd": "2026/09/10",
-      "workStart": "2026/09/14",
-      "workEnd": "2026/11/11",
-      "registered": "2026/09/07",
-      "headcount": "1",
-      "source": "경기도교육청 통합 구인구직",
-      "checkedSources": [
-        "경기도교육청 통합 구인구직"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59316",
-      "recoveredBy": "targeted-official-id-restore",
-      "sourceIdentity": "goe-central:59316",
-      "reconciliationCarryForward": true
-    },
-    {
-      "id": "goe-59317",
-      "province": "경기",
-      "school": "철산중학교",
-      "title": "(철산중)기간제교사(국어과)채용 공고(2차)",
-      "subject": "국어",
-      "region": "광명시",
-      "regions": [
-        "광명시"
-      ],
-      "type": "기간제교원",
-      "schoolLevel": "중학교",
-      "applyStart": "2026/09/07",
-      "applyEnd": "2026/09/10",
-      "workStart": "2026/09/11",
-      "workEnd": "2026/10/30",
-      "registered": "2026/09/07",
-      "headcount": "1",
-      "source": "경기도교육청 통합 구인구직",
-      "checkedSources": [
-        "경기도교육청 통합 구인구직"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59317",
-      "recoveredBy": "targeted-official-id-restore",
-      "sourceIdentity": "goe-central:59317",
       "reconciliationCarryForward": true
     },
     {
@@ -9831,21 +9818,21 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59241"
     },
     {
-      "id": "sen-109863",
+      "id": "sen-109881",
       "province": "서울",
-      "school": "서울명일초등학교",
-      "title": "(서울명일초) 초등 6학년 학급담임 시간강사 모집",
-      "subject": "초등 6학년 학급 담임",
-      "region": "강동구",
+      "school": "서울신곡초등학교",
+      "title": "(서울신곡초) 5학년 과학 시간강사 급구인합니다.",
+      "subject": "5학년 과학 및 6학년 과학 일부",
+      "region": "강서구",
       "regions": [
-        "강동구"
+        "강서구"
       ],
       "type": "시간강사/강사",
       "schoolLevel": "초등학교",
       "applyStart": "2026/09/07",
       "applyEnd": "2026/09/09",
       "workStart": "2026/09/08",
-      "workEnd": "2026/09/10",
+      "workEnd": "2026/09/11",
       "registered": "2026/09/07",
       "headcount": "1",
       "source": "서울교육일자리포털",
@@ -9853,7 +9840,7 @@
         "서울교육일자리포털"
       ],
       "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109863"
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109881"
     },
     {
       "id": "sen-109861",
@@ -10480,6 +10467,33 @@
       "mi": "16003"
     },
     {
+      "id": "sen-109863",
+      "province": "서울",
+      "school": "서울명일초등학교",
+      "title": "(서울명일초) 초등 6학년 학급담임 시간강사 모집",
+      "subject": "초등 6학년 학급 담임",
+      "region": "강동구",
+      "regions": [
+        "강동구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/09",
+      "workStart": "2026/09/08",
+      "workEnd": "2026/09/10",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109863",
+      "recoveryCarryForward": true,
+      "recoveryReason": "previously published posting still within application period"
+    },
+    {
       "id": "goe-59176",
       "province": "경기",
       "school": "권선고등학교",
@@ -10659,33 +10673,6 @@
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
-    },
-    {
-      "id": "sen-109881",
-      "province": "서울",
-      "school": "서울신곡초등학교",
-      "title": "(서울신곡초) 5학년 과학 시간강사 급구인합니다.",
-      "subject": "5학년 과학 및 6학년 과학 일부",
-      "region": "강서구",
-      "regions": [
-        "강서구"
-      ],
-      "type": "시간강사/강사",
-      "schoolLevel": "초등학교",
-      "applyStart": "2026/09/07",
-      "applyEnd": "2026/09/09",
-      "workStart": "2026/09/08",
-      "workEnd": "2026/09/11",
-      "registered": "2026/09/07",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109881",
-      "recoveredBy": "official-source-id-reconciliation",
-      "sourceIdentity": "seoul-central:109881"
     },
     {
       "id": "goe-59309",
@@ -11272,7 +11259,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109816",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109786",
@@ -11299,7 +11286,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109786",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109814",
@@ -11326,7 +11313,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109814",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-office-0396d46585637cbdcfac",
@@ -11358,6 +11345,37 @@
       "bbsId": "8653",
       "mi": "16003",
       "detailLinkResolved": true
+    },
+    {
+      "id": "goe-office-caae1063e040af74d957",
+      "province": "경기",
+      "school": "철산중학교",
+      "title": "(철산중)기간제교사(국어과)채용 공고(2차)",
+      "subject": "",
+      "region": "광명시",
+      "regions": [
+        "광명시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "중학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/09/07",
+      "headcount": "",
+      "source": "광명교육지원청",
+      "checkedSources": [
+        "광명교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goegm.kr/goegm/na/ntt/selectNttInfo.do?bbsId=4225&mi=5826&nttSn=1259526",
+      "boardUrl": "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826",
+      "nttSn": "1259526",
+      "bbsId": "4225",
+      "mi": "5826",
+      "detailLinkResolved": true,
+      "periodStatus": "unavailable"
     },
     {
       "id": "goe-office-82a21cd04e03259666f6",
@@ -11945,40 +11963,6 @@
       "reconciliationCarryForward": true
     },
     {
-      "id": "goe-complete-6a5938ad5c331754be",
-      "province": "경기",
-      "school": "철산중학교",
-      "title": "(철산중)기간제교사(국어과)채용 공고(2차)",
-      "subject": "",
-      "region": "",
-      "regions": [
-        "광명시"
-      ],
-      "type": "기타",
-      "schoolLevel": "기타",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/09/07",
-      "headcount": "",
-      "source": "광명교육지원청",
-      "checkedSources": [
-        "광명교육지원청"
-      ],
-      "sourceType": "교육지원청 개별 게시판",
-      "url": "https://www.goegm.kr/goegm/na/ntt/selectNttInfo.do?bbsId=4225&nttSn=1259526&mi=5826",
-      "boardUrl": "https://www.goegm.kr/goegm/na/ntt/selectNttList.do?bbsId=4225&mi=5826",
-      "detailLinkResolved": true,
-      "recoveredBy": "targeted-official-id-restore",
-      "sourceIdentity": "mircms:www.goegm.kr:4225:1259526",
-      "reconciliationCarryForward": true,
-      "nttSn": "1259526",
-      "bbsId": "4225",
-      "mi": "5826",
-      "periodStatus": "unavailable"
-    },
-    {
       "id": "sen-109771",
       "province": "서울",
       "school": "인헌중학교",
@@ -12059,7 +12043,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109773",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109744",
@@ -12086,7 +12070,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109744",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109772",
@@ -12113,7 +12097,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109772",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109770",
@@ -12140,7 +12124,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109770",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -12224,7 +12208,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109768",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -20189,7 +20173,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59073",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58942",
@@ -20244,7 +20228,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109724",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109684",
@@ -20271,7 +20255,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109684",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109764",
@@ -20298,7 +20282,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109764",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -20326,7 +20310,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109763",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -20354,7 +20338,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109725",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109740",
@@ -20381,7 +20365,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109740",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -20409,7 +20393,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109709",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-59095",
@@ -27274,7 +27258,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109707",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109704",
@@ -27301,7 +27285,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109704",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109699",
@@ -27328,7 +27312,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109699",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109656",
@@ -27355,7 +27339,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109656",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109624",
@@ -27382,7 +27366,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109624",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109634",
@@ -27409,7 +27393,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109634",
       "recoveryCarryForward": true,
-      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -27437,7 +27421,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109631",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109703",
@@ -27464,7 +27448,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109703",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109702",
@@ -27491,7 +27475,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109702",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109694",
@@ -27518,7 +27502,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109694",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -27546,7 +27530,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109697",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109644",
@@ -27573,7 +27557,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109644",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109666",
@@ -27600,7 +27584,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109666",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -27628,7 +27612,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109653",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109636",
@@ -27655,7 +27639,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109636",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109590",
@@ -27682,7 +27666,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109590",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -27710,7 +27694,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58871",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58932",
@@ -34616,7 +34600,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109615",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109617",
@@ -34643,7 +34627,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109617",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109556",
@@ -34670,7 +34654,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109556",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109577",
@@ -34697,7 +34681,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109577",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109567",
@@ -34724,7 +34708,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109567",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109549",
@@ -34751,7 +34735,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109549",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -34779,7 +34763,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109595",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109544",
@@ -34806,7 +34790,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109544",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109605",
@@ -34833,7 +34817,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109605",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -34861,7 +34845,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109613",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -34889,7 +34873,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109571",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -34917,7 +34901,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109546",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109552",
@@ -34944,7 +34928,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109552",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -35231,7 +35215,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58784",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-office-0a60f2a28019ebf67273",
@@ -35263,7 +35247,7 @@
       "mi": "10118",
       "detailLinkResolved": true,
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58718",
@@ -41471,7 +41455,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58598",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58595",
@@ -41498,7 +41482,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58595",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109530",
@@ -41525,7 +41509,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109530",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109539",
@@ -41552,7 +41536,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109539",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109534",
@@ -41579,7 +41563,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109534",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109448",
@@ -41606,7 +41590,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109448",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109497",
@@ -41633,7 +41617,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109497",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109507",
@@ -41660,7 +41644,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109507",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -41688,7 +41672,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109451",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109464",
@@ -41715,7 +41699,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109464",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109501",
@@ -41742,7 +41726,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109501",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109457",
@@ -41771,7 +41755,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109457",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-complete-sbgbedu.sen.go.kr-3045",
@@ -41865,7 +41849,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58561",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -41894,7 +41878,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58656",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58642",
@@ -41921,7 +41905,7 @@
       "sourceType": "통합게시판",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58642",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58652",
@@ -50730,7 +50714,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109435",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109408",
@@ -50757,7 +50741,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109408",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109404",
@@ -50784,7 +50768,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109404",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109397",
@@ -50811,7 +50795,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109397",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109353",
@@ -50840,7 +50824,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109353",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109442",
@@ -50867,7 +50851,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109442",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109387",
@@ -50894,7 +50878,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109387",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109309",
@@ -50921,7 +50905,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109309",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109407",
@@ -50948,7 +50932,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109407",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -50976,7 +50960,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109367",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -51004,7 +50988,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109355",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109345",
@@ -51031,7 +51015,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109345",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-office-7887716eaed8addadb0d",
@@ -51065,7 +51049,7 @@
       "detailLinkResolved": true,
       "periodStatus": "unavailable",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -51098,7 +51082,7 @@
       "mi": "5826",
       "detailLinkResolved": true,
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "goe-58475",
@@ -58943,7 +58927,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109277",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -58971,7 +58955,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109276",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -67128,7 +67112,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109185",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109224",
@@ -67155,7 +67139,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109224",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period"
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
     {
       "id": "sen-109223",
@@ -67182,7 +67166,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109223",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -75472,7 +75456,7 @@
       "sourceType": "통합게시판",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109097",
       "recoveryCarryForward": true,
-      "recoveryReason": "previously published posting still within application period",
+      "recoveryReason": "previously published recent posting not rediscovered in this crawl",
       "reconciliationCarryForward": true
     },
     {
@@ -163705,6 +163689,37 @@
       },
       "detailLinkResolved": true,
       "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-office2-ca5ecba43ea6a22378",
+      "province": "경기",
+      "school": "초등학교",
+      "title": "2026.9.1.자 시흥 교육공무원(초등학교 신규 교사)인사 발령 안내",
+      "subject": "",
+      "region": "시흥시",
+      "regions": [
+        "시흥시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "",
+      "applyEnd": "",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/08/18",
+      "headcount": "",
+      "source": "시흥교육지원청",
+      "checkedSources": [
+        "시흥교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goesh.kr/goesh/na/ntt/selectNttInfo.do?bbsId=5511&mi=9003&nttSn=527414",
+      "boardUrl": "https://www.goesh.kr/goesh/na/ntt/selectNttList.do?bbsId=5511&mi=9003",
+      "detailLinkResolved": true,
+      "nttSn": "527414",
+      "bbsId": "5511",
+      "mi": "9003",
+      "periodStatus": "unavailable"
     },
     {
       "id": "sen-office-nbedu.sen.go.kr-11343",
@@ -431055,8 +431070,7 @@
       "nttSn": "1938459",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "sen-complete-gsycedu.sen.go.kr-14992",
@@ -431297,8 +431311,7 @@
       "nttSn": "1938696",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-50545",
@@ -431376,8 +431389,7 @@
       "nttSn": "1938452",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-50636",
@@ -431558,8 +431570,7 @@
       "nttSn": "1676924",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-58e641f4cee3200811a4",
@@ -431589,8 +431600,7 @@
       "nttSn": "1339004",
       "bbsId": "7202",
       "mi": "10838",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "sen-office-dgedu.sen.go.kr-10115",
@@ -431623,8 +431633,7 @@
       "openParams": {
         "job_seq": "10115"
       },
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-24375bad00faa478b4cc",
@@ -431714,8 +431723,7 @@
       "nttSn": "1220827",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-5b3a176ba66e6bb02049",
@@ -431745,8 +431753,7 @@
       "nttSn": "1098935",
       "bbsId": "2801",
       "mi": "4565",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-dea60cb81b5797a9503f",
@@ -431776,8 +431783,7 @@
       "nttSn": "1119797",
       "bbsId": "4119",
       "mi": "7023",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-50607",
@@ -432293,8 +432299,7 @@
       "nttSn": "1338937",
       "bbsId": "7162",
       "mi": "10759",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-a7b2eefc84be3e12f48d",
@@ -432324,8 +432329,7 @@
       "nttSn": "1338940",
       "bbsId": "7202",
       "mi": "10838",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-3cc66848fc4b8c38daa4",
@@ -432445,8 +432449,7 @@
       "nttSn": "1130093",
       "bbsId": "5153",
       "mi": "9229",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-2d8b46f9284a2fd9b818",
@@ -432596,8 +432599,7 @@
       "nttSn": "1119842",
       "bbsId": "4119",
       "mi": "7023",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-5659c876aceba962dfed",
@@ -432627,8 +432629,7 @@
       "nttSn": "1119850",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-0d211039b87a346a6838",
@@ -432658,8 +432659,7 @@
       "nttSn": "1119815",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-cb4737c3ceed5f062fe8",
@@ -433193,8 +433193,7 @@
       "nttSn": "1676990",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-db13d76a5f7bad437aa3",
@@ -433225,8 +433224,7 @@
       "nttSn": "1676987",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-cf6e8100dc2b76ec6336",
@@ -433257,8 +433255,7 @@
       "nttSn": "1676881",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-cec567db6d97ba9854b3",
@@ -433288,8 +433285,7 @@
       "nttSn": "1938715",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-25234c8c0da402e29f0a",
@@ -433319,8 +433315,7 @@
       "nttSn": "1938680",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-a819f0c50074a5857e79",
@@ -433350,8 +433345,7 @@
       "nttSn": "1938571",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-1f50d0c64cc3e45f0b76",
@@ -433381,8 +433375,7 @@
       "nttSn": "1938537",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-0f3d4b66406088875e66",
@@ -433412,8 +433405,7 @@
       "nttSn": "1938485",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-c2bbf02c3b098faec4e5",
@@ -433443,8 +433435,7 @@
       "nttSn": "1339027",
       "bbsId": "7162",
       "mi": "10759",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-dde13b2a75f390315806",
@@ -433656,8 +433647,7 @@
       "nttSn": "1393075",
       "bbsId": "8653",
       "mi": "16003",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-4f760ac909b0d04e59be",
@@ -433717,8 +433707,7 @@
       "nttSn": "1130033",
       "bbsId": "5218",
       "mi": "9406",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-13084e998a8eeca033ab",
@@ -433748,8 +433737,7 @@
       "nttSn": "1130084",
       "bbsId": "5153",
       "mi": "9229",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-61569f5f89574fc56143",
@@ -433959,8 +433947,7 @@
       "nttSn": "1518251",
       "bbsId": "5918",
       "mi": "11390",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-e51c394f10999ca403d3",
@@ -434050,8 +434037,7 @@
       "nttSn": "1119776",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-fbb4bae852bf6a81a09f",
@@ -435604,8 +435590,7 @@
       "nttSn": "1676947",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-94806acec3a6071d1932",
@@ -435636,8 +435621,7 @@
       "nttSn": "1676932",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-8edb7af20171a590801c",
@@ -435668,8 +435652,7 @@
       "nttSn": "1676911",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-9ef0ea1777e5e3d50ab3",
@@ -435700,8 +435683,7 @@
       "nttSn": "1676897",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-86bab3c34a189a467c24",
@@ -435732,8 +435714,7 @@
       "nttSn": "1676882",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-a9c0b2f4eb7d3cfaf70e",
@@ -435763,8 +435744,7 @@
       "nttSn": "1938465",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-1d014e338e2e588a3c10",
@@ -435824,8 +435804,7 @@
       "nttSn": "1339001",
       "bbsId": "7162",
       "mi": "10759",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-ec2135c9445a4851389a",
@@ -436490,8 +436469,7 @@
       "nttSn": "1220972",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-e88f297a6be343942bbc",
@@ -437121,8 +437099,7 @@
       "nttSn": "1518262",
       "bbsId": "5918",
       "mi": "11390",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-2dbd7642b266a8af49a8",
@@ -437272,8 +437249,7 @@
       "nttSn": "1098997",
       "bbsId": "2727",
       "mi": "4464",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-7aa96216c91ef2ff8f8b",
@@ -437303,8 +437279,7 @@
       "nttSn": "1063338",
       "bbsId": "1906",
       "mi": "3608",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-084157ac2944e18af10c",
@@ -437334,8 +437309,7 @@
       "nttSn": "1119861",
       "bbsId": "4119",
       "mi": "7023",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-a6e4396bfd7de7851af6",
@@ -437485,8 +437459,7 @@
       "nttSn": "2555257",
       "bbsId": "10077",
       "mi": "10064",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-e7d28688a99d1e7db27c",
@@ -438776,8 +438749,7 @@
       "nttSn": "1676900",
       "bbsId": "10228",
       "mi": "10336",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-e652f6791e2f4ce08d7f",
@@ -438838,8 +438810,7 @@
       "nttSn": "1393378",
       "bbsId": "8653",
       "mi": "16003",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-49882e6fa3b7044a068c",
@@ -439020,8 +438991,7 @@
       "nttSn": "1518261",
       "bbsId": "5918",
       "mi": "11390",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-1961f5aa22ec1dd1cf06",
@@ -439051,8 +439021,7 @@
       "nttSn": "1119767",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-02c2a785c9d61166a124",
@@ -439112,8 +439081,7 @@
       "nttSn": "2555313",
       "bbsId": "10077",
       "mi": "10064",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-50559",
@@ -439198,8 +439166,7 @@
       "nttSn": "1938367",
       "bbsId": "17872",
       "mi": "23603",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-50574",
@@ -439334,8 +439301,7 @@
       "nttSn": "1130139",
       "bbsId": "5218",
       "mi": "9406",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-3c629cd7e42881be498e",
@@ -439365,8 +439331,7 @@
       "nttSn": "2555303",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-82d8401d13769644fa36",
@@ -439456,8 +439421,7 @@
       "nttSn": "1212296",
       "bbsId": "11674",
       "mi": "21050",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-737e40248683ff03590d",
@@ -439487,8 +439451,7 @@
       "nttSn": "1212282",
       "bbsId": "11674",
       "mi": "21048",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-ed14346dab743557b93f",
@@ -439518,8 +439481,7 @@
       "nttSn": "1212275",
       "bbsId": "11674",
       "mi": "21048",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-7c7a43d497d11ee2b081",
@@ -439549,8 +439511,7 @@
       "nttSn": "1212150",
       "bbsId": "11674",
       "mi": "21048",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-36223a04046f72c5f33a",
@@ -439580,8 +439541,7 @@
       "nttSn": "1212091",
       "bbsId": "11674",
       "mi": "21048",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-3fc9ac0eec664a977bf6",
@@ -439611,8 +439571,7 @@
       "nttSn": "1212077",
       "bbsId": "11674",
       "mi": "21048",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-eace94426d0a6cdb1383",
@@ -439642,8 +439601,7 @@
       "nttSn": "1255921",
       "bbsId": "4225",
       "mi": "5826",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-b7b0b15feaba63f124e4",
@@ -439673,8 +439631,7 @@
       "nttSn": "1255911",
       "bbsId": "4225",
       "mi": "5826",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-24c87779538e0cc484c7",
@@ -439704,8 +439661,7 @@
       "nttSn": "1255855",
       "bbsId": "4225",
       "mi": "5826",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-8c3adb775598851490fd",
@@ -439736,8 +439692,7 @@
       "nttSn": "1214386",
       "bbsId": "5088",
       "mi": "8754",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-bc6469f886fd8d67d9e9",
@@ -439768,8 +439723,7 @@
       "nttSn": "1393351",
       "bbsId": "8653",
       "mi": "16003",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-736ff5e8e8b6e92d5ef1",
@@ -439799,8 +439753,7 @@
       "nttSn": "1130000",
       "bbsId": "5218",
       "mi": "9406",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-676bfa4a47ed1c5f8fb8",
@@ -439830,8 +439783,7 @@
       "nttSn": "1220937",
       "bbsId": "6381",
       "detailLinkResolved": true,
-      "mi": "",
-      "periodStatus": "parsed"
+      "mi": ""
     },
     {
       "id": "goe-office-ff34c6f1436281931c78",
@@ -439861,8 +439813,7 @@
       "nttSn": "521951",
       "bbsId": "5518",
       "mi": "9018",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-e29e91bba249556a7992",
@@ -439892,8 +439843,7 @@
       "nttSn": "1518241",
       "bbsId": "5918",
       "mi": "11390",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-b02f346a8ec2a253fe44",
@@ -439923,8 +439873,7 @@
       "nttSn": "1063346",
       "bbsId": "1906",
       "mi": "3608",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-a370095a63a393d0e17f",
@@ -439954,8 +439903,7 @@
       "nttSn": "1063336",
       "bbsId": "1906",
       "mi": "3608",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-bb2c7dc4b676aff58f11",
@@ -439985,8 +439933,7 @@
       "nttSn": "1063334",
       "bbsId": "1906",
       "mi": "3608",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-99e0adfe59c70dc31a60",
@@ -440016,8 +439963,7 @@
       "nttSn": "1119853",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-515b0751a2f30c8bae68",
@@ -440047,8 +439993,7 @@
       "nttSn": "1119843",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-4032de638c2eec3c1360",
@@ -440078,8 +440023,7 @@
       "nttSn": "1119831",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-f021dd982ba06d89d676",
@@ -440109,8 +440053,7 @@
       "nttSn": "1119787",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-d3a80b2c07925645633d",
@@ -440140,8 +440083,7 @@
       "nttSn": "1338878",
       "bbsId": "7162",
       "mi": "10759",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-ede6b26f32178490014a",
@@ -440171,8 +440113,7 @@
       "nttSn": "2555274",
       "bbsId": "10077",
       "mi": "10064",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-f4027f3557fae1d93918",
@@ -440202,8 +440143,7 @@
       "nttSn": "2555312",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-2421c5cd63ff20f56ccb",
@@ -440233,8 +440173,7 @@
       "nttSn": "2555285",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-3cf67e2646db85333ba1",
@@ -440264,8 +440203,7 @@
       "nttSn": "2555281",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-4f0c90d83dc1ba4c337a",
@@ -440295,8 +440233,7 @@
       "nttSn": "2555270",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-4ca6cdefddca475caf98",
@@ -440326,8 +440263,7 @@
       "nttSn": "2555265",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-e872f47b248b3cd408ef",
@@ -440357,8 +440293,7 @@
       "nttSn": "2555244",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-40592938548768159dea",
@@ -440388,8 +440323,7 @@
       "nttSn": "2555141",
       "bbsId": "10111",
       "mi": "10118",
-      "detailLinkResolved": true,
-      "periodStatus": "unavailable"
+      "detailLinkResolved": true
     },
     {
       "id": "sen-office-jbedu.sen.go.kr-3399",
@@ -526853,54 +526787,6 @@
       "reconciliationCarryForward": true
     },
     {
-      "id": "sen-office-cms-ed90b395879c4fb037e0",
-      "province": "서울",
-      "school": "북부교육지원청",
-      "title": "북부채용정보",
-      "subject": "",
-      "region": "",
-      "regions": [],
-      "type": "교육공무직/기간제근로자",
-      "schoolLevel": "교육행정기관",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/06/10",
-      "headcount": "",
-      "source": "북부교육지원청",
-      "checkedSources": [
-        "북부교육지원청"
-      ],
-      "sourceType": "교육지원청 자체 채용공고",
-      "url": "http://bbedu.sen.go.kr/CMS/notice/notice07/1356604_9278.html",
-      "boardUrl": "https://bbedu.sen.go.kr/CMS/notice/notice07/index.html"
-    },
-    {
-      "id": "sen-office-cms-3c4f43ac4fb0bc5aeab1",
-      "province": "서울",
-      "school": "북부교육지원청",
-      "title": "북부채용정보",
-      "subject": "",
-      "region": "",
-      "regions": [],
-      "type": "기간제교원",
-      "schoolLevel": "교육행정기관",
-      "applyStart": "",
-      "applyEnd": "",
-      "workStart": "",
-      "workEnd": "",
-      "registered": "2026/06/10",
-      "headcount": "",
-      "source": "북부교육지원청",
-      "checkedSources": [
-        "북부교육지원청"
-      ],
-      "sourceType": "교육지원청 자체 채용공고",
-      "url": "http://bbedu.sen.go.kr/CMS/notice/notice07/1356603_9278.html",
-      "boardUrl": "https://bbedu.sen.go.kr/CMS/notice/notice07/index.html"
-    },
-    {
       "id": "goe-48175",
       "province": "경기",
       "school": "수원고등학교",
@@ -529427,53 +529313,53 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-07 19:02 KST",
+      "checkedAt": "2026-09-07 23:56 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
       "needsCheck": 0,
-      "recentJobsRead": 1050,
+      "recentJobsRead": 1051,
       "lookbackDays": 21,
       "maxPages": 0
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-07 23:13 KST",
+    "checkedAt": "2026-09-08 00:02 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-07 23:13 KST",
+    "checkedAt": "2026-09-08 00:02 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
-    "freshCount": 16583,
-    "previousCount": 19070,
-    "mergedCount": 19057,
-    "carriedForward": 2474,
-    "officialIdProtected": 17844,
-    "officialIdCarryForward": 1266,
-    "enrichedFromPrevious": 7060,
+    "freshCount": 16588,
+    "previousCount": 19080,
+    "mergedCount": 19063,
+    "carriedForward": 2475,
+    "officialIdProtected": 17852,
+    "officialIdCarryForward": 1265,
+    "enrichedFromPrevious": 7062,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-07 19:07 KST"
+    "generatedAt": "2026-09-08 00:01 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6907,
-    "gyeonggiTotal": 6907,
+    "gyeonggiExact": 6908,
+    "gyeonggiTotal": 6908,
     "seoulExact": 511,
     "seoulTotal": 511
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-07 23:13 KST",
+    "checkedAt": "2026-09-08 00:01 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6058,
-    "detailPagesParsed": 2509,
+    "recentSupportJobs": 5880,
+    "detailPagesParsed": 2453,
     "fieldsFilledThisRun": 0,
-    "missingApplicationPeriod": 1057,
-    "missingWorkPeriod": 1993,
+    "missingApplicationPeriod": 1028,
+    "missingWorkPeriod": 1934,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-07 23:13 KST",
+      "checkedAt": "2026-09-08 00:01 KST",
       "candidates": 248,
       "detailPagesConfirmed": 242,
       "cacheEntriesImproved": 0,
@@ -529483,28 +529369,5 @@
       "newCandidates": 0,
       "ran": false
     }
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-07 23:13:51 KST",
-    "ledgerScanId": "20260907T134451Z-34129059939-1",
-    "protectedOfficialIds": 17852,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
-  },
-  "sourceReconciliation": {
-    "generatedAt": "2026-09-07 22:50:10 KST",
-    "lookbackDays": 90,
-    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 17852,
-    "datasetIdCountBefore": 19037,
-    "missingBefore": 1,
-    "recoveredNow": 1,
-    "missingAfter": 0,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "reconciledOffices": 38,
-    "totalOffices": 38,
-    "scanId": "20260907T134451Z-34129059939-1"
   }
 }
