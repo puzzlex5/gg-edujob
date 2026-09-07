@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T17:09:59+09:00",
+  "generatedAt": "2026-09-07T18:09:03+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T17:09:59+09:00",
+    "generatedAt": "2026-09-07T18:09:03+09:00",
     "official": {
       "datasetCount": 18957,
       "officialIdCount": 17745,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7606,
+      "publishedJobs": 7607,
       "officialDisplayed": 3231,
-      "privateDisplayed": 4375,
-      "privateDiscovered": 4386,
+      "privateDisplayed": 4376,
+      "privateDiscovered": 4387,
       "officialPrivateAliases": 11,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -255,9 +255,9 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4036,
-        "rawCount": 4036,
-        "currentCount": 4036,
+        "datasetCount": 4037,
+        "rawCount": 4037,
+        "currentCount": 4037,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -315,12 +315,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T17:08:59+09:00",
+      "baselineAt": "2026-09-06T18:08:12+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18957,
-          "baseline": 18900,
-          "changeRatio": 0.003
+          "baseline": 18902,
+          "changeRatio": 0.0029
         },
         "official.officialIdCount": {
           "current": 17745,
@@ -328,19 +328,19 @@
           "changeRatio": -0.0038
         },
         "unified.publishedJobs": {
-          "current": 7606,
-          "baseline": 7528,
+          "current": 7607,
+          "baseline": 7529,
           "changeRatio": 0.0104
         },
         "unified.officialDisplayed": {
           "current": 3231,
-          "baseline": 3074,
-          "changeRatio": 0.0511
+          "baseline": 3075,
+          "changeRatio": 0.0507
         },
         "unified.privateDiscovered": {
-          "current": 4386,
+          "current": 4387,
           "baseline": 4466,
-          "changeRatio": -0.0179
+          "changeRatio": -0.0177
         }
       },
       "privateSources": {
@@ -350,9 +350,9 @@
           "changeRatio": -0.238
         },
         "jobteacher": {
-          "current": 4036,
+          "current": 4037,
           "baseline": 4036,
-          "changeRatio": 0.0
+          "changeRatio": 0.0002
         },
         "artmore": {
           "current": 20,
