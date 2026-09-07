@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/verify_lessoninfo_culture_cold.py'
+      - 'scripts/recover_lessoninfo_culture_artmore.py'
       - '.github/workflows/lessoninfo-culture-cold-verify.yml'
 
 permissions:
@@ -45,7 +46,9 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Syntax check
-        run: python -m py_compile scripts/verify_lessoninfo_culture_cold.py
+        run: |
+          python -m py_compile scripts/verify_lessoninfo_culture_cold.py
+          python -m py_compile scripts/recover_lessoninfo_culture_artmore.py
 
       - name: Verify every current culture link from a cold browser
         env:
@@ -53,15 +56,26 @@ jobs:
           LESSONINFO_CULTURE_COLD_TIMEOUT_MS: '18000'
         run: python scripts/verify_lessoninfo_culture_cold.py
 
+      - name: Recover route-mismatch rows through exact ArtMore IDs
+        env:
+          LESSONINFO_CULTURE_FALLBACK_CONCURRENCY: '4'
+          LESSONINFO_CULTURE_FALLBACK_TIMEOUT_MS: '20000'
+          LESSONINFO_CULTURE_FALLBACK_ATTEMPTS: '3'
+        run: python scripts/recover_lessoninfo_culture_artmore.py
+
       - name: Enforce per-post verification contract
         run: |
           python - <<'PY'
           import json
+          import re
           from pathlib import Path
+          from urllib.parse import parse_qs, urlparse
 
           report = json.loads(Path('lessoninfo_culture_link_report.json').read_text(encoding='utf-8'))
           if report.get('policy') != 'lessoninfo-culture-cold-link-v2':
               raise SystemExit('wrong cold-link policy')
+          if report.get('artmoreFallbackPolicy') != 'exact-rec-idx+detail-route+title+cold-mobile-v1':
+              raise SystemExit('ArtMore recovery contract missing')
           if not report.get('healthy') or int(report.get('verificationMissingCount') or 0) != 0:
               raise SystemExit('cold-link verification coverage is incomplete')
 
@@ -74,6 +88,7 @@ jobs:
 
           bad_true = []
           bad_false = []
+          bad_artmore = []
           for j in culture:
               if j.get('detailLinkVerified') is True:
                   verified = str(j.get('verifiedUrl') or '')
@@ -82,10 +97,30 @@ jobs:
               else:
                   if j.get('url') or j.get('originalUrl') or j.get('verifiedUrl'):
                       bad_false.append(j.get('sourceIdentity'))
+
+              if str(j.get('detailLinkReason') or '') == 'cold-browser-artmore-id-title-match':
+                  sid = str(j.get('sourceIdentity') or '')
+                  m = re.fullmatch(r'culture:id:(\d+)', sid)
+                  try:
+                      u = urlparse(str(j.get('verifiedUrl') or ''))
+                      rec_idx = str((parse_qs(u.query).get('rec_idx') or [''])[0])
+                      valid = (
+                          bool(m)
+                          and (u.hostname or '').lower() in {'artmore.kr', 'www.artmore.kr'}
+                          and u.path.lower() == '/sub/recruit/search_view.do'
+                          and rec_idx == m.group(1)
+                      )
+                  except Exception:
+                      valid = False
+                  if not valid:
+                      bad_artmore.append(sid)
+
           if bad_true:
               raise SystemExit(f'verified culture rows without exact verified URL projection: {bad_true[:20]}')
           if bad_false:
               raise SystemExit(f'unverified culture rows expose URLs: {bad_false[:20]}')
+          if bad_artmore:
+              raise SystemExit(f'ArtMore fallback rows violate stable-ID binding: {bad_artmore[:20]}')
 
           sentinel = next((j for j in culture if j.get('sourceIdentity') == 'culture:id:94673'), None)
           if sentinel and (sentinel.get('detailLinkVerified') is not False or sentinel.get('url') or sentinel.get('originalUrl')):
@@ -97,6 +132,8 @@ jobs:
               'pending': sum(1 for j in culture if j.get('detailLinkVerified') is False),
               'official': report.get('verifiedOfficialRows'),
               'lessoninfo': report.get('verifiedLessoninfoRows'),
+              'artmoreFallbackAttempted': report.get('artmoreFallbackAttemptedRows'),
+              'artmoreFallbackRecovered': report.get('artmoreFallbackRecoveredRows'),
               'expiredRemoved': report.get('expiredCultureRemoved'),
           }, ensure_ascii=False, indent=2))
           PY
