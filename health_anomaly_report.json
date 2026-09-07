@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-07T23:09:03+09:00",
+  "generatedAt": "2026-09-08T00:08:46+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T23:09:03+09:00",
+    "generatedAt": "2026-09-08T00:08:46+09:00",
     "official": {
       "datasetCount": 19079,
-      "officialIdCount": 17844,
+      "officialIdCount": 17852,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7735,
-      "officialDisplayed": 3356,
+      "publishedJobs": 7353,
+      "officialDisplayed": 2974,
       "privateDisplayed": 4379,
-      "privateDiscovered": 4390,
-      "officialPrivateAliases": 11,
+      "privateDiscovered": 4386,
+      "officialPrivateAliases": 7,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -34,7 +34,9 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": []
+      "degradedPrivateSources": [
+        "cleaneye"
+      ]
     },
     "officialSources": {
       "가평교육지원청": {
@@ -138,7 +140,7 @@
         "latestRegistered": "2026-09-07"
       },
       "북부교육지원청": {
-        "count": 13,
+        "count": 11,
         "latestRegistered": "2026-09-04"
       },
       "서부교육지원청": {
@@ -146,7 +148,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1297,
+        "count": 1298,
         "latestRegistered": "2026-09-07"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -178,7 +180,7 @@
         "latestRegistered": "2026-09-03"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 67,
         "latestRegistered": "2026-09-07"
       },
       "안산교육지원청": {
@@ -251,6 +253,18 @@
         "traversalComplete": true,
         "latestRegistered": "2026-09-07"
       },
+      "cleaneye": {
+        "name": "클린아이 잡플러스",
+        "enabled": false,
+        "healthy": false,
+        "datasetCount": 0,
+        "rawCount": 0,
+        "currentCount": 0,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": false,
+        "latestRegistered": ""
+      },
       "jobteacher": {
         "name": "잡티처",
         "enabled": true,
@@ -281,7 +295,7 @@
         "healthy": true,
         "datasetCount": 60,
         "rawCount": 60,
-        "currentCount": 60,
+        "currentCount": 56,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -315,32 +329,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T23:08:10+09:00",
+      "baselineAt": "2026-09-07T00:08:11+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19079,
-          "baseline": 18902,
-          "changeRatio": 0.0094
+          "baseline": 18905,
+          "changeRatio": 0.0092
         },
         "official.officialIdCount": {
-          "current": 17844,
-          "baseline": 17809,
-          "changeRatio": 0.002
+          "current": 17852,
+          "baseline": 17810,
+          "changeRatio": 0.0024
         },
         "unified.publishedJobs": {
-          "current": 7735,
-          "baseline": 7533,
-          "changeRatio": 0.0268
+          "current": 7353,
+          "baseline": 7431,
+          "changeRatio": -0.0105
         },
         "unified.officialDisplayed": {
-          "current": 3356,
-          "baseline": 3076,
-          "changeRatio": 0.091
+          "current": 2974,
+          "baseline": 2976,
+          "changeRatio": -0.0007
         },
         "unified.privateDiscovered": {
-          "current": 4390,
-          "baseline": 4469,
-          "changeRatio": -0.0177
+          "current": 4386,
+          "baseline": 4466,
+          "changeRatio": -0.0179
         }
       },
       "privateSources": {
@@ -348,6 +362,11 @@
           "current": 269,
           "baseline": 353,
           "changeRatio": -0.238
+        },
+        "cleaneye": {
+          "current": 0,
+          "baseline": 0,
+          "changeRatio": null
         },
         "jobteacher": {
           "current": 4038,
@@ -360,9 +379,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 60,
-          "baseline": 57,
-          "changeRatio": 0.0526
+          "current": 56,
+          "baseline": 54,
+          "changeRatio": 0.037
         },
         "seekle": {
           "current": 1,
