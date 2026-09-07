@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T10:32:29+09:00",
+  "generatedAt": "2026-09-07T11:20:15+09:00",
   "source": "공공강사",
   "policy": "gonggonggangsa-post-api-live-head-catchup-v3",
   "publicationEnabled": false,
-  "healthy": false,
+  "healthy": true,
   "traversalComplete": true,
   "serverCountAtStart": 22549,
   "serverCountAfterFullScan": 22549,
@@ -30,7 +30,7 @@
   "publishedIdCount": 58,
   "missingAfterCount": 0,
   "missingAfter": [],
-  "detailErrorCount": 2,
+  "detailErrorCount": 0,
   "regionContaminationCount": 0,
   "stateErrorCount": 0,
   "expiredCount": 0,
@@ -1849,5 +1849,5 @@
       "lastId": "1"
     }
   ],
-  "nextGate": "keep prior canonical data; diagnose candidate failure"
+  "nextGate": "private multi-source candidate + unified validator"
 }
