@@ -8,6 +8,7 @@ on:
       - 'cultural_foundation_registry.json'
       - 'scripts/validate_cultural_foundation_registry.py'
       - 'scripts/probe_cultural_sources.py'
+      - 'scripts/probe_cleaneye_api.py'
       - 'scripts/crawl_ancf_foundation_jobs.py'
       - '.github/workflows/cultural-foundation-coverage.yml'
 
@@ -35,13 +36,15 @@ jobs:
         run: python scripts/validate_cultural_foundation_registry.py
       - name: Probe CleanEye and ANCF surfaces
         run: python scripts/probe_cultural_sources.py
+      - name: Probe CleanEye recruitment API
+        run: python scripts/probe_cleaneye_api.py
       - name: Collect ANCF foundation cross-check jobs
         run: python scripts/crawl_ancf_foundation_jobs.py
       - name: Commit audit datasets and reports
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add cultural_foundation_registry_report.json cultural_source_probe_report.json ancf_foundation_jobs.json ancf_foundation_report.json
+          git add cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json ancf_foundation_jobs.json ancf_foundation_report.json
           if ! git diff --cached --quiet; then
             git commit -m 'Audit cultural foundation source surfaces'
             git pull --rebase origin main
