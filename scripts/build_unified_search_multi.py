@@ -79,6 +79,50 @@ def project_private_generic(job, source_name):
     row["searchText"] = base.norm(" ".join(map(str, [row.get("school"), row.get("title"), row.get("subject"), row.get("region"), " ".join(row.get("regions") or []), row.get("province"), " ".join(row.get("provinces") or []), row.get("location"), row.get("source"), row.get("sourceSurfaceLabel"), row.get("type"), " ".join(row.get("categories") or [])])))
     return row
 
+
+def dedupe_multi_source(rows):
+    """Strong dedupe without silently deleting a stable ID from a different private source.
+
+    Official-vs-private exact URL matches keep the official card and preserve the private identity
+    as an alias, matching the original policy. Same-source duplicate private rows can also collapse.
+    But two *different* private sources sharing an exact URL are both retained until an explicit
+    cross-source alias representation is available; preserving evidence is safer than dropping one
+    source identity and failing completeness.
+    """
+    out=[]
+    seen_id=set()
+    by_url={}
+    exact_url_groups=[]
+    for row in rows:
+        sid=str(row.get("sourceIdentity") or "")
+        if sid and sid in seen_id:
+            continue
+        url=base.canonical_url(row.get("url"))
+        prior_rows=by_url.get(url,[]) if url else []
+
+        official_prior=next((p for p in prior_rows if p.get("feedKind")=="official"),None)
+        if official_prior is not None and row.get("feedKind")=="private":
+            official_prior.setdefault("alsoSeenOn",[]).append({
+                "source":row.get("source"),
+                "sourceIdentity":sid,
+                "privateUrl":row.get("originalUrl") or row.get("url"),
+                "evidence":"exact-same-detail-url",
+            })
+            exact_url_groups.append([official_prior.get("sourceIdentity"),sid])
+            if sid: seen_id.add(sid)
+            continue
+
+        same_source_prior=next((p for p in prior_rows if p.get("feedKind")==row.get("feedKind") and p.get("source")==row.get("source")),None)
+        if same_source_prior is not None:
+            if sid: seen_id.add(sid)
+            continue
+
+        out.append(row)
+        if sid: seen_id.add(sid)
+        if url: by_url.setdefault(url,[]).append(row)
+    return out, exact_url_groups
+
+
 def main():
     official_data = load("jobs.json", {}); official_jobs = rows_from(official_data)
     ledger = load("source_id_ledger.json", {"entries": {}}); protected = base.latest_official_ids(ledger)
@@ -91,9 +135,9 @@ def main():
         if effective_enabled:
             enabled_private_sources += 1; canonical_private_total += len(jobs); all_private.extend(projected)
         elif configured_enabled and not healthy: degraded_private_sources.append(spec["key"])
-        private_meta[spec["key"]]={"name":spec["name"],"configuredPublicationEnabled":configured_enabled,"publicationEnabled":effective_enabled,"degraded":configured_enabled and not healthy,"ok":healthy,"candidateCount":len(projected),"count":len(projected) if effective_enabled else 0,"lastVerifiedAt":(dreport or preport).get("generatedAt") if isinstance((dreport or preport),dict) else None,"missingAfterCount":preport.get("missingAfterCount") if isinstance(preport,dict) else None,"detailErrorCount":(dreport or preport).get("detailErrorCount") if isinstance((dreport or preport),dict) else None}
+        private_meta[spec["key"]]={"name":spec["name"],"configuredPublicationEnabled":configured_enabled,"publicationEnabled":effective_enabled,"degraded":configured_enabled and not healthy,"ok":healthy,"candidateCount":len(projected),"count":len(projected) if effective_enabled else 0,"lastVerifiedAt":(dreport or preport).get("generatedAt") if isinstance((dreport or preport),dict) else None,"missingAfterCount":preport.get("missingAfterCount") if isinstance(preport,dict) else None,"detailErrorCount":(dreport or preport).get("detailErrorCount") if isinstance(preport,dict) else None}
     remaining_private, explicit_aliases, ambiguous_aliases = base.merge_explicit_official_aliases(projected_official, all_private)
-    rows, exact_url_groups = base.dedupe_strong(projected_official + remaining_private)
+    rows, exact_url_groups = dedupe_multi_source(projected_official + remaining_private)
     rows.sort(key=lambda j:(j.get("registered") or "",j.get("applyEnd") or "9999-12-31",j.get("sourceIdentity") or ""), reverse=True)
     per_feed={"official":0,"private":0}; per_private_source_displayed={spec["key"]:0 for spec in PRIVATE_SOURCES}
     for j in rows:
@@ -108,7 +152,7 @@ def main():
         raise SystemExit(f"jobs.json officialSourceCount={embedded_official_sources} does not match sources.json={expected_official_sources}")
     payload={"updatedAt":datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),"dataset":"unified-search-v3-multi-private","officialSourceCount":expected_official_sources,"totalSourceCount":expected_official_sources+enabled_private_sources,"sources":official_data.get("sources",{}) if isinstance(official_data,dict) else {},"privateSources":private_meta,"counts":{"total":len(rows),**per_feed,"privateSourceOccurrences":{spec["key"]:private_meta[spec["key"]]["count"] for spec in PRIVATE_SOURCES}},"jobs":rows}
     Path("unified_jobs.next.json").write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
-    report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"policy":"unified-search-v3-multi-private-strong-evidence-only","canonicalOfficialJobs":len(official_jobs),"canonicalPrivateJobs":canonical_private_total,"selectedOfficialJobs":len(projected_official),"selectedPrivateJobs":len(all_private),"publishedJobs":len(rows),"perFeed":per_feed,"privateSources":private_meta,"protectedOfficialIds":len(protected),"explicitOfficialAliasGroupsMerged":len(explicit_aliases),"exactUrlAliasGroupsMerged":len(exact_url_groups),"ambiguousExplicitOfficialLinks":len(ambiguous_aliases),"semanticDuplicatePolicy":"review-only-never-auto-delete","degradedPrivateSources":degraded_private_sources,"allPublicationEnabledSourcesHealthy":not degraded_private_sources}
+    report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"policy":"unified-search-v3-multi-private-strong-evidence-only","canonicalOfficialJobs":len(official_jobs),"canonicalPrivateJobs":canonical_private_total,"selectedOfficialJobs":len(projected_official),"selectedPrivateJobs":len(all_private),"publishedJobs":len(rows),"perFeed":per_feed,"privateSources":private_meta,"protectedOfficialIds":len(protected),"explicitOfficialAliasGroupsMerged":len(explicit_aliases),"exactUrlAliasGroupsMerged":len(exact_url_groups),"ambiguousExplicitOfficialLinks":len(ambiguous_aliases),"semanticDuplicatePolicy":"same-source/exact-official aliases only; preserve cross-private identities","degradedPrivateSources":degraded_private_sources,"allPublicationEnabledSourcesHealthy":not degraded_private_sources}
     Path("unified_search_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report,ensure_ascii=False,indent=2))
 
