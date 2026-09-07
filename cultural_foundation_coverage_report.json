@@ -1,0 +1,819 @@
+{
+  "generatedAt": "2026-09-07T23:49:00+09:00",
+  "policy": "official-primary+multi-sensor-gap-detection-v2",
+  "healthy": true,
+  "registryInstitutions": 49,
+  "officialBoardsConfigured": 1,
+  "officialCoverageComplete": false,
+  "componentAvailable": {
+    "cleaneye": false,
+    "ancf": true,
+    "artmore": false,
+    "registry": true
+  },
+  "componentHealth": {
+    "cleaneye": null,
+    "ancf": true,
+    "artmore": null,
+    "registry": true
+  },
+  "failedAvailableComponents": [],
+  "currentMappedBySource": {
+    "official": 0,
+    "cleaneye": 0,
+    "artmore": 0,
+    "ancf": 0,
+    "lessoninfo-discovery": 28
+  },
+  "coverageGapCount": 0,
+  "coverageGaps": [],
+  "discoveryOnlyGapCount": 0,
+  "discoveryOnlyGaps": [],
+  "unmappedStrongSourceRows": {},
+  "institutions": [
+    {
+      "foundationRegistryId": "seoul:metropolitan",
+      "foundationName": "서울문화재단",
+      "region": "서울",
+      "municipality": "서울특별시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 2
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": true,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:gangnam",
+      "foundationName": "강남문화재단",
+      "region": "서울",
+      "municipality": "강남구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:gangdong",
+      "foundationName": "강동문화재단",
+      "region": "서울",
+      "municipality": "강동구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:gangbuk",
+      "foundationName": "강북문화재단",
+      "region": "서울",
+      "municipality": "강북구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:gwanak",
+      "foundationName": "관악문화재단",
+      "region": "서울",
+      "municipality": "관악구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:gwangjin",
+      "foundationName": "광진문화재단",
+      "region": "서울",
+      "municipality": "광진구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:guro",
+      "foundationName": "구로문화재단",
+      "region": "서울",
+      "municipality": "구로구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:geumcheon",
+      "foundationName": "금천문화재단",
+      "region": "서울",
+      "municipality": "금천구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:nowon",
+      "foundationName": "노원문화재단",
+      "region": "서울",
+      "municipality": "노원구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:dobong",
+      "foundationName": "도봉문화재단",
+      "region": "서울",
+      "municipality": "도봉구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:dongdaemun",
+      "foundationName": "동대문문화재단",
+      "region": "서울",
+      "municipality": "동대문구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:dongjak",
+      "foundationName": "동작문화재단",
+      "region": "서울",
+      "municipality": "동작구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 2
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:mapo",
+      "foundationName": "마포문화재단",
+      "region": "서울",
+      "municipality": "마포구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:seongdong",
+      "foundationName": "성동문화재단",
+      "region": "서울",
+      "municipality": "성동구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:seocho",
+      "foundationName": "서초문화재단",
+      "region": "서울",
+      "municipality": "서초구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:seongbuk",
+      "foundationName": "성북문화재단",
+      "region": "서울",
+      "municipality": "성북구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:songpa",
+      "foundationName": "송파문화재단",
+      "region": "서울",
+      "municipality": "송파구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:yangcheon",
+      "foundationName": "양천문화재단",
+      "region": "서울",
+      "municipality": "양천구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:yeongdeungpo",
+      "foundationName": "영등포문화재단",
+      "region": "서울",
+      "municipality": "영등포구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:eunpyeong",
+      "foundationName": "은평문화재단",
+      "region": "서울",
+      "municipality": "은평구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:jongno",
+      "foundationName": "종로문화재단",
+      "region": "서울",
+      "municipality": "종로구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:junggu",
+      "foundationName": "중구문화재단",
+      "region": "서울",
+      "municipality": "중구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:jungnang",
+      "foundationName": "중랑문화재단",
+      "region": "서울",
+      "municipality": "중랑구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "seoul:yongsan",
+      "foundationName": "용산문화재단",
+      "region": "서울",
+      "municipality": "용산구",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:metropolitan",
+      "foundationName": "경기문화재단",
+      "region": "경기",
+      "municipality": "경기도",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 2
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:goyang",
+      "foundationName": "고양문화재단",
+      "region": "경기",
+      "municipality": "고양시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:gwacheon",
+      "foundationName": "과천문화재단",
+      "region": "경기",
+      "municipality": "과천시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:gwangmyeong",
+      "foundationName": "광명문화재단",
+      "region": "경기",
+      "municipality": "광명시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:gwangju",
+      "foundationName": "광주시문화재단",
+      "region": "경기",
+      "municipality": "광주시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:guri",
+      "foundationName": "구리문화재단",
+      "region": "경기",
+      "municipality": "구리시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:gunpo",
+      "foundationName": "군포문화재단",
+      "region": "경기",
+      "municipality": "군포시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:gimpo",
+      "foundationName": "김포문화재단",
+      "region": "경기",
+      "municipality": "김포시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:namyangju",
+      "foundationName": "남양주문화재단",
+      "region": "경기",
+      "municipality": "남양주시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:bucheon",
+      "foundationName": "부천문화재단",
+      "region": "경기",
+      "municipality": "부천시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:seongnam",
+      "foundationName": "성남문화재단",
+      "region": "경기",
+      "municipality": "성남시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 2
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:suwon",
+      "foundationName": "수원문화재단",
+      "region": "경기",
+      "municipality": "수원시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:ansan",
+      "foundationName": "안산문화재단",
+      "region": "경기",
+      "municipality": "안산시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 4
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:anyang",
+      "foundationName": "안양문화예술재단",
+      "region": "경기",
+      "municipality": "안양시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:yangpyeong",
+      "foundationName": "양평문화재단",
+      "region": "경기",
+      "municipality": "양평군",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:yeoju",
+      "foundationName": "여주세종문화관광재단",
+      "region": "경기",
+      "municipality": "여주시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:osan",
+      "foundationName": "오산문화재단",
+      "region": "경기",
+      "municipality": "오산시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:yongin",
+      "foundationName": "용인문화재단",
+      "region": "경기",
+      "municipality": "용인시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:uijeongbu",
+      "foundationName": "의정부문화재단",
+      "region": "경기",
+      "municipality": "의정부시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:icheon",
+      "foundationName": "이천문화재단",
+      "region": "경기",
+      "municipality": "이천시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:paju",
+      "foundationName": "파주문화재단",
+      "region": "경기",
+      "municipality": "파주시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:pyeongtaek",
+      "foundationName": "평택시문화재단",
+      "region": "경기",
+      "municipality": "평택시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:pocheon",
+      "foundationName": "포천문화재단",
+      "region": "경기",
+      "municipality": "포천시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 0
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:hanam",
+      "foundationName": "하남문화재단",
+      "region": "경기",
+      "municipality": "하남시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 1
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    },
+    {
+      "foundationRegistryId": "gyeonggi:hwaseong",
+      "foundationName": "화성시문화관광재단",
+      "region": "경기",
+      "municipality": "화성시",
+      "sourceCounts": {
+        "official": 0,
+        "cleaneye": 0,
+        "artmore": 0,
+        "ancf": 0,
+        "lessoninfo-discovery": 3
+      },
+      "currentStrongSignals": 0,
+      "officialBoardConfigured": false,
+      "coverageOutcome": "no-current-crosscheck-signal"
+    }
+  ]
+}
