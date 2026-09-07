@@ -10,12 +10,12 @@
       "count": 10
     },
     "daily-deep-audit.yml": {
-      "lastAttemptAt": "2026-09-07T15:26:30+09:00",
+      "lastAttemptAt": "2026-09-08T00:18:06+09:00",
       "lastResult": "dispatched",
       "lastReason": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
       "lastCode": "coverage-evidence-stale",
       "message": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
-      "count": 7
+      "count": 8
     },
     "recover-missing-jobs.yml": {
       "lastAttemptAt": "2026-08-31T23:10:00+09:00",
@@ -188,19 +188,28 @@
       "lastCode": "fast-collector-unhealthy",
       "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
       "count": 10
+    },
+    {
+      "workflow": "daily-deep-audit.yml",
+      "lastAttemptAt": "2026-09-08T00:18:06+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
+      "lastCode": "coverage-evidence-stale",
+      "message": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
+      "count": 8
     }
   ],
-  "lastUpdatedAt": "2026-09-07T22:20:25+09:00",
-  "lastHealth": "critical",
+  "lastUpdatedAt": "2026-09-08T00:18:06+09:00",
+  "lastHealth": "degraded",
   "lastPlanSummary": {
-    "generatedAt": "2026-09-07T22:20:19+09:00",
+    "generatedAt": "2026-09-08T00:18:00+09:00",
     "selectedAction": {
-      "workflow": "update-jobs.yml",
-      "code": "fast-collector-unhealthy",
-      "reason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
-      "priority": 105,
-      "severity": "critical",
-      "cooldown_hours": 3
+      "workflow": "daily-deep-audit.yml",
+      "code": "coverage-evidence-stale",
+      "reason": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
+      "priority": 70,
+      "severity": "warning",
+      "cooldown_hours": 8
     },
     "blockedByCooldown": []
   }
