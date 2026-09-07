@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-08 07:47 KST",
+    "checkedAt": "2026-09-08 08:19 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [
       {
@@ -1020,9 +1020,37 @@
       ]
     },
     "previousTotal": 18816,
-    "currentTotal": 18816
+    "currentTotal": 18817
   },
   "jobs": [
+    {
+      "id": "sen-109864",
+      "province": "서울",
+      "school": "서울강신초등학교",
+      "title": "(강신초)5학년 영어 교과 (9.9~10)",
+      "subject": "5학년 영어 교과",
+      "region": "양천구",
+      "regions": [
+        "양천구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/08",
+      "applyEnd": "2026/09/08",
+      "workStart": "2026/09/09",
+      "workEnd": "2026/09/10",
+      "registered": "2026/09/08",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109864",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109864",
+      "reconciliationCarryForward": true
+    },
     {
       "id": "sen-109822",
       "province": "서울",
@@ -522002,11 +522030,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-08 07:46 KST",
+    "checkedAt": "2026-09-08 08:16 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-08 07:46 KST",
+    "checkedAt": "2026-09-08 08:16 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -522027,7 +522055,7 @@
     "seoulTotal": 505
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-08 07:45 KST",
+    "checkedAt": "2026-09-08 08:16 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5879,
     "detailPagesParsed": 2452,
@@ -522037,7 +522065,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-08 07:45 KST",
+      "checkedAt": "2026-09-08 08:16 KST",
       "candidates": 245,
       "detailPagesConfirmed": 239,
       "cacheEntriesImproved": 0,
@@ -522047,5 +522075,13 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-08 08:16:52 KST",
+    "ledgerScanId": "20260907T224107Z-34167469475-1",
+    "protectedOfficialIds": 17577,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0
   }
 }

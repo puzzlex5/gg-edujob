@@ -271,9 +271,9 @@
     "lastFailureAt": "2026-08-26T15:18:24+09:00"
   },
   "reconciliation": {
-    "state": "failed",
-    "updatedAt": "2026-09-08T08:15:44+09:00",
-    "jobsCount": 18816,
+    "state": "success",
+    "updatedAt": "2026-09-08T08:19:14+09:00",
+    "jobsCount": 18817,
     "artifacts": {
       "jobLedger": true,
       "sourceIdLedger": true,
@@ -291,11 +291,11 @@
       "centralPaginationReport": "2026-09-08 07:10:56 KST",
       "missingRecoveryReport": "",
       "boardDiscoveryReport": "",
-      "collectionState": "2026-09-08 07:47:52 KST"
+      "collectionState": "2026-09-08 08:19:11 KST"
     },
     "coverageEvidence": {
       "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-      "ageHours": 47.95,
+      "ageHours": 48.01,
       "freshWithinHours": 30,
       "fresh": false,
       "gyeonggiComplete": 25,
@@ -313,7 +313,7 @@
       "proof": "38-source-reconciliation",
       "supportCoverage": {
         "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-        "ageHours": 47.95,
+        "ageHours": 48.01,
         "freshWithinHours": 30,
         "fresh": false,
         "gyeonggiComplete": 25,
@@ -331,7 +331,7 @@
       },
       "sourceReconciliation": {
         "generatedAt": "2026-09-08 06:47:57 KST",
-        "ageHours": 1.46,
+        "ageHours": 1.52,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
@@ -339,10 +339,10 @@
         "missingAfter": 0,
         "centralPaginationComplete": true,
         "centralGeneratedAt": "2026-09-08 07:10:56 KST",
-        "centralAgeHours": 1.08,
+        "centralAgeHours": 1.14,
         "ledgerPresent": true,
         "ledgerGeneratedAt": "2026-09-08 06:47:57 KST",
-        "ledgerAgeHours": 1.46,
+        "ledgerAgeHours": 1.52,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
         "reportCentralSkewHours": 0.383,
@@ -356,8 +356,8 @@
         "currentComplete": true
       }
     },
-    "stage": "source-id-reconciliation",
-    "lastSuccessAt": "2026-09-08T07:13:59+09:00",
+    "stage": "candidate-recovered",
+    "lastSuccessAt": "2026-09-08T08:19:14+09:00",
     "lastFailureAt": "2026-09-08T08:15:44+09:00"
   }
 }
