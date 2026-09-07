@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T08:52:49+09:00",
+  "generatedAt": "2026-09-07T09:13:54+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T08:52:49+09:00",
+    "generatedAt": "2026-09-07T09:13:54+09:00",
     "official": {
       "datasetCount": 18668,
       "officialIdCount": 17543,
@@ -12,11 +12,11 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7061,
+      "publishedJobs": 7319,
       "officialDisplayed": 2944,
-      "privateDisplayed": 4117,
-      "privateDiscovered": 4117,
-      "officialPrivateAliases": 0,
+      "privateDisplayed": 4375,
+      "privateDiscovered": 4386,
+      "officialPrivateAliases": 11,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,15 +27,14 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
+        "lessoninfo",
         "jobteacher",
         "artmore",
         "gonggonggangsa",
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": [
-        "lessoninfo"
-      ]
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -238,8 +237,8 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": false,
-        "healthy": false,
+        "enabled": true,
+        "healthy": true,
         "datasetCount": 269,
         "rawCount": 269,
         "currentCount": 269,
@@ -325,9 +324,9 @@
           "changeRatio": -0.0154
         },
         "unified.publishedJobs": {
-          "current": 7061,
+          "current": 7319,
           "baseline": 7527,
-          "changeRatio": -0.0619
+          "changeRatio": -0.0276
         },
         "unified.officialDisplayed": {
           "current": 2944,
@@ -335,9 +334,9 @@
           "changeRatio": -0.0417
         },
         "unified.privateDiscovered": {
-          "current": 4117,
+          "current": 4386,
           "baseline": 4467,
-          "changeRatio": -0.0784
+          "changeRatio": -0.0181
         }
       },
       "privateSources": {
