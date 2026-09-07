@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-08T07:57:56+09:00",
+  "generatedAt": "2026-09-08T08:01:44+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 18816,
-  "canonicalPrivateJobs": 4125,
+  "canonicalPrivateJobs": 4152,
   "selectedOfficialJobs": 2958,
-  "selectedPrivateJobs": 4115,
-  "publishedJobs": 7073,
+  "selectedPrivateJobs": 4141,
+  "publishedJobs": 7099,
   "perFeed": {
     "official": 2958,
-    "private": 4115
+    "private": 4141
   },
   "privateSources": {
     "lessoninfo": {
@@ -27,15 +27,15 @@
     "cleaneye": {
       "name": "클린아이 잡플러스",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": false,
-      "degraded": true,
-      "ok": false,
-      "candidateCount": 0,
-      "count": 0,
-      "lastVerifiedAt": null,
-      "missingAfterCount": null,
+      "publicationEnabled": true,
+      "degraded": false,
+      "ok": true,
+      "candidateCount": 26,
+      "count": 26,
+      "lastVerifiedAt": "2026-09-08T07:36:14+09:00",
+      "missingAfterCount": 0,
       "detailErrorCount": null,
-      "displayedAsPrivate": 0
+      "displayedAsPrivate": 26
     },
     "jobteacher": {
       "name": "잡티처",
@@ -109,8 +109,7 @@
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
   "degradedPrivateSources": [
-    "lessoninfo",
-    "cleaneye"
+    "lessoninfo"
   ],
   "allPublicationEnabledSourcesHealthy": false
 }

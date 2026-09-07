@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-09-08T07:58:02+09:00",
+  "generatedAt": "2026-09-08T08:01:51+09:00",
   "policy": "official-primary+multi-sensor-gap-detection-v2",
   "healthy": true,
   "registryInstitutions": 49,
   "officialBoardsConfigured": 1,
   "officialCoverageComplete": false,
   "componentAvailable": {
-    "cleaneye": false,
+    "cleaneye": true,
     "ancf": true,
-    "artmore": false,
+    "artmore": true,
     "registry": true
   },
   "componentHealth": {
-    "cleaneye": null,
+    "cleaneye": true,
     "ancf": true,
-    "artmore": null,
+    "artmore": true,
     "registry": true
   },
   "failedAvailableComponents": [],
   "currentMappedBySource": {
     "official": 0,
-    "cleaneye": 0,
-    "artmore": 0,
+    "cleaneye": 26,
+    "artmore": 1,
     "ancf": 0,
     "lessoninfo-discovery": 28
   },
   "coverageGapCount": 0,
   "coverageGaps": [],
-  "discoveryOnlyGapCount": 27,
+  "discoveryOnlyGapCount": 26,
   "discoveryOnlyGaps": [
     {
       "foundationRegistryId": "seoul:metropolitan",
@@ -117,15 +117,6 @@
       "strength": "discovery-only",
       "sourceIdentity": "culture:id:94571",
       "title": "2026 영등포문화재단 무대기술파트(조명분야) 인턴 채용(26.10.01.임용)",
-      "applyEnd": ""
-    },
-    {
-      "foundationRegistryId": "seoul:jongno",
-      "foundationName": "종로문화재단",
-      "source": "lessoninfo-discovery",
-      "strength": "discovery-only",
-      "sourceIdentity": "culture:id:94763",
-      "title": "2026년 제7차 종로문화재단 직원 공개모집 공고",
       "applyEnd": ""
     },
     {
@@ -330,14 +321,14 @@
       "municipality": "강북구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:gwanak",
@@ -378,14 +369,14 @@
       "municipality": "구로구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 2,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 2,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:geumcheon",
@@ -410,14 +401,14 @@
       "municipality": "노원구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:dobong",
@@ -490,14 +481,14 @@
       "municipality": "성동구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 1
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:seocho",
@@ -506,14 +497,14 @@
       "municipality": "서초구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:seongbuk",
@@ -522,14 +513,14 @@
       "municipality": "성북구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 4,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 4,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:songpa",
@@ -538,14 +529,14 @@
       "municipality": "송파구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 1
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:yangcheon",
@@ -554,14 +545,14 @@
       "municipality": "양천구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
-        "artmore": 0,
+        "cleaneye": 7,
+        "artmore": 1,
         "ancf": 0,
         "lessoninfo-discovery": 1
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 8,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:yeongdeungpo",
@@ -602,14 +593,14 @@
       "municipality": "종로구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 1
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:junggu",
@@ -634,14 +625,14 @@
       "municipality": "중랑구",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "seoul:yongsan",
@@ -666,14 +657,14 @@
       "municipality": "경기도",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 2
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "gyeonggi:goyang",
@@ -682,14 +673,14 @@
       "municipality": "고양시",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 3,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 1
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 3,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "gyeonggi:gwacheon",
@@ -1002,14 +993,14 @@
       "municipality": "평택시",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 0
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     },
     {
       "foundationRegistryId": "gyeonggi:pocheon",
@@ -1050,14 +1041,14 @@
       "municipality": "화성시",
       "sourceCounts": {
         "official": 0,
-        "cleaneye": 0,
+        "cleaneye": 1,
         "artmore": 0,
         "ancf": 0,
         "lessoninfo-discovery": 3
       },
-      "currentStrongSignals": 0,
+      "currentStrongSignals": 1,
       "officialBoardConfigured": false,
-      "coverageOutcome": "no-current-crosscheck-signal"
+      "coverageOutcome": "current-seen"
     }
   ]
 }

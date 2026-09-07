@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-09-08T07:57:57+09:00",
+  "generatedAt": "2026-09-08T08:01:45+09:00",
   "healthy": true,
-  "total": 7073,
+  "total": 7099,
   "official": 2958,
-  "privateDisplayed": 4115,
+  "privateDisplayed": 4141,
   "enabledPrivateSources": [
+    "cleaneye",
     "jobteacher",
     "artmore",
     "gonggonggangsa",
@@ -12,11 +13,10 @@
     "boramyc"
   ],
   "degradedPrivateSources": [
-    "lessoninfo",
-    "cleaneye"
+    "lessoninfo"
   ],
-  "privateStableIds": 4115,
-  "privateRepresentedDirectly": 4115,
+  "privateStableIds": 4141,
+  "privateRepresentedDirectly": 4141,
   "privateRepresentedByOfficial": 0,
   "missingPrivateIds": 0,
   "missingPrivateBySource": {
@@ -66,8 +66,8 @@
       "currentCount": 0
     },
     "cleaneye": {
-      "rawCount": 0,
-      "currentCount": 0
+      "rawCount": 27,
+      "currentCount": 26
     },
     "jobteacher": {
       "rawCount": 4036,
@@ -92,7 +92,6 @@
   },
   "errors": [],
   "warnings": [
-    "레슨인포 is degraded and excluded from this unified publication",
-    "클린아이 잡플러스 is degraded and excluded from this unified publication"
+    "레슨인포 is degraded and excluded from this unified publication"
   ]
 }
