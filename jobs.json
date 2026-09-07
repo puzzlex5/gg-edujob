@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-07 21:20 KST",
+    "checkedAt": "2026-09-07 23:15 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [
       {
@@ -1019,8 +1019,8 @@
         }
       ]
     },
-    "previousTotal": 19078,
-    "currentTotal": 19079
+    "previousTotal": 19079,
+    "currentTotal": 19080
   },
   "jobs": [
     {
@@ -10659,6 +10659,33 @@
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109881",
+      "province": "서울",
+      "school": "서울신곡초등학교",
+      "title": "(서울신곡초) 5학년 과학 시간강사 급구인합니다.",
+      "subject": "5학년 과학 및 6학년 과학 일부",
+      "region": "강서구",
+      "regions": [
+        "강서구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/09",
+      "workStart": "2026/09/08",
+      "workEnd": "2026/09/11",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109881",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:109881"
     },
     {
       "id": "goe-59309",
@@ -529411,11 +529438,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-07 21:18 KST",
+    "checkedAt": "2026-09-07 23:13 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-07 21:18 KST",
+    "checkedAt": "2026-09-07 23:13 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -529436,7 +529463,7 @@
     "seoulTotal": 511
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-07 21:18 KST",
+    "checkedAt": "2026-09-07 23:13 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6058,
     "detailPagesParsed": 2509,
@@ -529446,7 +529473,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-07 21:18 KST",
+      "checkedAt": "2026-09-07 23:13 KST",
       "candidates": 248,
       "detailPagesConfirmed": 242,
       "cacheEntriesImproved": 0,
@@ -529458,11 +529485,26 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-07 21:18:40 KST",
-    "ledgerScanId": "20260907T114404Z-34118066142-1",
-    "protectedOfficialIds": 17851,
+    "checkedAt": "2026-09-07 23:13:51 KST",
+    "ledgerScanId": "20260907T134451Z-34129059939-1",
+    "protectedOfficialIds": 17852,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-07 22:50:10 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17852,
+    "datasetIdCountBefore": 19037,
     "missingBefore": 1,
     "recoveredNow": 1,
-    "missingAfter": 0
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38,
+    "scanId": "20260907T134451Z-34129059939-1"
   }
 }
