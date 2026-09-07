@@ -1,0 +1,120 @@
+name: Recover isolated reconciliation candidate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'reconciliation_failure_report.json'
+      - 'source_id_ledger.candidate.json'
+      - '.github/workflows/reconciliation-candidate-recovery.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-reconciliation-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Preserve and validate isolated candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -s reconciliation_failure_report.json ] || [ ! -s source_id_ledger.candidate.json ]; then
+            echo 'No isolated reconciliation candidate to recover.'
+            exit 0
+          fi
+          mkdir -p /tmp/reconciliation-candidate
+          cp reconciliation_failure_report.json /tmp/reconciliation-candidate/failure.json
+          cp source_id_ledger.candidate.json /tmp/reconciliation-candidate/ledger.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          failure=json.loads(Path('/tmp/reconciliation-candidate/failure.json').read_text(encoding='utf-8'))
+          ledger=json.loads(Path('/tmp/reconciliation-candidate/ledger.json').read_text(encoding='utf-8'))
+          if failure.get('candidateAvailable') is not True:
+              raise SystemExit('Failure report does not advertise a recoverable candidate')
+          candidate=str(failure.get('candidateScanId') or '')
+          ledger_scan=str(ledger.get('scanId') or '')
+          if not candidate or candidate != ledger_scan:
+              raise SystemExit(f'Candidate scan mismatch: failure={candidate!r} ledger={ledger_scan!r}')
+          if failure.get('deltaConsistent') is False:
+              raise SystemExit('Candidate delta consistency check failed')
+          entries=ledger.get('entries',{}) if isinstance(ledger,dict) else {}
+          protected=sum(1 for e in entries.values() if isinstance(e,dict) and e.get('presentInLatestOfficialScan') is True)
+          if protected < 100:
+              raise SystemExit(f'Unsafe candidate ledger population: {protected}')
+          print({'candidateScanId': candidate, 'protectedEntries': protected})
+          PY
+      - name: Apply candidate onto latest main without rebasing stale data
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -s /tmp/reconciliation-candidate/ledger.json ]; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '4189822+github-actions[bot]@users.noreply.github.com'
+          pushed=0
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git checkout -B main origin/main
+            git reset --hard origin/main
+            git clean -fd
+
+            cp jobs.json /tmp/reconciliation-candidate/baseline.json
+            cp source_id_ledger.json /tmp/reconciliation-candidate/canonical-ledger.json
+            cp /tmp/reconciliation-candidate/ledger.json source_id_ledger.json
+
+            # Re-crawl only candidate-protected official IDs missing from the newest main.
+            # This preserves every newer writer's data and fails closed if any candidate ID
+            # cannot still be proven from its official source.
+            python scripts/restore_reconciled_ids.py
+            python scripts/sanitize_job_dates.py
+            python scripts/resolve_support_links.py
+            python scripts/enrich_support_periods.py
+            python scripts/enrich_seoul_get_fallback.py
+            python scripts/verify_jobs.py --previous /tmp/reconciliation-candidate/baseline.json
+
+            # Candidate proof is diagnostic only. Keep the canonical proof/ledger untouched;
+            # the next scheduled reconciliation will publish a newly bound full proof.
+            cp /tmp/reconciliation-candidate/canonical-ledger.json source_id_ledger.json
+            python scripts/update_collection_state.py
+            python scripts/update_collector_status.py --workflow reconciliation --stage candidate-recovered --state success
+            python scripts/sync_effective_audit_status.py
+
+            if git ls-files --error-unmatch reconciliation_failure_report.json >/dev/null 2>&1; then
+              git rm -f reconciliation_failure_report.json
+            fi
+            if git ls-files --error-unmatch source_id_ledger.candidate.json >/dev/null 2>&1; then
+              git rm -f source_id_ledger.candidate.json
+            fi
+            git add jobs.json job_ledger.json collection_state.json support_link_resolution.json support_period_cache.json date_anomaly_report.json collector_status.json deep_audit_status.json
+            git diff --cached --quiet && { pushed=1; break; }
+            git commit -m 'Recover isolated reconciliation candidate onto latest main'
+            if git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            sleep $((attempt * 5))
+          done
+          [ "$pushed" = "1" ] || { echo '::error::candidate recovery push failed after 3 fresh-main attempts'; exit 1; }
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main || {
+            echo '::error::candidate recovery commit is not reachable from origin/main'
+            exit 1
+          }
