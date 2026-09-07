@@ -60,12 +60,16 @@ elif new_sort not in s or "function deadlineSortKey(j)" not in s:
     raise SystemExit('deadline comparator signature changed; refusing unsafe ranking patch')
 
 marker='<script src="mobile-ui.js?v='
+# This value is a deployment contract, not cosmetic. Bump it whenever direct-link-guard.js
+# changes so Pages/CDN/browser caches cannot keep an older fail-close policy active against a
+# newer unified_jobs.json payload.
+DIRECT_LINK_GUARD_ASSET_VERSION='20260907c'
 if 'direct-link-guard.js' not in s:
     i=s.find(marker)
     if i<0: raise SystemExit('mobile-ui script marker missing')
-    s=s[:i]+'<script src="direct-link-guard.js?v=20260907a" defer></script>\n'+s[i:]
+    s=s[:i]+f'<script src="direct-link-guard.js?v={DIRECT_LINK_GUARD_ASSET_VERSION}" defer></script>\n'+s[i:]
 else:
-    s,n=re.subn(r'direct-link-guard\.js\?v=[A-Za-z0-9._-]+','direct-link-guard.js?v=20260907a',s,count=1)
+    s,n=re.subn(r'direct-link-guard\.js\?v=[A-Za-z0-9._-]+',f'direct-link-guard.js?v={DIRECT_LINK_GUARD_ASSET_VERSION}',s,count=1)
     if n!=1: raise SystemExit('direct-link-guard asset reference changed')
 
 if 'unified-ui.js' not in s:
