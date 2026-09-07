@@ -33,6 +33,12 @@
   // and refuse a list/home fallback for those sources if no exact detail identity exists.
   const basePostingLink=typeof postingLink==='function'?postingLink:null;
   const sidText=j=>String(j?.sourceIdentity||'');
+  const isLessoninfoCulture=j=>j?.source==='레슨인포'&&j?.sourceSurface==='culture-arts';
+  const verifiedLessoninfoCulture=j=>{
+    if(!isLessoninfoCulture(j))return null;
+    if(j?.sourceIdentity==='culture:id:94673'||j?.detailLinkVerified!==true)return '';
+    return String(j?.verifiedUrl||'').trim();
+  };
   const knownPrivate=j=>/^(?:artmore|jobteacher|gonggonggangsa|culture:id|board):/.test(sidText(j))||['아트모아','잡티처','공공강사','레슨인포'].includes(String(j?.source||''));
   const validPrivateCandidate=(j,raw)=>{
     if(!raw)return '';
@@ -61,10 +67,19 @@
   };
   if(basePostingLink){
     postingLink=function(j){
+      // Culture-arts is never reconstructed from a stable ID. Its independent cold-browser
+      // verdict is authoritative and may intentionally point to a verified external detail.
+      const culture=verifiedLessoninfoCulture(j);
+      if(culture!==null)return culture;
+      if(j?.detailLinkVerified===false)return '';
       if(j?.feedKind==='private'&&knownPrivate(j))return reconstructedPrivateDetail(j);
       return basePostingLink(j);
     };
   }
+
+  // Expose an explicit readiness marker so deployed black-box tests can wait until all
+  // frontend wrappers have finished installing before testing link policy.
+  window.__edujobMobileUiReady='20260907d';
 
   const bp=900;
   const panel=document.querySelector('.filter-panel');if(!panel)return;
