@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-07T19:08:50+09:00",
+  "generatedAt": "2026-09-07T20:08:51+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T19:08:50+09:00",
+    "generatedAt": "2026-09-07T20:08:51+09:00",
     "official": {
-      "datasetCount": 19070,
+      "datasetCount": 19074,
       "officialIdCount": 17844,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7723,
-      "officialDisplayed": 3345,
+      "publishedJobs": 7729,
+      "officialDisplayed": 3351,
       "privateDisplayed": 4378,
       "privateDiscovered": 4389,
       "officialPrivateAliases": 11,
@@ -54,7 +54,7 @@
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10273,
+        "count": 10269,
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -62,11 +62,11 @@
         "latestRegistered": "2026-07-29"
       },
       "경기도교육청 통합 구인구직 + 고양교육지원청": {
-        "count": 1,
-        "latestRegistered": "2026-09-04"
+        "count": 2,
+        "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 구리남양주교육지원청": {
-        "count": 5,
+        "count": 7,
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 김포교육지원청": {
@@ -86,12 +86,12 @@
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직 + 의정부교육지원청": {
-        "count": 2,
+        "count": 3,
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 평택교육지원청": {
-        "count": 4,
-        "latestRegistered": "2026-09-04"
+        "count": 5,
+        "latestRegistered": "2026-09-07"
       },
       "고양교육지원청": {
         "count": 218,
@@ -102,8 +102,8 @@
         "latestRegistered": "2026-09-07"
       },
       "광주하남교육지원청": {
-        "count": 336,
-        "latestRegistered": "2026-09-06"
+        "count": 337,
+        "latestRegistered": "2026-09-07"
       },
       "구리남양주교육지원청": {
         "count": 568,
@@ -146,7 +146,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1295,
+        "count": 1297,
         "latestRegistered": "2026-09-07"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -315,32 +315,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T19:08:16+09:00",
+      "baselineAt": "2026-09-06T20:07:37+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19070,
-          "baseline": 18901,
-          "changeRatio": 0.0089
+          "current": 19074,
+          "baseline": 18903,
+          "changeRatio": 0.009
         },
         "official.officialIdCount": {
           "current": 17844,
-          "baseline": 17813,
-          "changeRatio": 0.0017
+          "baseline": 17809,
+          "changeRatio": 0.002
         },
         "unified.publishedJobs": {
-          "current": 7723,
-          "baseline": 7530,
-          "changeRatio": 0.0256
+          "current": 7729,
+          "baseline": 7533,
+          "changeRatio": 0.026
         },
         "unified.officialDisplayed": {
-          "current": 3345,
-          "baseline": 3075,
-          "changeRatio": 0.0878
+          "current": 3351,
+          "baseline": 3076,
+          "changeRatio": 0.0894
         },
         "unified.privateDiscovered": {
           "current": 4389,
-          "baseline": 4467,
-          "changeRatio": -0.0175
+          "baseline": 4469,
+          "changeRatio": -0.0179
         }
       },
       "privateSources": {
@@ -371,8 +371,8 @@
         },
         "boramyc": {
           "current": 2,
-          "baseline": 0,
-          "changeRatio": null
+          "baseline": 2,
+          "changeRatio": 0.0
         }
       }
     },
