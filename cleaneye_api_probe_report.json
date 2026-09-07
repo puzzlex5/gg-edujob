@@ -1,0 +1,256 @@
+{
+  "generatedAt": "2026-09-07T23:07:30+09:00",
+  "trials": [
+    {
+      "name": "empty",
+      "request": {},
+      "status": 200,
+      "contentType": "application/json;charset=UTF-8",
+      "textPrefix": "{\"paginationInfo\":{\"currentPageNo\":1,\"recordCountPerPage\":10,\"pageSize\":10,\"totalRecordCount\":78372,\"totalPageCount\":0,\"firstPageNoOnPageList\":0,\"lastPageNoOnPageList\":0,\"firstRecordIndex\":0,\"lastRecordIndex\":10},\"cnt\":78372,\"list\":[{\"status\":\"709001\",\"empyear\":\"2026\",\"ypEntId\":\"2007100318\",\"entSeq\":\"000121\",\"sidoCd\":\"007015\",\"entName\":\"창원시설공단\",\"entGb\":\"707002\",\"entKind\":\"708014\",\"entTitle\":\"시민생활체육관 종합안내실 기간제근로자 채용 공고문\",\"employGb\":\"703003\",\"jobType\":\"702003\",\"localYn\":\"N\",\"pubDate\":\"2026-09-07\",\"pubEndDate\":\"2026-09-11\"},{\"status\":\"709001\",\"empyear\":\"2026\",\"ypEntId\":\"B000852\",\"entSeq\":\"000007\",\"sidoCd\":\"007008\",\"entName\":\"재단법인 구리시상권활성화재단\",\"entGb\":\"707004\",\"entKind\":\"708051\",\"entTitle\":\"구리시상권활성화재단 2026년 제3차 기간제(로컬테마상권 조성사업) 직원 채용 재공고\",\"employGb\":\"703003\",\"jobType\":\"702003\",\"localYn\":\"N\",\"pubDate\":\"2026-09-07\",\"pubEndDate\":\"2026-09-11\"},{\"status\":\"709001\",\"empyear\":\"2026\",\"ypEntId\":\"2024000003\",\"entSeq\":\"000034\",\"sidoCd\":\"007008\",\"entName\":\"의정부도시공사\",\"entGb\":\"707001\",\"entKind\":\"708003\",\"e",
+      "json": {
+        "paginationInfo": {
+          "currentPageNo": "1",
+          "recordCountPerPage": "10",
+          "pageSize": "10",
+          "totalRecordCount": "78372",
+          "totalPageCount": "0",
+          "firstPageNoOnPageList": "0",
+          "lastPageNoOnPageList": "0",
+          "firstRecordIndex": "0",
+          "lastRecordIndex": "10"
+        },
+        "cnt": "78372",
+        "list": [
+          {
+            "status": "709001",
+            "empyear": "2026",
+            "ypEntId": "2007100318",
+            "entSeq": "000121",
+            "sidoCd": "007015",
+            "entName": "창원시설공단",
+            "entGb": "707002",
+            "entKind": "708014",
+            "entTitle": "시민생활체육관 종합안내실 기간제근로자 채용 공고문",
+            "employGb": "703003",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-09-07",
+            "pubEndDate": "2026-09-11"
+          },
+          {
+            "status": "709001",
+            "empyear": "2026",
+            "ypEntId": "B000852",
+            "entSeq": "000007",
+            "sidoCd": "007008",
+            "entName": "재단법인 구리시상권활성화재단",
+            "entGb": "707004",
+            "entKind": "708051",
+            "entTitle": "구리시상권활성화재단 2026년 제3차 기간제(로컬테마상권 조성사업) 직원 채용 재공고",
+            "employGb": "703003",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-09-07",
+            "pubEndDate": "2026-09-11"
+          },
+          {
+            "status": "709001",
+            "empyear": "2026",
+            "ypEntId": "2024000003",
+            "entSeq": "000034",
+            "sidoCd": "007008",
+            "entName": "의정부도시공사",
+            "entGb": "707001",
+            "entKind": "708003",
+            "entTitle": "2026년 제10회 생활체육처 기간제근로자 채용 공고",
+            "employGb": "703001",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-09-07",
+            "pubEndDate": "2026-09-11"
+          }
+        ]
+      },
+      "keys": [
+        "paginationInfo",
+        "cnt",
+        "list"
+      ],
+      "listLengths": {
+        "list": 10
+      }
+    },
+    {
+      "name": "common-defaults",
+      "request": {
+        "pageIndex": "1",
+        "pageUnit": "10",
+        "pageSize": "10",
+        "status": "",
+        "entName": "",
+        "searchKeyword": ""
+      },
+      "status": 200,
+      "contentType": "application/json;charset=UTF-8",
+      "textPrefix": "{\"paginationInfo\":{\"currentPageNo\":1,\"recordCountPerPage\":10,\"pageSize\":10,\"totalRecordCount\":78372,\"totalPageCount\":0,\"firstPageNoOnPageList\":0,\"lastPageNoOnPageList\":0,\"firstRecordIndex\":0,\"lastRecordIndex\":10},\"cnt\":78372,\"list\":[{\"status\":\"709001\",\"empyear\":\"2026\",\"ypEntId\":\"2007100318\",\"entSeq\":\"000121\",\"sidoCd\":\"007015\",\"entName\":\"창원시설공단\",\"entGb\":\"707002\",\"entKind\":\"708014\",\"entTitle\":\"시민생활체육관 종합안내실 기간제근로자 채용 공고문\",\"employGb\":\"703003\",\"jobType\":\"702003\",\"localYn\":\"N\",\"pubDate\":\"2026-09-07\",\"pubEndDate\":\"2026-09-11\"},{\"status\":\"709001\",\"empyear\":\"2026\",\"ypEntId\":\"B000852\",\"entSeq\":\"000007\",\"sidoCd\":\"007008\",\"entName\":\"재단법인 구리시상권활성화재단\",\"entGb\":\"707004\",\"entKind\":\"708051\",\"entTitle\":\"구리시상권활성화재단 2026년 제3차 기간제(로컬테마상권 조성사업) 직원 채용 재공고\",\"employGb\":\"703003\",\"jobType\":\"702003\",\"localYn\":\"N\",\"pubDate\":\"2026-09-07\",\"pubEndDate\":\"2026-09-11\"},{\"status\":\"709001\",\"empyear\":\"2026\",\"ypEntId\":\"2024000003\",\"entSeq\":\"000034\",\"sidoCd\":\"007008\",\"entName\":\"의정부도시공사\",\"entGb\":\"707001\",\"entKind\":\"708003\",\"e",
+      "json": {
+        "paginationInfo": {
+          "currentPageNo": "1",
+          "recordCountPerPage": "10",
+          "pageSize": "10",
+          "totalRecordCount": "78372",
+          "totalPageCount": "0",
+          "firstPageNoOnPageList": "0",
+          "lastPageNoOnPageList": "0",
+          "firstRecordIndex": "0",
+          "lastRecordIndex": "10"
+        },
+        "cnt": "78372",
+        "list": [
+          {
+            "status": "709001",
+            "empyear": "2026",
+            "ypEntId": "2007100318",
+            "entSeq": "000121",
+            "sidoCd": "007015",
+            "entName": "창원시설공단",
+            "entGb": "707002",
+            "entKind": "708014",
+            "entTitle": "시민생활체육관 종합안내실 기간제근로자 채용 공고문",
+            "employGb": "703003",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-09-07",
+            "pubEndDate": "2026-09-11"
+          },
+          {
+            "status": "709001",
+            "empyear": "2026",
+            "ypEntId": "B000852",
+            "entSeq": "000007",
+            "sidoCd": "007008",
+            "entName": "재단법인 구리시상권활성화재단",
+            "entGb": "707004",
+            "entKind": "708051",
+            "entTitle": "구리시상권활성화재단 2026년 제3차 기간제(로컬테마상권 조성사업) 직원 채용 재공고",
+            "employGb": "703003",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-09-07",
+            "pubEndDate": "2026-09-11"
+          },
+          {
+            "status": "709001",
+            "empyear": "2026",
+            "ypEntId": "2024000003",
+            "entSeq": "000034",
+            "sidoCd": "007008",
+            "entName": "의정부도시공사",
+            "entGb": "707001",
+            "entKind": "708003",
+            "entTitle": "2026년 제10회 생활체육처 기간제근로자 채용 공고",
+            "employGb": "703001",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-09-07",
+            "pubEndDate": "2026-09-11"
+          }
+        ]
+      },
+      "keys": [
+        "paginationInfo",
+        "cnt",
+        "list"
+      ],
+      "listLengths": {
+        "list": 10
+      }
+    },
+    {
+      "name": "seoul-foundation",
+      "request": {
+        "pageIndex": "1",
+        "pageUnit": "10",
+        "pageSize": "10",
+        "status": "",
+        "entName": "서울문화재단",
+        "searchKeyword": "서울문화재단"
+      },
+      "status": 200,
+      "contentType": "application/json;charset=UTF-8",
+      "textPrefix": "{\"paginationInfo\":{\"currentPageNo\":1,\"recordCountPerPage\":10,\"pageSize\":10,\"totalRecordCount\":27,\"totalPageCount\":0,\"firstPageNoOnPageList\":0,\"lastPageNoOnPageList\":0,\"firstRecordIndex\":0,\"lastRecordIndex\":10},\"cnt\":27,\"list\":[{\"status\":\"709003\",\"empyear\":\"2026\",\"ypEntId\":\"B000260\",\"entSeq\":\"000002\",\"sidoCd\":\"007001\",\"entName\":\"서울문화재단\",\"entGb\":\"707004\",\"entKind\":\"708043\",\"entTitle\":\"서울문화재단 2026년 제2차 직원(정규직) 공개채용 공고\",\"employGb\":\"703001\",\"jobType\":\"702001\",\"localYn\":\"N\",\"pubDate\":\"2026-08-13\",\"pubEndDate\":\"2026-08-20\"},{\"status\":\"709003\",\"empyear\":\"2026\",\"ypEntId\":\"B000260\",\"entSeq\":\"000003\",\"sidoCd\":\"007001\",\"entName\":\"서울문화재단\",\"entGb\":\"707004\",\"entKind\":\"708043\",\"entTitle\":\"서울문화재단 2026년 제2차 직원(기간제계약직) 공개채용 공고\",\"employGb\":\"703001\",\"jobType\":\"702003\",\"localYn\":\"N\",\"pubDate\":\"2026-08-13\",\"pubEndDate\":\"2026-08-20\"},{\"status\":\"709003\",\"empyear\":\"2026\",\"ypEntId\":\"B000260\",\"entSeq\":\"000001\",\"sidoCd\":\"007001\",\"entName\":\"서울문화재단\",\"entGb\":\"707004\",\"entKind\":\"708043\",\"entTitle\":\"서울문화재단 2026년 제1차 직원",
+      "json": {
+        "paginationInfo": {
+          "currentPageNo": "1",
+          "recordCountPerPage": "10",
+          "pageSize": "10",
+          "totalRecordCount": "27",
+          "totalPageCount": "0",
+          "firstPageNoOnPageList": "0",
+          "lastPageNoOnPageList": "0",
+          "firstRecordIndex": "0",
+          "lastRecordIndex": "10"
+        },
+        "cnt": "27",
+        "list": [
+          {
+            "status": "709003",
+            "empyear": "2026",
+            "ypEntId": "B000260",
+            "entSeq": "000002",
+            "sidoCd": "007001",
+            "entName": "서울문화재단",
+            "entGb": "707004",
+            "entKind": "708043",
+            "entTitle": "서울문화재단 2026년 제2차 직원(정규직) 공개채용 공고",
+            "employGb": "703001",
+            "jobType": "702001",
+            "localYn": "N",
+            "pubDate": "2026-08-13",
+            "pubEndDate": "2026-08-20"
+          },
+          {
+            "status": "709003",
+            "empyear": "2026",
+            "ypEntId": "B000260",
+            "entSeq": "000003",
+            "sidoCd": "007001",
+            "entName": "서울문화재단",
+            "entGb": "707004",
+            "entKind": "708043",
+            "entTitle": "서울문화재단 2026년 제2차 직원(기간제계약직) 공개채용 공고",
+            "employGb": "703001",
+            "jobType": "702003",
+            "localYn": "N",
+            "pubDate": "2026-08-13",
+            "pubEndDate": "2026-08-20"
+          },
+          {
+            "status": "709003",
+            "empyear": "2026",
+            "ypEntId": "B000260",
+            "entSeq": "000001",
+            "sidoCd": "007001",
+            "entName": "서울문화재단",
+            "entGb": "707004",
+            "entKind": "708043",
+            "entTitle": "서울문화재단 2026년 제1차 직원 공개채용 공고",
+            "employGb": "703001",
+            "jobType": "702001",
+            "localYn": "N",
+            "pubDate": "2026-04-28",
+            "pubEndDate": "2026-05-08"
+          }
+        ]
+      },
+      "keys": [
+        "paginationInfo",
+        "cnt",
+        "list"
+      ],
+      "listLengths": {
+        "list": 10
+      }
+    }
+  ]
+}
