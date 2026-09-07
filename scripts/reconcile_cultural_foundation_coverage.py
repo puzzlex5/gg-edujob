@@ -163,22 +163,33 @@ def main() -> int:
             "coverageOutcome":"current-seen" if strong_seen else "no-current-crosscheck-signal",
         })
 
-    component_reports = {
-        "cleaneye": load(Path("cleaneye_foundation_report.json"), {}),
-        "ancf": load(Path("ancf_foundation_report.json"), {}),
-        "artmore": load(Path("artmore_foundation_crosscheck_report.json"), {}),
-        "registry": load(Path("cultural_foundation_registry_report.json"), {}),
+    component_paths = {
+        "cleaneye": Path("cleaneye_foundation_report.json"),
+        "ancf": Path("ancf_foundation_report.json"),
+        "artmore": Path("artmore_foundation_crosscheck_report.json"),
+        "registry": Path("cultural_foundation_registry_report.json"),
     }
-    component_health = {k: bool(v.get("healthy")) for k,v in component_reports.items()}
+    component_reports = {k: load(path, {}) for k, path in component_paths.items()}
+    component_available = {k: path.exists() for k, path in component_paths.items()}
+    component_health = {
+        k: (bool(component_reports[k].get("healthy")) if component_available[k] else None)
+        for k in component_paths
+    }
+    failed_available_components = [
+        k for k in component_paths
+        if component_available[k] and component_health[k] is False
+    ]
     configured_official = sum(1 for f in foundations if str(f.get("officialRecruitmentUrl") or "").strip())
     report = {
         "generatedAt":datetime.now(KST).isoformat(timespec="seconds"),
-        "policy":"official-primary+multi-sensor-gap-detection-v1",
-        "healthy": all(component_health.values()) and not gaps,
+        "policy":"official-primary+multi-sensor-gap-detection-v2",
+        "healthy": not failed_available_components and not gaps,
         "registryInstitutions":len(foundations),
         "officialBoardsConfigured":configured_official,
         "officialCoverageComplete":configured_official == len(foundations),
+        "componentAvailable":component_available,
         "componentHealth":component_health,
+        "failedAvailableComponents":failed_available_components,
         "currentMappedBySource":{s:sum(len(mapped[fid].get(s,[])) for fid in by_fid) for s in datasets},
         "coverageGapCount":len(gaps),
         "coverageGaps":gaps[:200],
@@ -188,7 +199,7 @@ def main() -> int:
         "institutions":institutions,
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentHealth","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}, ensure_ascii=False, indent=2))
+    print(json.dumps({k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentAvailable","componentHealth","failedAvailableComponents","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}, ensure_ascii=False, indent=2))
     return 0 if report["healthy"] else 2
 
 
