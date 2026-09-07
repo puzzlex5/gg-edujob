@@ -139,6 +139,11 @@ jobs:
           python scripts/reconcile_source_ids.py
           python scripts/stamp_reconciliation_scan.py --reconciliation
           python scripts/update_deep_audit_status.py source-id-reconciliation running
+      - name: Refresh independent Gyeonggi 90-day proof for this audit window
+        run: |
+          echo gyeonggi-central-90d-proof >/tmp/deep_audit_stage
+          python scripts/verify_gyeonggi_central_90d.py
+          python scripts/update_deep_audit_status.py gyeonggi-central-90d-proof running
       - name: Re-prove central IDs and require independent agreement
         run: |
           echo central-cross-check >/tmp/deep_audit_stage
