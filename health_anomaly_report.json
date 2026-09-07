@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-08T03:10:01+09:00",
+  "generatedAt": "2026-09-08T04:07:40+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T03:10:01+09:00",
+    "generatedAt": "2026-09-08T04:07:40+09:00",
     "official": {
       "datasetCount": 18816,
       "officialIdCount": 17576,
@@ -12,11 +12,11 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7334,
+      "publishedJobs": 7073,
       "officialDisplayed": 2958,
-      "privateDisplayed": 4376,
-      "privateDiscovered": 4383,
-      "officialPrivateAliases": 7,
+      "privateDisplayed": 4115,
+      "privateDiscovered": 4115,
+      "officialPrivateAliases": 0,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,7 +27,6 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
-        "lessoninfo",
         "jobteacher",
         "artmore",
         "gonggonggangsa",
@@ -35,6 +34,7 @@
         "boramyc"
       ],
       "degradedPrivateSources": [
+        "lessoninfo",
         "cleaneye"
       ]
     },
@@ -243,10 +243,10 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": true,
+        "enabled": false,
         "healthy": true,
         "datasetCount": 268,
-        "rawCount": 268,
+        "rawCount": 270,
         "currentCount": 268,
         "missingAfter": 0,
         "detailErrors": 0,
@@ -329,7 +329,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T03:09:23+09:00",
+      "baselineAt": "2026-09-07T04:07:04+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18816,
@@ -342,9 +342,9 @@
           "changeRatio": 0.0019
         },
         "unified.publishedJobs": {
-          "current": 7334,
+          "current": 7073,
           "baseline": 7319,
-          "changeRatio": 0.002
+          "changeRatio": -0.0336
         },
         "unified.officialDisplayed": {
           "current": 2958,
@@ -352,9 +352,9 @@
           "changeRatio": 0.0048
         },
         "unified.privateDiscovered": {
-          "current": 4383,
+          "current": 4115,
           "baseline": 4386,
-          "changeRatio": -0.0007
+          "changeRatio": -0.0618
         }
       },
       "privateSources": {
