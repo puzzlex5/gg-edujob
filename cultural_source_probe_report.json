@@ -1,0 +1,172 @@
+{
+  "generatedAt": "2026-09-07T22:59:51+09:00",
+  "targets": {
+    "cleaneye": {
+      "url": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
+      "status": 200,
+      "finalUrl": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
+      "contentType": "text/html; charset=UTF-8",
+      "title": "채용정보 검색 : 클린아이 잡플러스, 지방 공공기관 채용 정보 사이트",
+      "forms": [
+        {
+          "id": "mainSearchForm",
+          "name": "mainSearchForm",
+          "method": "post",
+          "action": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
+          "text": "통합검색",
+          "inputs": [
+            {
+              "tag": "input",
+              "type": "hidden",
+              "id": "kwd",
+              "name": "kwd",
+              "value": null,
+              "placeholder": null
+            },
+            {
+              "tag": "input",
+              "type": null,
+              "id": "topSearch",
+              "name": "topSearch",
+              "value": null,
+              "placeholder": "통합검색"
+            }
+          ]
+        },
+        {
+          "id": "detailForm",
+          "name": "detailForm",
+          "method": "post",
+          "action": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
+          "text": "",
+          "inputs": [
+            {
+              "tag": "input",
+              "type": "hidden",
+              "id": null,
+              "name": "empyear",
+              "value": "",
+              "placeholder": null
+            },
+            {
+              "tag": "input",
+              "type": "hidden",
+              "id": null,
+              "name": "ypEntId",
+              "value": "",
+              "placeholder": null
+            },
+            {
+              "tag": "input",
+              "type": "hidden",
+              "id": null,
+              "name": "entSeq",
+              "value": "",
+              "placeholder": null
+            }
+          ]
+        },
+        {
+          "id": "searchForm",
+          "name": "searchForm",
+          "method": "get",
+          "action": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
+          "text": "모집분야 지역제한 우대사항 고용형태 채용구분 접수시작일 접수마감일 채용마감여부 근무지 근무시간 연봉 대체인력여부 기관명 기관형태 기관유형 상세검색 열기 상세검색 닫기",
+          "inputs": [
+            {
+              "tag": "button",
+              "type": null,
+              "id": null,
+              "name": null,
+              "value": null,
+              "placeholder": null
+            },
+            {
+              "tag": "button",
+              "type": null,
+              "id": null,
+              "name": null,
+              "value": null,
+              "placeholder": null
+            }
+          ]
+        },
+        {
+          "id": "modalSearchForm",
+          "name": "modalSearchForm",
+          "method": "post",
+          "action": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
+          "text": "검색 조건 선택 기관명 입력 검색",
+          "inputs": [
+            {
+              "tag": "select",
+              "type": null,
+              "id": "searchCond",
+              "name": "searchCond",
+              "value": null,
+              "placeholder": null
+            },
+            {
+              "tag": "input",
+              "type": "text",
+              "id": "searchKeyword",
+              "name": "searchKeyword",
+              "value": null,
+              "placeholder": "기관명을 입력하세요."
+            },
+            {
+              "tag": "button",
+              "type": null,
+              "id": "searchEntNameBtn",
+              "name": null,
+              "value": null,
+              "placeholder": null
+            }
+          ]
+        }
+      ],
+      "anchors": [
+        {
+          "text": "본문으로 바로가기",
+          "href": "https://job.cleaneye.go.kr/user/ypRecruitment.do#container"
+        },
+        {
+          "text": "주메뉴 바로가기",
+          "href": "https://job.cleaneye.go.kr/user/ypRecruitment.do#mainNav"
+        },
+        {
+          "text": "채용정보",
+          "href": "https://job.cleaneye.go.kr/user/ypRecruitment.do"
+        },
+        {
+          "text": "채용정보",
+          "href": "https://job.cleaneye.go.kr/user/ypRecruitment.do"
+        },
+        {
+          "text": "",
+          "href": "http://matchingbank.career.co.kr"
+        },
+        {
+          "text": "채용정보",
+          "href": "https://job.cleaneye.go.kr/user/ypRecruitment.do"
+        }
+      ],
+      "scripts": [
+        "https://job.cleaneye.go.kr/SBUx/SBUx.js",
+        "https://job.cleaneye.go.kr/js/common.js",
+        "https://job.cleaneye.go.kr/js/cleaniCommon.js",
+        "https://job.cleaneye.go.kr/js/jquery.datetimepicker.full.js"
+      ]
+    }
+  },
+  "errors": [
+    {
+      "source": "ancf",
+      "error": "SSLError: HTTPSConnectionPool(host='www.ancf.or.kr', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    },
+    {
+      "source": "ancf_members",
+      "error": "SSLError: HTTPSConnectionPool(host='www.ancf.or.kr', port=443): Max retries exceeded with url: /members/state (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    }
+  ]
+}
