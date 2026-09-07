@@ -59,7 +59,7 @@ jobs:
                   try:
                       req=urllib.request.Request(
                           f'{site}/{name}?blackbox={time.time_ns()}',
-                          headers={'Cache-Control':'no-cache','Pragma':'no-cache','User-Agent':'gg-edujob-blackbox/4'}
+                          headers={'Cache-Control':'no-cache','Pragma':'no-cache','User-Agent':'gg-edujob-blackbox/5'}
                       )
                       with urllib.request.urlopen(req, timeout=15) as r:
                           body=r.read()
@@ -98,14 +98,13 @@ jobs:
             return hits>=required;
           };
           const listPath=p=>['/culture-jobs/list.php','/culture-jobs/','/culture-jobs'].includes(String(p||'').toLowerCase());
+          const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
           (async()=>{
             const browser=await chromium.launch({headless:true});
             const page=await browser.newPage({...devices['Pixel 7'], locale:'ko-KR', timezoneId:'Asia/Seoul'});
             await page.goto(`${SITE}/?blackbox=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:45000});
             // Test the final runtime function, not the inline base function before deferred wrappers.
-            // Defer scripts execute in document order: direct-link-guard then mobile-ui. This marker
-            // therefore proves all link-policy wrappers are installed before the contract is checked.
             await page.waitForFunction(()=>window.__edujobMobileUiReady==='20260907d'&&typeof window.postingLink==='function',{timeout:20000});
             const result=await page.evaluate(async()=>{
               const r=await fetch(`unified_jobs.json?blackbox=${Date.now()}`,{cache:'no-store'});
@@ -140,33 +139,57 @@ jobs:
               throw new Error(`deployed card contract failed missing=${result.missing} failures=${result.failures.length}`);
             }
 
+            const checkDestinationOnce=async(row,attempt)=>{
+              const context=await browser.newContext({...devices['Pixel 7'], locale:'ko-KR', timezoneId:'Asia/Seoul'});
+              const p=await context.newPage();
+              try{
+                const expectedId=String(row.id||'').match(/^culture:id:(\d+)$/)?.[1]||'';
+                const requested=new URL(row.url);
+                if(/(^|\.)artmore\.kr$/i.test(requested.hostname) && expectedId && requested.searchParams.get('rec_idx')!==expectedId){
+                  return {id:row.id,reason:'external-id-mismatch',attempt,expectedId,verifiedUrl:row.url};
+                }
+                const resp=await p.goto(row.url,{waitUntil:'domcontentloaded',timeout:20000});
+                const status=resp?resp.status():0;
+                const text=await p.locator('body').innerText({timeout:5000}).catch(()=> '');
+                const final=p.url();
+                if(status>=400){
+                  return {id:row.id,reason:`http-${status}`,status,attempt,final};
+                }
+                if(row.resolvedUrlType==='lessoninfo'){
+                  const u=new URL(final);
+                  const want=requested.searchParams.get('id');
+                  if(listPath(u.pathname)||u.pathname.toLowerCase()!=='/culture-jobs/detail.php'||u.searchParams.get('id')!==want||!titleMatches(row.title,text)){
+                    return {id:row.id,reason:'lessoninfo-cold-destination-mismatch',attempt,final,bodySample:String(text||'').slice(0,400)};
+                  }
+                } else if(!titleMatches(row.title,text)){
+                  return {id:row.id,reason:'external-title-mismatch',attempt,final,bodySample:String(text||'').slice(0,400)};
+                }
+                return null;
+              }catch(e){
+                return {id:row.id,reason:`navigation:${e.name}`,attempt,detail:String(e.message||e).slice(0,300)};
+              }finally{
+                await context.close();
+              }
+            };
+
             let next=0, destinationFailures=[];
             const workers=Array.from({length:4},async()=>{
               for(;;){
                 const i=next++;
                 if(i>=result.verifiedRows.length) return;
                 const row=result.verifiedRows[i];
-                const context=await browser.newContext({...devices['Pixel 7'], locale:'ko-KR', timezoneId:'Asia/Seoul'});
-                const p=await context.newPage();
-                try{
-                  const resp=await p.goto(row.url,{waitUntil:'domcontentloaded',timeout:20000});
-                  const text=await p.locator('body').innerText({timeout:5000}).catch(()=> '');
-                  if(resp && resp.status()>=400){
-                    destinationFailures.push({id:row.id,reason:`http-${resp.status()}`,final:p.url()});
-                  } else if(row.resolvedUrlType==='lessoninfo'){
-                    const u=new URL(p.url());
-                    const want=new URL(row.url).searchParams.get('id');
-                    if(listPath(u.pathname)||u.pathname.toLowerCase()!=='/culture-jobs/detail.php'||u.searchParams.get('id')!==want||!titleMatches(row.title,text)){
-                      destinationFailures.push({id:row.id,reason:'lessoninfo-cold-destination-mismatch',final:p.url()});
-                    }
-                  } else if(!titleMatches(row.title,text)){
-                    destinationFailures.push({id:row.id,reason:'external-title-mismatch',final:p.url()});
-                  }
-                }catch(e){
-                  destinationFailures.push({id:row.id,reason:`navigation:${e.name}`,detail:String(e.message||e).slice(0,300)});
-                }finally{
-                  await context.close();
+                let lastFailure=null;
+                for(let attempt=1;attempt<=3;attempt++){
+                  const failure=await checkDestinationOnce(row,attempt);
+                  if(!failure){lastFailure=null;break;}
+                  lastFailure=failure;
+                  const status=Number(failure.status||0);
+                  const permanent4xx=status>=400&&status<500&&![408,425,429].includes(status);
+                  const permanentIdentity=failure.reason==='external-id-mismatch';
+                  if(permanent4xx||permanentIdentity)break;
+                  if(attempt<3)await sleep(300*attempt);
                 }
+                if(lastFailure)destinationFailures.push(lastFailure);
               }
             });
             await Promise.all(workers);
