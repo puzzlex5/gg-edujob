@@ -1,0 +1,196 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import json
+import re
+from collections import Counter, defaultdict
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+
+KST = timezone(timedelta(hours=9))
+REGISTRY = Path("cultural_foundation_registry.json")
+CLEANEYE = Path("cleaneye_foundation_jobs.json")
+ANCF = Path("ancf_foundation_jobs.json")
+ARTMORE = Path("artmore_foundation_crosscheck.json")
+LESSONINFO = Path("lessoninfo_jobs.json")
+UNIFIED = Path("unified_jobs.json")
+OFFICIAL = Path("official_foundation_jobs.json")
+REPORT = Path("cultural_foundation_coverage_report.json")
+
+
+def load(path: Path, default):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return default
+
+
+def rows(data):
+    if isinstance(data, list): return data
+    if isinstance(data, dict): return data.get("jobs", [])
+    return []
+
+
+def norm(s: str) -> str:
+    s = re.sub(r"\(\s*재\s*\)|재단법인|진행중|마감", "", str(s or ""), flags=re.I)
+    return re.sub(r"[^0-9A-Za-z가-힣]+", "", s).lower()
+
+
+def tokenish(s: str) -> set[str]:
+    raw = re.sub(r"[^0-9A-Za-z가-힣]+", " ", str(s or "")).split()
+    stop = {"채용", "공고", "모집", "직원", "공개채용", "공개경쟁채용", "재단법인", "진행중"}
+    return {x.lower() for x in raw if len(x) >= 2 and x not in stop}
+
+
+def title_match(a: str, b: str) -> bool:
+    na, nb = norm(a), norm(b)
+    if not na or not nb: return False
+    if na == nb or (len(na) >= 12 and na in nb) or (len(nb) >= 12 and nb in na):
+        return True
+    ta, tb = tokenish(a), tokenish(b)
+    if not ta or not tb: return False
+    inter = len(ta & tb)
+    return inter >= 2 and inter / max(1, min(len(ta), len(tb))) >= 0.65
+
+
+def current(row: dict, today: date) -> bool:
+    end = str(row.get("applyEnd") or row.get("pubEndDate") or "")[:10]
+    if end:
+        try:
+            if date.fromisoformat(end) < today: return False
+        except Exception:
+            pass
+    registered = str(row.get("registered") or row.get("pubDate") or "")[:10]
+    if registered:
+        try:
+            if date.fromisoformat(registered) > today: return False
+        except Exception:
+            pass
+    return True
+
+
+def foundation_matchers(registry_rows):
+    out = []
+    for f in registry_rows:
+        for alias in [f.get("name"), *(f.get("aliases") or [])]:
+            n = norm(alias)
+            if n: out.append((n, f["id"]))
+    out.sort(key=lambda x: len(x[0]), reverse=True)
+    return out
+
+
+def identify_foundation(row: dict, matchers) -> str:
+    explicit = str(row.get("foundationRegistryId") or "")
+    if explicit: return explicit
+    hay = norm(" ".join(str(row.get(k) or "") for k in ("title","organization","school","rawListText")))
+    for alias, fid in matchers:
+        if alias in hay: return fid
+    return ""
+
+
+def represented_in_unified(job: dict, unified_rows: list[dict], fid: str, foundation_name: str) -> bool:
+    title = str(job.get("title") or "")
+    f_norm = norm(foundation_name)
+    candidates = []
+    for u in unified_rows:
+        utext = norm(" ".join(str(u.get(k) or "") for k in ("title","school","organization","searchText","source")))
+        if f_norm and f_norm not in utext:
+            continue
+        candidates.append(u)
+    return any(title_match(title, str(u.get("title") or "")) for u in candidates)
+
+
+def main() -> int:
+    today = datetime.now(KST).date()
+    registry = load(REGISTRY, {})
+    foundations = [x for x in registry.get("institutions", []) if x.get("enabled") is not False]
+    by_fid = {x["id"]:x for x in foundations}
+    matchers = foundation_matchers(foundations)
+    unified_rows = rows(load(UNIFIED, {}))
+
+    datasets = {
+        "official": rows(load(OFFICIAL, {})),
+        "cleaneye": rows(load(CLEANEYE, {})),
+        "artmore": rows(load(ARTMORE, {})),
+        "ancf": rows(load(ANCF, {})),
+        "lessoninfo-discovery": [x for x in rows(load(LESSONINFO, {})) if str(x.get("sourceSurface") or "") == "culture-arts"],
+    }
+    source_strength = {"official":"primary","cleaneye":"strong-cross-check","artmore":"strong-cross-check","ancf":"cross-check","lessoninfo-discovery":"discovery-only"}
+
+    mapped = defaultdict(lambda: defaultdict(list))
+    unmapped = defaultdict(list)
+    for source, dataset in datasets.items():
+        for job in dataset:
+            if not current(job, today):
+                continue
+            fid = identify_foundation(job, matchers)
+            if fid and fid in by_fid:
+                mapped[fid][source].append(job)
+            elif source != "lessoninfo-discovery":
+                unmapped[source].append(job)
+
+    gaps = []
+    discovery_gaps = []
+    institutions = []
+    for f in foundations:
+        fid = f["id"]
+        source_counts = {s: len(mapped[fid].get(s, [])) for s in datasets}
+        strong_seen = sum(source_counts[s] for s in ("official","cleaneye","artmore","ancf"))
+        for source, jobs in mapped[fid].items():
+            for job in jobs:
+                represented = represented_in_unified(job, unified_rows, fid, f["name"])
+                if represented:
+                    continue
+                gap = {
+                    "foundationRegistryId":fid,
+                    "foundationName":f["name"],
+                    "source":source,
+                    "strength":source_strength[source],
+                    "sourceIdentity":job.get("sourceIdentity"),
+                    "title":job.get("title"),
+                    "applyEnd":job.get("applyEnd"),
+                }
+                if source == "lessoninfo-discovery": discovery_gaps.append(gap)
+                else: gaps.append(gap)
+        institutions.append({
+            "foundationRegistryId":fid,
+            "foundationName":f["name"],
+            "region":f["region"],
+            "municipality":f["municipality"],
+            "sourceCounts":source_counts,
+            "currentStrongSignals":strong_seen,
+            "officialBoardConfigured":bool(str(f.get("officialRecruitmentUrl") or "").strip()),
+            "coverageOutcome":"current-seen" if strong_seen else "no-current-crosscheck-signal",
+        })
+
+    component_reports = {
+        "cleaneye": load(Path("cleaneye_foundation_report.json"), {}),
+        "ancf": load(Path("ancf_foundation_report.json"), {}),
+        "artmore": load(Path("artmore_foundation_crosscheck_report.json"), {}),
+        "registry": load(Path("cultural_foundation_registry_report.json"), {}),
+    }
+    component_health = {k: bool(v.get("healthy")) for k,v in component_reports.items()}
+    configured_official = sum(1 for f in foundations if str(f.get("officialRecruitmentUrl") or "").strip())
+    report = {
+        "generatedAt":datetime.now(KST).isoformat(timespec="seconds"),
+        "policy":"official-primary+multi-sensor-gap-detection-v1",
+        "healthy": all(component_health.values()) and not gaps,
+        "registryInstitutions":len(foundations),
+        "officialBoardsConfigured":configured_official,
+        "officialCoverageComplete":configured_official == len(foundations),
+        "componentHealth":component_health,
+        "currentMappedBySource":{s:sum(len(mapped[fid].get(s,[])) for fid in by_fid) for s in datasets},
+        "coverageGapCount":len(gaps),
+        "coverageGaps":gaps[:200],
+        "discoveryOnlyGapCount":len(discovery_gaps),
+        "discoveryOnlyGaps":discovery_gaps[:200],
+        "unmappedStrongSourceRows":{s:len(v) for s,v in unmapped.items()},
+        "institutions":institutions,
+    }
+    REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps({k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentHealth","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}, ensure_ascii=False, indent=2))
+    return 0 if report["healthy"] else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
