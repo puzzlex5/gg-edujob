@@ -17,128 +17,120 @@ _BASE_CANONICAL_URL = base.canonical_url
 def canonical_url_multi(raw):
     if not raw: return ""
     try:
-        p = urlparse(str(raw)); q = parse_qs(p.query, keep_blank_values=True); host = (p.hostname or "").lower()
-        rec = str((q.get("rec_idx") or [""])[0])
+        p=urlparse(str(raw)); q=parse_qs(p.query,keep_blank_values=True); host=(p.hostname or "").lower()
+        rec=str((q.get("rec_idx") or [""])[0])
         if rec.isdigit() and host.endswith("artmore.kr"):
-            return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"rec_idx": rec}), ""))
-        idx = str((q.get("idx") or [""])[0])
+            return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"rec_idx":rec}),""))
+        if host=="job.cleaneye.go.kr" and p.path.endswith("/user/ypCareersData.do"):
+            empyear=str((q.get("empyear") or [""])[0]); entseq=str((q.get("entSeq") or [""])[0]); entid=str((q.get("ypEntId") or [""])[0])
+            if empyear.isdigit() and entseq.isdigit() and entid:
+                return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"empyear":empyear,"entSeq":entseq,"ypEntId":entid}),""))
+        idx=str((q.get("idx") or [""])[0])
         if idx.isdigit() and host.endswith("seekle.or.kr") and p.path.endswith("/sub07/sub01.php"):
-            return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"idx": idx, "ptype": "view"}), ""))
+            return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"idx":idx,"ptype":"view"}),""))
         if idx.isdigit() and host.endswith("boramyc.or.kr") and p.path.endswith("/sub06/sub01.php"):
-            return urlunparse((p.scheme.lower(), p.netloc.lower(), p.path, "", urlencode({"idx": idx, "ptype": "view"}), ""))
+            return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"idx":idx,"ptype":"view"}),""))
     except Exception:
         pass
     return _BASE_CANONICAL_URL(raw)
 
-base.canonical_url = canonical_url_multi
+base.canonical_url=canonical_url_multi
 
 
-def load(path, default=None):
+def load(path,default=None):
     try: return json.loads(Path(path).read_text(encoding="utf-8"))
     except Exception: return default
 
 def rows_from(data):
-    if isinstance(data, list): return data
-    if isinstance(data, dict): return data.get("jobs", [])
+    if isinstance(data,list): return data
+    if isinstance(data,dict): return data.get("jobs",[])
     return []
 
-def project_private_generic(job, source_name):
-    row = base.project_private(job)
-    row["source"] = str(job.get("source") or source_name)
-    row["sourceSurfaceLabel"] = str(job.get("sourceSurfaceLabel") or source_name)
-    if row.get("school") == "레슨인포 구인" and source_name != "레슨인포": row["school"] = source_name + " 구인"
-    explicit_provinces = [str(x) for x in (job.get("provinces") or []) if str(x)]
+def project_private_generic(job,source_name):
+    row=base.project_private(job)
+    row["source"]=str(job.get("source") or source_name)
+    row["sourceSurfaceLabel"]=str(job.get("sourceSurfaceLabel") or source_name)
+    row["sourceRole"]=str(job.get("sourceRole") or "supplemental")
+    if row.get("school")=="레슨인포 구인" and source_name!="레슨인포": row["school"]=source_name+" 구인"
+    explicit_provinces=[str(x) for x in (job.get("provinces") or []) if str(x)]
     if explicit_provinces:
-        row["provinces"] = list(dict.fromkeys(explicit_provinces))
-        if row.get("province") not in row["provinces"]: row["province"] = row["provinces"][0]
-    else: row["provinces"] = [row.get("province")] if row.get("province") else []
-    explicit_regions = [str(x) for x in (job.get("regions") or []) if str(x)]
+        row["provinces"]=list(dict.fromkeys(explicit_provinces))
+        if row.get("province") not in row["provinces"]: row["province"]=row["provinces"][0]
+    else: row["provinces"]=[row.get("province")] if row.get("province") else []
+    explicit_regions=[str(x) for x in (job.get("regions") or []) if str(x)]
     if explicit_regions:
-        row["regions"] = list(dict.fromkeys(explicit_regions)); row["region"] = str(job.get("region") or row["region"] or row["regions"][0])
+        row["regions"]=list(dict.fromkeys(explicit_regions)); row["region"]=str(job.get("region") or row["region"] or row["regions"][0])
 
-    # Lessoninfo culture links are authorized per posting, never per source surface. The independent
-    # cold verifier stores the exact destination it proved. Failed/unverified rows remain searchable
-    # but deliberately expose no URL, so the card renders "원문 링크 점검 중".
-    if source_name == "레슨인포" and str(job.get("sourceSurface") or "") == "culture-arts":
-        row["detailLinkVerified"] = job.get("detailLinkVerified")
-        row["detailLinkReason"] = str(job.get("detailLinkReason") or job.get("detailLinkVerificationReason") or "")
-        row["verifiedAt"] = str(job.get("verifiedAt") or "")
-        row["verifiedUrl"] = str(job.get("verifiedUrl") or "")
-        row["resolvedUrlType"] = str(job.get("resolvedUrlType") or "")
-        row["detailUrl"] = str(job.get("detailUrl") or job.get("unverifiedDetailUrl") or "")
+    if source_name=="클린아이 잡플러스":
+        row["trustLevel"]="공공"
+        row["sourceType"]="공공기관 통합채용"
+        row["sourceRole"]="public-foundation-safety-source"
+        row["sourceSurface"]="cultural-foundation"
+        row["school"]=str(job.get("foundationName") or job.get("organization") or "문화재단")
+        row["schoolLevel"]="문화재단"
+        row["categories"]=["문화예술","공공 문화재단"]
+        row["subject"]="문화예술 · 공공 문화재단"
+        row["foundationRegistryId"]=str(job.get("foundationRegistryId") or "")
+        row["cleaneyeUrl"]=str(job.get("cleaneyeUrl") or row.get("url") or "")
+
+    # Lessoninfo culture is discovery-only for authority/deadlines. It may still expose an
+    # individually verified destination, but it is never treated as proof that foundation
+    # coverage is complete; CleanEye/ArtMore/official-board evidence outranks it.
+    if source_name=="레슨인포" and str(job.get("sourceSurface") or "")=="culture-arts":
+        row["sourceRole"]="discovery-only"
+        row["detailLinkVerified"]=job.get("detailLinkVerified")
+        row["detailLinkReason"]=str(job.get("detailLinkReason") or job.get("detailLinkVerificationReason") or "")
+        row["verifiedAt"]=str(job.get("verifiedAt") or "")
+        row["verifiedUrl"]=str(job.get("verifiedUrl") or "")
+        row["resolvedUrlType"]=str(job.get("resolvedUrlType") or "")
+        row["detailUrl"]=str(job.get("detailUrl") or job.get("unverifiedDetailUrl") or "")
         if lessoninfo_culture_failclosed(job):
-            row["url"] = ""
-            row["originalUrl"] = ""
-            row["detailLinkVerified"] = False
+            row["url"]=""; row["originalUrl"]=""; row["detailLinkVerified"]=False
         else:
-            verified_url = str(job.get("verifiedUrl") or "")
-            row["url"] = verified_url
-            row["originalUrl"] = verified_url
-            row["detailLinkVerified"] = True
+            verified_url=str(job.get("verifiedUrl") or ""); row["url"]=verified_url; row["originalUrl"]=verified_url; row["detailLinkVerified"]=True
 
-    row["searchText"] = base.norm(" ".join(map(str, [row.get("school"), row.get("title"), row.get("subject"), row.get("region"), " ".join(row.get("regions") or []), row.get("province"), " ".join(row.get("provinces") or []), row.get("location"), row.get("source"), row.get("sourceSurfaceLabel"), row.get("type"), " ".join(row.get("categories") or [])])))
+    row["searchText"]=base.norm(" ".join(map(str,[row.get("school"),row.get("title"),row.get("subject"),row.get("region")," ".join(row.get("regions") or []),row.get("province")," ".join(row.get("provinces") or []),row.get("location"),row.get("source"),row.get("sourceSurfaceLabel"),row.get("type")," ".join(row.get("categories") or [])])))
     return row
 
 
 def dedupe_multi_source(rows):
-    """Strong dedupe without silently deleting a stable ID from a different private source.
-
-    Official-vs-private exact URL matches keep the official card and preserve the private identity
-    as an alias, matching the original policy. Same-source duplicate private rows can also collapse.
-    But two *different* private sources sharing an exact URL are both retained until an explicit
-    cross-source alias representation is available; preserving evidence is safer than dropping one
-    source identity and failing completeness.
-    """
-    out=[]
-    seen_id=set()
-    by_url={}
-    exact_url_groups=[]
+    out=[]; seen_id=set(); by_url={}; exact_url_groups=[]
     for row in rows:
         sid=str(row.get("sourceIdentity") or "")
-        if sid and sid in seen_id:
-            continue
-        url=base.canonical_url(row.get("url"))
-        prior_rows=by_url.get(url,[]) if url else []
-
+        if sid and sid in seen_id: continue
+        url=base.canonical_url(row.get("url")); prior_rows=by_url.get(url,[]) if url else []
         official_prior=next((p for p in prior_rows if p.get("feedKind")=="official"),None)
         if official_prior is not None and row.get("feedKind")=="private":
-            official_prior.setdefault("alsoSeenOn",[]).append({
-                "source":row.get("source"),
-                "sourceIdentity":sid,
-                "privateUrl":row.get("originalUrl") or row.get("url"),
-                "evidence":"exact-same-detail-url",
-            })
+            official_prior.setdefault("alsoSeenOn",[]).append({"source":row.get("source"),"sourceIdentity":sid,"privateUrl":row.get("originalUrl") or row.get("url"),"evidence":"exact-same-detail-url"})
             exact_url_groups.append([official_prior.get("sourceIdentity"),sid])
             if sid: seen_id.add(sid)
             continue
-
         same_source_prior=next((p for p in prior_rows if p.get("feedKind")==row.get("feedKind") and p.get("source")==row.get("source")),None)
         if same_source_prior is not None:
             if sid: seen_id.add(sid)
             continue
-
         out.append(row)
         if sid: seen_id.add(sid)
         if url: by_url.setdefault(url,[]).append(row)
-    return out, exact_url_groups
+    return out,exact_url_groups
 
 
 def main():
-    official_data = load("jobs.json", {}); official_jobs = rows_from(official_data)
-    ledger = load("source_id_ledger.json", {"entries": {}}); protected = base.latest_official_ids(ledger)
-    projected_official = [base.project_official(j) for j in official_jobs if base.official_current(j, protected)]
+    official_data=load("jobs.json",{}); official_jobs=rows_from(official_data)
+    ledger=load("source_id_ledger.json",{"entries":{}}); protected=base.latest_official_ids(ledger)
+    projected_official=[base.project_official(j) for j in official_jobs if base.official_current(j,protected)]
     all_private=[]; private_meta={}; canonical_private_total=0; enabled_private_sources=0; degraded_private_sources=[]
     for spec in PRIVATE_SOURCES:
-        pdata=load(spec["jobs"], []); preport=load(spec["report"], {}); dreport=load(spec["detail_report"], {}) if spec.get("detail_report") else None
+        pdata=load(spec["jobs"],[]); preport=load(spec["report"],{}); dreport=load(spec["detail_report"],{}) if spec.get("detail_report") else None
         jobs=rows_from(pdata); projected=[project_private_generic(j,spec["name"]) for j in jobs if base.private_current(j)]
         configured_enabled=publication_enabled(preport); healthy=source_health(spec,preport,dreport); effective_enabled=configured_enabled and healthy
         if effective_enabled:
-            enabled_private_sources += 1; canonical_private_total += len(jobs); all_private.extend(projected)
+            enabled_private_sources+=1; canonical_private_total+=len(jobs); all_private.extend(projected)
         elif configured_enabled and not healthy: degraded_private_sources.append(spec["key"])
         private_meta[spec["key"]]={"name":spec["name"],"configuredPublicationEnabled":configured_enabled,"publicationEnabled":effective_enabled,"degraded":configured_enabled and not healthy,"ok":healthy,"candidateCount":len(projected),"count":len(projected) if effective_enabled else 0,"lastVerifiedAt":(dreport or preport).get("generatedAt") if isinstance((dreport or preport),dict) else None,"missingAfterCount":preport.get("missingAfterCount") if isinstance(preport,dict) else None,"detailErrorCount":(dreport or preport).get("detailErrorCount") if isinstance(preport,dict) else None}
-    remaining_private, explicit_aliases, ambiguous_aliases = base.merge_explicit_official_aliases(projected_official, all_private)
-    rows, exact_url_groups = dedupe_multi_source(projected_official + remaining_private)
-    rows.sort(key=lambda j:(j.get("registered") or "",j.get("applyEnd") or "9999-12-31",j.get("sourceIdentity") or ""), reverse=True)
+    remaining_private,explicit_aliases,ambiguous_aliases=base.merge_explicit_official_aliases(projected_official,all_private)
+    rows,exact_url_groups=dedupe_multi_source(projected_official+remaining_private)
+    rows.sort(key=lambda j:(j.get("registered") or "",j.get("applyEnd") or "9999-12-31",j.get("sourceIdentity") or ""),reverse=True)
     per_feed={"official":0,"private":0}; per_private_source_displayed={spec["key"]:0 for spec in PRIVATE_SOURCES}
     for j in rows:
         kind=j.get("feedKind","official"); per_feed[kind]=per_feed.get(kind,0)+1
@@ -156,4 +148,4 @@ def main():
     Path("unified_search_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report,ensure_ascii=False,indent=2))
 
-if __name__ == "__main__": main()
+if __name__=="__main__": main()
