@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-07T13:08:30+09:00",
+  "generatedAt": "2026-09-07T14:08:20+09:00",
   "status": "healthy",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-07T13:08:30+09:00",
+    "generatedAt": "2026-09-07T14:08:20+09:00",
     "official": {
-      "datasetCount": 18865,
-      "officialIdCount": 17691,
+      "datasetCount": 18880,
+      "officialIdCount": 17705,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7516,
-      "officialDisplayed": 3141,
+      "publishedJobs": 7530,
+      "officialDisplayed": 3155,
       "privateDisplayed": 4375,
       "privateDiscovered": 4386,
       "officialPrivateAliases": 11,
@@ -54,7 +54,7 @@
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10167,
+        "count": 10172,
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -106,7 +106,7 @@
         "latestRegistered": "2026-09-06"
       },
       "구리남양주교육지원청": {
-        "count": 559,
+        "count": 560,
         "latestRegistered": "2026-09-07"
       },
       "군포의왕교육지원청": {
@@ -122,7 +122,7 @@
         "latestRegistered": "2026-09-04"
       },
       "동두천양주교육지원청": {
-        "count": 491,
+        "count": 492,
         "latestRegistered": "2026-09-07"
       },
       "동부교육지원청": {
@@ -134,7 +134,7 @@
         "latestRegistered": "2026-09-04"
       },
       "부천교육지원청": {
-        "count": 713,
+        "count": 714,
         "latestRegistered": "2026-09-07"
       },
       "북부교육지원청": {
@@ -146,7 +146,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1254,
+        "count": 1258,
         "latestRegistered": "2026-09-07"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -206,7 +206,7 @@
         "latestRegistered": "2026-09-07"
       },
       "용인교육지원청": {
-        "count": 132,
+        "count": 133,
         "latestRegistered": "2026-09-07"
       },
       "의정부교육지원청": {
@@ -218,11 +218,11 @@
         "latestRegistered": "2026-09-02"
       },
       "중부교육지원청": {
-        "count": 51,
-        "latestRegistered": "2026-09-01"
+        "count": 52,
+        "latestRegistered": "2026-09-07"
       },
       "파주교육지원청": {
-        "count": 468,
+        "count": 469,
         "latestRegistered": "2026-09-07"
       },
       "평택교육지원청": {
@@ -315,39 +315,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-06T13:08:19+09:00",
+      "baselineAt": "2026-09-06T14:07:44+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18865,
+          "current": 18880,
           "baseline": 18898,
-          "changeRatio": -0.0017
+          "changeRatio": -0.001
         },
         "official.officialIdCount": {
-          "current": 17691,
+          "current": 17705,
           "baseline": 17817,
-          "changeRatio": -0.0071
+          "changeRatio": -0.0063
         },
         "unified.publishedJobs": {
-          "current": 7516,
-          "baseline": 7527,
-          "changeRatio": -0.0015
+          "current": 7530,
+          "baseline": 7526,
+          "changeRatio": 0.0005
         },
         "unified.officialDisplayed": {
-          "current": 3141,
+          "current": 3155,
           "baseline": 3072,
-          "changeRatio": 0.0225
+          "changeRatio": 0.027
         },
         "unified.privateDiscovered": {
           "current": 4386,
-          "baseline": 4467,
-          "changeRatio": -0.0181
+          "baseline": 4466,
+          "changeRatio": -0.0179
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 269,
-          "baseline": 354,
-          "changeRatio": -0.2401
+          "baseline": 353,
+          "changeRatio": -0.238
         },
         "jobteacher": {
           "current": 4036,
