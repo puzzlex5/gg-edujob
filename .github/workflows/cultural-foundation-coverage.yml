@@ -14,6 +14,7 @@ on:
       - 'scripts/crawl_cleaneye_foundation_jobs.py'
       - 'scripts/crawl_ancf_foundation_jobs.py'
       - 'scripts/audit_artmore_foundations.py'
+      - 'scripts/discover_foundation_official_sources.py'
       - '.github/workflows/cultural-foundation-coverage.yml'
 
 permissions:
@@ -26,7 +27,7 @@ concurrency:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
         with:
@@ -48,11 +49,13 @@ jobs:
         run: python scripts/crawl_ancf_foundation_jobs.py
       - name: Audit ArtMore against foundation registry
         run: python scripts/audit_artmore_foundations.py
+      - name: Discover verified official source candidates
+        run: python scripts/discover_foundation_official_sources.py
       - name: Commit audit datasets and reports
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json
+          git add cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json foundation_official_source_candidates.json foundation_official_source_discovery_report.json
           if ! git diff --cached --quiet; then
             git commit -m 'Audit cultural foundation source surfaces'
             for i in 1 2 3; do
