@@ -1,0 +1,178 @@
+{
+  "generatedAt": "2026-09-08 08:15:43 KST",
+  "policy": "Rejected reconciliation diagnostics are isolated from canonical published proof files; candidate stable-ID deltas are retained for audit.",
+  "candidateAvailable": true,
+  "canonicalScanId": "20260907T214221Z-34164053550-1",
+  "candidateScanId": "20260907T224107Z-34167469475-1",
+  "canonicalOfficialIdCount": 17576,
+  "candidateOfficialIdCount": 17577,
+  "removedSinceCanonical": [],
+  "addedSinceCanonical": [
+    {
+      "sourceIdentity": "seoul-central:109864",
+      "source": "서울교육일자리포털",
+      "province": "서울",
+      "title": "(강신초)5학년 영어 교과 (9.9~10)",
+      "registered": "2026/09/08",
+      "firstSeen": "2026-09-08 07:47:12 KST",
+      "lastSeen": "2026-09-08 07:47:12 KST"
+    }
+  ],
+  "deltaConsistent": true,
+  "symmetricDifferenceCount": 1,
+  "candidate": {
+    "reconciliation": {
+      "generatedAt": "2026-09-08 07:47:12 KST",
+      "lookbackDays": 90,
+      "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+      "officialIdCount": 17577,
+      "datasetIdCountBefore": 18776,
+      "missingBefore": 1,
+      "recoveredNow": 1,
+      "missingAfter": 0,
+      "reconciledSources": 38,
+      "totalSources": 38,
+      "reconciledOffices": 38,
+      "totalOffices": 38,
+      "scanId": "20260907T224107Z-34167469475-1"
+    },
+    "centralPagination": {
+      "scanId": "20260907T224107Z-34167469475-1",
+      "generatedAt": "2026-09-08 08:11:31 KST",
+      "complete": true,
+      "sources": [
+        {
+          "name": "경기도교육청 통합 구인구직",
+          "province": "경기",
+          "stableIdCount": 621,
+          "complete": true,
+          "categories": [
+            {
+              "code": "A",
+              "name": "기간제/사립교원",
+              "pagesScanned": 5,
+              "rawRows": 190,
+              "stableIdCount": 189,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "B",
+              "name": "초중등시간강사",
+              "pagesScanned": 8,
+              "rawRows": 303,
+              "stableIdCount": 302,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "C",
+              "name": "교육공무직원",
+              "pagesScanned": 3,
+              "rawRows": 58,
+              "stableIdCount": 57,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "D",
+              "name": "사립학교 교원정규채용",
+              "pagesScanned": 2,
+              "rawRows": 13,
+              "stableIdCount": 12,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "E",
+              "name": "사립학교 사무직정규채용",
+              "pagesScanned": 2,
+              "rawRows": 4,
+              "stableIdCount": 3,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            },
+            {
+              "code": "F",
+              "name": "자원봉사자",
+              "pagesScanned": 3,
+              "rawRows": 59,
+              "stableIdCount": 58,
+              "terminalEvidence": "explicit-empty-state",
+              "accessError": false,
+              "parseError": false,
+              "partialParseRows": 0,
+              "parseErrorSample": "",
+              "paginationRepeated": false,
+              "capHit": false,
+              "complete": true
+            }
+          ]
+        },
+        {
+          "name": "서울교육일자리포털",
+          "province": "서울",
+          "stableIdCount": 330,
+          "pagesScanned": 8,
+          "rawRows": 330,
+          "terminalEvidence": "empty-page",
+          "accessError": false,
+          "parseError": false,
+          "partialParseCards": 0,
+          "parseErrorSample": "",
+          "paginationRepeated": false,
+          "capHit": false,
+          "complete": true
+        }
+      ]
+    },
+    "gyeonggiCentral90d": {
+      "generatedAt": "2026-09-08 07:47:12 KST",
+      "stableIdCount": 10054,
+      "complete": true
+    },
+    "finalRestore": {
+      "checkedAt": "2026-09-08 08:12:37 KST",
+      "ledgerScanId": "20260907T224107Z-34167469475-1",
+      "protectedOfficialIds": 17577,
+      "missingBefore": 0,
+      "recoveredNow": 0,
+      "missingAfter": 0
+    },
+    "sourceIdLedger": {
+      "scanId": "20260907T224107Z-34167469475-1",
+      "generatedAt": "2026-09-08 07:47:12 KST",
+      "officialIdCount": 17577
+    }
+  }
+}
