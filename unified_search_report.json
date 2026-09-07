@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-09-07T16:53:12+09:00",
+  "generatedAt": "2026-09-07T16:54:02+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 18957,
-  "canonicalPrivateJobs": 4396,
+  "canonicalPrivateJobs": 4127,
   "selectedOfficialJobs": 3231,
-  "selectedPrivateJobs": 4386,
-  "publishedJobs": 7606,
+  "selectedPrivateJobs": 4117,
+  "publishedJobs": 7348,
   "perFeed": {
     "official": 3231,
-    "private": 4375
+    "private": 4117
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": true,
-      "degraded": false,
-      "ok": true,
-      "candidateCount": 269,
-      "count": 269,
-      "lastVerifiedAt": "2026-09-07T15:59:28+09:00",
+      "publicationEnabled": false,
+      "degraded": true,
+      "ok": false,
+      "candidateCount": 271,
+      "count": 0,
+      "lastVerifiedAt": "2026-09-07T16:53:11+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 258
+      "displayedAsPrivate": 0
     },
     "jobteacher": {
       "name": "잡티처",
@@ -91,10 +91,12 @@
     }
   },
   "protectedOfficialIds": 17745,
-  "explicitOfficialAliasGroupsMerged": 11,
+  "explicitOfficialAliasGroupsMerged": 0,
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
-  "degradedPrivateSources": [],
-  "allPublicationEnabledSourcesHealthy": true
+  "degradedPrivateSources": [
+    "lessoninfo"
+  ],
+  "allPublicationEnabledSourcesHealthy": false
 }
