@@ -1,0 +1,115 @@
+name: Verify Lessoninfo culture links cold
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Lessoninfo recruitment jobs"]
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/verify_lessoninfo_culture_cold.py'
+      - '.github/workflows/lessoninfo-culture-cold-verify.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metro-edujob-lessoninfo-culture-cold
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install cold-verifier dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements.txt playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Syntax check
+        run: python -m py_compile scripts/verify_lessoninfo_culture_cold.py
+
+      - name: Verify every current culture link from a cold browser
+        env:
+          LESSONINFO_CULTURE_COLD_CONCURRENCY: '4'
+          LESSONINFO_CULTURE_COLD_TIMEOUT_MS: '18000'
+        run: python scripts/verify_lessoninfo_culture_cold.py
+
+      - name: Enforce per-post verification contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('lessoninfo_culture_link_report.json').read_text(encoding='utf-8'))
+          if report.get('policy') != 'lessoninfo-culture-cold-link-v2':
+              raise SystemExit('wrong cold-link policy')
+          if not report.get('healthy') or int(report.get('verificationMissingCount') or 0) != 0:
+              raise SystemExit('cold-link verification coverage is incomplete')
+
+          data = json.loads(Path('lessoninfo_jobs.json').read_text(encoding='utf-8'))
+          jobs = data if isinstance(data, list) else (data.get('jobs') or [])
+          culture = [j for j in jobs if j.get('sourceSurface') == 'culture-arts']
+          missing = [j.get('sourceIdentity') for j in culture if j.get('detailLinkVerified') not in {True, False}]
+          if missing:
+              raise SystemExit(f'culture rows without explicit verification result: {missing[:20]}')
+
+          bad_true = []
+          bad_false = []
+          for j in culture:
+              if j.get('detailLinkVerified') is True:
+                  verified = str(j.get('verifiedUrl') or '')
+                  if not verified or str(j.get('url') or '') != verified or str(j.get('originalUrl') or '') != verified:
+                      bad_true.append(j.get('sourceIdentity'))
+              else:
+                  if j.get('url') or j.get('originalUrl') or j.get('verifiedUrl'):
+                      bad_false.append(j.get('sourceIdentity'))
+          if bad_true:
+              raise SystemExit(f'verified culture rows without exact verified URL projection: {bad_true[:20]}')
+          if bad_false:
+              raise SystemExit(f'unverified culture rows expose URLs: {bad_false[:20]}')
+
+          sentinel = next((j for j in culture if j.get('sourceIdentity') == 'culture:id:94673'), None)
+          if sentinel and (sentinel.get('detailLinkVerified') is not False or sentinel.get('url') or sentinel.get('originalUrl')):
+              raise SystemExit('known-bad culture:id:94673 escaped cold fail-close')
+
+          print(json.dumps({
+              'culture': len(culture),
+              'verified': sum(1 for j in culture if j.get('detailLinkVerified') is True),
+              'pending': sum(1 for j in culture if j.get('detailLinkVerified') is False),
+              'official': report.get('verifiedOfficialRows'),
+              'lessoninfo': report.get('verifiedLessoninfoRows'),
+              'expiredRemoved': report.get('expiredCultureRemoved'),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit verified culture-link state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add lessoninfo_jobs.json lessoninfo_culture_link_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Verify Lessoninfo culture links in cold browsers'
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              sleep $((i*5))
+            done
+          fi
