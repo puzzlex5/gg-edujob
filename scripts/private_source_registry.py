@@ -19,6 +19,14 @@ PRIVATE_SOURCES = (
         ),
     },
     {
+        "key": "culturefoundations",
+        "name": "문화재단 공식채용",
+        "jobs": "cultural_foundation_jobs.json",
+        "report": "cultural_foundation_source_report.json",
+        "detail_report": None,
+        "detail_url_patterns": (),
+    },
+    {
         "key": "jobteacher",
         "name": "잡티처",
         "jobs": "jobteacher_jobs.json",
@@ -74,14 +82,7 @@ def lessoninfo_culture_failclosed(row) -> bool:
     )
 
 def _lessoninfo_exact_link_coverage(spec) -> bool:
-    """Require exact per-post evidence for every current Lessoninfo row.
-
-    Afterschool/nulbom rows must expose their exact Lessoninfo route. Culture rows may remain
-    non-clickable, but they must have an explicit failed cold-verification result. A verified
-    culture row must retain its exact Lessoninfo detail identity in ``detailUrl`` and a non-empty
-    ``verifiedUrl`` for the destination actually exposed to users (official original when proven,
-    otherwise the cold-safe Lessoninfo detail URL).
-    """
+    """Require exact per-post evidence for every current Lessoninfo row."""
     try:
         data = json.loads(Path(spec["jobs"]).read_text(encoding="utf-8"))
         rows = data if isinstance(data, list) else data.get("jobs", [])
@@ -104,7 +105,6 @@ def _lessoninfo_exact_link_coverage(spec) -> bool:
                 if str(row.get("url") or "") != str(verified) or str(row.get("originalUrl") or "") != str(verified):
                     return False
                 continue
-
             url = row.get("detailUrl") or row.get("originalUrl") or row.get("openUrl") or row.get("url") or ""
             if not detail_url_is_specific(spec, url):
                 return False
