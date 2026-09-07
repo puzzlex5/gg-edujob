@@ -410,6 +410,11 @@
       "method": "POST",
       "url": "https://job.cleaneye.go.kr/user/selectEntNameList.do",
       "postData": "searchKeyword=%EC%84%9C%EC%9A%B8%EB%AC%B8%ED%99%94%EC%9E%AC%EB%8B%A8&pageIndex=1"
+    },
+    {
+      "method": "POST",
+      "url": "https://job.cleaneye.go.kr/user/selectYpRecruitment.do",
+      "postData": "yearincome=&status=&pubDate=&pubEndDate=&entName=%EC%84%9C%EC%9A%B8%EB%AC%B8%ED%99%94%EC%9E%AC%EB%8B%A8&pageIndex=1"
     }
   ],
   "responses": [
@@ -435,7 +440,7 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/js/cleaniCommon.js"
+      "url": "https://job.cleaneye.go.kr/images/search.png"
     },
     {
       "status": 200,
@@ -443,15 +448,23 @@
     },
     {
       "status": 200,
+      "url": "https://job.cleaneye.go.kr/SBUx/js/locale/SBUxMessage_ko.js"
+    },
+    {
+      "status": 200,
+      "url": "https://job.cleaneye.go.kr/SBUx/js/locale/SBUxDefault.js"
+    },
+    {
+      "status": 200,
       "url": "https://job.cleaneye.go.kr/SBUx/css/default/SBUx.min.css"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/css/SBUxCustom.css"
+      "url": "https://job.cleaneye.go.kr/js/cleaniCommon.js"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/css/SBGrid.css"
+      "url": "https://job.cleaneye.go.kr/SBUx/css/SBUxCustom.css"
     },
     {
       "status": 200,
@@ -460,6 +473,10 @@
     {
       "status": 200,
       "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/css/plugins/poshytip-1.2/tip-yellowsimple/tip-yellowsimple.css"
+    },
+    {
+      "status": 200,
+      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/css/SBGrid.css"
     },
     {
       "status": 200,
@@ -479,19 +496,7 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/locale/SBUxMessage_ko.js"
-    },
-    {
-      "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/locale/SBUxDefault.js"
-    },
-    {
-      "status": 200,
       "url": "https://job.cleaneye.go.kr/SBUx/js/locale/angular-locale_ko.js"
-    },
-    {
-      "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/locale/SBGridDefault.js"
     },
     {
       "status": 200,
@@ -499,11 +504,11 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/ds/hashtable.js"
+      "url": "https://job.cleaneye.go.kr/SBUx/js/locale/SBGridDefault.js"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/ds/hashset.js"
+      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/ds/hashtable.js"
     },
     {
       "status": 200,
@@ -515,6 +520,10 @@
     },
     {
       "status": 200,
+      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/ds/hashset.js"
+    },
+    {
+      "status": 200,
       "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/jquery-1.11.3.min.js"
     },
     {
@@ -523,15 +532,11 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/vkthread.js"
-    },
-    {
-      "status": 200,
       "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/ds/SBStack.js"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/search.png"
+      "url": "https://job.cleaneye.go.kr/SBUx/js/sbgrid/2_5/SBGrid/js/lib/vkthread.js"
     },
     {
       "status": 200,
@@ -539,11 +544,11 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/SBUx/js/SBUxCtrl.js"
+      "url": "https://job.cleaneye.go.kr/images/m_menu_icon_01.png"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/m_menu_icon_01.png"
+      "url": "https://job.cleaneye.go.kr/SBUx/js/SBUxCtrl.js"
     },
     {
       "status": 200,
@@ -576,10 +581,6 @@
     {
       "status": 200,
       "url": "https://job.cleaneye.go.kr/images/footer/f_banner3.jpg"
-    },
-    {
-      "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/footer/f_banner4_1.jpg"
     },
     {
       "status": 200,
@@ -651,6 +652,10 @@
     },
     {
       "status": 200,
+      "url": "https://job.cleaneye.go.kr/images/footer/f_banner4_1.jpg"
+    },
+    {
+      "status": 200,
       "url": "https://job.cleaneye.go.kr/images/footer/f_banner5.jpg"
     },
     {
@@ -659,11 +664,11 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/logo_mois.png"
+      "url": "https://job.cleaneye.go.kr/images/footer/f_banner7.jpg"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/logo_klid.png"
+      "url": "https://job.cleaneye.go.kr/images/logo_mois.png"
     },
     {
       "status": 200,
@@ -671,7 +676,11 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/footer/f_banner7.jpg"
+      "url": "https://job.cleaneye.go.kr/images/right_line.png"
+    },
+    {
+      "status": 200,
+      "url": "https://job.cleaneye.go.kr/images/square.png"
     },
     {
       "status": 200,
@@ -679,15 +688,19 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/right_line.png"
-    },
-    {
-      "status": 200,
       "url": "https://job.cleaneye.go.kr/images/sub_bar_03.png"
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/square.png"
+      "url": "https://job.cleaneye.go.kr/images/logo_klid.png"
+    },
+    {
+      "status": 200,
+      "url": "https://job.cleaneye.go.kr/css/font/NotoSansKR-Medium.woff"
+    },
+    {
+      "status": 200,
+      "url": "https://job.cleaneye.go.kr/css/font/NotoSansKR-Bold.woff"
     },
     {
       "status": 200,
@@ -699,11 +712,7 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/css/font/NotoSansKR-Bold.woff"
-    },
-    {
-      "status": 200,
-      "url": "https://job.cleaneye.go.kr/css/font/NotoSansKR-Medium.woff"
+      "url": "https://job.cleaneye.go.kr/images/detail_open.png"
     },
     {
       "status": 200,
@@ -711,7 +720,7 @@
     },
     {
       "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/detail_open.png"
+      "url": "https://job.cleaneye.go.kr/images/detail_close.png"
     },
     {
       "status": 200,
@@ -720,10 +729,6 @@
     {
       "status": 200,
       "url": "https://job.cleaneye.go.kr/images/circle_menu.png"
-    },
-    {
-      "status": 200,
-      "url": "https://job.cleaneye.go.kr/images/detail_close.png"
     },
     {
       "status": 200,
@@ -740,22 +745,16 @@
     {
       "status": 200,
       "url": "https://job.cleaneye.go.kr/user/selectEntNameList.do"
+    },
+    {
+      "status": 200,
+      "url": "https://job.cleaneye.go.kr/user/selectYpRecruitment.do"
     }
   ],
   "matches": [
     {
-      "tag": "TR",
-      "id": "",
-      "cls": "",
       "text": "문화·복지·관광서울문화재단서울특별시 동대문구 청계천로 517",
       "html": "<tr><td headers=\"xxx\">문화·복지·관광</td><td headers=\"yyy\" class=\"txLeft\"><a href=\"javascript:void(0);\">서울문화재단</a></td><td headers=\"zzz\" class=\"txLeft\">서울특별시 동대문구 청계천로 517</td></tr>"
-    },
-    {
-      "tag": "A",
-      "id": "",
-      "cls": "",
-      "text": "서울문화재단",
-      "html": "<a href=\"javascript:void(0);\">서울문화재단</a>"
     }
   ],
   "inputs": [
@@ -768,8 +767,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -780,8 +778,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -792,8 +789,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -804,8 +800,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -816,8 +811,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -828,8 +822,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -840,8 +833,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -852,8 +844,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -864,8 +855,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -876,8 +866,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -888,8 +877,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -900,8 +888,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -912,8 +899,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -924,8 +910,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -936,8 +921,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -948,8 +932,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -960,8 +943,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -972,8 +954,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -984,8 +965,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -996,8 +976,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1008,8 +987,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1020,8 +998,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1032,8 +1009,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1044,8 +1020,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1056,8 +1031,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1068,8 +1042,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1080,8 +1053,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1092,8 +1064,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1104,8 +1075,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1116,8 +1086,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1128,8 +1097,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1140,8 +1108,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1152,8 +1119,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1164,8 +1130,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1176,8 +1141,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1188,8 +1152,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1200,8 +1163,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1212,8 +1174,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1224,8 +1185,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1236,8 +1196,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1248,8 +1207,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1260,8 +1218,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1272,8 +1229,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1284,8 +1240,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1296,8 +1251,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1308,8 +1262,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1320,8 +1273,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1332,8 +1284,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1344,8 +1295,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1356,8 +1306,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1368,8 +1317,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1380,8 +1328,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1392,8 +1339,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1404,8 +1350,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "SELECT",
@@ -1416,8 +1361,7 @@
       "text": "전체 모집예정 모집중 모집마감",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1428,8 +1372,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1440,8 +1383,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1452,8 +1394,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1464,8 +1405,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1476,8 +1416,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1488,8 +1427,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1500,8 +1438,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1512,8 +1449,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1524,8 +1460,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1536,8 +1471,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1548,8 +1482,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1560,8 +1493,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1572,8 +1504,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1584,8 +1515,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1596,8 +1526,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1608,8 +1537,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1620,8 +1548,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1632,8 +1559,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1644,8 +1570,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1656,8 +1581,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1668,8 +1592,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1680,8 +1603,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "SELECT",
@@ -1692,8 +1614,7 @@
       "text": "전체1200만원 이하1200만원 이상1400만원 이상1600만원 이상1800만원 이상2000만원 이상2200만원 이상2600만원 이상2800만원 이상3000만원 이상3200만원 이상3400만원 이상3600만원 이상3800만원 이상4000만원 이상5000만원 이상6000만원 이상7000만원 이상8000만원 이상9000만원 이상1억원 이상무급",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1704,8 +1625,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1716,20 +1636,18 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
       "id": "entName",
       "name": "entName",
       "type": "text",
-      "value": "",
+      "value": "서울문화재단",
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1740,8 +1658,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1752,8 +1669,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1764,8 +1680,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1776,8 +1691,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1788,8 +1702,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1800,8 +1713,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1812,8 +1724,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1824,8 +1735,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1836,8 +1746,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1848,8 +1757,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1860,8 +1768,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1872,8 +1779,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1884,8 +1790,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1896,8 +1801,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1908,8 +1812,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1920,8 +1823,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1932,8 +1834,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1944,8 +1845,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1956,8 +1856,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1968,8 +1867,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1980,8 +1878,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -1992,8 +1889,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -2004,8 +1900,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -2016,8 +1911,117 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2026년 제2차 직원(정규직) 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2026년 제2차 직원(기간제계약직) 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2026년 제1차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2025년 제3차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2025년 제2차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2025년 제1차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2024년 제3차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2024년 제2차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2024년 제1차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "name": "",
+      "type": "",
+      "value": "",
+      "text": "서울문화재단 2023년 제3차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": "",
+      "checked": false
     },
     {
       "tag": "SELECT",
@@ -2028,8 +2032,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -2040,8 +2043,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "BUTTON",
@@ -2052,8 +2054,7 @@
       "text": "검색",
       "href": "",
       "onclick": "onSearchEntName('1')",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "A",
@@ -2064,8 +2065,7 @@
       "text": "서울문화재단",
       "href": "javascript:void(0);",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "BUTTON",
@@ -2076,13 +2076,7 @@
       "text": "선택",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": [
-        [
-          "data-ng-model",
-          "selectEntNameBtn"
-        ]
-      ]
+      "checked": false
     },
     {
       "tag": "BUTTON",
@@ -2093,13 +2087,7 @@
       "text": "닫기",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": [
-        [
-          "data-ng-model",
-          "closeEntNameBtn"
-        ]
-      ]
+      "checked": false
     },
     {
       "tag": "A",
@@ -2110,8 +2098,7 @@
       "text": "이메일 무단수집거부",
       "href": "javascript:emailNotice();",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "A",
@@ -2122,8 +2109,7 @@
       "text": "사이트맵",
       "href": "javascript:sitemapNotice();",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "INPUT",
@@ -2134,8 +2120,7 @@
       "text": "",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "BUTTON",
@@ -2146,13 +2131,7 @@
       "text": "닫기",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": [
-        [
-          "data-dismiss",
-          "modal"
-        ]
-      ]
+      "checked": false
     },
     {
       "tag": "A",
@@ -2163,8 +2142,7 @@
       "text": "기관정보",
       "href": "javascript:void(0);",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "A",
@@ -2175,8 +2153,7 @@
       "text": "저작권 정책",
       "href": "https://job.cleaneye.go.kr/siteGuide/ypCopyrightPolicy.do",
       "onclick": "",
-      "checked": false,
-      "data": []
+      "checked": false
     },
     {
       "tag": "BUTTON",
@@ -2187,21 +2164,2145 @@
       "text": "닫기",
       "href": "",
       "onclick": "",
-      "checked": false,
-      "data": [
-        [
-          "data-dismiss",
-          "modal"
-        ]
-      ]
+      "checked": false
     }
   ],
   "functions": {
     "onSearchEntName": "function",
+    "likelySearchFunctions": [
+      "onSearch",
+      "onSearchEntName"
+    ],
     "searchEntNameBtn": true,
     "searchKeyword": true
   },
+  "selected": {
+    "entName": "서울문화재단",
+    "entNameText": "<input id=\"entName\" name=\"entName\" korean-name=\"기관명\" type=\"text\">",
+    "searchForm": "<form id=\"searchForm\" name=\"searchForm\" class=\"ng-pristine ng-valid\">\n\t\t\t\t<div class=\"content_box\">\n\t\t\t\t\t<div class=\"section\">\n\t\t\t\t\t\t<div class=\"content_row\">\n\t\t\t\t\t\t\t<div id=\"entRecruit_article\" class=\"article\">모집분야<button title=\"모집분야 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button><button title=\"모집분야 항목 전체 선택\" class=\"all_btn\">전체</button></div>\n\t\t\t\t\t\t\t<div id=\"entRecruit_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">사업관리<label for=\"entRecruit_700001\"></label><input id=\"entRecruit_700001\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"사업관리\" type=\"checkbox\" tabindex=\"-1\" value=\"700001\"></button><button title=\"선택\">경영·회계·사무<label for=\"entRecruit_700002\"></label><input id=\"entRecruit_700002\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"경영·회계·사무\" type=\"checkbox\" tabindex=\"-1\" value=\"700002\"></button><button title=\"선택\">경비·청소<label for=\"entRecruit_700011\"></label><input id=\"entRecruit_700011\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"경비·청소\" type=\"checkbox\" tabindex=\"-1\" value=\"700011\"></button><button title=\"선택\">이용·숙박·여행·오락·스포츠<label for=\"entRecruit_700012\"></label><input id=\"entRecruit_700012\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"이용·숙박·여행·오락·스포츠\" type=\"checkbox\" tabindex=\"-1\" value=\"700012\"></button><button title=\"선택\">음식서비스<label for=\"entRecruit_700013\"></label><input id=\"entRecruit_700013\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"음식서비스\" type=\"checkbox\" tabindex=\"-1\" value=\"700013\"></button><button title=\"선택\" style=\"display: none;\">건설<label for=\"entRecruit_700014\"></label><input id=\"entRecruit_700014\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"건설\" type=\"checkbox\" tabindex=\"-1\" value=\"700014\"></button><button title=\"선택\" style=\"display: none;\">기계<label for=\"entRecruit_700015\"></label><input id=\"entRecruit_700015\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"기계\" type=\"checkbox\" tabindex=\"-1\" value=\"700015\"></button><button title=\"선택\" style=\"display: none;\">재료<label for=\"entRecruit_700016\"></label><input id=\"entRecruit_700016\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"재료\" type=\"checkbox\" tabindex=\"-1\" value=\"700016\"></button><button title=\"선택\" style=\"display: none;\">화학<label for=\"entRecruit_700017\"></label><input id=\"entRecruit_700017\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"화학\" type=\"checkbox\" tabindex=\"-1\" value=\"700017\"></button><button title=\"선택\" style=\"display: none;\">섬유·의복<label for=\"entRecruit_700018\"></label><input id=\"entRecruit_700018\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"섬유·의복\" type=\"checkbox\" tabindex=\"-1\" value=\"700018\"></button><button title=\"선택\" style=\"display: none;\">전기·전자<label for=\"entRecruit_700019\"></label><input id=\"entRecruit_700019\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"전기·전자\" type=\"checkbox\" tabindex=\"-1\" value=\"700019\"></button><button title=\"선택\" style=\"display: none;\">정보통신<label for=\"entRecruit_700020\"></label><input id=\"entRecruit_700020\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"정보통신\" type=\"checkbox\" tabindex=\"-1\" value=\"700020\"></button><button title=\"선택\" style=\"display: none;\">금융·보험<label for=\"entRecruit_700003\"></label><input id=\"entRecruit_700003\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"금융·보험\" type=\"checkbox\" tabindex=\"-1\" value=\"700003\"></button><button title=\"선택\" style=\"display: none;\">식품가공<label for=\"entRecruit_700021\"></label><input id=\"entRecruit_700021\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"식품가공\" type=\"checkbox\" tabindex=\"-1\" value=\"700021\"></button><button title=\"선택\" style=\"display: none;\">인쇄·목재·가구·공예<label for=\"entRecruit_700022\"></label><input id=\"entRecruit_700022\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"인쇄·목재·가구·공예\" type=\"checkbox\" tabindex=\"-1\" value=\"700022\"></button><button title=\"선택\" style=\"display: none;\">환경·에너지·안전<label for=\"entRecruit_700023\"></label><input id=\"entRecruit_700023\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"환경·에너지·안전\" type=\"checkbox\" tabindex=\"-1\" value=\"700023\"></button><button title=\"선택\" style=\"display: none;\">농림어업<label for=\"entRecruit_700024\"></label><input id=\"entRecruit_700024\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"농림어업\" type=\"checkbox\" tabindex=\"-1\" value=\"700024\"></button><button title=\"선택\" style=\"display: none;\">연구<label for=\"entRecruit_700025\"></label><input id=\"entRecruit_700025\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"연구\" type=\"checkbox\" tabindex=\"-1\" value=\"700025\"></button><button title=\"선택\" style=\"display: none;\">기타<label for=\"entRecruit_700026\"></label><input id=\"entRecruit_700026\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"기타\" type=\"checkbox\" tabindex=\"-1\" value=\"700026\"></button><button title=\"선택\" style=\"display: none;\">교육·자연·사회과학<label for=\"entRecruit_700004\"></label><input id=\"entRecruit_700004\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"교육·자연·사회과학\" type=\"checkbox\" tabindex=\"-1\" value=\"700004\"></button><button title=\"선택\" style=\"display: none;\">법률·경찰·소방·교도·국방<label for=\"entRecruit_700005\"></label><input id=\"entRecruit_700005\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"법률·경찰·소방·교도·국방\" type=\"checkbox\" tabindex=\"-1\" value=\"700005\"></button><button title=\"선택\" style=\"display: none;\">보건·의료<label for=\"entRecruit_700006\"></label><input id=\"entRecruit_700006\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"보건·의료\" type=\"checkbox\" tabindex=\"-1\" value=\"700006\"></button><button title=\"선택\" style=\"display: none;\">사회복지·종교<label for=\"entRecruit_700007\"></label><input id=\"entRecruit_700007\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"사회복지·종교\" type=\"checkbox\" tabindex=\"-1\" value=\"700007\"></button><button title=\"선택\" style=\"display: none;\">문화·예술·디자인·방송<label for=\"entRecruit_700008\"></label><input id=\"entRecruit_700008\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"문화·예술·디자인·방송\" type=\"checkbox\" tabindex=\"-1\" value=\"700008\"></button><button title=\"선택\" style=\"display: none;\">운전·운송<label for=\"entRecruit_700009\"></label><input id=\"entRecruit_700009\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"운전·운송\" type=\"checkbox\" tabindex=\"-1\" value=\"700009\"></button><button title=\"선택\" style=\"display: none;\">영업판매<label for=\"entRecruit_700010\"></label><input id=\"entRecruit_700010\" name=\"entRecruit\" korean-name=\"모집분야\" korean-value=\"영업판매\" type=\"checkbox\" tabindex=\"-1\" value=\"700010\"></button><button title=\"항목 더보기\" class=\"plus\">26개</button></div>\n\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"localYn_article\" class=\"article\">지역제한<button title=\"지역제한 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"localYn_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">없음<label for=\"localYn_N\"></label><input id=\"localYn_N\" name=\"localYn\" korean-name=\"지역제한\" korean-value=\"없음\" type=\"checkbox\" tabindex=\"-1\" value=\"N\"></button><button title=\"선택\">있음<label for=\"localYn_Y\"></label><input id=\"localYn_Y\" name=\"localYn\" korean-name=\"지역제한\" korean-value=\"있음\" type=\"checkbox\" tabindex=\"-1\" value=\"Y\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"specialItem_article\" class=\"article\">우대사항<button title=\"우대사항 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"specialItem_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">없음<label for=\"specialItem_701001\"></label><input id=\"specialItem_701001\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"없음\" type=\"checkbox\" tabindex=\"-1\" value=\"701001\"></button><button title=\"선택\">국가유공자<label for=\"specialItem_701002\"></label><input id=\"specialItem_701002\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"국가유공자\" type=\"checkbox\" tabindex=\"-1\" value=\"701002\"></button><button title=\"선택\">청년<label for=\"specialItem_701003\"></label><input id=\"specialItem_701003\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"청년\" type=\"checkbox\" tabindex=\"-1\" value=\"701003\"></button><button title=\"선택\">경력자<label for=\"specialItem_701004\"></label><input id=\"specialItem_701004\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"경력자\" type=\"checkbox\" tabindex=\"-1\" value=\"701004\"></button><button title=\"선택\">지역인재<label for=\"specialItem_701005\"></label><input id=\"specialItem_701005\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"지역인재\" type=\"checkbox\" tabindex=\"-1\" value=\"701005\"></button><button title=\"선택\">장애인<label for=\"specialItem_701006\"></label><input id=\"specialItem_701006\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"장애인\" type=\"checkbox\" tabindex=\"-1\" value=\"701006\"></button><button title=\"선택\">외국어<label for=\"specialItem_701007\"></label><input id=\"specialItem_701007\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"외국어\" type=\"checkbox\" tabindex=\"-1\" value=\"701007\"></button><button title=\"선택\">고졸<label for=\"specialItem_701008\"></label><input id=\"specialItem_701008\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"고졸\" type=\"checkbox\" tabindex=\"-1\" value=\"701008\"></button><button title=\"선택\">자격증<label for=\"specialItem_701009\"></label><input id=\"specialItem_701009\" name=\"specialItem\" korean-name=\"우대사항\" korean-value=\"자격증\" type=\"checkbox\" tabindex=\"-1\" value=\"701009\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row\">\n\t\t\t\t\t\t\t<div id=\"jobType_article\" class=\"article\">고용형태<button title=\"고용형태 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"jobType_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">일반정규직<label for=\"jobType_702001\"></label><input id=\"jobType_702001\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"일반정규직\" type=\"checkbox\" tabindex=\"-1\" value=\"702001\"></button><button title=\"선택\">무기계약직<label for=\"jobType_702002\"></label><input id=\"jobType_702002\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"무기계약직\" type=\"checkbox\" tabindex=\"-1\" value=\"702002\"></button><button title=\"선택\">기간제<label for=\"jobType_702003\"></label><input id=\"jobType_702003\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"기간제\" type=\"checkbox\" tabindex=\"-1\" value=\"702003\"></button><button title=\"선택\">전문계약직<label for=\"jobType_702004\"></label><input id=\"jobType_702004\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"전문계약직\" type=\"checkbox\" tabindex=\"-1\" value=\"702004\"></button><button title=\"선택\">인턴<label for=\"jobType_702005\"></label><input id=\"jobType_702005\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"인턴\" type=\"checkbox\" tabindex=\"-1\" value=\"702005\"></button><button title=\"선택\">일반계약직<label for=\"jobType_702006\"></label><input id=\"jobType_702006\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"일반계약직\" type=\"checkbox\" tabindex=\"-1\" value=\"702006\"></button><button title=\"선택\">비상임<label for=\"jobType_702007\"></label><input id=\"jobType_702007\" name=\"jobType\" korean-name=\"고용형태\" korean-value=\"비상임\" type=\"checkbox\" tabindex=\"-1\" value=\"702007\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"employGb_article\" class=\"article\">채용구분<button title=\"채용구분 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"employGb_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">신입<label for=\"employGb_703001\"></label><input id=\"employGb_703001\" name=\"employGb\" korean-name=\"채용구분\" korean-value=\"신입\" type=\"checkbox\" tabindex=\"-1\" value=\"703001\"></button><button title=\"선택\">경력<label for=\"employGb_703002\"></label><input id=\"employGb_703002\" name=\"employGb\" korean-name=\"채용구분\" korean-value=\"경력\" type=\"checkbox\" tabindex=\"-1\" value=\"703002\"></button><button title=\"선택\">신입+경력<label for=\"employGb_703003\"></label><input id=\"employGb_703003\" name=\"employGb\" korean-name=\"채용구분\" korean-value=\"신입+경력\" type=\"checkbox\" tabindex=\"-1\" value=\"703003\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t  <div class=\"content_row_inner\">\n\t\t\t\t\t\t\t<div id=\"pubDate_article\" class=\"article\">접수시작일<button title=\"접수시작일 항목 입력 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"pubDate_item\" class=\"item\"><label for=\"pubDate\"></label><input id=\"pubDate\" name=\"pubDate\" korean-name=\"접수시작일\" type=\"text\" maxlength=\"10\" title=\"접수시작일 날짜 입력창. 날짜는 연도 4자리, -, 월 2자리, -, 일 2자리 형식으로 10자를 입력해야 합니다.\" placeholder=\"날짜 입력\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"content_row_inner\">\n\t\t\t\t\t\t\t<div id=\"pubEndDate_article\" class=\"article\">접수마감일<button title=\"접수마감일 항목 입력 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"pubEndDate_item\" class=\"item\"><label for=\"pubEndDate\"></label><input id=\"pubEndDate\" name=\"pubEndDate\" korean-name=\"접수마감일\" type=\"text\" maxlength=\"10\" title=\"접수마감일 날짜 입력창. 날짜는 연도 4자리, -, 월 2자리, -, 일 2자리 형식으로 10자를 입력해야 합니다.\" placeholder=\"날짜 입력\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"status_article\" class=\"article\">채용마감여부<button title=\"채용마감여부 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"status_item\" class=\"item\" aria-label=\"채용마감여부\">\n\t\t\t\t\t\t\t<label for=\"status\"></label><select id=\"status\" name=\"status\" korean-name=\"채용마감여부\"><option id=\"status_\" korean-value=\"전체\" value=\"\">전체</option><option id=\"status_709002\" korean-value=\"모집예정\" value=\"709002\">모집예정</option><option id=\"status_709001\" korean-value=\"모집중\" value=\"709001\">모집중</option><option id=\"status_709003\" korean-value=\"모집마감\" value=\"709003\">모집마감</option></select></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"line\" style=\"display: none;\"></div>\n\t\t\t\t\t<div class=\"section\" style=\"display: none;\">\n\t\t\t\t\t\t<div class=\"content_row\">\n\t\t\t\t\t\t\t<div id=\"workPlace_article\" class=\"article\">근무지<button title=\"근무지 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button><button title=\"근무지 항목 전체 선택\" class=\"all_btn\">전체</button></div>\n\t\t\t\t\t\t\t<div id=\"workPlace_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">서울특별시<label for=\"workPlace_704001\"></label><input id=\"workPlace_704001\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"서울특별시\" type=\"checkbox\" tabindex=\"-1\" value=\"704001\"></button><button title=\"선택\">부산광역시<label for=\"workPlace_704002\"></label><input id=\"workPlace_704002\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"부산광역시\" type=\"checkbox\" tabindex=\"-1\" value=\"704002\"></button><button title=\"선택\">대구광역시<label for=\"workPlace_704003\"></label><input id=\"workPlace_704003\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"대구광역시\" type=\"checkbox\" tabindex=\"-1\" value=\"704003\"></button><button title=\"선택\">인천광역시<label for=\"workPlace_704004\"></label><input id=\"workPlace_704004\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"인천광역시\" type=\"checkbox\" tabindex=\"-1\" value=\"704004\"></button><button title=\"선택\">광주광역시<label for=\"workPlace_704005\"></label><input id=\"workPlace_704005\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"광주광역시\" type=\"checkbox\" tabindex=\"-1\" value=\"704005\"></button><button title=\"선택\">대전광역시<label for=\"workPlace_704006\"></label><input id=\"workPlace_704006\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"대전광역시\" type=\"checkbox\" tabindex=\"-1\" value=\"704006\"></button><button title=\"선택\">울산광역시<label for=\"workPlace_704007\"></label><input id=\"workPlace_704007\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"울산광역시\" type=\"checkbox\" tabindex=\"-1\" value=\"704007\"></button><button title=\"선택\" style=\"display: none;\">세종특별자치시<label for=\"workPlace_704008\"></label><input id=\"workPlace_704008\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"세종특별자치시\" type=\"checkbox\" tabindex=\"-1\" value=\"704008\"></button><button title=\"선택\" style=\"display: none;\">경기도<label for=\"workPlace_704009\"></label><input id=\"workPlace_704009\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"경기도\" type=\"checkbox\" tabindex=\"-1\" value=\"704009\"></button><button title=\"선택\" style=\"display: none;\">강원특별자치도<label for=\"workPlace_704010\"></label><input id=\"workPlace_704010\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"강원특별자치도\" type=\"checkbox\" tabindex=\"-1\" value=\"704010\"></button><button title=\"선택\" style=\"display: none;\">충청북도<label for=\"workPlace_704011\"></label><input id=\"workPlace_704011\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"충청북도\" type=\"checkbox\" tabindex=\"-1\" value=\"704011\"></button><button title=\"선택\" style=\"display: none;\">충청남도<label for=\"workPlace_704012\"></label><input id=\"workPlace_704012\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"충청남도\" type=\"checkbox\" tabindex=\"-1\" value=\"704012\"></button><button title=\"선택\" style=\"display: none;\">전북특별자치도<label for=\"workPlace_704013\"></label><input id=\"workPlace_704013\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"전북특별자치도\" type=\"checkbox\" tabindex=\"-1\" value=\"704013\"></button><button title=\"선택\" style=\"display: none;\">전라남도<label for=\"workPlace_704014\"></label><input id=\"workPlace_704014\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"전라남도\" type=\"checkbox\" tabindex=\"-1\" value=\"704014\"></button><button title=\"선택\" style=\"display: none;\">전남광주통합특별시<label for=\"workPlace_704019\"></label><input id=\"workPlace_704019\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"전남광주통합특별시\" type=\"checkbox\" tabindex=\"-1\" value=\"704019\"></button><button title=\"선택\" style=\"display: none;\">경상북도<label for=\"workPlace_704015\"></label><input id=\"workPlace_704015\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"경상북도\" type=\"checkbox\" tabindex=\"-1\" value=\"704015\"></button><button title=\"선택\" style=\"display: none;\">경상남도<label for=\"workPlace_704016\"></label><input id=\"workPlace_704016\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"경상남도\" type=\"checkbox\" tabindex=\"-1\" value=\"704016\"></button><button title=\"선택\" style=\"display: none;\">제주특별자치도<label for=\"workPlace_704017\"></label><input id=\"workPlace_704017\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"제주특별자치도\" type=\"checkbox\" tabindex=\"-1\" value=\"704017\"></button><button title=\"선택\" style=\"display: none;\">해외<label for=\"workPlace_704018\"></label><input id=\"workPlace_704018\" name=\"workPlace\" korean-name=\"근무지\" korean-value=\"해외\" type=\"checkbox\" tabindex=\"-1\" value=\"704018\"></button><button title=\"항목 더보기\" class=\"plus\">19개</button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"officeHours_article\" class=\"article\">근무시간<button title=\"근무시간 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"officeHours_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">전일제<label for=\"officeHours_705001\"></label><input id=\"officeHours_705001\" name=\"officeHours\" korean-name=\"근무시간\" korean-value=\"전일제\" type=\"checkbox\" tabindex=\"-1\" value=\"705001\"></button><button title=\"선택\">시간제<label for=\"officeHours_705002\"></label><input id=\"officeHours_705002\" name=\"officeHours\" korean-name=\"근무시간\" korean-value=\"시간제\" type=\"checkbox\" tabindex=\"-1\" value=\"705002\"></button><button title=\"선택\">비상임<label for=\"officeHours_705003\"></label><input id=\"officeHours_705003\" name=\"officeHours\" korean-name=\"근무시간\" korean-value=\"비상임\" type=\"checkbox\" tabindex=\"-1\" value=\"705003\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"yearincome_article\" class=\"article\">연봉<button title=\"연봉 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"yearincome_item\" class=\"item\">\n\t\t\t\t\t\t\t<label for=\"yearincome\"></label><select id=\"yearincome\" name=\"yearincome\" korean-name=\"연봉\"><option id=\"yearincome_\" korean-value=\"전체\" value=\"\">전체</option><option id=\"yearincome_706001\" korean-value=\"1200만원 이하\" value=\"706001\">1200만원 이하</option><option id=\"yearincome_706002\" korean-value=\"1200만원 이상\" value=\"706002\">1200만원 이상</option><option id=\"yearincome_706003\" korean-value=\"1400만원 이상\" value=\"706003\">1400만원 이상</option><option id=\"yearincome_706004\" korean-value=\"1600만원 이상\" value=\"706004\">1600만원 이상</option><option id=\"yearincome_706005\" korean-value=\"1800만원 이상\" value=\"706005\">1800만원 이상</option><option id=\"yearincome_706006\" korean-value=\"2000만원 이상\" value=\"706006\">2000만원 이상</option><option id=\"yearincome_706007\" korean-value=\"2200만원 이상\" value=\"706007\">2200만원 이상</option><option id=\"yearincome_706008\" korean-value=\"2600만원 이상\" value=\"706008\">2600만원 이상</option><option id=\"yearincome_706009\" korean-value=\"2800만원 이상\" value=\"706009\">2800만원 이상</option><option id=\"yearincome_706010\" korean-value=\"3000만원 이상\" value=\"706010\">3000만원 이상</option><option id=\"yearincome_706011\" korean-value=\"3200만원 이상\" value=\"706011\">3200만원 이상</option><option id=\"yearincome_706012\" korean-value=\"3400만원 이상\" value=\"706012\">3400만원 이상</option><option id=\"yearincome_706013\" korean-value=\"3600만원 이상\" value=\"706013\">3600만원 이상</option><option id=\"yearincome_706014\" korean-value=\"3800만원 이상\" value=\"706014\">3800만원 이상</option><option id=\"yearincome_706015\" korean-value=\"4000만원 이상\" value=\"706015\">4000만원 이상</option><option id=\"yearincome_706016\" korean-value=\"5000만원 이상\" value=\"706016\">5000만원 이상</option><option id=\"yearincome_706017\" korean-value=\"6000만원 이상\" value=\"706017\">6000만원 이상</option><option id=\"yearincome_706018\" korean-value=\"7000만원 이상\" value=\"706018\">7000만원 이상</option><option id=\"yearincome_706019\" korean-value=\"8000만원 이상\" value=\"706019\">8000만원 이상</option><option id=\"yearincome_706020\" korean-value=\"9000만원 이상\" value=\"706020\">9000만원 이상</option><option id=\"yearincome_706021\" korean-value=\"1억원 이상\" value=\"706021\">1억원 이상</option><option id=\"yearincome_706099\" korean-value=\"무급\" value=\"706099\">무급</option></select></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"reManYn_article\" class=\"article\">대체인력여부<button title=\"대체인력여부 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"reManYn_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">예<label for=\"reManYn_Y\"></label><input id=\"reManYn_Y\" name=\"reManYn\" korean-name=\"대체인력여부\" korean-value=\"예\" type=\"checkbox\" tabindex=\"-1\" value=\"Y\"></button><button title=\"선택\">아니오<label for=\"reManYn_N\"></label><input id=\"reManYn_N\" name=\"reManYn\" korean-name=\"대체인력여부\" korean-value=\"아니오\" type=\"checkbox\" tabindex=\"-1\" value=\"N\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div><!--section end-->\n\t\t\t\t\t<div class=\"line\" style=\"display: none;\"></div>\n\t\t\t\t\t<div class=\"section\" style=\"display: none;\">\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"entName_article\" class=\"article\">기관명<button title=\"기관명 항목 입력 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"entName_item\" class=\"item\">\n\t\t\t\t\t\t\t<label for=\"entName_text\">기관명 입력</label><input id=\"entName\" name=\"entName\" korean-name=\"기관명\" type=\"text\"><input type=\"button\" title=\"새창 열림\" class=\"search_btn_org\" value=\"기관명 찾기\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"entGb_article\" class=\"article\">기관형태<button title=\"기관형태 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button></div>\n\t\t\t\t\t\t\t<div id=\"entGb_item\" class=\"item\">\n\t\t\t\t\t\t\t<button title=\"선택\">직영기업<label for=\"entGb_707005\"></label><input id=\"entGb_707005\" name=\"entGb\" korean-name=\"기관형태\" korean-value=\"직영기업\" type=\"checkbox\" tabindex=\"-1\" value=\"707005\"></button><button title=\"선택\">지방공사<label for=\"entGb_707001\"></label><input id=\"entGb_707001\" name=\"entGb\" korean-name=\"기관형태\" korean-value=\"지방공사\" type=\"checkbox\" tabindex=\"-1\" value=\"707001\"></button><button title=\"선택\">지방공단<label for=\"entGb_707002\"></label><input id=\"entGb_707002\" name=\"entGb\" korean-name=\"기관형태\" korean-value=\"지방공단\" type=\"checkbox\" tabindex=\"-1\" value=\"707002\"></button><button title=\"선택\">지방출자기관<label for=\"entGb_707003\"></label><input id=\"entGb_707003\" name=\"entGb\" korean-name=\"기관형태\" korean-value=\"지방출자기관\" type=\"checkbox\" tabindex=\"-1\" value=\"707003\"></button><button title=\"선택\">지방출연기관<label for=\"entGb_707004\"></label><input id=\"entGb_707004\" name=\"entGb\" korean-name=\"기관형태\" korean-value=\"지방출연기관\" type=\"checkbox\" tabindex=\"-1\" value=\"707004\"></button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"content_row mHide\">\n\t\t\t\t\t\t\t<div id=\"entKind_article\" class=\"article\">기관유형<button title=\"기관유형 항목 선택 초기화\" class=\"zero_btn\"><img src=\"/images/zero.png\" alt=\"\"></button><button title=\"기관유형 항목 전체 선택\" class=\"all_btn\">전체</button></div>\n\t\t\t\t\t\t\t<div id=\"entKind_item\" class=\"item\">\n\t\t\t\t\t\t\t<p title=\"공기업\" class=\"pitem\" style=\"display: none;\">공기업<label for=\"entKind_G\"></label></p><button title=\"선택\">상수도<label for=\"entKind_708016\"></label><input id=\"entKind_708016\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"상수도\" type=\"checkbox\" tabindex=\"-1\" value=\"708016\"></button><button title=\"선택\">하수도<label for=\"entKind_708017\"></label><input id=\"entKind_708017\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"하수도\" type=\"checkbox\" tabindex=\"-1\" value=\"708017\"></button><button title=\"선택\">공영개발<label for=\"entKind_708018\"></label><input id=\"entKind_708018\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"공영개발\" type=\"checkbox\" tabindex=\"-1\" value=\"708018\"></button><button title=\"선택\">자동차운송<label for=\"entKind_708019\"></label><input id=\"entKind_708019\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"자동차운송\" type=\"checkbox\" tabindex=\"-1\" value=\"708019\"></button><button title=\"선택\">도시철도<label for=\"entKind_708001\"></label><input id=\"entKind_708001\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"도시철도\" type=\"checkbox\" tabindex=\"-1\" value=\"708001\"></button><button title=\"선택\">도시개발<label for=\"entKind_708002\"></label><input id=\"entKind_708002\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"도시개발\" type=\"checkbox\" tabindex=\"-1\" value=\"708002\"></button><button title=\"선택\">기타공사<label for=\"entKind_708003\"></label><input id=\"entKind_708003\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"기타공사\" type=\"checkbox\" tabindex=\"-1\" value=\"708003\"></button><button title=\"선택\" style=\"display: none;\">시설관리공단<label for=\"entKind_708014\"></label><input id=\"entKind_708014\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"시설관리공단\" type=\"checkbox\" tabindex=\"-1\" value=\"708014\"></button><button title=\"선택\" style=\"display: none;\">경륜공단<label for=\"entKind_708015\"></label><input id=\"entKind_708015\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"경륜공단\" type=\"checkbox\" tabindex=\"-1\" value=\"708015\"></button><p title=\"출자기관\" class=\"pitem\" style=\"display: none;\">출자기관</p><button title=\"선택\" style=\"display: none;\">기업지원<label for=\"entKind_708042\"></label><input id=\"entKind_708042\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"기업지원\" type=\"checkbox\" tabindex=\"-1\" value=\"708042\"></button><button title=\"선택\" style=\"display: none;\">문화·복지·관광<label for=\"entKind_708043\"></label><input id=\"entKind_708043\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"문화·복지·관광\" type=\"checkbox\" tabindex=\"-1\" value=\"708043\"></button><button title=\"선택\" style=\"display: none;\">식품·유통<label for=\"entKind_708044\"></label><input id=\"entKind_708044\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"식품·유통\" type=\"checkbox\" tabindex=\"-1\" value=\"708044\"></button><button title=\"선택\" style=\"display: none;\">의료<label for=\"entKind_708045\"></label><input id=\"entKind_708045\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"의료\" type=\"checkbox\" tabindex=\"-1\" value=\"708045\"></button><button title=\"선택\" style=\"display: none;\">연구<label for=\"entKind_708046\"></label><input id=\"entKind_708046\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"연구\" type=\"checkbox\" tabindex=\"-1\" value=\"708046\"></button><button title=\"선택\" style=\"display: none;\">신용보증<label for=\"entKind_708047\"></label><input id=\"entKind_708047\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"신용보증\" type=\"checkbox\" tabindex=\"-1\" value=\"708047\"></button><button title=\"선택\" style=\"display: none;\">장학<label for=\"entKind_708048\"></label><input id=\"entKind_708048\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"장학\" type=\"checkbox\" tabindex=\"-1\" value=\"708048\"></button><button title=\"선택\" style=\"display: none;\">개발·투자<label for=\"entKind_708049\"></label><input id=\"entKind_708049\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"개발·투자\" type=\"checkbox\" tabindex=\"-1\" value=\"708049\"></button><button title=\"선택\" style=\"display: none;\">에너지·환경<label for=\"entKind_708050\"></label><input id=\"entKind_708050\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"에너지·환경\" type=\"checkbox\" tabindex=\"-1\" value=\"708050\"></button><button title=\"선택\" style=\"display: none;\">기타<label for=\"entKind_708051\"></label><input id=\"entKind_708051\" name=\"entKind\" korean-name=\"기관유형\" korean-value=\"기타\" type=\"checkbox\" tabindex=\"-1\" value=\"708051\"></button><button title=\"항목 더보기\" class=\"plus\">19개</button></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div><!--section end-->\t\t\t\t\t\n\t\t\t\t</div><!--content_box end-->\n\t\t\t\t<button class=\"detail_btn_open\" onclick=\"onClickToggle('open')\">상세검색 열기</button>\n\t\t\t\t<button class=\"detail_btn_close\" onclick=\"onClickToggle('close')\" style=\"display: none;\">상세검색 닫기</button>\n\t\t\t</form>",
+    "fields": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전체",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "사업관리",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700001",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경영·회계·사무",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700002",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경비·청소",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700011",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700011",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "이용·숙박·여행·오락·스포츠",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700012",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700012",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "음식서비스",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700013",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700013",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "건설",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700014",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700014",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "기계",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700015",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700015",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "재료",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700016",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700016",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "화학",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700017",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700017",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "섬유·의복",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700018",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700018",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전기·전자",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700019",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700019",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "정보통신",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700020",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700020",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "금융·보험",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700003",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "식품가공",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700021",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700021",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "인쇄·목재·가구·공예",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700022",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700022",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "환경·에너지·안전",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700023",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700023",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "농림어업",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700024",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700024",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "연구",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700025",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700025",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "기타",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700026",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700026",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "교육·자연·사회과학",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700004",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700004",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "법률·경찰·소방·교도·국방",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700005",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700005",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "보건·의료",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700006",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700006",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "사회복지·종교",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700007",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700007",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "문화·예술·디자인·방송",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700008",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700008",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "운전·운송",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700009",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700009",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "영업판매",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entRecruit_700010",
+        "name": "entRecruit",
+        "type": "checkbox",
+        "value": "700010",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "26개",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "없음",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "localYn_N",
+        "name": "localYn",
+        "type": "checkbox",
+        "value": "N",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "있음",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "localYn_Y",
+        "name": "localYn",
+        "type": "checkbox",
+        "value": "Y",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "없음",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701001",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "국가유공자",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701002",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "청년",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701003",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경력자",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701004",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701004",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "지역인재",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701005",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701005",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "장애인",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701006",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701006",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "외국어",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701007",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701007",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "고졸",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701008",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701008",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "자격증",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "specialItem_701009",
+        "name": "specialItem",
+        "type": "checkbox",
+        "value": "701009",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "일반정규직",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702001",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "무기계약직",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702002",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "기간제",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702003",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전문계약직",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702004",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702004",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "인턴",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702005",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702005",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "일반계약직",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702006",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702006",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "비상임",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "jobType_702007",
+        "name": "jobType",
+        "type": "checkbox",
+        "value": "702007",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "신입",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "employGb_703001",
+        "name": "employGb",
+        "type": "checkbox",
+        "value": "703001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경력",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "employGb_703002",
+        "name": "employGb",
+        "type": "checkbox",
+        "value": "703002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "신입+경력",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "employGb_703003",
+        "name": "employGb",
+        "type": "checkbox",
+        "value": "703003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "pubDate",
+        "name": "pubDate",
+        "type": "text",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "pubEndDate",
+        "name": "pubEndDate",
+        "type": "text",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "SELECT",
+        "id": "status",
+        "name": "status",
+        "type": "select-one",
+        "value": "",
+        "text": "전체 모집예정 모집중 모집마감",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전체",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "서울특별시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704001",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "부산광역시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704002",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "대구광역시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704003",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "인천광역시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704004",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704004",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "광주광역시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704005",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704005",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "대전광역시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704006",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704006",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "울산광역시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704007",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704007",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "세종특별자치시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704008",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704008",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경기도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704009",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704009",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "강원특별자치도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704010",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704010",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "충청북도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704011",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704011",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "충청남도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704012",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704012",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전북특별자치도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704013",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704013",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전라남도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704014",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704014",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전남광주통합특별시",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704019",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704019",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경상북도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704015",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704015",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경상남도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704016",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704016",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "제주특별자치도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704017",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704017",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "해외",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "workPlace_704018",
+        "name": "workPlace",
+        "type": "checkbox",
+        "value": "704018",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "19개",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전일제",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "officeHours_705001",
+        "name": "officeHours",
+        "type": "checkbox",
+        "value": "705001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "시간제",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "officeHours_705002",
+        "name": "officeHours",
+        "type": "checkbox",
+        "value": "705002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "비상임",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "officeHours_705003",
+        "name": "officeHours",
+        "type": "checkbox",
+        "value": "705003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "SELECT",
+        "id": "yearincome",
+        "name": "yearincome",
+        "type": "select-one",
+        "value": "",
+        "text": "전체1200만원 이하1200만원 이상1400만원 이상1600만원 이상1800만원 이상2000만원 이상2200만원 이상2600만원 이상2800만원 이상3000만원 이상3200만원 이상3400만원 이상3600만원 이상3800만원 이상4000만원 이상5000만원 이상6000만원 이상7000만원 이상8000만원 이상9000만원 이상1억원 이상무급",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "예",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "reManYn_Y",
+        "name": "reManYn",
+        "type": "checkbox",
+        "value": "Y",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "아니오",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "reManYn_N",
+        "name": "reManYn",
+        "type": "checkbox",
+        "value": "N",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entName",
+        "name": "entName",
+        "type": "text",
+        "value": "서울문화재단",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "name": "",
+        "type": "button",
+        "value": "기관명 찾기",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "직영기업",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entGb_707005",
+        "name": "entGb",
+        "type": "checkbox",
+        "value": "707005",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "지방공사",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entGb_707001",
+        "name": "entGb",
+        "type": "checkbox",
+        "value": "707001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "지방공단",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entGb_707002",
+        "name": "entGb",
+        "type": "checkbox",
+        "value": "707002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "지방출자기관",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entGb_707003",
+        "name": "entGb",
+        "type": "checkbox",
+        "value": "707003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "지방출연기관",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entGb_707004",
+        "name": "entGb",
+        "type": "checkbox",
+        "value": "707004",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "전체",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "상수도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708016",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708016",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "하수도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708017",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708017",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "공영개발",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708018",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708018",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "자동차운송",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708019",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708019",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "도시철도",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708001",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708001",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "도시개발",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708002",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708002",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "기타공사",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708003",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708003",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "시설관리공단",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708014",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708014",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "경륜공단",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708015",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708015",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "기업지원",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708042",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708042",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "문화·복지·관광",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708043",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708043",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "식품·유통",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708044",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708044",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "의료",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708045",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708045",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "연구",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708046",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708046",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "신용보증",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708047",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708047",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "장학",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708048",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708048",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "개발·투자",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708049",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708049",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "에너지·환경",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708050",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708050",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "기타",
+        "onclick": ""
+      },
+      {
+        "tag": "INPUT",
+        "id": "entKind_708051",
+        "name": "entKind",
+        "type": "checkbox",
+        "value": "708051",
+        "text": "",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "19개",
+        "onclick": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "상세검색 열기",
+        "onclick": "onClickToggle('open')"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "name": "",
+        "type": "submit",
+        "value": "",
+        "text": "상세검색 닫기",
+        "onclick": "onClickToggle('close')"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "상세검색 열기",
+        "onclick": "onClickToggle('open')"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "상세검색 닫기",
+        "onclick": "onClickToggle('close')"
+      },
+      {
+        "tag": "INPUT",
+        "id": "",
+        "text": "검색",
+        "onclick": "onSearch('1')"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "2",
+        "onclick": "javascript:onSearch(2)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "3",
+        "onclick": "javascript:onSearch(3)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "4",
+        "onclick": "javascript:onSearch(4)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "5",
+        "onclick": "javascript:onSearch(5)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "6",
+        "onclick": "javascript:onSearch(6)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "7",
+        "onclick": "javascript:onSearch(7)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "8",
+        "onclick": "javascript:onSearch(8)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "9",
+        "onclick": "javascript:onSearch(9)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "10",
+        "onclick": "javascript:onSearch(10)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "",
+        "onclick": "javascript:onSearch(11)"
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "text": "",
+        "onclick": "javascript:onSearch(7838)"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "searchEntNameBtn",
+        "text": "검색",
+        "onclick": "onSearchEntName('1')"
+      }
+    ],
+    "searchTrigger": "onSearch"
+  },
   "error": null,
-  "modalHtml": "<div id=\"entNameModalBody\">\n\t\t<!-- 기관명 검색조건 시작 -->\n\t\t<div id=\"schBox\" class=\"txCenter row margin15\">\n\t\t\t<form id=\"modalSearchForm\" name=\"modalSearchForm\" method=\"post\" class=\"ng-pristine ng-valid\">\n\t\t\t\t<label for=\"searchCond\">검색 조건 선택</label>\n\t   \t\t\t<select id=\"searchCond\" name=\"searchCond\" style=\"width: 100px\" class=\"select_popup\" onchange=\"onSearchEntName('1')\"></select>\t\n\t\t\t\t<label for=\"searchKeyword\">기관명 입력</label>\n\t\t\t\t<input id=\"searchKeyword\" name=\"searchKeyword\" onkeyenter=\"onSearchEntName('1')\" type=\"text\" placeholder=\"기관명을 입력하세요.\" class=\"input_popup\">\n\t\t\t\t<button id=\"searchEntNameBtn\" class=\"search_btn_org_popup\" onclick=\"onSearchEntName('1')\">검색</button>\n\t\t\t</form>\n\t    </div>\n\t\t<!-- 기관명 검색조건 끝 -->\n\t\t<div id=\"modal_cnt\" class=\"txLeft table_all_n\">총 <span class=\"txStrongColor\">1</span>건</div>\n\t\t\n\t\t<table id=\"modal_table\" class=\"board_job\"><caption>기관명 검색 결과 - 기관유형, 기관명, 주소로 구성</caption><colgroup>\t<col width=\"20%\">\t<col width=\"30%\">\t<col width=\"50%\"></colgroup><thead>\t<tr>\t\t<th id=\"xxx\" scope=\"col\">기관유형</th>\t\t<th id=\"yyy\" scope=\"col\">기관명</th>\t\t<th id=\"zzz\" scope=\"col\">주소</th>\t</tr></thead><tbody><tr><td headers=\"xxx\">문화·복지·관광</td><td headers=\"yyy\" class=\"txLeft\"><a href=\"javascript:void(0);\">서울문화재단</a></td><td headers=\"zzz\" class=\"txLeft\">서울특별시 동대문구 청계천로 517</td></tr></tbody></table>\t\n\n\t\t<div id=\"modal_paginate\" class=\"num\"><span class=\"num_active\">1</span> </div>\n\t\t\n\t\t<br>\n\t</div>",
-  "bodyExcerpt": "컨텐츠 바로가기\n본문으로 바로가기\n주메뉴 바로가기\n기관정보\n채용정보\nCleaneye Job+ 소개\n공지사항\n통합검색\n채용정보 검색\n모집분야\n전체\n사업관리\n경영·회계·사무\n경비·청소\n이용·숙박·여행·오락·스포츠\n음식서비스\n26개\n지역제한\n없음\n있음\n우대사항\n없음\n국가유공자\n청년\n경력자\n지역인재\n장애인\n외국어\n고졸\n자격증\n고용형태\n일반정규직\n무기계약직\n기간제\n전문계약직\n인턴\n일반계약직\n비상임\n채용구분\n신입\n경력\n신입+경력\n접수시작일\n접수마감일\n채용마감여부\n전체\n모집예정\n모집중\n모집마감\n상세검색 열기\n총 78372건\n채용정보 검색 결과 - 기관명, 소재지, 채용제목, 고용조건, 모집기간, 상태로 구성\n기관명\t소재지\t채용제목\t고용조건\t모집기간\t상태\n창원시설공단\t경상남도\t시민생활체육관 종합안내실 기간제근로자 채용 공고문\n신입+경력\t기간제\n\t2026-09-07\n2026-09-11\t모집중\n재단법인 구리시상권활성화재단\t경기도\t구리시상권활성화재단 2026년 제3차 기간제(로컬테마상권 조성사업) 직원 채용 재공고\n신입+경력\t기간제\n\t2026-09-07\n2026-09-11\t모집중\n의정부도시공사\t경기도\t2026년 제10회 생활체육처 기간제근로자 채용 공고\n신입\t기간제\n\t2026-09-07\n2026-09-11\t모집중\n재단법인 창녕양파앤마늘식품연구원\t경상남도\t(재)창녕양파앤마늘식품연구원 2026년도 연구원 채용 공고\n신입+경력\t일반정규직\n\t2026-09-07\n2026-09-14\t모집중\n인천광역시연수구시설안전관리공단\t인천광역시\t2026년 제10회 체육사업팀 기간제근로자 채용 공고\n신입+경력\t기간제\n\t2026-09-07\n2026-09-11\t모집중\n대구의료원\t대구광역시\t대구의료원 신규직원 채용 공고(약사)\n신입+경력\t일반정규직\n\t2026-09-07\n2026-09-17\t모집중\n목포국제축구센터\t전남광주통합특별시\t재단법인 목포국제축구센터 직원 공개 채용 공고\n신입+경력\t전문계약직\n\t2026-09-07\n2026-09-17\t모집중\n재단법인 청주시활성화재단\t충청북도\t2026 재단법인 청주시활성화재단 기간제근로자 채용 재공고\n신입\t기간제\n지역제한 : 청주시\t2026-09-07\n2026-09-17\t모집중\n홍성의료원\t충청남도\t계약직(육아휴직대체) 간호조무사\n신입+경력\t일반계약직\n\t2026-09-07\n2026-09-17\t모집중\n(주)킨텍스\t경기도\t제2026-022호 킨텍스 임시직 직원 공개채용 공고\n신입\t기간제\n\t2026-09-07\n2026-09-17\t모집중\n1 2 3 4 5 6 7 8 9 10 \n이메일 무단수집거부\n저작권 정책\n사이트맵\n\n(우 30112) 세종특별자치시 도움6로 42(어진동)\n문의 : (시스템) 채용공고 등록, 시스템 장애 등 T. 02-303-3353 | (채용, 일자리)T. 044-205-3984\n© Ministry of the Interior and Safety. All rights reserved."
+  "resultRows": [
+    {
+      "text": "서울문화재단 2026년 제2차 직원(정규직) 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2026년 제2차 직원(기간제계약직) 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2026년 제1차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2025년 제3차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2025년 제2차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2025년 제1차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2024년 제3차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2024년 제2차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2024년 제1차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단 2023년 제3차 직원 공개채용 공고",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    },
+    {
+      "text": "서울문화재단",
+      "href": "javascript:void(0);",
+      "onclick": ""
+    }
+  ]
 }
