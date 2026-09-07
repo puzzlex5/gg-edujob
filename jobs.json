@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-07 20:52 KST",
+    "checkedAt": "2026-09-07 21:20 KST",
     "message": "교육지원청 확인 필요 4곳 · 원문 링크 일시/본문증거 확인 필요 1/50개",
     "supportOfficeIssues": [
       {
@@ -1020,7 +1020,7 @@
       ]
     },
     "previousTotal": 19078,
-    "currentTotal": 19078
+    "currentTotal": 19079
   },
   "jobs": [
     {
@@ -1802,6 +1802,34 @@
       "periodStatus": "parsed",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
+    },
+    {
+      "id": "goe-59319",
+      "province": "경기",
+      "school": "고양송암고등학교",
+      "title": "고양송암고 수학과 기간제 교사 모집 공고",
+      "subject": "수학",
+      "region": "고양시",
+      "regions": [
+        "고양시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/18",
+      "workStart": "2026/10/29",
+      "workEnd": "",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59319",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "goe-central:59319",
       "reconciliationCarryForward": true
     },
     {
@@ -529383,11 +529411,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-07 20:51 KST",
+    "checkedAt": "2026-09-07 21:18 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-07 20:51 KST",
+    "checkedAt": "2026-09-07 21:18 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -529408,7 +529436,7 @@
     "seoulTotal": 511
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-07 20:16 KST",
+    "checkedAt": "2026-09-07 21:18 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6058,
     "detailPagesParsed": 2509,
@@ -529418,7 +529446,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-07 20:16 KST",
+      "checkedAt": "2026-09-07 21:18 KST",
       "candidates": 248,
       "detailPagesConfirmed": 242,
       "cacheEntriesImproved": 0,
@@ -529430,11 +529458,11 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-07 20:35:25 KST",
-    "ledgerScanId": "20260907T084525Z-34102233206-1",
-    "protectedOfficialIds": 17844,
-    "missingBefore": 0,
-    "recoveredNow": 0,
+    "checkedAt": "2026-09-07 21:18:40 KST",
+    "ledgerScanId": "20260907T114404Z-34118066142-1",
+    "protectedOfficialIds": 17851,
+    "missingBefore": 1,
+    "recoveredNow": 1,
     "missingAfter": 0
   }
 }
