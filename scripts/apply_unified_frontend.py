@@ -43,9 +43,7 @@ elif new_filter not in s:
     raise SystemExit('province filter signature changed; refusing unsafe multi-province patch')
 
 # Enforce exact per-post Lessoninfo culture authorization in the base postingLink itself.
-# This removes any load-order/race dependency on the deferred defense-in-depth guard: even
-# before auxiliary scripts execute, unverified culture rows are non-clickable and verified
-# rows resolve only to the verifier-produced verifiedUrl.
+# This removes any load-order/race dependency on deferred wrappers.
 old_posting="function postingLink(j){const board=j.boardUrl||'';const raw=j.url||'';"
 new_posting="function postingLink(j){if(j&&j.detailLinkVerified===false)return '';if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts'){if(j.sourceIdentity==='culture:id:94673'||j.detailLinkVerified!==true)return '';return String(j.verifiedUrl||'').trim()}const board=j.boardUrl||'';const raw=j.url||'';"
 if old_posting in s:
@@ -55,7 +53,6 @@ elif new_posting not in s:
 
 # Deadline sort policy B keeps actual imminent deadlines first, but no longer buries a
 # newly registered official posting solely because its source does not expose applyEnd.
-# No source date is synthesized or mutated; the ranking uses applyEnd/registered read-only.
 rank_helper="function deadlineSortKey(j){const dd=diffDay(j.applyEnd),rd=parseDate(j.registered),r0=rd?new Date(rd.getFullYear(),rd.getMonth(),rd.getDate()):null,age=r0?Math.floor((today0()-r0)/86400000):null,official=(j.feedKind||'official')==='official';let bucket=4,primary=0;if(dd!==null&&dd>=0&&dd<=3){bucket=0;primary=dd}else if(dd!==null&&dd>=4&&dd<=7){bucket=1;primary=dd}else if(dd===null&&official&&age!==null&&age>=0&&age<=7){bucket=2}else if(dd!==null){bucket=3;primary=dd}return [bucket,primary,-(rd?rd.getTime():0),(j.sourceIdentity||j.id||j.url||'').toString()]}function compareDeadline(x,y){const a=deadlineSortKey(x),b=deadlineSortKey(y);return a[0]-b[0]||a[1]-b[1]||a[2]-b[2]||a[3].localeCompare(b[3])}"
 if "function deadlineSortKey(j)" not in s:
     marker="function matchesSet(set,val){return set.size===0||set.has(val)}function filtered(){"
@@ -70,14 +67,26 @@ if old_sort in s:
 elif new_sort not in s or "function deadlineSortKey(j)" not in s:
     raise SystemExit('deadline comparator signature changed; refusing unsafe ranking patch')
 
-marker='<script src="mobile-ui.js?v='
-# This value is a deployment contract, not cosmetic. Bump it whenever direct-link-guard.js
-# changes so Pages/CDN/browser caches cannot keep an older fail-close policy active against a
-# newer unified_jobs.json payload.
+# Normalize frontend policy bundles to exactly one copy each. Duplicate mobile-ui loads used to
+# race/override the verified culture destination policy, so duplicate tags are now a build error.
 DIRECT_LINK_GUARD_ASSET_VERSION='20260907c'
+MOBILE_UI_ASSET_VERSION='20260907d'
+UNIFIED_UI_ASSET_VERSION='20260904a'
+
+mobile_tags=list(re.finditer(r'<script src="mobile-ui\.js\?v=[A-Za-z0-9._-]+" defer></script>\s*',s))
+if not mobile_tags:
+    raise SystemExit('mobile-ui script marker missing')
+first_mobile=mobile_tags[0].start()
+s=re.sub(r'<script src="mobile-ui\.js\?v=[A-Za-z0-9._-]+" defer></script>\s*','',s)
+mobile_tag=f'<script src="mobile-ui.js?v={MOBILE_UI_ASSET_VERSION}" defer></script>\n'
+s=s[:first_mobile]+mobile_tag+s[first_mobile:]
+if len(re.findall(r'<script src="mobile-ui\.js\?v=',s))!=1:
+    raise SystemExit('mobile-ui deduplication failed')
+
+marker=f'<script src="mobile-ui.js?v={MOBILE_UI_ASSET_VERSION}" defer></script>'
 if 'direct-link-guard.js' not in s:
     i=s.find(marker)
-    if i<0: raise SystemExit('mobile-ui script marker missing')
+    if i<0: raise SystemExit('mobile-ui script marker missing after normalization')
     s=s[:i]+f'<script src="direct-link-guard.js?v={DIRECT_LINK_GUARD_ASSET_VERSION}" defer></script>\n'+s[i:]
 else:
     s,n=re.subn(r'direct-link-guard\.js\?v=[A-Za-z0-9._-]+',f'direct-link-guard.js?v={DIRECT_LINK_GUARD_ASSET_VERSION}',s,count=1)
@@ -86,12 +95,12 @@ else:
 if 'unified-ui.js' not in s:
     i=s.find(marker)
     if i<0: raise SystemExit('mobile-ui script marker missing')
-    s=s[:i]+'<script src="unified-ui.js?v=20260904a" defer></script>\n'+s[i:]
+    s=s[:i]+f'<script src="unified-ui.js?v={UNIFIED_UI_ASSET_VERSION}" defer></script>\n'+s[i:]
 else:
-    s,n=re.subn(r'unified-ui\.js\?v=[A-Za-z0-9._-]+','unified-ui.js?v=20260904a',s,count=1)
+    s,n=re.subn(r'unified-ui\.js\?v=[A-Za-z0-9._-]+',f'unified-ui.js?v={UNIFIED_UI_ASSET_VERSION}',s,count=1)
     if n!=1: raise SystemExit('unified-ui asset reference changed')
 
 # Keep the data loader compatible with both old and new metadata names.
 s=s.replace("if(data.officialSourceCount)$('#countSources').textContent=data.officialSourceCount;","if(data.totalSourceCount||data.officialSourceCount)$('#countSources').textContent=data.totalSourceCount||data.officialSourceCount;")
 p.write_text(s,encoding='utf-8')
-print('unified frontend patch applied: multi-source search, multi-province filtering, deterministic deadline ranking B, direct-link guard, refreshed UI asset')
+print('unified frontend patch applied: exact culture gate, deduplicated mobile UI, refreshed policy assets')
