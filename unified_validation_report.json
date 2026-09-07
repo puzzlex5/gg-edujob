@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-07T11:21:17+09:00",
-  "healthy": false,
-  "total": 7408,
+  "generatedAt": "2026-09-07T11:21:57+09:00",
+  "healthy": true,
+  "total": 7424,
   "official": 3051,
-  "privateDisplayed": 4357,
+  "privateDisplayed": 4373,
   "enabledPrivateSources": [
     "lessoninfo",
     "jobteacher",
@@ -14,13 +14,13 @@
   ],
   "degradedPrivateSources": [],
   "privateStableIds": 4384,
-  "privateRepresentedDirectly": 4357,
+  "privateRepresentedDirectly": 4373,
   "privateRepresentedByOfficial": 11,
-  "missingPrivateIds": 16,
+  "missingPrivateIds": 0,
   "missingPrivateBySource": {
     "lessoninfo": 0,
     "jobteacher": 0,
-    "artmore": 16,
+    "artmore": 0,
     "gonggonggangsa": 0,
     "seekle": 0,
     "boramyc": 0
@@ -28,24 +28,7 @@
   "missingPrivateExamples": {
     "lessoninfo": [],
     "jobteacher": [],
-    "artmore": [
-      "artmore:94829",
-      "artmore:94832",
-      "artmore:94834",
-      "artmore:94851",
-      "artmore:94852",
-      "artmore:94853",
-      "artmore:94854",
-      "artmore:94856",
-      "artmore:94864",
-      "artmore:94865",
-      "artmore:94866",
-      "artmore:94868",
-      "artmore:94869",
-      "artmore:94870",
-      "artmore:94877",
-      "artmore:94878"
-    ],
+    "artmore": [],
     "gonggonggangsa": [],
     "seekle": [],
     "boramyc": []
@@ -341,8 +324,6 @@
       "currentCount": 2
     }
   },
-  "errors": [
-    "Unified dataset dropped 16 current 아트모아 stable IDs"
-  ],
+  "errors": [],
   "warnings": []
 }
