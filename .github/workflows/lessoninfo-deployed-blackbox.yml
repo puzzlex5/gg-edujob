@@ -2,6 +2,10 @@ name: Black-box deployed Lessoninfo culture links
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/lessoninfo-deployed-blackbox.yml'
   workflow_run:
     workflows: ['Unified recruitment search']
     types: [completed]
@@ -37,7 +41,7 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Wait until Pages serves the current unified dataset
+      - name: Wait until Pages serves current data and UI assets
         env:
           SITE: https://puzzlex5.github.io/gg-edujob
         run: |
@@ -46,27 +50,32 @@ jobs:
           from pathlib import Path
 
           site=os.environ['SITE'].rstrip('/')
-          local=Path('unified_jobs.json').read_bytes()
-          wanted=hashlib.sha256(local).hexdigest()
-          last=''
-          for attempt in range(36):
-              try:
-                  req=urllib.request.Request(
-                      f'{site}/unified_jobs.json?blackbox={time.time_ns()}',
-                      headers={'Cache-Control':'no-cache','User-Agent':'gg-edujob-blackbox/2'}
-                  )
-                  with urllib.request.urlopen(req, timeout=15) as r:
-                      body=r.read()
-                  last=hashlib.sha256(body).hexdigest()
-                  if last == wanted:
-                      print('Pages dataset matches current main', wanted)
-                      break
-              except Exception as exc:
-                  last=f'{type(exc).__name__}:{exc}'
-              print('Pages not current yet', attempt + 1, last)
+          files=('unified_jobs.json','index.html','direct-link-guard.js')
+          wanted={name: hashlib.sha256(Path(name).read_bytes()).hexdigest() for name in files}
+          last={}
+          for attempt in range(48):
+              all_match=True
+              for name in files:
+                  try:
+                      req=urllib.request.Request(
+                          f'{site}/{name}?blackbox={time.time_ns()}',
+                          headers={'Cache-Control':'no-cache','Pragma':'no-cache','User-Agent':'gg-edujob-blackbox/3'}
+                      )
+                      with urllib.request.urlopen(req, timeout=15) as r:
+                          body=r.read()
+                      last[name]=hashlib.sha256(body).hexdigest()
+                  except Exception as exc:
+                      last[name]=f'{type(exc).__name__}:{exc}'
+                  if last[name] != wanted[name]:
+                      all_match=False
+              if all_match:
+                  print('Pages data and UI assets match current main')
+                  print(wanted)
+                  break
+              print('Pages not current yet', attempt + 1, {'wanted':wanted,'last':last})
               time.sleep(10)
           else:
-              raise SystemExit(f'Pages never served current unified_jobs.json: wanted={wanted} last={last}')
+              raise SystemExit(f'Pages never served current data/UI assets: wanted={wanted} last={last}')
           PY
 
       - name: Mobile-browser black-box current deployed cards and verified destinations
@@ -148,7 +157,7 @@ jobs:
                       destinationFailures.push({id:row.id,reason:'lessoninfo-cold-destination-mismatch',final:p.url()});
                     }
                   } else if(!titleMatches(row.title,text)){
-                    destinationFailures.push({id:row.id,reason:'official-title-mismatch',final:p.url()});
+                    destinationFailures.push({id:row.id,reason:'external-title-mismatch',final:p.url()});
                   }
                 }catch(e){
                   destinationFailures.push({id:row.id,reason:`navigation:${e.name}`,detail:String(e.message||e).slice(0,300)});
