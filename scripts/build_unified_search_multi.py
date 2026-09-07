@@ -2,16 +2,20 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timedelta, timezone
+from difflib import SequenceMatcher
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import build_unified_search as base
+from cultural_foundation_common import alias_index as cf_alias_index, match_foundation as cf_match_foundation, norm as cf_norm
 from private_source_registry import PRIVATE_SOURCES, lessoninfo_culture_failclosed, publication_enabled, source_health
 from source_registry import official_source_count
 
 KST = timezone(timedelta(hours=9))
 _BASE_CANONICAL_URL = base.canonical_url
+_CF_NOISE = re.compile(r"진행중|공고|채용|모집|직원|신규|공개경쟁|공개|재단법인|\(재\)|\[재\]", re.I)
 
 
 def canonical_url_multi(raw):
@@ -56,9 +60,6 @@ def project_private_generic(job, source_name):
     if explicit_regions:
         row["regions"] = list(dict.fromkeys(explicit_regions)); row["region"] = str(job.get("region") or row["region"] or row["regions"][0])
 
-    # Lessoninfo culture links are authorized per posting, never per source surface. The independent
-    # cold verifier stores the exact destination it proved. Failed/unverified rows remain searchable
-    # but deliberately expose no URL, so the card renders "원문 링크 점검 중".
     if source_name == "레슨인포" and str(job.get("sourceSurface") or "") == "culture-arts":
         row["detailLinkVerified"] = job.get("detailLinkVerified")
         row["detailLinkReason"] = str(job.get("detailLinkReason") or job.get("detailLinkVerificationReason") or "")
@@ -67,56 +68,52 @@ def project_private_generic(job, source_name):
         row["resolvedUrlType"] = str(job.get("resolvedUrlType") or "")
         row["detailUrl"] = str(job.get("detailUrl") or job.get("unverifiedDetailUrl") or "")
         if lessoninfo_culture_failclosed(job):
-            row["url"] = ""
-            row["originalUrl"] = ""
-            row["detailLinkVerified"] = False
+            row["url"] = ""; row["originalUrl"] = ""; row["detailLinkVerified"] = False
         else:
             verified_url = str(job.get("verifiedUrl") or "")
-            row["url"] = verified_url
-            row["originalUrl"] = verified_url
-            row["detailLinkVerified"] = True
+            row["url"] = verified_url; row["originalUrl"] = verified_url; row["detailLinkVerified"] = True
 
     row["searchText"] = base.norm(" ".join(map(str, [row.get("school"), row.get("title"), row.get("subject"), row.get("region"), " ".join(row.get("regions") or []), row.get("province"), " ".join(row.get("provinces") or []), row.get("location"), row.get("source"), row.get("sourceSurfaceLabel"), row.get("type"), " ".join(row.get("categories") or [])])))
     return row
 
 
-def dedupe_multi_source(rows):
-    """Strong dedupe without silently deleting a stable ID from a different private source.
+def _cf_title_key(title, foundation_name=""):
+    text = _CF_NOISE.sub("", str(title or ""))
+    if foundation_name: text = text.replace(str(foundation_name), "")
+    return cf_norm(text)
 
-    Official-vs-private exact URL matches keep the official card and preserve the private identity
-    as an alias, matching the original policy. Same-source duplicate private rows can also collapse.
-    But two *different* private sources sharing an exact URL are both retained until an explicit
-    cross-source alias representation is available; preserving evidence is safer than dropping one
-    source identity and failing completeness.
-    """
-    out=[]
-    seen_id=set()
-    by_url={}
-    exact_url_groups=[]
+
+def _lessoninfo_replaced_by_primary(job, primary_rows, pairs):
+    if str(job.get("sourceSurface") or "") != "culture-arts": return False
+    inst = cf_match_foundation(" ".join(str(job.get(k) or "") for k in ("title", "school", "rawListText")), pairs)
+    if not inst: return False
+    a = _cf_title_key(job.get("title"), inst.get("name"))
+    if not a: return False
+    for row in primary_rows:
+        if row.get("foundationRegistryId") != inst.get("id"): continue
+        b = _cf_title_key(row.get("title"), row.get("foundationName") or inst.get("name"))
+        if not b: continue
+        if (a in b or b in a) and min(len(a), len(b)) >= 7: return True
+        if SequenceMatcher(None, a, b).ratio() >= 0.78: return True
+    return False
+
+
+def dedupe_multi_source(rows):
+    out=[]; seen_id=set(); by_url={}; exact_url_groups=[]
     for row in rows:
         sid=str(row.get("sourceIdentity") or "")
-        if sid and sid in seen_id:
-            continue
-        url=base.canonical_url(row.get("url"))
-        prior_rows=by_url.get(url,[]) if url else []
-
+        if sid and sid in seen_id: continue
+        url=base.canonical_url(row.get("url")); prior_rows=by_url.get(url,[]) if url else []
         official_prior=next((p for p in prior_rows if p.get("feedKind")=="official"),None)
         if official_prior is not None and row.get("feedKind")=="private":
-            official_prior.setdefault("alsoSeenOn",[]).append({
-                "source":row.get("source"),
-                "sourceIdentity":sid,
-                "privateUrl":row.get("originalUrl") or row.get("url"),
-                "evidence":"exact-same-detail-url",
-            })
+            official_prior.setdefault("alsoSeenOn",[]).append({"source":row.get("source"),"sourceIdentity":sid,"privateUrl":row.get("originalUrl") or row.get("url"),"evidence":"exact-same-detail-url"})
             exact_url_groups.append([official_prior.get("sourceIdentity"),sid])
             if sid: seen_id.add(sid)
             continue
-
         same_source_prior=next((p for p in prior_rows if p.get("feedKind")==row.get("feedKind") and p.get("source")==row.get("source")),None)
         if same_source_prior is not None:
             if sid: seen_id.add(sid)
             continue
-
         out.append(row)
         if sid: seen_id.add(sid)
         if url: by_url.setdefault(url,[]).append(row)
@@ -127,10 +124,24 @@ def main():
     official_data = load("jobs.json", {}); official_jobs = rows_from(official_data)
     ledger = load("source_id_ledger.json", {"entries": {}}); protected = base.latest_official_ids(ledger)
     projected_official = [base.project_official(j) for j in official_jobs if base.official_current(j, protected)]
-    all_private=[]; private_meta={}; canonical_private_total=0; enabled_private_sources=0; degraded_private_sources=[]
+
+    cf_spec = next((x for x in PRIVATE_SOURCES if x.get("key") == "culturefoundations"), None)
+    cf_rows = rows_from(load((cf_spec or {}).get("jobs", "cultural_foundation_jobs.json"), []))
+    cf_report = load((cf_spec or {}).get("report", "cultural_foundation_source_report.json"), {})
+    cf_healthy = bool(cf_spec and publication_enabled(cf_report) and source_health(cf_spec, cf_report, None))
+    cf_pairs = cf_alias_index() if cf_healthy else []
+
+    all_private=[]; private_meta={}; canonical_private_total=0; enabled_private_sources=0; degraded_private_sources=[]; lessoninfo_demoted=0
     for spec in PRIVATE_SOURCES:
         pdata=load(spec["jobs"], []); preport=load(spec["report"], {}); dreport=load(spec["detail_report"], {}) if spec.get("detail_report") else None
-        jobs=rows_from(pdata); projected=[project_private_generic(j,spec["name"]) for j in jobs if base.private_current(j)]
+        jobs=rows_from(pdata)
+        if spec.get("key") == "lessoninfo" and cf_healthy:
+            kept=[]
+            for job in jobs:
+                if _lessoninfo_replaced_by_primary(job, cf_rows, cf_pairs): lessoninfo_demoted += 1
+                else: kept.append(job)
+            jobs=kept
+        projected=[project_private_generic(j,spec["name"]) for j in jobs if base.private_current(j)]
         configured_enabled=publication_enabled(preport); healthy=source_health(spec,preport,dreport); effective_enabled=configured_enabled and healthy
         if effective_enabled:
             enabled_private_sources += 1; canonical_private_total += len(jobs); all_private.extend(projected)
@@ -152,7 +163,7 @@ def main():
         raise SystemExit(f"jobs.json officialSourceCount={embedded_official_sources} does not match sources.json={expected_official_sources}")
     payload={"updatedAt":datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),"dataset":"unified-search-v3-multi-private","officialSourceCount":expected_official_sources,"totalSourceCount":expected_official_sources+enabled_private_sources,"sources":official_data.get("sources",{}) if isinstance(official_data,dict) else {},"privateSources":private_meta,"counts":{"total":len(rows),**per_feed,"privateSourceOccurrences":{spec["key"]:private_meta[spec["key"]]["count"] for spec in PRIVATE_SOURCES}},"jobs":rows}
     Path("unified_jobs.next.json").write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
-    report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"policy":"unified-search-v3-multi-private-strong-evidence-only","canonicalOfficialJobs":len(official_jobs),"canonicalPrivateJobs":canonical_private_total,"selectedOfficialJobs":len(projected_official),"selectedPrivateJobs":len(all_private),"publishedJobs":len(rows),"perFeed":per_feed,"privateSources":private_meta,"protectedOfficialIds":len(protected),"explicitOfficialAliasGroupsMerged":len(explicit_aliases),"exactUrlAliasGroupsMerged":len(exact_url_groups),"ambiguousExplicitOfficialLinks":len(ambiguous_aliases),"semanticDuplicatePolicy":"same-source/exact-official aliases only; preserve cross-private identities","degradedPrivateSources":degraded_private_sources,"allPublicationEnabledSourcesHealthy":not degraded_private_sources}
+    report={"generatedAt":datetime.now(KST).isoformat(timespec="seconds"),"policy":"unified-search-v3-multi-private-strong-evidence-only","canonicalOfficialJobs":len(official_jobs),"canonicalPrivateJobs":canonical_private_total,"selectedOfficialJobs":len(projected_official),"selectedPrivateJobs":len(all_private),"publishedJobs":len(rows),"perFeed":per_feed,"privateSources":private_meta,"protectedOfficialIds":len(protected),"explicitOfficialAliasGroupsMerged":len(explicit_aliases),"exactUrlAliasGroupsMerged":len(exact_url_groups),"ambiguousExplicitOfficialLinks":len(ambiguous_aliases),"lessoninfoFoundationRowsDemoted":lessoninfo_demoted,"lessoninfoFoundationDemotionPolicy":"only when same foundation/title is represented by healthy primary cultural-foundation feed","semanticDuplicatePolicy":"same-source/exact-official aliases only; preserve cross-private identities","degradedPrivateSources":degraded_private_sources,"allPublicationEnabledSourcesHealthy":not degraded_private_sources}
     Path("unified_search_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report,ensure_ascii=False,indent=2))
 
