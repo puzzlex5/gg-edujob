@@ -14,6 +14,11 @@ ROUTES = Path("cultural_foundation_routes.json")
 RESULT_WORDS = re.compile(r"(최종\s*합격|합격자|서류\s*전형|면접\s*전형|임용\s*후보|전형\s*결과|결과\s*공고)", re.I)
 JOB_WORDS = re.compile(r"(채용|직원\s*모집|근로자\s*모집|인력\s*모집|사무국장\s*모집|임원\s*공개모집)", re.I)
 DATE_RE = re.compile(r"(20\d{2})[.\-/년\s]+(\d{1,2})[.\-/월\s]+(\d{1,2})")
+EXTRA_ALIASES = {
+    "gyeonggi:pocheon": ["포천문화관광재단", "(재)포천문화관광재단", "재단법인 포천문화관광재단"],
+    "gyeonggi:yeoju": ["여주세종문화관광재단", "여주세종문화재단"],
+    "gyeonggi:hwaseong": ["화성시문화관광재단", "화성시문화재단", "화성문화재단"],
+}
 
 
 def norm(text: str) -> str:
@@ -33,6 +38,10 @@ def load_foundations() -> list[dict]:
         overlay = routes.get(str(row.get("id") or ""), {})
         row["homepage"] = str(overlay.get("homepage") or row.get("homepage") or "").strip()
         row["officialRecruitmentUrl"] = str(overlay.get("recruitmentUrl") or row.get("officialRecruitmentUrl") or "").strip()
+        extras = EXTRA_ALIASES.get(str(row.get("id") or ""), [])
+        row["aliases"] = list(dict.fromkeys([*(row.get("aliases") or []), *extras]))
+        if row.get("id") == "gyeonggi:pocheon":
+            row["canonicalCurrentName"] = "포천문화관광재단"
         out.append(row)
     return out
 
@@ -41,7 +50,7 @@ def alias_index(foundations: list[dict] | None = None):
     foundations = foundations or load_foundations()
     pairs = []
     for row in foundations:
-        for value in [row.get("name"), *(row.get("aliases") or [])]:
+        for value in [row.get("name"), row.get("canonicalCurrentName"), *(row.get("aliases") or [])]:
             n = norm(value)
             if n:
                 pairs.append((n, row))
