@@ -2,6 +2,8 @@ name: Cultural foundation coverage
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '25 22 * * *'
   push:
     branches: [main]
     paths:
@@ -9,7 +11,9 @@ on:
       - 'scripts/validate_cultural_foundation_registry.py'
       - 'scripts/probe_cultural_sources.py'
       - 'scripts/probe_cleaneye_api.py'
+      - 'scripts/crawl_cleaneye_foundation_jobs.py'
       - 'scripts/crawl_ancf_foundation_jobs.py'
+      - 'scripts/audit_artmore_foundations.py'
       - '.github/workflows/cultural-foundation-coverage.yml'
 
 permissions:
@@ -22,7 +26,7 @@ concurrency:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7
         with:
@@ -38,15 +42,21 @@ jobs:
         run: python scripts/probe_cultural_sources.py
       - name: Probe CleanEye recruitment API
         run: python scripts/probe_cleaneye_api.py
+      - name: Collect current CleanEye foundation jobs
+        run: python scripts/crawl_cleaneye_foundation_jobs.py
       - name: Collect ANCF foundation cross-check jobs
         run: python scripts/crawl_ancf_foundation_jobs.py
+      - name: Audit ArtMore against foundation registry
+        run: python scripts/audit_artmore_foundations.py
       - name: Commit audit datasets and reports
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json ancf_foundation_jobs.json ancf_foundation_report.json
+          git add cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json
           if ! git diff --cached --quiet; then
             git commit -m 'Audit cultural foundation source surfaces'
-            git pull --rebase origin main
-            git push origin HEAD:main
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              sleep $((i*5))
+            done
           fi
