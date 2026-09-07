@@ -1,0 +1,166 @@
+name: Black-box deployed Lessoninfo culture links
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Unified recruitment search']
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: metro-edujob-lessoninfo-deployed-blackbox
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Synchronize current main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Wait until Pages serves the current unified dataset
+        env:
+          SITE: https://puzzlex5.github.io/gg-edujob
+        run: |
+          python - <<'PY'
+          import hashlib, os, time, urllib.request
+          from pathlib import Path
+
+          site=os.environ['SITE'].rstrip('/')
+          local=Path('unified_jobs.json').read_bytes()
+          wanted=hashlib.sha256(local).hexdigest()
+          last=''
+          for attempt in range(36):
+              try:
+                  req=urllib.request.Request(
+                      f'{site}/unified_jobs.json?blackbox={time.time_ns()}',
+                      headers={'Cache-Control':'no-cache','User-Agent':'gg-edujob-blackbox/2'}
+                  )
+                  with urllib.request.urlopen(req, timeout=15) as r:
+                      body=r.read()
+                  last=hashlib.sha256(body).hexdigest()
+                  if last == wanted:
+                      print('Pages dataset matches current main', wanted)
+                      break
+              except Exception as exc:
+                  last=f'{type(exc).__name__}:{exc}'
+              print('Pages not current yet', attempt + 1, last)
+              time.sleep(10)
+          else:
+              raise SystemExit(f'Pages never served current unified_jobs.json: wanted={wanted} last={last}')
+          PY
+
+      - name: Mobile-browser black-box current deployed cards and verified destinations
+        env:
+          SITE: https://puzzlex5.github.io/gg-edujob
+        run: |
+          node <<'NODE'
+          const { chromium, devices } = require('playwright');
+          const SITE=(process.env.SITE||'').replace(/\/$/,'');
+          const compact=s=>String(s||'').replace(/^\(?\s*복사\s*\)?\s*/i,'').replace(/[^0-9A-Za-z가-힣]+/g,'').toLowerCase();
+          const generic=new Set(['채용','공고','모집','직원','강사','기간제','계약직','정규직','2026','2025','지원','접수']);
+          const tokens=s=>(String(s||'').match(/[0-9A-Za-z가-힣]{2,}/g)||[]).map(x=>x.toLowerCase()).filter(x=>!generic.has(x));
+          const titleMatches=(expected,actual)=>{
+            const e=compact(expected), a=compact(String(actual||'').slice(0,16000));
+            if(e.length>=6 && a.includes(e)) return true;
+            const ts=[...new Set(tokens(expected))];
+            if(!ts.length) return false;
+            const hits=ts.filter(t=>a.includes(t)).length;
+            const required=ts.length===1 && ts[0].length>=5 ? 1 : Math.max(2,Math.ceil(ts.length/2));
+            return hits>=required;
+          };
+          const listPath=p=>['/culture-jobs/list.php','/culture-jobs/','/culture-jobs'].includes(String(p||'').toLowerCase());
+
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({...devices['Pixel 7'], locale:'ko-KR', timezoneId:'Asia/Seoul'});
+            await page.goto(`${SITE}/?blackbox=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:45000});
+            await page.waitForFunction(()=>typeof window.postingLink==='function',{timeout:20000});
+            const result=await page.evaluate(async()=>{
+              const r=await fetch(`unified_jobs.json?blackbox=${Date.now()}`,{cache:'no-store'});
+              if(!r.ok) throw new Error(`unified_jobs HTTP ${r.status}`);
+              const data=await r.json();
+              const rows=(data.jobs||[]).filter(j=>j.source==='레슨인포'&&j.sourceSurface==='culture-arts');
+              const failures=[];
+              for(const j of rows){
+                const link=window.postingLink(j);
+                if(j.sourceIdentity==='culture:id:94673'){
+                  if(link) failures.push({id:j.sourceIdentity,reason:'known-bad-sentinel-clickable',link});
+                  continue;
+                }
+                if(j.detailLinkVerified===true){
+                  if(!j.verifiedUrl || link!==j.verifiedUrl) failures.push({id:j.sourceIdentity,reason:'verified-link-mismatch',link,verifiedUrl:j.verifiedUrl});
+                }else if(link){
+                  failures.push({id:j.sourceIdentity,reason:'unverified-link-clickable',link});
+                }
+              }
+              return {
+                updatedAt:data.updatedAt,
+                total:rows.length,
+                verified:rows.filter(j=>j.detailLinkVerified===true).length,
+                pending:rows.filter(j=>j.detailLinkVerified===false).length,
+                missing:rows.filter(j=>![true,false].includes(j.detailLinkVerified)).length,
+                failures,
+                verifiedRows:rows.filter(j=>j.detailLinkVerified===true).map(j=>({id:j.sourceIdentity,title:j.title,url:j.verifiedUrl,resolvedUrlType:j.resolvedUrlType}))
+              };
+            });
+            if(result.missing!==0 || result.failures.length){
+              console.error(JSON.stringify(result,null,2));
+              throw new Error(`deployed card contract failed missing=${result.missing} failures=${result.failures.length}`);
+            }
+
+            let next=0, destinationFailures=[];
+            const workers=Array.from({length:4},async()=>{
+              for(;;){
+                const i=next++;
+                if(i>=result.verifiedRows.length) return;
+                const row=result.verifiedRows[i];
+                const context=await browser.newContext({...devices['Pixel 7'], locale:'ko-KR', timezoneId:'Asia/Seoul'});
+                const p=await context.newPage();
+                try{
+                  const resp=await p.goto(row.url,{waitUntil:'domcontentloaded',timeout:20000});
+                  const text=await p.locator('body').innerText({timeout:5000}).catch(()=> '');
+                  if(resp && resp.status()>=400){
+                    destinationFailures.push({id:row.id,reason:`http-${resp.status()}`,final:p.url()});
+                  } else if(row.resolvedUrlType==='lessoninfo'){
+                    const u=new URL(p.url());
+                    const want=new URL(row.url).searchParams.get('id');
+                    if(listPath(u.pathname)||u.pathname.toLowerCase()!=='/culture-jobs/detail.php'||u.searchParams.get('id')!==want||!titleMatches(row.title,text)){
+                      destinationFailures.push({id:row.id,reason:'lessoninfo-cold-destination-mismatch',final:p.url()});
+                    }
+                  } else if(!titleMatches(row.title,text)){
+                    destinationFailures.push({id:row.id,reason:'official-title-mismatch',final:p.url()});
+                  }
+                }catch(e){
+                  destinationFailures.push({id:row.id,reason:`navigation:${e.name}`,detail:String(e.message||e).slice(0,300)});
+                }finally{
+                  await context.close();
+                }
+              }
+            });
+            await Promise.all(workers);
+            await browser.close();
+            const summary={updatedAt:result.updatedAt,total:result.total,verified:result.verified,pending:result.pending,missing:result.missing,destinationFailures};
+            console.log(JSON.stringify(summary,null,2));
+            if(destinationFailures.length) throw new Error(`verified deployed destinations failed=${destinationFailures.length}`);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
