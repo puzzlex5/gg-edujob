@@ -55,13 +55,27 @@ def project_private_generic(job, source_name):
     explicit_regions = [str(x) for x in (job.get("regions") or []) if str(x)]
     if explicit_regions:
         row["regions"] = list(dict.fromkeys(explicit_regions)); row["region"] = str(job.get("region") or row["region"] or row["regions"][0])
-    # Lessoninfo culture detail.php?id=... is not a proven persistent cold-browser route.
-    # Preserve the stable row and searchable fields, but make the unified projection fail closed.
-    if source_name == "레슨인포" and lessoninfo_culture_failclosed(job):
-        row["url"] = ""
-        row["originalUrl"] = ""
-        row["detailLinkVerified"] = False
-        row["detailLinkReason"] = "lessoninfo-culture-cold-route-unverified"
+
+    # Lessoninfo culture links are authorized per posting, never per source surface. The independent
+    # cold verifier stores the exact destination it proved. Failed/unverified rows remain searchable
+    # but deliberately expose no URL, so the card renders "원문 링크 점검 중".
+    if source_name == "레슨인포" and str(job.get("sourceSurface") or "") == "culture-arts":
+        row["detailLinkVerified"] = job.get("detailLinkVerified")
+        row["detailLinkReason"] = str(job.get("detailLinkReason") or job.get("detailLinkVerificationReason") or "")
+        row["verifiedAt"] = str(job.get("verifiedAt") or "")
+        row["verifiedUrl"] = str(job.get("verifiedUrl") or "")
+        row["resolvedUrlType"] = str(job.get("resolvedUrlType") or "")
+        row["detailUrl"] = str(job.get("detailUrl") or job.get("unverifiedDetailUrl") or "")
+        if lessoninfo_culture_failclosed(job):
+            row["url"] = ""
+            row["originalUrl"] = ""
+            row["detailLinkVerified"] = False
+        else:
+            verified_url = str(job.get("verifiedUrl") or "")
+            row["url"] = verified_url
+            row["originalUrl"] = verified_url
+            row["detailLinkVerified"] = True
+
     row["searchText"] = base.norm(" ".join(map(str, [row.get("school"), row.get("title"), row.get("subject"), row.get("region"), " ".join(row.get("regions") or []), row.get("province"), " ".join(row.get("provinces") or []), row.get("location"), row.get("source"), row.get("sourceSurfaceLabel"), row.get("type"), " ".join(row.get("categories") or [])])))
     return row
 
