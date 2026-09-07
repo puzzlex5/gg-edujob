@@ -50,7 +50,7 @@ jobs:
           from pathlib import Path
 
           site=os.environ['SITE'].rstrip('/')
-          files=('unified_jobs.json','index.html','direct-link-guard.js')
+          files=('unified_jobs.json','index.html','direct-link-guard.js','mobile-ui.js')
           wanted={name: hashlib.sha256(Path(name).read_bytes()).hexdigest() for name in files}
           last={}
           for attempt in range(48):
@@ -59,7 +59,7 @@ jobs:
                   try:
                       req=urllib.request.Request(
                           f'{site}/{name}?blackbox={time.time_ns()}',
-                          headers={'Cache-Control':'no-cache','Pragma':'no-cache','User-Agent':'gg-edujob-blackbox/3'}
+                          headers={'Cache-Control':'no-cache','Pragma':'no-cache','User-Agent':'gg-edujob-blackbox/4'}
                       )
                       with urllib.request.urlopen(req, timeout=15) as r:
                           body=r.read()
@@ -103,7 +103,10 @@ jobs:
             const browser=await chromium.launch({headless:true});
             const page=await browser.newPage({...devices['Pixel 7'], locale:'ko-KR', timezoneId:'Asia/Seoul'});
             await page.goto(`${SITE}/?blackbox=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:45000});
-            await page.waitForFunction(()=>typeof window.postingLink==='function',{timeout:20000});
+            // Test the final runtime function, not the inline base function before deferred wrappers.
+            // Defer scripts execute in document order: direct-link-guard then mobile-ui. This marker
+            // therefore proves all link-policy wrappers are installed before the contract is checked.
+            await page.waitForFunction(()=>window.__edujobMobileUiReady==='20260907d'&&typeof window.postingLink==='function',{timeout:20000});
             const result=await page.evaluate(async()=>{
               const r=await fetch(`unified_jobs.json?blackbox=${Date.now()}`,{cache:'no-store'});
               if(!r.ok) throw new Error(`unified_jobs HTTP ${r.status}`);
@@ -168,7 +171,7 @@ jobs:
             });
             await Promise.all(workers);
             await browser.close();
-            const summary={updatedAt:result.updatedAt,total:result.total,verified:result.verified,pending:result.pending,missing:result.missing,destinationFailures};
+            const summary={updatedAt:result.updatedAt,total:result.total,verified:result.verified,pending:result.pending,missing:result.missing,cardFailures:result.failures.length,destinationFailures};
             console.log(JSON.stringify(summary,null,2));
             if(destinationFailures.length) throw new Error(`verified deployed destinations failed=${destinationFailures.length}`);
           })().catch(e=>{console.error(e);process.exit(1)});
