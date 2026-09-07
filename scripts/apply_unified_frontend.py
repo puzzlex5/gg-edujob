@@ -42,6 +42,17 @@ if old_filter in s:
 elif new_filter not in s:
     raise SystemExit('province filter signature changed; refusing unsafe multi-province patch')
 
+# Enforce exact per-post Lessoninfo culture authorization in the base postingLink itself.
+# This removes any load-order/race dependency on the deferred defense-in-depth guard: even
+# before auxiliary scripts execute, unverified culture rows are non-clickable and verified
+# rows resolve only to the verifier-produced verifiedUrl.
+old_posting="function postingLink(j){const board=j.boardUrl||'';const raw=j.url||'';"
+new_posting="function postingLink(j){if(j&&j.detailLinkVerified===false)return '';if(j&&j.source==='레슨인포'&&j.sourceSurface==='culture-arts'){if(j.sourceIdentity==='culture:id:94673'||j.detailLinkVerified!==true)return '';return String(j.verifiedUrl||'').trim()}const board=j.boardUrl||'';const raw=j.url||'';"
+if old_posting in s:
+    s=s.replace(old_posting,new_posting,1)
+elif new_posting not in s:
+    raise SystemExit('postingLink signature changed; refusing unsafe culture-link gate patch')
+
 # Deadline sort policy B keeps actual imminent deadlines first, but no longer buries a
 # newly registered official posting solely because its source does not expose applyEnd.
 # No source date is synthesized or mutated; the ranking uses applyEnd/registered read-only.
