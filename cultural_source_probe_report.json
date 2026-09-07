@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T22:59:51+09:00",
+  "generatedAt": "2026-09-07T23:03:34+09:00",
   "targets": {
     "cleaneye": {
       "url": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
@@ -7,6 +7,7 @@
       "finalUrl": "https://job.cleaneye.go.kr/user/ypRecruitment.do",
       "contentType": "text/html; charset=UTF-8",
       "title": "채용정보 검색 : 클린아이 잡플러스, 지방 공공기관 채용 정보 사이트",
+      "tlsVerified": true,
       "forms": [
         {
           "id": "mainSearchForm",
@@ -156,17 +157,481 @@
         "https://job.cleaneye.go.kr/js/common.js",
         "https://job.cleaneye.go.kr/js/cleaniCommon.js",
         "https://job.cleaneye.go.kr/js/jquery.datetimepicker.full.js"
+      ],
+      "scriptHits": {
+        "https://job.cleaneye.go.kr/SBUx/SBUx.js": [
+          "eval(function(p,a,c,k,e,d){e=function(c){return(c<a?\"\":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\\\b'+e(c)+'\\\\b','g'),k[c]);return p;}('r(m==K){J m=2u||{};(X(){m.N=\"\";m.Y=4z;m.5J=\"5M-8\";m.9i=\"2.0.9j\";m.3j=\"5t\";3d{r(m){r(!m.S){m.N=\\'J 2u={ S : \"\",...}}\\'}r(m.N==\"\"){3d{r(m.S.9g(m.S.1k-1,m.S.1k)==\"/\"){m.S=m.S}y{m.S=m.S+\"/\"}}3a(b){m.S=\"./\"}r(!m.Y){m.N=\"5N 9h 9m\";J a=\\'<1W 2S=\"\\'+m.S+\\'l/3X/9n.l\" 1T=\"1V/2Q\"><\\\\/1W>\\\\n<1W 2S=\"\\'+m.S+\\'l/3X/2u.l\" 1T=\"1V/2Q\"><\\\\/1W>\\\\n\\';1b.2V(a)}}y{V(\"9k 9l 9f : \"+m.N)}}}3a(b){V(\"8Z : \"+m.N)}5I{m.N=1C}}())}(X(){m.o={};m.9a={};m.B={};m.t={8X:{3U:\"3U\",3V:\"3V\",46:\"46\",47:\"47\",3T:\"3T\",3N:\"3N\",3L:\"3L\",3M:\"3M\",3S:\"3S\",4j:\"4j\",4i:\"4i\",4n:\"4n\",4o:\"4o\",V:\"V\",U:\"U\",38:\"38\",4l:\"4l\",4m:\"4m\",4g:\"4g\",4a:\"4a\",4b:\"4b\",4f:\"4f\",4c:\"4c\",3o:\"3o\",3l:\"3l\",3r:\"3r\"},D:{0:\"9x\",6:\"9r\",7:\"9s\",8:\"5"
+        ],
+        "https://job.cleaneye.go.kr/js/cleaniCommon.js": [
+          "//alert('시스템점검으로 인하여 파일을 다운 받으실수 없습니다. \\n하단의 해당 기관 홈페이지의 채용정보에서 첨부파일을 받아주시길 바랍니다.');",
+          "$.ajax({",
+          "$.ajax({",
+          "$.ajax({",
+          "$.ajax({"
+        ]
+      },
+      "inlineScriptHits": [
+        "var msgWinTitle = '채용정보 검색';",
+        "var entRecruitCombo = [];\t\t\t// 모집분야 콤보",
+        "var employGbCombo = [];\t\t\t\t// 채용구분 콤보",
+        "var statusCombo = [];\t\t\t\t// 채용마감여부 콤보",
+        "//sw : 검색조건 ajax 처리 후, setting",
+        "unfoldItem('entRecruit');\t// 모집분야 항목 펼치기",
+        "foldItem('entRecruit');\t\t// 모집분야 항목 접기",
+        "entRecruitCombo = gfn_CodeList('2', 'P000001', '', '', '', '', '', '', '');",
+        "//채용구분 콤보",
+        "//채용마감여부 콤보 : 전체, 모집예정, 모집중, 모집마감",
+        "{'itemName' : 'entRecruit', 'comboName' : entRecruitCombo, 'koreanName' : '모집분야'},",
+        "{'itemName' : 'employGb', 'comboName' : employGbCombo, 'koreanName' : '채용구분'},",
+        "foldItem('entRecruit');\t\t// 모집분야",
+        "{'itemName' : 'status', 'comboName' : statusCombo, 'koreanName' : '채용마감여부'}",
+        "if(itemName == \"entRecruit\" || itemName == \"workPlace\" || itemName == \"entKind\") {",
+        "if(itemName === \"entRecruit\") {\t\t\t\t//모집분야",
+        "if(itemName === \"entRecruit\") {\t\t\t\t//모집분야",
+        "if(itemName === \"entRecruit\") {\t\t\t\t//모집분야",
+        "var entRecruitList = [];\t//모집분야",
+        "var employGbList = [];\t\t//채용구분",
+        "var status = '';\t\t\t//채용마감여부",
+        "{'itemName' : 'entRecruit', 'itemValue' : entRecruitList},",
+        "$.ajax({",
+        "url : \"/user/selectYpRecruitment.do\",",
+        "\"entRecruitList\" : entRecruitList,\t\t\t//모집분야",
+        "\"employGbList\" : employGbList,\t\t\t\t//채용구분",
+        "\"status\" : status,\t\t\t\t\t\t\t//채용마감여부",
+        "var $thead = '<caption>채용정보 검색 결과 - 기관명, 소재지, 채용제목, 고용조건, 모집기간, 상태로 구성</caption>'",
+        "+'\t\t<th id=\"ccc\" scope=\"col\">채용제목</th>'",
+        "empyearArr[i] = resultList[i].empyear;\t//채용연도",
+        "//채용제목 & 채용구분 td",
+        "empyearArr[i] = resultList[i].empyear;\t//채용연도",
+        "//채용제목 div",
+        "//채용구분 div",
+        "//새창에서 채용정보 상세조회",
+        "frm.empyear.value = empyear;\t\t//채용연도",
+        "frm.action = \"/user/ypCareersData.do\";",
+        "document.getElementById(\"searchKeyword\").value = \"\";",
+        "document.getElementById(\"searchKeyword\").value = document.getElementById(\"entName\").value;",
+        "var searchKeyword = document.getElementById(\"searchKeyword\").value; \t\t\t\t//검색명",
+        "searchKeyword = searchKeyword.replace(/(^\\s*)|(\\s*$)/gi, \"\");\t//앞, 뒤 공백 제거",
+        "document.getElementById(\"searchKeyword\").value = searchKeyword;",
+        "$.ajax({",
+        "\"searchKeyword\" : searchKeyword,\t\t\t//검색명",
+        "document.getElementById(\"entName\").value = document.getElementById(\"searchKeyword\").value;"
+      ],
+      "rawEndpointCandidates": [
+        "/search.do",
+        "/siteGuide/ypCompGuide.do",
+        "/siteGuide/ypCopyrightPolicy.do",
+        "/siteGuide/ypIntroduce.do",
+        "/user/selectEntNameList.do",
+        "/user/selectYpRecruitment.do",
+        "/user/ypCareersData.do",
+        "/user/ypNoticeList.do",
+        "/user/ypPublicCorporation.do",
+        "/user/ypRecruitment.do"
       ]
+    },
+    "ancf": {
+      "url": "https://www.ancf.or.kr/",
+      "status": 200,
+      "finalUrl": "https://www.ancf.or.kr/",
+      "contentType": "text/html; charset=utf-8",
+      "title": "전국지역문화재단연합회",
+      "tlsVerified": false,
+      "forms": [],
+      "anchors": [
+        {
+          "text": "재단 현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "기초지역문화재단 현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "기초지역문화재단 현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "사람 [(재)인천서해구문화재단] 임원(비상임이사) 공개 모집 2026.09.01 -2026.09.16 View More",
+          "href": "https://www.ancf.or.kr/p/6a9a2143760de6acd1a1f194"
+        },
+        {
+          "text": "사람 [(재)순천문화재단] 2026년 직원(사무국장) 채용 공고 2026.09.07 -2026.09.11 View More",
+          "href": "https://www.ancf.or.kr/p/6a9511ab760de6acd1a190ec"
+        },
+        {
+          "text": "사람 [(재)남해군관광문화재단] 대표이사 공개 모집 안내 2026.08.27 -2026.09.11 View More",
+          "href": "https://www.ancf.or.kr/p/6a94ccbe760de6acd1a18588"
+        },
+        {
+          "text": "사람 [(재)논산문화관광재단] 2026년 제3차 직원 공개채용 공고 2026.08.24 -2026.09.07 View More",
+          "href": "https://www.ancf.or.kr/p/6a8e3718760de6acd1a11dba"
+        },
+        {
+          "text": "가입절차 및 문의",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람 [(재)인천서해구문화재단] 임원(비상임이사) 공개 모집 2026.09.01 -2026.09.16",
+          "href": "https://www.ancf.or.kr/p/6a9a2143760de6acd1a1f194"
+        },
+        {
+          "text": "사람 [(재)순천문화재단] 2026년 직원(사무국장) 채용 공고 2026.09.07 -2026.09.11",
+          "href": "https://www.ancf.or.kr/p/6a9511ab760de6acd1a190ec"
+        },
+        {
+          "text": "사람 [(재)남해군관광문화재단] 대표이사 공개 모집 안내 2026.08.27 -2026.09.11",
+          "href": "https://www.ancf.or.kr/p/6a94ccbe760de6acd1a18588"
+        },
+        {
+          "text": "사람 [(재)천안문화재단] 임원(대표이사, 비상임 이사, 비상임 감사) 공개 모집 2026.08.27 -2026.09.02",
+          "href": "https://www.ancf.or.kr/p/6a8e3aaf760de6acd1a11e27"
+        },
+        {
+          "text": "가입절차 및 문의",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        }
+      ],
+      "scripts": [
+        "https://code.jquery.com/jquery-3.6.0.js",
+        "https://code.jquery.com/ui/1.13.2/jquery-ui.js",
+        "https://www.ancf.or.kr/asset/common/js/js.use9.kr.js",
+        "https://www.ancf.or.kr/asset/common/js/swiper.min.js",
+        "https://www.ancf.or.kr/asset/common/js/printThis.js",
+        "https://dapi.kakao.com/v2/maps/sdk.js?appkey=26123c55d3963f9a343348698f693825",
+        "https://wcs.naver.net/wcslog.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js",
+        "https://www.ancf.or.kr/asset/common/js/NACF.js"
+      ],
+      "scriptHits": {
+        "https://code.jquery.com/jquery-3.6.0.js": [
+          "// Optional AJAX dependency, but won't run scripts if not present",
+          "* 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)",
+          "// Base \"constructor\" for jQuery.ajaxPrefilter and jQuery.ajaxTransport",
+          "// A special extend for ajax options",
+          "function ajaxExtend( target, src ) {",
+          "flatOptions = jQuery.ajaxSettings.flatOptions || {};",
+          "/* Handles responses to an ajax request:",
+          "function ajaxHandleResponses( s, jqXHR, responses ) {",
+          "function ajaxConvert( s, response, jqXHR, isSuccess ) {",
+          "ajaxSettings: {",
+          "// deep extended (see ajaxExtend)",
+          "// with both ajaxSettings and settings fields.",
+          "// If target is omitted, writes into ajaxSettings.",
+          "ajaxSetup: function( target, settings ) {",
+          "ajaxExtend( ajaxExtend( target, jQuery.ajaxSettings ), settings ) :",
+          "// Extending ajaxSettings",
+          "ajaxExtend( jQuery.ajaxSettings, target );",
+          "ajaxPrefilter: addToPrefiltersOrTransports( prefilters ),",
+          "ajaxTransport: addToPrefiltersOrTransports( transports ),",
+          "ajax: function( url, options ) {",
+          "s = jQuery.ajaxSetup( {}, options ),",
+          "jQuery.event.trigger( \"ajaxStart\" );",
+          "globalEventContext.trigger( \"ajaxSend\", [ jqXHR, s ] );",
+          "// If request was aborted inside ajaxSend, stop there",
+          "response = ajaxHandleResponses( s, jqXHR, responses );",
+          "response = ajaxConvert( s, response, jqXHR, isSuccess );",
+          "globalEventContext.trigger( isSuccess ? \"ajaxSuccess\" : \"ajaxError\",",
+          "globalEventContext.trigger( \"ajaxComplete\", [ jqXHR, s ] );",
+          "// Handle the global AJAX counter",
+          "jQuery.event.trigger( \"ajaxStop\" );",
+          "return jQuery.ajax( jQuery.extend( {",
+          "jQuery.ajaxPrefilter( function( s ) {",
+          "return jQuery.ajax( {",
+          "// Make this explicit, since user can override this through ajaxSetup (#11264)",
+          "jQuery.ajaxSettings.xhr = function() {",
+          "xhrSupported = jQuery.ajaxSettings.xhr();",
+          "support.ajax = xhrSupported = !!xhrSupported;",
+          "jQuery.ajaxTransport( function( options ) {",
+          "// (it can always be set on a per-request basis or even using ajaxSetup)",
+          "jQuery.ajaxPrefilter( function( s ) {",
+          "jQuery.ajaxSetup( {",
+          "jQuery.ajaxPrefilter( \"script\", function( s ) {",
+          "jQuery.ajaxTransport( \"script\", function( s ) {",
+          "// Use native DOM manipulation to avoid our domManip AJAX trickery",
+          "jQuery.ajaxSetup( {",
+          "jQuery.ajaxPrefilter( \"json jsonp\", function( s, originalSettings, jqXHR ) {",
+          "jQuery.ajax( {",
+          "// user can override it through ajaxSetup method",
+          "\"ajaxStart\",",
+          "\"ajaxStop\",",
+          "\"ajaxComplete\",",
+          "\"ajaxError\",",
+          "\"ajaxSuccess\",",
+          "\"ajaxSend\""
+        ],
+        "https://code.jquery.com/ui/1.13.2/jquery-ui.js": [
+          "that.xhr = $.ajax( {",
+          "this.xhr = $.ajax( this._ajaxSettings( anchor, event, eventData ) );",
+          "// but as of 1.8, $.ajax() always returns a jqXHR object.",
+          "_ajaxSettings: function( anchor, event, eventData ) {",
+          "// Strip any hash that exists to prevent errors with the Ajax request",
+          "$.extend( { jqXHR: jqXHR, ajaxSettings: settings }, eventData ) );",
+          "// IE may instantly serve a cached response for ajax requests"
+        ]
+      },
+      "inlineScriptHits": [],
+      "rawEndpointCandidates": []
+    },
+    "ancf_members": {
+      "url": "https://www.ancf.or.kr/members/state",
+      "status": 200,
+      "finalUrl": "https://www.ancf.or.kr/members/state",
+      "contentType": "text/html; charset=utf-8",
+      "title": "전국지역문화재단연합회",
+      "tlsVerified": false,
+      "forms": [],
+      "anchors": [
+        {
+          "text": "SITEMAP",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "소개",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "재단 현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "소개",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "기초지역문화재단 현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "소개",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "기초지역문화재단 현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "사람",
+          "href": "https://www.ancf.or.kr/list/사람?page=0"
+        },
+        {
+          "text": "직접검색",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "지역검색",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "1",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "1",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "1",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "1",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "1",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "1",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차 및 문의",
+          "href": "https://www.ancf.or.kr/members/join"
+        },
+        {
+          "text": "공지사항",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "회원현황",
+          "href": "https://www.ancf.or.kr/members/state"
+        },
+        {
+          "text": "가입절차",
+          "href": "https://www.ancf.or.kr/members/join"
+        }
+      ],
+      "scripts": [
+        "https://code.jquery.com/jquery-3.6.0.js",
+        "https://code.jquery.com/ui/1.13.2/jquery-ui.js",
+        "https://www.ancf.or.kr/asset/common/js/js.use9.kr.js",
+        "https://www.ancf.or.kr/asset/common/js/swiper.min.js",
+        "https://www.ancf.or.kr/asset/common/js/printThis.js",
+        "https://dapi.kakao.com/v2/maps/sdk.js?appkey=26123c55d3963f9a343348698f693825",
+        "https://wcs.naver.net/wcslog.js",
+        "https://www.ancf.or.kr/asset/common/js/NACF.js",
+        "https://www.ancf.or.kr/asset/common/js/map.js?v=2026072801"
+      ],
+      "scriptHits": {
+        "https://code.jquery.com/jquery-3.6.0.js": [
+          "// Optional AJAX dependency, but won't run scripts if not present",
+          "* 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)",
+          "// Base \"constructor\" for jQuery.ajaxPrefilter and jQuery.ajaxTransport",
+          "// A special extend for ajax options",
+          "function ajaxExtend( target, src ) {",
+          "flatOptions = jQuery.ajaxSettings.flatOptions || {};",
+          "/* Handles responses to an ajax request:",
+          "function ajaxHandleResponses( s, jqXHR, responses ) {",
+          "function ajaxConvert( s, response, jqXHR, isSuccess ) {",
+          "ajaxSettings: {",
+          "// deep extended (see ajaxExtend)",
+          "// with both ajaxSettings and settings fields.",
+          "// If target is omitted, writes into ajaxSettings.",
+          "ajaxSetup: function( target, settings ) {",
+          "ajaxExtend( ajaxExtend( target, jQuery.ajaxSettings ), settings ) :",
+          "// Extending ajaxSettings",
+          "ajaxExtend( jQuery.ajaxSettings, target );",
+          "ajaxPrefilter: addToPrefiltersOrTransports( prefilters ),",
+          "ajaxTransport: addToPrefiltersOrTransports( transports ),",
+          "ajax: function( url, options ) {",
+          "s = jQuery.ajaxSetup( {}, options ),",
+          "jQuery.event.trigger( \"ajaxStart\" );",
+          "globalEventContext.trigger( \"ajaxSend\", [ jqXHR, s ] );",
+          "// If request was aborted inside ajaxSend, stop there",
+          "response = ajaxHandleResponses( s, jqXHR, responses );",
+          "response = ajaxConvert( s, response, jqXHR, isSuccess );",
+          "globalEventContext.trigger( isSuccess ? \"ajaxSuccess\" : \"ajaxError\",",
+          "globalEventContext.trigger( \"ajaxComplete\", [ jqXHR, s ] );",
+          "// Handle the global AJAX counter",
+          "jQuery.event.trigger( \"ajaxStop\" );",
+          "return jQuery.ajax( jQuery.extend( {",
+          "jQuery.ajaxPrefilter( function( s ) {",
+          "return jQuery.ajax( {",
+          "// Make this explicit, since user can override this through ajaxSetup (#11264)",
+          "jQuery.ajaxSettings.xhr = function() {",
+          "xhrSupported = jQuery.ajaxSettings.xhr();",
+          "support.ajax = xhrSupported = !!xhrSupported;",
+          "jQuery.ajaxTransport( function( options ) {",
+          "// (it can always be set on a per-request basis or even using ajaxSetup)",
+          "jQuery.ajaxPrefilter( function( s ) {",
+          "jQuery.ajaxSetup( {",
+          "jQuery.ajaxPrefilter( \"script\", function( s ) {",
+          "jQuery.ajaxTransport( \"script\", function( s ) {",
+          "// Use native DOM manipulation to avoid our domManip AJAX trickery",
+          "jQuery.ajaxSetup( {",
+          "jQuery.ajaxPrefilter( \"json jsonp\", function( s, originalSettings, jqXHR ) {",
+          "jQuery.ajax( {",
+          "// user can override it through ajaxSetup method",
+          "\"ajaxStart\",",
+          "\"ajaxStop\",",
+          "\"ajaxComplete\",",
+          "\"ajaxError\",",
+          "\"ajaxSuccess\",",
+          "\"ajaxSend\""
+        ],
+        "https://code.jquery.com/ui/1.13.2/jquery-ui.js": [
+          "that.xhr = $.ajax( {",
+          "this.xhr = $.ajax( this._ajaxSettings( anchor, event, eventData ) );",
+          "// but as of 1.8, $.ajax() always returns a jqXHR object.",
+          "_ajaxSettings: function( anchor, event, eventData ) {",
+          "// Strip any hash that exists to prevent errors with the Ajax request",
+          "$.extend( { jqXHR: jqXHR, ajaxSettings: settings }, eventData ) );",
+          "// IE may instantly serve a cached response for ajax requests"
+        ]
+      },
+      "inlineScriptHits": [],
+      "rawEndpointCandidates": []
     }
   },
-  "errors": [
-    {
-      "source": "ancf",
-      "error": "SSLError: HTTPSConnectionPool(host='www.ancf.or.kr', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
-    },
-    {
-      "source": "ancf_members",
-      "error": "SSLError: HTTPSConnectionPool(host='www.ancf.or.kr', port=443): Max retries exceeded with url: /members/state (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
-    }
-  ]
+  "errors": []
 }
