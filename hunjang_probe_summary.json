@@ -1,26 +1,32 @@
 {
-  "generatedAt": "2026-09-08T03:32:32+09:00",
+  "generatedAt": "2026-09-08T04:27:19+09:00",
   "source": "훈장마을",
   "publiclyReachable": true,
   "humanVerificationDetected": false,
-  "stableIdCandidate": null,
-  "numericRcrtNoCount": 0,
-  "encRcrtNoCount": 0,
-  "metroRowCount": 0,
-  "observedRecruitApiCount": 0,
-  "observedPaidMainApiCount": 0,
+  "stableIdCandidate": "hunjang:<rcrtNo>",
+  "numericRcrtNoCount": 152,
+  "encRcrtNoCount": 178,
+  "metroRowCount": 147,
+  "observedRecruitApiCount": 48,
+  "observedPaidMainApiCount": 40,
   "observedGeneralListApiCount": 0,
   "observedGeneralListApiUrls": [],
-  "observedGeneralListApiUrlsRaw": [],
-  "rejectedNonGeneralRecruitApiUrls": [],
+  "observedGeneralListApiUrlsRaw": [
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+  ],
+  "rejectedNonGeneralRecruitApiUrls": [
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+  ],
   "observedDetailApiCount": 0,
-  "navigationHunApiUrls": [],
-  "navigationAttemptCount": 0,
+  "navigationHunApiUrls": [
+    "https://hunapi.hunjang.com/hunApi/main/prchsSubMainRecruitList",
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recruitCount",
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+  ],
+  "navigationAttemptCount": 13,
   "readyForPaginationProbe": false,
   "nextGate": "discover the public general recruitment-list API from the rendered 채용정보 view; recommendation/main/common APIs do not qualify. Then prove page-wise ID changes and an exhaustion boundary before writing any canonical dataset",
-  "errors": [
-    "https://www.hunjang.com/recruit/recruitList: Error: Page.goto: net::ERR_ABORTED at https://www.hunjang.com/recruit/recruitList\nCall log:\n  - navigating to \"https://www.hunjang.com/recruit/recruitList\", waiting until \"commit\"\n"
-  ],
+  "errors": [],
   "safety": {
     "tlsVerificationDisabled": false,
     "authenticationBypassed": false,
