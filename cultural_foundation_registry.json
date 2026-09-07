@@ -1,0 +1,79 @@
+{
+  "registryVersion": "2026-09-07-v1",
+  "scope": {
+    "regions": ["서울", "경기"],
+    "publicCulturalFoundations": 49,
+    "seoul": 24,
+    "gyeonggi": 25
+  },
+  "policy": {
+    "primary": "official-foundation-site",
+    "crossChecks": ["cleaneye", "artmore", "ancf"],
+    "discoveryOnly": ["lessoninfo-culture"],
+    "invariant": "Every registry institution must have a daily coverage outcome even when its board is unavailable."
+  },
+  "evidence": [
+    {
+      "region": "서울",
+      "url": "https://www.sfac.or.kr/site/SFAC_KOR/12/11208020300002023120102.jsp",
+      "note": "서울문화재단의 서울시자치구문화재단연합회 현황 및 회원기관 목록"
+    },
+    {
+      "region": "경기",
+      "url": "https://ggcf.kr/attachment/19063/download",
+      "note": "경기문화재단 2026 경기예술지원 안내의 기초문화재단 보유 지역 24개"
+    }
+  ],
+  "institutions": [
+    {"id":"seoul:metropolitan","region":"서울","municipality":"서울특별시","level":"광역","name":"서울문화재단","aliases":["(재)서울문화재단","재단법인 서울문화재단"],"homepage":"https://www.sfac.or.kr/","officialRecruitmentUrl":"https://www.sfac.or.kr/opensquare/notice/recruit_list.do?cbIdx=964","enabled":true},
+    {"id":"seoul:gangnam","region":"서울","municipality":"강남구","level":"기초","name":"강남문화재단","aliases":["(재)강남문화재단","재단법인 강남문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:gangdong","region":"서울","municipality":"강동구","level":"기초","name":"강동문화재단","aliases":["(재)강동문화재단","재단법인 강동문화재단"],"homepage":"https://www.gdfac.or.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:gangbuk","region":"서울","municipality":"강북구","level":"기초","name":"강북문화재단","aliases":["(재)강북문화재단","재단법인 강북문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:gwanak","region":"서울","municipality":"관악구","level":"기초","name":"관악문화재단","aliases":["(재)관악문화재단","재단법인 관악문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:gwangjin","region":"서울","municipality":"광진구","level":"기초","name":"광진문화재단","aliases":["(재)광진문화재단","재단법인 광진문화재단"],"homepage":"http://www.naruart.or.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:guro","region":"서울","municipality":"구로구","level":"기초","name":"구로문화재단","aliases":["(재)구로문화재단","재단법인 구로문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:geumcheon","region":"서울","municipality":"금천구","level":"기초","name":"금천문화재단","aliases":["(재)금천문화재단","재단법인 금천문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:nowon","region":"서울","municipality":"노원구","level":"기초","name":"노원문화재단","aliases":["(재)노원문화재단","재단법인 노원문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:dobong","region":"서울","municipality":"도봉구","level":"기초","name":"도봉문화재단","aliases":["(재)도봉문화재단","재단법인 도봉문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:dongdaemun","region":"서울","municipality":"동대문구","level":"기초","name":"동대문문화재단","aliases":["(재)동대문문화재단","재단법인 동대문문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:dongjak","region":"서울","municipality":"동작구","level":"기초","name":"동작문화재단","aliases":["(재)동작문화재단","재단법인 동작문화재단"],"homepage":"http://www.idfac.or.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:mapo","region":"서울","municipality":"마포구","level":"기초","name":"마포문화재단","aliases":["(재)마포문화재단","재단법인 마포문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:seongdong","region":"서울","municipality":"성동구","level":"기초","name":"성동문화재단","aliases":["(재)성동문화재단","재단법인 성동문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:seocho","region":"서울","municipality":"서초구","level":"기초","name":"서초문화재단","aliases":["(재)서초문화재단","재단법인 서초문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:seongbuk","region":"서울","municipality":"성북구","level":"기초","name":"성북문화재단","aliases":["(재)성북문화재단","재단법인 성북문화재단"],"homepage":"https://www.sbculture.or.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:songpa","region":"서울","municipality":"송파구","level":"기초","name":"송파문화재단","aliases":["(재)송파문화재단","재단법인 송파문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:yangcheon","region":"서울","municipality":"양천구","level":"기초","name":"양천문화재단","aliases":["(재)양천문화재단","재단법인 양천문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:yeongdeungpo","region":"서울","municipality":"영등포구","level":"기초","name":"영등포문화재단","aliases":["(재)영등포문화재단","재단법인 영등포문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:eunpyeong","region":"서울","municipality":"은평구","level":"기초","name":"은평문화재단","aliases":["(재)은평문화재단","재단법인 은평문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:jongno","region":"서울","municipality":"종로구","level":"기초","name":"종로문화재단","aliases":["(재)종로문화재단","재단법인 종로문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:junggu","region":"서울","municipality":"중구","level":"기초","name":"중구문화재단","aliases":["(재)중구문화재단","재단법인 중구문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:jungnang","region":"서울","municipality":"중랑구","level":"기초","name":"중랑문화재단","aliases":["(재)중랑문화재단","재단법인 중랑문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"seoul:yongsan","region":"서울","municipality":"용산구","level":"기초","name":"용산문화재단","aliases":["(재)용산문화재단","재단법인 용산문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+
+    {"id":"gyeonggi:metropolitan","region":"경기","municipality":"경기도","level":"광역","name":"경기문화재단","aliases":["(재)경기문화재단","재단법인 경기문화재단"],"homepage":"https://www.ggcf.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:goyang","region":"경기","municipality":"고양시","level":"기초","name":"고양문화재단","aliases":["(재)고양문화재단","재단법인 고양문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:gwacheon","region":"경기","municipality":"과천시","level":"기초","name":"과천문화재단","aliases":["(재)과천문화재단","재단법인 과천문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:gwangmyeong","region":"경기","municipality":"광명시","level":"기초","name":"광명문화재단","aliases":["(재)광명문화재단","재단법인 광명문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:gwangju","region":"경기","municipality":"광주시","level":"기초","name":"광주시문화재단","aliases":["광주문화재단","(재)광주시문화재단","재단법인 광주시문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:guri","region":"경기","municipality":"구리시","level":"기초","name":"구리문화재단","aliases":["(재)구리문화재단","재단법인 구리문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:gunpo","region":"경기","municipality":"군포시","level":"기초","name":"군포문화재단","aliases":["(재)군포문화재단","재단법인 군포문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:gimpo","region":"경기","municipality":"김포시","level":"기초","name":"김포문화재단","aliases":["(재)김포문화재단","재단법인 김포문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:namyangju","region":"경기","municipality":"남양주시","level":"기초","name":"남양주문화재단","aliases":["(재)남양주문화재단","재단법인 남양주문화재단"],"homepage":"https://www.nyjcf.or.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:bucheon","region":"경기","municipality":"부천시","level":"기초","name":"부천문화재단","aliases":["(재)부천문화재단","재단법인 부천문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:seongnam","region":"경기","municipality":"성남시","level":"기초","name":"성남문화재단","aliases":["(재)성남문화재단","재단법인 성남문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:suwon","region":"경기","municipality":"수원시","level":"기초","name":"수원문화재단","aliases":["(재)수원문화재단","재단법인 수원문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:ansan","region":"경기","municipality":"안산시","level":"기초","name":"안산문화재단","aliases":["(재)안산문화재단","재단법인 안산문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:anyang","region":"경기","municipality":"안양시","level":"기초","name":"안양문화예술재단","aliases":["안양문화재단","(재)안양문화예술재단","재단법인 안양문화예술재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:yangpyeong","region":"경기","municipality":"양평군","level":"기초","name":"양평문화재단","aliases":["(재)양평문화재단","재단법인 양평문화재단"],"homepage":"https://ypcf.or.kr/","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:yeoju","region":"경기","municipality":"여주시","level":"기초","name":"여주세종문화관광재단","aliases":["여주세종문화재단","(재)여주세종문화관광재단","재단법인 여주세종문화관광재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:osan","region":"경기","municipality":"오산시","level":"기초","name":"오산문화재단","aliases":["(재)오산문화재단","재단법인 오산문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:yongin","region":"경기","municipality":"용인시","level":"기초","name":"용인문화재단","aliases":["(재)용인문화재단","재단법인 용인문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:uijeongbu","region":"경기","municipality":"의정부시","level":"기초","name":"의정부문화재단","aliases":["(재)의정부문화재단","재단법인 의정부문화재단","의정부예술의전당"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:icheon","region":"경기","municipality":"이천시","level":"기초","name":"이천문화재단","aliases":["(재)이천문화재단","재단법인 이천문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:paju","region":"경기","municipality":"파주시","level":"기초","name":"파주문화재단","aliases":["(재)파주문화재단","재단법인 파주문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:pyeongtaek","region":"경기","municipality":"평택시","level":"기초","name":"평택시문화재단","aliases":["평택문화재단","(재)평택시문화재단","재단법인 평택시문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:pocheon","region":"경기","municipality":"포천시","level":"기초","name":"포천문화재단","aliases":["(재)포천문화재단","재단법인 포천문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:hanam","region":"경기","municipality":"하남시","level":"기초","name":"하남문화재단","aliases":["(재)하남문화재단","재단법인 하남문화재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true},
+    {"id":"gyeonggi:hwaseong","region":"경기","municipality":"화성시","level":"기초","name":"화성시문화관광재단","aliases":["화성시문화재단","화성문화재단","(재)화성시문화관광재단","재단법인 화성시문화관광재단"],"homepage":"","officialRecruitmentUrl":"","enabled":true}
+  ]
+}
