@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-08T23:10:10+09:00",
+  "generatedAt": "2026-09-09T00:09:50+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T23:10:10+09:00",
+    "generatedAt": "2026-09-09T00:09:50+09:00",
     "official": {
       "datasetCount": 19102,
       "officialIdCount": 17802,
@@ -12,11 +12,11 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7665,
-      "officialDisplayed": 3244,
-      "privateDisplayed": 4421,
-      "privateDiscovered": 4431,
-      "officialPrivateAliases": 10,
+      "publishedJobs": 7441,
+      "officialDisplayed": 3029,
+      "privateDisplayed": 4412,
+      "privateDiscovered": 4421,
+      "officialPrivateAliases": 9,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -268,9 +268,9 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4037,
-        "rawCount": 4037,
-        "currentCount": 4037,
+        "datasetCount": 4035,
+        "rawCount": 4035,
+        "currentCount": 4035,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -294,7 +294,7 @@
         "healthy": true,
         "datasetCount": 64,
         "rawCount": 64,
-        "currentCount": 64,
+        "currentCount": 56,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -328,7 +328,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T23:09:03+09:00",
+      "baselineAt": "2026-09-08T00:08:46+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19102,
@@ -337,23 +337,23 @@
         },
         "official.officialIdCount": {
           "current": 17802,
-          "baseline": 17844,
-          "changeRatio": -0.0024
+          "baseline": 17852,
+          "changeRatio": -0.0028
         },
         "unified.publishedJobs": {
-          "current": 7665,
-          "baseline": 7735,
-          "changeRatio": -0.009
+          "current": 7441,
+          "baseline": 7353,
+          "changeRatio": 0.012
         },
         "unified.officialDisplayed": {
-          "current": 3244,
-          "baseline": 3356,
-          "changeRatio": -0.0334
+          "current": 3029,
+          "baseline": 2974,
+          "changeRatio": 0.0185
         },
         "unified.privateDiscovered": {
-          "current": 4431,
-          "baseline": 4390,
-          "changeRatio": 0.0093
+          "current": 4421,
+          "baseline": 4386,
+          "changeRatio": 0.008
         }
       },
       "privateSources": {
@@ -368,9 +368,9 @@
           "changeRatio": null
         },
         "jobteacher": {
-          "current": 4037,
+          "current": 4035,
           "baseline": 4038,
-          "changeRatio": -0.0002
+          "changeRatio": -0.0007
         },
         "artmore": {
           "current": 20,
@@ -378,9 +378,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 64,
-          "baseline": 60,
-          "changeRatio": 0.0667
+          "current": 56,
+          "baseline": 56,
+          "changeRatio": 0.0
         },
         "seekle": {
           "current": 1,
@@ -408,19 +408,19 @@
           "changeRatio": -0.0048
         },
         "unified.publishedJobs": {
-          "current": 7665,
+          "current": 7441,
           "baseline": 4715,
-          "changeRatio": 0.6257
+          "changeRatio": 0.5782
         },
         "unified.officialDisplayed": {
-          "current": 3244,
+          "current": 3029,
           "baseline": 3299,
-          "changeRatio": -0.0167
+          "changeRatio": -0.0818
         },
         "unified.privateDiscovered": {
-          "current": 4431,
+          "current": 4421,
           "baseline": 1431,
-          "changeRatio": 2.0964
+          "changeRatio": 2.0894
         }
       },
       "privateSources": {
@@ -435,7 +435,7 @@
           "changeRatio": null
         },
         "jobteacher": {
-          "current": 4037,
+          "current": 4035,
           "baseline": 0,
           "changeRatio": null
         },
@@ -445,7 +445,7 @@
           "changeRatio": null
         },
         "gonggonggangsa": {
-          "current": 64,
+          "current": 56,
           "baseline": 0,
           "changeRatio": null
         },
