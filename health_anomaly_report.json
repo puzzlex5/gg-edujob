@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-08T08:09:01+09:00",
-  "status": "healthy",
+  "generatedAt": "2026-09-08T09:13:39+09:00",
+  "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T08:09:01+09:00",
+    "generatedAt": "2026-09-08T09:13:39+09:00",
     "official": {
-      "datasetCount": 18816,
+      "datasetCount": 18817,
       "officialIdCount": 17576,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7360,
-      "officialDisplayed": 2958,
+      "publishedJobs": 7361,
+      "officialDisplayed": 2959,
       "privateDisplayed": 4402,
       "privateDiscovered": 4409,
       "officialPrivateAliases": 7,
@@ -147,8 +147,8 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1301,
-        "latestRegistered": "2026-09-07"
+        "count": 1302,
+        "latestRegistered": "2026-09-08"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
         "count": 2,
@@ -328,12 +328,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T08:07:48+09:00",
+      "baselineAt": "2026-09-07T09:13:54+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18816,
+          "current": 18817,
           "baseline": 18668,
-          "changeRatio": 0.0079
+          "changeRatio": 0.008
         },
         "official.officialIdCount": {
           "current": 17576,
@@ -341,19 +341,19 @@
           "changeRatio": 0.0019
         },
         "unified.publishedJobs": {
-          "current": 7360,
-          "baseline": 7061,
-          "changeRatio": 0.0423
+          "current": 7361,
+          "baseline": 7319,
+          "changeRatio": 0.0057
         },
         "unified.officialDisplayed": {
-          "current": 2958,
+          "current": 2959,
           "baseline": 2944,
-          "changeRatio": 0.0048
+          "changeRatio": 0.0051
         },
         "unified.privateDiscovered": {
           "current": 4409,
-          "baseline": 4117,
-          "changeRatio": 0.0709
+          "baseline": 4386,
+          "changeRatio": 0.0052
         }
       },
       "privateSources": {
@@ -394,11 +394,133 @@
         }
       }
     },
-    "7d": null,
+    "7d": {
+      "baselineAt": "2026-09-03T19:59:07+09:00",
+      "metrics": {
+        "official.datasetCount": {
+          "current": 18817,
+          "baseline": 18911,
+          "changeRatio": -0.005
+        },
+        "official.officialIdCount": {
+          "current": 17576,
+          "baseline": 17887,
+          "changeRatio": -0.0174
+        },
+        "unified.publishedJobs": {
+          "current": 7361,
+          "baseline": 4715,
+          "changeRatio": 0.5612
+        },
+        "unified.officialDisplayed": {
+          "current": 2959,
+          "baseline": 3299,
+          "changeRatio": -0.1031
+        },
+        "unified.privateDiscovered": {
+          "current": 4409,
+          "baseline": 1431,
+          "changeRatio": 2.0811
+        }
+      },
+      "privateSources": {
+        "lessoninfo": {
+          "current": 268,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "cleaneye": {
+          "current": 26,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "jobteacher": {
+          "current": 4036,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "artmore": {
+          "current": 20,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "gonggonggangsa": {
+          "current": 56,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "seekle": {
+          "current": 1,
+          "baseline": 0,
+          "changeRatio": null
+        },
+        "boramyc": {
+          "current": 2,
+          "baseline": 0,
+          "changeRatio": null
+        }
+      }
+    },
     "30d": null
   },
-  "anomalies": [],
+  "anomalies": [
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+      "evidence": {
+        "source": "경기도교육청 통합 구인구직 + 가평교육지원청",
+        "latestRegistered": "2026-07-29",
+        "globalLatest": "2026-09-08",
+        "ageDays": 41
+      }
+    },
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+      "evidence": {
+        "source": "동부교육지원청",
+        "latestRegistered": "2026-08-12",
+        "globalLatest": "2026-09-08",
+        "ageDays": 27
+      }
+    },
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+      "evidence": {
+        "source": "성동광진교육지원청",
+        "latestRegistered": "2026-08-20",
+        "globalLatest": "2026-09-08",
+        "ageDays": 19
+      }
+    },
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+      "evidence": {
+        "source": "성북강북교육지원청",
+        "latestRegistered": "2026-09-01",
+        "globalLatest": "2026-09-08",
+        "ageDays": 7
+      }
+    },
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+      "evidence": {
+        "source": "여주교육지원청",
+        "latestRegistered": "2026-09-01",
+        "globalLatest": "2026-09-08",
+        "ageDays": 7
+      }
+    }
+  ],
   "criticalCount": 0,
-  "warningCount": 0,
+  "warningCount": 5,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
