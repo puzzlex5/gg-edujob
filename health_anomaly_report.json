@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-09T07:09:15+09:00",
+  "generatedAt": "2026-09-09T08:08:19+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-09T07:09:15+09:00",
+    "generatedAt": "2026-09-09T08:08:19+09:00",
     "official": {
       "datasetCount": 18877,
       "officialIdCount": 17566,
@@ -256,13 +256,13 @@
         "name": "클린아이 잡플러스",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 27,
+        "datasetCount": 29,
         "rawCount": 27,
         "currentCount": 26,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-14"
+        "latestRegistered": "2026-09-17"
       },
       "jobteacher": {
         "name": "잡티처",
@@ -328,7 +328,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T07:08:50+09:00",
+      "baselineAt": "2026-09-08T08:09:01+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18877,
@@ -342,8 +342,8 @@
         },
         "unified.publishedJobs": {
           "current": 7409,
-          "baseline": 7334,
-          "changeRatio": 0.0102
+          "baseline": 7360,
+          "changeRatio": 0.0067
         },
         "unified.officialDisplayed": {
           "current": 2998,
@@ -352,8 +352,8 @@
         },
         "unified.privateDiscovered": {
           "current": 4420,
-          "baseline": 4383,
-          "changeRatio": 0.0084
+          "baseline": 4409,
+          "changeRatio": 0.0025
         }
       },
       "privateSources": {
@@ -364,8 +364,8 @@
         },
         "cleaneye": {
           "current": 26,
-          "baseline": 0,
-          "changeRatio": null
+          "baseline": 26,
+          "changeRatio": 0.0
         },
         "jobteacher": {
           "current": 4035,
