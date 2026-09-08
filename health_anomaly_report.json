@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-08T19:09:41+09:00",
+  "generatedAt": "2026-09-08T20:08:39+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T19:09:41+09:00",
+    "generatedAt": "2026-09-08T20:08:39+09:00",
     "official": {
-      "datasetCount": 19095,
-      "officialIdCount": 17792,
+      "datasetCount": 19098,
+      "officialIdCount": 17796,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7658,
-      "officialDisplayed": 3237,
+      "publishedJobs": 7661,
+      "officialDisplayed": 3240,
       "privateDisplayed": 4421,
-      "privateDiscovered": 4428,
-      "officialPrivateAliases": 7,
+      "privateDiscovered": 4429,
+      "officialPrivateAliases": 8,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -147,7 +147,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1380,
+        "count": 1382,
         "latestRegistered": "2026-09-08"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -227,7 +227,7 @@
         "latestRegistered": "2026-09-08"
       },
       "평택교육지원청": {
-        "count": 766,
+        "count": 767,
         "latestRegistered": "2026-09-08"
       },
       "포천교육지원청": {
@@ -244,9 +244,9 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 278,
-        "rawCount": 278,
-        "currentCount": 278,
+        "datasetCount": 279,
+        "rawCount": 279,
+        "currentCount": 279,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -328,39 +328,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T19:08:50+09:00",
+      "baselineAt": "2026-09-07T20:08:51+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19095,
-          "baseline": 19070,
+          "current": 19098,
+          "baseline": 19074,
           "changeRatio": 0.0013
         },
         "official.officialIdCount": {
-          "current": 17792,
+          "current": 17796,
           "baseline": 17844,
-          "changeRatio": -0.0029
+          "changeRatio": -0.0027
         },
         "unified.publishedJobs": {
-          "current": 7658,
-          "baseline": 7723,
-          "changeRatio": -0.0084
+          "current": 7661,
+          "baseline": 7729,
+          "changeRatio": -0.0088
         },
         "unified.officialDisplayed": {
-          "current": 3237,
-          "baseline": 3345,
-          "changeRatio": -0.0323
+          "current": 3240,
+          "baseline": 3351,
+          "changeRatio": -0.0331
         },
         "unified.privateDiscovered": {
-          "current": 4428,
+          "current": 4429,
           "baseline": 4389,
-          "changeRatio": 0.0089
+          "changeRatio": 0.0091
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 278,
+          "current": 279,
           "baseline": 269,
-          "changeRatio": 0.0335
+          "changeRatio": 0.0372
         },
         "cleaneye": {
           "current": 26,
@@ -398,34 +398,34 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19095,
+          "current": 19098,
           "baseline": 18911,
-          "changeRatio": 0.0097
+          "changeRatio": 0.0099
         },
         "official.officialIdCount": {
-          "current": 17792,
+          "current": 17796,
           "baseline": 17887,
-          "changeRatio": -0.0053
+          "changeRatio": -0.0051
         },
         "unified.publishedJobs": {
-          "current": 7658,
+          "current": 7661,
           "baseline": 4715,
-          "changeRatio": 0.6242
+          "changeRatio": 0.6248
         },
         "unified.officialDisplayed": {
-          "current": 3237,
+          "current": 3240,
           "baseline": 3299,
-          "changeRatio": -0.0188
+          "changeRatio": -0.0179
         },
         "unified.privateDiscovered": {
-          "current": 4428,
+          "current": 4429,
           "baseline": 1431,
-          "changeRatio": 2.0943
+          "changeRatio": 2.095
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 278,
+          "current": 279,
           "baseline": 0,
           "changeRatio": null
         },
