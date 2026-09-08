@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08 17:09:29 KST",
+  "generatedAt": "2026-09-08 19:10:35 KST",
   "policy": "central sources fail closed: every semantic posting row/card must expose a stable ID; partial-page parsing is a failure; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
   "sources": [
     {
@@ -27,8 +27,8 @@
           "code": "B",
           "name": "초중등시간강사",
           "pagesScanned": 8,
-          "rawRows": 348,
-          "stableIdCount": 347,
+          "rawRows": 349,
+          "stableIdCount": 348,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -42,8 +42,8 @@
           "code": "C",
           "name": "교육공무직원",
           "pagesScanned": 3,
-          "rawRows": 66,
-          "stableIdCount": 65,
+          "rawRows": 65,
+          "stableIdCount": 64,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -103,9 +103,9 @@
     {
       "name": "서울교육일자리포털",
       "province": "서울",
-      "stableIdCount": 354,
+      "stableIdCount": 355,
       "pagesScanned": 9,
-      "rawRows": 354,
+      "rawRows": 355,
       "terminalEvidence": "empty-page",
       "accessError": false,
       "parseError": false,
@@ -117,5 +117,5 @@
     }
   ],
   "complete": true,
-  "scanId": "20260908T074451Z-34200837091-1"
+  "scanId": "20260908T094500Z-34211642379-1"
 }
