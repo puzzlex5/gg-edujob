@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-08T16:10:25+09:00",
+  "generatedAt": "2026-09-08T17:09:37+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T16:10:25+09:00",
+    "generatedAt": "2026-09-08T17:09:37+09:00",
     "official": {
-      "datasetCount": 19026,
-      "officialIdCount": 17692,
+      "datasetCount": 19063,
+      "officialIdCount": 17775,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7308,
-      "officialDisplayed": 3168,
-      "privateDisplayed": 4140,
-      "privateDiscovered": 4140,
-      "officialPrivateAliases": 0,
+      "publishedJobs": 7619,
+      "officialDisplayed": 3205,
+      "privateDisplayed": 4414,
+      "privateDiscovered": 4421,
+      "officialPrivateAliases": 7,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,6 +27,7 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
+        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -34,9 +35,7 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": [
-        "lessoninfo"
-      ]
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -52,11 +51,11 @@
         "latestRegistered": "2026-09-07"
       },
       "강서양천교육지원청": {
-        "count": 139,
+        "count": 140,
         "latestRegistered": "2026-09-08"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10206,
+        "count": 10218,
         "latestRegistered": "2026-09-08"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -96,7 +95,7 @@
         "latestRegistered": "2026-09-08"
       },
       "고양교육지원청": {
-        "count": 214,
+        "count": 216,
         "latestRegistered": "2026-09-08"
       },
       "광명교육지원청": {
@@ -108,7 +107,7 @@
         "latestRegistered": "2026-09-08"
       },
       "구리남양주교육지원청": {
-        "count": 567,
+        "count": 571,
         "latestRegistered": "2026-09-08"
       },
       "군포의왕교육지원청": {
@@ -136,7 +135,7 @@
         "latestRegistered": "2026-09-04"
       },
       "부천교육지원청": {
-        "count": 715,
+        "count": 716,
         "latestRegistered": "2026-09-08"
       },
       "북부교육지원청": {
@@ -148,7 +147,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1361,
+        "count": 1372,
         "latestRegistered": "2026-09-08"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -164,7 +163,7 @@
         "latestRegistered": "2026-09-04"
       },
       "성남교육지원청": {
-        "count": 974,
+        "count": 975,
         "latestRegistered": "2026-09-08"
       },
       "성동광진교육지원청": {
@@ -188,7 +187,7 @@
         "latestRegistered": "2026-09-07"
       },
       "안성교육지원청": {
-        "count": 212,
+        "count": 213,
         "latestRegistered": "2026-09-08"
       },
       "안양과천교육지원청": {
@@ -196,7 +195,7 @@
         "latestRegistered": "2026-09-03"
       },
       "양평교육지원청": {
-        "count": 180,
+        "count": 181,
         "latestRegistered": "2026-09-08"
       },
       "여주교육지원청": {
@@ -224,15 +223,15 @@
         "latestRegistered": "2026-09-07"
       },
       "파주교육지원청": {
-        "count": 468,
+        "count": 469,
         "latestRegistered": "2026-09-08"
       },
       "평택교육지원청": {
-        "count": 764,
+        "count": 765,
         "latestRegistered": "2026-09-08"
       },
       "포천교육지원청": {
-        "count": 206,
+        "count": 207,
         "latestRegistered": "2026-09-08"
       },
       "화성오산교육지원청": {
@@ -243,11 +242,11 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": false,
-        "healthy": false,
-        "datasetCount": 279,
-        "rawCount": 279,
-        "currentCount": 279,
+        "enabled": true,
+        "healthy": true,
+        "datasetCount": 278,
+        "rawCount": 278,
+        "currentCount": 278,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -293,13 +292,13 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 55,
-        "rawCount": 55,
-        "currentCount": 55,
+        "datasetCount": 58,
+        "rawCount": 58,
+        "currentCount": 58,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-07"
+        "latestRegistered": "2026-09-08"
       },
       "seekle": {
         "name": "시립광진청소년센터",
@@ -329,39 +328,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T16:10:29+09:00",
+      "baselineAt": "2026-09-07T17:09:59+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19026,
+          "current": 19063,
           "baseline": 18957,
-          "changeRatio": 0.0036
+          "changeRatio": 0.0056
         },
         "official.officialIdCount": {
-          "current": 17692,
+          "current": 17775,
           "baseline": 17745,
-          "changeRatio": -0.003
+          "changeRatio": 0.0017
         },
         "unified.publishedJobs": {
-          "current": 7308,
+          "current": 7619,
           "baseline": 7606,
-          "changeRatio": -0.0392
+          "changeRatio": 0.0017
         },
         "unified.officialDisplayed": {
-          "current": 3168,
+          "current": 3205,
           "baseline": 3231,
-          "changeRatio": -0.0195
+          "changeRatio": -0.008
         },
         "unified.privateDiscovered": {
-          "current": 4140,
+          "current": 4421,
           "baseline": 4386,
-          "changeRatio": -0.0561
+          "changeRatio": 0.008
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 279,
+          "current": 278,
           "baseline": 269,
-          "changeRatio": 0.0372
+          "changeRatio": 0.0335
         },
         "cleaneye": {
           "current": 26,
@@ -379,9 +378,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 55,
+          "current": 58,
           "baseline": 58,
-          "changeRatio": -0.0517
+          "changeRatio": 0.0
         },
         "seekle": {
           "current": 1,
@@ -399,34 +398,34 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19026,
+          "current": 19063,
           "baseline": 18911,
-          "changeRatio": 0.0061
+          "changeRatio": 0.008
         },
         "official.officialIdCount": {
-          "current": 17692,
+          "current": 17775,
           "baseline": 17887,
-          "changeRatio": -0.0109
+          "changeRatio": -0.0063
         },
         "unified.publishedJobs": {
-          "current": 7308,
+          "current": 7619,
           "baseline": 4715,
-          "changeRatio": 0.5499
+          "changeRatio": 0.6159
         },
         "unified.officialDisplayed": {
-          "current": 3168,
+          "current": 3205,
           "baseline": 3299,
-          "changeRatio": -0.0397
+          "changeRatio": -0.0285
         },
         "unified.privateDiscovered": {
-          "current": 4140,
+          "current": 4421,
           "baseline": 1431,
-          "changeRatio": 1.8931
+          "changeRatio": 2.0894
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 279,
+          "current": 278,
           "baseline": 0,
           "changeRatio": null
         },
@@ -446,7 +445,7 @@
           "changeRatio": null
         },
         "gonggonggangsa": {
-          "current": 55,
+          "current": 58,
           "baseline": 0,
           "changeRatio": null
         },
