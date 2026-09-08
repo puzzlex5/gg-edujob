@@ -1,14 +1,14 @@
 {
   "summary": {
-    "freshCount": 16546,
-    "previousCount": 19089,
-    "mergedCount": 19079,
-    "carriedForward": 2533,
-    "officialIdProtected": 17792,
-    "officialIdCarryForward": 1252,
-    "enrichedFromPrevious": 7031,
+    "freshCount": 16548,
+    "previousCount": 19096,
+    "mergedCount": 19082,
+    "carriedForward": 2534,
+    "officialIdProtected": 17796,
+    "officialIdCarryForward": 1250,
+    "enrichedFromPrevious": 7033,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-08 17:59 KST"
+    "generatedAt": "2026-09-08 19:56 KST"
   },
   "carried": [
     {
@@ -87,6 +87,17 @@
       "sourceIdentity": "mircms:www.goeujb.kr:4117:1126998",
       "reason": "present in latest independent official-ID reconciliation",
       "url": "https://www.goeujb.kr/goeujb/na/ntt/selectNttInfo.do?bbsId=4117&nttSn=1126998&mi=7019"
+    },
+    {
+      "province": "서울",
+      "source": "서울교육일자리포털",
+      "school": "서울신정초등학교",
+      "title": "(신정초 9.14.월)5학년 담임교사 대체 시간강사 모십니다.",
+      "registered": "2026/09/08",
+      "applyEnd": "2026/09/13",
+      "sourceIdentity": "seoul-central:109958",
+      "reason": "previously published posting still within application period",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109958"
     },
     {
       "province": "서울",
@@ -195,7 +206,7 @@
       "registered": "2026/09/08",
       "applyEnd": "2026/09/10",
       "sourceIdentity": "goe-central:59427",
-      "reason": "present in latest independent official-ID reconciliation",
+      "reason": "previously published posting still within application period",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59427"
     },
     {
@@ -1548,7 +1559,7 @@
       "registered": "2026/09/03",
       "applyEnd": "2026/09/08",
       "sourceIdentity": "seoul-central:109623",
-      "reason": "present in latest independent official-ID reconciliation",
+      "reason": "previously published posting still within application period",
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109623"
     },
     {
