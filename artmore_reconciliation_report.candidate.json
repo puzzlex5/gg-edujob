@@ -1,27 +1,39 @@
 {
-  "generatedAt": "2026-09-08T10:00:28+09:00",
+  "generatedAt": "2026-09-08T11:58:23+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
   "healthy": false,
   "traversalComplete": false,
-  "candidateIdCount": 0,
-  "publishedIdCount": 0,
+  "candidateIdCount": 6,
+  "publishedIdCount": 6,
   "missingAfterCount": 0,
   "missingAfter": [],
-  "sourceReports": [],
-  "errors": [
+  "sourceReports": [
     {
       "region": "서울",
-      "error": "RuntimeError: area filter lost after current-only submit"
-    },
+      "code": "2001",
+      "pagesVisited": 1,
+      "ids": 6,
+      "pages": [
+        {
+          "page": 1,
+          "rowCount": 6,
+          "newIdCount": 6,
+          "firstId": "94901",
+          "lastId": "94887"
+        }
+      ]
+    }
+  ],
+  "errors": [
     {
       "region": "경기",
-      "error": "RuntimeError: area filter lost after current-only submit"
+      "error": "RuntimeError: ended row on current-only surface: 94884 더뮤엘 종료 9/13(일) 수원 선경도서관 클래식 공연 스텝 모집 경력무관,경력 1년 학력무관 경기 수원시 팔달구 신풍로23번길 68 (신풍동) 일급 60,000원 ~ 60,000원 프리랜서 주1일 채용시까지 2026-09-07 등록 173"
     },
     {
       "region": "all",
-      "error": "suspicious drop: previous=20 current=0"
+      "error": "suspicious drop: previous=20 current=6"
     }
   ],
   "regionsAllowed": [
