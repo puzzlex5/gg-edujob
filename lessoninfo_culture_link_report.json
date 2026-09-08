@@ -1,26 +1,21 @@
 {
-  "generatedAt": "2026-09-08T15:06:34+09:00",
-  "startedAt": "2026-09-08T14:55:19+09:00",
+  "generatedAt": "2026-09-08T16:12:19+09:00",
+  "startedAt": "2026-09-08T15:59:47+09:00",
   "policy": "lessoninfo-culture-cold-link-v2",
   "healthy": true,
-  "totalInputJobs": 271,
-  "expiredCultureRemoved": 2,
+  "totalInputJobs": 279,
+  "expiredCultureRemoved": 1,
   "expiredCultureExamples": [
     {
       "sourceIdentity": "culture:id:94790",
       "title": "예술의전당 음악당 하우스 어텐던트 2026년 하반기 9월 모집 (~9/1)",
       "applyEnd": "2026-09-01"
-    },
-    {
-      "sourceIdentity": "culture:id:94780",
-      "title": "예술의전당 음악당 하우스 어텐던트 2026년 하반기 9월 모집 (~9/1)",
-      "applyEnd": "2026-09-01"
     }
   ],
-  "eligibleCultureRows": 187,
-  "verifiedCultureRows": 175,
-  "verifiedOfficialRows": 175,
-  "verifiedLessoninfoRows": 0,
+  "eligibleCultureRows": 196,
+  "verifiedCultureRows": 184,
+  "verifiedOfficialRows": 183,
+  "verifiedLessoninfoRows": 1,
   "unverifiedCultureRows": 12,
   "verificationMissingCount": 0,
   "verificationMissingExamples": [],
@@ -28,15 +23,16 @@
     "culture:id:94673"
   ],
   "reasonCounts": {
-    "cold-browser-official-title-match": 55,
-    "cold-browser-artmore-id-title-match": 120,
+    "cold-browser-official-title-match": 53,
+    "cold-browser-id-title-match": 1,
+    "cold-browser-artmore-id-title-match": 130,
     "cold-browser-route-mismatch": 11,
     "known-bad-cold-regression-sentinel": 1
   },
-  "artmoreFallbackAttemptedRows": 131,
-  "artmoreFallbackRecoveredRows": 120,
+  "artmoreFallbackAttemptedRows": 141,
+  "artmoreFallbackRecoveredRows": 130,
   "artmoreFallbackOutcomeCounts": {
-    "recovered": 120,
+    "recovered": 130,
     "artmore-title-mismatch": 11
   },
   "artmoreFallbackPolicy": "exact-rec-idx+detail-route+title+cold-mobile-v1"
