@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install proposed Python dependencies
-        run: python -m pip install --disable-pip-version-check -r requirements.txt
+        run: python -m pip install --disable-pip-version-check -r requirements.txt playwright
       - name: Run repository unit tests
         run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Compile collector and audit scripts
