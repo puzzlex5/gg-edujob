@@ -1,0 +1,61 @@
+name: Validate ArtMore row-state traversal
+
+on:
+  push:
+    branches:
+      - 'fix/artmore-row-state-v4'
+    paths:
+      - 'scripts/crawl_artmore_browser_v3.py'
+      - '.github/workflows/validate-artmore-row-state.yml'
+  pull_request:
+    paths:
+      - 'scripts/crawl_artmore_browser_v3.py'
+      - '.github/workflows/validate-artmore-row-state.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Syntax check
+        run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v3.py
+      - name: Run isolated candidate traversal
+        run: python scripts/crawl_artmore_browser_v3.py
+      - name: Validate candidate safety gates
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          report=json.loads(pathlib.Path('artmore_reconciliation_report.candidate.json').read_text(encoding='utf-8'))
+          state=json.loads(pathlib.Path('artmore_collection_state.candidate.json').read_text(encoding='utf-8'))
+          jobs=json.loads(pathlib.Path('artmore_jobs.candidate.json').read_text(encoding='utf-8')).get('jobs',[])
+          assert report.get('publicationEnabled') is False
+          assert report.get('healthy') is True, report.get('errors')
+          assert report.get('traversalComplete') is True
+          assert report.get('missingAfterCount') == 0
+          assert state.get('preservedPublishedDataset') is True
+          assert jobs
+          assert all(j.get('province') in {'서울','경기'} for j in jobs)
+          assert all('rec_idx=' in (j.get('originalUrl') or '') for j in jobs)
+          print(json.dumps({'jobs':len(jobs),'surfaces':report.get('sourceReports',[])}, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload isolated evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: artmore-row-state-evidence
+          path: |
+            artmore_jobs.candidate.json
+            artmore_source_id_ledger.candidate.json
+            artmore_reconciliation_report.candidate.json
+            artmore_collection_state.candidate.json
