@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-09 00:49 KST",
+    "checkedAt": "2026-09-09 01:07 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1008,7 +1008,7 @@
       "failures": []
     },
     "previousTotal": 19102,
-    "currentTotal": 19102
+    "currentTotal": 19106
   },
   "jobs": [
     {
@@ -1542,6 +1542,34 @@
       "periodStatus": "parsed"
     },
     {
+      "id": "sen-109955",
+      "province": "서울",
+      "school": "한강미디어고등학교",
+      "title": "한강미디어고등학교 진로진학상담 기간제 교사 채용 공고",
+      "subject": "진로진학상담",
+      "region": "영등포구",
+      "regions": [
+        "영등포구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/20",
+      "workStart": "2026/10/12",
+      "workEnd": "2027/01/08",
+      "registered": "2026/09/08",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109955",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109955",
+      "reconciliationCarryForward": true
+    },
+    {
       "id": "sen-109963",
       "province": "서울",
       "school": "한양제일유치원",
@@ -2054,6 +2082,62 @@
       "sourceIdentity": "goe-central:59341",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109911",
+      "province": "서울",
+      "school": "목동중학교",
+      "title": "(급) 목동중학교 시간강사(기술)",
+      "subject": "기술",
+      "region": "양천구",
+      "regions": [
+        "양천구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/15",
+      "workStart": "2026/10/14",
+      "workEnd": "2026/10/16",
+      "registered": "2026/09/08",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109911",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109911",
+      "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109919",
+      "province": "서울",
+      "school": "목동중학교",
+      "title": "(급) 목동중학교 시간강사(국어)",
+      "subject": "국어",
+      "region": "양천구",
+      "regions": [
+        "양천구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/15",
+      "workStart": "2026/10/22",
+      "workEnd": "2026/10/23",
+      "registered": "2026/09/08",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109919",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109919",
       "reconciliationCarryForward": true
     },
     {
@@ -4267,6 +4351,34 @@
       "periodStatus": "unavailable",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109923",
+      "province": "서울",
+      "school": "잠일고등학교",
+      "title": "잠일고등학교 계약제교원(국어) 채용 공고",
+      "subject": "국어",
+      "region": "송파구",
+      "regions": [
+        "송파구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/13",
+      "workStart": "2026/10/06",
+      "workEnd": "2026/12/31",
+      "registered": "2026/09/08",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109923",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109923",
       "reconciliationCarryForward": true
     },
     {
@@ -529884,11 +529996,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-09 00:48 KST",
+    "checkedAt": "2026-09-09 01:05 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-09 00:48 KST",
+    "checkedAt": "2026-09-09 01:05 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -529909,7 +530021,7 @@
     "seoulTotal": 510
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-09 00:11 KST",
+    "checkedAt": "2026-09-09 01:05 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5807,
     "detailPagesParsed": 2427,
@@ -529919,7 +530031,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-09 00:11 KST",
+      "checkedAt": "2026-09-09 01:05 KST",
       "candidates": 247,
       "detailPagesConfirmed": 241,
       "cacheEntriesImproved": 0,
@@ -529931,11 +530043,11 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-09 00:48:49 KST",
-    "ledgerScanId": "20260908T134610Z-34233940930-1",
-    "protectedOfficialIds": 17802,
-    "missingBefore": 0,
-    "recoveredNow": 0,
+    "checkedAt": "2026-09-09 01:05:19 KST",
+    "ledgerScanId": "20260908T153051Z-34240276310-2",
+    "protectedOfficialIds": 17566,
+    "missingBefore": 4,
+    "recoveredNow": 4,
     "missingAfter": 0
   }
 }
