@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-09T00:09:50+09:00",
+  "generatedAt": "2026-09-09T01:09:33+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-09T00:09:50+09:00",
+    "generatedAt": "2026-09-09T01:09:33+09:00",
     "official": {
-      "datasetCount": 19102,
+      "datasetCount": 19106,
       "officialIdCount": 17802,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7441,
+      "publishedJobs": 7442,
       "officialDisplayed": 3029,
-      "privateDisplayed": 4412,
-      "privateDiscovered": 4421,
+      "privateDisplayed": 4413,
+      "privateDiscovered": 4422,
       "officialPrivateAliases": 9,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -147,7 +147,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1383,
+        "count": 1387,
         "latestRegistered": "2026-09-08"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -274,7 +274,7 @@
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-08"
+        "latestRegistered": "2026-09-09"
       },
       "artmore": {
         "name": "아트모아",
@@ -292,13 +292,13 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 64,
-        "rawCount": 64,
-        "currentCount": 56,
+        "datasetCount": 57,
+        "rawCount": 57,
+        "currentCount": 57,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-08"
+        "latestRegistered": "2026-09-09"
       },
       "seekle": {
         "name": "시립광진청소년센터",
@@ -328,12 +328,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T00:08:46+09:00",
+      "baselineAt": "2026-09-08T01:08:46+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19102,
+          "current": 19106,
           "baseline": 19079,
-          "changeRatio": 0.0012
+          "changeRatio": 0.0014
         },
         "official.officialIdCount": {
           "current": 17802,
@@ -341,9 +341,9 @@
           "changeRatio": -0.0028
         },
         "unified.publishedJobs": {
-          "current": 7441,
-          "baseline": 7353,
-          "changeRatio": 0.012
+          "current": 7442,
+          "baseline": 7350,
+          "changeRatio": 0.0125
         },
         "unified.officialDisplayed": {
           "current": 3029,
@@ -351,16 +351,16 @@
           "changeRatio": 0.0185
         },
         "unified.privateDiscovered": {
-          "current": 4421,
-          "baseline": 4386,
-          "changeRatio": 0.008
+          "current": 4422,
+          "baseline": 4383,
+          "changeRatio": 0.0089
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 281,
-          "baseline": 269,
-          "changeRatio": 0.0446
+          "baseline": 268,
+          "changeRatio": 0.0485
         },
         "cleaneye": {
           "current": 26,
@@ -369,8 +369,8 @@
         },
         "jobteacher": {
           "current": 4035,
-          "baseline": 4038,
-          "changeRatio": -0.0007
+          "baseline": 4036,
+          "changeRatio": -0.0002
         },
         "artmore": {
           "current": 20,
@@ -378,9 +378,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 56,
+          "current": 57,
           "baseline": 56,
-          "changeRatio": 0.0
+          "changeRatio": 0.0179
         },
         "seekle": {
           "current": 1,
@@ -398,9 +398,9 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19102,
+          "current": 19106,
           "baseline": 18911,
-          "changeRatio": 0.0101
+          "changeRatio": 0.0103
         },
         "official.officialIdCount": {
           "current": 17802,
@@ -408,9 +408,9 @@
           "changeRatio": -0.0048
         },
         "unified.publishedJobs": {
-          "current": 7441,
+          "current": 7442,
           "baseline": 4715,
-          "changeRatio": 0.5782
+          "changeRatio": 0.5784
         },
         "unified.officialDisplayed": {
           "current": 3029,
@@ -418,9 +418,9 @@
           "changeRatio": -0.0818
         },
         "unified.privateDiscovered": {
-          "current": 4421,
+          "current": 4422,
           "baseline": 1431,
-          "changeRatio": 2.0894
+          "changeRatio": 2.0901
         }
       },
       "privateSources": {
@@ -445,7 +445,7 @@
           "changeRatio": null
         },
         "gonggonggangsa": {
-          "current": 56,
+          "current": 57,
           "baseline": 0,
           "changeRatio": null
         },
