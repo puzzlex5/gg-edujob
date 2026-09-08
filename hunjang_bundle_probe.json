@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-08T19:32:24+09:00",
+  "generatedAt": "2026-09-08T20:30:41+09:00",
   "source": "훈장마을",
   "publiclyReachable": true,
   "humanVerificationDetected": false,
-  "scriptCount": 32,
+  "scriptCount": 31,
   "scriptsWithRecruitApiHints": 6,
   "observedRecruitApiStrings": [
     "/hunApi/academy/recruit/recruitSelfFileDetail",
@@ -34,28 +34,11 @@
       ]
     },
     {
-      "scriptUrl": "https://www.hunjang.com/assets/hunjangMain.ba12dc87.js",
-      "status": 200,
-      "apiCandidates": [
-        "/hunApi/academy/recruitMng/recruitList",
-        "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
-        "/hunApi/main/prchsSubMainRecruitList"
-      ]
-    },
-    {
       "scriptUrl": "https://www.hunjang.com/assets/popTodayView.f681e665.js",
       "status": 200,
       "apiCandidates": [
         "/hunApi/instructor/recommRecruit/recommRecruitList",
         "/hunApi/instructor/scrapRecruit/scrapRecruitWork"
-      ]
-    },
-    {
-      "scriptUrl": "https://www.hunjang.com/assets/includeSideMenu.b8389dad.js",
-      "status": 200,
-      "apiCandidates": [
-        "/hunApi/instructor/recommRecruit/recruitCount",
-        "/hunApi/main/prchsMainRecruitCnt"
       ]
     },
     {
@@ -67,6 +50,14 @@
       ]
     },
     {
+      "scriptUrl": "https://www.hunjang.com/assets/includeSideMenu.b8389dad.js",
+      "status": 200,
+      "apiCandidates": [
+        "/hunApi/instructor/recommRecruit/recruitCount",
+        "/hunApi/main/prchsMainRecruitCnt"
+      ]
+    },
+    {
       "scriptUrl": "https://www.hunjang.com/assets/popSprtResumeProgress02.c20f1e08.js",
       "status": 200,
       "apiCandidates": [
@@ -75,6 +66,15 @@
         "/hunApi/instructor/recommRecruit/recruitSprtYnCheck",
         "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
         "/hunApi/main/recruitSimilarList"
+      ]
+    },
+    {
+      "scriptUrl": "https://www.hunjang.com/assets/hunjangMain.ba12dc87.js",
+      "status": 200,
+      "apiCandidates": [
+        "/hunApi/academy/recruitMng/recruitList",
+        "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
+        "/hunApi/main/prchsSubMainRecruitList"
       ]
     }
   ],
