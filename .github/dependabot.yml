@@ -5,9 +5,6 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 8
-    labels:
-      - "dependencies"
-      - "security"
     groups:
       compatible-actions-updates:
         update-types:
@@ -18,9 +15,6 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 8
-    labels:
-      - "dependencies"
-      - "security"
     groups:
       compatible-python-updates:
         update-types:
