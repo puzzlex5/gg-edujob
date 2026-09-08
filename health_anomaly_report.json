@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-08T12:09:26+09:00",
+  "generatedAt": "2026-09-08T13:09:06+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-08T12:09:26+09:00",
+    "generatedAt": "2026-09-08T13:09:06+09:00",
     "official": {
       "datasetCount": 18908,
       "officialIdCount": 17656,
@@ -328,39 +328,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-07T12:08:52+09:00",
+      "baselineAt": "2026-09-07T13:08:30+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18908,
-          "baseline": 18851,
-          "changeRatio": 0.003
+          "baseline": 18865,
+          "changeRatio": 0.0023
         },
         "official.officialIdCount": {
           "current": 17656,
-          "baseline": 17633,
-          "changeRatio": 0.0013
+          "baseline": 17691,
+          "changeRatio": -0.002
         },
         "unified.publishedJobs": {
           "current": 7453,
-          "baseline": 7478,
-          "changeRatio": -0.0033
+          "baseline": 7516,
+          "changeRatio": -0.0084
         },
         "unified.officialDisplayed": {
           "current": 3050,
-          "baseline": 3104,
-          "changeRatio": -0.0174
+          "baseline": 3141,
+          "changeRatio": -0.029
         },
         "unified.privateDiscovered": {
           "current": 4410,
-          "baseline": 4385,
-          "changeRatio": 0.0057
+          "baseline": 4386,
+          "changeRatio": 0.0055
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 269,
-          "baseline": 268,
-          "changeRatio": 0.0037
+          "baseline": 269,
+          "changeRatio": 0.0
         },
         "cleaneye": {
           "current": 26,
