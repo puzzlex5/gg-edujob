@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-09T07:28:51+09:00",
+  "generatedAt": "2026-09-09T08:26:58+09:00",
   "source": "훈장마을",
   "publiclyReachable": true,
   "humanVerificationDetected": false,
   "stableIdCandidate": "hunjang:<rcrtNo>",
   "numericRcrtNoCount": 151,
-  "encRcrtNoCount": 169,
+  "encRcrtNoCount": 182,
   "metroRowCount": 146,
-  "observedRecruitApiCount": 42,
-  "observedPaidMainApiCount": 35,
+  "observedRecruitApiCount": 50,
+  "observedPaidMainApiCount": 40,
   "observedGeneralListApiCount": 0,
   "observedGeneralListApiUrls": [],
   "observedGeneralListApiUrlsRaw": [
@@ -19,9 +19,10 @@
   ],
   "observedDetailApiCount": 0,
   "navigationHunApiUrls": [
+    "https://hunapi.hunjang.com/hunApi/instructor/resume/resumeMyMain",
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList",
     "https://hunapi.hunjang.com/hunApi/main/prchsSubMainRecruitList",
-    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recruitCount",
-    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recommRecruitList"
+    "https://hunapi.hunjang.com/hunApi/instructor/recommRecruit/recruitCount"
   ],
   "navigationAttemptCount": 13,
   "readyForPaginationProbe": false,
