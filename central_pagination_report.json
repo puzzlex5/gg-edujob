@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-08 10:19:48 KST",
+  "generatedAt": "2026-09-08 11:09:08 KST",
   "policy": "central sources fail closed: every semantic posting row/card must expose a stable ID; partial-page parsing is a failure; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
   "sources": [
     {
       "name": "경기도교육청 통합 구인구직",
       "province": "경기",
-      "stableIdCount": 651,
+      "stableIdCount": 656,
       "complete": true,
       "categories": [
         {
           "code": "A",
           "name": "기간제/사립교원",
           "pagesScanned": 5,
-          "rawRows": 200,
-          "stableIdCount": 199,
+          "rawRows": 201,
+          "stableIdCount": 200,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -27,8 +27,8 @@
           "code": "B",
           "name": "초중등시간강사",
           "pagesScanned": 8,
-          "rawRows": 320,
-          "stableIdCount": 319,
+          "rawRows": 322,
+          "stableIdCount": 321,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -42,8 +42,8 @@
           "code": "C",
           "name": "교육공무직원",
           "pagesScanned": 3,
-          "rawRows": 59,
-          "stableIdCount": 58,
+          "rawRows": 61,
+          "stableIdCount": 60,
           "terminalEvidence": "explicit-empty-state",
           "accessError": false,
           "parseError": false,
@@ -103,9 +103,9 @@
     {
       "name": "서울교육일자리포털",
       "province": "서울",
-      "stableIdCount": 335,
+      "stableIdCount": 342,
       "pagesScanned": 8,
-      "rawRows": 335,
+      "rawRows": 342,
       "terminalEvidence": "empty-page",
       "accessError": false,
       "parseError": false,
@@ -117,5 +117,5 @@
     }
   ],
   "complete": true,
-  "scanId": "20260908T004930Z-34174542731-1"
+  "scanId": "20260908T014327Z-34177559022-1"
 }
