@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-09-09T07:53:00+09:00",
+  "generatedAt": "2026-09-09T07:55:52+09:00",
   "healthy": true,
-  "total": 7139,
+  "total": 7409,
   "official": 2998,
-  "privateDisplayed": 4141,
+  "privateDisplayed": 4411,
   "enabledPrivateSources": [
+    "lessoninfo",
     "cleaneye",
     "jobteacher",
     "artmore",
@@ -12,12 +13,10 @@
     "seekle",
     "boramyc"
   ],
-  "degradedPrivateSources": [
-    "lessoninfo"
-  ],
-  "privateStableIds": 4141,
-  "privateRepresentedDirectly": 4141,
-  "privateRepresentedByOfficial": 0,
+  "degradedPrivateSources": [],
+  "privateStableIds": 4420,
+  "privateRepresentedDirectly": 4411,
+  "privateRepresentedByOfficial": 9,
   "missingPrivateIds": 0,
   "missingPrivateBySource": {
     "lessoninfo": 0,
@@ -62,8 +61,8 @@
   "badCrossSourceAliasEvidence": 0,
   "sourceValidationPopulations": {
     "lessoninfo": {
-      "rawCount": 280,
-      "currentCount": 0
+      "rawCount": 279,
+      "currentCount": 279
     },
     "cleaneye": {
       "rawCount": 27,
@@ -91,7 +90,5 @@
     }
   },
   "errors": [],
-  "warnings": [
-    "레슨인포 is degraded and excluded from this unified publication"
-  ]
+  "warnings": []
 }
