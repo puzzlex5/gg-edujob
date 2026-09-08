@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-08 19:58 KST",
+    "checkedAt": "2026-09-08 20:15 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1007,7 +1007,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19096,
+    "previousTotal": 19098,
     "currentTotal": 19098
   },
   "jobs": [
@@ -98964,7 +98964,7 @@
       "bbsId": "4117",
       "mi": "7019",
       "detailLinkResolved": true,
-      "periodStatus": "parsed",
+      "periodStatus": "unavailable",
       "recoveryCarryForward": true,
       "recoveryReason": "previously published recent posting not rediscovered in this crawl"
     },
@@ -529784,11 +529784,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-08 19:57 KST",
+    "checkedAt": "2026-09-08 20:13 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-08 19:57 KST",
+    "checkedAt": "2026-09-08 20:13 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -529809,17 +529809,17 @@
     "seoulTotal": 510
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-08 19:56 KST",
+    "checkedAt": "2026-09-08 20:13 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5968,
-    "detailPagesParsed": 2491,
+    "detailPagesParsed": 2490,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1048,
     "missingWorkPeriod": 1975,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-08 19:56 KST",
+      "checkedAt": "2026-09-08 20:13 KST",
       "candidates": 247,
       "detailPagesConfirmed": 241,
       "cacheEntriesImproved": 0,
@@ -529829,5 +529829,13 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-08 20:13:05 KST",
+    "ledgerScanId": "20260908T104414Z-34216956925-1",
+    "protectedOfficialIds": 17798,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
