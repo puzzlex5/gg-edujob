@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-09T01:09:33+09:00",
+  "generatedAt": "2026-09-09T02:09:04+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-09T01:09:33+09:00",
+    "generatedAt": "2026-09-09T02:09:04+09:00",
     "official": {
       "datasetCount": 19106,
       "officialIdCount": 17802,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7442,
-      "officialDisplayed": 3029,
-      "privateDisplayed": 4413,
-      "privateDiscovered": 4422,
+      "publishedJobs": 7444,
+      "officialDisplayed": 3033,
+      "privateDisplayed": 4411,
+      "privateDiscovered": 4420,
       "officialPrivateAliases": 9,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -55,7 +55,7 @@
         "latestRegistered": "2026-09-08"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10235,
+        "count": 10238,
         "latestRegistered": "2026-09-08"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -67,7 +67,7 @@
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 구리남양주교육지원청": {
-        "count": 6,
+        "count": 5,
         "latestRegistered": "2026-09-07"
       },
       "경기도교육청 통합 구인구직 + 김포교육지원청": {
@@ -87,7 +87,7 @@
         "latestRegistered": "2026-09-04"
       },
       "경기도교육청 통합 구인구직 + 의정부교육지원청": {
-        "count": 4,
+        "count": 2,
         "latestRegistered": "2026-09-08"
       },
       "경기도교육청 통합 구인구직 + 평택교육지원청": {
@@ -244,9 +244,9 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 281,
-        "rawCount": 281,
-        "currentCount": 281,
+        "datasetCount": 279,
+        "rawCount": 279,
+        "currentCount": 279,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -328,39 +328,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T01:08:46+09:00",
+      "baselineAt": "2026-09-08T02:08:03+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19106,
-          "baseline": 19079,
-          "changeRatio": 0.0014
+          "baseline": 19081,
+          "changeRatio": 0.0013
         },
         "official.officialIdCount": {
           "current": 17802,
-          "baseline": 17852,
-          "changeRatio": -0.0028
+          "baseline": 17576,
+          "changeRatio": 0.0129
         },
         "unified.publishedJobs": {
-          "current": 7442,
-          "baseline": 7350,
-          "changeRatio": 0.0125
+          "current": 7444,
+          "baseline": 7334,
+          "changeRatio": 0.015
         },
         "unified.officialDisplayed": {
-          "current": 3029,
-          "baseline": 2974,
-          "changeRatio": 0.0185
+          "current": 3033,
+          "baseline": 2958,
+          "changeRatio": 0.0254
         },
         "unified.privateDiscovered": {
-          "current": 4422,
+          "current": 4420,
           "baseline": 4383,
-          "changeRatio": 0.0089
+          "changeRatio": 0.0084
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 281,
+          "current": 279,
           "baseline": 268,
-          "changeRatio": 0.0485
+          "changeRatio": 0.041
         },
         "cleaneye": {
           "current": 26,
@@ -408,24 +408,24 @@
           "changeRatio": -0.0048
         },
         "unified.publishedJobs": {
-          "current": 7442,
+          "current": 7444,
           "baseline": 4715,
-          "changeRatio": 0.5784
+          "changeRatio": 0.5788
         },
         "unified.officialDisplayed": {
-          "current": 3029,
+          "current": 3033,
           "baseline": 3299,
-          "changeRatio": -0.0818
+          "changeRatio": -0.0806
         },
         "unified.privateDiscovered": {
-          "current": 4422,
+          "current": 4420,
           "baseline": 1431,
-          "changeRatio": 2.0901
+          "changeRatio": 2.0887
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 281,
+          "current": 279,
           "baseline": 0,
           "changeRatio": null
         },
