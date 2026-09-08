@@ -10,12 +10,12 @@
       "count": 10
     },
     "daily-deep-audit.yml": {
-      "lastAttemptAt": "2026-09-08T00:18:06+09:00",
+      "lastAttemptAt": "2026-09-08T14:18:08+09:00",
       "lastResult": "dispatched",
       "lastReason": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
       "lastCode": "coverage-evidence-stale",
       "message": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
-      "count": 8
+      "count": 9
     },
     "recover-missing-jobs.yml": {
       "lastAttemptAt": "2026-08-31T23:10:00+09:00",
@@ -197,12 +197,21 @@
       "lastCode": "coverage-evidence-stale",
       "message": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
       "count": 8
+    },
+    {
+      "workflow": "daily-deep-audit.yml",
+      "lastAttemptAt": "2026-09-08T14:18:08+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
+      "lastCode": "coverage-evidence-stale",
+      "message": "완전성 증거가 최신 상태가 아닙니다. 정밀감사를 다시 수행해야 합니다.",
+      "count": 9
     }
   ],
-  "lastUpdatedAt": "2026-09-08T00:18:06+09:00",
+  "lastUpdatedAt": "2026-09-08T14:18:08+09:00",
   "lastHealth": "degraded",
   "lastPlanSummary": {
-    "generatedAt": "2026-09-08T00:18:00+09:00",
+    "generatedAt": "2026-09-08T14:18:03+09:00",
     "selectedAction": {
       "workflow": "daily-deep-audit.yml",
       "code": "coverage-evidence-stale",
