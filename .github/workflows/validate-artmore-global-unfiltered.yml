@@ -1,0 +1,68 @@
+name: Validate ArtMore global unfiltered traversal
+on:
+  push:
+    branches:
+      - 'fix/artmore-global-unfiltered-postfilter-v8'
+    paths:
+      - 'scripts/crawl_artmore_browser_v8.py'
+      - '.github/workflows/validate-artmore-global-unfiltered.yml'
+  pull_request:
+    paths:
+      - 'scripts/crawl_artmore_browser_v8.py'
+      - '.github/workflows/validate-artmore-global-unfiltered.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Syntax check
+        run: python -m py_compile scripts/crawl_artmore_browser.py scripts/crawl_artmore_browser_v8.py
+      - name: Run isolated unfiltered traversal
+        run: python scripts/crawl_artmore_browser_v8.py
+      - name: Validate candidate safety gates and detail links
+        run: |
+          python - <<'PY'
+          import json,pathlib,re,urllib.request
+          report=json.loads(pathlib.Path('artmore_reconciliation_report.candidate.json').read_text(encoding='utf-8'))
+          state=json.loads(pathlib.Path('artmore_collection_state.candidate.json').read_text(encoding='utf-8'))
+          jobs=json.loads(pathlib.Path('artmore_jobs.candidate.json').read_text(encoding='utf-8')).get('jobs',[])
+          assert report.get('publicationEnabled') is False
+          assert report.get('healthy') is True,report.get('errors')
+          assert report.get('traversalComplete') is True
+          assert report.get('missingAfterCount')==0
+          assert report.get('rawIdsTraversed',0)>=len(jobs)>0
+          assert state.get('preservedPublishedDataset') is True
+          assert set(report.get('provinceCounts',{}))=={'서울','경기'}
+          assert all(report['provinceCounts'][p]>0 for p in ('서울','경기'))
+          assert all(j.get('province') in {'서울','경기'} for j in jobs)
+          assert all((j.get('location') or '').startswith(('서울','경기')) for j in jobs)
+          assert all(re.search(r'rec_idx=\d+',j.get('originalUrl') or '') for j in jobs)
+          assert len({j['sourceIdentity'] for j in jobs})==len(jobs)
+          for j in jobs:
+            req=urllib.request.Request(j['originalUrl'],headers={'User-Agent':'Mozilla/5.0'})
+            with urllib.request.urlopen(req,timeout=20) as r:
+              assert r.status==200,(j['stableId'],r.status)
+              final=r.geturl()
+              assert re.search(r'rec_idx='+re.escape(j['stableId'])+r'(?:\D|$)',final),(j['stableId'],final)
+          print(json.dumps({'jobs':len(jobs),'provinceCounts':report['provinceCounts'],'pagesVisited':report['sourceReports'][0]['pagesVisited'],'rawIdsTraversed':report['rawIdsTraversed']},ensure_ascii=False,indent=2))
+          PY
+      - name: Upload isolated evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: artmore-global-unfiltered-evidence
+          path: |
+            artmore_jobs.candidate.json
+            artmore_source_id_ledger.candidate.json
+            artmore_reconciliation_report.candidate.json
+            artmore_collection_state.candidate.json
