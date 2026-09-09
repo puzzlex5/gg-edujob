@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-10T01:09:32+09:00",
+  "generatedAt": "2026-09-10T02:08:22+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-10T01:09:32+09:00",
+    "generatedAt": "2026-09-10T02:08:22+09:00",
     "official": {
-      "datasetCount": 19148,
+      "datasetCount": 19151,
       "officialIdCount": 17775,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -151,7 +151,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1454,
+        "count": 1457,
         "latestRegistered": "2026-09-09"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -332,12 +332,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-09T01:09:33+09:00",
+      "baselineAt": "2026-09-09T02:09:04+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19148,
+          "current": 19151,
           "baseline": 19106,
-          "changeRatio": 0.0022
+          "changeRatio": 0.0024
         },
         "official.officialIdCount": {
           "current": 17775,
@@ -346,25 +346,25 @@
         },
         "unified.publishedJobs": {
           "current": 7409,
-          "baseline": 7442,
-          "changeRatio": -0.0044
+          "baseline": 7444,
+          "changeRatio": -0.0047
         },
         "unified.officialDisplayed": {
           "current": 2998,
-          "baseline": 3029,
-          "changeRatio": -0.0102
+          "baseline": 3033,
+          "changeRatio": -0.0115
         },
         "unified.privateDiscovered": {
           "current": 4420,
-          "baseline": 4422,
-          "changeRatio": -0.0005
+          "baseline": 4420,
+          "changeRatio": 0.0
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 279,
-          "baseline": 281,
-          "changeRatio": -0.0071
+          "baseline": 279,
+          "changeRatio": 0.0
         },
         "cleaneye": {
           "current": 26,
@@ -402,9 +402,9 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19148,
+          "current": 19151,
           "baseline": 18911,
-          "changeRatio": 0.0125
+          "changeRatio": 0.0127
         },
         "official.officialIdCount": {
           "current": 17775,
