@@ -7,7 +7,7 @@ on:
       - 'scripts/audit_operational_quality.py'
       - '.github/workflows/operational-quality-audit.yml'
   schedule:
-    - cron: '42 0,2,4,6,8,10,12,14,16 * * *' # fast refresh 뒤 독립 품질감사
+    - cron: '42 */2 * * *' # fast refresh 뒤 독립 품질감사: 2시간 간격 연속 실행
 
 permissions:
   contents: write
