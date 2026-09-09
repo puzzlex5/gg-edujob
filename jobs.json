@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-09 10:11 KST",
+    "checkedAt": "2026-09-09 10:31 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7297,
-      "resolved": 7297,
+      "total": 7298,
+      "resolved": 7298,
       "unresolved": 0,
       "examples": []
     },
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 18877,
-    "currentTotal": 18936
+    "previousTotal": 18936,
+    "currentTotal": 18938
   },
   "jobs": [
     {
@@ -1968,6 +1968,34 @@
       "periodStatus": "parsed"
     },
     {
+      "id": "goe-59454",
+      "province": "경기",
+      "school": "강하초등학교",
+      "title": "기간제교원 채용 공고 (특수)",
+      "subject": "특수",
+      "region": "양평군",
+      "regions": [
+        "양평군"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/14",
+      "workStart": "2026/10/01",
+      "workEnd": "2026/10/31",
+      "registered": "2026/09/09",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59454",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "goe-central:59454",
+      "reconciliationCarryForward": true
+    },
+    {
       "id": "goe-59439",
       "province": "경기",
       "school": "숲속초등학교",
@@ -2408,6 +2436,40 @@
       "nttSn": "1127075",
       "bbsId": "4117",
       "mi": "7019",
+      "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-complete-7f911cd9d848fe3c21",
+      "province": "경기",
+      "school": "경기창조고등학교",
+      "title": "2026학년도 경기창조고등학교 기간제교원(국어) 채용 공고",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "평택시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/17",
+      "workStart": "2026/10/12",
+      "workEnd": "2026/11/20",
+      "registered": "2026/09/09",
+      "headcount": "",
+      "source": "평택교육지원청",
+      "checkedSources": [
+        "평택교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goept.kr/goept/na/ntt/selectNttInfo.do?bbsId=10111&nttSn=2566713&mi=10118",
+      "boardUrl": "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10118&bbsId=10111",
+      "detailLinkResolved": true,
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "mircms:www.goept.kr:10111:2566713",
+      "reconciliationCarryForward": true,
+      "nttSn": "2566713",
+      "bbsId": "10111",
+      "mi": "10118",
       "periodStatus": "parsed"
     },
     {
@@ -524997,11 +525059,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-09 10:10 KST",
+    "checkedAt": "2026-09-09 10:29 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-09 10:10 KST",
+    "checkedAt": "2026-09-09 10:29 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -525016,23 +525078,23 @@
     "generatedAt": "2026-09-09 10:08 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6803,
-    "gyeonggiTotal": 6803,
+    "gyeonggiExact": 6804,
+    "gyeonggiTotal": 6804,
     "seoulExact": 494,
     "seoulTotal": 494
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-09 10:08 KST",
+    "checkedAt": "2026-09-09 10:29 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 5823,
-    "detailPagesParsed": 2442,
-    "fieldsFilledThisRun": 42,
+    "recentSupportJobs": 5824,
+    "detailPagesParsed": 2435,
+    "fieldsFilledThisRun": 4,
     "missingApplicationPeriod": 1020,
     "missingWorkPeriod": 1929,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-09 10:09 KST",
+      "checkedAt": "2026-09-09 10:29 KST",
       "candidates": 240,
       "detailPagesConfirmed": 234,
       "cacheEntriesImproved": 0,
@@ -525042,5 +525104,13 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-09 10:29:31 KST",
+    "ledgerScanId": "20260909T004903Z-34296552727-1",
+    "protectedOfficialIds": 17624,
+    "missingBefore": 2,
+    "recoveredNow": 2,
+    "missingAfter": 0
   }
 }
