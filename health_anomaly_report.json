@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-09T09:13:47+09:00",
-  "status": "degraded",
-  "healthy": true,
+  "generatedAt": "2026-09-09T10:08:42+09:00",
+  "status": "critical",
+  "healthy": false,
   "snapshot": {
-    "generatedAt": "2026-09-09T09:13:47+09:00",
+    "generatedAt": "2026-09-09T10:08:42+09:00",
     "official": {
       "datasetCount": 18877,
       "officialIdCount": 17566,
@@ -243,8 +243,8 @@
       "lessoninfo": {
         "name": "레슨인포",
         "enabled": true,
-        "healthy": true,
-        "datasetCount": 279,
+        "healthy": false,
+        "datasetCount": 280,
         "rawCount": 279,
         "currentCount": 279,
         "missingAfter": 0,
@@ -328,27 +328,27 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T09:13:39+09:00",
+      "baselineAt": "2026-09-08T10:08:53+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 18877,
-          "baseline": 18817,
-          "changeRatio": 0.0032
+          "baseline": 18842,
+          "changeRatio": 0.0019
         },
         "official.officialIdCount": {
           "current": 17566,
-          "baseline": 17576,
-          "changeRatio": -0.0006
+          "baseline": 17601,
+          "changeRatio": -0.002
         },
         "unified.publishedJobs": {
           "current": 7409,
-          "baseline": 7361,
-          "changeRatio": 0.0065
+          "baseline": 7386,
+          "changeRatio": 0.0031
         },
         "unified.officialDisplayed": {
           "current": 2998,
-          "baseline": 2959,
-          "changeRatio": 0.0132
+          "baseline": 2984,
+          "changeRatio": 0.0047
         },
         "unified.privateDiscovered": {
           "current": 4420,
@@ -465,6 +465,24 @@
   },
   "anomalies": [
     {
+      "severity": "critical",
+      "code": "private-source-integrity-failed",
+      "message": "검증 편입된 민간 출처가 수집/ID 대조/상세검증 기준을 통과하지 못했습니다.",
+      "evidence": {
+        "source": "lessoninfo",
+        "name": "레슨인포",
+        "enabled": true,
+        "healthy": false,
+        "datasetCount": 280,
+        "rawCount": 279,
+        "currentCount": 279,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-08"
+      }
+    },
+    {
       "severity": "warning",
       "code": "official-source-freshness-stall",
       "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
@@ -520,7 +538,7 @@
       }
     }
   ],
-  "criticalCount": 0,
+  "criticalCount": 1,
   "warningCount": 5,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
