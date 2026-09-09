@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10 03:07:46 KST",
+  "generatedAt": "2026-09-10 05:05:39 KST",
   "policy": "central sources fail closed: every semantic posting row/card must expose a stable ID; partial-page parsing is a failure; after a short final data page, a following non-post row is terminal only when it contains no semantic recruitment-detail candidate; arbitrary numeric pagination/menu links are ignored; repeated full pages are pagination failures",
   "sources": [
     {
@@ -103,9 +103,9 @@
     {
       "name": "서울교육일자리포털",
       "province": "서울",
-      "stableIdCount": 352,
+      "stableIdCount": 353,
       "pagesScanned": 9,
-      "rawRows": 352,
+      "rawRows": 353,
       "terminalEvidence": "empty-page",
       "accessError": false,
       "parseError": false,
@@ -117,5 +117,5 @@
     }
   ],
   "complete": true,
-  "scanId": "20260909T174227Z-34384454219-1"
+  "scanId": "20260909T194044Z-34396398742-1"
 }
