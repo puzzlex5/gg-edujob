@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-09T20:08:58+09:00",
+  "generatedAt": "2026-09-09T21:11:21+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-09T20:08:58+09:00",
+    "generatedAt": "2026-09-09T21:11:21+09:00",
     "official": {
-      "datasetCount": 19146,
-      "officialIdCount": 17775,
+      "datasetCount": 19147,
+      "officialIdCount": 17774,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
@@ -127,7 +127,7 @@
         "latestRegistered": "2026-09-08"
       },
       "동두천양주교육지원청": {
-        "count": 493,
+        "count": 494,
         "latestRegistered": "2026-09-09"
       },
       "동부교육지원청": {
@@ -332,17 +332,17 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T20:08:39+09:00",
+      "baselineAt": "2026-09-08T21:12:02+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19146,
-          "baseline": 19098,
-          "changeRatio": 0.0025
+          "current": 19147,
+          "baseline": 19102,
+          "changeRatio": 0.0024
         },
         "official.officialIdCount": {
-          "current": 17775,
-          "baseline": 17796,
-          "changeRatio": -0.0012
+          "current": 17774,
+          "baseline": 17802,
+          "changeRatio": -0.0016
         },
         "unified.publishedJobs": {
           "current": 7409,
@@ -356,15 +356,15 @@
         },
         "unified.privateDiscovered": {
           "current": 4420,
-          "baseline": 4429,
-          "changeRatio": -0.002
+          "baseline": 4431,
+          "changeRatio": -0.0025
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 279,
-          "baseline": 279,
-          "changeRatio": 0.0
+          "baseline": 281,
+          "changeRatio": -0.0071
         },
         "cleaneye": {
           "current": 26,
@@ -402,12 +402,12 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19146,
+          "current": 19147,
           "baseline": 18911,
-          "changeRatio": 0.0124
+          "changeRatio": 0.0125
         },
         "official.officialIdCount": {
-          "current": 17775,
+          "current": 17774,
           "baseline": 17887,
           "changeRatio": -0.0063
         },
