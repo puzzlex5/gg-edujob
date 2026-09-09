@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-10 03:48 KST",
+    "checkedAt": "2026-09-10 06:09 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19151,
-    "currentTotal": 18839
+    "previousTotal": 18839,
+    "currentTotal": 18840
   },
   "jobs": [
     {
@@ -5468,6 +5468,33 @@
       "sourceIdentity": "seoul-central:110017",
       "recoveryCarryForward": true,
       "recoveryReason": "previously published posting still within application period"
+    },
+    {
+      "id": "sen-110011",
+      "province": "서울",
+      "school": "서울인공지능고등학교",
+      "title": "서울인공지능고등학교 기간제 채용 공고(정보 컴퓨터)",
+      "subject": "정보 컴퓨터",
+      "region": "송파구",
+      "regions": [
+        "송파구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/10",
+      "applyEnd": "2026/09/14",
+      "workStart": "2026/10/01",
+      "workEnd": "2027/01/08",
+      "registered": "2026/09/09",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110011",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:110011"
     },
     {
       "id": "goe-59490",
@@ -522080,11 +522107,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-10 03:47 KST",
+    "checkedAt": "2026-09-10 06:08 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-10 03:47 KST",
+    "checkedAt": "2026-09-10 06:08 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -522105,7 +522132,7 @@
     "seoulTotal": 489
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-10 03:44 KST",
+    "checkedAt": "2026-09-10 06:08 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5867,
     "detailPagesParsed": 2453,
@@ -522115,7 +522142,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-10 03:45 KST",
+      "checkedAt": "2026-09-10 06:08 KST",
       "candidates": 236,
       "detailPagesConfirmed": 231,
       "cacheEntriesImproved": 0,
@@ -522125,5 +522152,28 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-10 05:47:43 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17451,
+    "datasetIdCountBefore": 18794,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38,
+    "scanId": "20260909T204301Z-34402638679-1"
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-10 06:08:03 KST",
+    "ledgerScanId": "20260909T204301Z-34402638679-1",
+    "protectedOfficialIds": 17451,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
