@@ -1,14 +1,14 @@
 {
   "summary": {
-    "freshCount": 16545,
+    "freshCount": 16544,
     "previousCount": 19148,
     "mergedCount": 19132,
-    "carriedForward": 2587,
+    "carriedForward": 2588,
     "officialIdProtected": 17775,
-    "officialIdCarryForward": 1230,
+    "officialIdCarryForward": 1231,
     "enrichedFromPrevious": 6988,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-09 21:56 KST"
+    "generatedAt": "2026-09-09 22:29 KST"
   },
   "carried": [
     {
@@ -2045,6 +2045,17 @@
       "sourceIdentity": "goe-central:58857",
       "reason": "previously published posting still within application period",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=58857"
+    },
+    {
+      "province": "서울",
+      "source": "서울교육일자리포털",
+      "school": "서울옥수초등학교",
+      "title": "(옥수초)2026학년도 교과전담(영어) 기간제교원 채용 공고",
+      "registered": "2026/09/03",
+      "applyEnd": "2026/09/09",
+      "sourceIdentity": "seoul-central:109675",
+      "reason": "present in latest independent official-ID reconciliation",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109675"
     },
     {
       "province": "서울",
