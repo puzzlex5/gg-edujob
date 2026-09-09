@@ -1,21 +1,15 @@
 {
-  "generatedAt": "2026-09-09T14:30:55+09:00",
+  "generatedAt": "2026-09-09T15:37:58+09:00",
   "source": "훈장마을",
   "publiclyReachable": true,
   "humanVerificationDetected": false,
-  "scriptCount": 28,
-  "scriptsWithRecruitApiHints": 4,
+  "scriptCount": 13,
+  "scriptsWithRecruitApiHints": 1,
   "observedRecruitApiStrings": [
-    "/hunApi/academy/recruitMng/getCheckRegistRecruitCount",
-    "/hunApi/instructor/recommRecruit/recommRecruitList",
-    "/hunApi/instructor/recommRecruit/recruitCount",
-    "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
-    "/hunApi/main/prchsMainRecruitCnt",
-    "/hunApi/main/recruitSimpleDetail"
+    "/hunApi/academy/recruitMng/getCheckRegistRecruitCount"
   ],
   "generalListApiStringCandidates": [
-    "/hunApi/academy/recruitMng/getCheckRegistRecruitCount",
-    "/hunApi/instructor/scrapRecruit/scrapRecruitWork"
+    "/hunApi/academy/recruitMng/getCheckRegistRecruitCount"
   ],
   "findings": [
     {
@@ -23,30 +17,6 @@
       "status": 200,
       "apiCandidates": [
         "/hunApi/academy/recruitMng/getCheckRegistRecruitCount"
-      ]
-    },
-    {
-      "scriptUrl": "https://www.hunjang.com/assets/popTodayView.f681e665.js",
-      "status": 200,
-      "apiCandidates": [
-        "/hunApi/instructor/recommRecruit/recommRecruitList",
-        "/hunApi/instructor/scrapRecruit/scrapRecruitWork"
-      ]
-    },
-    {
-      "scriptUrl": "https://www.hunjang.com/assets/popRecruitPreview.9df19607.js",
-      "status": 200,
-      "apiCandidates": [
-        "/hunApi/instructor/scrapRecruit/scrapRecruitWork",
-        "/hunApi/main/recruitSimpleDetail"
-      ]
-    },
-    {
-      "scriptUrl": "https://www.hunjang.com/assets/includeSideMenu.b8389dad.js",
-      "status": 200,
-      "apiCandidates": [
-        "/hunApi/instructor/recommRecruit/recruitCount",
-        "/hunApi/main/prchsMainRecruitCnt"
       ]
     }
   ],
