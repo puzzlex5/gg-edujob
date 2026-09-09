@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-09 20:15 KST",
+    "checkedAt": "2026-09-09 21:12 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19146,
-    "currentTotal": 19147
+    "previousTotal": 19147,
+    "currentTotal": 19148
   },
   "jobs": [
     {
@@ -5405,6 +5405,33 @@
       "bbsId": "5218",
       "mi": "9406",
       "periodStatus": "parsed"
+    },
+    {
+      "id": "goe-59564",
+      "province": "경기",
+      "school": "영생고등학교",
+      "title": "영생고등학교 기간제교원 채용 공고",
+      "subject": "국어",
+      "region": "수원시",
+      "regions": [
+        "수원시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/09",
+      "applyEnd": "2026/09/14",
+      "workStart": "2026/09/21",
+      "workEnd": "2026/11/24",
+      "registered": "2026/09/09",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59564",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:59564"
     },
     {
       "id": "goe-59490",
@@ -530791,11 +530818,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-09 20:13 KST",
+    "checkedAt": "2026-09-09 21:10 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-09 20:13 KST",
+    "checkedAt": "2026-09-09 21:10 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -530816,7 +530843,7 @@
     "seoulTotal": 502
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-09 20:13 KST",
+    "checkedAt": "2026-09-09 21:10 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5874,
     "detailPagesParsed": 2456,
@@ -530826,7 +530853,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-09 20:13 KST",
+      "checkedAt": "2026-09-09 21:10 KST",
       "candidates": 242,
       "detailPagesConfirmed": 236,
       "cacheEntriesImproved": 0,
@@ -530838,19 +530865,19 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-09 20:13:18 KST",
-    "ledgerScanId": "20260909T104435Z-34341777935-1",
-    "protectedOfficialIds": 17774,
+    "checkedAt": "2026-09-09 21:10:54 KST",
+    "ledgerScanId": "20260909T114325Z-34346983638-1",
+    "protectedOfficialIds": 17775,
     "missingBefore": 0,
     "recoveredNow": 0,
     "missingAfter": 0
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-09 19:49:51 KST",
+    "generatedAt": "2026-09-09 20:48:27 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 17774,
-    "datasetIdCountBefore": 19101,
+    "officialIdCount": 17775,
+    "datasetIdCountBefore": 19102,
     "missingBefore": 1,
     "recoveredNow": 1,
     "missingAfter": 0,
@@ -530858,6 +530885,6 @@
     "totalSources": 38,
     "reconciledOffices": 38,
     "totalOffices": 38,
-    "scanId": "20260909T104435Z-34341777935-1"
+    "scanId": "20260909T114325Z-34346983638-1"
   }
 }
