@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-10T00:08:27+09:00",
-  "status": "critical",
-  "healthy": false,
+  "generatedAt": "2026-09-10T01:09:32+09:00",
+  "status": "degraded",
+  "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-10T00:08:27+09:00",
+    "generatedAt": "2026-09-10T01:09:32+09:00",
     "official": {
       "datasetCount": 19148,
       "officialIdCount": 17775,
@@ -247,8 +247,8 @@
       "lessoninfo": {
         "name": "레슨인포",
         "enabled": true,
-        "healthy": false,
-        "datasetCount": 289,
+        "healthy": true,
+        "datasetCount": 287,
         "rawCount": 279,
         "currentCount": 279,
         "missingAfter": 0,
@@ -272,13 +272,13 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4035,
+        "datasetCount": 4036,
         "rawCount": 4035,
         "currentCount": 4035,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-09"
+        "latestRegistered": "2026-09-10"
       },
       "artmore": {
         "name": "아트모아",
@@ -296,13 +296,13 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 65,
+        "datasetCount": 59,
         "rawCount": 57,
         "currentCount": 57,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-09"
+        "latestRegistered": "2026-09-10"
       },
       "seekle": {
         "name": "시립광진청소년센터",
@@ -332,12 +332,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-09T00:09:50+09:00",
+      "baselineAt": "2026-09-09T01:09:33+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19148,
-          "baseline": 19102,
-          "changeRatio": 0.0024
+          "baseline": 19106,
+          "changeRatio": 0.0022
         },
         "official.officialIdCount": {
           "current": 17775,
@@ -346,8 +346,8 @@
         },
         "unified.publishedJobs": {
           "current": 7409,
-          "baseline": 7441,
-          "changeRatio": -0.0043
+          "baseline": 7442,
+          "changeRatio": -0.0044
         },
         "unified.officialDisplayed": {
           "current": 2998,
@@ -356,8 +356,8 @@
         },
         "unified.privateDiscovered": {
           "current": 4420,
-          "baseline": 4421,
-          "changeRatio": -0.0002
+          "baseline": 4422,
+          "changeRatio": -0.0005
         }
       },
       "privateSources": {
@@ -383,8 +383,8 @@
         },
         "gonggonggangsa": {
           "current": 57,
-          "baseline": 56,
-          "changeRatio": 0.0179
+          "baseline": 57,
+          "changeRatio": 0.0
         },
         "seekle": {
           "current": 1,
@@ -469,24 +469,6 @@
   },
   "anomalies": [
     {
-      "severity": "critical",
-      "code": "private-source-integrity-failed",
-      "message": "검증 편입된 민간 출처가 수집/ID 대조/상세검증 기준을 통과하지 못했습니다.",
-      "evidence": {
-        "source": "lessoninfo",
-        "name": "레슨인포",
-        "enabled": true,
-        "healthy": false,
-        "datasetCount": 289,
-        "rawCount": 279,
-        "currentCount": 279,
-        "missingAfter": 0,
-        "detailErrors": 0,
-        "traversalComplete": true,
-        "latestRegistered": "2026-09-08"
-      }
-    },
-    {
       "severity": "warning",
       "code": "official-source-freshness-stall",
       "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
@@ -542,7 +524,7 @@
       }
     }
   ],
-  "criticalCount": 1,
+  "criticalCount": 0,
   "warningCount": 5,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
