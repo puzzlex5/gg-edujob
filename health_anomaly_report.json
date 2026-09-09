@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-09T19:09:17+09:00",
+  "generatedAt": "2026-09-09T20:08:58+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-09T19:09:17+09:00",
+    "generatedAt": "2026-09-09T20:08:58+09:00",
     "official": {
-      "datasetCount": 19145,
+      "datasetCount": 19146,
       "officialIdCount": 17775,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -191,7 +191,7 @@
         "latestRegistered": "2026-09-07"
       },
       "안성교육지원청": {
-        "count": 212,
+        "count": 213,
         "latestRegistered": "2026-09-09"
       },
       "안양과천교육지원청": {
@@ -296,7 +296,7 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 58,
+        "datasetCount": 64,
         "rawCount": 57,
         "currentCount": 57,
         "missingAfter": 0,
@@ -332,39 +332,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T19:09:41+09:00",
+      "baselineAt": "2026-09-08T20:08:39+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19145,
-          "baseline": 19095,
-          "changeRatio": 0.0026
+          "current": 19146,
+          "baseline": 19098,
+          "changeRatio": 0.0025
         },
         "official.officialIdCount": {
           "current": 17775,
-          "baseline": 17792,
-          "changeRatio": -0.001
+          "baseline": 17796,
+          "changeRatio": -0.0012
         },
         "unified.publishedJobs": {
           "current": 7409,
-          "baseline": 7658,
-          "changeRatio": -0.0325
+          "baseline": 7661,
+          "changeRatio": -0.0329
         },
         "unified.officialDisplayed": {
           "current": 2998,
-          "baseline": 3237,
-          "changeRatio": -0.0738
+          "baseline": 3240,
+          "changeRatio": -0.0747
         },
         "unified.privateDiscovered": {
           "current": 4420,
-          "baseline": 4428,
-          "changeRatio": -0.0018
+          "baseline": 4429,
+          "changeRatio": -0.002
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 279,
-          "baseline": 278,
-          "changeRatio": 0.0036
+          "baseline": 279,
+          "changeRatio": 0.0
         },
         "cleaneye": {
           "current": 26,
@@ -402,7 +402,7 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19145,
+          "current": 19146,
           "baseline": 18911,
           "changeRatio": 0.0124
         },
