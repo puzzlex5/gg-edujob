@@ -213,6 +213,7 @@ jobs:
           fi
           git diff --cached --quiet && exit 0
           git commit -m 'Publish verified multi-source recruitment search'
+          git restore --worktree -- .
           for i in 1 2 3; do
             git pull --rebase origin main && git push origin HEAD:main && break
             sleep $((i*4))
