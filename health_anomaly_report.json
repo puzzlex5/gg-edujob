@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-09T21:11:21+09:00",
-  "status": "degraded",
-  "healthy": true,
+  "generatedAt": "2026-09-09T22:10:07+09:00",
+  "status": "critical",
+  "healthy": false,
   "snapshot": {
-    "generatedAt": "2026-09-09T21:11:21+09:00",
+    "generatedAt": "2026-09-09T22:10:07+09:00",
     "official": {
-      "datasetCount": 19147,
-      "officialIdCount": 17774,
+      "datasetCount": 19148,
+      "officialIdCount": 17775,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
@@ -55,7 +55,7 @@
         "latestRegistered": "2026-09-09"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10243,
+        "count": 10244,
         "latestRegistered": "2026-09-09"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -151,7 +151,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1456,
+        "count": 1454,
         "latestRegistered": "2026-09-09"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -163,8 +163,8 @@
         "latestRegistered": "2026-08-24"
       },
       "서울교육일자리포털 + 동작관악교육지원청": {
-        "count": 9,
-        "latestRegistered": "2026-09-04"
+        "count": 11,
+        "latestRegistered": "2026-09-09"
       },
       "성남교육지원청": {
         "count": 974,
@@ -247,7 +247,7 @@
       "lessoninfo": {
         "name": "레슨인포",
         "enabled": true,
-        "healthy": true,
+        "healthy": false,
         "datasetCount": 289,
         "rawCount": 279,
         "currentCount": 279,
@@ -296,7 +296,7 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 64,
+        "datasetCount": 65,
         "rawCount": 57,
         "currentCount": 57,
         "missingAfter": 0,
@@ -332,32 +332,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-08T21:12:02+09:00",
+      "baselineAt": "2026-09-08T22:10:50+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19147,
+          "current": 19148,
           "baseline": 19102,
           "changeRatio": 0.0024
         },
         "official.officialIdCount": {
-          "current": 17774,
+          "current": 17775,
           "baseline": 17802,
-          "changeRatio": -0.0016
+          "changeRatio": -0.0015
         },
         "unified.publishedJobs": {
           "current": 7409,
-          "baseline": 7661,
-          "changeRatio": -0.0329
+          "baseline": 7394,
+          "changeRatio": 0.002
         },
         "unified.officialDisplayed": {
           "current": 2998,
-          "baseline": 3240,
-          "changeRatio": -0.0747
+          "baseline": 3244,
+          "changeRatio": -0.0758
         },
         "unified.privateDiscovered": {
           "current": 4420,
-          "baseline": 4431,
-          "changeRatio": -0.0025
+          "baseline": 4150,
+          "changeRatio": 0.0651
         }
       },
       "privateSources": {
@@ -402,12 +402,12 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19147,
+          "current": 19148,
           "baseline": 18911,
           "changeRatio": 0.0125
         },
         "official.officialIdCount": {
-          "current": 17774,
+          "current": 17775,
           "baseline": 17887,
           "changeRatio": -0.0063
         },
@@ -469,6 +469,24 @@
   },
   "anomalies": [
     {
+      "severity": "critical",
+      "code": "private-source-integrity-failed",
+      "message": "검증 편입된 민간 출처가 수집/ID 대조/상세검증 기준을 통과하지 못했습니다.",
+      "evidence": {
+        "source": "lessoninfo",
+        "name": "레슨인포",
+        "enabled": true,
+        "healthy": false,
+        "datasetCount": 289,
+        "rawCount": 279,
+        "currentCount": 279,
+        "missingAfter": 0,
+        "detailErrors": 0,
+        "traversalComplete": true,
+        "latestRegistered": "2026-09-08"
+      }
+    },
+    {
       "severity": "warning",
       "code": "official-source-freshness-stall",
       "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
@@ -524,7 +542,7 @@
       }
     }
   ],
-  "criticalCount": 0,
+  "criticalCount": 1,
   "warningCount": 5,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
