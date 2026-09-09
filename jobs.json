@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-10 00:54 KST",
+    "checkedAt": "2026-09-10 01:19 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1008,7 +1008,7 @@
       "failures": []
     },
     "previousTotal": 19148,
-    "currentTotal": 19148
+    "currentTotal": 19151
   },
   "jobs": [
     {
@@ -2063,6 +2063,34 @@
       "reconciliationCarryForward": true
     },
     {
+      "id": "sen-110027",
+      "province": "서울",
+      "school": "서울거여초등학교",
+      "title": "서울거여초등학교 리코더 협력강사 모집",
+      "subject": "리코더 협력강사",
+      "region": "송파구",
+      "regions": [
+        "송파구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/10",
+      "applyEnd": "2026/09/17",
+      "workStart": "2026/10/02",
+      "workEnd": "2026/12/18",
+      "registered": "2026/09/09",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110027",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:110027",
+      "reconciliationCarryForward": true
+    },
+    {
       "id": "goe-59441",
       "province": "경기",
       "school": "청룡초등학교",
@@ -3066,6 +3094,34 @@
       "periodStatus": "parsed",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
+    },
+    {
+      "id": "sen-109984",
+      "province": "서울",
+      "school": "서울난향초등학교",
+      "title": "서울난향초등학교 수영장 개인위탁 수영강사 채용 공고",
+      "subject": "-",
+      "region": "관악구",
+      "regions": [
+        "관악구"
+      ],
+      "type": "자원봉사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/10",
+      "applyEnd": "2026/09/15",
+      "workStart": "2026/10/01",
+      "workEnd": "2026/12/31",
+      "registered": "2026/09/09",
+      "headcount": "",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109984",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109984",
       "reconciliationCarryForward": true
     },
     {
@@ -5393,6 +5449,34 @@
       "sourceIdentity": "seoul-central:110017",
       "recoveryCarryForward": true,
       "recoveryReason": "previously published posting still within application period"
+    },
+    {
+      "id": "sen-109982",
+      "province": "서울",
+      "school": "서울송전초등학교병설유치원",
+      "title": "유치원 에듀케어 대체 강사",
+      "subject": "-",
+      "region": "송파구",
+      "regions": [
+        "송파구"
+      ],
+      "type": "자원봉사",
+      "schoolLevel": "유치원",
+      "applyStart": "2026/09/10",
+      "applyEnd": "2026/09/14",
+      "workStart": "2026/11/02",
+      "workEnd": "2027/02/26",
+      "registered": "2026/09/09",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109982",
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul-central:109982",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-59490",
@@ -530795,11 +530879,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-10 00:53 KST",
+    "checkedAt": "2026-09-10 01:16 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-10 00:53 KST",
+    "checkedAt": "2026-09-10 01:16 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -530820,17 +530904,17 @@
     "seoulTotal": 502
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-09 23:58 KST",
+    "checkedAt": "2026-09-10 01:16 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 5874,
-    "detailPagesParsed": 2456,
+    "recentSupportJobs": 5871,
+    "detailPagesParsed": 2454,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1028,
     "missingWorkPeriod": 1941,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-09 23:58 KST",
+      "checkedAt": "2026-09-10 01:16 KST",
       "candidates": 242,
       "detailPagesConfirmed": 236,
       "cacheEntriesImproved": 0,
@@ -530842,11 +530926,11 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-10 00:36:49 KST",
-    "ledgerScanId": "20260909T114325Z-34346983638-1",
-    "protectedOfficialIds": 17775,
-    "missingBefore": 0,
-    "recoveredNow": 0,
+    "checkedAt": "2026-09-10 01:16:31 KST",
+    "ledgerScanId": "20260909T154524Z-34372240029-1",
+    "protectedOfficialIds": 17450,
+    "missingBefore": 3,
+    "recoveredNow": 3,
     "missingAfter": 0
   }
 }
