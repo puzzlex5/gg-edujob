@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-09 19:17 KST",
+    "checkedAt": "2026-09-09 20:15 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7347,
-      "resolved": 7347,
+      "total": 7348,
+      "resolved": 7348,
       "unresolved": 0,
       "examples": []
     },
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19145,
-    "currentTotal": 19146
+    "previousTotal": 19146,
+    "currentTotal": 19147
   },
   "jobs": [
     {
@@ -2383,6 +2383,40 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59561",
       "recoveredBy": "official-source-id-reconciliation",
       "sourceIdentity": "goe-central:59561"
+    },
+    {
+      "id": "goe-complete-7f429088513cabab26",
+      "province": "경기",
+      "school": "지행초등학교",
+      "title": "지행초 초등교사 채용공고(영어전담 1명)_0910_1차",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "동두천시",
+        "양주시"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "",
+      "applyEnd": "2026/09/16",
+      "workStart": "",
+      "workEnd": "",
+      "registered": "2026/09/09",
+      "headcount": "",
+      "source": "동두천양주교육지원청",
+      "checkedSources": [
+        "동두천양주교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://www.goedy.kr/goedy/na/ntt/selectNttInfo.do?bbsId=10228&nttSn=1684041&mi=10336",
+      "boardUrl": "https://www.goedy.kr/goedy/na/ntt/selectNttList.do?mi=10336&bbsId=10228",
+      "detailLinkResolved": true,
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "mircms:www.goedy.kr:10228:1684041",
+      "nttSn": "1684041",
+      "bbsId": "10228",
+      "mi": "10336",
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-59544",
@@ -530757,11 +530791,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-09 19:14 KST",
+    "checkedAt": "2026-09-09 20:13 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-09 19:14 KST",
+    "checkedAt": "2026-09-09 20:13 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -530776,23 +530810,23 @@
     "generatedAt": "2026-09-09 16:23 KST"
   },
   "supportLinkResolution": {
-    "gyeonggiExact": 6845,
-    "gyeonggiTotal": 6845,
+    "gyeonggiExact": 6846,
+    "gyeonggiTotal": 6846,
     "seoulExact": 502,
     "seoulTotal": 502
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-09 19:14 KST",
+    "checkedAt": "2026-09-09 20:13 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 5873,
-    "detailPagesParsed": 2455,
-    "fieldsFilledThisRun": 1,
+    "recentSupportJobs": 5874,
+    "detailPagesParsed": 2456,
+    "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1028,
-    "missingWorkPeriod": 1940,
+    "missingWorkPeriod": 1941,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-09 19:14 KST",
+      "checkedAt": "2026-09-09 20:13 KST",
       "candidates": 242,
       "detailPagesConfirmed": 236,
       "cacheEntriesImproved": 0,
@@ -530804,26 +530838,26 @@
     }
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-09 19:14:51 KST",
-    "ledgerScanId": "20260909T094449Z-34336352265-1",
-    "protectedOfficialIds": 17773,
-    "missingBefore": 1,
-    "recoveredNow": 1,
+    "checkedAt": "2026-09-09 20:13:18 KST",
+    "ledgerScanId": "20260909T104435Z-34341777935-1",
+    "protectedOfficialIds": 17774,
+    "missingBefore": 0,
+    "recoveredNow": 0,
     "missingAfter": 0
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-09 17:49:55 KST",
+    "generatedAt": "2026-09-09 19:49:51 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 17775,
-    "datasetIdCountBefore": 19098,
-    "missingBefore": 2,
-    "recoveredNow": 2,
+    "officialIdCount": 17774,
+    "datasetIdCountBefore": 19101,
+    "missingBefore": 1,
+    "recoveredNow": 1,
     "missingAfter": 0,
     "reconciledSources": 38,
     "totalSources": 38,
     "reconciledOffices": 38,
     "totalOffices": 38,
-    "scanId": "20260909T084424Z-34330699586-1"
+    "scanId": "20260909T104435Z-34341777935-1"
   }
 }
