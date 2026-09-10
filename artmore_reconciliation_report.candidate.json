@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-10T21:57:19+09:00",
+  "generatedAt": "2026-09-10T23:55:24+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": true,
-  "traversalComplete": true,
-  "candidateIdCount": 20,
-  "publishedIdCount": 20,
+  "healthy": false,
+  "traversalComplete": false,
+  "candidateIdCount": 19,
+  "publishedIdCount": 19,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
@@ -21,34 +21,24 @@
           "rowCount": 10,
           "newIdCount": 10,
           "firstId": "94942",
-          "lastId": "94932"
+          "lastId": "94920"
         },
         {
           "page": 2,
           "rowCount": 9,
           "newIdCount": 9,
-          "firstId": "94933",
-          "lastId": "94901"
-        }
-      ]
-    },
-    {
-      "region": "경기",
-      "code": "2083",
-      "pagesVisited": 1,
-      "ids": 1,
-      "pages": [
-        {
-          "page": 1,
-          "rowCount": 1,
-          "newIdCount": 1,
-          "firstId": "94937",
-          "lastId": "94937"
+          "firstId": "94932",
+          "lastId": "94904"
         }
       ]
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "region": "경기",
+      "error": "RuntimeError: area filter lost after current-only submit"
+    }
+  ],
   "regionsAllowed": [
     "서울",
     "경기"
