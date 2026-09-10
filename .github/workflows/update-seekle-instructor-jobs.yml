@@ -3,7 +3,7 @@ name: Update Seekle instructor jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '31 * * * *'
+    - cron: '31 * * 1-12 *'
   pull_request:
     paths:
       - 'scripts/crawl_seekle_instructor_jobs.py'
