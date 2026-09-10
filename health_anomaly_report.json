@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-10T11:09:09+09:00",
+  "generatedAt": "2026-09-10T12:08:53+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-10T11:09:09+09:00",
+    "generatedAt": "2026-09-10T12:08:53+09:00",
     "official": {
-      "datasetCount": 18895,
-      "officialIdCount": 17451,
+      "datasetCount": 18933,
+      "officialIdCount": 17530,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7465,
-      "officialDisplayed": 3048,
+      "publishedJobs": 7503,
+      "officialDisplayed": 3086,
       "privateDisplayed": 4417,
       "privateDiscovered": 4424,
       "officialPrivateAliases": 7,
@@ -47,15 +47,15 @@
         "latestRegistered": "2026-09-10"
       },
       "강동송파교육지원청": {
-        "count": 21,
-        "latestRegistered": "2026-09-09"
+        "count": 22,
+        "latestRegistered": "2026-09-10"
       },
       "강서양천교육지원청": {
         "count": 131,
         "latestRegistered": "2026-09-09"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10117,
+        "count": 10134,
         "latestRegistered": "2026-09-10"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -103,11 +103,11 @@
         "latestRegistered": "2026-09-09"
       },
       "광명교육지원청": {
-        "count": 287,
+        "count": 288,
         "latestRegistered": "2026-09-10"
       },
       "광주하남교육지원청": {
-        "count": 323,
+        "count": 328,
         "latestRegistered": "2026-09-10"
       },
       "구리남양주교육지원청": {
@@ -135,8 +135,8 @@
         "latestRegistered": "2026-09-08"
       },
       "동작관악교육지원청": {
-        "count": 157,
-        "latestRegistered": "2026-09-09"
+        "count": 158,
+        "latestRegistered": "2026-09-10"
       },
       "부천교육지원청": {
         "count": 690,
@@ -151,7 +151,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1479,
+        "count": 1487,
         "latestRegistered": "2026-09-10"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -167,7 +167,7 @@
         "latestRegistered": "2026-09-09"
       },
       "성남교육지원청": {
-        "count": 956,
+        "count": 957,
         "latestRegistered": "2026-09-10"
       },
       "성동광진교육지원청": {
@@ -191,8 +191,8 @@
         "latestRegistered": "2026-09-07"
       },
       "안성교육지원청": {
-        "count": 213,
-        "latestRegistered": "2026-09-09"
+        "count": 214,
+        "latestRegistered": "2026-09-10"
       },
       "안양과천교육지원청": {
         "count": 9,
@@ -215,8 +215,8 @@
         "latestRegistered": "2026-09-07"
       },
       "의정부교육지원청": {
-        "count": 337,
-        "latestRegistered": "2026-09-09"
+        "count": 339,
+        "latestRegistered": "2026-09-10"
       },
       "이천교육지원청": {
         "count": 11,
@@ -231,8 +231,8 @@
         "latestRegistered": "2026-09-09"
       },
       "평택교육지원청": {
-        "count": 751,
-        "latestRegistered": "2026-09-09"
+        "count": 752,
+        "latestRegistered": "2026-09-10"
       },
       "포천교육지원청": {
         "count": 203,
@@ -272,9 +272,9 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4036,
-        "rawCount": 4036,
-        "currentCount": 4036,
+        "datasetCount": 4035,
+        "rawCount": 4035,
+        "currentCount": 4035,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -286,11 +286,11 @@
         "healthy": true,
         "datasetCount": 20,
         "rawCount": 20,
-        "currentCount": 19,
+        "currentCount": 20,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-05"
+        "latestRegistered": "2026-09-10"
       },
       "gonggonggangsa": {
         "name": "공공강사",
@@ -332,27 +332,27 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-09T11:09:09+09:00",
+      "baselineAt": "2026-09-09T12:09:46+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18895,
-          "baseline": 18938,
-          "changeRatio": -0.0023
+          "current": 18933,
+          "baseline": 18965,
+          "changeRatio": -0.0017
         },
         "official.officialIdCount": {
-          "current": 17451,
-          "baseline": 17566,
-          "changeRatio": -0.0065
+          "current": 17530,
+          "baseline": 17647,
+          "changeRatio": -0.0066
         },
         "unified.publishedJobs": {
-          "current": 7465,
+          "current": 7503,
           "baseline": 7409,
-          "changeRatio": 0.0076
+          "changeRatio": 0.0127
         },
         "unified.officialDisplayed": {
-          "current": 3048,
+          "current": 3086,
           "baseline": 2998,
-          "changeRatio": 0.0167
+          "changeRatio": 0.0294
         },
         "unified.privateDiscovered": {
           "current": 4424,
@@ -372,14 +372,14 @@
           "changeRatio": -0.2308
         },
         "jobteacher": {
-          "current": 4036,
+          "current": 4035,
           "baseline": 4035,
-          "changeRatio": 0.0002
+          "changeRatio": 0.0
         },
         "artmore": {
-          "current": 19,
+          "current": 20,
           "baseline": 20,
-          "changeRatio": -0.05
+          "changeRatio": 0.0
         },
         "gonggonggangsa": {
           "current": 59,
@@ -402,24 +402,24 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 18895,
+          "current": 18933,
           "baseline": 18911,
-          "changeRatio": -0.0008
+          "changeRatio": 0.0012
         },
         "official.officialIdCount": {
-          "current": 17451,
+          "current": 17530,
           "baseline": 17887,
-          "changeRatio": -0.0244
+          "changeRatio": -0.02
         },
         "unified.publishedJobs": {
-          "current": 7465,
+          "current": 7503,
           "baseline": 4715,
-          "changeRatio": 0.5832
+          "changeRatio": 0.5913
         },
         "unified.officialDisplayed": {
-          "current": 3048,
+          "current": 3086,
           "baseline": 3299,
-          "changeRatio": -0.0761
+          "changeRatio": -0.0646
         },
         "unified.privateDiscovered": {
           "current": 4424,
@@ -439,12 +439,12 @@
           "changeRatio": null
         },
         "jobteacher": {
-          "current": 4036,
+          "current": 4035,
           "baseline": 0,
           "changeRatio": null
         },
         "artmore": {
-          "current": 19,
+          "current": 20,
           "baseline": 0,
           "changeRatio": null
         },
