@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-11T04:06:22+09:00",
+  "generatedAt": "2026-09-11T05:07:07+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T04:06:22+09:00",
+    "generatedAt": "2026-09-11T05:07:07+09:00",
     "official": {
       "datasetCount": 19109,
       "officialIdCount": 17636,
@@ -244,7 +244,7 @@
       "lessoninfo": {
         "name": "레슨인포",
         "enabled": false,
-        "healthy": false,
+        "healthy": true,
         "datasetCount": 264,
         "rawCount": 264,
         "currentCount": 264,
@@ -329,7 +329,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T04:08:07+09:00",
+      "baselineAt": "2026-09-10T05:08:57+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19109,
@@ -343,45 +343,45 @@
         },
         "unified.publishedJobs": {
           "current": 7129,
-          "baseline": 7409,
-          "changeRatio": -0.0378
+          "baseline": 7408,
+          "changeRatio": -0.0377
         },
         "unified.officialDisplayed": {
           "current": 2996,
-          "baseline": 2998,
-          "changeRatio": -0.0007
+          "baseline": 2991,
+          "changeRatio": 0.0017
         },
         "unified.privateDiscovered": {
           "current": 4133,
-          "baseline": 4420,
-          "changeRatio": -0.0649
+          "baseline": 4424,
+          "changeRatio": -0.0658
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 264,
-          "baseline": 279,
-          "changeRatio": -0.0538
+          "baseline": 287,
+          "changeRatio": -0.0801
         },
         "cleaneye": {
-          "current": 20,
-          "baseline": 26,
-          "changeRatio": -0.2308
-        },
-        "jobteacher": {
-          "current": 4036,
-          "baseline": 4035,
-          "changeRatio": 0.0002
-        },
-        "artmore": {
           "current": 20,
           "baseline": 20,
           "changeRatio": 0.0
         },
+        "jobteacher": {
+          "current": 4036,
+          "baseline": 4036,
+          "changeRatio": 0.0
+        },
+        "artmore": {
+          "current": 20,
+          "baseline": 19,
+          "changeRatio": 0.0526
+        },
         "gonggonggangsa": {
           "current": 55,
-          "baseline": 57,
-          "changeRatio": -0.0351
+          "baseline": 59,
+          "changeRatio": -0.0678
         },
         "seekle": {
           "current": 1,
@@ -396,11 +396,11 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T04:07:07+09:00",
+      "baselineAt": "2026-09-04T05:08:18+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19109,
-          "baseline": 18917,
+          "baseline": 18918,
           "changeRatio": 0.0101
         },
         "official.officialIdCount": {
@@ -410,13 +410,13 @@
         },
         "unified.publishedJobs": {
           "current": 7129,
-          "baseline": 4517,
-          "changeRatio": 0.5783
+          "baseline": 4518,
+          "changeRatio": 0.5779
         },
         "unified.officialDisplayed": {
           "current": 2996,
-          "baseline": 3096,
-          "changeRatio": -0.0323
+          "baseline": 3097,
+          "changeRatio": -0.0326
         },
         "unified.privateDiscovered": {
           "current": 4133,
