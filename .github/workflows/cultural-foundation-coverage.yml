@@ -8,7 +8,9 @@ on:
     branches: [main]
     paths:
       - 'cultural_foundation_registry.json'
+      - 'verified_foundation_official_sources.json'
       - 'scripts/validate_cultural_foundation_registry.py'
+      - 'scripts/crawl_official_foundation_jobs.py'
       - 'scripts/probe_cultural_sources.py'
       - 'scripts/probe_cleaneye_api.py'
       - 'scripts/crawl_cleaneye_foundation_jobs.py'
@@ -37,8 +39,12 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Syntax check official foundation crawler
+        run: python -m py_compile scripts/crawl_official_foundation_jobs.py
       - name: Validate foundation registry
         run: python scripts/validate_cultural_foundation_registry.py
+      - name: Collect official cultural-foundation jobs
+        run: python scripts/crawl_official_foundation_jobs.py
       - name: Probe CleanEye and ANCF surfaces
         run: python scripts/probe_cultural_sources.py
       - name: Probe CleanEye recruitment API
@@ -55,7 +61,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json foundation_official_source_candidates.json foundation_official_source_discovery_report.json
+          git add official_foundation_jobs.json official_foundation_report.json cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json foundation_official_source_candidates.json foundation_official_source_discovery_report.json
           if ! git diff --cached --quiet; then
             git commit -m 'Audit cultural foundation source surfaces'
             for i in 1 2 3; do

@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import json
 import re
-from collections import Counter, defaultdict
+from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 KST = timezone(timedelta(hours=9))
 REGISTRY = Path("cultural_foundation_registry.json")
+OVERRIDES = Path("verified_foundation_official_sources.json")
 CLEANEYE = Path("cleaneye_foundation_jobs.json")
 ANCF = Path("ancf_foundation_jobs.json")
 ARTMORE = Path("artmore_foundation_crosscheck.json")
@@ -69,6 +70,22 @@ def current(row: dict, today: date) -> bool:
     return True
 
 
+def effective_foundations(registry: dict) -> list[dict]:
+    foundations = [dict(x) for x in registry.get("institutions", []) if x.get("enabled") is not False]
+    by_id = {str(x.get("id") or ""): x for x in foundations}
+    overrides = load(OVERRIDES, {})
+    for item in overrides.get("sources", []) if isinstance(overrides, dict) else []:
+        fid = str(item.get("foundationRegistryId") or "")
+        target = by_id.get(fid)
+        if not target:
+            continue
+        for key in ("homepage", "officialRecruitmentUrl"):
+            value = str(item.get(key) or "").strip()
+            if value:
+                target[key] = value
+    return foundations
+
+
 def foundation_matchers(registry_rows):
     out = []
     for f in registry_rows:
@@ -88,22 +105,57 @@ def identify_foundation(row: dict, matchers) -> str:
     return ""
 
 
+def same_date(a: dict, b: dict, key: str) -> bool:
+    av = str(a.get(key) or "")[:10]
+    bv = str(b.get(key) or "")[:10]
+    return bool(av and bv and av == bv)
+
+
+def executive_aggregate_represented(job: dict, candidates: list[dict]) -> bool:
+    """Conservatively recognize one cross-check aggregate represented by split official posts.
+
+    Some foundation syndication feeds combine 대표이사 + 비상임 이사/감사 into one row while the
+    official board publishes separate detail posts. We accept aggregate equivalence only when at
+    least two official candidates from the same foundation share the exact application deadline and
+    registration date, and collectively contain representative-director and executive-role signals.
+    This avoids weakening ordinary one-to-one title matching.
+    """
+    title = str(job.get("title") or "")
+    if not re.search(r"임원", title) or not re.search(r"대표이사", title):
+        return False
+    end = str(job.get("applyEnd") or "")[:10]
+    reg = str(job.get("registered") or job.get("pubDate") or "")[:10]
+    if not end or not reg:
+        return False
+    matched = [u for u in candidates if str(u.get("applyEnd") or "")[:10] == end and str(u.get("registered") or "")[:10] == reg]
+    if len(matched) < 2:
+        return False
+    titles = " ".join(str(u.get("title") or "") for u in matched)
+    return bool(re.search(r"대표이사", titles) and re.search(r"비상임\s*임원|이사|감사", titles))
+
+
 def represented_in_unified(job: dict, unified_rows: list[dict], fid: str, foundation_name: str) -> bool:
     title = str(job.get("title") or "")
     f_norm = norm(foundation_name)
     candidates = []
     for u in unified_rows:
+        explicit_fid = str(u.get("foundationRegistryId") or "")
         utext = norm(" ".join(str(u.get(k) or "") for k in ("title","school","organization","searchText","source")))
-        if f_norm and f_norm not in utext:
+        if explicit_fid:
+            if explicit_fid != fid:
+                continue
+        elif f_norm and f_norm not in utext:
             continue
         candidates.append(u)
-    return any(title_match(title, str(u.get("title") or "")) for u in candidates)
+    if any(title_match(title, str(u.get("title") or "")) for u in candidates):
+        return True
+    return executive_aggregate_represented(job, candidates)
 
 
 def main() -> int:
     today = datetime.now(KST).date()
     registry = load(REGISTRY, {})
-    foundations = [x for x in registry.get("institutions", []) if x.get("enabled") is not False]
+    foundations = effective_foundations(registry)
     by_fid = {x["id"]:x for x in foundations}
     matchers = foundation_matchers(foundations)
     unified_rows = rows(load(UNIFIED, {}))
@@ -148,7 +200,9 @@ def main() -> int:
                     "strength":source_strength[source],
                     "sourceIdentity":job.get("sourceIdentity"),
                     "title":job.get("title"),
+                    "registered":job.get("registered") or job.get("pubDate"),
                     "applyEnd":job.get("applyEnd"),
+                    "url":job.get("url") or job.get("originalUrl") or job.get("auditUrl"),
                 }
                 if source == "lessoninfo-discovery": discovery_gaps.append(gap)
                 else: gaps.append(gap)
@@ -164,6 +218,7 @@ def main() -> int:
         })
 
     component_paths = {
+        "official": Path("official_foundation_report.json"),
         "cleaneye": Path("cleaneye_foundation_report.json"),
         "ancf": Path("ancf_foundation_report.json"),
         "artmore": Path("artmore_foundation_crosscheck_report.json"),
@@ -182,7 +237,7 @@ def main() -> int:
     configured_official = sum(1 for f in foundations if str(f.get("officialRecruitmentUrl") or "").strip())
     report = {
         "generatedAt":datetime.now(KST).isoformat(timespec="seconds"),
-        "policy":"official-primary+multi-sensor-gap-detection-v2",
+        "policy":"official-primary+multi-sensor-gap-detection-v3",
         "healthy": not failed_available_components and not gaps,
         "registryInstitutions":len(foundations),
         "officialBoardsConfigured":configured_official,
@@ -199,7 +254,9 @@ def main() -> int:
         "institutions":institutions,
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentAvailable","componentHealth","failedAvailableComponents","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}, ensure_ascii=False, indent=2))
+    summary = {k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentAvailable","componentHealth","failedAvailableComponents","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}
+    summary["coverageGaps"] = report["coverageGaps"][:20]
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if report["healthy"] else 2
 
 
