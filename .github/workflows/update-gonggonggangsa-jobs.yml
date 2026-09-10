@@ -3,7 +3,7 @@ name: Update Gonggonggangsa jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '23 * * * *'
+    - cron: '23 * * 1-12 *'
   push:
     paths:
       - 'scripts/crawl_gonggonggangsa_jobs.py'
