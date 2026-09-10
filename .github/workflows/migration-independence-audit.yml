@@ -1,0 +1,37 @@
+name: Migration independence audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/audit_migration_independence.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/audit_migration_independence.py'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Inventory schedules, credential references, and old identities
+        run: |
+          python scripts/audit_migration_independence.py --report migration_independence_report.json
+      - name: Publish inventory artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-independence-report
+          path: migration_independence_report.json
+          if-no-files-found: error
+          retention-days: 14
