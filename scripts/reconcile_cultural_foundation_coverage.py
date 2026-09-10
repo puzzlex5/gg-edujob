@@ -200,7 +200,9 @@ def main() -> int:
                     "strength":source_strength[source],
                     "sourceIdentity":job.get("sourceIdentity"),
                     "title":job.get("title"),
+                    "registered":job.get("registered") or job.get("pubDate"),
                     "applyEnd":job.get("applyEnd"),
+                    "url":job.get("url") or job.get("originalUrl") or job.get("auditUrl"),
                 }
                 if source == "lessoninfo-discovery": discovery_gaps.append(gap)
                 else: gaps.append(gap)
@@ -252,7 +254,9 @@ def main() -> int:
         "institutions":institutions,
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentAvailable","componentHealth","failedAvailableComponents","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}, ensure_ascii=False, indent=2))
+    summary = {k:report[k] for k in ("healthy","registryInstitutions","officialBoardsConfigured","officialCoverageComplete","componentAvailable","componentHealth","failedAvailableComponents","currentMappedBySource","coverageGapCount","discoveryOnlyGapCount")}
+    summary["coverageGaps"] = report["coverageGaps"][:20]
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if report["healthy"] else 2
 
 
