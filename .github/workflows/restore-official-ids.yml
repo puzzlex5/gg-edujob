@@ -5,7 +5,7 @@ on:
   schedule:
     # Fast refresh starts at minute 17 of UTC hours 0,2,...,16.
     # Start targeted restore 55 minutes earlier so its 45-minute timeout has a 10-minute buffer.
-    - cron: '22 1,3,5,7,9,11,13,15,23 * * *'
+    - cron: '22 1,3,5,7,9,11,13,15,23 * 1-12 *'
 
 permissions:
   contents: write
