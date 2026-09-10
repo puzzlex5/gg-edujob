@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-10T21:52:35+09:00",
+  "generatedAt": "2026-09-10T21:59:09+09:00",
   "policy": "official-foundation-primary-fail-closed-v2",
-  "healthy": true,
+  "healthy": false,
   "registryInstitutions": 49,
   "officialBoardsConfigured": 2,
   "supportedBoardsChecked": 1,
@@ -13,22 +13,21 @@
       "reason": "adapter-not-yet-implemented"
     }
   ],
-  "jobs": 4,
-  "errors": [],
+  "jobs": 0,
+  "errors": [
+    {
+      "foundationRegistryId": "gyeonggi:gwangju",
+      "foundationName": "광주시문화재단",
+      "boardUrl": "https://www.nsart.or.kr/board/recruit.do",
+      "error": "ConnectionError: HTTPSConnectionPool(host='www.nsart.or.kr', port=443): Max retries exceeded with url: /board/recruit.do (Caused by NameResolutionError(\"HTTPSConnection(host='www.nsart.or.kr', port=443): Failed to resolve 'www.nsart.or.kr' ([Errno -3] Temporary failure in name resolution)\"))"
+    }
+  ],
   "boards": [
     {
       "foundationRegistryId": "gyeonggi:gwangju",
       "foundationName": "광주시문화재단",
       "boardUrl": "https://www.nsart.or.kr/board/recruit.do",
-      "healthy": true,
-      "adapter": "nsart",
-      "surfacesChecked": [
-        "https://www.nsart.or.kr/board/recruit.do",
-        "https://www.nsart.or.kr/index.do"
-      ],
-      "discoveredDetailLinks": 10,
-      "inspectedDetailLinks": 10,
-      "publishedCurrentJobs": 4
+      "healthy": false
     }
   ]
 }
