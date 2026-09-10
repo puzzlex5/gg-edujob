@@ -23,8 +23,8 @@ on:
     # GitHub scheduled workflows can occasionally be delayed or skipped. Use two
     # deliberately off-peak minute slots so one missed scheduler tick does not
     # leave fast collection stale for another full hour.
-    - cron: '17 * * * *'
-    - cron: '47 * * * *'
+    - cron: '17 * * 1-12 *'
+    - cron: '47 * * 1-12 *'
 
 permissions:
   contents: read
