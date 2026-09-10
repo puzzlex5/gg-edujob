@@ -15,7 +15,9 @@ permissions:
 
 concurrency:
   group: metro-edujob-lessoninfo-deployed-blackbox
-  cancel-in-progress: true
+  # Let the active deployed-site verification finish. Newer runs may replace the
+  # single pending run, but they must not cancel a browser audit already in progress.
+  cancel-in-progress: false
 
 jobs:
   verify:
