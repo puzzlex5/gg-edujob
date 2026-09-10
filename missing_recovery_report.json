@@ -1,16 +1,27 @@
 {
   "summary": {
-    "freshCount": 16281,
-    "previousCount": 18840,
-    "mergedCount": 18857,
-    "carriedForward": 2576,
+    "freshCount": 16298,
+    "previousCount": 18875,
+    "mergedCount": 18877,
+    "carriedForward": 2579,
     "officialIdProtected": 17451,
-    "officialIdCarryForward": 1205,
-    "enrichedFromPrevious": 6848,
+    "officialIdCarryForward": 1208,
+    "enrichedFromPrevious": 6851,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-10 09:24 KST"
+    "generatedAt": "2026-09-10 10:01 KST"
   },
   "carried": [
+    {
+      "province": "서울",
+      "source": "서울교육일자리포털",
+      "school": "서울원효초등학교",
+      "title": "(원효초) 6학년 담임 시간강사(9.14.(월) 수업6, 급식1, 총 7시간)",
+      "registered": "2026/09/10",
+      "applyEnd": "2026/09/12",
+      "sourceIdentity": "seoul-central:110067",
+      "reason": "previously published posting still within application period",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110067"
+    },
     {
       "province": "서울",
       "source": "서울교육일자리포털",
@@ -2144,6 +2155,17 @@
       "sourceIdentity": "seoul:gdspedu.sen.go.kr:8311",
       "reason": "present in latest independent official-ID reconciliation",
       "url": "https://gdspedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=8311"
+    },
+    {
+      "province": "서울",
+      "source": "서울교육일자리포털",
+      "school": "서울솔방울유치원",
+      "title": "(서울솔방울유치원) 방과후과정 아침돌봄 인력 채용",
+      "registered": "2026/09/03",
+      "applyEnd": "2026/09/30",
+      "sourceIdentity": "seoul-central:109663",
+      "reason": "present in latest independent official-ID reconciliation",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109663"
     },
     {
       "province": "서울",
@@ -7307,17 +7329,6 @@
     {
       "province": "서울",
       "source": "서울교육일자리포털",
-      "school": "양천중학교",
-      "title": "양천중학교 시간강사(국어)",
-      "registered": "2026/08/27",
-      "applyEnd": "2026/09/09",
-      "sourceIdentity": "seoul-central:109238",
-      "reason": "previously published recent posting not rediscovered in this crawl",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109238"
-    },
-    {
-      "province": "서울",
-      "source": "서울교육일자리포털",
       "school": "서울하늘숲초등학교",
       "title": "서울하늘숲초. 영어 교과담당 시간강사(9.16.수. 1일) 채용",
       "registered": "2026/08/27",
@@ -8370,6 +8381,17 @@
       "sourceIdentity": "goe-central:57983",
       "reason": "present in latest independent official-ID reconciliation",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=57983"
+    },
+    {
+      "province": "경기",
+      "source": "동두천양주교육지원청",
+      "school": "덕현중학교",
+      "title": "(마감)덕현중 시간강사(수학,정보_2차) 채용 공고",
+      "registered": "2026/08/26",
+      "applyEnd": "2026/09/21",
+      "sourceIdentity": "mircms:www.goedy.kr:10228:1682130",
+      "reason": "present in latest independent official-ID reconciliation",
+      "url": "https://www.goedy.kr/goedy/na/ntt/selectNttInfo.do?bbsId=10228&mi=10336&nttSn=1682130"
     },
     {
       "province": "서울",
@@ -17929,6 +17951,17 @@
       "sourceIdentity": "goe-central:55408",
       "reason": "present in latest independent official-ID reconciliation",
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=55408"
+    },
+    {
+      "province": "경기",
+      "source": "동두천양주교육지원청",
+      "school": "덕현중학교",
+      "title": "덕현중 기간제 교원(미술) 채용 공고",
+      "registered": "2026/08/10",
+      "applyEnd": "2026/08/13",
+      "sourceIdentity": "mircms:www.goedy.kr:10228:1680711",
+      "reason": "present in latest independent official-ID reconciliation",
+      "url": "https://www.goedy.kr/goedy/na/ntt/selectNttInfo.do?bbsId=10228&mi=10336&nttSn=1680711"
     },
     {
       "province": "경기",
