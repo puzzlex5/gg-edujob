@@ -3,7 +3,7 @@ name: Diagnose support-office link structures
 on:
   workflow_dispatch:
   schedule:
-    - cron: '43 18 * * *' # daily deep structure snapshot; kept off the hourly critical path
+    - cron: '43 18 * 1-12 *' # daily deep structure snapshot; kept off the hourly critical path
 
 permissions:
   contents: write

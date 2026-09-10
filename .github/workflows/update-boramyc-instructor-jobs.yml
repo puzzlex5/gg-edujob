@@ -3,7 +3,7 @@ name: Update Boramae instructor jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '36 * * * *'
+    - cron: '36 * * 1-12 *'
   pull_request:
     paths:
       - 'scripts/crawl_boramyc_instructor_jobs.py'

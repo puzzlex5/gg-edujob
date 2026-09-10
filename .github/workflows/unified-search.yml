@@ -82,7 +82,7 @@ on:
       - 'Cultural foundation coverage'
     types: [completed]
   schedule:
-    - cron: '47 * * * *'
+    - cron: '47 * * 1-12 *'
 
 permissions:
   contents: write

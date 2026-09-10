@@ -3,7 +3,7 @@ name: Recover missing 수도권 education jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '47 1,7,13,16 * * *' # KST 10:47,16:47,22:47,01:47; 04:23~06:53 정밀감사 창 보호
+    - cron: '47 1,7,13,16 * 1-12 *' # KST 10:47,16:47,22:47,01:47; 04:23~06:53 정밀감사 창 보호
 
 permissions:
   contents: write

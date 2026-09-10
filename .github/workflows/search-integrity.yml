@@ -12,7 +12,7 @@ on:
       - 'scripts/verify_search.py'
       - '.github/workflows/search-integrity.yml'
   schedule:
-    - cron: '37 * * * *' # 매시간 37분, 수집 작업 뒤 검색 정확도 독립 재검증
+    - cron: '37 * * 1-12 *' # 매시간 37분, 수집 작업 뒤 검색 정확도 독립 재검증
 
 permissions:
   contents: write

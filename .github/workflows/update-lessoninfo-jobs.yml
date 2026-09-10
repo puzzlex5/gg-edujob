@@ -13,7 +13,7 @@ on:
       - 'scripts/run_lessoninfo_browser_resilient.py'
       - '.github/workflows/update-lessoninfo-jobs.yml'
   schedule:
-    - cron: '27 * * * *'
+    - cron: '27 * * 1-12 *'
 
 permissions:
   contents: write

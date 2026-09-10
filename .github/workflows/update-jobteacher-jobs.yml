@@ -8,7 +8,7 @@ on:
       - 'scripts/validate_jobteacher_links.py'
       - '.github/workflows/update-jobteacher-jobs.yml'
   schedule:
-    - cron: '43 * * * *'
+    - cron: '43 * * 1-12 *'
 
 permissions:
   contents: write

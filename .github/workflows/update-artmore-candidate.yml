@@ -8,7 +8,7 @@ on:
       - 'scripts/crawl_artmore_browser_v2.py'
       - '.github/workflows/update-artmore-candidate.yml'
   schedule:
-    - cron: '47 */2 * * *'
+    - cron: '47 */2 * 1-12 *'
 
 permissions:
   contents: write

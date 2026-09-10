@@ -3,7 +3,7 @@ name: Probe Gonggonggangsa public recruitment structure
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '7 * * 1-12 *'
   push:
     paths:
       - 'scripts/probe_gonggonggangsa_browser.py'

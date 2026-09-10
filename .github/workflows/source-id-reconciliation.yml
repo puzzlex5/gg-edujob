@@ -18,7 +18,7 @@ on:
       - 'scripts/stamp_reconciliation_scan.py'
       - 'scripts/preserve_reconciliation_candidate.py'
   schedule:
-    - cron: '37 * * * *' # hourly at :37 UTC; independent 38-source proof every hour
+    - cron: '37 * * 1-12 *' # hourly at :37 UTC; independent 38-source proof every hour
 
 permissions:
   contents: write

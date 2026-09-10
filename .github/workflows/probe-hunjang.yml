@@ -3,7 +3,7 @@ name: Probe Hunjang public recruitment structure
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '17 * * 1-12 *'
   push:
     paths:
       - 'scripts/probe_hunjang_browser.py'

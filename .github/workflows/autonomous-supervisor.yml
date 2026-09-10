@@ -3,7 +3,7 @@ name: Autonomous stage-5 supervisor
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '7 * * 1-12 *'
 
 permissions:
   contents: write
