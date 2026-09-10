@@ -3,6 +3,7 @@
 
 The workflow mints RECONCILE_SCAN_ID exactly once per run. Scripts may read or
 require it, but must never fabricate a fallback identity on their own.
+Migration note: proof refreshes are intentionally runnable by the current repo owner.
 """
 from __future__ import annotations
 
