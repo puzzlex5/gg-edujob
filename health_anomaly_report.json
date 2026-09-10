@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-10T18:07:37+09:00",
+  "generatedAt": "2026-09-10T19:07:43+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-10T18:07:37+09:00",
+    "generatedAt": "2026-09-10T19:07:43+09:00",
     "official": {
-      "datasetCount": 19091,
+      "datasetCount": 19099,
       "officialIdCount": 17632,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7393,
-      "officialDisplayed": 3248,
+      "publishedJobs": 7402,
+      "officialDisplayed": 3257,
       "privateDisplayed": 4145,
       "privateDiscovered": 4145,
       "officialPrivateAliases": 0,
@@ -87,6 +87,10 @@
         "count": 10,
         "latestRegistered": "2026-09-09"
       },
+      "경기도교육청 통합 구인구직 + 시흥교육지원청": {
+        "count": 1,
+        "latestRegistered": "2026-09-10"
+      },
       "경기도교육청 통합 구인구직 + 안성교육지원청": {
         "count": 1,
         "latestRegistered": "2026-09-04"
@@ -96,8 +100,8 @@
         "latestRegistered": "2026-09-08"
       },
       "경기도교육청 통합 구인구직 + 평택교육지원청": {
-        "count": 4,
-        "latestRegistered": "2026-09-09"
+        "count": 5,
+        "latestRegistered": "2026-09-10"
       },
       "경기도교육청 통합 구인구직 + 포천교육지원청": {
         "count": 1,
@@ -156,7 +160,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1536,
+        "count": 1541,
         "latestRegistered": "2026-09-10"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -236,7 +240,7 @@
         "latestRegistered": "2026-09-10"
       },
       "평택교육지원청": {
-        "count": 755,
+        "count": 756,
         "latestRegistered": "2026-09-10"
       },
       "포천교육지원청": {
@@ -252,7 +256,7 @@
       "lessoninfo": {
         "name": "레슨인포",
         "enabled": false,
-        "healthy": false,
+        "healthy": true,
         "datasetCount": 295,
         "rawCount": 295,
         "currentCount": 295,
@@ -337,27 +341,27 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-09T18:09:07+09:00",
+      "baselineAt": "2026-09-09T19:09:17+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19091,
-          "baseline": 19138,
-          "changeRatio": -0.0025
+          "current": 19099,
+          "baseline": 19145,
+          "changeRatio": -0.0024
         },
         "official.officialIdCount": {
           "current": 17632,
-          "baseline": 17773,
-          "changeRatio": -0.0079
+          "baseline": 17775,
+          "changeRatio": -0.008
         },
         "unified.publishedJobs": {
-          "current": 7393,
+          "current": 7402,
           "baseline": 7409,
-          "changeRatio": -0.0022
+          "changeRatio": -0.0009
         },
         "unified.officialDisplayed": {
-          "current": 3248,
+          "current": 3257,
           "baseline": 2998,
-          "changeRatio": 0.0834
+          "changeRatio": 0.0864
         },
         "unified.privateDiscovered": {
           "current": 4145,
@@ -407,9 +411,9 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19091,
+          "current": 19099,
           "baseline": 18911,
-          "changeRatio": 0.0095
+          "changeRatio": 0.0099
         },
         "official.officialIdCount": {
           "current": 17632,
@@ -417,14 +421,14 @@
           "changeRatio": -0.0143
         },
         "unified.publishedJobs": {
-          "current": 7393,
+          "current": 7402,
           "baseline": 4715,
-          "changeRatio": 0.568
+          "changeRatio": 0.5699
         },
         "unified.officialDisplayed": {
-          "current": 3248,
+          "current": 3257,
           "baseline": 3299,
-          "changeRatio": -0.0155
+          "changeRatio": -0.0127
         },
         "unified.privateDiscovered": {
           "current": 4145,
