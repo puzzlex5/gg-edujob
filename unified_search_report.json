@@ -1,31 +1,31 @@
 {
-  "generatedAt": "2026-09-10T20:56:00+09:00",
+  "generatedAt": "2026-09-10T21:43:57+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 19114,
   "canonicalFoundationOfficialJobs": 4,
-  "canonicalPrivateJobs": 4158,
+  "canonicalPrivateJobs": 4453,
   "selectedCanonicalOfficialJobs": 3268,
   "selectedFoundationOfficialJobs": 4,
   "selectedOfficialJobs": 3272,
-  "selectedPrivateJobs": 4147,
-  "publishedJobs": 7419,
+  "selectedPrivateJobs": 4442,
+  "publishedJobs": 7707,
   "perFeed": {
     "official": 3272,
-    "private": 4147
+    "private": 4435
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": false,
-      "degraded": true,
-      "ok": false,
+      "publicationEnabled": true,
+      "degraded": false,
+      "ok": true,
       "candidateCount": 295,
-      "count": 0,
+      "count": 295,
       "lastVerifiedAt": "2026-09-10T20:53:38+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 0
+      "displayedAsPrivate": 288
     },
     "cleaneye": {
       "name": "클린아이 잡플러스",
@@ -48,7 +48,7 @@
       "ok": true,
       "candidateCount": 4036,
       "count": 4036,
-      "lastVerifiedAt": "2026-09-10T20:01:21+09:00",
+      "lastVerifiedAt": "2026-09-10T20:55:59+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 4036
@@ -74,7 +74,7 @@
       "ok": true,
       "candidateCount": 62,
       "count": 62,
-      "lastVerifiedAt": "2026-09-10T20:34:35+09:00",
+      "lastVerifiedAt": "2026-09-10T21:40:52+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 62
@@ -87,7 +87,7 @@
       "ok": true,
       "candidateCount": 1,
       "count": 1,
-      "lastVerifiedAt": "2026-09-10T20:38:09+09:00",
+      "lastVerifiedAt": "2026-09-10T21:43:11+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 1
@@ -107,12 +107,10 @@
     }
   },
   "protectedOfficialIds": 17648,
-  "explicitOfficialAliasGroupsMerged": 0,
+  "explicitOfficialAliasGroupsMerged": 7,
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
-  "degradedPrivateSources": [
-    "lessoninfo"
-  ],
-  "allPublicationEnabledSourcesHealthy": false
+  "degradedPrivateSources": [],
+  "allPublicationEnabledSourcesHealthy": true
 }
