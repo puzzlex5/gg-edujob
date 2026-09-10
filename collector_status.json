@@ -272,7 +272,7 @@
   },
   "reconciliation": {
     "state": "failed",
-    "updatedAt": "2026-09-10T15:23:03+09:00",
+    "updatedAt": "2026-09-10T16:15:19+09:00",
     "jobsCount": 19036,
     "artifacts": {
       "jobLedger": true,
@@ -295,7 +295,7 @@
     },
     "coverageEvidence": {
       "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-      "ageHours": 103.07,
+      "ageHours": 103.94,
       "freshWithinHours": 30,
       "fresh": false,
       "gyeonggiComplete": 25,
@@ -313,7 +313,7 @@
       "proof": "38-source-reconciliation",
       "supportCoverage": {
         "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-        "ageHours": 103.07,
+        "ageHours": 103.94,
         "freshWithinHours": 30,
         "fresh": false,
         "gyeonggiComplete": 25,
@@ -331,7 +331,7 @@
       },
       "sourceReconciliation": {
         "generatedAt": "2026-09-10 14:24:17 KST",
-        "ageHours": 0.98,
+        "ageHours": 1.85,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
@@ -339,10 +339,10 @@
         "missingAfter": 0,
         "centralPaginationComplete": true,
         "centralGeneratedAt": "2026-09-10 14:45:58 KST",
-        "centralAgeHours": 0.62,
+        "centralAgeHours": 1.49,
         "ledgerPresent": true,
         "ledgerGeneratedAt": "2026-09-10 14:24:17 KST",
-        "ledgerAgeHours": 0.98,
+        "ledgerAgeHours": 1.85,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
         "reportCentralSkewHours": 0.361,
@@ -358,6 +358,6 @@
     },
     "stage": "source-id-reconciliation",
     "lastSuccessAt": "2026-09-10T14:49:05+09:00",
-    "lastFailureAt": "2026-09-10T15:23:03+09:00"
+    "lastFailureAt": "2026-09-10T16:15:19+09:00"
   }
 }
