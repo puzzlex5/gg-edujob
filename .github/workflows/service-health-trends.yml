@@ -9,7 +9,7 @@ on:
       - 'scripts/check_official_source_freshness.py'
       - '.github/workflows/service-health-trends.yml'
   schedule:
-    - cron: '57 * * * *'
+    - cron: '57 * * 1-12 *'
 
 permissions:
   contents: write
