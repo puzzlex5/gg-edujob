@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-10T19:07:43+09:00",
+  "generatedAt": "2026-09-10T20:07:18+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-10T19:07:43+09:00",
+    "generatedAt": "2026-09-10T20:07:18+09:00",
     "official": {
-      "datasetCount": 19099,
-      "officialIdCount": 17632,
+      "datasetCount": 19109,
+      "officialIdCount": 17648,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7402,
-      "officialDisplayed": 3257,
-      "privateDisplayed": 4145,
-      "privateDiscovered": 4145,
+      "publishedJobs": 7414,
+      "officialDisplayed": 3267,
+      "privateDisplayed": 4147,
+      "privateDiscovered": 4147,
       "officialPrivateAliases": 0,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -132,7 +132,7 @@
         "latestRegistered": "2026-09-10"
       },
       "남부교육지원청": {
-        "count": 43,
+        "count": 48,
         "latestRegistered": "2026-09-10"
       },
       "동두천양주교육지원청": {
@@ -160,7 +160,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1541,
+        "count": 1546,
         "latestRegistered": "2026-09-10"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -256,7 +256,7 @@
       "lessoninfo": {
         "name": "레슨인포",
         "enabled": false,
-        "healthy": true,
+        "healthy": false,
         "datasetCount": 295,
         "rawCount": 295,
         "currentCount": 295,
@@ -305,9 +305,9 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 60,
-        "rawCount": 60,
-        "currentCount": 60,
+        "datasetCount": 62,
+        "rawCount": 62,
+        "currentCount": 62,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -341,32 +341,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-09T19:09:17+09:00",
+      "baselineAt": "2026-09-09T20:08:58+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19099,
-          "baseline": 19145,
-          "changeRatio": -0.0024
+          "current": 19109,
+          "baseline": 19146,
+          "changeRatio": -0.0019
         },
         "official.officialIdCount": {
-          "current": 17632,
+          "current": 17648,
           "baseline": 17775,
-          "changeRatio": -0.008
+          "changeRatio": -0.0071
         },
         "unified.publishedJobs": {
-          "current": 7402,
+          "current": 7414,
           "baseline": 7409,
-          "changeRatio": -0.0009
+          "changeRatio": 0.0007
         },
         "unified.officialDisplayed": {
-          "current": 3257,
+          "current": 3267,
           "baseline": 2998,
-          "changeRatio": 0.0864
+          "changeRatio": 0.0897
         },
         "unified.privateDiscovered": {
-          "current": 4145,
+          "current": 4147,
           "baseline": 4420,
-          "changeRatio": -0.0622
+          "changeRatio": -0.0618
         }
       },
       "privateSources": {
@@ -391,9 +391,9 @@
           "changeRatio": 0.3
         },
         "gonggonggangsa": {
-          "current": 60,
+          "current": 62,
           "baseline": 57,
-          "changeRatio": 0.0526
+          "changeRatio": 0.0877
         },
         "seekle": {
           "current": 1,
@@ -411,29 +411,29 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19099,
+          "current": 19109,
           "baseline": 18911,
-          "changeRatio": 0.0099
+          "changeRatio": 0.0105
         },
         "official.officialIdCount": {
-          "current": 17632,
+          "current": 17648,
           "baseline": 17887,
-          "changeRatio": -0.0143
+          "changeRatio": -0.0134
         },
         "unified.publishedJobs": {
-          "current": 7402,
+          "current": 7414,
           "baseline": 4715,
-          "changeRatio": 0.5699
+          "changeRatio": 0.5724
         },
         "unified.officialDisplayed": {
-          "current": 3257,
+          "current": 3267,
           "baseline": 3299,
-          "changeRatio": -0.0127
+          "changeRatio": -0.0097
         },
         "unified.privateDiscovered": {
-          "current": 4145,
+          "current": 4147,
           "baseline": 1431,
-          "changeRatio": 1.8966
+          "changeRatio": 1.898
         }
       },
       "privateSources": {
@@ -458,7 +458,7 @@
           "changeRatio": null
         },
         "gonggonggangsa": {
-          "current": 60,
+          "current": 62,
           "baseline": 0,
           "changeRatio": null
         },
