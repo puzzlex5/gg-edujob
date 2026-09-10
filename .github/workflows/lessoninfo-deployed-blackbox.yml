@@ -43,7 +43,7 @@ jobs:
 
       - name: Wait until Pages serves current data and UI assets
         env:
-          SITE: https://puzzlex5.github.io/gg-edujob
+          SITE: https://teacherhub-kr.github.io/gg-edujob
         run: |
           python - <<'PY'
           import hashlib, os, time, urllib.request
@@ -80,7 +80,7 @@ jobs:
 
       - name: Mobile-browser black-box current deployed cards and verified destinations
         env:
-          SITE: https://puzzlex5.github.io/gg-edujob
+          SITE: https://teacherhub-kr.github.io/gg-edujob
         run: |
           node <<'NODE'
           const { chromium, devices } = require('playwright');
