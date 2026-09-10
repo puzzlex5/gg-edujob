@@ -25,6 +25,11 @@ def canonical_url_multi(raw):
             empyear=str((q.get("empyear") or [""])[0]); entseq=str((q.get("entSeq") or [""])[0]); entid=str((q.get("ypEntId") or [""])[0])
             if empyear.isdigit() and entseq.isdigit() and entid:
                 return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"empyear":empyear,"entSeq":entseq,"ypEntId":entid}),""))
+        bpo=str((q.get("bpoId") or [""])[0])
+        if bpo.isdigit() and (host=="nsart.or.kr" or host.endswith(".nsart.or.kr")) and p.path.endswith("/board/recruit.do"):
+            # bpoId is the official article identity. Dropping it collapses separate recruitment
+            # notices on the same board into one URL and can silently discard valid official jobs.
+            return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"act":"read","bpoId":bpo}),""))
         idx=str((q.get("idx") or [""])[0])
         if idx.isdigit() and host.endswith("seekle.or.kr") and p.path.endswith("/sub07/sub01.php"):
             return urlunparse((p.scheme.lower(),p.netloc.lower(),p.path,"",urlencode({"idx":idx,"ptype":"view"}),""))
