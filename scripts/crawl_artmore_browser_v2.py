@@ -56,8 +56,11 @@ async def page_rows(page, region: str):
             continue
         if base.REGION_PATTERNS[other].search(text):
             raise RuntimeError(f"cross-metro contamination in {region}: {rid} {text[:180]}")
+        # ArtMore's current-only filter can still return individually ended rows.
+        # Exclude those rows without aborting the entire regional surface, so one
+        # stale/contradictory row cannot hide other current postings on the page.
         if base.END_RE.search(text) and "진행중" not in text:
-            raise RuntimeError(f"ended row on current-only surface: {rid} {text[:180]}")
+            continue
         rows.append({
             "sourceIdentity": f"artmore:{rid}",
             "source": "아트모아",
