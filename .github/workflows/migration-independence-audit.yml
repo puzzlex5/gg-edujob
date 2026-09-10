@@ -11,6 +11,8 @@ on:
     paths:
       - '.github/workflows/**'
       - 'scripts/audit_migration_independence.py'
+  schedule:
+    - cron: '19 3 * 1-12 *' # daily independence watchdog
 
 permissions:
   contents: read
@@ -24,6 +26,14 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+      - name: Require canonical repository owner and scheduled actor
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REPOSITORY_OWNER}" = "teacherhub-kr"
+          if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
+            test "${GITHUB_ACTOR}" = "teacherhub-kr"
+          fi
       - name: Inventory schedules, credential references, and old identities
         run: |
           python scripts/audit_migration_independence.py --report migration_independence_report.json
