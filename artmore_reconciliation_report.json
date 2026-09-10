@@ -1,27 +1,34 @@
 {
-  "generatedAt": "2026-09-10T16:32:33+09:00",
+  "generatedAt": "2026-09-10T17:56:53+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1",
   "publicationEnabled": true,
   "healthy": true,
   "traversalComplete": true,
-  "candidateIdCount": 16,
-  "publishedIdCount": 16,
+  "candidateIdCount": 26,
+  "publishedIdCount": 26,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
     {
       "region": "서울",
       "code": "2001",
-      "pagesVisited": 1,
-      "ids": 9,
+      "pagesVisited": 2,
+      "ids": 19,
       "pages": [
         {
           "page": 1,
+          "rowCount": 10,
+          "newIdCount": 10,
+          "firstId": "94942",
+          "lastId": "94932"
+        },
+        {
+          "page": 2,
           "rowCount": 9,
           "newIdCount": 9,
-          "firstId": "94939",
-          "lastId": "94933"
+          "firstId": "94933",
+          "lastId": "94901"
         }
       ]
     },
@@ -49,6 +56,6 @@
   "nextGate": "unified multi-source validation",
   "detailErrorCount": 0,
   "abnormalDrop": false,
-  "previousCanonicalCount": 20,
-  "candidateDropRatio": 0.2
+  "previousCanonicalCount": 16,
+  "candidateDropRatio": 0.0
 }
