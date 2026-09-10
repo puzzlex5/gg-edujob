@@ -209,7 +209,7 @@ jobs:
               print('')
           PY
           )"
-          origin_success="$(git show origin/main:collector_status.json 2>//null | python -c "import json,sys; e=json.load(sys.stdin).get('fast',{}); print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')" 2>/dev/null || true)"
+          origin_success="$(git show origin/main:collector_status.json 2>/dev/null | python -c "import json,sys; e=json.load(sys.stdin).get('fast',{}); print(e.get('lastSuccessAt','') if e.get('state')=='success' and e.get('stage')=='complete' else '')" 2>/dev/null || true)"
           if [ -n "$local_success" ] && [ "$local_success" = "$origin_success" ]; then
             echo 'Verified publication already exists on origin/main; preserving success status.'
             exit 0
