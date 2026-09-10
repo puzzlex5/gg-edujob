@@ -12,7 +12,7 @@ on:
       - '.github/workflows/**'
       - 'scripts/audit_migration_independence.py'
   schedule:
-    - cron: '19 3 * * 1-12 *' # daily independence watchdog
+    - cron: '19 3 * 1-12 *' # daily independence watchdog
 
 permissions:
   contents: read
