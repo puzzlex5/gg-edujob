@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-11T01:07:28+09:00",
+  "generatedAt": "2026-09-11T02:07:07+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T01:07:28+09:00",
+    "generatedAt": "2026-09-11T02:07:07+09:00",
     "official": {
-      "datasetCount": 19109,
-      "officialIdCount": 17653,
+      "datasetCount": 19113,
+      "officialIdCount": 17636,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7125,
-      "officialDisplayed": 2992,
+      "publishedJobs": 7129,
+      "officialDisplayed": 2996,
       "privateDisplayed": 4133,
       "privateDiscovered": 4133,
       "officialPrivateAliases": 0,
@@ -160,7 +160,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1542,
+        "count": 1546,
         "latestRegistered": "2026-09-10"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -341,27 +341,27 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T01:09:32+09:00",
+      "baselineAt": "2026-09-10T02:08:22+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19109,
-          "baseline": 19148,
+          "current": 19113,
+          "baseline": 19151,
           "changeRatio": -0.002
         },
         "official.officialIdCount": {
-          "current": 17653,
+          "current": 17636,
           "baseline": 17775,
-          "changeRatio": -0.0069
+          "changeRatio": -0.0078
         },
         "unified.publishedJobs": {
-          "current": 7125,
+          "current": 7129,
           "baseline": 7409,
-          "changeRatio": -0.0383
+          "changeRatio": -0.0378
         },
         "unified.officialDisplayed": {
-          "current": 2992,
+          "current": 2996,
           "baseline": 2998,
-          "changeRatio": -0.002
+          "changeRatio": -0.0007
         },
         "unified.privateDiscovered": {
           "current": 4133,
@@ -408,32 +408,32 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T01:09:17+09:00",
+      "baselineAt": "2026-09-04T02:08:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19109,
-          "baseline": 18913,
+          "current": 19113,
+          "baseline": 18917,
           "changeRatio": 0.0104
         },
         "official.officialIdCount": {
-          "current": 17653,
+          "current": 17636,
           "baseline": 17960,
-          "changeRatio": -0.0171
+          "changeRatio": -0.018
         },
         "unified.publishedJobs": {
-          "current": 7125,
-          "baseline": 4511,
-          "changeRatio": 0.5795
+          "current": 7129,
+          "baseline": 8554,
+          "changeRatio": -0.1666
         },
         "unified.officialDisplayed": {
-          "current": 2992,
-          "baseline": 3090,
-          "changeRatio": -0.0317
+          "current": 2996,
+          "baseline": 3096,
+          "changeRatio": -0.0323
         },
         "unified.privateDiscovered": {
           "current": 4133,
-          "baseline": 1435,
-          "changeRatio": 1.8801
+          "baseline": 5472,
+          "changeRatio": -0.2447
         }
       },
       "privateSources": {
