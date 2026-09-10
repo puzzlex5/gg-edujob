@@ -10,6 +10,7 @@ on:
       - 'scripts/validate_unified_search_multi.py'
       - 'scripts/crosscheck_private_official.py'
       - 'scripts/reconcile_cultural_foundation_coverage.py'
+      - 'scripts/crawl_official_foundation_jobs.py'
       - 'scripts/source_registry.py'
       - 'scripts/private_source_registry.py'
       - 'scripts/direct_post_links.py'
@@ -17,6 +18,9 @@ on:
       - 'scripts/apply_unified_frontend.py'
       - 'scripts/crawl_seekle_instructor_jobs.py'
       - 'scripts/crawl_boramyc_instructor_jobs.py'
+      - 'verified_foundation_official_sources.json'
+      - 'official_foundation_jobs.json'
+      - 'official_foundation_report.json'
       - 'cleaneye_foundation_jobs.json'
       - 'cleaneye_foundation_report.json'
       - 'seekle_jobs.json'
@@ -35,11 +39,15 @@ on:
       - 'scripts/validate_unified_search_multi.py'
       - 'scripts/crosscheck_private_official.py'
       - 'scripts/reconcile_cultural_foundation_coverage.py'
+      - 'scripts/crawl_official_foundation_jobs.py'
       - 'scripts/source_registry.py'
       - 'scripts/private_source_registry.py'
       - 'scripts/direct_post_links.py'
       - 'scripts/audit_direct_post_links.py'
       - 'scripts/apply_unified_frontend.py'
+      - 'verified_foundation_official_sources.json'
+      - 'official_foundation_jobs.json'
+      - 'official_foundation_report.json'
       - 'unified-ui.js'
       - 'mobile-ui.js'
       - 'direct-link-guard.js'
@@ -100,9 +108,11 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
       - name: Syntax check unified multi-source pipeline and UI
         run: |
-          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/reconcile_cultural_foundation_coverage.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py scripts/crawl_seekle_instructor_jobs.py scripts/crawl_boramyc_instructor_jobs.py
+          python -m py_compile scripts/source_registry.py scripts/private_source_registry.py scripts/build_unified_search.py scripts/build_unified_search_multi.py scripts/validate_unified_search_multi.py scripts/crosscheck_private_official.py scripts/reconcile_cultural_foundation_coverage.py scripts/crawl_official_foundation_jobs.py scripts/direct_post_links.py scripts/audit_direct_post_links.py scripts/apply_unified_frontend.py scripts/crawl_seekle_instructor_jobs.py scripts/crawl_boramyc_instructor_jobs.py
           node --check unified-ui.js
           node --check mobile-ui.js
           node --check direct-link-guard.js
@@ -119,8 +129,13 @@ jobs:
           assert set(private) >= {'lessoninfo','cleaneye','jobteacher','artmore','gonggonggangsa','seekle','boramyc'}
           print('registry check', official, private)
           PY
+      - name: Collect current official cultural-foundation jobs
+        id: foundation_official
+        continue-on-error: true
+        run: python scripts/crawl_official_foundation_jobs.py
       - name: Build disposable multi-source unified candidate
         id: build_candidate
+        if: steps.foundation_official.outcome == 'success'
         continue-on-error: true
         run: python scripts/build_unified_search_multi.py
       - name: Repair stable-ID links and audit exact posting destinations
@@ -179,6 +194,8 @@ jobs:
           assert not bad, f'non-metro private rows: {len(bad)}'
           unsafe=[j for j in d['jobs'] if j.get('detailLinkVerified') is not False and not is_direct_post(j)[0]]
           assert not unsafe, f'unsafe clickable posting links: {len(unsafe)}'
+          foundation_official=[j for j in d['jobs'] if j.get('sourceRole')=='primary-official' and j.get('sourceSurface')=='cultural-foundation']
+          assert all(j.get('foundationRegistryId') and j.get('trustLevel')=='공식' and is_direct_post(j)[0] for j in foundation_official)
           cleaneye=[j for j in d['jobs'] if j.get('source')=='클린아이 잡플러스']
           for j in cleaneye:
               assert j.get('trustLevel')=='공공' and j.get('sourceRole')=='public-foundation-safety-source'
@@ -194,7 +211,7 @@ jobs:
               assert boramyc[0].get('applyEnd')=='2026-09-10'
               assert '강사' in boramyc[0].get('searchText','') and '당구' in boramyc[0].get('searchText','') and '체육' in boramyc[0].get('searchText','')
               assert is_direct_post(boramyc[0])[0]
-          print('verified publication-gated multi-source unified publication',len(d['jobs']),official_count,sorted(enabled))
+          print('verified publication-gated multi-source unified publication',len(d['jobs']),official_count,sorted(enabled),len(foundation_official))
           PY
       - name: Reconcile cultural foundation signals against published search
         id: foundation_reconcile
@@ -207,8 +224,8 @@ jobs:
           rm -f unified_jobs.next.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add unified_search_report.json unified_validation_report.json unified_crosscheck_report.json direct_post_link_report.json cultural_foundation_coverage_report.json 2>/dev/null || true
-          if [ "${{ steps.build_candidate.outcome }}" = success ] && [ "${{ steps.link_audit.outcome }}" = success ] && [ "${{ steps.validate_candidate.outcome }}" = success ] && [ "${{ steps.foundation_reconcile.outcome }}" = success ]; then
+          git add official_foundation_jobs.json official_foundation_report.json unified_search_report.json unified_validation_report.json unified_crosscheck_report.json direct_post_link_report.json cultural_foundation_coverage_report.json 2>/dev/null || true
+          if [ "${{ steps.foundation_official.outcome }}" = success ] && [ "${{ steps.build_candidate.outcome }}" = success ] && [ "${{ steps.link_audit.outcome }}" = success ] && [ "${{ steps.validate_candidate.outcome }}" = success ] && [ "${{ steps.foundation_reconcile.outcome }}" = success ]; then
             git add unified_jobs.json index.html
           fi
           git diff --cached --quiet && exit 0
@@ -220,7 +237,7 @@ jobs:
           done
       - name: Clean branch/PR test artifacts
         if: always() && !(github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'))
-        run: rm -f unified_jobs.next.json
+        run: rm -f unified_jobs.next.json official_foundation_jobs.json official_foundation_report.json
       - name: Fail after preserving diagnostics
-        if: steps.build_candidate.outcome != 'success' || steps.link_audit.outcome == 'failure' || steps.validate_candidate.outcome != 'success' || steps.crosscheck.outcome == 'failure' || steps.foundation_reconcile.outcome == 'failure'
+        if: steps.foundation_official.outcome == 'failure' || steps.build_candidate.outcome != 'success' || steps.link_audit.outcome == 'failure' || steps.validate_candidate.outcome != 'success' || steps.crosscheck.outcome == 'failure' || steps.foundation_reconcile.outcome == 'failure'
         run: exit 1
