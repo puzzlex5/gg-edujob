@@ -3,7 +3,7 @@ name: Health anomaly auto repair
 on:
   workflow_dispatch:
   schedule:
-    - cron: '12 * * * *'
+    - cron: '12 * * 1-12 *'
 
 permissions:
   contents: write
