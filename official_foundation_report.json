@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-09-10T14:08:32+09:00",
+  "policy": "official-foundation-primary-fail-closed-v2",
+  "healthy": true,
+  "registryInstitutions": 49,
+  "officialBoardsConfigured": 2,
+  "supportedBoardsChecked": 1,
+  "unsupportedConfiguredBoards": [
+    {
+      "foundationRegistryId": "seoul:metropolitan",
+      "foundationName": "서울문화재단",
+      "boardUrl": "https://www.sfac.or.kr/opensquare/notice/recruit_list.do?cbIdx=964",
+      "reason": "adapter-not-yet-implemented"
+    }
+  ],
+  "jobs": 4,
+  "errors": [],
+  "boards": [
+    {
+      "foundationRegistryId": "gyeonggi:gwangju",
+      "foundationName": "광주시문화재단",
+      "boardUrl": "https://www.nsart.or.kr/board/recruit.do",
+      "healthy": true,
+      "adapter": "nsart",
+      "surfacesChecked": [
+        "https://www.nsart.or.kr/board/recruit.do",
+        "https://www.nsart.or.kr/index.do"
+      ],
+      "discoveredDetailLinks": 10,
+      "inspectedDetailLinks": 10,
+      "publishedCurrentJobs": 4
+    }
+  ]
+}

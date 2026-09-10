@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-10T14:07:39+09:00",
+  "generatedAt": "2026-09-10T14:08:55+09:00",
   "policy": "official-primary+multi-sensor-gap-detection-v3",
-  "healthy": false,
+  "healthy": true,
   "registryInstitutions": 49,
   "officialBoardsConfigured": 2,
   "officialCoverageComplete": false,
   "componentAvailable": {
-    "official": false,
+    "official": true,
     "cleaneye": true,
     "ancf": true,
     "artmore": true,
     "registry": true
   },
   "componentHealth": {
-    "official": null,
+    "official": true,
     "cleaneye": true,
     "ancf": true,
     "artmore": true,
@@ -21,27 +21,15 @@
   },
   "failedAvailableComponents": [],
   "currentMappedBySource": {
-    "official": 0,
+    "official": 4,
     "cleaneye": 20,
     "artmore": 1,
     "ancf": 2,
     "lessoninfo-discovery": 31
   },
-  "coverageGapCount": 1,
-  "coverageGaps": [
-    {
-      "foundationRegistryId": "gyeonggi:gwangju",
-      "foundationName": "광주시문화재단",
-      "source": "ancf",
-      "strength": "cross-check",
-      "sourceIdentity": "ancf:6a9f6609760de6acd1a2384c",
-      "title": "[(재)광주시문화재단] 임원(대표이사, 비상임 이사 및 감사) 공개 모집 2026.09.07 -2026.09.22",
-      "registered": "2026-09-07",
-      "applyEnd": "2026-09-22",
-      "url": "https://www.ancf.or.kr/p/6a9f6609760de6acd1a2384c"
-    }
-  ],
-  "discoveryOnlyGapCount": 28,
+  "coverageGapCount": 0,
+  "coverageGaps": [],
+  "discoveryOnlyGapCount": 27,
   "discoveryOnlyGaps": [
     {
       "foundationRegistryId": "seoul:metropolitan",
@@ -216,17 +204,6 @@
       "sourceIdentity": "culture:id:94583",
       "title": "[고양문화재단] 어울림문화학교 강사 상시 모집",
       "registered": "2026-08-14",
-      "applyEnd": "",
-      "url": null
-    },
-    {
-      "foundationRegistryId": "gyeonggi:gwangju",
-      "foundationName": "광주시문화재단",
-      "source": "lessoninfo-discovery",
-      "strength": "discovery-only",
-      "sourceIdentity": "culture:id:94560",
-      "title": "2026년 광주시문화재단 육아휴직대체자 채용 공고(4차)",
-      "registered": "2026-08-13",
       "applyEnd": "",
       "url": null
     },
@@ -808,13 +785,13 @@
       "region": "경기",
       "municipality": "광주시",
       "sourceCounts": {
-        "official": 0,
+        "official": 4,
         "cleaneye": 0,
         "artmore": 0,
         "ancf": 1,
         "lessoninfo-discovery": 1
       },
-      "currentStrongSignals": 1,
+      "currentStrongSignals": 5,
       "officialBoardConfigured": true,
       "coverageOutcome": "current-seen"
     },
