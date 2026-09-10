@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-11T00:07:30+09:00",
+  "generatedAt": "2026-09-11T01:07:28+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T00:07:30+09:00",
+    "generatedAt": "2026-09-11T01:07:28+09:00",
     "official": {
       "datasetCount": 19109,
       "officialIdCount": 17653,
@@ -257,9 +257,9 @@
         "name": "레슨인포",
         "enabled": false,
         "healthy": true,
-        "datasetCount": 295,
-        "rawCount": 295,
-        "currentCount": 295,
+        "datasetCount": 264,
+        "rawCount": 264,
+        "currentCount": 264,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -287,7 +287,7 @@
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-10"
+        "latestRegistered": "2026-09-11"
       },
       "artmore": {
         "name": "아트모아",
@@ -305,8 +305,8 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 62,
-        "rawCount": 62,
+        "datasetCount": 55,
+        "rawCount": 55,
         "currentCount": 55,
         "missingAfter": 0,
         "detailErrors": 0,
@@ -341,7 +341,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T00:08:27+09:00",
+      "baselineAt": "2026-09-10T01:09:32+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19109,
@@ -371,9 +371,9 @@
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 295,
+          "current": 264,
           "baseline": 279,
-          "changeRatio": 0.0573
+          "changeRatio": -0.0538
         },
         "cleaneye": {
           "current": 20,
@@ -408,7 +408,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T00:08:29+09:00",
+      "baselineAt": "2026-09-04T01:09:17+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19109,
@@ -422,23 +422,23 @@
         },
         "unified.publishedJobs": {
           "current": 7125,
-          "baseline": 4718,
-          "changeRatio": 0.5102
+          "baseline": 4511,
+          "changeRatio": 0.5795
         },
         "unified.officialDisplayed": {
           "current": 2992,
-          "baseline": 3302,
-          "changeRatio": -0.0939
+          "baseline": 3090,
+          "changeRatio": -0.0317
         },
         "unified.privateDiscovered": {
           "current": 4133,
-          "baseline": 1431,
-          "changeRatio": 1.8882
+          "baseline": 1435,
+          "changeRatio": 1.8801
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 295,
+          "current": 264,
           "baseline": 0,
           "changeRatio": null
         },
