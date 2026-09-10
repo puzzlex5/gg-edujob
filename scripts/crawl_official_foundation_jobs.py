@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import hashlib
 import json
 import re
 from datetime import date, datetime, timedelta, timezone
@@ -49,6 +48,19 @@ def parse_date_text(value: str) -> date | None:
     return None
 
 
+def parse_all_dates(value: str) -> list[date]:
+    out: list[date] = []
+    for rx in (DATE_RE, KOREAN_DATE_RE):
+        for m in rx.finditer(str(value or "")):
+            try:
+                d = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+            except ValueError:
+                continue
+            if d not in out:
+                out.append(d)
+    return out
+
+
 def format_date(value: date | None) -> str:
     return value.isoformat() if value else ""
 
@@ -72,7 +84,16 @@ def effective_foundations() -> list[dict]:
 
 
 def request(session: requests.Session, url: str) -> requests.Response:
-    r = session.get(url, timeout=25, headers={"User-Agent": UA}, allow_redirects=True)
+    r = session.get(
+        url,
+        timeout=25,
+        headers={
+            "User-Agent": UA,
+            "Cache-Control": "no-cache, no-store, max-age=0",
+            "Pragma": "no-cache",
+        },
+        allow_redirects=True,
+    )
     r.raise_for_status()
     if not r.encoding or r.encoding.lower() == "iso-8859-1":
         r.encoding = r.apparent_encoding or "utf-8"
@@ -82,8 +103,8 @@ def request(session: requests.Session, url: str) -> requests.Response:
 def candidate_period_segments(text: str) -> list[str]:
     segments = []
     for m in PERIOD_HINT_RE.finditer(text):
-        segments.append(text[m.start():m.start() + 420])
-    return segments or [text[:1400]]
+        segments.append(text[m.start():m.start() + 500])
+    return segments or [text[:1600]]
 
 
 def extract_apply_end(text: str, registered: date | None) -> date | None:
@@ -93,23 +114,24 @@ def extract_apply_end(text: str, registered: date | None) -> date | None:
         for rx in (DATE_RE, KOREAN_DATE_RE):
             for m in rx.finditer(segment):
                 try:
-                    d = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+                    candidates.append(date(int(m.group(1)), int(m.group(2)), int(m.group(3))))
                 except ValueError:
-                    continue
-                candidates.append(d)
-        month_days = []
+                    pass
         for m in MONTH_DAY_RE.finditer(segment):
             try:
-                month_days.append(date(base_year, int(m.group(1)), int(m.group(2))))
+                candidates.append(date(base_year, int(m.group(1)), int(m.group(2))))
             except ValueError:
                 pass
-        candidates.extend(month_days)
-
-        # Handles phrases such as "9월 7일부터 22일까지" where the month is stated once.
         m = re.search(r"(\d{1,2})\s*월\s*(\d{1,2})\s*일?\s*부터\s*(\d{1,2})\s*일?\s*까지", segment)
         if m:
             try:
                 candidates.append(date(base_year, int(m.group(1)), int(m.group(3))))
+            except ValueError:
+                pass
+        m = re.search(r"(20\d{2})\s*[.]\s*(\d{1,2})\s*[.]\s*(\d{1,2}).{0,40}?[~～-].{0,20}?(\d{1,2})\s*[.]\s*(\d{1,2})", segment)
+        if m:
+            try:
+                candidates.append(date(int(m.group(1)), int(m.group(4)), int(m.group(5))))
             except ValueError:
                 pass
 
@@ -121,38 +143,80 @@ def extract_apply_end(text: str, registered: date | None) -> date | None:
     return max(plausible) if plausible else None
 
 
+def detail_title(soup: BeautifulSoup, fallback: str = "") -> str:
+    # Prefer the page's visible article heading, but avoid relying on one markup version.
+    for selector in ("h3", "h4", ".board-view-title", ".view-title", ".title"):
+        for node in soup.select(selector):
+            text = normalize_space(node.get_text(" ", strip=True))
+            if text and ("공고" in text or "모집" in text or "채용" in text) and len(text) >= 8:
+                return text
+    return normalize_space(fallback)
+
+
+def detail_registered(soup: BeautifulSoup, fallback: date | None) -> date | None:
+    text = normalize_space(soup.get_text(" ", strip=True))
+    today = datetime.now(KST).date()
+    dates = [d for d in parse_all_dates(text[:2600]) if d <= today]
+    # The page metadata date is normally the newest past date near the heading. A list-row
+    # date, when present, is stronger and avoids confusing dates embedded in the notice body.
+    if fallback:
+        return fallback
+    recent = [d for d in dates if d >= today - timedelta(days=120)]
+    return min(recent, key=lambda d: abs((today - d).days)) if recent else None
+
+
+def nsart_detail_candidates(session: requests.Session, foundation: dict, board_url: str) -> tuple[dict[str, dict], list[str]]:
+    """Collect detail IDs from two independent surfaces.
+
+    nsart's recruitment list can be served from a stale cache to some clients. The homepage has a
+    separate current-recruitment surface, so use both. Missing a link on either surface must not hide
+    a current official posting.
+    """
+    surfaces = [board_url]
+    homepage = str(foundation.get("homepage") or "").strip()
+    if homepage:
+        surfaces.append(homepage)
+    candidates: dict[str, dict] = {}
+    surface_urls: list[str] = []
+    for surface in surfaces:
+        r = request(session, surface)
+        surface_urls.append(r.url)
+        soup = BeautifulSoup(r.text, "html.parser")
+        for a in soup.find_all("a", href=True):
+            href = str(a.get("href") or "")
+            absolute = urljoin(r.url, href)
+            parsed = urlparse(absolute)
+            q = parse_qs(parsed.query)
+            bpo = str((q.get("bpoId") or [""])[0])
+            if not bpo.isdigit() or not parsed.path.endswith("/board/recruit.do") or "act=read" not in parsed.query:
+                continue
+            row_text = normalize_space(a.parent.parent.get_text(" ", strip=True)) if a.parent and a.parent.parent else ""
+            reg = parse_date_text(row_text)
+            existing = candidates.setdefault(bpo, {"url": absolute, "fallbackTitle": "", "registered": None})
+            title = normalize_space(a.get_text(" ", strip=True))
+            if title and len(title) > len(existing.get("fallbackTitle") or ""):
+                existing["fallbackTitle"] = title
+            if reg:
+                existing["registered"] = reg
+    return candidates, surface_urls
+
+
 def nsart_rows(session: requests.Session, foundation: dict, board_url: str) -> tuple[list[dict], dict]:
-    board = request(session, board_url)
-    soup = BeautifulSoup(board.text, "html.parser")
     today = datetime.now(KST).date()
     rows = []
-    seen = set()
+    candidates, surfaces = nsart_detail_candidates(session, foundation, board_url)
     inspected = 0
 
-    for tr in soup.select("tr"):
-        a = tr.find("a", href=True)
-        if not a:
-            continue
-        href = str(a.get("href") or "")
-        absolute = urljoin(board.url, href)
-        parsed = urlparse(absolute)
-        q = parse_qs(parsed.query)
-        bpo = str((q.get("bpoId") or [""])[0])
-        if not bpo.isdigit() or "act=read" not in parsed.query:
-            continue
-        title = normalize_space(a.get_text(" ", strip=True))
-        if not title or bpo in seen:
-            continue
-        seen.add(bpo)
+    for bpo, meta in sorted(candidates.items(), key=lambda item: int(item[0]), reverse=True):
         inspected += 1
-        reg = parse_date_text(tr.get_text(" ", strip=True))
-        if not reg or reg < today - timedelta(days=90) or reg > today:
+        detail = request(session, str(meta["url"]))
+        detail_soup = BeautifulSoup(detail.text, "html.parser")
+        title = detail_title(detail_soup, str(meta.get("fallbackTitle") or ""))
+        reg = detail_registered(detail_soup, meta.get("registered"))
+        if not title or not reg or reg < today - timedelta(days=90) or reg > today:
             continue
         if RESULT_RE.search(title):
             continue
-
-        detail = request(session, absolute)
-        detail_soup = BeautifulSoup(detail.text, "html.parser")
         detail_text = detail_soup.get_text(" ", strip=True)
         end = extract_apply_end(detail_text, reg)
         if end and end < today:
@@ -180,18 +244,19 @@ def nsart_rows(session: requests.Session, foundation: dict, board_url: str) -> t
             "url": detail.url,
             "originalUrl": detail.url,
             "detailUrl": detail.url,
-            "boardUrl": board.url,
+            "boardUrl": board_url,
             "detailLinkVerified": True,
             "detailLinkReason": "official-foundation-detail-id",
             "transportVerified": True,
         })
 
-    return rows, {"adapter": "nsart", "inspectedDetailLinks": inspected, "publishedCurrentJobs": len(rows)}
-
-
-def stable_unknown_id(fid: str, url: str) -> str:
-    digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:20]
-    return f"official-foundation:{fid}:{digest}"
+    return rows, {
+        "adapter": "nsart",
+        "surfacesChecked": surfaces,
+        "discoveredDetailLinks": len(candidates),
+        "inspectedDetailLinks": inspected,
+        "publishedCurrentJobs": len(rows),
+    }
 
 
 def main() -> int:
@@ -239,7 +304,6 @@ def main() -> int:
                 "healthy": False,
             })
 
-    # Duplicate identities or URLs are a hard failure: an official board must be deterministic.
     ids = [str(x.get("sourceIdentity") or "") for x in jobs]
     urls = [str(x.get("url") or "") for x in jobs]
     duplicate_ids = sorted({x for x in ids if x and ids.count(x) > 1})
@@ -249,14 +313,10 @@ def main() -> int:
 
     jobs.sort(key=lambda x: (str(x.get("registered") or ""), str(x.get("sourceIdentity") or "")), reverse=True)
     healthy = not errors
-    payload = {
-        "generatedAt": generated,
-        "sourceRole": "primary-official",
-        "jobs": jobs,
-    }
+    payload = {"generatedAt": generated, "sourceRole": "primary-official", "jobs": jobs}
     report = {
         "generatedAt": generated,
-        "policy": "official-foundation-primary-fail-closed-v1",
+        "policy": "official-foundation-primary-fail-closed-v2",
         "healthy": healthy,
         "registryInstitutions": len(foundations),
         "officialBoardsConfigured": len(configured),
