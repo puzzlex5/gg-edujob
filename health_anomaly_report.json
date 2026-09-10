@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-10T14:28:34+09:00",
+  "generatedAt": "2026-09-10T15:11:49+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-10T14:28:34+09:00",
+    "generatedAt": "2026-09-10T15:11:49+09:00",
     "official": {
-      "datasetCount": 19014,
-      "officialIdCount": 17593,
+      "datasetCount": 19036,
+      "officialIdCount": 17605,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7568,
-      "officialDisplayed": 3142,
-      "privateDisplayed": 4426,
-      "privateDiscovered": 4433,
+      "publishedJobs": 7620,
+      "officialDisplayed": 3193,
+      "privateDisplayed": 4427,
+      "privateDiscovered": 4434,
       "officialPrivateAliases": 7,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -47,7 +47,7 @@
         "latestRegistered": "2026-09-10"
       },
       "강동송파교육지원청": {
-        "count": 22,
+        "count": 23,
         "latestRegistered": "2026-09-10"
       },
       "강서양천교육지원청": {
@@ -55,7 +55,7 @@
         "latestRegistered": "2026-09-09"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10166,
+        "count": 10177,
         "latestRegistered": "2026-09-10"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -115,7 +115,7 @@
         "latestRegistered": "2026-09-10"
       },
       "구리남양주교육지원청": {
-        "count": 570,
+        "count": 571,
         "latestRegistered": "2026-09-10"
       },
       "군포의왕교육지원청": {
@@ -155,7 +155,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1510,
+        "count": 1515,
         "latestRegistered": "2026-09-10"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -179,15 +179,15 @@
         "latestRegistered": "2026-09-08"
       },
       "성북강북교육지원청": {
-        "count": 2,
-        "latestRegistered": "2026-09-01"
+        "count": 3,
+        "latestRegistered": "2026-09-10"
       },
       "수원교육지원청": {
         "count": 15,
         "latestRegistered": "2026-09-08"
       },
       "시흥교육지원청": {
-        "count": 66,
+        "count": 67,
         "latestRegistered": "2026-09-10"
       },
       "안산교육지원청": {
@@ -231,11 +231,11 @@
         "latestRegistered": "2026-09-07"
       },
       "파주교육지원청": {
-        "count": 455,
+        "count": 456,
         "latestRegistered": "2026-09-10"
       },
       "평택교육지원청": {
-        "count": 753,
+        "count": 754,
         "latestRegistered": "2026-09-10"
       },
       "포천교육지원청": {
@@ -300,9 +300,9 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 59,
-        "rawCount": 59,
-        "currentCount": 59,
+        "datasetCount": 60,
+        "rawCount": 60,
+        "currentCount": 60,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -336,32 +336,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-09T14:08:12+09:00",
+      "baselineAt": "2026-09-09T15:11:28+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19014,
-          "baseline": 19006,
-          "changeRatio": 0.0004
+          "current": 19036,
+          "baseline": 19041,
+          "changeRatio": -0.0003
         },
         "official.officialIdCount": {
-          "current": 17593,
-          "baseline": 17672,
-          "changeRatio": -0.0045
+          "current": 17605,
+          "baseline": 17701,
+          "changeRatio": -0.0054
         },
         "unified.publishedJobs": {
-          "current": 7568,
+          "current": 7620,
           "baseline": 7409,
-          "changeRatio": 0.0215
+          "changeRatio": 0.0285
         },
         "unified.officialDisplayed": {
-          "current": 3142,
+          "current": 3193,
           "baseline": 2998,
-          "changeRatio": 0.048
+          "changeRatio": 0.065
         },
         "unified.privateDiscovered": {
-          "current": 4433,
+          "current": 4434,
           "baseline": 4420,
-          "changeRatio": 0.0029
+          "changeRatio": 0.0032
         }
       },
       "privateSources": {
@@ -386,9 +386,9 @@
           "changeRatio": 0.0
         },
         "gonggonggangsa": {
-          "current": 59,
+          "current": 60,
           "baseline": 57,
-          "changeRatio": 0.0351
+          "changeRatio": 0.0526
         },
         "seekle": {
           "current": 1,
@@ -406,29 +406,29 @@
       "baselineAt": "2026-09-03T19:59:07+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19014,
+          "current": 19036,
           "baseline": 18911,
-          "changeRatio": 0.0054
+          "changeRatio": 0.0066
         },
         "official.officialIdCount": {
-          "current": 17593,
+          "current": 17605,
           "baseline": 17887,
-          "changeRatio": -0.0164
+          "changeRatio": -0.0158
         },
         "unified.publishedJobs": {
-          "current": 7568,
+          "current": 7620,
           "baseline": 4715,
-          "changeRatio": 0.6051
+          "changeRatio": 0.6161
         },
         "unified.officialDisplayed": {
-          "current": 3142,
+          "current": 3193,
           "baseline": 3299,
-          "changeRatio": -0.0476
+          "changeRatio": -0.0321
         },
         "unified.privateDiscovered": {
-          "current": 4433,
+          "current": 4434,
           "baseline": 1431,
-          "changeRatio": 2.0978
+          "changeRatio": 2.0985
         }
       },
       "privateSources": {
@@ -453,7 +453,7 @@
           "changeRatio": null
         },
         "gonggonggangsa": {
-          "current": 59,
+          "current": 60,
           "baseline": 0,
           "changeRatio": null
         },
@@ -521,17 +521,6 @@
       "code": "official-source-freshness-stall",
       "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
       "evidence": {
-        "source": "성북강북교육지원청",
-        "latestRegistered": "2026-09-01",
-        "globalLatest": "2026-09-10",
-        "ageDays": 9
-      }
-    },
-    {
-      "severity": "warning",
-      "code": "official-source-freshness-stall",
-      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
-      "evidence": {
         "source": "안양과천교육지원청",
         "latestRegistered": "2026-09-03",
         "globalLatest": "2026-09-10",
@@ -562,6 +551,6 @@
     }
   ],
   "criticalCount": 0,
-  "warningCount": 8,
+  "warningCount": 7,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
