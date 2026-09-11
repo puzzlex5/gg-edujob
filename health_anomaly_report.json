@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-11T14:07:05+09:00",
+  "generatedAt": "2026-09-11T15:09:00+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T14:07:05+09:00",
+    "generatedAt": "2026-09-11T15:09:00+09:00",
     "official": {
       "datasetCount": 19261,
       "officialIdCount": 17756,
@@ -245,13 +245,13 @@
         "name": "레슨인포",
         "enabled": false,
         "healthy": true,
-        "datasetCount": 264,
-        "rawCount": 264,
-        "currentCount": 264,
+        "datasetCount": 268,
+        "rawCount": 268,
+        "currentCount": 268,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-09"
+        "latestRegistered": "2026-09-10"
       },
       "cleaneye": {
         "name": "클린아이 잡플러스",
@@ -269,7 +269,7 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4036,
+        "datasetCount": 4037,
         "rawCount": 4036,
         "currentCount": 4036,
         "missingAfter": 0,
@@ -329,39 +329,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T14:08:22+09:00",
+      "baselineAt": "2026-09-10T15:11:49+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19261,
-          "baseline": 18985,
-          "changeRatio": 0.0145
+          "baseline": 19036,
+          "changeRatio": 0.0118
         },
         "official.officialIdCount": {
           "current": 17756,
-          "baseline": 17567,
-          "changeRatio": 0.0108
+          "baseline": 17605,
+          "changeRatio": 0.0086
         },
         "unified.publishedJobs": {
           "current": 7288,
-          "baseline": 7276,
-          "changeRatio": 0.0016
+          "baseline": 7620,
+          "changeRatio": -0.0436
         },
         "unified.officialDisplayed": {
           "current": 3148,
-          "baseline": 3138,
-          "changeRatio": 0.0032
+          "baseline": 3193,
+          "changeRatio": -0.0141
         },
         "unified.privateDiscovered": {
           "current": 4140,
-          "baseline": 4138,
-          "changeRatio": 0.0005
+          "baseline": 4434,
+          "changeRatio": -0.0663
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 264,
+          "current": 268,
           "baseline": 295,
-          "changeRatio": -0.1051
+          "changeRatio": -0.0915
         },
         "cleaneye": {
           "current": 20,
@@ -380,8 +380,8 @@
         },
         "gonggonggangsa": {
           "current": 56,
-          "baseline": 59,
-          "changeRatio": -0.0508
+          "baseline": 60,
+          "changeRatio": -0.0667
         },
         "seekle": {
           "current": 1,
@@ -396,37 +396,37 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T14:07:53+09:00",
+      "baselineAt": "2026-09-04T15:10:37+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19261,
-          "baseline": 19092,
-          "changeRatio": 0.0089
+          "baseline": 19117,
+          "changeRatio": 0.0075
         },
         "official.officialIdCount": {
           "current": 17756,
-          "baseline": 17995,
-          "changeRatio": -0.0133
+          "baseline": 18099,
+          "changeRatio": -0.019
         },
         "unified.publishedJobs": {
           "current": 7288,
-          "baseline": 8768,
-          "changeRatio": -0.1688
+          "baseline": 4757,
+          "changeRatio": 0.5321
         },
         "unified.officialDisplayed": {
           "current": 3148,
-          "baseline": 3276,
-          "changeRatio": -0.0391
+          "baseline": 3302,
+          "changeRatio": -0.0466
         },
         "unified.privateDiscovered": {
           "current": 4140,
-          "baseline": 5507,
-          "changeRatio": -0.2482
+          "baseline": 1470,
+          "changeRatio": 1.8163
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 264,
+          "current": 268,
           "baseline": 0,
           "changeRatio": null
         },
