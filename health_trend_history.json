@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-12T02:06:31+09:00",
+  "updatedAt": "2026-09-12T03:07:54+09:00",
   "snapshots": [
     {
       "generatedAt": "2026-09-03T19:59:07+09:00",
@@ -62660,6 +62660,335 @@
         "lessoninfo": {
           "name": "레슨인포",
           "enabled": true,
+          "healthy": true,
+          "datasetCount": 255,
+          "rawCount": 255,
+          "currentCount": 255,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-09-10"
+        },
+        "cleaneye": {
+          "name": "클린아이 잡플러스",
+          "enabled": true,
+          "healthy": true,
+          "datasetCount": 22,
+          "rawCount": 22,
+          "currentCount": 20,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-09-17"
+        },
+        "jobteacher": {
+          "name": "잡티처",
+          "enabled": true,
+          "healthy": true,
+          "datasetCount": 4039,
+          "rawCount": 4039,
+          "currentCount": 4039,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-09-12"
+        },
+        "artmore": {
+          "name": "아트모아",
+          "enabled": true,
+          "healthy": true,
+          "datasetCount": 36,
+          "rawCount": 36,
+          "currentCount": 36,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-09-11"
+        },
+        "gonggonggangsa": {
+          "name": "공공강사",
+          "enabled": true,
+          "healthy": true,
+          "datasetCount": 48,
+          "rawCount": 48,
+          "currentCount": 48,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-09-11"
+        },
+        "seekle": {
+          "name": "시립광진청소년센터",
+          "enabled": true,
+          "healthy": true,
+          "datasetCount": 6,
+          "rawCount": 6,
+          "currentCount": 1,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-09-04"
+        },
+        "boramyc": {
+          "name": "시립보라매청소년센터",
+          "enabled": true,
+          "healthy": true,
+          "datasetCount": 6,
+          "rawCount": 6,
+          "currentCount": 1,
+          "missingAfter": 0,
+          "detailErrors": 0,
+          "traversalComplete": true,
+          "latestRegistered": "2026-08-26"
+        }
+      }
+    },
+    {
+      "generatedAt": "2026-09-12T03:07:54+09:00",
+      "official": {
+        "datasetCount": 19419,
+        "officialIdCount": 17860,
+        "missingAfter": 0,
+        "reconciledSources": 38,
+        "totalSources": 38
+      },
+      "unified": {
+        "publishedJobs": 7131,
+        "officialDisplayed": 2986,
+        "privateDisplayed": 4145,
+        "privateDiscovered": 4145,
+        "officialPrivateAliases": 0,
+        "healthy": true,
+        "missingPrivateIds": 0,
+        "nonMetroPrivate": 0,
+        "bannedPrivate": 0,
+        "expiredPrivate": 0,
+        "futurePrivateDates": 0,
+        "duplicateStableIds": 0,
+        "missingLinks": 0,
+        "badCrossSourceAliasEvidence": 0,
+        "enabledPrivateSources": [
+          "cleaneye",
+          "jobteacher",
+          "artmore",
+          "gonggonggangsa",
+          "seekle",
+          "boramyc"
+        ],
+        "degradedPrivateSources": [
+          "lessoninfo"
+        ]
+      },
+      "officialSources": {
+        "가평교육지원청": {
+          "count": 98,
+          "latestRegistered": "2026-09-11"
+        },
+        "강남서초교육지원청": {
+          "count": 100,
+          "latestRegistered": "2026-09-10"
+        },
+        "강동송파교육지원청": {
+          "count": 24,
+          "latestRegistered": "2026-09-11"
+        },
+        "강서양천교육지원청": {
+          "count": 132,
+          "latestRegistered": "2026-09-11"
+        },
+        "경기도교육청 통합 구인구직": {
+          "count": 10338,
+          "latestRegistered": "2026-09-11"
+        },
+        "경기도교육청 통합 구인구직 + 가평교육지원청": {
+          "count": 1,
+          "latestRegistered": "2026-07-29"
+        },
+        "경기도교육청 통합 구인구직 + 고양교육지원청": {
+          "count": 1,
+          "latestRegistered": "2026-09-07"
+        },
+        "경기도교육청 통합 구인구직 + 광주하남교육지원청": {
+          "count": 1,
+          "latestRegistered": "2026-09-10"
+        },
+        "경기도교육청 통합 구인구직 + 구리남양주교육지원청": {
+          "count": 6,
+          "latestRegistered": "2026-09-11"
+        },
+        "경기도교육청 통합 구인구직 + 김포교육지원청": {
+          "count": 1,
+          "latestRegistered": "2026-09-11"
+        },
+        "경기도교육청 통합 구인구직 + 동두천양주교육지원청": {
+          "count": 10,
+          "latestRegistered": "2026-09-11"
+        },
+        "경기도교육청 통합 구인구직 + 성남교육지원청": {
+          "count": 6,
+          "latestRegistered": "2026-09-09"
+        },
+        "경기도교육청 통합 구인구직 + 시흥교육지원청": {
+          "count": 1,
+          "latestRegistered": "2026-09-10"
+        },
+        "경기도교육청 통합 구인구직 + 의정부교육지원청": {
+          "count": 2,
+          "latestRegistered": "2026-09-11"
+        },
+        "경기도교육청 통합 구인구직 + 평택교육지원청": {
+          "count": 4,
+          "latestRegistered": "2026-09-11"
+        },
+        "고양교육지원청": {
+          "count": 218,
+          "latestRegistered": "2026-09-11"
+        },
+        "광명교육지원청": {
+          "count": 293,
+          "latestRegistered": "2026-09-11"
+        },
+        "광주하남교육지원청": {
+          "count": 333,
+          "latestRegistered": "2026-09-11"
+        },
+        "구리남양주교육지원청": {
+          "count": 582,
+          "latestRegistered": "2026-09-11"
+        },
+        "군포의왕교육지원청": {
+          "count": 7,
+          "latestRegistered": "2026-09-03"
+        },
+        "김포교육지원청": {
+          "count": 518,
+          "latestRegistered": "2026-09-11"
+        },
+        "남부교육지원청": {
+          "count": 55,
+          "latestRegistered": "2026-09-11"
+        },
+        "동두천양주교육지원청": {
+          "count": 496,
+          "latestRegistered": "2026-09-11"
+        },
+        "동부교육지원청": {
+          "count": 10,
+          "latestRegistered": "2026-09-08"
+        },
+        "동작관악교육지원청": {
+          "count": 158,
+          "latestRegistered": "2026-09-10"
+        },
+        "부천교육지원청": {
+          "count": 702,
+          "latestRegistered": "2026-09-11"
+        },
+        "북부교육지원청": {
+          "count": 11,
+          "latestRegistered": "2026-09-04"
+        },
+        "서부교육지원청": {
+          "count": 11,
+          "latestRegistered": "2026-09-03"
+        },
+        "서울교육일자리포털": {
+          "count": 1629,
+          "latestRegistered": "2026-09-11"
+        },
+        "서울교육일자리포털 + 강남서초교육지원청": {
+          "count": 2,
+          "latestRegistered": "2026-09-02"
+        },
+        "서울교육일자리포털 + 남부교육지원청": {
+          "count": 3,
+          "latestRegistered": "2026-08-24"
+        },
+        "서울교육일자리포털 + 동작관악교육지원청": {
+          "count": 11,
+          "latestRegistered": "2026-09-09"
+        },
+        "성남교육지원청": {
+          "count": 967,
+          "latestRegistered": "2026-09-11"
+        },
+        "성동광진교육지원청": {
+          "count": 4,
+          "latestRegistered": "2026-09-08"
+        },
+        "성북강북교육지원청": {
+          "count": 3,
+          "latestRegistered": "2026-09-10"
+        },
+        "수원교육지원청": {
+          "count": 15,
+          "latestRegistered": "2026-09-08"
+        },
+        "시흥교육지원청": {
+          "count": 67,
+          "latestRegistered": "2026-09-11"
+        },
+        "안산교육지원청": {
+          "count": 77,
+          "latestRegistered": "2026-09-11"
+        },
+        "안성교육지원청": {
+          "count": 219,
+          "latestRegistered": "2026-09-11"
+        },
+        "안양과천교육지원청": {
+          "count": 9,
+          "latestRegistered": "2026-09-03"
+        },
+        "양평교육지원청": {
+          "count": 175,
+          "latestRegistered": "2026-09-11"
+        },
+        "여주교육지원청": {
+          "count": 9,
+          "latestRegistered": "2026-09-01"
+        },
+        "연천교육지원청": {
+          "count": 92,
+          "latestRegistered": "2026-09-11"
+        },
+        "용인교육지원청": {
+          "count": 126,
+          "latestRegistered": "2026-09-11"
+        },
+        "의정부교육지원청": {
+          "count": 347,
+          "latestRegistered": "2026-09-11"
+        },
+        "이천교육지원청": {
+          "count": 11,
+          "latestRegistered": "2026-09-02"
+        },
+        "중부교육지원청": {
+          "count": 46,
+          "latestRegistered": "2026-09-07"
+        },
+        "파주교육지원청": {
+          "count": 469,
+          "latestRegistered": "2026-09-11"
+        },
+        "평택교육지원청": {
+          "count": 763,
+          "latestRegistered": "2026-09-11"
+        },
+        "포천교육지원청": {
+          "count": 207,
+          "latestRegistered": "2026-09-11"
+        },
+        "화성오산교육지원청": {
+          "count": 49,
+          "latestRegistered": "2026-09-11"
+        }
+      },
+      "privateSources": {
+        "lessoninfo": {
+          "name": "레슨인포",
+          "enabled": false,
           "healthy": true,
           "datasetCount": 255,
           "rawCount": 255,
