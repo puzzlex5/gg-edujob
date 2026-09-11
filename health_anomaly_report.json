@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-11T18:07:38+09:00",
+  "generatedAt": "2026-09-11T19:07:47+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T18:07:38+09:00",
+    "generatedAt": "2026-09-11T19:07:47+09:00",
     "official": {
-      "datasetCount": 19388,
-      "officialIdCount": 17850,
+      "datasetCount": 19421,
+      "officialIdCount": 17874,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7429,
-      "officialDisplayed": 3273,
-      "privateDisplayed": 4156,
-      "privateDiscovered": 4156,
-      "officialPrivateAliases": 0,
+      "publishedJobs": 7724,
+      "officialDisplayed": 3306,
+      "privateDisplayed": 4418,
+      "privateDiscovered": 4424,
+      "officialPrivateAliases": 6,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,6 +27,7 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
+        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -34,9 +35,7 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": [
-        "lessoninfo"
-      ]
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -56,7 +55,7 @@
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10327,
+        "count": 10341,
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -108,7 +107,7 @@
         "latestRegistered": "2026-09-11"
       },
       "구리남양주교육지원청": {
-        "count": 581,
+        "count": 582,
         "latestRegistered": "2026-09-11"
       },
       "군포의왕교육지원청": {
@@ -124,7 +123,7 @@
         "latestRegistered": "2026-09-11"
       },
       "동두천양주교육지원청": {
-        "count": 494,
+        "count": 496,
         "latestRegistered": "2026-09-11"
       },
       "동부교육지원청": {
@@ -136,7 +135,7 @@
         "latestRegistered": "2026-09-10"
       },
       "부천교육지원청": {
-        "count": 700,
+        "count": 702,
         "latestRegistered": "2026-09-11"
       },
       "북부교육지원청": {
@@ -148,7 +147,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1618,
+        "count": 1631,
         "latestRegistered": "2026-09-11"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -184,8 +183,8 @@
         "latestRegistered": "2026-09-11"
       },
       "안산교육지원청": {
-        "count": 76,
-        "latestRegistered": "2026-09-07"
+        "count": 77,
+        "latestRegistered": "2026-09-11"
       },
       "안성교육지원청": {
         "count": 219,
@@ -243,7 +242,7 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": false,
+        "enabled": true,
         "healthy": true,
         "datasetCount": 268,
         "rawCount": 268,
@@ -329,32 +328,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T18:07:37+09:00",
+      "baselineAt": "2026-09-10T19:07:43+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19388,
-          "baseline": 19091,
-          "changeRatio": 0.0156
+          "current": 19421,
+          "baseline": 19099,
+          "changeRatio": 0.0169
         },
         "official.officialIdCount": {
-          "current": 17850,
+          "current": 17874,
           "baseline": 17632,
-          "changeRatio": 0.0124
+          "changeRatio": 0.0137
         },
         "unified.publishedJobs": {
-          "current": 7429,
-          "baseline": 7393,
-          "changeRatio": 0.0049
+          "current": 7724,
+          "baseline": 7402,
+          "changeRatio": 0.0435
         },
         "unified.officialDisplayed": {
-          "current": 3273,
-          "baseline": 3248,
-          "changeRatio": 0.0077
+          "current": 3306,
+          "baseline": 3257,
+          "changeRatio": 0.015
         },
         "unified.privateDiscovered": {
-          "current": 4156,
+          "current": 4424,
           "baseline": 4145,
-          "changeRatio": 0.0027
+          "changeRatio": 0.0673
         }
       },
       "privateSources": {
@@ -396,32 +395,32 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T18:08:20+09:00",
+      "baselineAt": "2026-09-04T19:08:59+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19388,
+          "current": 19421,
           "baseline": 19168,
-          "changeRatio": 0.0115
+          "changeRatio": 0.0132
         },
         "official.officialIdCount": {
-          "current": 17850,
+          "current": 17874,
           "baseline": 18099,
-          "changeRatio": -0.0138
+          "changeRatio": -0.0124
         },
         "unified.publishedJobs": {
-          "current": 7429,
+          "current": 7724,
           "baseline": 4808,
-          "changeRatio": 0.5451
+          "changeRatio": 0.6065
         },
         "unified.officialDisplayed": {
-          "current": 3273,
+          "current": 3306,
           "baseline": 3353,
-          "changeRatio": -0.0239
+          "changeRatio": -0.014
         },
         "unified.privateDiscovered": {
-          "current": 4156,
+          "current": 4424,
           "baseline": 1470,
-          "changeRatio": 1.8272
+          "changeRatio": 2.0095
         }
       },
       "privateSources": {
