@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-11 19:00 KST",
+    "checkedAt": "2026-09-11 19:53 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19388,
-    "currentTotal": 19421
+    "previousTotal": 19421,
+    "currentTotal": 19423
   },
   "jobs": [
     {
@@ -1583,6 +1583,33 @@
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110190",
       "recoveredBy": "official-source-id-reconciliation",
       "sourceIdentity": "seoul-central:110190"
+    },
+    {
+      "id": "goe-59804",
+      "province": "경기",
+      "school": "화성고등학교",
+      "title": "2027학년도 학교법인 백련학원(화성중학교) 교원 신규채용 시행계획 공고(안)",
+      "subject": "화학 1명, 일반사회 1명",
+      "region": "화성시",
+      "regions": [
+        "화성시"
+      ],
+      "type": "정규채용",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/10/12",
+      "applyEnd": "2026/10/16",
+      "workStart": "2027/03/01",
+      "workEnd": "",
+      "registered": "2026/09/11",
+      "headcount": "2",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59804",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:59804"
     },
     {
       "id": "goe-59752",
@@ -5775,6 +5802,33 @@
       "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110240",
       "recoveredBy": "official-source-id-reconciliation",
       "sourceIdentity": "seoul-central:110240"
+    },
+    {
+      "id": "sen-110227",
+      "province": "서울",
+      "school": "서울배봉초등학교",
+      "title": "(배봉초)6학년 담임 기간제교원(9.14.~10.29. 시간강사도 가능) 채용",
+      "subject": "6학년 담임수업",
+      "region": "동대문구",
+      "regions": [
+        "동대문구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/11",
+      "applyEnd": "2026/09/16",
+      "workStart": "2026/09/14",
+      "workEnd": "2026/10/29",
+      "registered": "2026/09/11",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110227",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:110227"
     },
     {
       "id": "goe-59721",
@@ -538400,11 +538454,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-11 18:48 KST",
+    "checkedAt": "2026-09-11 19:49 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-11 18:48 KST",
+    "checkedAt": "2026-09-11 19:49 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -538425,7 +538479,7 @@
     "seoulTotal": 507
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-11 18:48 KST",
+    "checkedAt": "2026-09-11 19:49 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6031,
     "detailPagesParsed": 2384,
@@ -538435,7 +538489,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-11 18:48 KST",
+      "checkedAt": "2026-09-11 19:49 KST",
       "candidates": 252,
       "detailPagesConfirmed": 247,
       "cacheEntriesImproved": 0,
@@ -538447,24 +538501,24 @@
     }
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-11 18:08:40 KST",
+    "generatedAt": "2026-09-11 19:11:26 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
-    "officialIdCount": 17874,
-    "datasetIdCountBefore": 19341,
-    "missingBefore": 33,
-    "recoveredNow": 33,
+    "officialIdCount": 17876,
+    "datasetIdCountBefore": 19374,
+    "missingBefore": 2,
+    "recoveredNow": 2,
     "missingAfter": 0,
     "reconciledSources": 38,
     "totalSources": 38,
     "reconciledOffices": 38,
     "totalOffices": 38,
-    "scanId": "20260911T090025Z-34580940729-1"
+    "scanId": "20260911T100155Z-34585898339-1"
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-11 18:48:38 KST",
-    "ledgerScanId": "20260911T090025Z-34580940729-1",
-    "protectedOfficialIds": 17874,
+    "checkedAt": "2026-09-11 19:49:00 KST",
+    "ledgerScanId": "20260911T100155Z-34585898339-1",
+    "protectedOfficialIds": 17876,
     "missingBefore": 0,
     "recoveredNow": 0,
     "missingAfter": 0
