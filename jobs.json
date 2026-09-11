@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11 20:54 KST",
+  "updatedAt": "2026-09-11 21:36 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -802,7 +802,7 @@
       "central": {
         "name": "경기도교육청 통합 구인구직",
         "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502",
-        "count": 10243,
+        "count": 10244,
         "ok": true,
         "state": "ok"
       }
@@ -956,7 +956,7 @@
       "central": {
         "name": "서울교육일자리포털",
         "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do?type=term",
-        "count": 395,
+        "count": 394,
         "ok": true,
         "state": "ok"
       }
@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-11 21:25 KST",
+    "checkedAt": "2026-09-11 22:13 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19424,
-    "currentTotal": 19425
+    "previousTotal": 19425,
+    "currentTotal": 19426
   },
   "jobs": [
     {
@@ -2547,8 +2547,7 @@
       "nttSn": "1528776",
       "bbsId": "5918",
       "mi": "11390",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-403112c765894f0d120f",
@@ -2578,8 +2577,7 @@
       "nttSn": "1127517",
       "bbsId": "4117",
       "mi": "7019",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-18256a4b2f01b9fd90ef",
@@ -3575,8 +3573,7 @@
       "nttSn": "1406948",
       "bbsId": "8653",
       "mi": "16003",
-      "detailLinkResolved": true,
-      "periodStatus": "parsed"
+      "detailLinkResolved": true
     },
     {
       "id": "goe-office-5203fa82e1762973fa7a",
@@ -7097,6 +7094,31 @@
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
+    },
+    {
+      "id": "goe-59805",
+      "province": "경기",
+      "school": "관양고등학교",
+      "title": "2026학년도 관양고 계약제교원(미술) 채용 공고",
+      "subject": "미술",
+      "region": "안양시",
+      "regions": [
+        "안양시"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "고등학교",
+      "applyStart": "2026/09/11",
+      "applyEnd": "2026/09/14",
+      "workStart": "2026/09/16",
+      "workEnd": "2026/10/15",
+      "registered": "2026/09/11",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59805"
     },
     {
       "id": "goe-59794",
@@ -35614,31 +35636,6 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59211"
     },
     {
-      "id": "sen-109854",
-      "province": "서울",
-      "school": "서울사근초등학교",
-      "title": "(사근초) SW(코딩)교육 지도강사 채용 계획 공고",
-      "subject": "SW(코딩)교육",
-      "region": "성동구",
-      "regions": [
-        "성동구"
-      ],
-      "type": "시간강사/강사",
-      "schoolLevel": "초등학교",
-      "applyStart": "2026/09/07",
-      "applyEnd": "2026/09/11",
-      "workStart": "2026/10/01",
-      "workEnd": "2026/12/30",
-      "registered": "2026/09/07",
-      "headcount": "1",
-      "source": "서울교육일자리포털",
-      "checkedSources": [
-        "서울교육일자리포털"
-      ],
-      "sourceType": "통합게시판",
-      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109854"
-    },
-    {
       "id": "sen-109817",
       "province": "서울",
       "school": "서울정수초등학교",
@@ -36145,6 +36142,34 @@
       "bbsId": "10111",
       "mi": "10118",
       "detailLinkResolved": true
+    },
+    {
+      "id": "sen-109854",
+      "province": "서울",
+      "school": "서울사근초등학교",
+      "title": "(사근초) SW(코딩)교육 지도강사 채용 계획 공고",
+      "subject": "SW(코딩)교육",
+      "region": "성동구",
+      "regions": [
+        "성동구"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/07",
+      "applyEnd": "2026/09/11",
+      "workStart": "2026/10/01",
+      "workEnd": "2026/12/30",
+      "registered": "2026/09/07",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=109854",
+      "recoveryCarryForward": true,
+      "recoveryReason": "present in latest independent official-ID reconciliation",
+      "reconciliationCarryForward": true
     },
     {
       "id": "goe-59155",
@@ -538261,7 +538286,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-11 21:19 KST",
+      "checkedAt": "2026-09-11 22:06 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
@@ -538272,23 +538297,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-11 21:24 KST",
+    "checkedAt": "2026-09-11 22:12 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-11 21:24 KST",
+    "checkedAt": "2026-09-11 22:12 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 16642,
-    "previousCount": 19424,
-    "mergedCount": 19404,
-    "carriedForward": 2762,
+    "previousCount": 19425,
+    "mergedCount": 19405,
+    "carriedForward": 2763,
     "officialIdProtected": 17876,
-    "officialIdCarryForward": 1235,
+    "officialIdCarryForward": 1236,
     "enrichedFromPrevious": 6989,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-11 21:23 KST"
+    "generatedAt": "2026-09-11 22:11 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 6851,
@@ -538297,17 +538322,17 @@
     "seoulTotal": 507
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-11 21:23 KST",
+    "checkedAt": "2026-09-11 22:11 KST",
     "parserVersion": 2,
     "recentSupportJobs": 6031,
-    "detailPagesParsed": 2377,
-    "fieldsFilledThisRun": 22,
+    "detailPagesParsed": 2374,
+    "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1066,
     "missingWorkPeriod": 2011,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-11 21:23 KST",
+      "checkedAt": "2026-09-11 22:11 KST",
       "candidates": 252,
       "detailPagesConfirmed": 247,
       "cacheEntriesImproved": 0,
