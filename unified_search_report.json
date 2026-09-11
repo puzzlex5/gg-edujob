@@ -1,31 +1,31 @@
 {
-  "generatedAt": "2026-09-11T16:57:26+09:00",
+  "generatedAt": "2026-09-11T17:39:11+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
-  "canonicalOfficialJobs": 19343,
+  "canonicalOfficialJobs": 19388,
   "canonicalFoundationOfficialJobs": 4,
-  "canonicalPrivateJobs": 4158,
-  "selectedCanonicalOfficialJobs": 3225,
+  "canonicalPrivateJobs": 4426,
+  "selectedCanonicalOfficialJobs": 3269,
   "selectedFoundationOfficialJobs": 4,
-  "selectedOfficialJobs": 3229,
-  "selectedPrivateJobs": 4146,
-  "publishedJobs": 7375,
+  "selectedOfficialJobs": 3273,
+  "selectedPrivateJobs": 4414,
+  "publishedJobs": 7681,
   "perFeed": {
-    "official": 3229,
-    "private": 4146
+    "official": 3273,
+    "private": 4408
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": false,
-      "degraded": true,
-      "ok": false,
+      "publicationEnabled": true,
+      "degraded": false,
+      "ok": true,
       "candidateCount": 268,
-      "count": 0,
+      "count": 268,
       "lastVerifiedAt": "2026-09-11T16:54:53+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 0
+      "displayedAsPrivate": 262
     },
     "cleaneye": {
       "name": "클린아이 잡플러스",
@@ -48,7 +48,7 @@
       "ok": true,
       "candidateCount": 4039,
       "count": 4039,
-      "lastVerifiedAt": "2026-09-11T16:04:22+09:00",
+      "lastVerifiedAt": "2026-09-11T17:01:37+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 4039
@@ -74,7 +74,7 @@
       "ok": true,
       "candidateCount": 59,
       "count": 59,
-      "lastVerifiedAt": "2026-09-11T16:34:50+09:00",
+      "lastVerifiedAt": "2026-09-11T17:35:49+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 59
@@ -106,13 +106,11 @@
       "displayedAsPrivate": 1
     }
   },
-  "protectedOfficialIds": 17819,
-  "explicitOfficialAliasGroupsMerged": 0,
+  "protectedOfficialIds": 17850,
+  "explicitOfficialAliasGroupsMerged": 6,
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
-  "degradedPrivateSources": [
-    "lessoninfo"
-  ],
-  "allPublicationEnabledSourcesHealthy": false
+  "degradedPrivateSources": [],
+  "allPublicationEnabledSourcesHealthy": true
 }
