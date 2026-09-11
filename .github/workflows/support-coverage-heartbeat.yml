@@ -1,0 +1,56 @@
+name: Support-office coverage heartbeat
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 19 * 1-12 *' # 04:37 KST daily
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/complete_support_coverage.py'
+      - 'scripts/verify_support_completeness.py'
+      - 'scripts/resolve_support_links.py'
+      - 'scripts/update_collector_status.py'
+      - 'sources.json'
+      - 'board_cache.json'
+      - '.github/workflows/support-coverage-heartbeat.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: support-coverage-heartbeat
+  cancel-in-progress: false
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Validate crawler syntax
+        run: python -m py_compile scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/update_collector_status.py
+      - name: Coverage traversal pass 1
+        run: python scripts/complete_support_coverage.py
+      - name: Coverage traversal pass 2
+        run: sleep 12 && python scripts/complete_support_coverage.py
+      - name: Require all support offices and exact links
+        run: python scripts/verify_support_completeness.py
+      - name: Verify publication candidate against refreshed evidence
+        run: python scripts/verify_jobs.py
+      - name: Persist refreshed independent coverage evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add jobs.json board_cache.json support_coverage_report.json support_link_resolution.json collection_state.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Refresh independent support-office coverage evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
