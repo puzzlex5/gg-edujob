@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-11T09:10:11+09:00",
+  "generatedAt": "2026-09-11T10:07:24+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T09:10:11+09:00",
+    "generatedAt": "2026-09-11T10:07:24+09:00",
     "official": {
-      "datasetCount": 19113,
-      "officialIdCount": 17640,
+      "datasetCount": 19158,
+      "officialIdCount": 17665,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7139,
-      "officialDisplayed": 3000,
-      "privateDisplayed": 4139,
-      "privateDiscovered": 4139,
-      "officialPrivateAliases": 0,
+      "publishedJobs": 7442,
+      "officialDisplayed": 3045,
+      "privateDisplayed": 4397,
+      "privateDiscovered": 4403,
+      "officialPrivateAliases": 6,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,6 +27,7 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
+        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -34,9 +35,7 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": [
-        "lessoninfo"
-      ]
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -52,12 +51,12 @@
         "latestRegistered": "2026-09-10"
       },
       "강서양천교육지원청": {
-        "count": 131,
-        "latestRegistered": "2026-09-09"
+        "count": 132,
+        "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10211,
-        "latestRegistered": "2026-09-10"
+        "count": 10225,
+        "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
         "count": 1,
@@ -96,8 +95,8 @@
         "latestRegistered": "2026-09-10"
       },
       "고양교육지원청": {
-        "count": 216,
-        "latestRegistered": "2026-09-10"
+        "count": 217,
+        "latestRegistered": "2026-09-11"
       },
       "광명교육지원청": {
         "count": 292,
@@ -116,16 +115,16 @@
         "latestRegistered": "2026-09-03"
       },
       "김포교육지원청": {
-        "count": 514,
-        "latestRegistered": "2026-09-10"
+        "count": 517,
+        "latestRegistered": "2026-09-11"
       },
       "남부교육지원청": {
         "count": 52,
         "latestRegistered": "2026-09-10"
       },
       "동두천양주교육지원청": {
-        "count": 487,
-        "latestRegistered": "2026-09-10"
+        "count": 488,
+        "latestRegistered": "2026-09-11"
       },
       "동부교육지원청": {
         "count": 11,
@@ -136,8 +135,8 @@
         "latestRegistered": "2026-09-10"
       },
       "부천교육지원청": {
-        "count": 691,
-        "latestRegistered": "2026-09-10"
+        "count": 692,
+        "latestRegistered": "2026-09-11"
       },
       "북부교육지원청": {
         "count": 11,
@@ -148,7 +147,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1549,
+        "count": 1566,
         "latestRegistered": "2026-09-11"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -188,8 +187,8 @@
         "latestRegistered": "2026-09-07"
       },
       "안성교육지원청": {
-        "count": 216,
-        "latestRegistered": "2026-09-10"
+        "count": 217,
+        "latestRegistered": "2026-09-11"
       },
       "안양과천교육지원청": {
         "count": 9,
@@ -204,16 +203,16 @@
         "latestRegistered": "2026-09-01"
       },
       "연천교육지원청": {
-        "count": 89,
-        "latestRegistered": "2026-09-10"
+        "count": 90,
+        "latestRegistered": "2026-09-11"
       },
       "용인교육지원청": {
         "count": 124,
         "latestRegistered": "2026-09-07"
       },
       "의정부교육지원청": {
-        "count": 341,
-        "latestRegistered": "2026-09-10"
+        "count": 342,
+        "latestRegistered": "2026-09-11"
       },
       "이천교육지원청": {
         "count": 11,
@@ -228,22 +227,22 @@
         "latestRegistered": "2026-09-10"
       },
       "평택교육지원청": {
-        "count": 756,
-        "latestRegistered": "2026-09-10"
+        "count": 758,
+        "latestRegistered": "2026-09-11"
       },
       "포천교육지원청": {
-        "count": 203,
-        "latestRegistered": "2026-09-10"
+        "count": 204,
+        "latestRegistered": "2026-09-11"
       },
       "화성오산교육지원청": {
-        "count": 48,
-        "latestRegistered": "2026-09-10"
+        "count": 49,
+        "latestRegistered": "2026-09-11"
       }
     },
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": false,
+        "enabled": true,
         "healthy": true,
         "datasetCount": 264,
         "rawCount": 264,
@@ -329,32 +328,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T09:11:41+09:00",
+      "baselineAt": "2026-09-10T10:08:43+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19113,
-          "baseline": 18840,
-          "changeRatio": 0.0145
+          "current": 19158,
+          "baseline": 18895,
+          "changeRatio": 0.0139
         },
         "official.officialIdCount": {
-          "current": 17640,
+          "current": 17665,
           "baseline": 17451,
-          "changeRatio": 0.0108
+          "changeRatio": 0.0123
         },
         "unified.publishedJobs": {
-          "current": 7139,
-          "baseline": 7409,
-          "changeRatio": -0.0364
+          "current": 7442,
+          "baseline": 7185,
+          "changeRatio": 0.0358
         },
         "unified.officialDisplayed": {
-          "current": 3000,
-          "baseline": 2992,
-          "changeRatio": 0.0027
+          "current": 3045,
+          "baseline": 3048,
+          "changeRatio": -0.001
         },
         "unified.privateDiscovered": {
-          "current": 4139,
-          "baseline": 4424,
-          "changeRatio": -0.0644
+          "current": 4403,
+          "baseline": 4137,
+          "changeRatio": 0.0643
         }
       },
       "privateSources": {
@@ -396,32 +395,32 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T09:12:09+09:00",
+      "baselineAt": "2026-09-04T10:06:57+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19113,
-          "baseline": 18915,
-          "changeRatio": 0.0105
+          "current": 19158,
+          "baseline": 18973,
+          "changeRatio": 0.0098
         },
         "official.officialIdCount": {
-          "current": 17640,
+          "current": 17665,
           "baseline": 17947,
-          "changeRatio": -0.0171
+          "changeRatio": -0.0157
         },
         "unified.publishedJobs": {
-          "current": 7139,
-          "baseline": 4517,
-          "changeRatio": 0.5805
+          "current": 7442,
+          "baseline": 4574,
+          "changeRatio": 0.627
         },
         "unified.officialDisplayed": {
-          "current": 3000,
-          "baseline": 3096,
-          "changeRatio": -0.031
+          "current": 3045,
+          "baseline": 3153,
+          "changeRatio": -0.0343
         },
         "unified.privateDiscovered": {
-          "current": 4139,
+          "current": 4403,
           "baseline": 1435,
-          "changeRatio": 1.8843
+          "changeRatio": 2.0683
         }
       },
       "privateSources": {
@@ -474,6 +473,17 @@
         "latestRegistered": "2026-07-29",
         "globalLatest": "2026-09-11",
         "ageDays": 44
+      }
+    },
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
+      "evidence": {
+        "source": "경기도교육청 통합 구인구직 + 동두천양주교육지원청",
+        "latestRegistered": "2026-09-04",
+        "globalLatest": "2026-09-11",
+        "ageDays": 7
       }
     },
     {
@@ -544,6 +554,6 @@
     }
   ],
   "criticalCount": 0,
-  "warningCount": 7,
+  "warningCount": 8,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
