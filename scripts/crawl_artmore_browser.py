@@ -47,6 +47,33 @@ async def visible_click(loc):
     return False
 
 
+async def restore_region_filter(page, region: str, code: str) -> str:
+    expected = f"2000-{code}"
+    if not await visible_click(page.get_by_role("button", name="지역 선택")):
+        raise RuntimeError(f"region opener missing while restoring {region}")
+    await page.wait_for_timeout(250)
+    radio = page.locator(f"#area_level_{code}")
+    if not await radio.count():
+        raise RuntimeError(f"region radio missing while restoring: {region}/{code}")
+    await radio.evaluate('e=>{e.click();e.dispatchEvent(new Event("change",{bubbles:true}))}')
+    await page.wait_for_timeout(400)
+    all_radio = page.locator("#all_3")
+    if not await all_radio.count():
+        raise RuntimeError(f"region all selector missing while restoring {region}")
+    await all_radio.evaluate('e=>{e.click();e.dispatchEvent(new Event("change",{bubbles:true}))}')
+    await page.wait_for_timeout(200)
+    vals = await page.locator('input[name="area_selector_val"]').evaluate_all("els=>els.map(e=>e.value)")
+    if expected not in vals:
+        raise RuntimeError(f"area selector not staged while restoring {region}: {expected}; got={vals}")
+    if not await visible_click(page.locator("#btn_area_ok")):
+        raise RuntimeError(f"region confirm button missing while restoring {region}")
+    await page.wait_for_timeout(350)
+    vals = await page.locator('input[name="array_area_type"]').evaluate_all("els=>els.map(e=>e.value)")
+    if expected not in vals:
+        raise RuntimeError(f"area selector not recommitted while restoring {region}: {expected}; got={vals}")
+    return expected
+
+
 async def enable_current_only(page):
     hidden = page.locator("#exclude_end_yn")
     cur = page.locator("#jobs_ving_chk")
@@ -100,7 +127,9 @@ async def establish_filter(page, region: str, code: str):
     await enable_current_only(page)
     vals = await page.locator('input[name="array_area_type"]').evaluate_all("els=>els.map(e=>e.value)")
     if expected not in vals:
-        raise RuntimeError("area filter lost after current-only submit")
+        await restore_region_filter(page, region, code)
+        if await page.locator("#exclude_end_yn").input_value() != "Y":
+            raise RuntimeError(f"current-only state lost while restoring {region} filter")
     return expected
 
 
@@ -251,7 +280,7 @@ async def main():
     all_jobs = list(by_id.values())
     discovered = set(by_id)
     prev = previous_ids()
-    missing_after = []  # candidate dataset is built from the complete discovered set in this run
+    missing_after = []
     healthy = len(surfaces) == 2 and not errors and bool(all_jobs) and not missing_after
     if prev and len(discovered) < max(10, int(len(prev) * 0.35)):
         healthy = False
