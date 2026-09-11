@@ -269,10 +269,12 @@ def reconciliation_evidence():
 def coverage_evidence():
     support = support_coverage_evidence()
     reconciliation = reconciliation_evidence()
-    current = bool(support.get("currentComplete") or reconciliation.get("currentComplete"))
-    proof = "support-coverage" if support.get("currentComplete") else (
-        "38-source-reconciliation" if reconciliation.get("currentComplete") else "none"
-    )
+    # A 38-source ID reconciliation is necessary but not sufficient to replace the
+    # dedicated 25+11 support-office coverage proof. Keep the top-level state false
+    # whenever the support-office evidence is stale/incomplete, even if reconciliation
+    # is fresh. This prevents a fresh reconciliation from masking stale coverage.
+    current = bool(support.get("currentComplete") and reconciliation.get("currentComplete"))
+    proof = "support-coverage+38-source-reconciliation" if current else "none"
     return {
         **support,
         "currentComplete": current,
@@ -342,7 +344,7 @@ def main():
         and not evidence.get("currentComplete")
     ):
         raise SystemExit(
-            "Refusing fast publication: no fresh completeness proof bound to the current dataset"
+            "Refusing fast publication: no fresh support-office coverage proof AND 38-source reconciliation proof bound to the current dataset"
         )
 
 
