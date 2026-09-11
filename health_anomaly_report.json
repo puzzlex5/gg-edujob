@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-11T12:07:27+09:00",
+  "generatedAt": "2026-09-11T13:07:55+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T12:07:27+09:00",
+    "generatedAt": "2026-09-11T13:07:55+09:00",
     "official": {
-      "datasetCount": 19213,
+      "datasetCount": 19239,
       "officialIdCount": 17726,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7498,
-      "officialDisplayed": 3100,
-      "privateDisplayed": 4398,
-      "privateDiscovered": 4404,
-      "officialPrivateAliases": 6,
+      "publishedJobs": 7267,
+      "officialDisplayed": 3127,
+      "privateDisplayed": 4140,
+      "privateDiscovered": 4140,
+      "officialPrivateAliases": 0,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,7 +27,6 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
-        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -35,7 +34,9 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": []
+      "degradedPrivateSources": [
+        "lessoninfo"
+      ]
     },
     "officialSources": {
       "가평교육지원청": {
@@ -55,7 +56,7 @@
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10255,
+        "count": 10259,
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -87,27 +88,27 @@
         "latestRegistered": "2026-09-10"
       },
       "경기도교육청 통합 구인구직 + 의정부교육지원청": {
-        "count": 1,
-        "latestRegistered": "2026-09-08"
+        "count": 2,
+        "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 평택교육지원청": {
-        "count": 3,
-        "latestRegistered": "2026-09-10"
+        "count": 4,
+        "latestRegistered": "2026-09-11"
       },
       "고양교육지원청": {
         "count": 217,
         "latestRegistered": "2026-09-11"
       },
       "광명교육지원청": {
-        "count": 292,
-        "latestRegistered": "2026-09-10"
+        "count": 293,
+        "latestRegistered": "2026-09-11"
       },
       "광주하남교육지원청": {
         "count": 329,
         "latestRegistered": "2026-09-10"
       },
       "구리남양주교육지원청": {
-        "count": 574,
+        "count": 578,
         "latestRegistered": "2026-09-11"
       },
       "군포의왕교육지원청": {
@@ -147,7 +148,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1575,
+        "count": 1585,
         "latestRegistered": "2026-09-11"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -207,8 +208,8 @@
         "latestRegistered": "2026-09-11"
       },
       "용인교육지원청": {
-        "count": 124,
-        "latestRegistered": "2026-09-07"
+        "count": 125,
+        "latestRegistered": "2026-09-11"
       },
       "의정부교육지원청": {
         "count": 346,
@@ -223,15 +224,15 @@
         "latestRegistered": "2026-09-07"
       },
       "파주교육지원청": {
-        "count": 461,
+        "count": 463,
         "latestRegistered": "2026-09-11"
       },
       "평택교육지원청": {
-        "count": 759,
+        "count": 760,
         "latestRegistered": "2026-09-11"
       },
       "포천교육지원청": {
-        "count": 204,
+        "count": 205,
         "latestRegistered": "2026-09-11"
       },
       "화성오산교육지원청": {
@@ -242,7 +243,7 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": true,
+        "enabled": false,
         "healthy": true,
         "datasetCount": 264,
         "rawCount": 264,
@@ -328,12 +329,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T12:08:53+09:00",
+      "baselineAt": "2026-09-10T13:08:50+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19213,
-          "baseline": 18933,
-          "changeRatio": 0.0148
+          "current": 19239,
+          "baseline": 18972,
+          "changeRatio": 0.0141
         },
         "official.officialIdCount": {
           "current": 17726,
@@ -341,19 +342,19 @@
           "changeRatio": 0.0112
         },
         "unified.publishedJobs": {
-          "current": 7498,
-          "baseline": 7503,
-          "changeRatio": -0.0007
+          "current": 7267,
+          "baseline": 7543,
+          "changeRatio": -0.0366
         },
         "unified.officialDisplayed": {
-          "current": 3100,
-          "baseline": 3086,
-          "changeRatio": 0.0045
+          "current": 3127,
+          "baseline": 3125,
+          "changeRatio": 0.0006
         },
         "unified.privateDiscovered": {
-          "current": 4404,
-          "baseline": 4424,
-          "changeRatio": -0.0045
+          "current": 4140,
+          "baseline": 4425,
+          "changeRatio": -0.0644
         }
       },
       "privateSources": {
@@ -369,8 +370,8 @@
         },
         "jobteacher": {
           "current": 4036,
-          "baseline": 4035,
-          "changeRatio": 0.0002
+          "baseline": 4036,
+          "changeRatio": 0.0
         },
         "artmore": {
           "current": 26,
@@ -395,12 +396,12 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T12:08:23+09:00",
+      "baselineAt": "2026-09-04T13:08:48+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19213,
+          "current": 19239,
           "baseline": 18987,
-          "changeRatio": 0.0119
+          "changeRatio": 0.0133
         },
         "official.officialIdCount": {
           "current": 17726,
@@ -408,19 +409,19 @@
           "changeRatio": -0.0149
         },
         "unified.publishedJobs": {
-          "current": 7498,
-          "baseline": 4589,
-          "changeRatio": 0.6339
+          "current": 7267,
+          "baseline": 4595,
+          "changeRatio": 0.5815
         },
         "unified.officialDisplayed": {
-          "current": 3100,
+          "current": 3127,
           "baseline": 3168,
-          "changeRatio": -0.0215
+          "changeRatio": -0.0129
         },
         "unified.privateDiscovered": {
-          "current": 4404,
-          "baseline": 1436,
-          "changeRatio": 2.0669
+          "current": 4140,
+          "baseline": 1442,
+          "changeRatio": 1.871
         }
       },
       "privateSources": {
