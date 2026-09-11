@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-11T13:07:55+09:00",
+  "generatedAt": "2026-09-11T14:07:05+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T13:07:55+09:00",
+    "generatedAt": "2026-09-11T14:07:05+09:00",
     "official": {
-      "datasetCount": 19239,
-      "officialIdCount": 17726,
+      "datasetCount": 19261,
+      "officialIdCount": 17756,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7267,
-      "officialDisplayed": 3127,
+      "publishedJobs": 7288,
+      "officialDisplayed": 3148,
       "privateDisplayed": 4140,
       "privateDiscovered": 4140,
       "officialPrivateAliases": 0,
@@ -56,7 +56,7 @@
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10259,
+        "count": 10274,
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -120,11 +120,11 @@
         "latestRegistered": "2026-09-11"
       },
       "남부교육지원청": {
-        "count": 52,
-        "latestRegistered": "2026-09-10"
+        "count": 53,
+        "latestRegistered": "2026-09-11"
       },
       "동두천양주교육지원청": {
-        "count": 489,
+        "count": 491,
         "latestRegistered": "2026-09-11"
       },
       "동부교육지원청": {
@@ -136,7 +136,7 @@
         "latestRegistered": "2026-09-10"
       },
       "부천교육지원청": {
-        "count": 693,
+        "count": 694,
         "latestRegistered": "2026-09-11"
       },
       "북부교육지원청": {
@@ -148,7 +148,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1585,
+        "count": 1588,
         "latestRegistered": "2026-09-11"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -287,7 +287,7 @@
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-10"
+        "latestRegistered": "2026-09-11"
       },
       "gonggonggangsa": {
         "name": "공공강사",
@@ -329,39 +329,39 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T13:08:50+09:00",
+      "baselineAt": "2026-09-10T14:08:22+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19239,
-          "baseline": 18972,
-          "changeRatio": 0.0141
+          "current": 19261,
+          "baseline": 18985,
+          "changeRatio": 0.0145
         },
         "official.officialIdCount": {
-          "current": 17726,
-          "baseline": 17530,
-          "changeRatio": 0.0112
+          "current": 17756,
+          "baseline": 17567,
+          "changeRatio": 0.0108
         },
         "unified.publishedJobs": {
-          "current": 7267,
-          "baseline": 7543,
-          "changeRatio": -0.0366
+          "current": 7288,
+          "baseline": 7276,
+          "changeRatio": 0.0016
         },
         "unified.officialDisplayed": {
-          "current": 3127,
-          "baseline": 3125,
-          "changeRatio": 0.0006
+          "current": 3148,
+          "baseline": 3138,
+          "changeRatio": 0.0032
         },
         "unified.privateDiscovered": {
           "current": 4140,
-          "baseline": 4425,
-          "changeRatio": -0.0644
+          "baseline": 4138,
+          "changeRatio": 0.0005
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 264,
-          "baseline": 287,
-          "changeRatio": -0.0801
+          "baseline": 295,
+          "changeRatio": -0.1051
         },
         "cleaneye": {
           "current": 20,
@@ -396,32 +396,32 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T13:08:48+09:00",
+      "baselineAt": "2026-09-04T14:07:53+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19239,
-          "baseline": 18987,
-          "changeRatio": 0.0133
+          "current": 19261,
+          "baseline": 19092,
+          "changeRatio": 0.0089
         },
         "official.officialIdCount": {
-          "current": 17726,
+          "current": 17756,
           "baseline": 17995,
-          "changeRatio": -0.0149
+          "changeRatio": -0.0133
         },
         "unified.publishedJobs": {
-          "current": 7267,
-          "baseline": 4595,
-          "changeRatio": 0.5815
+          "current": 7288,
+          "baseline": 8768,
+          "changeRatio": -0.1688
         },
         "unified.officialDisplayed": {
-          "current": 3127,
-          "baseline": 3168,
-          "changeRatio": -0.0129
+          "current": 3148,
+          "baseline": 3276,
+          "changeRatio": -0.0391
         },
         "unified.privateDiscovered": {
           "current": 4140,
-          "baseline": 1442,
-          "changeRatio": 1.871
+          "baseline": 5507,
+          "changeRatio": -0.2482
         }
       },
       "privateSources": {
