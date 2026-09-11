@@ -1,34 +1,27 @@
 {
-  "generatedAt": "2026-09-11T13:53:46+09:00",
+  "generatedAt": "2026-09-11T15:57:03+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": true,
-  "traversalComplete": true,
-  "candidateIdCount": 26,
-  "publishedIdCount": 26,
+  "healthy": false,
+  "traversalComplete": false,
+  "candidateIdCount": 9,
+  "publishedIdCount": 9,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
     {
       "region": "서울",
       "code": "2001",
-      "pagesVisited": 2,
-      "ids": 19,
+      "pagesVisited": 1,
+      "ids": 2,
       "pages": [
         {
           "page": 1,
-          "rowCount": 10,
-          "newIdCount": 10,
-          "firstId": "94957",
-          "lastId": "94922"
-        },
-        {
-          "page": 2,
-          "rowCount": 9,
-          "newIdCount": 9,
-          "firstId": "94921",
-          "lastId": "94909"
+          "rowCount": 2,
+          "newIdCount": 2,
+          "firstId": "94962",
+          "lastId": "94961"
         }
       ]
     },
@@ -48,7 +41,12 @@
       ]
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "region": "all",
+      "error": "suspicious drop: previous=26 current=9"
+    }
+  ],
   "regionsAllowed": [
     "서울",
     "경기"
