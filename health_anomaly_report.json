@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-11T21:09:48+09:00",
+  "generatedAt": "2026-09-11T22:07:06+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T21:09:48+09:00",
+    "generatedAt": "2026-09-11T22:07:06+09:00",
     "official": {
-      "datasetCount": 19424,
+      "datasetCount": 19425,
       "officialIdCount": 17876,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7729,
+      "publishedJobs": 7467,
       "officialDisplayed": 3309,
-      "privateDisplayed": 4420,
-      "privateDiscovered": 4426,
-      "officialPrivateAliases": 6,
+      "privateDisplayed": 4158,
+      "privateDiscovered": 4158,
+      "officialPrivateAliases": 0,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,7 +27,6 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
-        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -35,7 +34,9 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": []
+      "degradedPrivateSources": [
+        "lessoninfo"
+      ]
     },
     "officialSources": {
       "가평교육지원청": {
@@ -55,7 +56,7 @@
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10342,
+        "count": 10337,
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
@@ -71,12 +72,16 @@
         "latestRegistered": "2026-09-10"
       },
       "경기도교육청 통합 구인구직 + 구리남양주교육지원청": {
-        "count": 4,
-        "latestRegistered": "2026-09-09"
+        "count": 6,
+        "latestRegistered": "2026-09-11"
+      },
+      "경기도교육청 통합 구인구직 + 김포교육지원청": {
+        "count": 1,
+        "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 동두천양주교육지원청": {
-        "count": 8,
-        "latestRegistered": "2026-09-04"
+        "count": 10,
+        "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직 + 성남교육지원청": {
         "count": 6,
@@ -147,7 +152,7 @@
         "latestRegistered": "2026-09-03"
       },
       "서울교육일자리포털": {
-        "count": 1633,
+        "count": 1634,
         "latestRegistered": "2026-09-11"
       },
       "서울교육일자리포털 + 강남서초교육지원청": {
@@ -242,8 +247,8 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": true,
-        "healthy": true,
+        "enabled": false,
+        "healthy": false,
         "datasetCount": 268,
         "rawCount": 268,
         "currentCount": 268,
@@ -328,12 +333,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T21:09:54+09:00",
+      "baselineAt": "2026-09-10T22:07:52+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19424,
+          "current": 19425,
           "baseline": 19114,
-          "changeRatio": 0.0162
+          "changeRatio": 0.0163
         },
         "official.officialIdCount": {
           "current": 17876,
@@ -341,9 +346,9 @@
           "changeRatio": 0.0129
         },
         "unified.publishedJobs": {
-          "current": 7729,
-          "baseline": 7419,
-          "changeRatio": 0.0418
+          "current": 7467,
+          "baseline": 7413,
+          "changeRatio": 0.0073
         },
         "unified.officialDisplayed": {
           "current": 3309,
@@ -351,9 +356,9 @@
           "changeRatio": 0.0113
         },
         "unified.privateDiscovered": {
-          "current": 4426,
-          "baseline": 4147,
-          "changeRatio": 0.0673
+          "current": 4158,
+          "baseline": 4141,
+          "changeRatio": 0.0041
         }
       },
       "privateSources": {
@@ -374,8 +379,8 @@
         },
         "artmore": {
           "current": 36,
-          "baseline": 26,
-          "changeRatio": 0.3846
+          "baseline": 20,
+          "changeRatio": 0.8
         },
         "gonggonggangsa": {
           "current": 61,
@@ -395,12 +400,12 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T21:11:03+09:00",
+      "baselineAt": "2026-09-04T22:07:57+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19424,
-          "baseline": 19233,
-          "changeRatio": 0.0099
+          "current": 19425,
+          "baseline": 19236,
+          "changeRatio": 0.0098
         },
         "official.officialIdCount": {
           "current": 17876,
@@ -408,19 +413,19 @@
           "changeRatio": -0.0123
         },
         "unified.publishedJobs": {
-          "current": 7729,
-          "baseline": 4908,
-          "changeRatio": 0.5748
+          "current": 7467,
+          "baseline": 4938,
+          "changeRatio": 0.5122
         },
         "unified.officialDisplayed": {
           "current": 3309,
-          "baseline": 3418,
-          "changeRatio": -0.0319
+          "baseline": 3420,
+          "changeRatio": -0.0325
         },
         "unified.privateDiscovered": {
-          "current": 4426,
-          "baseline": 1505,
-          "changeRatio": 1.9409
+          "current": 4158,
+          "baseline": 1533,
+          "changeRatio": 1.7123
         }
       },
       "privateSources": {
@@ -473,17 +478,6 @@
         "latestRegistered": "2026-07-29",
         "globalLatest": "2026-09-11",
         "ageDays": 44
-      }
-    },
-    {
-      "severity": "warning",
-      "code": "official-source-freshness-stall",
-      "message": "다른 출처는 갱신되는데 특정 공식 출처의 최신 등록일이 7일 이상 정체되어 있습니다.",
-      "evidence": {
-        "source": "경기도교육청 통합 구인구직 + 동두천양주교육지원청",
-        "latestRegistered": "2026-09-04",
-        "globalLatest": "2026-09-11",
-        "ageDays": 7
       }
     },
     {
@@ -554,6 +548,6 @@
     }
   ],
   "criticalCount": 0,
-  "warningCount": 8,
+  "warningCount": 7,
   "policy": "hard integrity failures are critical; every registry-enabled private source is checked independently; isolated degraded private sources are fail-closed by unified validation and are not independently critical; trend drops/stalls are warnings until independently verified"
 }
