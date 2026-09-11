@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-11T17:08:14+09:00",
+  "generatedAt": "2026-09-11T18:07:38+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-11T17:08:14+09:00",
+    "generatedAt": "2026-09-11T18:07:38+09:00",
     "official": {
       "datasetCount": 19388,
       "officialIdCount": 17850,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7375,
-      "officialDisplayed": 3229,
-      "privateDisplayed": 4146,
-      "privateDiscovered": 4146,
+      "publishedJobs": 7429,
+      "officialDisplayed": 3273,
+      "privateDisplayed": 4156,
+      "privateDiscovered": 4156,
       "officialPrivateAliases": 0,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -281,9 +281,9 @@
         "name": "아트모아",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 26,
-        "rawCount": 26,
-        "currentCount": 26,
+        "datasetCount": 36,
+        "rawCount": 36,
+        "currentCount": 36,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -329,32 +329,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-10T17:08:13+09:00",
+      "baselineAt": "2026-09-10T18:07:37+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19388,
-          "baseline": 19085,
-          "changeRatio": 0.0159
+          "baseline": 19091,
+          "changeRatio": 0.0156
         },
         "official.officialIdCount": {
           "current": 17850,
-          "baseline": 17626,
-          "changeRatio": 0.0127
+          "baseline": 17632,
+          "changeRatio": 0.0124
         },
         "unified.publishedJobs": {
-          "current": 7375,
-          "baseline": 7665,
-          "changeRatio": -0.0378
+          "current": 7429,
+          "baseline": 7393,
+          "changeRatio": 0.0049
         },
         "unified.officialDisplayed": {
-          "current": 3229,
-          "baseline": 3242,
-          "changeRatio": -0.004
+          "current": 3273,
+          "baseline": 3248,
+          "changeRatio": 0.0077
         },
         "unified.privateDiscovered": {
-          "current": 4146,
-          "baseline": 4430,
-          "changeRatio": -0.0641
+          "current": 4156,
+          "baseline": 4145,
+          "changeRatio": 0.0027
         }
       },
       "privateSources": {
@@ -374,9 +374,9 @@
           "changeRatio": 0.0007
         },
         "artmore": {
-          "current": 26,
-          "baseline": 16,
-          "changeRatio": 0.625
+          "current": 36,
+          "baseline": 26,
+          "changeRatio": 0.3846
         },
         "gonggonggangsa": {
           "current": 59,
@@ -396,7 +396,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-04T17:09:07+09:00",
+      "baselineAt": "2026-09-04T18:08:20+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19388,
@@ -409,19 +409,19 @@
           "changeRatio": -0.0138
         },
         "unified.publishedJobs": {
-          "current": 7375,
+          "current": 7429,
           "baseline": 4808,
-          "changeRatio": 0.5339
+          "changeRatio": 0.5451
         },
         "unified.officialDisplayed": {
-          "current": 3229,
+          "current": 3273,
           "baseline": 3353,
-          "changeRatio": -0.037
+          "changeRatio": -0.0239
         },
         "unified.privateDiscovered": {
-          "current": 4146,
+          "current": 4156,
           "baseline": 1470,
-          "changeRatio": 1.8204
+          "changeRatio": 1.8272
         }
       },
       "privateSources": {
@@ -441,7 +441,7 @@
           "changeRatio": null
         },
         "artmore": {
-          "current": 26,
+          "current": 36,
           "baseline": 0,
           "changeRatio": null
         },
