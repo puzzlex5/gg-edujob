@@ -1,31 +1,31 @@
 {
-  "generatedAt": "2026-09-12T06:35:36+09:00",
+  "generatedAt": "2026-09-12T06:55:20+09:00",
   "policy": "unified-search-v3-multi-private-strong-evidence-only",
   "canonicalOfficialJobs": 19415,
   "canonicalFoundationOfficialJobs": 4,
-  "canonicalPrivateJobs": 4412,
+  "canonicalPrivateJobs": 4157,
   "selectedCanonicalOfficialJobs": 2982,
   "selectedFoundationOfficialJobs": 4,
   "selectedOfficialJobs": 2986,
-  "selectedPrivateJobs": 4400,
-  "publishedJobs": 7382,
+  "selectedPrivateJobs": 4145,
+  "publishedJobs": 7131,
   "perFeed": {
     "official": 2986,
-    "private": 4396
+    "private": 4145
   },
   "privateSources": {
     "lessoninfo": {
       "name": "레슨인포",
       "configuredPublicationEnabled": true,
-      "publicationEnabled": true,
-      "degraded": false,
-      "ok": true,
+      "publicationEnabled": false,
+      "degraded": true,
+      "ok": false,
       "candidateCount": 255,
-      "count": 255,
-      "lastVerifiedAt": "2026-09-12T05:53:31+09:00",
+      "count": 0,
+      "lastVerifiedAt": "2026-09-12T06:49:02+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
-      "displayedAsPrivate": 251
+      "displayedAsPrivate": 0
     },
     "cleaneye": {
       "name": "클린아이 잡플러스",
@@ -100,17 +100,19 @@
       "ok": true,
       "candidateCount": 1,
       "count": 1,
-      "lastVerifiedAt": "2026-09-12T05:45:45+09:00",
+      "lastVerifiedAt": "2026-09-12T06:42:58+09:00",
       "missingAfterCount": 0,
       "detailErrorCount": 0,
       "displayedAsPrivate": 1
     }
   },
   "protectedOfficialIds": 17860,
-  "explicitOfficialAliasGroupsMerged": 4,
+  "explicitOfficialAliasGroupsMerged": 0,
   "exactUrlAliasGroupsMerged": 0,
   "ambiguousExplicitOfficialLinks": 0,
   "semanticDuplicatePolicy": "same-source/exact-official aliases only; preserve cross-private identities",
-  "degradedPrivateSources": [],
-  "allPublicationEnabledSourcesHealthy": true
+  "degradedPrivateSources": [
+    "lessoninfo"
+  ],
+  "allPublicationEnabledSourcesHealthy": false
 }
