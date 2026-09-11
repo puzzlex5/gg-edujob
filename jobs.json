@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-11 22:13 KST",
+    "checkedAt": "2026-09-11 22:23 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -995,8 +995,8 @@
       }
     ],
     "supportExactLinks": {
-      "total": 7358,
-      "resolved": 7358,
+      "total": 7359,
+      "resolved": 7359,
       "unresolved": 0,
       "examples": []
     },
@@ -1007,8 +1007,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19425,
-    "currentTotal": 19426
+    "previousTotal": 19426,
+    "currentTotal": 19427
   },
   "jobs": [
     {
@@ -5861,6 +5861,43 @@
       "sourceIdentity": "seoul-central:110227",
       "recoveryCarryForward": true,
       "recoveryReason": "previously published posting still within application period"
+    },
+    {
+      "id": "sen-complete-gdspedu.sen.go.kr-8318",
+      "province": "서울",
+      "school": "서울송파위례유치원",
+      "title": "서울송파위례유치원",
+      "subject": "",
+      "region": "",
+      "regions": [
+        "강동구",
+        "송파구"
+      ],
+      "type": "기타",
+      "schoolLevel": "기타",
+      "applyStart": "2026/09/11",
+      "applyEnd": "2026/09/16",
+      "workStart": "2027/02/28",
+      "workEnd": "",
+      "registered": "2026/09/11",
+      "headcount": "",
+      "source": "강동송파교육지원청",
+      "checkedSources": [
+        "강동송파교육지원청"
+      ],
+      "sourceType": "교육지원청 개별 게시판",
+      "url": "https://gdspedu.sen.go.kr/FUS/JO/JOV11.do?job_seq=8318",
+      "boardUrl": "https://gdspedu.sen.go.kr/FUS/JO/JOL11.do",
+      "openMethod": "POST",
+      "openUrl": "https://gdspedu.sen.go.kr/FUS/JO/JOV11.do",
+      "openParams": {
+        "job_seq": "8318"
+      },
+      "recoveredBy": "targeted-official-id-restore",
+      "sourceIdentity": "seoul:gdspedu.sen.go.kr:8318",
+      "reconciliationCarryForward": true,
+      "detailLinkResolved": true,
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-59801",
@@ -538297,11 +538334,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-11 22:12 KST",
+    "checkedAt": "2026-09-11 22:22 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-11 22:12 KST",
+    "checkedAt": "2026-09-11 22:22 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -538318,21 +538355,21 @@
   "supportLinkResolution": {
     "gyeonggiExact": 6851,
     "gyeonggiTotal": 6851,
-    "seoulExact": 507,
-    "seoulTotal": 507
+    "seoulExact": 508,
+    "seoulTotal": 508
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-11 22:11 KST",
+    "checkedAt": "2026-09-11 22:22 KST",
     "parserVersion": 2,
-    "recentSupportJobs": 6031,
-    "detailPagesParsed": 2374,
-    "fieldsFilledThisRun": 0,
+    "recentSupportJobs": 6032,
+    "detailPagesParsed": 2375,
+    "fieldsFilledThisRun": 1,
     "missingApplicationPeriod": 1066,
     "missingWorkPeriod": 2011,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-11 22:11 KST",
+      "checkedAt": "2026-09-11 22:22 KST",
       "candidates": 252,
       "detailPagesConfirmed": 247,
       "cacheEntriesImproved": 0,
@@ -538342,5 +538379,13 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-11 22:22:00 KST",
+    "ledgerScanId": "20260911T125102Z-34600961278-1",
+    "protectedOfficialIds": 17879,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0
   }
 }
