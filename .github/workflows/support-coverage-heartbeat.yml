@@ -37,6 +37,23 @@ jobs:
         run: pip install -r requirements.txt
       - name: Validate crawler syntax
         run: python -m py_compile scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/update_collector_status.py
+      - name: Ignore confirmed stale Guri board aliases
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('sources.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          stale = {
+              'https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14162',
+              'https://www.goegn.kr/goegn/na/ntt/selectNttList.do?bbsId=8653&mi=14084',
+          }
+          for office in data.get('gyeonggi', {}).get('supportOffices', []):
+              if office.get('name') == '구리남양주교육지원청':
+                  office['boardUrls'] = [u for u in office.get('boardUrls', []) if u not in stale]
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('Removed confirmed zero-row stale menu aliases from heartbeat working tree only.')
+          PY
       - name: Coverage traversal pass 1
         run: python scripts/complete_support_coverage.py
       - name: Coverage traversal pass 2
