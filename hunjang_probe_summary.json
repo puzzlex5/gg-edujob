@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-12T12:26:11+09:00",
+  "generatedAt": "2026-09-12T13:26:11+09:00",
   "source": "훈장마을",
   "publiclyReachable": true,
   "humanVerificationDetected": false,
   "stableIdCandidate": "hunjang:<rcrtNo>",
-  "numericRcrtNoCount": 145,
-  "encRcrtNoCount": 170,
-  "metroRowCount": 138,
-  "observedRecruitApiCount": 58,
-  "observedPaidMainApiCount": 45,
+  "numericRcrtNoCount": 146,
+  "encRcrtNoCount": 175,
+  "metroRowCount": 139,
+  "observedRecruitApiCount": 46,
+  "observedPaidMainApiCount": 35,
   "observedGeneralListApiCount": 0,
   "observedGeneralListApiUrls": [],
   "observedGeneralListApiUrlsRaw": [
@@ -27,7 +27,10 @@
   "navigationAttemptCount": 13,
   "readyForPaginationProbe": false,
   "nextGate": "discover the public general recruitment-list API from the rendered 채용정보 view; recommendation/main/common APIs do not qualify. Then prove page-wise ID changes and an exhaustion boundary before writing any canonical dataset",
-  "errors": [],
+  "errors": [
+    "https://www.hunjang.com/recruit/recruitList: Error: Page.goto: net::ERR_ABORTED at https://www.hunjang.com/recruit/recruitList\nCall log:\n  - navigating to \"https://www.hunjang.com/recruit/recruitList\", waiting until \"commit\"\n",
+    "spa navigation home: navigation commit timeout recovered at https://www.hunjang.com/: Page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.hunjang.com/\", waiting until \"commit\"\n"
+  ],
   "safety": {
     "tlsVerificationDisabled": false,
     "authenticationBypassed": false,
