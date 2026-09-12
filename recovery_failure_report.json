@@ -1,0 +1,345 @@
+{
+  "generatedAt": "2026-09-12 17:57:52 KST",
+  "policy": "failed recovery candidate evidence is isolated; canonical jobs/evidence remain last-known-good",
+  "sourceReconciliationSummary": {
+    "generatedAt": "2026-09-12 15:53:31 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17861,
+    "datasetIdCountBefore": 19373,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38,
+    "scanId": "20260912T064842Z-34679059160-1"
+  },
+  "sourceIdLedger": {
+    "generatedAt": "2026-09-12 15:53:31 KST",
+    "knownIdCount": 22646
+  },
+  "centralPagination": {
+    "generatedAt": "2026-09-12 16:13:46 KST",
+    "complete": true,
+    "sources": [
+      {
+        "name": "경기도교육청 통합 구인구직",
+        "province": "경기",
+        "parsedStableIdCount": 577,
+        "stableIdCount": 576,
+        "excludedNonRecruitmentCount": 1,
+        "complete": true,
+        "categories": [
+          {
+            "code": "A",
+            "name": "기간제/사립교원",
+            "pagesScanned": 5,
+            "rawRows": 177,
+            "parsedStableIdCount": 176,
+            "stableIdCount": 176,
+            "excludedNonRecruitmentCount": 0,
+            "terminalEvidence": "explicit-empty-state",
+            "accessError": false,
+            "parseError": false,
+            "partialParseRows": 0,
+            "parseErrorSample": "",
+            "paginationRepeated": false,
+            "capHit": false,
+            "complete": true
+          },
+          {
+            "code": "B",
+            "name": "초중등시간강사",
+            "pagesScanned": 6,
+            "rawRows": 251,
+            "parsedStableIdCount": 250,
+            "stableIdCount": 250,
+            "excludedNonRecruitmentCount": 0,
+            "terminalEvidence": "explicit-empty-state",
+            "accessError": false,
+            "parseError": false,
+            "partialParseRows": 0,
+            "parseErrorSample": "",
+            "paginationRepeated": false,
+            "capHit": false,
+            "complete": true
+          },
+          {
+            "code": "C",
+            "name": "교육공무직원",
+            "pagesScanned": 3,
+            "rawRows": 64,
+            "parsedStableIdCount": 63,
+            "stableIdCount": 63,
+            "excludedNonRecruitmentCount": 0,
+            "terminalEvidence": "explicit-empty-state",
+            "accessError": false,
+            "parseError": false,
+            "partialParseRows": 0,
+            "parseErrorSample": "",
+            "paginationRepeated": false,
+            "capHit": false,
+            "complete": true
+          },
+          {
+            "code": "D",
+            "name": "사립학교 교원정규채용",
+            "pagesScanned": 2,
+            "rawRows": 23,
+            "parsedStableIdCount": 22,
+            "stableIdCount": 21,
+            "excludedNonRecruitmentCount": 1,
+            "terminalEvidence": "explicit-empty-state",
+            "accessError": false,
+            "parseError": false,
+            "partialParseRows": 0,
+            "parseErrorSample": "",
+            "paginationRepeated": false,
+            "capHit": false,
+            "complete": true
+          },
+          {
+            "code": "E",
+            "name": "사립학교 사무직정규채용",
+            "pagesScanned": 2,
+            "rawRows": 4,
+            "parsedStableIdCount": 3,
+            "stableIdCount": 3,
+            "excludedNonRecruitmentCount": 0,
+            "terminalEvidence": "explicit-empty-state",
+            "accessError": false,
+            "parseError": false,
+            "partialParseRows": 0,
+            "parseErrorSample": "",
+            "paginationRepeated": false,
+            "capHit": false,
+            "complete": true
+          },
+          {
+            "code": "F",
+            "name": "자원봉사자",
+            "pagesScanned": 3,
+            "rawRows": 64,
+            "parsedStableIdCount": 63,
+            "stableIdCount": 63,
+            "excludedNonRecruitmentCount": 0,
+            "terminalEvidence": "explicit-empty-state",
+            "accessError": false,
+            "parseError": false,
+            "partialParseRows": 0,
+            "parseErrorSample": "",
+            "paginationRepeated": false,
+            "capHit": false,
+            "complete": true
+          }
+        ]
+      },
+      {
+        "name": "서울교육일자리포털",
+        "province": "서울",
+        "parsedStableIdCount": 380,
+        "stableIdCount": 380,
+        "excludedNonRecruitmentCount": 0,
+        "pagesScanned": 9,
+        "rawRows": 380,
+        "terminalEvidence": "empty-page",
+        "accessError": false,
+        "parseError": false,
+        "partialParseCards": 0,
+        "parseErrorSample": "",
+        "paginationRepeated": false,
+        "capHit": false,
+        "complete": true
+      }
+    ]
+  },
+  "supportCoverageSummary": null,
+  "supportCompleteness": {
+    "lookbackDays": 90,
+    "newlyRecoveredJobs": 0,
+    "gyeonggiComplete": 25,
+    "seoulComplete": 11,
+    "gyeonggiTotal": 25,
+    "seoulTotal": 11,
+    "warnings": []
+  },
+  "supportLinkResolution": {
+    "gyeonggi": {
+      "supportJobs": 6847,
+      "exactLinks": 6847,
+      "unresolved": 0,
+      "fallbackTargetTitles": 0,
+      "offices": [
+        {
+          "name": "가평교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "고양교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "광명교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "광주하남교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "구리남양주교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "군포의왕교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "김포교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "동두천양주교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "부천교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "성남교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "수원교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "시흥교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "안산교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "안성교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "안양과천교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "양평교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "여주교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "연천교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "용인교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "의정부교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "이천교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "파주교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "평택교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "포천교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        },
+        {
+          "name": "화성오산교육지원청",
+          "targetTitles": 0,
+          "resolvedTargets": 0,
+          "boards": []
+        }
+      ]
+    },
+    "seoul": {
+      "supportJobs": 507,
+      "exactLinks": 507,
+      "unresolved": 0
+    }
+  },
+  "missingRecoverySummary": {
+    "freshCount": 16616,
+    "previousCount": 19415,
+    "mergedCount": 19393,
+    "carriedForward": 2777,
+    "officialIdProtected": 17860,
+    "officialIdCarryForward": 1244,
+    "enrichedFromPrevious": 6987,
+    "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
+    "generatedAt": "2026-09-12 04:18 KST"
+  },
+  "dateAnomalySummary": null
+}
