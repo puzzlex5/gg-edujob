@@ -103,7 +103,6 @@ def request(session: requests.Session, url: str) -> requests.Response:
 def candidate_period_segments(text: str) -> list[str]:
     segments = []
     for m in PERIOD_HINT_RE.finditer(text):
-        # Detail pages can place the actual date several hundred characters after the label.
         segments.append(text[m.start():m.start() + 1200])
     return segments or [text[:1600]]
 
@@ -112,6 +111,19 @@ def extract_apply_end(text: str, registered: date | None) -> date | None:
     candidates: list[date] = []
     base_year = registered.year if registered else datetime.now(KST).year
     for segment in candidate_period_segments(normalize_space(text)):
+        # Prefer the explicit first application-period range so later contract/appointment dates
+        # cannot overwrite the true application deadline.
+        m = re.search(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2}).{0,40}?[~～-].{0,20}?(?:(20\d{2})\s*[./-]\s*)?(\d{1,2})\s*[./-]\s*(\d{1,2})", segment)
+        if m:
+            try:
+                year = int(m.group(4) or m.group(1))
+                end = date(year, int(m.group(5)), int(m.group(6)))
+                lower = (registered or datetime.now(KST).date()) - timedelta(days=2)
+                upper = (registered or datetime.now(KST).date()) + timedelta(days=150)
+                if lower <= end <= upper:
+                    return end
+            except ValueError:
+                pass
         for rx in (DATE_RE, KOREAN_DATE_RE):
             for m in rx.finditer(segment):
                 try:
@@ -127,12 +139,6 @@ def extract_apply_end(text: str, registered: date | None) -> date | None:
         if m:
             try:
                 candidates.append(date(base_year, int(m.group(1)), int(m.group(3))))
-            except ValueError:
-                pass
-        m = re.search(r"(20\d{2})\s*[.]\s*(\d{1,2})\s*[.]\s*(\d{1,2}).{0,40}?[~～-].{0,20}?(\d{1,2})\s*[.]\s*(\d{1,2})", segment)
-        if m:
-            try:
-                candidates.append(date(int(m.group(1)), int(m.group(4)), int(m.group(5))))
             except ValueError:
                 pass
 
