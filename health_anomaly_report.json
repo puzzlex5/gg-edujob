@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T00:07:13+09:00",
+  "generatedAt": "2026-09-13T01:07:40+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-13T00:07:13+09:00",
+    "generatedAt": "2026-09-13T01:07:40+09:00",
     "official": {
       "datasetCount": 19421,
       "officialIdCount": 17861,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7377,
+      "publishedJobs": 7356,
       "officialDisplayed": 2971,
-      "privateDisplayed": 4406,
-      "privateDiscovered": 4409,
+      "privateDisplayed": 4385,
+      "privateDiscovered": 4388,
       "officialPrivateAliases": 3,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -248,9 +248,9 @@
         "name": "레슨인포",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 267,
-        "rawCount": 267,
-        "currentCount": 267,
+        "datasetCount": 247,
+        "rawCount": 247,
+        "currentCount": 247,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -272,13 +272,13 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4038,
-        "rawCount": 4038,
-        "currentCount": 4038,
+        "datasetCount": 4037,
+        "rawCount": 4037,
+        "currentCount": 4037,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-12"
+        "latestRegistered": "2026-09-13"
       },
       "artmore": {
         "name": "아트모아",
@@ -296,8 +296,8 @@
         "name": "공공강사",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 48,
-        "rawCount": 48,
+        "datasetCount": 47,
+        "rawCount": 47,
         "currentCount": 47,
         "missingAfter": 0,
         "detailErrors": 0,
@@ -332,7 +332,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T00:07:10+09:00",
+      "baselineAt": "2026-09-12T01:08:00+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
@@ -345,26 +345,26 @@
           "changeRatio": -0.001
         },
         "unified.publishedJobs": {
-          "current": 7377,
-          "baseline": 7469,
-          "changeRatio": -0.0123
+          "current": 7356,
+          "baseline": 7132,
+          "changeRatio": 0.0314
         },
         "unified.officialDisplayed": {
           "current": 2971,
-          "baseline": 3311,
-          "changeRatio": -0.1027
+          "baseline": 2987,
+          "changeRatio": -0.0054
         },
         "unified.privateDiscovered": {
-          "current": 4409,
-          "baseline": 4158,
-          "changeRatio": 0.0604
+          "current": 4388,
+          "baseline": 4145,
+          "changeRatio": 0.0586
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 267,
-          "baseline": 268,
-          "changeRatio": -0.0037
+          "current": 247,
+          "baseline": 255,
+          "changeRatio": -0.0314
         },
         "cleaneye": {
           "current": 20,
@@ -372,9 +372,9 @@
           "changeRatio": 0.0
         },
         "jobteacher": {
-          "current": 4038,
+          "current": 4037,
           "baseline": 4039,
-          "changeRatio": -0.0002
+          "changeRatio": -0.0005
         },
         "artmore": {
           "current": 34,
@@ -383,8 +383,8 @@
         },
         "gonggonggangsa": {
           "current": 47,
-          "baseline": 61,
-          "changeRatio": -0.2295
+          "baseline": 48,
+          "changeRatio": -0.0208
         },
         "seekle": {
           "current": 1,
@@ -399,12 +399,12 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T00:07:35+09:00",
+      "baselineAt": "2026-09-06T01:08:15+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
-          "baseline": 19238,
-          "changeRatio": 0.0095
+          "baseline": 19237,
+          "changeRatio": 0.0096
         },
         "official.officialIdCount": {
           "current": 17861,
@@ -412,26 +412,26 @@
           "changeRatio": -0.0178
         },
         "unified.publishedJobs": {
-          "current": 7377,
-          "baseline": 7597,
-          "changeRatio": -0.029
+          "current": 7356,
+          "baseline": 7571,
+          "changeRatio": -0.0284
         },
         "unified.officialDisplayed": {
           "current": 2971,
-          "baseline": 3134,
-          "changeRatio": -0.052
+          "baseline": 3116,
+          "changeRatio": -0.0465
         },
         "unified.privateDiscovered": {
-          "current": 4409,
-          "baseline": 4475,
-          "changeRatio": -0.0147
+          "current": 4388,
+          "baseline": 4467,
+          "changeRatio": -0.0177
         }
       },
       "privateSources": {
         "lessoninfo": {
-          "current": 267,
-          "baseline": 361,
-          "changeRatio": -0.2604
+          "current": 247,
+          "baseline": 354,
+          "changeRatio": -0.3023
         },
         "cleaneye": {
           "current": 20,
@@ -439,8 +439,8 @@
           "changeRatio": null
         },
         "jobteacher": {
-          "current": 4038,
-          "baseline": 4037,
+          "current": 4037,
+          "baseline": 4036,
           "changeRatio": 0.0002
         },
         "artmore": {
