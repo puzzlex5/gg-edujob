@@ -1,42 +1,21 @@
 {
-  "generatedAt": "2026-09-12T13:25:35+09:00",
-  "policy": "official-foundation-primary-fail-closed-v6-sfac-saramin-careerlink",
+  "generatedAt": "2026-09-12T13:55:37+09:00",
+  "policy": "official-foundation-primary-fail-closed-v2",
   "healthy": true,
   "registryInstitutions": 49,
   "officialBoardsConfigured": 2,
-  "supportedBoardsChecked": 2,
-  "unsupportedConfiguredBoards": [],
-  "jobs": 3,
-  "errors": [],
-  "boards": [
+  "supportedBoardsChecked": 1,
+  "unsupportedConfiguredBoards": [
     {
       "foundationRegistryId": "seoul:metropolitan",
       "foundationName": "서울문화재단",
       "boardUrl": "https://sfac.saramin.co.kr/service/sfac/3908/applicant/apply/recruit_default.asp",
-      "healthy": true,
-      "adapter": "sfac-saramin-current-microsite",
-      "surfacesChecked": [
-        "https://sfac.saramin.co.kr/service/sfac/3908/applicant/apply/recruit_default.asp",
-        "https://sfac.careerlink.kr/"
-      ],
-      "discoveredDetailLinks": 1,
-      "inspectedDetailLinks": 1,
-      "publishedCurrentJobs": 0,
-      "active": false,
-      "registered": "2026-11-23",
-      "applyEnd": "2026-08-20",
-      "secondarySurfaces": [
-        {
-          "url": "https://sfac.careerlink.kr/",
-          "healthy": true,
-          "currentJobs": 0,
-          "explicitEmpty": true,
-          "evidence": "200-html-no-recruitment-detail-links",
-          "role": "secondary-official-contract-surface"
-        }
-      ],
-      "adapterStatus": "implemented"
-    },
+      "reason": "adapter-not-yet-implemented"
+    }
+  ],
+  "jobs": 3,
+  "errors": [],
+  "boards": [
     {
       "foundationRegistryId": "gyeonggi:gwangju",
       "foundationName": "광주시문화재단",
