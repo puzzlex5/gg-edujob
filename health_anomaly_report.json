@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T07:07:39+09:00",
+  "generatedAt": "2026-09-13T08:06:27+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-13T07:07:39+09:00",
+    "generatedAt": "2026-09-13T08:06:27+09:00",
     "official": {
       "datasetCount": 19421,
       "officialIdCount": 17861,
@@ -260,8 +260,8 @@
         "name": "클린아이 잡플러스",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 24,
-        "rawCount": 24,
+        "datasetCount": 23,
+        "rawCount": 23,
         "currentCount": 20,
         "missingAfter": 0,
         "detailErrors": 0,
@@ -332,7 +332,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T07:07:21+09:00",
+      "baselineAt": "2026-09-12T08:06:30+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
@@ -341,13 +341,13 @@
         },
         "official.officialIdCount": {
           "current": 17861,
-          "baseline": 17860,
+          "baseline": 17859,
           "changeRatio": 0.0001
         },
         "unified.publishedJobs": {
           "current": 7356,
-          "baseline": 7131,
-          "changeRatio": 0.0316
+          "baseline": 7382,
+          "changeRatio": -0.0035
         },
         "unified.officialDisplayed": {
           "current": 2971,
@@ -356,8 +356,8 @@
         },
         "unified.privateDiscovered": {
           "current": 4388,
-          "baseline": 4145,
-          "changeRatio": 0.0586
+          "baseline": 4400,
+          "changeRatio": -0.0027
         }
       },
       "privateSources": {
@@ -399,7 +399,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T07:07:46+09:00",
+      "baselineAt": "2026-09-06T08:07:26+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
