@@ -151,8 +151,9 @@ jobs:
           python scripts/update_collector_status.py --workflow fast --stage official-reconciliation --state running
           echo "RECONCILE_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
           SCAN_ID="$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          echo "RECONCILE_SCAN_ID=${SCAN_ID}" >> "$GITHUB_ENV"
-          echo "Fast publication reconciliation scan: ${SCAN_ID}"
+          export RECONCILE_SCAN_ID="${SCAN_ID}"
+          echo "RECONCILE_SCAN_ID=${RECONCILE_SCAN_ID}" >> "$GITHUB_ENV"
+          echo "Fast publication reconciliation scan: ${RECONCILE_SCAN_ID}"
           python scripts/verify_central_pagination.py
           python scripts/stamp_reconciliation_scan.py --central
           python scripts/reconcile_source_ids.py
