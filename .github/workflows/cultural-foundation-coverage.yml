@@ -25,7 +25,7 @@ permissions:
 
 concurrency:
   group: cultural-foundation-coverage
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   audit:
@@ -60,13 +60,18 @@ jobs:
         run: python scripts/discover_foundation_official_sources.py
       - name: Commit audit datasets and reports
         run: |
+          set -e
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add official_foundation_jobs.json official_foundation_report.json cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json foundation_official_source_candidates.json foundation_official_source_discovery_report.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'Audit cultural foundation source surfaces'
-            for i in 1 2 3; do
-              git pull --rebase origin main && git push origin HEAD:main && break
-              sleep $((i*5))
-            done
-          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Audit cultural foundation source surfaces'
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --mixed origin/main
+            git add official_foundation_jobs.json official_foundation_report.json cultural_foundation_registry_report.json cultural_source_probe_report.json cleaneye_api_probe_report.json cleaneye_foundation_jobs.json cleaneye_foundation_report.json ancf_foundation_jobs.json ancf_foundation_report.json artmore_foundation_crosscheck.json artmore_foundation_crosscheck_report.json foundation_official_source_candidates.json foundation_official_source_discovery_report.json
+            git diff --cached --quiet || git commit -m 'Audit cultural foundation source surfaces'
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((i*5))
+          done
+          exit 1
