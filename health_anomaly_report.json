@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-12T20:06:45+09:00",
+  "generatedAt": "2026-09-12T21:08:51+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-12T20:06:45+09:00",
+    "generatedAt": "2026-09-12T21:08:51+09:00",
     "official": {
-      "datasetCount": 19420,
+      "datasetCount": 19421,
       "officialIdCount": 17861,
       "missingAfter": 0,
       "reconciledSources": 38,
@@ -47,7 +47,7 @@
         "latestRegistered": "2026-09-10"
       },
       "강동송파교육지원청": {
-        "count": 24,
+        "count": 25,
         "latestRegistered": "2026-09-12"
       },
       "강서양천교육지원청": {
@@ -332,11 +332,11 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-11T20:07:54+09:00",
+      "baselineAt": "2026-09-11T21:09:48+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19420,
-          "baseline": 19423,
+          "current": 19421,
+          "baseline": 19424,
           "changeRatio": -0.0002
         },
         "official.officialIdCount": {
@@ -346,13 +346,13 @@
         },
         "unified.publishedJobs": {
           "current": 7397,
-          "baseline": 7728,
-          "changeRatio": -0.0428
+          "baseline": 7729,
+          "changeRatio": -0.043
         },
         "unified.officialDisplayed": {
           "current": 2990,
-          "baseline": 3308,
-          "changeRatio": -0.0961
+          "baseline": 3309,
+          "changeRatio": -0.0964
         },
         "unified.privateDiscovered": {
           "current": 4411,
@@ -399,10 +399,10 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-05T20:07:19+09:00",
+      "baselineAt": "2026-09-05T21:09:20+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19420,
+          "current": 19421,
           "baseline": 19234,
           "changeRatio": 0.0097
         },
