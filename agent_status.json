@@ -2,12 +2,12 @@
   "version": 1,
   "dispatchHistory": {
     "update-jobs.yml": {
-      "lastAttemptAt": "2026-09-12T14:16:54+09:00",
+      "lastAttemptAt": "2026-09-12T18:17:30+09:00",
       "lastResult": "dispatched",
       "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
       "lastCode": "fast-collector-unhealthy",
       "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
-      "count": 11
+      "count": 12
     },
     "daily-deep-audit.yml": {
       "lastAttemptAt": "2026-09-12T01:19:38+09:00",
@@ -27,15 +27,6 @@
     }
   },
   "recentDispatches": [
-    {
-      "workflow": "update-jobs.yml",
-      "lastAttemptAt": "2026-09-05T10:15:47+09:00",
-      "lastResult": "dispatched",
-      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
-      "lastCode": "fast-collector-unhealthy",
-      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=publication-guard",
-      "count": 6
-    },
     {
       "workflow": "update-jobs.yml",
       "lastAttemptAt": "2026-09-05T14:15:46+09:00",
@@ -206,19 +197,28 @@
       "lastCode": "coverage-integrity-failure",
       "message": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
       "count": 2
+    },
+    {
+      "workflow": "update-jobs.yml",
+      "lastAttemptAt": "2026-09-12T18:17:30+09:00",
+      "lastResult": "dispatched",
+      "lastReason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "lastCode": "fast-collector-unhealthy",
+      "message": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "count": 12
     }
   ],
-  "lastUpdatedAt": "2026-09-12T16:15:53+09:00",
+  "lastUpdatedAt": "2026-09-12T18:17:30+09:00",
   "lastHealth": "critical",
   "lastPlanSummary": {
-    "generatedAt": "2026-09-12T16:15:49+09:00",
+    "generatedAt": "2026-09-12T18:17:26+09:00",
     "selectedAction": {
-      "workflow": "recover-missing-jobs.yml",
-      "code": "coverage-integrity-failure",
-      "reason": "공식 ID/출처 대사·페이지네이션·상세링크 중 하나 이상이 완전성 기준을 통과하지 못했습니다.",
-      "priority": 130,
+      "workflow": "update-jobs.yml",
+      "code": "fast-collector-unhealthy",
+      "reason": "빠른 수집기가 성공/완료 상태가 아닙니다: state=failed stage=hardening",
+      "priority": 105,
       "severity": "critical",
-      "cooldown_hours": 4
+      "cooldown_hours": 3
     },
     "blockedByCooldown": []
   }
