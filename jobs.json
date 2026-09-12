@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-12 04:21 KST",
+    "checkedAt": "2026-09-12 09:17 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1008,9 +1008,36 @@
       "failures": []
     },
     "previousTotal": 19415,
-    "currentTotal": 19415
+    "currentTotal": 19416
   },
   "jobs": [
+    {
+      "id": "goe-59806",
+      "province": "경기",
+      "school": "점동중학교",
+      "title": "특수학급 직업교육 강사 채용 공고",
+      "subject": "원예치료",
+      "region": "여주시",
+      "regions": [
+        "여주시"
+      ],
+      "type": "시간강사/강사",
+      "schoolLevel": "중학교",
+      "applyStart": "2026/09/11",
+      "applyEnd": "2026/09/18",
+      "workStart": "2026/11/01",
+      "workEnd": "2026/12/31",
+      "registered": "2026/09/12",
+      "headcount": "1",
+      "source": "경기도교육청 통합 구인구직",
+      "checkedSources": [
+        "경기도교육청 통합 구인구직"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59806",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "goe-central:59806"
+    },
     {
       "id": "sen-110176",
       "province": "서울",
@@ -342690,7 +342717,7 @@
       "bbsId": "6381",
       "detailLinkResolved": true,
       "mi": "",
-      "periodStatus": "unavailable"
+      "periodStatus": "parsed"
     },
     {
       "id": "goe-office-a531d0eab513321c8cf4",
@@ -537929,11 +537956,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-12 04:20 KST",
+    "checkedAt": "2026-09-12 09:15 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-12 04:20 KST",
+    "checkedAt": "2026-09-12 09:15 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -537954,19 +537981,19 @@
     "seoulTotal": 506
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-12 04:18 KST",
+    "checkedAt": "2026-09-12 09:15 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5873,
-    "detailPagesParsed": 2300,
+    "detailPagesParsed": 2301,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1037,
     "missingWorkPeriod": 1951,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-12 04:18 KST",
+      "checkedAt": "2026-09-12 09:15 KST",
       "candidates": 250,
-      "detailPagesConfirmed": 242,
+      "detailPagesConfirmed": 245,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     },
@@ -537974,5 +538001,28 @@
       "newCandidates": 0,
       "ran": false
     }
+  },
+  "sourceReconciliation": {
+    "generatedAt": "2026-09-12 08:49:12 KST",
+    "lookbackDays": 90,
+    "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
+    "officialIdCount": 17860,
+    "datasetIdCountBefore": 19369,
+    "missingBefore": 1,
+    "recoveredNow": 1,
+    "missingAfter": 0,
+    "reconciledSources": 38,
+    "totalSources": 38,
+    "reconciledOffices": 38,
+    "totalOffices": 38,
+    "scanId": "20260911T234332Z-34659074159-1"
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-12 09:15:01 KST",
+    "ledgerScanId": "20260911T234332Z-34659074159-1",
+    "protectedOfficialIds": 17860,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
