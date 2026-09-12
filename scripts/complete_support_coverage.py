@@ -30,7 +30,7 @@ JOBS = PAYLOAD.get("jobs", [])
 KST = timezone(timedelta(hours=9))
 NOW = datetime.now(KST)
 LOOKBACK_DAYS = 90
-MAX_PAGES = 500
+MAX_PAGES = 500  # emergency ceiling; normal stop is lookback/structural end
 UA = "Mozilla/5.0 (compatible; metro-edujob-completeness/1.0; public recruitment aggregator)"
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.6"})
@@ -192,159 +192,98 @@ def gyeonggi_board(board, src):
         txt = clean(soup.get_text(" ", strip=True))
         if re.search(r"전체\s*0\s*건|총\s*0\s*건|등록된\s*게시물이\s*없", txt):
             explicit_empty = True
-        page_items = []
-        page_dates = []
-        page_has_expected_table = False
-        page_candidate_rows = 0
+        page_items=[]; page_dates=[]; page_has_expected_table=False; page_candidate_rows=0
         for table in soup.find_all("table"):
-            hs = headers(table)
-            table_is_expected = any(any(k in h for k in ("제목", "학교", "기관", "등록일", "작성일", "마감")) for h in hs)
-            if table_is_expected:
-                page_has_expected_table = True
+            hs=headers(table); table_is_expected=any(any(k in h for k in ("제목","학교","기관","등록일","작성일","마감")) for h in hs)
+            if table_is_expected: page_has_expected_table=True
             for tr in table.find_all("tr"):
-                tds = tr.find_all("td")
-                if not tds:
-                    continue
-                if table_is_expected:
-                    page_candidate_rows += 1
-                pick = None
-                detail = ""
-                title = ""
+                tds=tr.find_all("td")
+                if not tds: continue
+                if table_is_expected: page_candidate_rows+=1
+                detail=""; title=""; pick=None
                 for a in tr.find_all("a"):
-                    d = detail_from_anchor(r.url, a)
-                    anchor_title = clean(a.get_text(" ", strip=True))
-                    if d and len(anchor_title) >= 3:
-                        pick, detail, title = a, d, anchor_title
-                        break
-                vals = row_vals(tr, hs)
-                row_text = clean(tr.get_text(" ", strip=True))
+                    d=detail_from_anchor(r.url,a); anchor_title=clean(a.get_text(" ",strip=True))
+                    if d and len(anchor_title)>=3: pick,detail,title=a,d,anchor_title; break
+                vals=row_vals(tr,hs); row_text=clean(tr.get_text(" ",strip=True))
                 if not detail:
-                    html = str(tr)
-                    m = re.search(r"nttSn\s*[=:,'\"() ]+\s*(\d{4,})", html, re.I)
-                    if not m:
-                        m = re.search(r"(?:nttView|selectNttInfo|goView)\D+(\d{4,})", html, re.I)
+                    html=str(tr); m=re.search(r"nttSn\s*[=:,'\"() ]+\s*(\d{4,})",html,re.I)
+                    if not m: m=re.search(r"(?:nttView|selectNttInfo|goView)\D+(\d{4,})",html,re.I)
                     if m:
-                        bp = urlparse(r.url)
-                        bq = parse_qs(bp.query)
-                        bbs = (bq.get("bbsId") or [""])[0]
+                        bp=urlparse(r.url); bq=parse_qs(bp.query); bbs=(bq.get("bbsId") or [""])[0]
                         if bbs:
-                            params = {"bbsId": bbs, "nttSn": m.group(1)}
-                            for k in ("mi", "clasHmpgId"):
-                                if bq.get(k):
-                                    params[k] = bq[k][0]
-                            detail = urlunparse((bp.scheme, bp.netloc, bp.path.replace("selectNttList.do", "selectNttInfo.do"), "", urlencode(params), ""))
-                            title = first_of(vals, ["제목", "공고명", "채용공고", "학교명"])
+                            params={"bbsId":bbs,"nttSn":m.group(1)}
+                            for k in ("mi","clasHmpgId"):
+                                if bq.get(k): params[k]=bq[k][0]
+                            detail=urlunparse((bp.scheme,bp.netloc,bp.path.replace("selectNttList.do","selectNttInfo.do"),"",urlencode(params),""))
+                            title=first_of(vals,["제목","공고명","채용공고","학교명"])
                             if not title:
-                                cells = [clean(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
-                                title = max((x for x in cells if len(x) >= 3 and not DATE_RE.fullmatch(x)), key=len, default="")
-                if not detail or detail in seen_details or len(clean(title)) < 3:
-                    continue
-                registered = date_norm(first_of(vals, ["등록일", "작성일"]))
+                                cells=[clean(td.get_text(" ",strip=True)) for td in tr.find_all("td")]
+                                title=max((x for x in cells if len(x)>=3 and not DATE_RE.fullmatch(x)),key=len,default="")
+                if not detail or detail in seen_details or len(clean(title))<3: continue
+                registered=date_norm(first_of(vals,["등록일","작성일"]))
                 if not registered:
-                    ds = all_dates(row_text)
-                    registered = ds[-1] if ds else ""
-                title = clean(title).replace("새로운 글", "").strip()
-                page_items.append((detail, title, registered, vals, row_text))
-                if registered:
-                    page_dates.append(registered)
-        sig = tuple(x[0] for x in page_items)
-        if sig and sig in seen_page_sigs:
-            repeat = True
-            break
-        if sig:
-            seen_page_sigs.add(sig)
-        pages += 1
+                    ds=all_dates(row_text); registered=ds[-1] if ds else ""
+                title=clean(title).replace("새로운 글","").strip(); page_items.append((detail,title,registered,vals,row_text))
+                if registered: page_dates.append(registered)
+        sig=tuple(x[0] for x in page_items)
+        if sig and sig in seen_page_sigs: repeat=True; break
+        if sig: seen_page_sigs.add(sig)
+        pages+=1
         if not page_items:
-            ended_on_structural_empty = bool(explicit_empty or (page_has_expected_table and page_candidate_rows == 0))
-            break
-        raw_rows += len(page_items)
-        recent_on_page = 0
-        for detail, title, registered, vals, row_text in page_items:
+            ended_on_structural_empty=bool(explicit_empty or (page_has_expected_table and page_candidate_rows==0)); break
+        raw_rows+=len(page_items); recent_on_page=0
+        for detail,title,registered,vals,row_text in page_items:
             seen_details.add(detail)
-            if registered and not recent(registered):
-                continue
-            if EXCLUDE_WORDS.search(title) or not JOB_WORDS.search(title):
-                continue
-            recent_on_page += 1
-            school = first_of(vals, ["학교명", "기관명"]) or school_from_title(title) or src["name"]
-            region = first_of(vals, ["지역"])
-            if region not in src.get("regions", []):
-                region = next((x for x in src.get("regions", []) if x in f"{row_text} {school} {title}"), "")
-            out.append({"id":"goe-complete-" + hashlib.sha1(detail.encode()).hexdigest()[:18],"province":"경기","school":school,"title":title,"subject":first_of(vals,["과목","분야"]),"region":region,"regions":src.get("regions",[]),"type":"기타","schoolLevel":"기타","applyStart":"","applyEnd":date_norm(first_of(vals,["접수마감일","마감일"])),"workStart":"","workEnd":"","registered":registered,"headcount":"","source":src["name"],"checkedSources":[src["name"]],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board,"detailLinkResolved":True})
-        if page_dates and all(definitely_old(x) for x in page_dates):
-            consecutive_old_pages += 1
-        else:
-            consecutive_old_pages = 0
-        if consecutive_old_pages >= 2:
-            crossed_old = True
-            break
-        if recent_on_page == 0 and page >= 3 and page_dates and max(page_dates) < (NOW - timedelta(days=LOOKBACK_DAYS)).strftime("%Y/%m/%d"):
-            crossed_old = True
-            break
+            if registered and not recent(registered): continue
+            if EXCLUDE_WORDS.search(title): continue
+            if not JOB_WORDS.search(title): continue
+            recent_on_page+=1; school=first_of(vals,["학교명","기관명"]) or school_from_title(title) or src["name"]; region=first_of(vals,["지역"])
+            if region not in src.get("regions",[]): region=next((x for x in src.get("regions",[]) if x in f"{row_text} {school} {title}"),"")
+            out.append({"id":"goe-complete-"+hashlib.sha1(detail.encode()).hexdigest()[:18],"province":"경기","school":school,"title":title,"subject":first_of(vals,["과목","분야"]),"region":region,"regions":src.get("regions",[]),"type":"기타","schoolLevel":"기타","applyStart":"","applyEnd":date_norm(first_of(vals,["접수마감일","마감일"])),"workStart":"","workEnd":"","registered":registered,"headcount":"","source":src["name"],"checkedSources":[src["name"]],"sourceType":"교육지원청 개별 게시판","url":detail,"boardUrl":board,"detailLinkResolved":True})
+        if page_dates and all(definitely_old(x) for x in page_dates): consecutive_old_pages+=1
+        else: consecutive_old_pages=0
+        if consecutive_old_pages>=2: crossed_old=True; break
+        if recent_on_page==0 and page>=3 and page_dates and max(page_dates)<(NOW-timedelta(days=LOOKBACK_DAYS)).strftime("%Y/%m/%d"): crossed_old=True; break
         time.sleep(0.03)
-    complete = (not access_error) and (pages < MAX_PAGES) and (crossed_old or ended_on_structural_empty)
-    return out, {"url":board,"pagesScanned":pages,"rawRows":raw_rows,"recentRows":len(out),"paginationRepeated":repeat,"accessError":access_error,"explicitEmpty":explicit_empty,"crossedLookback":crossed_old,"naturalEnd":ended_on_structural_empty,"coverageComplete":complete}
+    complete=(not access_error) and (pages<MAX_PAGES) and (crossed_old or ended_on_structural_empty)
+    return out,{"url":board,"pagesScanned":pages,"rawRows":raw_rows,"recentRows":len(out),"paginationRepeated":repeat,"accessError":access_error,"explicitEmpty":explicit_empty,"crossedLookback":crossed_old,"naturalEnd":ended_on_structural_empty,"coverageComplete":complete}
 
 
 def seoul_seq(tr):
-    html = str(tr)
-    for pat in (r"fncDetailView\(['\"]?(\d+)", r"job_seq[=,'\"() ]+(\d+)", r"JOV11\.do[^\d]+(\d+)"):
-        m = re.search(pat, html, re.I)
-        if m:
-            return m.group(1)
+    html=str(tr)
+    for pat in (r"fncDetailView\(['\"]?(\d+)",r"job_seq[=,'\"() ]+(\d+)",r"JOV11\.do[^\d]+(\d+)"):
+        m=re.search(pat,html,re.I)
+        if m: return m.group(1)
     return ""
 
-
-def seoul_page(board, page, prefer_post=False):
-    params = {"pageIndex": page}
-    if prefer_post:
-        return post(board, {"pageIndex": str(page), "searchPartPosition": "", "searchCondition": "lesson", "searchKeyword": ""})
-    return get(board, params=params)
-
+def seoul_page(board,page,prefer_post=False):
+    params={"pageIndex":page}
+    if prefer_post: return post(board,{"pageIndex":str(page),"searchPartPosition":"","searchCondition":"lesson","searchKeyword":""})
+    return get(board,params=params)
 
 def seoul_board(src):
-    board = src["boardUrl"]
-    out = []
-    seen = set()
-    seen_page_sigs = set()
-    pages = 0
-    raw_rows = 0
-    repeat = False
-    access_error = False
-    explicit_empty = False
-    got_table = False
-    crossed_old = False
-    consecutive_old_pages = 0
-    use_post = False
-    ended_on_structural_empty = False
-    for page in range(1, MAX_PAGES + 1):
-        r = seoul_page(board, page, use_post)
-        if not r and not use_post:
-            use_post = True
-            r = seoul_page(board, page, True)
-        if not r:
-            access_error = True
-            break
-        soup = BeautifulSoup(r.text, "html.parser")
-        txt = clean(soup.get_text(" ", strip=True))
-        if re.search(r"총\s*0\s*건|전체\s*0\s*건|데이터가\s*없습니다|조회된\s*데이터가\s*없|등록된\s*자료가\s*없", txt):
-            explicit_empty = True
+    board=src["boardUrl"]; out=[]; seen=set(); seen_page_sigs=set(); pages=0; raw_rows=0; repeat=False; access_error=False; explicit_empty=False; got_table=False; crossed_old=False; consecutive_old_pages=0; use_post=False; ended_on_structural_empty=False
+    for page in range(1,MAX_PAGES+1):
+        r=seoul_page(board,page,use_post)
+        if not r and not use_post: use_post=True; r=seoul_page(board,page,True)
+        if not r: access_error=True; break
+        soup=BeautifulSoup(r.text,"html.parser"); txt=clean(soup.get_text(" ",strip=True))
+        if re.search(r"총\s*0\s*건|전체\s*0\s*건|데이터가\s*없습니다|조회된\s*데이터가\s*없|등록된\s*자료가\s*없",txt): explicit_empty=True
         items=[]; dates=[]; page_has_expected_table=False; page_candidate_rows=0
         for table in soup.find_all("table"):
             hs=headers(table)
-            if not hs or not any(any(k in h for k in ("마감","직종","학교","구분","대상","분야","등록일","작성자")) for h in hs):
-                continue
+            if not hs or not any(any(k in h for k in ("마감","직종","학교","구분","대상","분야","등록일","작성자")) for h in hs): continue
             got_table=True; page_has_expected_table=True
             for tr in table.find_all("tr"):
                 if not tr.find_all("td"): continue
-                page_candidate_rows += 1; seq=seoul_seq(tr)
+                page_candidate_rows+=1; seq=seoul_seq(tr)
                 if not seq: continue
-                vals=row_vals(tr,hs); anchors=[a for a in tr.find_all("a") if clean(a.get_text(" ",strip=True))]
-                title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default="")) or first_of(vals,["제목","공고명","분야1","분야"])
+                vals=row_vals(tr,hs); anchors=[a for a in tr.find_all("a") if clean(a.get_text(" ",strip=True))]; title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default=""))
+                if not title: title=first_of(vals,["제목","공고명","분야1","분야"])
                 registered=date_norm(first_of(vals,["등록일","작성일"]))
                 if not registered:
-                    ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=[d for d in ds if d and d <= today_s]; registered=plausible[-1] if plausible else ""
-                items.append((seq,title,registered,vals))
+                    ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=[d for d in ds if d and d<=today_s]; registered=plausible[-1] if plausible else ""
+                items.append((seq,title,registered,vals));
                 if registered: dates.append(registered)
         sig=tuple(x[0] for x in items)
         if sig and sig in seen_page_sigs:
@@ -360,12 +299,12 @@ def seoul_board(src):
                             if not tr.find_all("td"): continue
                             seq=seoul_seq(tr)
                             if not seq: continue
-                            vals=row_vals(tr,hs); anchors=[a for a in tr.find_all("a") if clean(a.get_text(" ",strip=True))]
-                            title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default="")) or first_of(vals,["제목","공고명","분야1","분야"])
+                            vals=row_vals(tr,hs); anchors=[a for a in tr.find_all("a") if clean(a.get_text(" ",strip=True))]; title=clean(max((a.get_text(" ",strip=True) for a in anchors),key=len,default=""))
+                            if not title: title=first_of(vals,["제목","공고명","분야1","분야"])
                             registered=date_norm(first_of(vals,["등록일","작성일"]))
                             if not registered:
-                                ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=[d for d in ds if d and d <= today_s]; registered=plausible[-1] if plausible else ""
-                            post_items.append((seq,title,registered,vals))
+                                ds=all_dates(clean(tr.get_text(" ",strip=True))); today_s=NOW.strftime("%Y/%m/%d"); plausible=[d for d in ds if d and d<=today_s]; registered=plausible[-1] if plausible else ""
+                            post_items.append((seq,title,registered,vals));
                             if registered: post_dates.append(registered)
                     post_sig=tuple(x[0] for x in post_items)
                     if post_sig and post_sig not in seen_page_sigs: items,dates,sig=post_items,post_dates,post_sig
@@ -373,30 +312,26 @@ def seoul_board(src):
                 else: access_error=True; repeat=True; break
             else: repeat=True; break
         if sig: seen_page_sigs.add(sig)
-        pages += 1
-        if not items:
-            ended_on_structural_empty=bool(explicit_empty or (page_has_expected_table and page_candidate_rows==0)); break
-        raw_rows += len(items)
+        pages+=1
+        if not items: ended_on_structural_empty=bool(explicit_empty or (page_has_expected_table and page_candidate_rows==0)); break
+        raw_rows+=len(items)
         for seq,title,registered,vals in items:
             if seq in seen: continue
             seen.add(seq)
             if registered and not recent(registered): continue
             if len(title)<3 or EXCLUDE_WORDS.search(title): continue
-            school=first_of(vals,["학교명","기관명","작성자"]) or school_from_title(title) or src["name"]
-            open_url=urljoin(board,"/FUS/JO/JOV11.do")
+            school=first_of(vals,["학교명","기관명","작성자"]) or school_from_title(title) or src["name"]; open_url=urljoin(board,"/FUS/JO/JOV11.do")
             out.append({"id":f"sen-complete-{urlparse(board).hostname}-{seq}","province":"서울","school":school,"title":title,"subject":" / ".join(x for x in (first_of(vals,["분야1"]),first_of(vals,["분야2"])) if x),"region":next((x for x in src.get("regions",[]) if x in f"{title} {school}"),""),"regions":src.get("regions",[]),"type":"기타","schoolLevel":"기타","applyStart":registered,"applyEnd":date_norm(first_of(vals,["마감일","접수마감일"])),"workStart":"","workEnd":"","registered":registered,"headcount":"","source":src["name"],"checkedSources":[src["name"]],"sourceType":"교육지원청 개별 게시판","url":f"{open_url}?job_seq={seq}","boardUrl":board,"openMethod":"POST","openUrl":open_url,"openParams":{"job_seq":seq}})
-        if dates and all(definitely_old(x) for x in dates): consecutive_old_pages += 1
+        if dates and all(definitely_old(x) for x in dates): consecutive_old_pages+=1
         else: consecutive_old_pages=0
         if consecutive_old_pages>=2: crossed_old=True; break
         time.sleep(0.03)
     complete=(not access_error) and (pages<MAX_PAGES) and (crossed_old or ended_on_structural_empty)
     return out,{"url":board,"pagesScanned":pages,"rawRows":raw_rows,"recentRows":len(out),"paginationRepeated":repeat,"accessError":access_error,"explicitEmpty":explicit_empty,"naturalEnd":ended_on_structural_empty,"gotTable":got_table,"crossedLookback":crossed_old,"coverageComplete":complete,"paginationMethod":"POST" if use_post else "GET"}
 
-
 def key(j):
     title=re.sub(r"[^0-9a-z가-힣]+","",clean(j.get("title","")).lower()); school=re.sub(r"[^0-9a-z가-힣]+","",clean(j.get("school","")).lower()); province=j.get("province","")
     return province+"|"+title+("" if len(title)>=14 else "|"+school)
-
 
 def merge(additions):
     by={key(j):j for j in JOBS if key(j)}; added=0
@@ -416,7 +351,6 @@ def merge(additions):
                     if j.get(f) is not None: old[f]=j.get(f)
     return added
 
-
 def status_from_board(name,url,rows,metas):
     raw=sum(m.get("rawRows",0) for m in metas); pages=sum(m.get("pagesScanned",0) for m in metas); any_access=any(m.get("accessError") for m in metas); any_repeat=any(m.get("paginationRepeated") for m in metas); complete=bool(metas) and all(m.get("coverageComplete") for m in metas); genuine_empty=raw==0 and bool(metas) and all(m.get("explicitEmpty") for m in metas)
     if genuine_empty: state,ok,msg="empty",True,"공식 게시판 정상 · 최근 공고 0건"
@@ -427,14 +361,12 @@ def status_from_board(name,url,rows,metas):
     else: state,ok,msg="warning",False,"게시판 구조/범위 추가 확인 필요"
     return {"name":name,"url":url,"boards":[m["url"] for m in metas],"count":len(rows),"rawRows":raw,"pagesScanned":pages,"ok":ok,"state":state,"message":msg,"coverageComplete":complete,"boardHealth":metas}
 
-
 def production_filter(rows):
     """Normalize second-pass output through the shared production population contract.
 
     Traversal stays unchanged; only what is merged into jobs.json is constrained.
     """
     return [r for r in rows if is_support_population_job(r, as_of=NOW)]
-
 
 def main():
     additions=[]; gg_status=[]; seoul_status=[]
@@ -456,6 +388,4 @@ def main():
     JOBS_PATH.write_text(json.dumps(PAYLOAD,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(PAYLOAD["supportCompleteness"],ensure_ascii=False))
 
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
