@@ -10,7 +10,6 @@ on:
       - 'cultural_foundation_registry.json'
       - 'verified_foundation_official_sources.json'
       - 'scripts/validate_cultural_foundation_registry.py'
-      - 'scripts/crawl_official_foundation_jobs.py'
       - 'scripts/crawl_official_foundation_jobs_v2.py'
       - 'scripts/probe_cultural_sources.py'
       - 'scripts/probe_cleaneye_api.py'
@@ -40,12 +39,24 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r requirements.txt
-      - name: Syntax check official foundation crawler
-        run: python -m py_compile scripts/crawl_official_foundation_jobs.py scripts/crawl_official_foundation_jobs_v2.py
+      - name: Syntax check production foundation crawler
+        run: python -m py_compile scripts/crawl_official_foundation_jobs_v2.py
       - name: Validate foundation registry
         run: python scripts/validate_cultural_foundation_registry.py
-      - name: Collect official cultural-foundation jobs
+      - name: Collect official cultural-foundation jobs (single production writer)
         run: python scripts/crawl_official_foundation_jobs_v2.py
+      - name: Require v6 SFAC adapter report before any report commit
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('official_foundation_report.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d.get('policy') == 'official-foundation-primary-fail-closed-v6-sfac-saramin-careerlink', d.get('policy')
+          unsupported=d.get('unsupportedConfiguredBoards') or []
+          assert not any(x.get('reason') == 'adapter-not-yet-implemented' for x in unsupported), unsupported
+          print('v6 foundation report verified', d.get('jobs'), d.get('policy'))
+          PY
       - name: Probe CleanEye and ANCF surfaces
         run: python scripts/probe_cultural_sources.py
       - name: Probe CleanEye recruitment API
@@ -58,7 +69,7 @@ jobs:
         run: python scripts/audit_artmore_foundations.py
       - name: Discover verified official source candidates
         run: python scripts/discover_foundation_official_sources.py
-      - name: Commit audit datasets and reports
+      - name: Commit audit datasets and reports (foundation report is owned here only)
         run: |
           set -e
           git config user.name 'github-actions[bot]'
