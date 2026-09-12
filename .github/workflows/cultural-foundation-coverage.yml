@@ -86,3 +86,4 @@ jobs:
             sleep $((i*5))
           done
           exit 1
+# Trigger-only comment: rerun production foundation writer after single-writer hardening.
