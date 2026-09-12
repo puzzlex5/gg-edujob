@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-12T13:52:54+09:00",
+  "generatedAt": "2026-09-12T15:55:01+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": true,
-  "traversalComplete": true,
-  "candidateIdCount": 36,
-  "publishedIdCount": 36,
+  "healthy": false,
+  "traversalComplete": false,
+  "candidateIdCount": 29,
+  "publishedIdCount": 29,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
@@ -20,42 +20,32 @@
           "page": 1,
           "rowCount": 10,
           "newIdCount": 10,
-          "firstId": "94965",
-          "lastId": "94954"
+          "firstId": "94969",
+          "lastId": "94957"
         },
         {
           "page": 2,
           "rowCount": 10,
           "newIdCount": 10,
-          "firstId": "94941",
-          "lastId": "94932"
+          "firstId": "94956",
+          "lastId": "94921"
         },
         {
           "page": 3,
           "rowCount": 9,
           "newIdCount": 9,
-          "firstId": "94933",
-          "lastId": "94914"
-        }
-      ]
-    },
-    {
-      "region": "경기",
-      "code": "2083",
-      "pagesVisited": 1,
-      "ids": 7,
-      "pages": [
-        {
-          "page": 1,
-          "rowCount": 7,
-          "newIdCount": 7,
-          "firstId": "94952",
-          "lastId": "94905"
+          "firstId": "94920",
+          "lastId": "94904"
         }
       ]
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "region": "경기",
+      "error": "RuntimeError: region radio missing while restoring: 경기/2083"
+    }
+  ],
   "regionsAllowed": [
     "서울",
     "경기"
