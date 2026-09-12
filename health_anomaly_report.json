@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-12T09:09:39+09:00",
+  "generatedAt": "2026-09-12T10:06:32+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-12T09:09:39+09:00",
+    "generatedAt": "2026-09-12T10:06:32+09:00",
     "official": {
-      "datasetCount": 19415,
-      "officialIdCount": 17859,
+      "datasetCount": 19416,
+      "officialIdCount": 17860,
       "missingAfter": 0,
       "reconciledSources": 38,
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7382,
-      "officialDisplayed": 2986,
-      "privateDisplayed": 4396,
-      "privateDiscovered": 4400,
+      "publishedJobs": 7376,
+      "officialDisplayed": 2987,
+      "privateDisplayed": 4389,
+      "privateDiscovered": 4393,
       "officialPrivateAliases": 4,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -55,8 +55,8 @@
         "latestRegistered": "2026-09-11"
       },
       "경기도교육청 통합 구인구직": {
-        "count": 10339,
-        "latestRegistered": "2026-09-11"
+        "count": 10340,
+        "latestRegistered": "2026-09-12"
       },
       "경기도교육청 통합 구인구직 + 가평교육지원청": {
         "count": 1,
@@ -272,9 +272,9 @@
         "name": "잡티처",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 4039,
-        "rawCount": 4039,
-        "currentCount": 4039,
+        "datasetCount": 4038,
+        "rawCount": 4038,
+        "currentCount": 4038,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -284,9 +284,9 @@
         "name": "아트모아",
         "enabled": true,
         "healthy": true,
-        "datasetCount": 36,
-        "rawCount": 36,
-        "currentCount": 36,
+        "datasetCount": 30,
+        "rawCount": 30,
+        "currentCount": 30,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -332,32 +332,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-11T09:10:11+09:00",
+      "baselineAt": "2026-09-11T10:07:24+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19415,
-          "baseline": 19113,
-          "changeRatio": 0.0158
+          "current": 19416,
+          "baseline": 19158,
+          "changeRatio": 0.0135
         },
         "official.officialIdCount": {
-          "current": 17859,
-          "baseline": 17640,
-          "changeRatio": 0.0124
+          "current": 17860,
+          "baseline": 17665,
+          "changeRatio": 0.011
         },
         "unified.publishedJobs": {
-          "current": 7382,
-          "baseline": 7139,
-          "changeRatio": 0.034
+          "current": 7376,
+          "baseline": 7442,
+          "changeRatio": -0.0089
         },
         "unified.officialDisplayed": {
-          "current": 2986,
-          "baseline": 3000,
-          "changeRatio": -0.0047
+          "current": 2987,
+          "baseline": 3045,
+          "changeRatio": -0.019
         },
         "unified.privateDiscovered": {
-          "current": 4400,
-          "baseline": 4139,
-          "changeRatio": 0.0631
+          "current": 4393,
+          "baseline": 4403,
+          "changeRatio": -0.0023
         }
       },
       "privateSources": {
@@ -372,14 +372,14 @@
           "changeRatio": 0.0
         },
         "jobteacher": {
-          "current": 4039,
+          "current": 4038,
           "baseline": 4036,
-          "changeRatio": 0.0007
+          "changeRatio": 0.0005
         },
         "artmore": {
-          "current": 36,
+          "current": 30,
           "baseline": 26,
-          "changeRatio": 0.3846
+          "changeRatio": 0.1538
         },
         "gonggonggangsa": {
           "current": 48,
@@ -399,32 +399,32 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-05T09:13:08+09:00",
+      "baselineAt": "2026-09-05T10:07:06+09:00",
       "metrics": {
         "official.datasetCount": {
-          "current": 19415,
-          "baseline": 19232,
-          "changeRatio": 0.0095
+          "current": 19416,
+          "baseline": 19228,
+          "changeRatio": 0.0098
         },
         "official.officialIdCount": {
-          "current": 17859,
-          "baseline": 18185,
+          "current": 17860,
+          "baseline": 18186,
           "changeRatio": -0.0179
         },
         "unified.publishedJobs": {
-          "current": 7382,
-          "baseline": 7605,
-          "changeRatio": -0.0293
+          "current": 7376,
+          "baseline": 7603,
+          "changeRatio": -0.0299
         },
         "unified.officialDisplayed": {
-          "current": 2986,
-          "baseline": 3128,
-          "changeRatio": -0.0454
+          "current": 2987,
+          "baseline": 3126,
+          "changeRatio": -0.0445
         },
         "unified.privateDiscovered": {
-          "current": 4400,
+          "current": 4393,
           "baseline": 4489,
-          "changeRatio": -0.0198
+          "changeRatio": -0.0214
         }
       },
       "privateSources": {
@@ -439,14 +439,14 @@
           "changeRatio": null
         },
         "jobteacher": {
-          "current": 4039,
+          "current": 4038,
           "baseline": 4037,
-          "changeRatio": 0.0005
+          "changeRatio": 0.0002
         },
         "artmore": {
-          "current": 36,
+          "current": 30,
           "baseline": 28,
-          "changeRatio": 0.2857
+          "changeRatio": 0.0714
         },
         "gonggonggangsa": {
           "current": 48,
@@ -475,8 +475,8 @@
       "evidence": {
         "source": "경기도교육청 통합 구인구직 + 가평교육지원청",
         "latestRegistered": "2026-07-29",
-        "globalLatest": "2026-09-11",
-        "ageDays": 44
+        "globalLatest": "2026-09-12",
+        "ageDays": 45
       }
     },
     {
@@ -486,8 +486,8 @@
       "evidence": {
         "source": "군포의왕교육지원청",
         "latestRegistered": "2026-09-03",
-        "globalLatest": "2026-09-11",
-        "ageDays": 8
+        "globalLatest": "2026-09-12",
+        "ageDays": 9
       }
     },
     {
@@ -497,8 +497,8 @@
       "evidence": {
         "source": "서부교육지원청",
         "latestRegistered": "2026-09-03",
-        "globalLatest": "2026-09-11",
-        "ageDays": 8
+        "globalLatest": "2026-09-12",
+        "ageDays": 9
       }
     },
     {
@@ -508,8 +508,8 @@
       "evidence": {
         "source": "서울교육일자리포털 + 강남서초교육지원청",
         "latestRegistered": "2026-09-02",
-        "globalLatest": "2026-09-11",
-        "ageDays": 9
+        "globalLatest": "2026-09-12",
+        "ageDays": 10
       }
     },
     {
@@ -519,8 +519,8 @@
       "evidence": {
         "source": "안양과천교육지원청",
         "latestRegistered": "2026-09-03",
-        "globalLatest": "2026-09-11",
-        "ageDays": 8
+        "globalLatest": "2026-09-12",
+        "ageDays": 9
       }
     },
     {
@@ -530,8 +530,8 @@
       "evidence": {
         "source": "여주교육지원청",
         "latestRegistered": "2026-09-01",
-        "globalLatest": "2026-09-11",
-        "ageDays": 10
+        "globalLatest": "2026-09-12",
+        "ageDays": 11
       }
     },
     {
@@ -541,8 +541,8 @@
       "evidence": {
         "source": "이천교육지원청",
         "latestRegistered": "2026-09-02",
-        "globalLatest": "2026-09-11",
-        "ageDays": 9
+        "globalLatest": "2026-09-12",
+        "ageDays": 10
       }
     }
   ],
