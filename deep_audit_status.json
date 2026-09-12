@@ -1,8 +1,8 @@
 {
   "state": "failed",
-  "stage": "central-cross-check",
-  "updatedAt": "2026-09-09T09:11:34+09:00",
-  "jobsCount": 18877,
+  "stage": "hardening",
+  "updatedAt": "2026-09-13T04:39:14+09:00",
+  "jobsCount": 19421,
   "artifacts": {
     "coverageReport": true,
     "linkResolution": true,
@@ -11,21 +11,6 @@
     "boardDiscoveryReport": true,
     "dailyRecoveryReport": true
   },
-  "lastFailureAt": "2026-09-09T09:11:34+09:00",
-  "lastSuccessAt": "2026-09-06T08:24:05+09:00",
-  "effectiveState": "success",
-  "effectiveAt": "2026-09-12T22:36:24+09:00",
-  "effectiveWorkflow": "official-id-restore",
-  "effectiveProof": "38-source-reconciliation",
-  "effectiveJobsCount": 19421,
-  "effectiveSupersedesLastFailure": true,
-  "effectiveEvidence": {
-    "currentComplete": true,
-    "reconciledSources": 38,
-    "totalSources": 38,
-    "missingAfter": 0,
-    "missingOfficialIdsFromCurrentDataset": 0,
-    "centralPaginationComplete": true,
-    "supportCoverageCurrentComplete": true
-  }
+  "lastFailureAt": "2026-09-13T04:39:14+09:00",
+  "lastSuccessAt": "2026-09-06T08:24:05+09:00"
 }
