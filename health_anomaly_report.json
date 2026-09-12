@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T04:06:37+09:00",
+  "generatedAt": "2026-09-13T05:07:14+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-13T04:06:37+09:00",
+    "generatedAt": "2026-09-13T05:07:14+09:00",
     "official": {
       "datasetCount": 19421,
       "officialIdCount": 17861,
@@ -12,11 +12,11 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7112,
+      "publishedJobs": 7356,
       "officialDisplayed": 2971,
-      "privateDisplayed": 4141,
-      "privateDiscovered": 4141,
-      "officialPrivateAliases": 0,
+      "privateDisplayed": 4385,
+      "privateDiscovered": 4388,
+      "officialPrivateAliases": 3,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,6 +27,7 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
+        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -34,9 +35,7 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": [
-        "lessoninfo"
-      ]
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -247,7 +246,7 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": false,
+        "enabled": true,
         "healthy": true,
         "datasetCount": 247,
         "rawCount": 247,
@@ -333,7 +332,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T04:06:49+09:00",
+      "baselineAt": "2026-09-12T05:07:33+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
@@ -346,9 +345,9 @@
           "changeRatio": 0.0001
         },
         "unified.publishedJobs": {
-          "current": 7112,
+          "current": 7356,
           "baseline": 7382,
-          "changeRatio": -0.0366
+          "changeRatio": -0.0035
         },
         "unified.officialDisplayed": {
           "current": 2971,
@@ -356,9 +355,9 @@
           "changeRatio": -0.005
         },
         "unified.privateDiscovered": {
-          "current": 4141,
+          "current": 4388,
           "baseline": 4400,
-          "changeRatio": -0.0589
+          "changeRatio": -0.0027
         }
       },
       "privateSources": {
@@ -400,11 +399,11 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T04:07:12+09:00",
+      "baselineAt": "2026-09-06T05:08:07+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
-          "baseline": 18874,
+          "baseline": 18873,
           "changeRatio": 0.029
         },
         "official.officialIdCount": {
@@ -413,9 +412,9 @@
           "changeRatio": 0.0025
         },
         "unified.publishedJobs": {
-          "current": 7112,
+          "current": 7356,
           "baseline": 7515,
-          "changeRatio": -0.0536
+          "changeRatio": -0.0212
         },
         "unified.officialDisplayed": {
           "current": 2971,
@@ -423,9 +422,9 @@
           "changeRatio": -0.0291
         },
         "unified.privateDiscovered": {
-          "current": 4141,
+          "current": 4388,
           "baseline": 4467,
-          "changeRatio": -0.073
+          "changeRatio": -0.0177
         }
       },
       "privateSources": {
