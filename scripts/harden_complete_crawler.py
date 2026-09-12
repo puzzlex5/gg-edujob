@@ -6,6 +6,20 @@ ROOT = Path(__file__).resolve().parents[1]
 p = ROOT / "scripts/complete_support_coverage.py"
 s = p.read_text(encoding="utf-8")
 
+# The crawler has already been through this hardening pass on some revisions. Validate the
+# semantic invariants rather than requiring one exact historical formatting of each anchor.
+# This is deliberately fail-closed: a partial/unknown variant is still rejected below.
+semantic_markers = (
+    "MAX_PAGES = 500",
+    "access_error = True",
+    "ended_on_structural_empty",
+    "page_candidate_rows",
+    "complete = (not access_error) and (pages < MAX_PAGES)",
+)
+if all(marker in s for marker in semantic_markers):
+    print("Deep completeness crawler already hardened; validation passed (no-op)")
+    raise SystemExit(0)
+
 replacements = [
     ("MAX_PAGES = 80", "MAX_PAGES = 500  # emergency ceiling; normal stop is lookback/structural end"),
     ("access_error = page == 1", "access_error = True  # any pagination request failure makes traversal incomplete"),
