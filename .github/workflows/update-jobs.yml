@@ -26,6 +26,23 @@ jobs:
           set -euo pipefail
           git fetch origin main
           git checkout -B main origin/main
+      - name: Report workflow definition drift after sync
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The workflow YAML is frozen at this run's head SHA, but the sync step above moves
+          # scripts/ to the latest main. That skew is why a pushed workflow fix can look like it
+          # "did not work": the run simply predates it. Surface it loudly instead of guessing.
+          # This is diagnostic only - it must never block a crawl, because refusing to collect
+          # is worse for posting coverage than running a slightly older orchestration.
+          RUNNING="$(git show "${GITHUB_SHA}:.github/workflows/update-jobs.yml" | sha256sum | cut -d' ' -f1)"
+          LATEST="$(git show "origin/main:.github/workflows/update-jobs.yml" | sha256sum | cut -d' ' -f1)"
+          echo "workflow definition SHA in use: ${GITHUB_SHA}"
+          if [ "$RUNNING" != "$LATEST" ]; then
+            echo "::warning title=Stale workflow definition::This run executes update-jobs.yml from ${GITHUB_SHA}, which differs from origin/main. Re-dispatch after the current run to exercise the newest orchestration."
+          else
+            echo "workflow definition matches origin/main"
+          fi
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -156,10 +173,21 @@ jobs:
           echo "Fast publication reconciliation scan: ${RECONCILE_SCAN_ID}"
           python scripts/verify_central_pagination.py
           python scripts/stamp_reconciliation_scan.py --central
+          # The independent Gyeonggi 90-day proof must belong to THIS scan. Without it the
+          # consistency verifier compares a fresh reconciliation against an old 90-day proof
+          # and fails the 45-minute audit-window check. Regenerate it, never widen the window.
+          python scripts/verify_gyeonggi_central_90d.py
           python scripts/reconcile_source_ids.py
           python scripts/stamp_reconciliation_scan.py --reconciliation
-          python scripts/verify_central_reconciliation_consistency.py
+          # A targeted-restore report belongs to the ledger scan that produced it. It is not
+          # evidence for the newly minted scan until this run performs restoration.
+          rm -f official_id_restore_report.json
           python scripts/validate_reconciliation_policy.py
+          # Re-prove central IDs inside the same scan so the pagination proof and the
+          # reconciliation report stay inside one audit window.
+          python scripts/verify_central_pagination.py
+          python scripts/stamp_reconciliation_scan.py --central
+          python scripts/verify_central_reconciliation_consistency.py
 
       - name: Final publication guard
         run: |

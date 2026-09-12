@@ -37,6 +37,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Validate crawler syntax
         run: python -m py_compile scripts/complete_support_coverage.py scripts/verify_support_completeness.py scripts/resolve_support_links.py scripts/update_collector_status.py
+      - name: Refuse a support crawler that cannot traverse
+        run: python -c "import sys;sys.path.insert(0,'scripts');import complete_support_coverage as cov;required=('gyeonggi_board','seoul_board','merge','status_from_board','production_filter','main');missing=[n for n in required if not callable(getattr(cov,n,None))];assert not missing, f'missing traversal entrypoints: {missing}';assert getattr(cov,'LOOKBACK_DAYS',None)==90, f'lookback must stay 90 days: {getattr(cov,\"LOOKBACK_DAYS\",None)}';print('support coverage traversal present:',', '.join(required))"
       - name: Ignore confirmed stale Guri board aliases
         run: |
           python - <<'PY'
