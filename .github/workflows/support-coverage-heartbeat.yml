@@ -66,10 +66,17 @@ jobs:
         run: python scripts/verify_jobs.py
       - name: Persist refreshed independent coverage evidence
         run: |
+          set -e
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add jobs.json board_cache.json support_coverage_report.json support_link_resolution.json collection_state.json
           git diff --cached --quiet && exit 0
           git commit -m 'Refresh independent support-office coverage evidence'
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git reset --hard HEAD
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((i*5))
+          done
+          exit 1
