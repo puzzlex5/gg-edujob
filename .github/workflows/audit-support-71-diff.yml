@@ -8,6 +8,7 @@ on:
       - 'scripts/audit_support_71_diff.py'
       - 'scripts/support_population_contract.py'
       - 'jobs.json'
+      - '.github/workflows/audit-support-71-diff.yml'
 
 permissions:
   contents: write
