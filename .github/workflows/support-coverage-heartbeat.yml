@@ -58,6 +58,8 @@ jobs:
         run: python scripts/complete_support_coverage.py
       - name: Coverage traversal pass 2
         run: sleep 12 && python scripts/complete_support_coverage.py
+      - name: Resolve exact individual posting links
+        run: python scripts/resolve_support_links.py
       - name: Require all support offices and exact links
         run: python scripts/verify_support_completeness.py
       - name: Verify publication candidate against refreshed evidence
