@@ -1717,7 +1717,7 @@
   ],
   "verification": {
     "state": "ok",
-    "checkedAt": "2026-09-12 15:13 KST",
+    "checkedAt": "2026-09-12 16:16 KST",
     "message": "2차 검증 정상",
     "supportOfficeIssues": [],
     "supportExactLinks": {
@@ -1733,8 +1733,8 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19602,
-    "currentTotal": 19419
+    "previousTotal": 19419,
+    "currentTotal": 19420
   },
   "jobs": [
     {
@@ -1827,6 +1827,33 @@
       "url": "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancInfoView.do?mi=10502&pbancSn=59806",
       "recoveredBy": "official-source-id-reconciliation",
       "sourceIdentity": "goe-central:59806"
+    },
+    {
+      "id": "sen-110244",
+      "province": "서울",
+      "school": "서울혜화초등학교",
+      "title": "(기간제)6학년 담임교사",
+      "subject": "6학년 담임교사",
+      "region": "종로구",
+      "regions": [
+        "종로구"
+      ],
+      "type": "기간제교원",
+      "schoolLevel": "초등학교",
+      "applyStart": "2026/09/12",
+      "applyEnd": "2026/09/15",
+      "workStart": "2026/09/12",
+      "workEnd": "2026/09/15",
+      "registered": "2026/09/12",
+      "headcount": "1",
+      "source": "서울교육일자리포털",
+      "checkedSources": [
+        "서울교육일자리포털"
+      ],
+      "sourceType": "통합게시판",
+      "url": "https://work.sen.go.kr/work/search/recInfo/BD_selectRecDetail.do?q_rcrtSn=110244",
+      "recoveredBy": "official-source-id-reconciliation",
+      "sourceIdentity": "seoul-central:110244"
     },
     {
       "id": "sen-110243",
@@ -6741,7 +6768,7 @@
       "recoveredBy": "official-source-id-reconciliation",
       "sourceIdentity": "seoul:nbedu.sen.go.kr:11389",
       "detailLinkResolved": true,
-      "periodStatus": "unavailable",
+      "periodStatus": "parsed",
       "recoveryCarryForward": true,
       "recoveryReason": "present in latest independent official-ID reconciliation",
       "reconciliationCarryForward": true
@@ -538857,11 +538884,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-12 15:11 KST",
+    "checkedAt": "2026-09-12 16:14 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-12 15:11 KST",
+    "checkedAt": "2026-09-12 16:14 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -538882,19 +538909,19 @@
     "seoulTotal": 507
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-12 15:11 KST",
+    "checkedAt": "2026-09-12 16:14 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5874,
-    "detailPagesParsed": 2413,
+    "detailPagesParsed": 2414,
     "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1034,
     "missingWorkPeriod": 1949,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-12 15:11 KST",
-      "candidates": 251,
-      "detailPagesConfirmed": 245,
+      "checkedAt": "2026-09-12 16:14 KST",
+      "candidates": 250,
+      "detailPagesConfirmed": 244,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     },
@@ -538904,11 +538931,11 @@
     }
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-12 14:49:39 KST",
+    "generatedAt": "2026-09-12 15:53:31 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
     "officialIdCount": 17861,
-    "datasetIdCountBefore": 19372,
+    "datasetIdCountBefore": 19373,
     "missingBefore": 1,
     "recoveredNow": 1,
     "missingAfter": 0,
@@ -538916,11 +538943,11 @@
     "totalSources": 38,
     "reconciledOffices": 38,
     "totalOffices": 38,
-    "scanId": "20260912T054445Z-34676321874-1"
+    "scanId": "20260912T064842Z-34679059160-1"
   },
   "officialIdRestore": {
-    "checkedAt": "2026-09-12 15:11:12 KST",
-    "ledgerScanId": "20260912T054445Z-34676321874-1",
+    "checkedAt": "2026-09-12 16:14:34 KST",
+    "ledgerScanId": "20260912T064842Z-34679059160-1",
     "protectedOfficialIds": 17861,
     "missingBefore": 0,
     "recoveredNow": 0,
