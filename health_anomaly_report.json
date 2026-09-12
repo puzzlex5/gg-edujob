@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-12T23:06:56+09:00",
+  "generatedAt": "2026-09-13T00:07:13+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-12T23:06:56+09:00",
+    "generatedAt": "2026-09-13T00:07:13+09:00",
     "official": {
       "datasetCount": 19421,
       "officialIdCount": 17861,
@@ -12,11 +12,11 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7398,
-      "officialDisplayed": 2991,
-      "privateDisplayed": 4407,
-      "privateDiscovered": 4411,
-      "officialPrivateAliases": 4,
+      "publishedJobs": 7377,
+      "officialDisplayed": 2971,
+      "privateDisplayed": 4406,
+      "privateDiscovered": 4409,
+      "officialPrivateAliases": 3,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -262,7 +262,7 @@
         "healthy": true,
         "datasetCount": 24,
         "rawCount": 24,
-        "currentCount": 21,
+        "currentCount": 20,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -298,7 +298,7 @@
         "healthy": true,
         "datasetCount": 48,
         "rawCount": 48,
-        "currentCount": 48,
+        "currentCount": 47,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
@@ -332,32 +332,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-11T23:07:23+09:00",
+      "baselineAt": "2026-09-12T00:07:10+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
-          "baseline": 19427,
-          "changeRatio": -0.0003
+          "baseline": 19419,
+          "changeRatio": 0.0001
         },
         "official.officialIdCount": {
           "current": 17861,
-          "baseline": 17876,
-          "changeRatio": -0.0008
+          "baseline": 17878,
+          "changeRatio": -0.001
         },
         "unified.publishedJobs": {
-          "current": 7398,
+          "current": 7377,
           "baseline": 7469,
-          "changeRatio": -0.0095
+          "changeRatio": -0.0123
         },
         "unified.officialDisplayed": {
-          "current": 2991,
+          "current": 2971,
           "baseline": 3311,
-          "changeRatio": -0.0966
+          "changeRatio": -0.1027
         },
         "unified.privateDiscovered": {
-          "current": 4411,
+          "current": 4409,
           "baseline": 4158,
-          "changeRatio": 0.0608
+          "changeRatio": 0.0604
         }
       },
       "privateSources": {
@@ -367,9 +367,9 @@
           "changeRatio": -0.0037
         },
         "cleaneye": {
-          "current": 21,
+          "current": 20,
           "baseline": 20,
-          "changeRatio": 0.05
+          "changeRatio": 0.0
         },
         "jobteacher": {
           "current": 4038,
@@ -382,9 +382,9 @@
           "changeRatio": -0.0556
         },
         "gonggonggangsa": {
-          "current": 48,
+          "current": 47,
           "baseline": 61,
-          "changeRatio": -0.2131
+          "changeRatio": -0.2295
         },
         "seekle": {
           "current": 1,
@@ -399,12 +399,12 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-05T23:07:52+09:00",
+      "baselineAt": "2026-09-06T00:07:35+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19421,
-          "baseline": 19237,
-          "changeRatio": 0.0096
+          "baseline": 19238,
+          "changeRatio": 0.0095
         },
         "official.officialIdCount": {
           "current": 17861,
@@ -412,19 +412,19 @@
           "changeRatio": -0.0178
         },
         "unified.publishedJobs": {
-          "current": 7398,
+          "current": 7377,
           "baseline": 7597,
-          "changeRatio": -0.0262
+          "changeRatio": -0.029
         },
         "unified.officialDisplayed": {
-          "current": 2991,
+          "current": 2971,
           "baseline": 3134,
-          "changeRatio": -0.0456
+          "changeRatio": -0.052
         },
         "unified.privateDiscovered": {
-          "current": 4411,
+          "current": 4409,
           "baseline": 4475,
-          "changeRatio": -0.0143
+          "changeRatio": -0.0147
         }
       },
       "privateSources": {
@@ -434,7 +434,7 @@
           "changeRatio": -0.2604
         },
         "cleaneye": {
-          "current": 21,
+          "current": 20,
           "baseline": 0,
           "changeRatio": null
         },
@@ -449,9 +449,9 @@
           "changeRatio": 0.7
         },
         "gonggonggangsa": {
-          "current": 48,
+          "current": 47,
           "baseline": 57,
-          "changeRatio": -0.1579
+          "changeRatio": -0.1754
         },
         "seekle": {
           "current": 1,
