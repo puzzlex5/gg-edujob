@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-12T11:07:55+09:00",
+  "generatedAt": "2026-09-12T12:07:36+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-12T11:07:55+09:00",
+    "generatedAt": "2026-09-12T12:07:36+09:00",
     "official": {
       "datasetCount": 19416,
       "officialIdCount": 17860,
@@ -332,32 +332,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-11T11:07:17+09:00",
+      "baselineAt": "2026-09-11T12:07:27+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19416,
-          "baseline": 19158,
-          "changeRatio": 0.0135
+          "baseline": 19213,
+          "changeRatio": 0.0106
         },
         "official.officialIdCount": {
           "current": 17860,
-          "baseline": 17665,
-          "changeRatio": 0.011
+          "baseline": 17726,
+          "changeRatio": 0.0076
         },
         "unified.publishedJobs": {
           "current": 7376,
-          "baseline": 7442,
-          "changeRatio": -0.0089
+          "baseline": 7498,
+          "changeRatio": -0.0163
         },
         "unified.officialDisplayed": {
           "current": 2987,
-          "baseline": 3045,
-          "changeRatio": -0.019
+          "baseline": 3100,
+          "changeRatio": -0.0365
         },
         "unified.privateDiscovered": {
           "current": 4393,
-          "baseline": 4403,
-          "changeRatio": -0.0023
+          "baseline": 4404,
+          "changeRatio": -0.0025
         }
       },
       "privateSources": {
@@ -383,8 +383,8 @@
         },
         "gonggonggangsa": {
           "current": 48,
-          "baseline": 55,
-          "changeRatio": -0.1273
+          "baseline": 56,
+          "changeRatio": -0.1429
         },
         "seekle": {
           "current": 1,
@@ -399,7 +399,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-05T11:08:09+09:00",
+      "baselineAt": "2026-09-05T12:08:21+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19416,
