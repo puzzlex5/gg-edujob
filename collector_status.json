@@ -270,9 +270,9 @@
     "lastFailureAt": "2026-08-26T15:18:24+09:00"
   },
   "reconciliation": {
-    "state": "success",
-    "updatedAt": "2026-09-12T13:17:09+09:00",
-    "jobsCount": 19417,
+    "state": "failed",
+    "updatedAt": "2026-09-12T14:16:29+09:00",
+    "jobsCount": 19602,
     "artifacts": {
       "jobLedger": true,
       "sourceIdLedger": true,
@@ -284,7 +284,7 @@
       "boardDiscoveryReport": true
     },
     "artifactGeneratedAt": {
-      "coverageReport": "2026-09-05T23:18:42.357696+00:00",
+      "coverageReport": "2026-09-12T05:02:10.646263+00:00",
       "sourceReconciliationReport": "2026-09-12 12:51:32 KST",
       "sourceIdLedger": "2026-09-12 12:51:32 KST",
       "centralPaginationReport": "2026-09-12 13:13:53 KST",
@@ -293,10 +293,10 @@
       "collectionState": "2026-09-12 12:17:01 KST"
     },
     "coverageEvidence": {
-      "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-      "ageHours": 148.97,
+      "generatedAt": "2026-09-12T05:02:10.646263+00:00",
+      "ageHours": 0.24,
       "freshWithinHours": 30,
-      "fresh": false,
+      "fresh": true,
       "gyeonggiComplete": 25,
       "gyeonggiTotal": 25,
       "seoulComplete": 11,
@@ -304,17 +304,17 @@
       "warnings": 0,
       "exactLinks": true,
       "complete": true,
-      "referenceSupportPostingCount": 7424,
-      "currentSupportPostingCount": 7353,
+      "referenceSupportPostingCount": 7538,
+      "currentSupportPostingCount": 7538,
       "currentSupportExactLinks": true,
-      "datasetBound": false,
-      "currentComplete": false,
-      "proof": "none",
+      "datasetBound": true,
+      "currentComplete": true,
+      "proof": "support-coverage+38-source-reconciliation",
       "supportCoverage": {
-        "generatedAt": "2026-09-05T23:18:42.357696+00:00",
-        "ageHours": 148.97,
+        "generatedAt": "2026-09-12T05:02:10.646263+00:00",
+        "ageHours": 0.24,
         "freshWithinHours": 30,
-        "fresh": false,
+        "fresh": true,
         "gyeonggiComplete": 25,
         "gyeonggiTotal": 25,
         "seoulComplete": 11,
@@ -322,15 +322,15 @@
         "warnings": 0,
         "exactLinks": true,
         "complete": true,
-        "referenceSupportPostingCount": 7424,
-        "currentSupportPostingCount": 7353,
+        "referenceSupportPostingCount": 7538,
+        "currentSupportPostingCount": 7538,
         "currentSupportExactLinks": true,
-        "datasetBound": false,
-        "currentComplete": false
+        "datasetBound": true,
+        "currentComplete": true
       },
       "sourceReconciliation": {
         "generatedAt": "2026-09-12 12:51:32 KST",
-        "ageHours": 0.43,
+        "ageHours": 1.42,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
@@ -338,10 +338,10 @@
         "missingAfter": 0,
         "centralPaginationComplete": true,
         "centralGeneratedAt": "2026-09-12 13:13:53 KST",
-        "centralAgeHours": 0.05,
+        "centralAgeHours": 1.04,
         "ledgerPresent": true,
         "ledgerGeneratedAt": "2026-09-12 12:51:32 KST",
-        "ledgerAgeHours": 0.43,
+        "ledgerAgeHours": 1.42,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
         "reportCentralSkewHours": 0.372,
@@ -355,8 +355,8 @@
         "currentComplete": true
       }
     },
-    "stage": "complete",
+    "stage": "source-id-reconciliation",
     "lastSuccessAt": "2026-09-12T13:17:09+09:00",
-    "lastFailureAt": "2026-09-11T22:18:40+09:00"
+    "lastFailureAt": "2026-09-12T14:16:29+09:00"
   }
 }
