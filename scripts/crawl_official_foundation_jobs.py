@@ -103,7 +103,8 @@ def request(session: requests.Session, url: str) -> requests.Response:
 def candidate_period_segments(text: str) -> list[str]:
     segments = []
     for m in PERIOD_HINT_RE.finditer(text):
-        segments.append(text[m.start():m.start() + 500])
+        # Detail pages can place the actual date several hundred characters after the label.
+        segments.append(text[m.start():m.start() + 1200])
     return segments or [text[:1600]]
 
 
@@ -144,7 +145,6 @@ def extract_apply_end(text: str, registered: date | None) -> date | None:
 
 
 def detail_title(soup: BeautifulSoup, fallback: str = "") -> str:
-    # Prefer the page's visible article heading, but avoid relying on one markup version.
     for selector in ("h3", "h4", ".board-view-title", ".view-title", ".title"):
         for node in soup.select(selector):
             text = normalize_space(node.get_text(" ", strip=True))
@@ -157,8 +157,6 @@ def detail_registered(soup: BeautifulSoup, fallback: date | None) -> date | None
     text = normalize_space(soup.get_text(" ", strip=True))
     today = datetime.now(KST).date()
     dates = [d for d in parse_all_dates(text[:2600]) if d <= today]
-    # The page metadata date is normally the newest past date near the heading. A list-row
-    # date, when present, is stronger and avoids confusing dates embedded in the notice body.
     if fallback:
         return fallback
     recent = [d for d in dates if d >= today - timedelta(days=120)]
@@ -166,12 +164,6 @@ def detail_registered(soup: BeautifulSoup, fallback: date | None) -> date | None
 
 
 def nsart_detail_candidates(session: requests.Session, foundation: dict, board_url: str) -> tuple[dict[str, dict], list[str]]:
-    """Collect detail IDs from two independent surfaces.
-
-    nsart's recruitment list can be served from a stale cache to some clients. The homepage has a
-    separate current-recruitment surface, so use both. Missing a link on either surface must not hide
-    a current official posting.
-    """
     surfaces = [board_url]
     homepage = str(foundation.get("homepage") or "").strip()
     if homepage:
