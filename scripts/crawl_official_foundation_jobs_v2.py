@@ -24,6 +24,7 @@ KST = base.KST
 OUTPUT = base.OUTPUT
 REPORT = base.REPORT
 UA = base.UA
+SFAC_CAREERLINK_URL = "https://sfac.careerlink.kr/"
 
 
 RETRY = Retry(
@@ -140,6 +141,28 @@ def sfac_rows(session: requests.Session, foundation: dict, url: str) -> tuple[li
     }
 
 
+def sfac_careerlink_probe(session: requests.Session) -> dict:
+    """Verify the separate official contract/temporary hiring surface.
+
+    It is an official application surface distinct from Saramin. When it explicitly reports
+    zero current postings, that is a valid empty collection. If a posting appears later and the
+    surface is no longer explicitly empty, fail closed until a dedicated parser is implemented.
+    """
+    r = resilient_request(session, SFAC_CAREERLINK_URL)
+    soup = BeautifulSoup(r.text, "html.parser")
+    text = base.normalize_space(soup.get_text(" ", strip=True))
+    empty = "현재 게시중인 공고가 없습니다" in text
+    if not empty:
+        raise RuntimeError("sfac.careerlink.kr is not explicitly empty; dedicated current-post parser is required before collection can continue")
+    return {
+        "url": r.url,
+        "healthy": True,
+        "currentJobs": 0,
+        "explicitEmpty": True,
+        "role": "secondary-official-contract-surface",
+    }
+
+
 def main() -> int:
     generated = datetime.now(KST).isoformat(timespec="seconds")
     foundations = base.effective_foundations()
@@ -161,6 +184,9 @@ def main() -> int:
                 found, meta = base.nsart_rows(session, foundation, board_url)
             elif host == "sfac.saramin.co.kr":
                 found, meta = sfac_rows(session, foundation, board_url)
+                careerlink = sfac_careerlink_probe(session)
+                meta["surfacesChecked"] = meta.get("surfacesChecked", []) + [careerlink["url"]]
+                meta["secondarySurfaces"] = [careerlink]
             else:
                 unsupported.append({
                     "foundationRegistryId": foundation.get("id"),
@@ -203,7 +229,7 @@ def main() -> int:
     payload = {"generatedAt": generated, "sourceRole": "primary-official", "jobs": jobs}
     report = {
         "generatedAt": generated,
-        "policy": "official-foundation-primary-fail-closed-v3-retry-and-sfac",
+        "policy": "official-foundation-primary-fail-closed-v4-retry-sfac-careerlink",
         "healthy": healthy,
         "registryInstitutions": len(foundations),
         "officialBoardsConfigured": len(configured),
