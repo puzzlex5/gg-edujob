@@ -15,7 +15,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 70
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
         with:
@@ -142,6 +142,23 @@ jobs:
         run: |
           python scripts/update_collector_status.py --workflow fast --stage ledger --state running
           python scripts/update_collection_state.py
+
+      - name: Refresh official reconciliation evidence for current fast dataset
+        timeout-minutes: 55
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/update_collector_status.py --workflow fast --stage official-reconciliation --state running
+          echo "RECONCILE_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          SCAN_ID="$(date -u +%Y%m%dT%H%M%SZ)-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "RECONCILE_SCAN_ID=${SCAN_ID}" >> "$GITHUB_ENV"
+          echo "Fast publication reconciliation scan: ${SCAN_ID}"
+          python scripts/verify_central_pagination.py
+          python scripts/stamp_reconciliation_scan.py --central
+          python scripts/reconcile_source_ids.py
+          python scripts/stamp_reconciliation_scan.py --reconciliation
+          python scripts/verify_central_reconciliation_consistency.py
+          python scripts/validate_reconciliation_policy.py
 
       - name: Final publication guard
         run: |
