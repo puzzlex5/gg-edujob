@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-12T19:07:18+09:00",
+  "generatedAt": "2026-09-12T20:06:45+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-12T19:07:18+09:00",
+    "generatedAt": "2026-09-12T20:06:45+09:00",
     "official": {
       "datasetCount": 19420,
       "officialIdCount": 17861,
@@ -12,10 +12,10 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7399,
+      "publishedJobs": 7397,
       "officialDisplayed": 2990,
-      "privateDisplayed": 4409,
-      "privateDiscovered": 4413,
+      "privateDisplayed": 4407,
+      "privateDiscovered": 4411,
       "officialPrivateAliases": 4,
       "healthy": true,
       "missingPrivateIds": 0,
@@ -286,11 +286,11 @@
         "healthy": true,
         "datasetCount": 36,
         "rawCount": 36,
-        "currentCount": 36,
+        "currentCount": 34,
         "missingAfter": 0,
         "detailErrors": 0,
         "traversalComplete": true,
-        "latestRegistered": "2026-09-11"
+        "latestRegistered": "2026-09-25"
       },
       "gonggonggangsa": {
         "name": "공공강사",
@@ -332,32 +332,32 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-11T19:07:47+09:00",
+      "baselineAt": "2026-09-11T20:07:54+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19420,
-          "baseline": 19421,
-          "changeRatio": -0.0001
+          "baseline": 19423,
+          "changeRatio": -0.0002
         },
         "official.officialIdCount": {
           "current": 17861,
-          "baseline": 17874,
-          "changeRatio": -0.0007
+          "baseline": 17876,
+          "changeRatio": -0.0008
         },
         "unified.publishedJobs": {
-          "current": 7399,
-          "baseline": 7724,
-          "changeRatio": -0.0421
+          "current": 7397,
+          "baseline": 7728,
+          "changeRatio": -0.0428
         },
         "unified.officialDisplayed": {
           "current": 2990,
-          "baseline": 3306,
-          "changeRatio": -0.0956
+          "baseline": 3308,
+          "changeRatio": -0.0961
         },
         "unified.privateDiscovered": {
-          "current": 4413,
-          "baseline": 4424,
-          "changeRatio": -0.0025
+          "current": 4411,
+          "baseline": 4426,
+          "changeRatio": -0.0034
         }
       },
       "privateSources": {
@@ -377,14 +377,14 @@
           "changeRatio": -0.0002
         },
         "artmore": {
-          "current": 36,
+          "current": 34,
           "baseline": 36,
-          "changeRatio": 0.0
+          "changeRatio": -0.0556
         },
         "gonggonggangsa": {
           "current": 48,
-          "baseline": 59,
-          "changeRatio": -0.1864
+          "baseline": 61,
+          "changeRatio": -0.2131
         },
         "seekle": {
           "current": 1,
@@ -399,7 +399,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-05T19:07:48+09:00",
+      "baselineAt": "2026-09-05T20:07:19+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19420,
@@ -412,9 +412,9 @@
           "changeRatio": -0.0178
         },
         "unified.publishedJobs": {
-          "current": 7399,
+          "current": 7397,
           "baseline": 7601,
-          "changeRatio": -0.0266
+          "changeRatio": -0.0268
         },
         "unified.officialDisplayed": {
           "current": 2990,
@@ -422,9 +422,9 @@
           "changeRatio": -0.045
         },
         "unified.privateDiscovered": {
-          "current": 4413,
+          "current": 4411,
           "baseline": 4482,
-          "changeRatio": -0.0154
+          "changeRatio": -0.0158
         }
       },
       "privateSources": {
@@ -444,9 +444,9 @@
           "changeRatio": 0.0002
         },
         "artmore": {
-          "current": 36,
+          "current": 34,
           "baseline": 20,
-          "changeRatio": 0.8
+          "changeRatio": 0.7
         },
         "gonggonggangsa": {
           "current": 48,
