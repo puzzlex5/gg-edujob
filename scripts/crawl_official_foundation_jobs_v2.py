@@ -66,12 +66,7 @@ def resilient_request(session: requests.Session, url: str) -> requests.Response:
 
 
 def sfac_rows(session: requests.Session, foundation: dict, url: str) -> tuple[list[dict], dict]:
-    """Read the current official Seoul Cultural Foundation recruitment microsite.
-
-    The official SFAC site links applicants to this microsite. It is a current-posting surface,
-    not an archive: a posting is emitted only while its application/announcement period is still
-    open. Closed historical notices therefore do not become fake current jobs.
-    """
+    """Read the current official Seoul Cultural Foundation recruitment microsite."""
     r = resilient_request(session, url)
     soup = BeautifulSoup(r.text, "html.parser")
     text = base.normalize_space(soup.get_text(" ", strip=True))
@@ -144,14 +139,14 @@ def sfac_rows(session: requests.Session, foundation: dict, url: str) -> tuple[li
 def sfac_careerlink_probe(session: requests.Session) -> dict:
     """Verify the separate official contract/temporary hiring surface.
 
-    It is an official application surface distinct from Saramin. When it explicitly reports
-    zero current postings, that is a valid empty collection. If a posting appears later and the
-    surface is no longer explicitly empty, fail closed until a dedicated parser is implemented.
+    The live microsite can render the empty state without the exact phrase in every transport
+    representation. Accept only an explicit zero-posting marker ("0 / 0" plus the recruitment
+    heading); any non-empty state remains fail-closed until a dedicated parser exists.
     """
     r = resilient_request(session, SFAC_CAREERLINK_URL)
     soup = BeautifulSoup(r.text, "html.parser")
     text = base.normalize_space(soup.get_text(" ", strip=True))
-    empty = "현재 게시중인 공고가 없습니다" in text
+    empty = "현재 게시중인 공고가 없습니다" in text or ("0 / 0" in text and "채용공고" in text)
     if not empty:
         raise RuntimeError("sfac.careerlink.kr is not explicitly empty; dedicated current-post parser is required before collection can continue")
     return {
@@ -168,7 +163,6 @@ def main() -> int:
     foundations = base.effective_foundations()
     configured = [x for x in foundations if str(x.get("officialRecruitmentUrl") or "").strip()]
     session = make_session()
-    # Reuse the existing, tested nsart adapter but give it the same bounded transport retry policy.
     base.request = resilient_request
 
     jobs: list[dict] = []
