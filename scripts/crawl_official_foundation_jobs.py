@@ -84,16 +84,7 @@ def effective_foundations() -> list[dict]:
 
 
 def request(session: requests.Session, url: str) -> requests.Response:
-    r = session.get(
-        url,
-        timeout=25,
-        headers={
-            "User-Agent": UA,
-            "Cache-Control": "no-cache, no-store, max-age=0",
-            "Pragma": "no-cache",
-        },
-        allow_redirects=True,
-    )
+    r = session.get(url, timeout=25, headers={"User-Agent": UA, "Cache-Control": "no-cache, no-store, max-age=0", "Pragma": "no-cache"}, allow_redirects=True)
     r.raise_for_status()
     if not r.encoding or r.encoding.lower() == "iso-8859-1":
         r.encoding = r.apparent_encoding or "utf-8"
@@ -110,16 +101,15 @@ def candidate_period_segments(text: str) -> list[str]:
 def extract_apply_end(text: str, registered: date | None) -> date | None:
     candidates: list[date] = []
     base_year = registered.year if registered else datetime.now(KST).year
+    today = datetime.now(KST).date()
     for segment in candidate_period_segments(normalize_space(text)):
-        # Prefer the explicit first application-period range so later contract/appointment dates
-        # cannot overwrite the true application deadline.
         m = re.search(r"(20\d{2})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2}).{0,40}?[~～-].{0,20}?(?:(20\d{2})\s*[./-]\s*)?(\d{1,2})\s*[./-]\s*(\d{1,2})", segment)
         if m:
             try:
                 year = int(m.group(4) or m.group(1))
                 end = date(year, int(m.group(5)), int(m.group(6)))
-                lower = (registered or datetime.now(KST).date()) - timedelta(days=2)
-                upper = (registered or datetime.now(KST).date()) + timedelta(days=150)
+                lower = today - timedelta(days=180)
+                upper = today + timedelta(days=150)
                 if lower <= end <= upper:
                     return end
             except ValueError:
@@ -141,11 +131,10 @@ def extract_apply_end(text: str, registered: date | None) -> date | None:
                 candidates.append(date(base_year, int(m.group(1)), int(m.group(3))))
             except ValueError:
                 pass
-
     if not candidates:
         return None
-    lower = (registered or datetime.now(KST).date()) - timedelta(days=2)
-    upper = (registered or datetime.now(KST).date()) + timedelta(days=150)
+    lower = today - timedelta(days=180)
+    upper = today + timedelta(days=150)
     plausible = [d for d in candidates if lower <= d <= upper]
     return max(plausible) if plausible else None
 
@@ -204,7 +193,6 @@ def nsart_rows(session: requests.Session, foundation: dict, board_url: str) -> t
     rows = []
     candidates, surfaces = nsart_detail_candidates(session, foundation, board_url)
     inspected = 0
-
     for bpo, meta in sorted(candidates.items(), key=lambda item: int(item[0]), reverse=True):
         inspected += 1
         detail = request(session, str(meta["url"]))
@@ -215,46 +203,12 @@ def nsart_rows(session: requests.Session, foundation: dict, board_url: str) -> t
             continue
         if RESULT_RE.search(title):
             continue
-        detail_text = detail_soup.get_text(" ", strip=True)
-        end = extract_apply_end(detail_text, reg)
+        end = extract_apply_end(detail_soup.get_text(" ", strip=True), reg)
         if end and end < today:
             continue
-
         fid = str(foundation.get("id") or "")
-        rows.append({
-            "sourceIdentity": f"official-foundation:nsart:{bpo}",
-            "foundationRegistryId": fid,
-            "foundationName": foundation.get("name") or "광주시문화재단",
-            "organization": foundation.get("name") or "광주시문화재단",
-            "source": foundation.get("name") or "광주시문화재단",
-            "sourceType": "문화재단 공식채용",
-            "sourceSurface": "cultural-foundation",
-            "sourceSurfaceLabel": f"{foundation.get('name') or '문화재단'} 공식 채용공고",
-            "sourceRole": "primary-official",
-            "trustLevel": "공식",
-            "province": foundation.get("region") or "경기",
-            "region": foundation.get("municipality") or "",
-            "regions": [foundation.get("municipality")] if foundation.get("municipality") else [],
-            "location": " ".join(x for x in [foundation.get("region"), foundation.get("municipality")] if x),
-            "title": title,
-            "registered": format_date(reg),
-            "applyEnd": format_date(end),
-            "url": detail.url,
-            "originalUrl": detail.url,
-            "detailUrl": detail.url,
-            "boardUrl": board_url,
-            "detailLinkVerified": True,
-            "detailLinkReason": "official-foundation-detail-id",
-            "transportVerified": True,
-        })
-
-    return rows, {
-        "adapter": "nsart",
-        "surfacesChecked": surfaces,
-        "discoveredDetailLinks": len(candidates),
-        "inspectedDetailLinks": inspected,
-        "publishedCurrentJobs": len(rows),
-    }
+        rows.append({"sourceIdentity": f"official-foundation:nsart:{bpo}", "foundationRegistryId": fid, "foundationName": foundation.get("name") or "광주시문화재단", "organization": foundation.get("name") or "광주시문화재단", "source": foundation.get("name") or "광주시문화재단", "sourceType": "문화재단 공식채용", "sourceSurface": "cultural-foundation", "sourceSurfaceLabel": f"{foundation.get('name') or '문화재단'} 공식 채용공고", "sourceRole": "primary-official", "trustLevel": "공식", "province": foundation.get("region") or "경기", "region": foundation.get("municipality") or "", "regions": [foundation.get("municipality")] if foundation.get("municipality") else [], "location": " ".join(x for x in [foundation.get("region"), foundation.get("municipality")] if x), "title": title, "registered": format_date(reg), "applyEnd": format_date(end), "url": detail.url, "originalUrl": detail.url, "detailUrl": detail.url, "boardUrl": board_url, "detailLinkVerified": True, "detailLinkReason": "official-foundation-detail-id", "transportVerified": True})
+    return rows, {"adapter": "nsart", "surfacesChecked": surfaces, "discoveredDetailLinks": len(candidates), "inspectedDetailLinks": inspected, "publishedCurrentJobs": len(rows)}
 
 
 def main() -> int:
@@ -266,7 +220,6 @@ def main() -> int:
     errors = []
     unsupported = []
     board_results = []
-
     for foundation in configured:
         board_url = str(foundation.get("officialRecruitmentUrl") or "").strip()
         host = (urlparse(board_url).hostname or "").lower()
@@ -274,56 +227,22 @@ def main() -> int:
             if host == "nsart.or.kr" or host.endswith(".nsart.or.kr"):
                 found, meta = nsart_rows(session, foundation, board_url)
                 jobs.extend(found)
-                board_results.append({
-                    "foundationRegistryId": foundation.get("id"),
-                    "foundationName": foundation.get("name"),
-                    "boardUrl": board_url,
-                    "healthy": True,
-                    **meta,
-                })
+                board_results.append({"foundationRegistryId": foundation.get("id"), "foundationName": foundation.get("name"), "boardUrl": board_url, "healthy": True, **meta})
             else:
-                unsupported.append({
-                    "foundationRegistryId": foundation.get("id"),
-                    "foundationName": foundation.get("name"),
-                    "boardUrl": board_url,
-                    "reason": "adapter-not-yet-implemented",
-                })
+                unsupported.append({"foundationRegistryId": foundation.get("id"), "foundationName": foundation.get("name"), "boardUrl": board_url, "reason": "adapter-not-yet-implemented"})
         except Exception as exc:
-            errors.append({
-                "foundationRegistryId": foundation.get("id"),
-                "foundationName": foundation.get("name"),
-                "boardUrl": board_url,
-                "error": f"{type(exc).__name__}: {exc}",
-            })
-            board_results.append({
-                "foundationRegistryId": foundation.get("id"),
-                "foundationName": foundation.get("name"),
-                "boardUrl": board_url,
-                "healthy": False,
-            })
-
+            errors.append({"foundationRegistryId": foundation.get("id"), "foundationName": foundation.get("name"), "boardUrl": board_url, "error": f"{type(exc).__name__}: {exc}"})
+            board_results.append({"foundationRegistryId": foundation.get("id"), "foundationName": foundation.get("name"), "boardUrl": board_url, "healthy": False})
     ids = [str(x.get("sourceIdentity") or "") for x in jobs]
     urls = [str(x.get("url") or "") for x in jobs]
     duplicate_ids = sorted({x for x in ids if x and ids.count(x) > 1})
     duplicate_urls = sorted({x for x in urls if x and urls.count(x) > 1})
     if duplicate_ids or duplicate_urls:
         errors.append({"error": "duplicate-official-identities", "ids": duplicate_ids, "urls": duplicate_urls})
-
     jobs.sort(key=lambda x: (str(x.get("registered") or ""), str(x.get("sourceIdentity") or "")), reverse=True)
     healthy = not errors
     payload = {"generatedAt": generated, "sourceRole": "primary-official", "jobs": jobs}
-    report = {
-        "generatedAt": generated,
-        "policy": "official-foundation-primary-fail-closed-v2",
-        "healthy": healthy,
-        "registryInstitutions": len(foundations),
-        "officialBoardsConfigured": len(configured),
-        "supportedBoardsChecked": len(board_results),
-        "unsupportedConfiguredBoards": unsupported,
-        "jobs": len(jobs),
-        "errors": errors,
-        "boards": board_results,
-    }
+    report = {"generatedAt": generated, "policy": "official-foundation-primary-fail-closed-v2", "healthy": healthy, "registryInstitutions": len(foundations), "officialBoardsConfigured": len(configured), "supportedBoardsChecked": len(board_results), "unsupportedConfiguredBoards": unsupported, "jobs": len(jobs), "errors": errors, "boards": board_results}
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
