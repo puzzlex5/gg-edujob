@@ -23,6 +23,12 @@ def identity(job):
         if v:return v
     url=str(job.get("url") or job.get("originalUrl") or job.get("detailUrl") or ""); m=re.search(r"(?:nttSn|nttId|articleId|bbsNo|seq|idx|jobId|recrutSn|bpoId)=(\d+)",url,re.I)
     return f"url-id:{m.group(1)}" if m else f"url:{url}"
+def unique_support(rows):
+    out={}
+    for job in rows:
+        key=identity(job)
+        if key not in out: out[key]=job
+    return list(out.values())
 def title(job): return re.sub(r"\s+"," ",str(job.get("title") or "")).strip()
 def url(job): return str(job.get("url") or job.get("detailUrl") or job.get("originalUrl") or "").strip()
 def fetch(url_):
@@ -47,7 +53,8 @@ def classify(old,current,current_ids):
     end=str(old.get("applyEnd") or old.get("deadline") or "")
     return {"oldId":oid,"classification":"parser/기간 기준 변경" if end and end < datetime.now(timezone.utc).date().isoformat() else "정상 종료/삭제","title":old_title,"url":old_url,"probe":status}
 def main():
-    old= [j for j in as_jobs(git_json(HIST,"jobs.json")) if is_support(j)]; cur=[j for j in as_jobs(json.loads(Path("jobs.json").read_text(encoding="utf-8"))) if is_support(j)]
+    old=unique_support([j for j in as_jobs(git_json(HIST,"jobs.json")) if is_support(j)])
+    cur=unique_support([j for j in as_jobs(json.loads(Path("jobs.json").read_text(encoding="utf-8"))) if is_support(j)])
     ids={identity(j) for j in cur}; missing=[j for j in old if identity(j) not in ids]; rows=[classify(j,cur,ids) for j in missing]; counts={}
     for row in rows:counts[row["classification"]]=counts.get(row["classification"],0)+1
     report={"generatedAt":datetime.now(timezone.utc).isoformat(),"historicalCommit":HIST,"historicalSupportCount":len(old),"currentSupportCount":len(cur),"historicalMinusCurrent":len(missing),"counts":counts,"actualMissing":[r for r in rows if r["classification"]=="실제 누락"],"rows":rows,"healthy":len(rows)==71 and counts.get("실제 누락",0)==0}
