@@ -1,15 +1,44 @@
 {
-  "generatedAt": "2026-09-13T09:55:45+09:00",
+  "generatedAt": "2026-09-13T11:52:56+09:00",
   "source": "아트모아",
   "policy": "artmore-active-browser-v1-candidate",
   "publicationEnabled": false,
-  "healthy": false,
-  "traversalComplete": false,
-  "candidateIdCount": 7,
-  "publishedIdCount": 7,
+  "healthy": true,
+  "traversalComplete": true,
+  "candidateIdCount": 36,
+  "publishedIdCount": 36,
   "missingAfterCount": 0,
   "missingAfter": [],
   "sourceReports": [
+    {
+      "region": "서울",
+      "code": "2001",
+      "pagesVisited": 3,
+      "ids": 29,
+      "pages": [
+        {
+          "page": 1,
+          "rowCount": 10,
+          "newIdCount": 10,
+          "firstId": "94972",
+          "lastId": "94960"
+        },
+        {
+          "page": 2,
+          "rowCount": 10,
+          "newIdCount": 10,
+          "firstId": "94959",
+          "lastId": "94927"
+        },
+        {
+          "page": 3,
+          "rowCount": 9,
+          "newIdCount": 9,
+          "firstId": "94924",
+          "lastId": "94912"
+        }
+      ]
+    },
     {
       "region": "경기",
       "code": "2083",
@@ -26,16 +55,7 @@
       ]
     }
   ],
-  "errors": [
-    {
-      "region": "서울",
-      "error": "RuntimeError: region radio missing while restoring: 서울/2001"
-    },
-    {
-      "region": "all",
-      "error": "suspicious drop: previous=36 current=7"
-    }
-  ],
+  "errors": [],
   "regionsAllowed": [
     "서울",
     "경기"
