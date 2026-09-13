@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T08:06:27+09:00",
+  "generatedAt": "2026-09-13T09:10:20+09:00",
   "registrySourceCount": 38,
   "observedSourceCount": 38,
   "healthy": true,
@@ -34,7 +34,7 @@
     },
     "광주하남교육지원청": {
       "stableIdCount": 330,
-      "latestRegistered": "2026-09-11",
+      "latestRegistered": "2026-09-12",
       "coverageComplete": true,
       "missingAfter": 0,
       "accessErrors": 0
@@ -167,7 +167,7 @@
     },
     "평택교육지원청": {
       "stableIdCount": 757,
-      "latestRegistered": "2026-09-11",
+      "latestRegistered": "2026-09-12",
       "coverageComplete": true,
       "missingAfter": 0,
       "accessErrors": 0
@@ -273,7 +273,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T08:06:31+09:00",
+      "baselineAt": "2026-09-12T09:09:39+09:00",
       "sources": {
         "경기도교육청 통합 구인구직": {
           "current": 10245,
@@ -307,7 +307,7 @@
           "current": 330,
           "baseline": 330,
           "changeRatio": 0.0,
-          "latestRegistered": "2026-09-11",
+          "latestRegistered": "2026-09-12",
           "baselineLatestRegistered": "2026-09-11"
         },
         "구리남양주교육지원청": {
@@ -440,7 +440,7 @@
           "current": 757,
           "baseline": 757,
           "changeRatio": 0.0,
-          "latestRegistered": "2026-09-11",
+          "latestRegistered": "2026-09-12",
           "baselineLatestRegistered": "2026-09-11"
         },
         "포천교육지원청": {
@@ -544,7 +544,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T08:07:27+09:00",
+      "baselineAt": "2026-09-06T09:13:56+09:00",
       "sources": {
         "경기도교육청 통합 구인구직": {
           "current": 10245,
@@ -578,7 +578,7 @@
           "current": 330,
           "baseline": 337,
           "changeRatio": -0.0208,
-          "latestRegistered": "2026-09-11",
+          "latestRegistered": "2026-09-12",
           "baselineLatestRegistered": "2026-09-04"
         },
         "구리남양주교육지원청": {
@@ -711,7 +711,7 @@
           "current": 757,
           "baseline": 762,
           "changeRatio": -0.0066,
-          "latestRegistered": "2026-09-11",
+          "latestRegistered": "2026-09-12",
           "baselineLatestRegistered": "2026-09-04"
         },
         "포천교육지원청": {
@@ -730,8 +730,8 @@
         },
         "서울교육일자리포털": {
           "current": 381,
-          "baseline": 367,
-          "changeRatio": 0.0381,
+          "baseline": 368,
+          "changeRatio": 0.0353,
           "latestRegistered": "2026-09-12",
           "baselineLatestRegistered": "2026-09-06"
         },
@@ -761,7 +761,7 @@
           "baseline": 0,
           "changeRatio": null,
           "latestRegistered": "2026-09-04",
-          "baselineLatestRegistered": "2026-09-01"
+          "baselineLatestRegistered": "2026-09-04"
         },
         "중부교육지원청": {
           "current": 46,
@@ -851,9 +851,16 @@
       "source": "서부교육지원청",
       "latestRegistered": "2026-09-03",
       "ageDays": 10
+    },
+    {
+      "severity": "warning",
+      "code": "official-source-freshness-stall",
+      "source": "북부교육지원청",
+      "latestRegistered": "2026-09-04",
+      "ageDays": 9
     }
   ],
   "criticalCount": 0,
-  "warningCount": 5,
+  "warningCount": 6,
   "policy": "exact registry sources; counts from stable-ID reconciliation; composite display labels never create synthetic sources"
 }
