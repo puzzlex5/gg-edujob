@@ -1,231 +1,134 @@
 {
-  "generatedAt": "2026-09-13T15:58:45+09:00",
+  "generatedAt": "2026-09-13T19:54:14+09:00",
   "source": "아트모아",
-  "healthy": false,
-  "detailCoverageComplete": false,
+  "healthy": true,
+  "detailCoverageComplete": true,
   "candidateCount": 36,
-  "verifiedCount": 16,
-  "detailErrorCount": 20,
+  "verifiedCount": 36,
+  "detailErrorCount": 0,
   "abnormalDrop": false,
   "previousCanonicalCount": 36,
   "candidateDropRatio": 0.0,
-  "errors": [
+  "errors": [],
+  "verifiedExamples": [
     {
       "sourceIdentity": "artmore:94972",
       "stableId": "94972",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94972",
-      "error": "Error: Page.goto: net::ERR_TIMED_OUT at https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94972\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94972\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94971",
       "stableId": "94971",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94971",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94971\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94971\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94970",
       "stableId": "94970",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94970",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94970\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94971\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94970\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94969",
       "stableId": "94969",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94969",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94969\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94970\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94969\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94968",
       "stableId": "94968",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94968",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94968\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94969\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94968\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94965",
       "stableId": "94965",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94965",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94965\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94968\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94965\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94964",
       "stableId": "94964",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94964",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94964\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94965\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94964\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94962",
       "stableId": "94962",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94962",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94962\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94964\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94962\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94961",
       "stableId": "94961",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94961",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94961\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94962\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94961\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94960",
       "stableId": "94960",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94960",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94960\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94961\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94960\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94959",
       "stableId": "94959",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94959",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94959\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94960\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94959\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94958",
       "stableId": "94958",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94958",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94958\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94959\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94958\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94957",
       "stableId": "94957",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94957",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94957\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94958\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94957\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94956",
       "stableId": "94956",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94956",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94956\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94957\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94956\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94954",
       "stableId": "94954",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94954",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94954\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94956\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94954\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94941",
       "stableId": "94941",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94941",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94941\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94954\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94941\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94939",
       "stableId": "94939",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94939",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94939\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94941\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94939\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94949",
       "stableId": "94949",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94949",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94949\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94939\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94949\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94928",
       "stableId": "94928",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94928",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94928\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94949\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94928\", waiting until \"domcontentloaded\"\n"
+      "httpStatus": 200
     },
     {
       "sourceIdentity": "artmore:94927",
       "stableId": "94927",
       "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94927",
-      "error": "Error: Page.goto: Navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94927\" is interrupted by another navigation to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94928\"\nCall log:\n  - navigating to \"https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94927\", waiting until \"domcontentloaded\"\n"
-    }
-  ],
-  "verifiedExamples": [
-    {
-      "sourceIdentity": "artmore:94924",
-      "stableId": "94924",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94924",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94922",
-      "stableId": "94922",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94922",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94921",
-      "stableId": "94921",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94921",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94920",
-      "stableId": "94920",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94920",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94935",
-      "stableId": "94935",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94935",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94934",
-      "stableId": "94934",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94934",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94933",
-      "stableId": "94933",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94933",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94932",
-      "stableId": "94932",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94932",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94912",
-      "stableId": "94912",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94912",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94952",
-      "stableId": "94952",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94952",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94937",
-      "stableId": "94937",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94937",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94946",
-      "stableId": "94946",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94946",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94947",
-      "stableId": "94947",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94947",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94923",
-      "stableId": "94923",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94923",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94910",
-      "stableId": "94910",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94910",
-      "httpStatus": 200
-    },
-    {
-      "sourceIdentity": "artmore:94905",
-      "stableId": "94905",
-      "url": "https://www.artmore.kr/sub/recruit/search_view.do?rec_idx=94905",
       "httpStatus": 200
     }
   ]
