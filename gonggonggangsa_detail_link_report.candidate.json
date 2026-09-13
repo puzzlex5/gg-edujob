@@ -1,10 +1,19 @@
 {
-  "generatedAt": "2026-09-13T19:00:08+09:00",
+  "generatedAt": "2026-09-13T19:34:20+09:00",
   "source": "공공강사",
-  "healthy": true,
-  "detailCoverageComplete": true,
+  "healthy": false,
+  "detailCoverageComplete": false,
   "candidateCount": 47,
   "checkedCount": 47,
-  "detailErrorCount": 0,
-  "errors": []
+  "detailErrorCount": 1,
+  "errors": [
+    {
+      "url": "https://00gangsa.com/recruitments/23394",
+      "ok": false,
+      "status": null,
+      "finalUrl": null,
+      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+      "sourceIdentity": "gonggonggangsa:23394"
+    }
+  ]
 }
