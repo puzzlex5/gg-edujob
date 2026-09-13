@@ -270,8 +270,8 @@
     "lastFailureAt": "2026-09-13T10:52:30+09:00"
   },
   "reconciliation": {
-    "state": "success",
-    "updatedAt": "2026-09-13T13:48:55+09:00",
+    "state": "failed",
+    "updatedAt": "2026-09-13T14:44:52+09:00",
     "jobsCount": 19419,
     "artifacts": {
       "jobLedger": true,
@@ -290,11 +290,11 @@
       "centralPaginationReport": "2026-09-12 16:13:46 KST",
       "missingRecoveryReport": "",
       "boardDiscoveryReport": "",
-      "collectionState": "2026-09-13 13:48:52 KST"
+      "collectionState": "2026-09-13 14:34:48 KST"
     },
     "coverageEvidence": {
       "generatedAt": "2026-09-12T07:18:42.218994+00:00",
-      "ageHours": 21.5,
+      "ageHours": 22.44,
       "freshWithinHours": 30,
       "fresh": true,
       "gyeonggiComplete": 25,
@@ -312,7 +312,7 @@
       "proof": "support-coverage+38-source-reconciliation",
       "supportCoverage": {
         "generatedAt": "2026-09-12T07:18:42.218994+00:00",
-        "ageHours": 21.5,
+        "ageHours": 22.44,
         "freshWithinHours": 30,
         "fresh": true,
         "gyeonggiComplete": 25,
@@ -330,7 +330,7 @@
       },
       "sourceReconciliation": {
         "generatedAt": "2026-09-12 15:53:31 KST",
-        "ageHours": 21.92,
+        "ageHours": 22.86,
         "freshWithinHours": 30,
         "fresh": true,
         "reconciledSources": 38,
@@ -338,10 +338,10 @@
         "missingAfter": 0,
         "centralPaginationComplete": true,
         "centralGeneratedAt": "2026-09-12 16:13:46 KST",
-        "centralAgeHours": 21.59,
+        "centralAgeHours": 22.52,
         "ledgerPresent": true,
         "ledgerGeneratedAt": "2026-09-12 15:53:31 KST",
-        "ledgerAgeHours": 21.92,
+        "ledgerAgeHours": 22.86,
         "sameScanWindow": true,
         "reportLedgerSkewHours": 0.0,
         "reportCentralSkewHours": 0.338,
@@ -355,8 +355,8 @@
         "currentComplete": true
       }
     },
-    "stage": "candidate-recovered",
+    "stage": "source-id-reconciliation",
     "lastSuccessAt": "2026-09-13T13:48:55+09:00",
-    "lastFailureAt": "2026-09-13T13:45:51+09:00"
+    "lastFailureAt": "2026-09-13T14:44:52+09:00"
   }
 }
