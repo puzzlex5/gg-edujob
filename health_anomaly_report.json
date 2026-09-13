@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T14:06:51+09:00",
+  "generatedAt": "2026-09-13T15:12:49+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-13T14:06:51+09:00",
+    "generatedAt": "2026-09-13T15:12:49+09:00",
     "official": {
       "datasetCount": 19419,
       "officialIdCount": 17861,
@@ -332,7 +332,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T14:06:41+09:00",
+      "baselineAt": "2026-09-12T15:09:15+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19419,
@@ -346,25 +346,25 @@
         },
         "unified.publishedJobs": {
           "current": 7360,
-          "baseline": 7446,
-          "changeRatio": -0.0115
+          "baseline": 7144,
+          "changeRatio": 0.0302
         },
         "unified.officialDisplayed": {
           "current": 2975,
-          "baseline": 3050,
-          "changeRatio": -0.0246
+          "baseline": 2998,
+          "changeRatio": -0.0077
         },
         "unified.privateDiscovered": {
           "current": 4388,
-          "baseline": 4400,
-          "changeRatio": -0.0027
+          "baseline": 4146,
+          "changeRatio": 0.0584
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 247,
-          "baseline": 255,
-          "changeRatio": -0.0314
+          "baseline": 267,
+          "changeRatio": -0.0749
         },
         "cleaneye": {
           "current": 20,
@@ -393,13 +393,13 @@
         },
         "boramyc": {
           "current": 2,
-          "baseline": 1,
-          "changeRatio": 1.0
+          "baseline": 2,
+          "changeRatio": 0.0
         }
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T14:07:44+09:00",
+      "baselineAt": "2026-09-06T15:10:13+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19419,
