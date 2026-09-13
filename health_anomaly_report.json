@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T19:15:34+09:00",
+  "generatedAt": "2026-09-13T20:07:21+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-13T19:15:34+09:00",
+    "generatedAt": "2026-09-13T20:07:21+09:00",
     "official": {
       "datasetCount": 19420,
       "officialIdCount": 17861,
@@ -12,11 +12,11 @@
       "totalSources": 38
     },
     "unified": {
-      "publishedJobs": 7117,
+      "publishedJobs": 7365,
       "officialDisplayed": 2976,
-      "privateDisplayed": 4141,
-      "privateDiscovered": 4141,
-      "officialPrivateAliases": 0,
+      "privateDisplayed": 4389,
+      "privateDiscovered": 4392,
+      "officialPrivateAliases": 3,
       "healthy": true,
       "missingPrivateIds": 0,
       "nonMetroPrivate": 0,
@@ -27,6 +27,7 @@
       "missingLinks": 0,
       "badCrossSourceAliasEvidence": 0,
       "enabledPrivateSources": [
+        "lessoninfo",
         "cleaneye",
         "jobteacher",
         "artmore",
@@ -34,9 +35,7 @@
         "seekle",
         "boramyc"
       ],
-      "degradedPrivateSources": [
-        "lessoninfo"
-      ]
+      "degradedPrivateSources": []
     },
     "officialSources": {
       "가평교육지원청": {
@@ -247,8 +246,8 @@
     "privateSources": {
       "lessoninfo": {
         "name": "레슨인포",
-        "enabled": false,
-        "healthy": false,
+        "enabled": true,
+        "healthy": true,
         "datasetCount": 251,
         "rawCount": 251,
         "currentCount": 251,
@@ -333,7 +332,7 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T19:07:18+09:00",
+      "baselineAt": "2026-09-12T20:06:45+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19420,
@@ -346,9 +345,9 @@
           "changeRatio": 0.0
         },
         "unified.publishedJobs": {
-          "current": 7117,
-          "baseline": 7399,
-          "changeRatio": -0.0381
+          "current": 7365,
+          "baseline": 7397,
+          "changeRatio": -0.0043
         },
         "unified.officialDisplayed": {
           "current": 2976,
@@ -356,9 +355,9 @@
           "changeRatio": -0.0047
         },
         "unified.privateDiscovered": {
-          "current": 4141,
-          "baseline": 4413,
-          "changeRatio": -0.0616
+          "current": 4392,
+          "baseline": 4411,
+          "changeRatio": -0.0043
         }
       },
       "privateSources": {
@@ -379,8 +378,8 @@
         },
         "artmore": {
           "current": 34,
-          "baseline": 36,
-          "changeRatio": -0.0556
+          "baseline": 34,
+          "changeRatio": 0.0
         },
         "gonggonggangsa": {
           "current": 47,
@@ -400,32 +399,32 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T19:08:16+09:00",
+      "baselineAt": "2026-09-06T20:07:37+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19420,
-          "baseline": 18901,
-          "changeRatio": 0.0275
+          "baseline": 18903,
+          "changeRatio": 0.0274
         },
         "official.officialIdCount": {
           "current": 17861,
-          "baseline": 17813,
-          "changeRatio": 0.0027
+          "baseline": 17809,
+          "changeRatio": 0.0029
         },
         "unified.publishedJobs": {
-          "current": 7117,
-          "baseline": 7530,
-          "changeRatio": -0.0548
+          "current": 7365,
+          "baseline": 7533,
+          "changeRatio": -0.0223
         },
         "unified.officialDisplayed": {
           "current": 2976,
-          "baseline": 3075,
-          "changeRatio": -0.0322
+          "baseline": 3076,
+          "changeRatio": -0.0325
         },
         "unified.privateDiscovered": {
-          "current": 4141,
-          "baseline": 4467,
-          "changeRatio": -0.073
+          "current": 4392,
+          "baseline": 4469,
+          "changeRatio": -0.0172
         }
       },
       "privateSources": {
@@ -461,8 +460,8 @@
         },
         "boramyc": {
           "current": 2,
-          "baseline": 0,
-          "changeRatio": null
+          "baseline": 2,
+          "changeRatio": 0.0
         }
       }
     },
