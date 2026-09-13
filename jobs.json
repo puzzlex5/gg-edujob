@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-13 15:25 KST",
+    "checkedAt": "2026-09-13 16:49 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1007,7 +1007,7 @@
       "supportFailed": 0,
       "failures": []
     },
-    "previousTotal": 19419,
+    "previousTotal": 19420,
     "currentTotal": 19420
   },
   "jobs": [
@@ -538959,11 +538959,11 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-13 15:24 KST",
+    "checkedAt": "2026-09-13 16:46 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-13 15:24 KST",
+    "checkedAt": "2026-09-13 16:46 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
@@ -538984,19 +538984,19 @@
     "seoulTotal": 507
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-13 15:23 KST",
+    "checkedAt": "2026-09-13 16:46 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5726,
     "detailPagesParsed": 2364,
-    "fieldsFilledThisRun": 2,
+    "fieldsFilledThisRun": 0,
     "missingApplicationPeriod": 1009,
     "missingWorkPeriod": 1904,
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-13 15:23 KST",
+      "checkedAt": "2026-09-13 16:46 KST",
       "candidates": 250,
-      "detailPagesConfirmed": 243,
+      "detailPagesConfirmed": 244,
       "cacheEntriesImproved": 0,
       "fieldsFilled": 0
     },
@@ -539019,5 +539019,13 @@
     "reconciledOffices": 38,
     "totalOffices": 38,
     "scanId": "20260913T062546Z-34741360204-1"
+  },
+  "officialIdRestore": {
+    "checkedAt": "2026-09-13 16:46:54 KST",
+    "ledgerScanId": "20260912T064842Z-34679059160-1",
+    "protectedOfficialIds": 17861,
+    "missingBefore": 0,
+    "recoveredNow": 0,
+    "missingAfter": 0
   }
 }
