@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-13 07:29 KST",
+  "updatedAt": "2026-09-13 09:38 KST",
   "officialSourceCount": 38,
   "sources": {
     "gyeonggi": {
@@ -970,7 +970,7 @@
   ],
   "verification": {
     "state": "warning",
-    "checkedAt": "2026-09-13 08:46 KST",
+    "checkedAt": "2026-09-13 10:12 KST",
     "message": "교육지원청 확인 필요 4곳",
     "supportOfficeIssues": [
       {
@@ -1227,10 +1227,10 @@
       "sourceType": "교육지원청 개별 게시판",
       "url": "https://www.goegh.kr/goegh/na/ntt/selectNttInfo.do?bbsId=5088&mi=8754&nttSn=1225076",
       "boardUrl": "https://www.goegh.kr/goegh/na/ntt/selectNttList.do?bbsId=5088&mi=8754",
-      "detailLinkResolved": true,
       "nttSn": "1225076",
       "bbsId": "5088",
       "mi": "8754",
+      "detailLinkResolved": true,
       "periodStatus": "parsed"
     },
     {
@@ -1258,10 +1258,10 @@
       "sourceType": "교육지원청 개별 게시판",
       "url": "https://www.goept.kr/goept/na/ntt/selectNttInfo.do?bbsId=10111&mi=10118&nttSn=2567478",
       "boardUrl": "https://www.goept.kr/goept/na/ntt/selectNttList.do?mi=10118&bbsId=10111",
-      "detailLinkResolved": true,
       "nttSn": "2567478",
       "bbsId": "10111",
       "mi": "10118",
+      "detailLinkResolved": true,
       "periodStatus": "unavailable"
     },
     {
@@ -538898,7 +538898,7 @@
   ],
   "repair": {
     "gyeonggiSupport": {
-      "checkedAt": "2026-09-13 07:53 KST",
+      "checkedAt": "2026-09-13 10:05 KST",
       "parser": "gyeonggi-mircms-table-v2.1",
       "offices": 25,
       "healthy": 25,
@@ -538909,23 +538909,23 @@
     }
   },
   "dateSanitization": {
-    "checkedAt": "2026-09-13 08:44 KST",
+    "checkedAt": "2026-09-13 10:11 KST",
     "futureRegistrationDatesCorrected": 0
   },
   "metadataSanitization": {
-    "checkedAt": "2026-09-13 08:44 KST",
+    "checkedAt": "2026-09-13 10:11 KST",
     "schoolColumnLabelsRemoved": 0
   },
   "missingRecovery": {
     "freshCount": 16312,
-    "previousCount": 19421,
+    "previousCount": 19419,
     "mergedCount": 19397,
     "carriedForward": 3085,
     "officialIdProtected": 17861,
     "officialIdCarryForward": 1553,
-    "enrichedFromPrevious": 6858,
+    "enrichedFromPrevious": 6860,
     "policy": "fresh wins; latest official reconciliation IDs survive incremental crawl gaps; otherwise active/recent previous recruitment postings survive one-run disappearance",
-    "generatedAt": "2026-09-13 07:57 KST"
+    "generatedAt": "2026-09-13 10:09 KST"
   },
   "supportLinkResolution": {
     "gyeonggiExact": 6848,
@@ -538934,7 +538934,7 @@
     "seoulTotal": 507
   },
   "periodEnrichment": {
-    "checkedAt": "2026-09-13 08:44 KST",
+    "checkedAt": "2026-09-13 10:09 KST",
     "parserVersion": 2,
     "recentSupportJobs": 5725,
     "detailPagesParsed": 2359,
@@ -538944,7 +538944,7 @@
     "pendingDetailPages": 0,
     "displayFallback": "원문 확인",
     "seoulGetFallback": {
-      "checkedAt": "2026-09-13 08:44 KST",
+      "checkedAt": "2026-09-13 10:09 KST",
       "candidates": 250,
       "detailPagesConfirmed": 244,
       "cacheEntriesImproved": 0,
@@ -538956,7 +538956,7 @@
     }
   },
   "sourceReconciliation": {
-    "generatedAt": "2026-09-13 08:04:33 KST",
+    "generatedAt": "2026-09-13 10:17:44 KST",
     "lookbackDays": 90,
     "populationPolicy": "stable-id-38-v2-gyeonggi-central-90d",
     "officialIdCount": 17509,
@@ -538968,14 +538968,6 @@
     "totalSources": 38,
     "reconciledOffices": 38,
     "totalOffices": 38,
-    "scanId": "20260912T225950Z-34722836036-1"
-  },
-  "officialIdRestore": {
-    "checkedAt": "2026-09-13 08:44:26 KST",
-    "ledgerScanId": "20260912T064842Z-34679059160-1",
-    "protectedOfficialIds": 17861,
-    "missingBefore": 0,
-    "recoveredNow": 0,
-    "missingAfter": 0
+    "scanId": "20260913T011231Z-34728438005-1"
   }
 }
