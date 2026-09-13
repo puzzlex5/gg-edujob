@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T13:07:55+09:00",
+  "generatedAt": "2026-09-13T14:06:51+09:00",
   "status": "degraded",
   "healthy": true,
   "snapshot": {
-    "generatedAt": "2026-09-13T13:07:55+09:00",
+    "generatedAt": "2026-09-13T14:06:51+09:00",
     "official": {
       "datasetCount": 19419,
       "officialIdCount": 17861,
@@ -332,12 +332,12 @@
   },
   "comparisons": {
     "1d": {
-      "baselineAt": "2026-09-12T13:07:45+09:00",
+      "baselineAt": "2026-09-12T14:06:41+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19419,
-          "baseline": 19417,
-          "changeRatio": 0.0001
+          "baseline": 19602,
+          "changeRatio": -0.0093
         },
         "official.officialIdCount": {
           "current": 17861,
@@ -346,18 +346,18 @@
         },
         "unified.publishedJobs": {
           "current": 7360,
-          "baseline": 7377,
-          "changeRatio": -0.0023
+          "baseline": 7446,
+          "changeRatio": -0.0115
         },
         "unified.officialDisplayed": {
           "current": 2975,
-          "baseline": 2987,
-          "changeRatio": -0.004
+          "baseline": 3050,
+          "changeRatio": -0.0246
         },
         "unified.privateDiscovered": {
           "current": 4388,
-          "baseline": 4394,
-          "changeRatio": -0.0014
+          "baseline": 4400,
+          "changeRatio": -0.0027
         }
       },
       "privateSources": {
@@ -378,8 +378,8 @@
         },
         "artmore": {
           "current": 34,
-          "baseline": 30,
-          "changeRatio": 0.1333
+          "baseline": 36,
+          "changeRatio": -0.0556
         },
         "gonggonggangsa": {
           "current": 47,
@@ -399,7 +399,7 @@
       }
     },
     "7d": {
-      "baselineAt": "2026-09-06T13:08:19+09:00",
+      "baselineAt": "2026-09-06T14:07:44+09:00",
       "metrics": {
         "official.datasetCount": {
           "current": 19419,
@@ -413,8 +413,8 @@
         },
         "unified.publishedJobs": {
           "current": 7360,
-          "baseline": 7527,
-          "changeRatio": -0.0222
+          "baseline": 7526,
+          "changeRatio": -0.0221
         },
         "unified.officialDisplayed": {
           "current": 2975,
@@ -423,15 +423,15 @@
         },
         "unified.privateDiscovered": {
           "current": 4388,
-          "baseline": 4467,
-          "changeRatio": -0.0177
+          "baseline": 4466,
+          "changeRatio": -0.0175
         }
       },
       "privateSources": {
         "lessoninfo": {
           "current": 247,
-          "baseline": 354,
-          "changeRatio": -0.3023
+          "baseline": 353,
+          "changeRatio": -0.3003
         },
         "cleaneye": {
           "current": 20,
